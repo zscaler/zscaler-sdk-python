@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.posture_profiles import PostureProfile
-from zscaler.utils import format_url, remove_cloud_suffix
-from zscaler.types import APIResult
+from zscaler.utils import format_url
 
 
 class PostureProfilesAPI(APIClient):
@@ -34,72 +33,38 @@ class PostureProfilesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_posture_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[PostureProfile]]:
+    def list_posture_profiles(self, query_params: Optional[dict] = None) -> List[PostureProfile]:
         """
         Returns a list of all configured posture profiles.
 
-        Keyword Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
+        Args:
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            list: A list of `PostureProfile` instances.
+            List[PostureProfile]: A list of PostureProfile instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Retrieve posture profiles with pagination parameters:
-
-            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles(
-            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing posture: {err}")
-            ...     return
-            ... print(f"Total posture profiles found: {len(posture_list)}")
-            ... for posture in posture_list:
-            ...     print(posture.as_dict())
-
-            Retrieve posture profiles udid with:
-
-            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles()
-            ... if err:
-            ...     print(f"Error listing profiles: {err}")
-            ...     return
-            ... print("Extracted posture_udid values:")
-            ... for profile in profile_list:
-            ...     if profile.posture_udid:
-            ...         print(profile.posture_udid)
+            >>> try:
+            ...     profiles = client.zpa.posture_profiles.list_posture_profiles()
+            ...     for profile in profiles:
+            ...         print(profile.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint_v2}
-            /posture
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint_v2}/posture")
 
         query_params = query_params or {}
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
+        response = self._request_executor.execute(request, PostureProfile)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        return [PostureProfile(self.form_response_body(item)) for item in response.get_results()]
 
-        response, error = self._request_executor.execute(request, PostureProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PostureProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_profile(self, profile_id: str) -> APIResult[dict]:
+    def get_profile(self, profile_id: str) -> PostureProfile:
         """
         Gets a specific posture profile by its unique ID.
 
@@ -107,38 +72,22 @@ class PostureProfilesAPI(APIClient):
             profile_id (str): The unique identifier of the posture profile.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of Posture Profile instances, Response, error)
+            PostureProfile: The posture profile object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_posture, _, err = client.zpa.posture_profile.get_profile('999999')
-            ... if err:
-            ...     print(f"Error fetching posture by ID: {err}")
-            ...     return
-            ... print(fetched_profile.posture_udid)
+            >>> try:
+            ...     profile = client.zpa.posture_profiles.get_profile('999999')
+            ...     print(profile.posture_udid)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /posture/{profile_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/posture/{profile_id}")
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
+        response = self._request_executor.execute(request, PostureProfile)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PostureProfile)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PostureProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return PostureProfile(self.form_response_body(response.get_body()))

@@ -21,7 +21,6 @@ from zscaler.zdx.models.alerts import Alerts
 from zscaler.zdx.models.alerts import AlertDetails
 from zscaler.zdx.models.alerts import AffectedDevices
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class AlertsAPI(APIClient):
@@ -32,7 +31,7 @@ class AlertsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_ongoing(self, query_params: Optional[dict] = None) -> APIResult[List[Alerts]]:
+    def list_ongoing(self, query_params: Optional[dict] = None) -> List[Alerts]:
         """
         Returns a list of all ongoing alert rules across an organization in ZDX.
         All ongoing alert rules are returned if the search filter is not specified.
@@ -66,20 +65,20 @@ class AlertsAPI(APIClient):
         Examples:
             List all ongoing alerts in ZDX for the past 2 hours:
 
-            >>> alert_list, _, err = client.zdx.alerts.list_ongoing()
-            ... if err:
-            ...      print(f"Error listing alerts: {err}")
-            ...      return
+            >>> try:
+            ...     alert_list = client.zdx.alerts.list_ongoing()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ...  for alert in alert_list:
             ...      print(alert.as_dict())
 
             List ongoing alerts in ZDX for the past 2 hours for specific location(s):
 
-            >>> alert_list, _, err = client.zdx.alerts.list_ongoing(
+            >>> try:
+            ...     alert_list = client.zdx.alerts.list_ongoing(
             ... query_params={'since': 2, 'location_id': [58755]})
-            ... if err:
-            ...      print(f"Error listing alert: {err}")
-            ...      return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ...  for alert in alert_list:
             ...      print(alert.as_dict())
         """
@@ -96,23 +95,13 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = [Alerts(self.form_response_body(response.get_body()))]
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [Alerts(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_alert(self, alert_id: str) -> APIResult[dict]:
+    def get_alert(self, alert_id: str) -> AlertDetails:
         """
         Returns details of a single alert including the impacted department,
         Zscaler locations, geolocation, and alert trigger.
@@ -142,23 +131,14 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AlertDetails)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AlertDetails(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, AlertDetails)
+        result = AlertDetails(self.form_response_body(response.get_body()))
+        return result
 
     @zdx_params
-    def list_historical(self, query_params: Optional[dict] = None) -> APIResult[List[Alerts]]:
+    def list_historical(self, query_params: Optional[dict] = None) -> List[Alerts]:
         """
         Returns a list of alert history rules defined across an organization.
         All alert history rules are returned if the search filter is not specified.
@@ -192,20 +172,20 @@ class AlertsAPI(APIClient):
         Examples:
             List all alert history rules in ZDX for the past 2 hours:
 
-            >>> alert_list, _, err = client.zdx.alerts.list_historical()
-            ... if err:
-            ...     print(f"Error listing alert history rules: {err}")
-            ...     return
+            >>> try:
+            ...     alert_list = client.zdx.alerts.list_historical()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for alert in alert_list:
             ...     print(alert.as_dict())
 
             List alert history rules in ZDX for the past 24 hours.
             Note: Cannot exceed the 14-day time range limit for alert rules.
 
-            >>> alert_list, _, err = client.zdx.alerts.list_historical(query_params={"since": 24})
-            ... if err:
-            ...     print(f"Error listing alert history rules: {err}")
-            ...     return
+            >>> try:
+            ...     alert_list = client.zdx.alerts.list_historical(query_params={"since": 24})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for alert in alert_list:
             ...     print(alert.as_dict())
         """
@@ -222,24 +202,14 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [Alerts(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [Alerts(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def list_affected_devices(self, alert_id, query_params: Optional[dict] = None) -> APIResult[List[AffectedDevices]]:
+    def list_affected_devices(self, alert_id, query_params: Optional[dict] = None) -> List[AffectedDevices]:
         """
         Returns a list of all affected devices associated with
         an alert rule in conjunction with provided filters.
@@ -278,12 +248,12 @@ class AlertsAPI(APIClient):
 
             List of all affected devices associated with an alert rule in ZDX for the past 24 hours:
 
-            >>> devices, _, err = client.zdx.alerts.list_affected_devices(
+            >>> try:
+            ...     devices = client.zdx.alerts.list_affected_devices(
             ... '7473160764821179371', query_params={"since": 24}
             ... )
-            ... if err:
-            ...    print(f"Error listing affected devices: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for dev in devices:
             ...     print(dev.as_dict())
         """
@@ -300,18 +270,8 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [AffectedDevices(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [AffectedDevices(self.form_response_body(response.get_body()))]
+        return result

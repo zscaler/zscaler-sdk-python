@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.oauth2_user_code import OAuth2UserCode
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 def simplify_key_type(key_type):
@@ -55,7 +54,7 @@ class OAuth2UserCodeAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def verify_oauth2_user_code(self, key_type: str, **kwargs) -> APIResult[OAuth2UserCode]:
+    def verify_oauth2_user_code(self, key_type: str, **kwargs) -> OAuth2UserCode:
         """
         Verifies the provided list of user codes for a given component provisioning.
 
@@ -74,16 +73,16 @@ class OAuth2UserCodeAPI(APIClient):
             microtenant_id (str, optional): The microtenant ID if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (OAuth2UserCode instance, Response, error).
+            :obj:`Tuple`: A tuple containing OAuth2UserCode.
 
         Examples:
-            >>> verified_codes, _, err = client.zpa.oauth2_user_code.verify_oauth2_user_code(
+            >>> try:
+            ...     verified_codes = client.zpa.oauth2_user_code.verify_oauth2_user_code(
             ...     key_type='connector',
             ...     user_codes=['code1', 'code2', 'code3']
             ... )
-            ... if err:
-            ...     print(f"Error verifying user codes: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"User codes verified successfully: {verified_codes.as_dict()}")
         """
         if not key_type:
@@ -102,21 +101,12 @@ class OAuth2UserCodeAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, OAuth2UserCode)
+        result = OAuth2UserCode(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, OAuth2UserCode)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = OAuth2UserCode(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_provisioning_key(self, key_type: str, **kwargs) -> APIResult[OAuth2UserCode]:
+    def add_provisioning_key(self, key_type: str, **kwargs) -> OAuth2UserCode:
         """
         Adds a new Provisioning Key for the specified customer.
 
@@ -135,16 +125,16 @@ class OAuth2UserCodeAPI(APIClient):
             microtenant_id (str, optional): The microtenant ID if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (OAuth2UserCode instance, Response, error).
+            :obj:`Tuple`: A tuple containing OAuth2UserCode.
 
         Examples:
-            >>> new_prov_key, _, err = client.zpa.oauth2_user_code.add_provisioning_key(
+            >>> try:
+            ...     new_prov_key = client.zpa.oauth2_user_code.add_provisioning_key(
             ...     key_type='connector',
             ...     user_codes=['code1', 'code2']
             ... )
-            ... if err:
-            ...     print(f"Error adding provisioning key: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Provisioning key added successfully: {new_prov_key.as_dict()}")
         """
         if not key_type:
@@ -163,16 +153,7 @@ class OAuth2UserCodeAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, OAuth2UserCode)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = OAuth2UserCode(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, OAuth2UserCode)
+        result = OAuth2UserCode(self.form_response_body(response.get_body()))
+        return result

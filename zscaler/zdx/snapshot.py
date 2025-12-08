@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.snapshot import Snapshot
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class SnapshotAPI(APIClient):
@@ -29,7 +28,7 @@ class SnapshotAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def share_snapshot(self, **kwargs) -> APIResult[dict]:
+    def share_snapshot(self, **kwargs) -> Snapshot:
         """
         Share a ZDX Snapshot of alert details for a given alert ID.
 
@@ -107,22 +106,13 @@ class SnapshotAPI(APIClient):
             expiry_epoch = int(time.time()) + (expiry_hours * 3600)
             body['expiry'] = expiry_epoch
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             params=query_params or {}
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, Snapshot)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Snapshot(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, Snapshot)
+        result = Snapshot(self.form_response_body(response.get_body()))
+        return result

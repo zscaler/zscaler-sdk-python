@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_profile import CBIProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CBIProfileAPI(APIClient):
@@ -33,7 +32,7 @@ class CBIProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_profiles(self) -> APIResult[List[CBIProfile]]:
+    def list_cbi_profiles(self) -> List[CBIProfile]:
         """
         Returns a list of all cloud browser isolation profile.
 
@@ -44,10 +43,10 @@ class CBIProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing a list of `CBIProfile` instances, response object, and error if any.
 
         Examples:
-            >>> profile_list, _, err = client.zpa.cbi_profile.list_cbi_profiles()
-            ... if err:
-            ...     print(f"Error listing profiles: {err}")
-            ...     return
+            >>> try:
+            ...     profile_list = client.zpa.cbi_profile.list_cbi_profiles()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total profiles found: {len(profile_list)}")
             ... for profile in profile_list:
             ...     print(profile.as_dict())
@@ -60,23 +59,14 @@ class CBIProfileAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CBIProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CBIProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_cbi_profile(self, profile_id: str) -> APIResult[dict]:
+    def get_cbi_profile(self, profile_id: str) -> CBIProfile:
         """
         Returns information on the specified cloud browser isolation profile.
 
@@ -87,11 +77,11 @@ class CBIProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing the `CBIProfile` instance, response object, and error if any.
 
         Examples:
-            >>> fetched_profile, _, err = client.zpa.cbi_profile.get_cbi_profile(
+            >>> try:
+            ...     fetched_profile = client.zpa.cbi_profile.get_cbi_profile(
             ... profile_id='ab73fa29-667a-4057-83c5-6a8dccf84930')
-            ... if err:
-            ...     print(f"Error fetching profile by ID: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
@@ -102,21 +92,12 @@ class CBIProfileAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, CBIProfile)
+        result = CBIProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CBIProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CBIProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_cbi_profile(self, **kwargs) -> APIResult[dict]:
+    def add_cbi_profile(self, **kwargs) -> CBIProfile:
         """
         Adds a new cloud browser isolation profile to the Zscaler platform.
 
@@ -205,9 +186,8 @@ class CBIProfileAPI(APIClient):
             ...   },
             ...   banner_id="97f339f6-9f85-40fb-8b76-f62cdf8f795c"
             ... )
-            ... if err:
-            ...     print(f"Error adding cbi profile: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"CBI profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
@@ -222,27 +202,18 @@ class CBIProfileAPI(APIClient):
 
         # Validation for required fields: region_ids and certificate_ids
         if not body.get("region_ids") or not isinstance(body.get("region_ids"), list) or len(body.get("region_ids")) < 2:
-            return (None, None, "Validation Error: 'region_ids' is required and must contain at least 2 region IDs.")
+            raise ValueError("'region_ids' is required and must contain at least 2 region IDs.")
 
         if not body.get("certificate_ids") or not isinstance(body.get("certificate_ids"), list):
-            return (None, None, "Validation Error: 'certificate_ids' is required and must be a list.")
+            raise ValueError("'certificate_ids' is required and must be a list.")
 
         # Proceed with request creation and execution
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, CBIProfile)
+        result = CBIProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CBIProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CBIProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_cbi_profile(self, profile_id: str, **kwargs) -> APIResult[dict]:
+    def update_cbi_profile(self, profile_id: str, **kwargs) -> CBIProfile:
         """
         Updates an existing cloud browser isolation profile.
 
@@ -300,9 +271,8 @@ class CBIProfileAPI(APIClient):
             ...   name='CBI_Profile_Update'
             ...   description='CBI_Profile_Update'
             )
-            ... if err:
-            ...     print(f"Error adding cbi profile: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"CBI profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
@@ -319,35 +289,25 @@ class CBIProfileAPI(APIClient):
 
         # Validation for required fields: regions, certificates, and banner
         if not body.get("regions") or not isinstance(body.get("regions"), list) or len(body.get("regions")) < 2:
-            return (None, None, "Validation Error: 'regions' is required and must contain at least 2 region objects.")
+            raise ValueError("'regions' is required and must contain at least 2 region objects.")
 
         if not body.get("certificates") or not isinstance(body.get("certificates"), list):
-            return (None, None, "Validation Error: 'certificates' is required and must be a list of certificate objects.")
+            raise ValueError("'certificates' is required and must be a list of certificate objects.")
 
         if not body.get("banner") or not isinstance(body.get("banner"), dict) or not body["banner"].get("id"):
-            return (None, None, "Validation Error: 'banner' is required and must contain a valid 'id'.")
+            raise ValueError("'banner' is required and must contain a valid 'id'.")
 
         # Proceed with request creation and execution
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CBIProfile)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {})
+        response = self._request_executor.execute(request, CBIProfile)
         # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (CBIProfile({"id": profile_id}), None, None)
+            return CBIProfile({"id": profile_id})
 
-        try:
-            result = CBIProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = CBIProfile(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def delete_cbi_profile(self, profile_id: str) -> APIResult[dict]:
+    def delete_cbi_profile(self, profile_id: str) -> None:
         """
         Deletes the specified cloud browser isolation profile.
 
@@ -358,12 +318,12 @@ class CBIProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing the response object and error if any.
 
         Examples:
-            >>> _, _, err = client.zpa.cbi_profile.delete_cbi_profile(
+            >>> try:
+            ...     _ = client.zpa.cbi_profile.delete_cbi_profile(
             ...     profile_id='ab73fa29-667a-4057-83c5-6a8dccf84930'
             ... )
-            ... if err:
-            ...     print(f"Error deleting cbi profile: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"CBI Profile with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -374,12 +334,6 @@ class CBIProfileAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        return None

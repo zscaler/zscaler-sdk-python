@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_mapper, transform_common_id_fields, reformat_params
 from zscaler.zcc.models.webpolicy import WebPolicy
-from zscaler.types import APIResult
 
 
 class WebPolicyAPI(APIClient):
@@ -30,7 +29,7 @@ class WebPolicyAPI(APIClient):
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
     @zcc_param_mapper
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[WebPolicy]]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> List[WebPolicy]:
         """
         Returns the list of Web Policy By Company ID in the Client Connector Portal.
 
@@ -53,7 +52,8 @@ class WebPolicyAPI(APIClient):
         Examples:
             Prints Web Policy By Company ID in the Client Connector Portal to the console:
 
-            >>> policy_list, _, err = client.zcc.web_policy.list_by_company(query_params={'device_type': 'windows'})
+            >>> try:
+            ...     policy_list = client.zcc.web_policy.list_by_company(query_params={'device_type': 'windows'})
             >>> if err:
             ...     print(f"Error listing company policies: {err}")
             ...     return
@@ -73,23 +73,13 @@ class WebPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, WebPolicy)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_results()
-        except Exception as error:
-            return None, response, error
-
+        response = self._request_executor.execute(request, WebPolicy)
+        result = response.get_results()
         return result, response, None
 
-    def activate_web_policy(self, **kwargs) -> APIResult[dict]:
+    def activate_web_policy(self, **kwargs) -> WebPolicy:
         """
         Enables or disables a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
@@ -98,7 +88,6 @@ class WebPolicyAPI(APIClient):
            policy_id: (int):
 
         Returns:
-            tuple: A tuple containing the updated Activation Web Policy, response, and error.
 
         Examples:
             Activate Web Policy in the Client Connector Portal to the console:
@@ -123,32 +112,25 @@ class WebPolicyAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, WebPolicy)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, WebPolicy)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = WebPolicy(self.form_response_body(response.get_body()))
             else:
                 result = WebPolicy()
         except Exception as error:
-            return (None, response, error)
+            return WebPolicy
 
-        return (result, response, None)
+        return result
 
-    def web_policy_edit(self, **kwargs) -> APIResult[dict]:
+    def web_policy_edit(self, **kwargs) -> WebPolicy:
         """
         Adds or updates a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
         Args:
 
         Returns:
-            tuple: A tuple containing the updated Web Policy, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -162,21 +144,12 @@ class WebPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, WebPolicy)
+        result = WebPolicy(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, WebPolicy)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = WebPolicy(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_web_policy(self, policy_id: int) -> APIResult[dict]:
+    def delete_web_policy(self, policy_id: int) -> None:
         """
         Deletes the specified Web Policy.
 
@@ -184,7 +157,6 @@ class WebPolicyAPI(APIClient):
             policy_id (str): The unique identifier of the  Web Policy.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -196,11 +168,6 @@ class WebPolicyAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

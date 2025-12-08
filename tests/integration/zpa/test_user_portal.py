@@ -42,7 +42,7 @@ class TestUserPortal:
 
         try:
             # Create a new portal
-            created_portal, _, err = client.zpa.user_portal_controller.add_user_portal(
+            created_portal = client.zpa.user_portal_controller.add_user_portal(
                 name=portal_name,
                 description=portal_description,
                 enabled=True,
@@ -54,7 +54,6 @@ class TestUserPortal:
                 ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                 ext_domain="securitygeek.io"
             )
-            assert err is None, f"Error creating portal: {err}"
             assert created_portal is not None
             assert created_portal.name == portal_name
             assert created_portal.description == portal_description
@@ -70,14 +69,13 @@ class TestUserPortal:
         try:
             if portal_id:
                 # Retrieve the created portal by ID
-                retrieved_portal, _, err = client.zpa.user_portal_controller.get_user_portal(portal_id)
-                assert err is None, f"Error fetching portal: {err}"
+                retrieved_portal = client.zpa.user_portal_controller.get_user_portal(portal_id)
                 assert retrieved_portal.id == portal_id
                 assert retrieved_portal.name == portal_name
 
                 # Update the portal
                 updated_name = portal_name + " Updated"
-                _, _, err = client.zpa.user_portal_controller.update_user_portal(
+                _ = client.zpa.user_portal_controller.update_user_portal(
                     portal_id, 
                     name=updated_name,
                     description=portal_description,
@@ -90,15 +88,12 @@ class TestUserPortal:
                     ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                     ext_domain="securitygeek.io"                    
                     )
-                assert err is None, f"Error updating portal: {err}"
 
-                updated_portal, _, err = client.zpa.user_portal_controller.get_user_portal(portal_id)
-                assert err is None, f"Error fetching updated portal: {err}"
+                updated_portal = client.zpa.user_portal_controller.get_user_portal(portal_id)
                 assert updated_portal.name == updated_name
 
                 # List portals and ensure the updated portal is in the list
-                portal_list, _, err = client.zpa.user_portal_controller.list_user_portals()
-                assert err is None, f"Error listing portals: {err}"
+                portal_list = client.zpa.user_portal_controller.list_user_portals()
                 assert any(portal.id == portal_id for portal in portal_list)
         except Exception as exc:
             errors.append(f"Portal operation failed: {exc}")
@@ -107,8 +102,7 @@ class TestUserPortal:
             # Cleanup: Delete the portal if it was created
             if portal_id:
                 try:
-                    delete_response, _, err = client.zpa.user_portal_controller.delete_user_portal(portal_id)
-                    assert err is None, f"Error deleting portal: {err}"
+                    delete_response = client.zpa.user_portal_controller.delete_user_portal(portal_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

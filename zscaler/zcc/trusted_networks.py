@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.trustednetworks import TrustedNetworks
-from zscaler.types import APIResult
 
 
 class TrustedNetworksAPI(APIClient):
@@ -29,7 +28,7 @@ class TrustedNetworksAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[TrustedNetworks]]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> List[TrustedNetworks]:
         """
         Returns the list of Trusted Networks By Company ID in the Client Connector Portal.
 
@@ -66,26 +65,20 @@ class TrustedNetworksAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request)
         try:
             response_body = response.get_body()
             trusted_networks = response_body.get("trustedNetworkContracts", [])
 
             result = [TrustedNetworks(network) for network in trusted_networks]
         except Exception as error:
-            return (None, response, error)
+            return List[TrustedNetworks]
 
-        return (result, response, None)
+        return result
 
-    def add_trusted_network(self, **kwargs) -> APIResult[dict]:
+    def add_trusted_network(self, **kwargs) -> TrustedNetworks:
         """
         Creates a new ZIA Rule Label.
 
@@ -109,7 +102,6 @@ class TrustedNetworksAPI(APIClient):
             trusted_subnets (str):
 
         Returns:
-            tuple: A tuple containing the newly added Trusted Network, response, and error.
 
         Examples:
             Add a new Trusted Network :
@@ -139,26 +131,17 @@ class TrustedNetworksAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrustedNetworks)
+        result = TrustedNetworks(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrustedNetworks)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrustedNetworks(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_trusted_network(self, **kwargs) -> APIResult[dict]:
+    def update_trusted_network(self, **kwargs) -> TrustedNetworks:
         """
         Update Trusted Network
 
@@ -166,7 +149,6 @@ class TrustedNetworksAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing the Update Trusted Network, response, and error.
 
         Examples:
             Update an existing Trusted Network :
@@ -198,21 +180,12 @@ class TrustedNetworksAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, TrustedNetworks)
+        result = TrustedNetworks(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrustedNetworks)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrustedNetworks(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_trusted_network(self, network_id: int) -> APIResult[dict]:
+    def delete_trusted_network(self, network_id: int) -> None:
         """
         Deletes the specified Trusted Network.
 
@@ -220,7 +193,6 @@ class TrustedNetworksAPI(APIClient):
             network_id (str): The unique identifier of the Trusted Network.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete an existing Trusted Network :
@@ -241,11 +213,6 @@ class TrustedNetworksAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

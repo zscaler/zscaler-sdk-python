@@ -48,13 +48,14 @@ def check_response_for_error(url, response_details, response_body):
 
     try:
         error = ZscalerAPIError(url, response_details, formatted_response)
-        if exceptions.raise_exception:
-            raise ZscalerAPIException(error)
-        return None, error
-
     except Exception as e:
         logger.exception("Failed to construct ZscalerAPIError.")
         generic_error = HTTPError(url, response_details, formatted_response)
         if exceptions.raise_exception:
-            raise HTTPException(str(generic_error)) from e
+            raise HTTPException(url, response_details, formatted_response) from e
         return None, generic_error
+
+    # Successfully created ZscalerAPIError - now raise or return it
+    if exceptions.raise_exception:
+        raise ZscalerAPIException(error)
+    return None, error

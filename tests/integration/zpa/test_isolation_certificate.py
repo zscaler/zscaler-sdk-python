@@ -94,8 +94,7 @@ class TestCBICertificates:
 
             try:
                 # Create a new certificate and capture debug information
-                created_cert, _, err = client.zpa.cbi_certificate.add_cbi_certificate(name=cert_name, pem=pem.decode("utf-8"))
-                assert err is None, f"Error creating certificate: {err}"
+                created_cert = client.zpa.cbi_certificate.add_cbi_certificate(name=cert_name, pem=pem.decode("utf-8"))
                 cert_id = created_cert.id if created_cert else None
                 if not cert_id:
                     errors.append("Failed to retrieve certificate ID after creation")
@@ -109,8 +108,7 @@ class TestCBICertificates:
                     # Update the certificate
                     updated_name = cert_name + " Updated"
                     client.zpa.cbi_certificate.update_cbi_certificate(cert_id, name=updated_name)
-                    updated_cert, _, err = client.zpa.cbi_certificate.get_cbi_certificate(cert_id)
-                    assert err is None, f"Error fetching updated certificate: {err}"
+                    updated_cert = client.zpa.cbi_certificate.get_cbi_certificate(cert_id)
                     if updated_cert.name != updated_name:
                         errors.append("Failed to update certificate name")
                 except Exception as exc:
@@ -118,8 +116,7 @@ class TestCBICertificates:
 
                 try:
                     # Verify the certificate by listing
-                    certs, _, err = client.zpa.cbi_certificate.list_cbi_certificates()
-                    assert err is None, f"Error listing certificates: {err}"
+                    certs = client.zpa.cbi_certificate.list_cbi_certificates()
                     if cert_id not in [cert.id for cert in certs]:
                         errors.append("Certificate not found in list")
                 except Exception as exc:
@@ -133,8 +130,7 @@ class TestCBICertificates:
             if cert_id:
                 try:
                     # Delete the certificate
-                    delete_response, _, err = client.zpa.cbi_certificate.delete_cbi_certificate(cert_id)
-                    assert err is None, f"Error deleting certificate: {err}"
+                    delete_response = client.zpa.cbi_certificate.delete_cbi_certificate(cert_id)
                     print(f"Certificate with ID {cert_id} deleted successfully.")
                 except Exception as exc:
                     errors.append(f"Certificate deletion failed: {str(exc)}")

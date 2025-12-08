@@ -33,12 +33,11 @@ class SecurityPolicyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_whitelist(self) -> APIResult[dict]:
+    def get_whitelist(self) -> SecurityPolicySettings:
         """
         Returns a list of whitelisted URLs.
 
         Returns:
-            tuple: A tuple containing (SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> whitelist, response, error = zia.security.get_whitelist()
@@ -46,27 +45,16 @@ class SecurityPolicyAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zia_base_endpoint}/security")
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
+        result = SecurityPolicySettings(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SecurityPolicySettings(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_blacklist(self) -> APIResult[dict]:
+    def get_blacklist(self) -> SecurityPolicySettings:
         """
         Returns a list of blacklisted URLs.
 
         Returns:
-            tuple: A tuple containing (SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> blacklist, response, error = zia.security.get_blacklist()
@@ -74,22 +62,12 @@ class SecurityPolicyAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zia_base_endpoint}/security/advanced")
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
+        result = SecurityPolicySettings(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SecurityPolicySettings(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def replace_whitelist(self, url_list: list) -> APIResult[dict]:
+    def replace_whitelist(self, url_list: list) -> SecurityPolicySettings:
         """
         Replaces the existing whitelist with the URLs provided.
 
@@ -97,7 +75,6 @@ class SecurityPolicyAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs for the new whitelist.
 
         Returns:
-            tuple: A tuple containing (updated SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> whitelist, response, error = zia.security.replace_whitelist(['example.com'])
@@ -107,14 +84,8 @@ class SecurityPolicyAPI(APIClient):
 
         payload = {"whitelistUrls": url_list}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, payload)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
         return self.get_whitelist()
 
     def add_urls_to_whitelist(self, url_list: list) -> APIResult[dict]:
@@ -153,7 +124,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.replace_whitelist(whitelist.whitelist_urls)
 
-    def add_urls_to_blacklist(self, url_list: list) -> APIResult[dict]:
+    def add_urls_to_blacklist(self, url_list: list) -> SecurityPolicySettings:
         """
         Adds the provided URLs to the blacklist.
 
@@ -161,7 +132,6 @@ class SecurityPolicyAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs to be added.
 
         Returns:
-            tuple: A tuple containing (updated SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> blacklist, response, error = zia.security.add_urls_to_blacklist(['example.com'])
@@ -171,17 +141,11 @@ class SecurityPolicyAPI(APIClient):
         params = {"action": "ADD_TO_LIST"}
         payload = {"blacklistUrls": url_list}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, payload, params=params)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
         return self.get_blacklist()
 
-    def delete_urls_from_blacklist(self, url_list: list) -> APIResult[dict]:
+    def delete_urls_from_blacklist(self, url_list: list) -> None:
         """
         Deletes the provided URLs from the blacklist.
 
@@ -189,7 +153,6 @@ class SecurityPolicyAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs to be deleted.
 
         Returns:
-            tuple: A tuple containing (updated SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> blacklist, response, error = zia.security.delete_urls_from_blacklist(['example.com'])
@@ -199,17 +162,11 @@ class SecurityPolicyAPI(APIClient):
         params = {"action": "REMOVE_FROM_LIST"}
         payload = {"blacklistUrls": url_list}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, payload, params=params)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
         return self.get_blacklist()
 
-    def replace_blacklist(self, url_list: list) -> APIResult[dict]:
+    def replace_blacklist(self, url_list: list) -> SecurityPolicySettings:
         """
         Replaces the existing blacklist with the URLs provided.
 
@@ -217,7 +174,6 @@ class SecurityPolicyAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs for the new blacklist.
 
         Returns:
-            tuple: A tuple containing (updated SecurityPolicySettings instance, Response, error)
 
         Examples:
             >>> blacklist, response, error = zia.security.replace_blacklist(['example.com'])
@@ -227,14 +183,8 @@ class SecurityPolicyAPI(APIClient):
 
         payload = {"blacklistUrls": url_list}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, SecurityPolicySettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, payload)
+        response = self._request_executor.execute(request, SecurityPolicySettings)
         return self.get_blacklist()
 
     def erase_blacklist(self) -> APIResult[dict]:

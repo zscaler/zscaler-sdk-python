@@ -18,7 +18,6 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class PolicyExportAPI(APIClient):
@@ -32,7 +31,7 @@ class PolicyExportAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def policy_export(self, policy_types=None, output_file=None) -> APIResult[dict]:
+    def policy_export(self, policy_types=None, output_file=None) -> Any:
         """
         Exports the rules for the specified policy types. The server typically returns
         a ZIP file containing one JSON file per policy type.
@@ -69,21 +68,15 @@ class PolicyExportAPI(APIClient):
             "Content-Type": "application/json",
         }
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             headers=headers,
             use_raw_data_for_body=False,  # We'll let JSON be formed from the Python list
         )
-        if error:
-            return (None, error)
-
         # We want raw bytes so we can save them if it's a ZIP
-        response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error:
-            return (None, f"Request failed: {error}")
-
+        response = self._request_executor.execute(request, return_raw_response=True)
         content = response.content  # raw bytes (likely a .zip)
 
         # If user asked for a file, write it
@@ -91,4 +84,4 @@ class PolicyExportAPI(APIClient):
             with open(output_file, "wb") as f:
                 f.write(content)
 
-        return (content, None)
+        return content

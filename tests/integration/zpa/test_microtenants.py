@@ -41,8 +41,7 @@ class TestMicrotenants:
 
         # Retrieve available authentication domains
         try:
-            auth_domains, _, err = client.zpa.customer_controller.get_auth_domains()
-            assert err is None, f"Error retrieving authentication domains: {err}"
+            auth_domains = client.zpa.customer_controller.get_auth_domains()
             assert auth_domains is not None, "Auth domains response is None"
             assert isinstance(auth_domains, dict), "Auth domains should be a dictionary"
             assert "authDomains" in auth_domains, "Missing 'authDomains' key in response"
@@ -56,7 +55,7 @@ class TestMicrotenants:
         for domain in available_domains:
             try:
                 # Create a new microtenant with the current domain
-                created_microtenant, _, err = client.zpa.microtenants.add_microtenant(
+                created_microtenant = client.zpa.microtenants.add_microtenant(
                     name=microtenant_name,
                     description=microtenant_description,
                     enabled=True,
@@ -88,8 +87,7 @@ class TestMicrotenants:
 
         try:
             # Test retrieving the specific portal
-            retrieved_microtenant, _, err = client.zpa.microtenants.get_microtenant(microtenant_id)
-            assert err is None, f"Error fetching Microtenant: {err}"
+            retrieved_microtenant = client.zpa.microtenants.get_microtenant(microtenant_id)
             assert retrieved_microtenant.id == microtenant_id
             assert retrieved_microtenant.name == microtenant_name
         except Exception as exc:
@@ -97,7 +95,7 @@ class TestMicrotenants:
 
         try:
             if microtenant_id:
-                update_microtenant, _, error = client.zpa.microtenants.update_microtenant(
+                update_microtenant = client.zpa.microtenants.update_microtenant(
                     microtenant_id=microtenant_id,
                     name=microtenant_name,
                     description=microtenant_name,
@@ -105,15 +103,13 @@ class TestMicrotenants:
                     privileged_approvals_enabled=True,
                     criteria_attribute="AuthDomain",
                 )
-                assert error is None, f"Update Microtenant Error: {error}"
                 assert update_microtenant is not None, "Microtenant update returned None."
         except Exception as e:
             errors.append(f"Exception during update_microtenant: {str(e)}")
 
         try:
             if update_microtenant:
-                microtenants, _, error = client.zpa.microtenants.list_microtenants(query_params={"search": update_microtenant.name})
-                assert error is None, f"List Microtenants Error: {error}"
+                microtenants = client.zpa.microtenants.list_microtenants(query_params={"search": update_microtenant.name})
                 assert microtenants is not None and isinstance(microtenants, list), "No Microtenants found or invalid format."
         except Exception as e:
             errors.append(f"Exception during list_microtenants: {str(e)}")
@@ -132,8 +128,7 @@ class TestMicrotenants:
             try:
                 # Attempt to delete resources created during the test
                 if microtenant_id:
-                    delete_response, _, err = client.zpa.microtenants.delete_microtenant(microtenant_id)
-                    assert err is None, f"Microtenant deletion failed: {err}"
+                    delete_response = client.zpa.microtenants.delete_microtenant(microtenant_id)
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Microtenant failed: {exc}")

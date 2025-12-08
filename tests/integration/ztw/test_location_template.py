@@ -40,7 +40,7 @@ class TestLocationTemplate:
             # Create Location Template
             try:
                 template_name = generate_random_string()
-                created_location, _, error = client.ztw.location_template.add_location_template(
+                created_location = client.ztw.location_template.add_location_template(
                     name="tests-ztw-template-" + template_name,
                     desc="tests-ztw-template-" + template_name,
                     template={
@@ -57,7 +57,6 @@ class TestLocationTemplate:
                         "dnBandwidth": 10,
                     },
                 )
-                assert error is None, f"Error creating location template: {error}"
                 template_id = created_location.id if hasattr(created_location, 'id') else created_location.get("id", None)
                 assert template_id is not None, "Location template creation failed"
             except Exception as exc:
@@ -66,8 +65,7 @@ class TestLocationTemplate:
             try:
                 # Verify the location template by listing and finding it
                 # Note: LocationTemplateAPI does not have a get_location_template() method
-                templates, _, error = client.ztw.location_template.list_location_templates()
-                assert error is None, f"Error listing location templates: {error}"
+                templates = client.ztw.location_template.list_location_templates()
                 retrieved_template = next(
                     (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
                     None
@@ -83,7 +81,7 @@ class TestLocationTemplate:
                 # Note: The API requires `name` and `template` to be included in update requests
                 template_name_for_update = "tests-ztw-template-" + template_name
                 updated_description = "Updated integration test location template"
-                updated_template, _, error = client.ztw.location_template.update_location_template(
+                updated_template = client.ztw.location_template.update_location_template(
                     template_id,
                     name=template_name_for_update,  # Name is mandatory for updates
                     desc=updated_description,
@@ -101,10 +99,8 @@ class TestLocationTemplate:
                         "dnBandwidth": 20,  # Changed value to verify update
                     },
                 )
-                assert error is None, f"Error updating location template: {error}"
                 # Verify the update by listing again
-                templates, _, error = client.ztw.location_template.list_location_templates()
-                assert error is None, f"Error listing location templates after update: {error}"
+                templates = client.ztw.location_template.list_location_templates()
                 updated_location = next(
                     (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
                     None
@@ -117,8 +113,7 @@ class TestLocationTemplate:
 
             try:
                 # Retrieve the list of all templates
-                locations, _, error = client.ztw.location_template.list_location_templates()
-                assert error is None, f"Error listing location templates: {error}"
+                locations = client.ztw.location_template.list_location_templates()
                 # Check if the newly created location is in the list of templates
                 found_location = any(
                     (loc.id if hasattr(loc, 'id') else loc.get("id")) == template_id for loc in locations
@@ -133,7 +128,6 @@ class TestLocationTemplate:
             if template_id:
                 try:
                     _, response, error = client.ztw.location_template.delete_location_template(template_id)
-                    assert error is None, f"Error deleting location template: {error}"
                     # delete_location_template returns (None, response, None) on success
                     # Check response status code if available
                     if response and hasattr(response, 'status_code'):

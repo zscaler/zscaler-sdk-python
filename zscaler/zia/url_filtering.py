@@ -20,7 +20,6 @@ from zscaler.api_client import APIClient
 from zscaler.zia.models.url_filtering_rules import URLFilteringRule
 from zscaler.zia.models.url_filter_cloud_app_settings import AdvancedUrlFilterAndCloudAppSettings
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class URLFilteringAPI(APIClient):
@@ -53,7 +52,7 @@ class URLFilteringAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[URLFilteringRule]]:
+    ) -> List[URLFilteringRule]:
         """
         Lists url filtering rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -63,7 +62,6 @@ class URLFilteringAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of url filtering rules instances, Response, error)
 
         Examples:
         >>> rules_list, _, error = client.zia.url_filtering.list_rules()
@@ -89,31 +87,21 @@ class URLFilteringAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(URLFilteringRule(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(URLFilteringRule(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> URLFilteringRule:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -141,23 +129,14 @@ class URLFilteringAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLFilteringRule)
 
-        response, error = self._request_executor.execute(request, URLFilteringRule)
+        result = URLFilteringRule(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLFilteringRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_rule(self, **kwargs) -> APIResult[dict]:
+    def add_rule(self, **kwargs) -> URLFilteringRule:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -255,26 +234,17 @@ class URLFilteringAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLFilteringRule)
+        result = URLFilteringRule(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, URLFilteringRule)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLFilteringRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: str, **kwargs) -> URLFilteringRule:
         """
         Updates the specified URL Filtering Policy rule.
 
@@ -374,26 +344,17 @@ class URLFilteringAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLFilteringRule)
+        result = URLFilteringRule(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, URLFilteringRule)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLFilteringRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: str) -> APIResult[dict]:
+    def delete_rule(self, rule_id: str) -> None:
         """
         Deletes the specified url filtering filter rule.
 
@@ -420,22 +381,15 @@ class URLFilteringAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def get_url_and_app_settings(self) -> APIResult[dict]:
+    def get_url_and_app_settings(self) -> Any:
         """
         Retrieves information about URL and Cloud App Control advanced policy settings
 
         Returns:
-            tuple: A tuple containing:
                 - AdvancedUrlFilterAndCloudAppSettings: The current advanced settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -457,23 +411,17 @@ class URLFilteringAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = AdvancedUrlFilterAndCloudAppSettings(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_url_and_app_settings(self, **kwargs) -> APIResult[dict]:
+    def update_url_and_app_settings(self, **kwargs) -> AdvancedUrlFilterAndCloudAppSettings:
         """
         Updates the URL and Cloud App Control advanced policy settings
 
@@ -531,11 +479,7 @@ class URLFilteringAPI(APIClient):
             ]
             for key in mutually_exclusive:
                 if kwargs.get(key) is True:
-                    return (
-                        None,
-                        None,
-                        ValueError(f"Invalid configuration: '{key}' cannot be True when 'enable_cipa_compliance' is True"),
-                    )
+                    raise ValueError(f"Invalid configuration: '{key}' cannot be True when 'enable_cipa_compliance' is True")
 
         http_method = "put".upper()
         api_url = format_url(
@@ -547,17 +491,7 @@ class URLFilteringAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AdvancedUrlFilterAndCloudAppSettings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdvancedUrlFilterAndCloudAppSettings(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AdvancedUrlFilterAndCloudAppSettings)
+        result = AdvancedUrlFilterAndCloudAppSettings(self.form_response_body(response.get_body()))
+        return result

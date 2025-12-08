@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.admin_user import AdminUser, AdminUserSyncInfo
 from zscaler.zcc.models.admin_roles import AdminRoles
-from zscaler.types import APIResult
 
 
 class AdminUserAPI(APIClient):
@@ -30,7 +29,7 @@ class AdminUserAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_admin_users(self, query_params: Optional[dict] = None) -> APIResult[List[AdminUser]]:
+    def list_admin_users(self, query_params: Optional[dict] = None) -> List[AdminUser]:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
 
@@ -46,7 +45,8 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admins in the Client Connector Portal to the console:
 
-            >>> user_list, _, err = client.zcc.admin_user.list_admin_users()
+            >>> try:
+            ...     user_list = client.zcc.admin_user.list_admin_users()
             >>> if err:
             ...     print(f"Error listing admin users: {err}")
             ...     return
@@ -67,24 +67,15 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AdminUser(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AdminUser(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_admin_user_sync_info(self) -> APIResult[dict]:
+    def get_admin_user_sync_info(self) -> AdminUserSyncInfo:
         """
         Returns admin user sync information Client Connector Portal.
 
@@ -114,22 +105,12 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return None, None, error
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None, response, error
-
-        try:
-            result = AdminUserSyncInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return None, response, error
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = AdminUserSyncInfo(self.form_response_body(response.get_body()))
         return result, response, None
 
-    def list_admin_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
+    def list_admin_roles(self, query_params: Optional[dict] = None) -> List[AdminRoles]:
         """
         Returns the list admin roles in the Client Connector Portal.
 
@@ -144,7 +125,8 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admin roles in the Client Connector Portal to the console:
 
-            >>> role_list, _, err = client.zcc.admin_user.list_admin_roles()
+            >>> try:
+            ...     role_list = client.zcc.admin_user.list_admin_roles()
             >>>     if err:
             ...         print(f"Error listing admin roles: {err}")
             ...         return
@@ -165,24 +147,15 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AdminRoles(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AdminRoles(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def sync_zia_zdx_admin_users(self) -> APIResult[dict]:
+    def sync_zia_zdx_admin_users(self) -> Any:
         """
         Sync Admin Users Information for ZDX and ZIA Client Connector Portal.
 
@@ -210,24 +183,15 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append((self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def sync_zpa_admin_users(self) -> APIResult[dict]:
+    def sync_zpa_admin_users(self) -> Any:
         """
         Sync Admin Users Information for ZPA Client Connector Portal.
 
@@ -255,19 +219,10 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append((self.form_response_body(item)))
+        return result

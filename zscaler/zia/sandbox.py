@@ -19,7 +19,6 @@ import mimetypes
 import time
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CloudSandboxAPI:
@@ -33,7 +32,7 @@ class CloudSandboxAPI:
     def __init__(self, request_executor: "RequestExecutor") -> None:
         self._request_executor: RequestExecutor = request_executor
 
-    def submit_file(self, file_path: str, force: bool = False) -> APIResult[dict]:
+    def submit_file(self, file_path: str, force: bool = False) -> Any:
         """
         Submits a file to the ZIA Advanced Cloud Sandbox for analysis.
 
@@ -50,7 +49,8 @@ class CloudSandboxAPI:
             >>> script_dir = os.path.dirname(os.path.abspath(__file__))
             ... file_path = os.path.join(script_dir, "test-pe-file.exe")
             ... force_analysis = True
-            ...     submit, _, err = client.zia.sandbox.submit_file(
+            ...     try:
+            ...     submit = client.zia.sandbox.submit_file(
                 file_path=file_path, force=force_analysis)
             >>>     if err:
             ...         print(f"Error submitting file: {err}")
@@ -73,7 +73,7 @@ class CloudSandboxAPI:
             "force": int(force),
         }
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=file_content,
@@ -82,22 +82,12 @@ class CloudSandboxAPI:
             use_raw_data_for_body=True,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def submit_file_for_inspection(self, file_path: str) -> APIResult[dict]:
+    def submit_file_for_inspection(self, file_path: str) -> Any:
         """
         Submits a file for inspection.
 
@@ -105,7 +95,6 @@ class CloudSandboxAPI:
             file_path (str): The path to the file to be inspected.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
 
         Examples:
             Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
@@ -113,7 +102,8 @@ class CloudSandboxAPI:
             >>> script_dir = os.path.dirname(os.path.abspath(__file__))
             ... file_path = os.path.join(script_dir, "test-pe-file.exe")
             ... force_analysis = True
-            ...     submit, _, err = client.zia.sandbox.submit_file_for_inspection(
+            ...     try:
+            ...     submit = client.zia.sandbox.submit_file_for_inspection(
                 file_path=file_path, force=force_analysis)
             >>>     if err:
             ...         print(f"Error submitting file: {err}")
@@ -137,7 +127,7 @@ class CloudSandboxAPI:
 
         params = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=file_content,
@@ -146,27 +136,16 @@ class CloudSandboxAPI:
             use_raw_data_for_body=True,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_quota(self) -> APIResult[dict]:
+    def get_quota(self) -> Any:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -176,27 +155,17 @@ class CloudSandboxAPI:
             """
         )
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_report(self, md5_hash: str, report_details: str = "summary") -> APIResult[dict]:
+    def get_report(self, md5_hash: str, report_details: str = "summary") -> Any:
         """
         Returns the Cloud Sandbox Report for the provided hash.
 
@@ -207,7 +176,6 @@ class CloudSandboxAPI:
                 The type of report. Accepted values are 'full' or 'summary'. Defaults to 'summary'.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -218,33 +186,22 @@ class CloudSandboxAPI:
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
+        result = response.get_body()
+        return result
 
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_behavioral_analysis(self) -> APIResult[dict]:
+    def get_behavioral_analysis(self) -> Any:
         """
         Returns the custom list of MD5 file hashes that are blocked by Sandbox.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -254,27 +211,17 @@ class CloudSandboxAPI:
             """
         )
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_file_hash_count(self) -> APIResult[dict]:
+    def get_file_hash_count(self) -> Any:
         """
         Retrieves the Cloud Sandbox used and unused quota for blocking MD5 file hashes.
 
@@ -282,7 +229,6 @@ class CloudSandboxAPI:
         quota available for blocking additional hashes.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -293,28 +239,18 @@ class CloudSandboxAPI:
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
+        result = response.get_body()
+        return result
 
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> APIResult[dict]:
+    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> Any:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
 
@@ -323,7 +259,6 @@ class CloudSandboxAPI:
                 The list of MD5 Hashes to be added. Pass an empty list to clear the blocklist.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -335,14 +270,9 @@ class CloudSandboxAPI:
 
         payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
 
-        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
+        request = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
         time.sleep(2)
         return self.get_behavioral_analysis()

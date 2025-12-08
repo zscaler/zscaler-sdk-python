@@ -40,7 +40,7 @@ class TestURLFilteringRule:
             # Create a url filtering Rule
             rule_name = "tests-" + generate_random_string()
             rule_description = "tests-" + generate_random_string()
-            created_rule, _, error = client.zia.url_filtering.add_rule(
+            created_rule = client.zia.url_filtering.add_rule(
                 name=rule_name,
                 description=rule_description,
                 enabled=True,
@@ -78,7 +78,6 @@ class TestURLFilteringRule:
                     "TRACE",
                 ],
             )
-            assert error is None, f"URL Filtering Rule creation failed: {error}"
             assert created_rule is not None, "URL Filtering Rule creation returned None"
             rule_id = created_rule.id
         except Exception as exc:
@@ -86,8 +85,7 @@ class TestURLFilteringRule:
 
         # Step 4: Retrieve the URL Filtering Rule by ID
         try:
-            retrieved_rule, _, error = client.zia.url_filtering.get_rule(rule_id)
-            assert error is None, f"Error retrieving URL Filtering Rule: {error}"
+            retrieved_rule = client.zia.url_filtering.get_rule(rule_id)
             assert retrieved_rule is not None, "Retrieved URL Filtering Rule is None"
             assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
         except Exception as exc:
@@ -96,7 +94,7 @@ class TestURLFilteringRule:
             # Step 5: Update the URL Filtering Rule
             try:
                 updated_description = "Updated integration test URL Filtering Rule"
-                updated_rule, _, error = client.zia.url_filtering.update_rule(
+                updated_rule = client.zia.url_filtering.update_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -135,7 +133,6 @@ class TestURLFilteringRule:
                         "TRACE",
                     ],
                 )
-                assert error is None, f"Error updating URL Filtering Rule: {error}"
                 assert updated_rule is not None, "Updated URL Filtering Rule is None"
                 assert (
                     updated_rule.description == updated_description
@@ -145,8 +142,7 @@ class TestURLFilteringRule:
 
             # Step 6: List URL Filtering and verify the rule is present
             try:
-                rules, _, error = client.zia.url_filtering.list_rules()
-                assert error is None, f"Error listing URL Filtering Rules: {error}"
+                rules = client.zia.url_filtering.list_rules()
                 assert rules is not None, "URL Filtering list is None"
                 assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in the list of rules."
             except Exception as exc:
@@ -157,12 +153,11 @@ class TestURLFilteringRule:
             try:
                 if rule_id:
                     # Delete the URL Filtering Rule
-                    _, _, error = client.zia.url_filtering.delete_rule(rule_id)
-                    assert error is None, f"Error deleting URL Filtering Rule: {error}"
+                    _ = client.zia.url_filtering.delete_rule(rule_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting URL Filtering Rule failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

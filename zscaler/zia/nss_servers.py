@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.nss_servers import Nssservers
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class NssServersAPI(APIClient):
@@ -33,7 +32,7 @@ class NssServersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_servers(self, query_params: Optional[dict] = None) -> APIResult[List[Nssservers]]:
+    def list_nss_servers(self, query_params: Optional[dict] = None) -> List[Nssservers]:
         """
         Lists NSS servers in your organization.
 
@@ -56,7 +55,6 @@ class NssServersAPI(APIClient):
                 - NSS_FOR_ZPA
 
         Returns:
-            tuple: A tuple containing a list of NSS server instances, the raw response, and any error.
 
         Examples:
             List all NSS servers:
@@ -92,25 +90,16 @@ class NssServersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(Nssservers(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Nssservers(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_nss_server(self, nss_id: int) -> APIResult[dict]:
+    def get_nss_server(self, nss_id: int) -> Nssservers:
         """
         Fetches a specific nss servers by ID.
 
@@ -118,7 +107,6 @@ class NssServersAPI(APIClient):
             nss_id (int): The unique identifier for the nss server.
 
         Returns:
-            tuple: A tuple containing (nss server instance, Response, error).
 
         Examples:
             Print a specific nss server
@@ -141,22 +129,13 @@ class NssServersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Nssservers)
+        result = Nssservers(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Nssservers)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Nssservers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_nss_server(self, **kwargs) -> APIResult[dict]:
+    def add_nss_server(self, **kwargs) -> Nssservers:
         """
         Creates a new ZIA NSS server.
 
@@ -174,7 +153,6 @@ class NssServersAPI(APIClient):
                 `MD5_CAPABLE`, `ADP`, `ZIRSVR`, `NSS_FOR_ZPA`
 
         Returns:
-            tuple: A tuple containing the newly added NSS server, response, and error.
 
         Examples:
             Add a new NSS server:
@@ -199,26 +177,17 @@ class NssServersAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Nssservers)
+        result = Nssservers(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Nssservers)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Nssservers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_nss_server(self, nss_id: int, **kwargs) -> APIResult[dict]:
+    def update_nss_server(self, nss_id: int, **kwargs) -> Nssservers:
         """
         Updates information for the specified ZIA nss server.
 
@@ -226,7 +195,6 @@ class NssServersAPI(APIClient):
             nss_id (int): The unique ID for the nss server.
 
         Returns:
-            tuple: A tuple containing the updated nss server, response, and error.
 
         Examples:
             Update a existing nss server :
@@ -253,21 +221,12 @@ class NssServersAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, Nssservers)
+        result = Nssservers(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Nssservers)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Nssservers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_nss_server(self, nss_id: int) -> APIResult[dict]:
+    def delete_nss_server(self, nss_id: int) -> None:
         """
         Deletes the specified nss server.
 
@@ -275,7 +234,6 @@ class NssServersAPI(APIClient):
             nss_id (str): The unique identifier of the nss server.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             List nss server:
@@ -296,11 +254,6 @@ class NssServersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

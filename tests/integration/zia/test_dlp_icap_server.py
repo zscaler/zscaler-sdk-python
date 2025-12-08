@@ -36,8 +36,7 @@ class TestDLPIcapServer:
 
         try:
             # Step 1: List all ICAP servers
-            icaps, _, error = client.zia.dlp_resources.list_dlp_icap_servers()
-            assert error is None, f"List ICAP Servers Error: {error}"
+            icaps = client.zia.dlp_resources.list_dlp_icap_servers()
             assert isinstance(icaps, list), "Expected a list of ICAPs"
 
             if icaps:
@@ -47,8 +46,7 @@ class TestDLPIcapServer:
 
                 # Step 3: Fetch by ID
                 try:
-                    fetched_icap, _, error = client.zia.dlp_resources.get_dlp_icap_servers(icap_server_id)
-                    assert error is None, f"Get ICAP Server Error: {error}"
+                    fetched_icap = client.zia.dlp_resources.get_dlp_icap_servers(icap_server_id)
                     assert fetched_icap is not None, "Expected a valid ICAP object"
                     assert fetched_icap.id == icap_server_id, "Mismatch in ICAP ID"
                 except Exception as exc:
@@ -59,4 +57,4 @@ class TestDLPIcapServer:
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

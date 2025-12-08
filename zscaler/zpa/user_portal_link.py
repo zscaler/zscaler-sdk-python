@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_link import UserPortalLink
 from zscaler.zpa.models.user_portal_link import UserPortalLinks
 from zscaler.utils import format_url, add_id_groups
-from zscaler.types import APIResult
 
 
 class UserPortalLinkAPI(APIClient):
@@ -39,7 +38,7 @@ class UserPortalLinkAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_portal_link(self, query_params: Optional[dict] = None) -> APIResult[List[UserPortalLink]]:
+    def list_portal_link(self, query_params: Optional[dict] = None) -> List[UserPortalLink]:
         """
         Enumerates user portal link link in an organization with pagination.
 
@@ -51,25 +50,25 @@ class UserPortalLinkAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of UserPortalLink instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[UserPortalLink]
 
         Example:
             Fetch all user portal links without filtering
 
-            >>> portal_list, _, err = client.zpa.user_portal_link.list_user_portal_link()
-            ... if err:
-            ...     print(f"Error listing user portal link link: {err}")
-            ...     return
+            >>> try:
+            ...     portal_list = client.zpa.user_portal_link.list_user_portal_link()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total user portal links found: {len(portal_list)}")
             ... for portal in portal_list:
             ...     print(portal.as_dict())
 
             Fetch user portal links with query_params filters
-            >>> portal_list, _, err = client.zpa.user_portal_link.list_user_portal_link(
+            >>> try:
+            ...     portal_list = client.zpa.user_portal_link.list_user_portal_link(
             ... query_params={'search': 'UserPortal01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing user portal links: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total user portal links found: {len(portal_list)}")
             ... for portal in portal_list:
             ...     print(portal.as_dict())
@@ -87,23 +86,14 @@ class UserPortalLinkAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, UserPortalLink)
+        result = []
+        for item in response.get_results():
+            result.append(UserPortalLink(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalLink)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(UserPortalLink(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> UserPortalLink:
         """
         Gets information on the specified user portal link.
 
@@ -118,10 +108,10 @@ class UserPortalLinkAPI(APIClient):
         Example:
             Retrieve details of a specific user portal link
 
-            >>> fetched_portal, _, err = client.zpa.user_portal_link.get_portal_link('999999')
-            ... if err:
-            ...     print(f"Error fetching user portal link by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_portal = client.zpa.user_portal_link.get_portal_link('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched user portal link by ID: {fetched_portal.as_dict()}")
         """
         http_method = "get".upper()
@@ -137,21 +127,12 @@ class UserPortalLinkAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, UserPortalLink)
+        result = UserPortalLink(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalLink)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserPortalLink(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_portal_link(self, **kwargs) -> APIResult[dict]:
+    def add_portal_link(self, **kwargs) -> UserPortalLink:
         """
         Adds a new user portal link.
 
@@ -166,7 +147,8 @@ class UserPortalLinkAPI(APIClient):
         Example:
             Basic example: Add a new user portal link
 
-            >>> added_portal_link, _, err = client.zpa.user_portal_link.add_portal_link(
+            >>> try:
+            ...     added_portal_link = client.zpa.user_portal_link.add_portal_link(
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -199,21 +181,12 @@ class UserPortalLinkAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, UserPortalLink)
+        result = UserPortalLink(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalLink)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserPortalLink(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_portal_link(self, portal_link_id: str, **kwargs) -> APIResult[dict]:
+    def update_portal_link(self, portal_link_id: str, **kwargs) -> UserPortalLink:
         """
         Updates the specified user portal link.
 
@@ -226,7 +199,8 @@ class UserPortalLinkAPI(APIClient):
         Example:
             Updating a user portal link for a specific microtenant
 
-            >>> updated_portal_link, _, err = client.zpa.user_portal_link.update_portal_link(
+            >>> try:
+            ...     updated_portal_link = client.zpa.user_portal_link.update_portal_link(
             ...     portal_link_id='25456654',
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
@@ -262,28 +236,19 @@ class UserPortalLinkAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, UserPortalLink)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, UserPortalLink)
         if response is None:
-            return (UserPortalLink({"id": portal_link_id}), None, None)
+            return UserPortalLink({"id": portal_link_id})
 
-        try:
-            result = UserPortalLink(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = UserPortalLink(self.form_response_body(response.get_body()))
+        return result
 
     def delete_portal_link(
         self,
         portal_link_id: str,
         microtenant_id: str = None
-    ) -> APIResult[dict]:
+    ) -> None:
         """
         Deletes the specified user portal link.
 
@@ -295,10 +260,10 @@ class UserPortalLinkAPI(APIClient):
 
         Example:
             # Delete a user portal link by ID
-            >>> _, _, err = client.zpa.user_portal_link.delete_portal_link('513265')
-            ... if err:
-            ...     print(f"Error deleting user portal link: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zpa.user_portal_link.delete_portal_link('513265')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"user portal link with ID {'513265'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -311,22 +276,17 @@ class UserPortalLinkAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-        return (None, response, error)
+        return None
 
     def add_bulk_portal_links(
         self,
         portal_links: list,
         user_portal_link_ids: list = None,
         **kwargs
-    ) -> APIResult[dict]:
+    ) -> UserPortalLink:
         """
         Adds multiple user portal links in bulk.
 
@@ -344,13 +304,13 @@ class UserPortalLinkAPI(APIClient):
             **kwargs: Additional keyword arguments that may be passed to the function.
 
         Returns:
-            tuple: A tuple containing:
                 - **list[UserPortalLinks]**: A list of newly created portal link instances.
                 - **Response**: The raw API response object.
                 - **Error**: An error message, if applicable.
 
         Examples:
-            >>> added_consoles, _, err = client.zpa.user_portal_link.add_bulk_portal_links(
+            >>> try:
+            ...     added_consoles = client.zpa.user_portal_link.add_bulk_portal_links(
             ...     portal_links=[
             ...         dict(
             ...             protocol="http://",
@@ -417,30 +377,20 @@ class UserPortalLinkAPI(APIClient):
         microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             params=params,
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = [
+            UserPortalLinks(self.form_response_body(item))
+            for item in response.get_body()
+        ]
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [
-                UserPortalLinks(self.form_response_body(item))
-                for item in response.get_body()
-            ]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_user_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_user_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> UserPortalLink:
         """
         Returns information on a User Portal Links for Specified Portal.
 
@@ -451,10 +401,10 @@ class UserPortalLinkAPI(APIClient):
             UserPortalLink: The corresponding portal link object.
 
         Examples:
-            >>> fetched_portal_link, _, err = client.zpa.user_portal_link.get_user_portal_link('999999')
-            ... if err:
-            ...     print(f"Error fetching portal link by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_portal_link = client.zpa.user_portal_link.get_user_portal_link('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched portal link by ID: {fetched_portal_link.as_dict()}")
         """
         http_method = "get".upper()
@@ -470,16 +420,7 @@ class UserPortalLinkAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, UserPortalLink)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserPortalLink(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, UserPortalLink)
+        result = UserPortalLink(self.form_response_body(response.get_body()))
+        return result

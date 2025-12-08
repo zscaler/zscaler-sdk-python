@@ -42,11 +42,11 @@ class TestAppProtectionProfile:
             # Fetch predefined controls by control group name
             try:
                 control_group_name = "Protocol Issues"
-                control_groups, _, err = client.zpa.app_protection.list_predef_controls(
+                control_groups = client.zpa.app_protection.list_predef_controls(
                     query_params={"search": "controlGroup", "search_field": control_group_name}
                 )
-                if err or not control_groups:
-                    errors.append(f"Failed to fetch predefined controls for group {control_group_name}: {err}")
+                if not control_groups:
+                    errors.append(f"Failed to fetch predefined controls for group {control_group_name}")
                     return
 
                 # Extract predefined controls from the specified control group
@@ -61,7 +61,7 @@ class TestAppProtectionProfile:
 
             # Create a new app protection security profile with predefined controls
             try:
-                created_profile, _, err = client.zpa.app_protection.add_profile(
+                created_profile = client.zpa.app_protection.add_profile(
                     name=profile_name,
                     paranoia_level=1,
                     predef_controls=predefined_controls,
@@ -73,7 +73,7 @@ class TestAppProtectionProfile:
                         "IS_OVERRIDE_ACTION_COMMON": "TRUE",
                     },
                 )
-                if err or not created_profile:
+                if not created_profile:
                     errors.append("App protection security profile creation failed or returned unexpected data")
                     return
 
@@ -119,9 +119,9 @@ class TestAppProtectionProfile:
 
             # Fetch the updated profile
             try:
-                updated_profile, _, err = client.zpa.app_protection.get_profile(profile_id)
-                if err or not updated_profile:
-                    errors.append(f"Failed to retrieve updated profile: {err}")
+                updated_profile = client.zpa.app_protection.get_profile(profile_id)
+                if not updated_profile:
+                    errors.append("Failed to retrieve updated profile")
                     return
                 assert updated_profile.name == updated_name  # Verify update by checking the updated attribute
             except Exception as exc:
@@ -130,10 +130,7 @@ class TestAppProtectionProfile:
 
             # List app protection security profiles and ensure the updated profile is in the list
             try:
-                profiles_list, _, err = client.zpa.app_protection.list_profiles()
-                if err:
-                    errors.append(f"Failed to list profiles: {err}")
-                    return
+                profiles_list = client.zpa.app_protection.list_profiles()
                 assert any(profile.id == profile_id for profile in profiles_list)
             except Exception as exc:
                 errors.append(f"Error listing profiles: {exc}")

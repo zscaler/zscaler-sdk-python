@@ -36,11 +36,7 @@ class TestApplications:
         errors = []
 
         try:
-            app_list, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing applications: {error}")
-                return
+            app_list = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if not app_list or not isinstance(app_list, list):
                 print("No applications found within the specified time range.")
@@ -54,13 +50,10 @@ class TestApplications:
 
             print(f"Using App ID: {app_id}")
 
-            app_info, _, error = client.zdx.apps.get_app(app_id=app_id)
+            app_info = client.zdx.apps.get_app(app_id=app_id)
 
-            if error:
-                errors.append(f"Error retrieving application details: {error}")
-            else:
-                print(f"Successfully retrieved application {app_id}:")
-                pprint(app_info.as_dict() if hasattr(app_info, "as_dict") else app_info)
+            print(f"Successfully retrieved application {app_id}:")
+            pprint(app_info.as_dict() if hasattr(app_info, "as_dict") else app_info)
 
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -72,7 +65,7 @@ class TestApplications:
     #     errors = []
 
     #     try:
-    #         ongoing_alerts, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
+    #         ongoing_alerts = client.zdx.apps.list_apps(query_params={"since": 2})
 
     #         if error:
     #             errors.append(f"Error listing applications: {error}")
@@ -90,7 +83,7 @@ class TestApplications:
 
     #         print(f"Using App ID: {app_id}")
 
-    #         app_info, _, error = client.zdx.apps.get_app_score(app_id=app_id)
+    #         app_info = client.zdx.apps.get_app_score(app_id=app_id)
 
     #         if error:
     #             errors.append(f"Error retrieving application details: {error}")
@@ -108,7 +101,7 @@ class TestApplications:
     #     errors = []
 
     #     try:
-    #         ongoing_alerts, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
+    #         ongoing_alerts = client.zdx.apps.list_apps(query_params={"since": 2})
 
     #         if error:
     #             errors.append(f"Error listing applications: {error}")
@@ -126,7 +119,7 @@ class TestApplications:
 
     #         print(f"Using App ID: {app_id}")
 
-    #         app_info, _, error = client.zdx.apps.get_app_metrics(app_id=app_id)
+    #         app_info = client.zdx.apps.get_app_metrics(app_id=app_id)
 
     #         if error:
     #             errors.append(f"Error retrieving application details: {error}")
@@ -144,7 +137,7 @@ class TestApplications:
     #     errors = []
 
     #     try:
-    #         ongoing_alerts, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
+    #         ongoing_alerts = client.zdx.apps.list_apps(query_params={"since": 2})
 
     #         if error:
     #             errors.append(f"Error listing applications: {error}")
@@ -162,7 +155,7 @@ class TestApplications:
 
     #         print(f"Using App ID: {app_id}")
 
-    #         app_info, _, error = client.zdx.apps.list_app_users(app_id=app_id)
+    #         app_info = client.zdx.apps.list_app_users(app_id=app_id)
 
     #         if error:
     #             errors.append(f"Error retrieving user details: {error}")
@@ -180,7 +173,7 @@ class TestApplications:
     #     errors = []
 
     #     try:
-    #         ongoing_apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
+    #         ongoing_apps = client.zdx.apps.list_apps(query_params={"since": 2})
 
     #         if error:
     #             errors.append(f"Error listing applications: {error}")
@@ -200,7 +193,7 @@ class TestApplications:
 
     #         print(f"Using App ID: {app_id}")
 
-    #         app_users, _, error = client.zdx.apps.list_app_users(app_id=app_id)
+    #         app_users = client.zdx.apps.list_app_users(app_id=app_id)
 
     #         if error:
     #             errors.append(f"Error listing app users: {error}")
@@ -220,7 +213,7 @@ class TestApplications:
 
     #         print(f"Using User ID: {user_id} for get_app_user test")
 
-    #         app_user_info, _, error = client.zdx.apps.get_app_user(app_id=app_id, user_id=user_id)
+    #         app_user_info = client.zdx.apps.get_app_user(app_id=app_id, user_id=user_id)
 
     #         if error:
     #             errors.append(f"Error retrieving app user details: {error}")

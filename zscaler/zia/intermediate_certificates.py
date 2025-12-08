@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.intermediate_certificates import IntermediateCACertificate
 from zscaler.zia.models.intermediate_certificates import CertSigningRequest
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IntermediateCertsAPI(APIClient):
@@ -34,7 +33,7 @@ class IntermediateCertsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ca_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
+    def list_ca_certificates(self, query_params: Optional[dict] = None) -> List[IntermediateCACertificate]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -51,25 +50,16 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(IntermediateCACertificate(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IntermediateCACertificate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ca_certificate(self, cert_id: int) -> APIResult[dict]:
+    def get_ca_certificate(self, cert_id: int) -> IntermediateCACertificate:
         """
         Fetches a specific intermediate CA certificate with the specified ID.
 
@@ -77,7 +67,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -90,21 +79,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request, IntermediateCACertificate)
+        result = IntermediateCACertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IntermediateCACertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
+    def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> List[IntermediateCACertificate]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -121,25 +101,16 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(IntermediateCACertificate(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IntermediateCACertificate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ca_certificate_lite(self, cert_id: int) -> APIResult[dict]:
+    def get_ca_certificate_lite(self, cert_id: int) -> IntermediateCACertificate:
         """
         Fetches a specific intermediate CA certificate with the specified ID.
 
@@ -147,7 +118,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -160,21 +130,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request, IntermediateCACertificate)
+        result = IntermediateCACertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IntermediateCACertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_ready_to_use(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
+    def list_ready_to_use(self, query_params: Optional[dict] = None) -> List[IntermediateCACertificate]:
         """
         List of intermediate CA certificates that are ready to use for SSL inspection.
         """
@@ -191,25 +152,16 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(IntermediateCACertificate(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IntermediateCACertificate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_show_cert(self, cert_id: int) -> APIResult[dict]:
+    def get_show_cert(self, cert_id: int) -> CertSigningRequest:
         """
         Shows information about the signed intermediate CA certificate with the specified ID.
         This operation is not applicable for the Zscaler root certificate
@@ -218,7 +170,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -231,21 +182,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request, CertSigningRequest)
+        result = CertSigningRequest(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CertSigningRequest)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CertSigningRequest(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_show_csr(self, cert_id: int) -> APIResult[dict]:
+    def get_show_csr(self, cert_id: int) -> CertSigningRequest:
         """
         Shows information about the Certificate Signing Request (CSR) for the specified ID.
         This operation is not applicable for the Zscaler root certificate
@@ -254,7 +196,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -267,21 +208,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request, CertSigningRequest)
+        result = CertSigningRequest(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CertSigningRequest)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CertSigningRequest(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_ca_certificate(self, **kwargs) -> APIResult[dict]:
+    def add_ca_certificate(self, **kwargs) -> IntermediateCACertificate:
         """
         Creates a custom intermediate CA certificate that can be used for SSL inspection.
 
@@ -305,7 +237,6 @@ class IntermediateCertsAPI(APIClient):
                 CSRGEN_DONE, INTCERT_UPLOAD_DONE, CERTCHAIN_UPLOAD_DONE, CERT_READY.
 
         Returns:
-            tuple: A tuple containing the newly added Rule Label (Box), response, and error.
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -317,26 +248,17 @@ class IntermediateCertsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, IntermediateCACertificate)
+        result = IntermediateCACertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IntermediateCACertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_ca_certificate(self, cert_id: int, **kwargs) -> APIResult[dict]:
+    def update_ca_certificate(self, cert_id: int, **kwargs) -> IntermediateCACertificate:
         """
         Updates intermediate CA certificate information for the specified ID.
 
@@ -344,7 +266,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing the updated intermediate CA certificate, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -357,21 +278,12 @@ class IntermediateCertsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, IntermediateCACertificate)
+        result = IntermediateCACertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IntermediateCACertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_ca_certificate(self, cert_id: int) -> APIResult[dict]:
+    def delete_ca_certificate(self, cert_id: int) -> None:
         """
         Deletes the intermediate CA certificate with the specified ID.
         The default intermediate certificate cannot be deleted.
@@ -380,7 +292,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (str): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -392,16 +303,11 @@ class IntermediateCertsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def download_csr(self, cert_id: int) -> APIResult[dict]:
+    def download_csr(self, cert_id: int) -> Any:
         """
         Downloads a Certificate Signing Request (CSR) for the specified ID.
         To perform this operation, a CSR must have already been generated.
@@ -410,7 +316,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -423,21 +328,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def download_public_key(self, cert_id: int) -> APIResult[dict]:
+    def download_public_key(self, cert_id: int) -> Any:
         """
         Downloads the public key in the HSM key pair for the intermediate CA certificate with the specified ID
 
@@ -445,7 +341,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -458,21 +353,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def finalize_cert(self, cert_id: int) -> APIResult[dict]:
+    def finalize_cert(self, cert_id: int) -> Any:
         """
         Finalizes the intermediate CA certificate with the specified ID.
 
@@ -480,7 +366,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -493,21 +378,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def generate_csr(self, cert_id: int) -> APIResult[dict]:
+    def generate_csr(self, cert_id: int) -> CertSigningRequest:
         """
         Generates a Certificate Signing Request (CSR) for the custom intermediate CA certificate with the specified ID.
 
@@ -515,7 +391,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -528,21 +403,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request, CertSigningRequest)
+        result = CertSigningRequest(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CertSigningRequest)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CertSigningRequest(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def generate_key_pair(self, cert_id: int) -> APIResult[dict]:
+    def generate_key_pair(self, cert_id: int) -> Any:
         """
         Generates a HSM key pair for the custom intermediate CA certificate with the specified ID.
 
@@ -550,7 +416,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -563,21 +428,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def upload_cert(self, cert_id: int, file_input_stream: str = None, file_path: str = None) -> APIResult[dict]:
+    def upload_cert(self, cert_id: int, file_input_stream: str = None, file_path: str = None) -> Any:
         """
         Uploads a custom intermediate CA certificate signed by your Certificate Authority (CA) for SSL inspection.
 
@@ -587,7 +443,6 @@ class IntermediateCertsAPI(APIClient):
             file_path (str): Path to the certificate file (alternative to file_input_stream).
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -606,7 +461,7 @@ class IntermediateCertsAPI(APIClient):
             # Use string content for upload
             file_content = file_input_stream.encode('utf-8')
         else:
-            return (None, None, ValueError("Either file_path or file_input_stream must be provided"))
+            raise ValueError("Either file_path or file_input_stream must be provided")
 
         # Create multipart form data manually (like Postman does)
         import io
@@ -629,27 +484,18 @@ class IntermediateCertsAPI(APIClient):
             'Content-Type': f'multipart/form-data; boundary={boundary}'
         }
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             body=form_data.getvalue(),
             headers=headers,
             use_raw_data_for_body=True
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def upload_cert_chain(self, cert_id: int) -> APIResult[dict]:
+    def upload_cert_chain(self, cert_id: int) -> Any:
         """
         Uploads the intermediate certificate chain (PEM file).
 
@@ -657,7 +503,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -670,21 +515,12 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def verify_key_attestation(self, cert_id: int) -> APIResult[dict]:
+    def verify_key_attestation(self, cert_id: int) -> Any:
         """
         Verifies the attestation for the HSM keys generated for the specified ID.
 
@@ -692,7 +528,6 @@ class IntermediateCertsAPI(APIClient):
             cert_id (int): The unique identifier for the intermediate CA certificate.
 
         Returns:
-            tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -705,16 +540,7 @@ class IntermediateCertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result

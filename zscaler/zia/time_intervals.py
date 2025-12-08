@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.time_intervals import TimeIntervals
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TimeIntervalsAPI(APIClient):
@@ -33,7 +32,7 @@ class TimeIntervalsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_time_intervals(self, query_params: Optional[dict] = None) -> APIResult[List[TimeIntervals]]:
+    def list_time_intervals(self, query_params: Optional[dict] = None) -> List[TimeIntervals]:
         """
         Retrieves a list of all configured time intervals.
 
@@ -46,7 +45,6 @@ class TimeIntervalsAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Time Intervals instances, Response, error)
 
         Examples:
             List Time Intervals using default settings:
@@ -73,25 +71,16 @@ class TimeIntervalsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TimeIntervals(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TimeIntervals(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_time_intervals(self, interval_id: int) -> APIResult[dict]:
+    def get_time_intervals(self, interval_id: int) -> TimeIntervals:
         """
         Fetches a specific Time Intervals by ID.
 
@@ -99,7 +88,6 @@ class TimeIntervalsAPI(APIClient):
             interval_id (int): The unique identifier for the Time Interval.
 
         Returns:
-            tuple: A tuple containing (Time Interval instance, Response, error).
 
         Examples:
             Retrieve a specific time interval:
@@ -121,22 +109,13 @@ class TimeIntervalsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TimeIntervals)
+        result = TimeIntervals(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TimeIntervals)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TimeIntervals(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_time_intervals(self, **kwargs) -> APIResult[dict]:
+    def add_time_intervals(self, **kwargs) -> TimeIntervals:
         """
         Creates a new ZIA Time Interval.
 
@@ -152,7 +131,6 @@ class TimeIntervalsAPI(APIClient):
                 Values supported: `EVERYDAY`, `SUN`, `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`
 
         Returns:
-            tuple: A tuple containing the newly added Time Interval, response, and error.
 
         Examples:
             Add a new Time Interval
@@ -178,26 +156,17 @@ class TimeIntervalsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TimeIntervals)
+        result = TimeIntervals(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TimeIntervals)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TimeIntervals(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_time_intervals(self, interval_id: int, **kwargs) -> APIResult[dict]:
+    def update_time_intervals(self, interval_id: int, **kwargs) -> TimeIntervals:
         """
         Updates information for the specified ZIA Time Interval.
 
@@ -205,7 +174,6 @@ class TimeIntervalsAPI(APIClient):
             interval_id (int): The unique ID for the Time Interval.
 
         Returns:
-            tuple: A tuple containing the updated Time Interval, response, and error.
 
         Examples:
             Update a Time Interval
@@ -233,21 +201,12 @@ class TimeIntervalsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, TimeIntervals)
+        result = TimeIntervals(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TimeIntervals)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TimeIntervals(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_time_intervals(self, interval_id: int) -> APIResult[dict]:
+    def delete_time_intervals(self, interval_id: int) -> None:
         """
         Deletes the specified Time Interval.
 
@@ -255,7 +214,6 @@ class TimeIntervalsAPI(APIClient):
             interval_id (str): The unique identifier of the Time Interval.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete Time Interval:
@@ -276,11 +234,6 @@ class TimeIntervalsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

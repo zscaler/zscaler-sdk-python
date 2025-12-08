@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.browser_control_settings import BrowserControlSettings
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class BrowserControlSettingsPI(APIClient):
@@ -33,12 +32,11 @@ class BrowserControlSettingsPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_browser_control_settings(self) -> APIResult[dict]:
+    def get_browser_control_settings(self) -> Any:
         """
         Retrieves the Browser Control status and the list of configured browsers in the Browser Control policy
 
         Returns:
-            tuple: A tuple containing:
                 - BrowserControlSettings: The current browser control settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -46,7 +44,8 @@ class BrowserControlSettingsPI(APIClient):
         Examples:
             Retrieve and print the current browser control settings:
 
-            >>> settings, _, err = client.zia.browser_control_settings.get_browser_control_settings()
+            >>> try:
+            ...     settings = client.zia.browser_control_settings.get_browser_control_settings()
             >>> if err:
             ...     print(f"Error fetching browser control settings: {err}")
             ...     return
@@ -61,23 +60,17 @@ class BrowserControlSettingsPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = BrowserControlSettings(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_browser_control_settings(self, **kwargs) -> APIResult[dict]:
+    def update_browser_control_settings(self, **kwargs) -> BrowserControlSettings:
         """
         Updates the Browser Control Settings.
 
@@ -152,7 +145,8 @@ class BrowserControlSettingsPI(APIClient):
         Examples:
             Update browser control setting options:
 
-            >>> browser_settings, _, err = client.zia.browser_control_settings.update_browser_control_settings(
+            >>> try:
+            ...     browser_settings = client.zia.browser_control_settings.update_browser_control_settings(
             ...     plugin_check_frequency = 'DAILY',
             ...     bypass_plugins = ['ACROBAT', 'FLASH', 'SHOCKWAVE'],
             ...     bypass_applications = ['OUTLOOKEXP', 'MSOFFICE'],
@@ -173,7 +167,8 @@ class BrowserControlSettingsPI(APIClient):
 
             Enable Smart Browser Isolation:
 
-            >>> browser_settings, _, err = client.zia.browser_control_settings.update_browser_control_settings(
+            >>> try:
+            ...     browser_settings = client.zia.browser_control_settings.update_browser_control_settings(
             ...     plugin_check_frequency = 'DAILY',
             ...     bypass_plugins = ['ACROBAT', 'FLASH', 'SHOCKWAVE'],
             ...     bypass_applications = ['OUTLOOKEXP', 'MSOFFICE'],
@@ -210,20 +205,14 @@ class BrowserControlSettingsPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, BrowserControlSettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, BrowserControlSettings)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = BrowserControlSettings(self.form_response_body(response.get_body()))
             else:
                 result = BrowserControlSettings()
         except Exception as error:
-            return (None, response, error)
+            return BrowserControlSettings
 
-        return (result, response, None)
+        return result

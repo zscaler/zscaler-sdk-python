@@ -55,11 +55,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -73,13 +69,10 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            device_info, _, error = client.zdx.devices.get_device_apps(device_id=device_id)
+            device_info = client.zdx.devices.get_device_apps(device_id=device_id)
 
-            if error:
-                errors.append(f"Error retrieving device details: {error}")
-            else:
-                print(f"Successfully retrieved device {device_id}:")
-                pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
+            print(f"Successfully retrieved device {device_id}:")
+            pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
 
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -92,11 +85,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -110,13 +99,10 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            device_info, _, error = client.zdx.devices.get_device_apps(device_id=device_id)
+            device_info = client.zdx.devices.get_device_apps(device_id=device_id)
 
-            if error:
-                errors.append(f"Error retrieving device details: {error}")
-            else:
-                print(f"Successfully retrieved device {device_id}:")
-                pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
+            print(f"Successfully retrieved device {device_id}:")
+            pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
 
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -129,11 +115,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -147,11 +129,7 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing apps: {error}")
-                return
+            apps = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if not apps or not isinstance(apps, list):
                 print("No apps found within the specified time range.")
@@ -186,11 +164,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -204,11 +178,7 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing apps: {error}")
-                return
+            apps = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if not apps or not isinstance(apps, list):
                 print("No apps found within the specified time range.")
@@ -243,11 +213,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -261,11 +227,7 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing apps: {error}")
-                return
+            apps = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if not apps or not isinstance(apps, list):
                 print("No apps found within the specified time range.")
@@ -300,11 +262,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -331,11 +289,7 @@ class TestDevices:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -349,13 +303,10 @@ class TestDevices:
 
             print(f"Using Device ID: {device_id}")
 
-            device_info, _, error = client.zdx.devices.get_events(device_id=device_id)
+            device_info = client.zdx.devices.get_events(device_id=device_id)
 
-            if error:
-                errors.append(f"Error retrieving device details: {error}")
-            else:
-                print(f"Successfully retrieved device {device_id}:")
-                pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
+            print(f"Successfully retrieved device {device_id}:")
+            pprint(device_info.as_dict() if hasattr(device_info, "as_dict") else device_info)
 
         except Exception as e:
             errors.append(f"Exception occurred: {e}")

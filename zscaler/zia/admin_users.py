@@ -21,7 +21,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_users import AdminUser
 from zscaler.zia.models.user_management import UserManagement
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class AdminUsersAPI(APIClient):
@@ -38,7 +37,7 @@ class AdminUsersAPI(APIClient):
     def list_admin_users(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[AdminUser]]:
+    ) -> List[AdminUser]:
         """
         Returns a list of admin users.
 
@@ -59,7 +58,6 @@ class AdminUsersAPI(APIClient):
                     The default size is 100, but the maximum size is 1000.
 
         Returns:
-            tuple: A tuple containing (list of AdminUser instances, Response, error)
 
         Examples:
 
@@ -90,26 +88,16 @@ class AdminUsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AdminUser(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AdminUser(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_admin_user(self, user_id: str) -> APIResult[AdminUser]:
+    def get_admin_user(self, user_id: str) -> AdminUser:
         """
         Returns information on the specified admin user id.
 
@@ -118,7 +106,6 @@ class AdminUsersAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
 
         Returns:
-            tuple: A tuple containing (AdminUser instance, Response, error)
 
         Examples:
             >>> fetched_user, _, error = client.zia.admin_users.get_admin_user(143783113)
@@ -137,22 +124,12 @@ class AdminUsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminUser)
 
-        response, error = self._request_executor.execute(request, AdminUser)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = AdminUser(self.form_response_body(response.get_body()))
+        return result
 
     def add_admin_user(
         self,
@@ -161,7 +138,7 @@ class AdminUsersAPI(APIClient):
         email: str,
         password: str,
         **kwargs
-    ) -> APIResult[AdminUser]:
+    ) -> AdminUser:
         """
         Adds a new admin user to ZIA.
 
@@ -263,28 +240,18 @@ class AdminUsersAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminUser)
 
-        response, error = self._request_executor.execute(request, AdminUser)
+        result = AdminUser(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def update_admin_user(self, user_id: str, **kwargs) -> APIResult[AdminUser]:
+    def update_admin_user(self, user_id: str, **kwargs) -> AdminUser:
         """
         Update an admin user.
 
@@ -381,26 +348,17 @@ class AdminUsersAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminUser)
+        result = AdminUser(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminUser)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_admin_user(self, user_id: int) -> APIResult[None]:
+    def delete_admin_user(self, user_id: int) -> None:
         """
         Deletes the specified admin user by id.
 
@@ -427,17 +385,11 @@ class AdminUsersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def convert_to_user(self, user_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[UserManagement]:
+    def convert_to_user(self, user_id: str, query_params: Optional[dict] = None, **kwargs) -> UserManagement:
         """
         Removes admin privileges for a user while retaining them as a regular user
         of your organization in the ZIA Admin Portal.
@@ -495,19 +447,10 @@ class AdminUsersAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, UserManagement)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserManagement(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, UserManagement)
+        result = UserManagement(self.form_response_body(response.get_body()))
+        return result

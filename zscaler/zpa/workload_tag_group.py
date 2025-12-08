@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.common import CommonIDName
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class WorkloadTagGroupAPI(APIClient):
@@ -33,7 +32,7 @@ class WorkloadTagGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_workload_tag_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
+    def get_workload_tag_group_summary(self, query_params: Optional[dict] = None) -> List[CommonIDName]:
         """
             Workload tag group summary endpoints.
 
@@ -48,14 +47,14 @@ class WorkloadTagGroupAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of WorkloadTagGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CommonIDName]
 
         Examples:
-            >>> workload_tag_group_list, _, err = client.zpa.workload_tag_group.list_workload_tag_groups(
+            >>> try:
+            ...     workload_tag_group_list = client.zpa.workload_tag_group.list_workload_tag_groups(
             ... query_params={'search': 'Extranet01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing extranet resources: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total workload tag groups found: {len(workload_tag_group_list)}")
             ... for workload_tag_group in workload_tag_group_list:
             ...     print(workload_tag_group.as_dict())
@@ -70,18 +69,9 @@ class WorkloadTagGroupAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result

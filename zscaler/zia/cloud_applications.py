@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zia.models.cloud_app_policy import CloudApplicationPolicy
-from zscaler.types import APIResult
 
 
 class CloudApplicationsAPI(APIClient):
@@ -33,7 +32,7 @@ class CloudApplicationsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_app_policy(self, query_params: Optional[dict] = None) -> APIResult[List[CloudApplicationPolicy]]:
+    def list_cloud_app_policy(self, query_params: Optional[dict] = None) -> List[CloudApplicationPolicy]:
         """
         Return a list of of Predefined and User Defined Cloud Applications associated with the DLP rules,
         Cloud App Control rules, Advanced Settings, Bandwidth Classes, and File Type Control rules.
@@ -53,7 +52,6 @@ class CloudApplicationsAPI(APIClient):
                 ``[query_params.group_results]`` {bool}: Show count of applications grouped by application category
 
         Returns:
-            tuple: A tuple containing (list of Cloud Application Policies instances, Response, error)
 
 
         Examples:
@@ -92,23 +90,14 @@ class CloudApplicationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudApplicationPolicy(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudApplicationPolicy(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_cloud_app_ssl_policy(self, query_params: Optional[dict] = None) -> APIResult[List[CloudApplicationPolicy]]:
+    def list_cloud_app_ssl_policy(self, query_params: Optional[dict] = None) -> List[CloudApplicationPolicy]:
         """
         Retrieves a list of Predefined and User Defined Cloud Applications associated with the SSL Inspection rules.
         Retrives AppInfo when groupResults is set to false and retrieves the application count grouped by application
@@ -129,7 +118,6 @@ class CloudApplicationsAPI(APIClient):
                 ``[query_params.group_results]`` {bool}: Show count of applications grouped by application category
 
         Returns:
-            tuple: A tuple containing (list of Cloud Application SSL Policies instances, Response, error)
 
         Examples:
             Get a list of all cloud application policies:
@@ -167,18 +155,9 @@ class CloudApplicationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudApplicationPolicy(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudApplicationPolicy(self.form_response_body(item)))
+        return result

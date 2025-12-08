@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.resource_servers import ResourceServers
 from zscaler.zidentity.models.resource_servers import ResourceServersRecord
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ResourceServersAPI(APIClient):
@@ -34,7 +33,7 @@ class ResourceServersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_resource_servers(self, query_params: Optional[dict] = None) -> APIResult[ResourceServers]:
+    def list_resource_servers(self, query_params: Optional[dict] = None) -> ResourceServers:
         """
         Retrieves a paginated list of resource servers with an optional query parameters
         for pagination
@@ -55,7 +54,6 @@ class ResourceServersAPI(APIClient):
                 case-insensitive partial match.
 
         Returns:
-            tuple: A tuple containing (list of ResourceServers instances, Response, error)
 
         Examples:
             List resource servers using default settings:
@@ -89,24 +87,14 @@ class ResourceServersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = ResourceServers(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ResourceServers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_resource_server(self, resource_id: str) -> APIResult[dict]:
+    def get_resource_server(self, resource_id: str) -> ResourceServersRecord:
         """
         Retrieves details about a specific resource server using the server ID.
 
@@ -114,7 +102,6 @@ class ResourceServersAPI(APIClient):
             resource_id (int): Unique identifier of the resource server to retrieve.
 
         Returns:
-            tuple: A tuple containing ResourceServersRecord instance, Response, error).
 
         Examples:
             Print a specific Resource Servers
@@ -137,17 +124,8 @@ class ResourceServersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ResourceServersRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ResourceServersRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, ResourceServersRecord)
+        result = ResourceServersRecord(self.form_response_body(response.get_body()))
+        return result

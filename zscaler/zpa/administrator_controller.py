@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.administrator_controller import AdministratorController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdministratorControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class AdministratorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_administrators(self, query_params: Optional[dict] = None) -> APIResult[List[AdministratorController]]:
+    def list_administrators(self, query_params: Optional[dict] = None) -> List[AdministratorController]:
         """
         Get all administrators in a company/customer.
         A mmaximum of 200 administrators are returned per request.
@@ -51,13 +50,13 @@ class AdministratorControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of AdministratorController instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[AdministratorController]
 
         Examples:
-            >>> admin_list, _, err = client.zpa.administrator_controller.list_administrators()
-            ... if err:
-            ...     print(f"Error listing administrors: {err}")
-            ...     return
+            >>> try:
+            ...     admin_list = client.zpa.administrator_controller.list_administrators()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total administrators found: {len(admin_list)}")
             ... for admin in admins:
             ...     print(admin.as_dict())
@@ -75,23 +74,14 @@ class AdministratorControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AdministratorController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AdministratorController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_administrator(self, admin_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_administrator(self, admin_id: str, query_params: Optional[dict] = None) -> AdministratorController:
         """
         Fetches a specific administrator details by ID.
 
@@ -101,13 +91,13 @@ class AdministratorControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AdministratorController instance, Response, error).
+            :obj:`Tuple`: A tuple containing AdministratorController.
 
         Examples:
-            >>> fetched_admin, _, err = client.zpa.administrator_controller.get_administrator('999999')
-            ... if err:
-            ...     print(f"Error fetching admin by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_admin = client.zpa.administrator_controller.get_administrator('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched admin by ID: {fetched_admin.as_dict()}")
         """
         http_method = "get".upper()
@@ -123,21 +113,12 @@ class AdministratorControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, AdministratorController)
+        result = AdministratorController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdministratorController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdministratorController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_administrator(self, **kwargs) -> APIResult[dict]:
+    def add_administrator(self, **kwargs) -> AdministratorController:
         """
         Adds a new ZPA admministrator.
 
@@ -147,12 +128,13 @@ class AdministratorControllerAPI(APIClient):
         Keyword Args:
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AdministratorController, Response, error)
+            :obj:`Tuple`: A tuple containing AdministratorController
 
         Examples:
             Adding a new local administrator account
 
-            >>> added_admin, _, err = client.zpa.administrator_controller.add_administrator(
+            >>> try:
+            ...     added_admin = client.zpa.administrator_controller.add_administrator(
             ...     username="jdoe@0000004767847.zpa-customer.com",
             ...     email="jdoe@0000004767847.zpa-customer.com",
             ...     display_name="John Doe",
@@ -183,21 +165,12 @@ class AdministratorControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, AdministratorController)
+        result = AdministratorController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdministratorController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdministratorController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_administrator(self, admin_id: str, **kwargs) -> APIResult[dict]:
+    def update_administrator(self, admin_id: str, **kwargs) -> AdministratorController:
         """
         Updates an existing ZPA c.
 
@@ -207,12 +180,12 @@ class AdministratorControllerAPI(APIClient):
         Keyword Args:
 
         Returns:
-            tuple: A tuple containing (AppConnectorGroup, Response, error)
 
         Examples:
             Updating a new local administrator account
 
-            >>> updated_admin, _, err = client.zpa.administrator_controller.add_administrator(
+            >>> try:
+            ...     updated_admin = client.zpa.administrator_controller.add_administrator(
             ...     admin_id='876678896',
             ...     username="jdoe@0000004767847.zpa-customer.com",
             ...     email="jdoe@0000004767847.zpa-customer.com",
@@ -248,24 +221,15 @@ class AdministratorControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AdministratorController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, AdministratorController)
         if response is None:
-            return (AdministratorController({"id": admin_id}), None, None)
+            return AdministratorController({"id": admin_id})
 
-        try:
-            result = AdministratorController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = AdministratorController(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified Administrator from ZPA.
 
@@ -274,15 +238,14 @@ class AdministratorControllerAPI(APIClient):
             microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
 
         Examples:
-            >>> _, _, err = client.zpa.administrator_controller.delete_administrator(
+            >>> try:
+            ...     _ = client.zpa.administrator_controller.delete_administrator(
             ...     admin_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting administrator: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"administrator with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -295,12 +258,6 @@ class AdministratorControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

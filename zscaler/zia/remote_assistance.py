@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.remoteassistance import RemoteAssistance
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class RemoteAssistanceAPI(APIClient):
@@ -33,14 +32,13 @@ class RemoteAssistanceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_remote_assistance(self) -> APIResult[dict]:
+    def get_remote_assistance(self) -> Any:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
         Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal
         for a specified time period to troubleshoot issues.
 
         Returns:
-            tuple: A tuple containing:
                 - RemoteAssistance: The current remote assistance settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -62,23 +60,17 @@ class RemoteAssistanceAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             remote_assistance = RemoteAssistance(response.get_body())
-            return (remote_assistance, response, None)
+            return remote_assistance
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_remote_assistance(self, **kwargs) -> APIResult[dict]:
+    def update_remote_assistance(self, **kwargs) -> RemoteAssistance:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
 
@@ -96,7 +88,6 @@ class RemoteAssistanceAPI(APIClient):
                     - device_info_obfuscate (bool): Whether device info (hostname, name, owner) is hidden in UI
 
         Returns:
-            tuple: A tuple containing:
                 - RemoteAssistance: The updated remote assistance object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the update failed; otherwise, `None`.
@@ -127,20 +118,14 @@ class RemoteAssistanceAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, RemoteAssistance)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, RemoteAssistance)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = RemoteAssistance(self.form_response_body(response.get_body()))
             else:
                 result = RemoteAssistance()
         except Exception as error:
-            return (None, response, error)
+            return RemoteAssistance
 
-        return (result, response, None)
+        return result

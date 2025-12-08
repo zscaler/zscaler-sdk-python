@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.private_cloud_controller import PrivateCloudController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class PrivateCloudControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class PrivateCloudControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_controllers(self, query_params: Optional[dict] = None) -> APIResult[List[PrivateCloudController]]:
+    def list_cloud_controllers(self, query_params: Optional[dict] = None) -> List[PrivateCloudController]:
         """
         Enumerates Private Cloud Controller in your organization with pagination.
         A subset of Private Cloud Controller can be returned that match a supported
@@ -56,14 +55,14 @@ class PrivateCloudControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of Private Cloud Controller instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[PrivateCloudController]
 
         Examples:
-            >>> controller_list, _, err = client.zpa.private_cloud_controller.list_cloud_controllers(
+            >>> try:
+            ...     controller_list = client.zpa.private_cloud_controller.list_cloud_controllers(
             ... query_params={'search': 'PCController01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing Private Cloud Controller: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total Private Cloud Controller found: {len(controller_list)}")
             ... for controller in controller_list:
             ...     print(controller.as_dict())
@@ -81,23 +80,14 @@ class PrivateCloudControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivateCloudController)
+        result = []
+        for item in response.get_results():
+            result.append(PrivateCloudController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivateCloudController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PrivateCloudController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_cloud_controller(self, controller_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_cloud_controller(self, controller_id: str, query_params: Optional[dict] = None) -> PrivateCloudController:
         """
         Returns information on the specified Private Cloud Controller.
 
@@ -108,10 +98,10 @@ class PrivateCloudControllerAPI(APIClient):
             :obj:`Tuple`: The specified Private Cloud Controller resource record.
 
         Examples:
-            >>> fetched_controller, _, err = client.zpa.private_cloud_controller.get_cloud_controller('999999')
-            ... if err:
-            ...     print(f"Error fetching controller by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_controller = client.zpa.private_cloud_controller.get_cloud_controller('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched controller by ID: {fetched_controller.as_dict()}")
         """
         http_method = "get".upper()
@@ -127,21 +117,12 @@ class PrivateCloudControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivateCloudController)
+        result = PrivateCloudController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivateCloudController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PrivateCloudController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_cloud_controller(self, controller_id: str, **kwargs) -> APIResult[dict]:
+    def update_cloud_controller(self, controller_id: str, **kwargs) -> PrivateCloudController:
         """
         Updates an existing ZPA Private Cloud Controller.
 
@@ -159,15 +140,15 @@ class PrivateCloudControllerAPI(APIClient):
         Examples:
             Update an Private Cloud Controller name, description and disable it.
 
-            >>> update_controller, _, err = client.zpa.private_cloud_controller.update_cloud_controller(
+            >>> try:
+            ...     update_controller = client.zpa.private_cloud_controller.update_cloud_controller(
             ...     controller_id='99999'
             ...     name=f"UpdatePrivateController_{random.randint(1000, 10000)}",
             ...     description=f"UpdatePrivateController_{random.randint(1000, 10000)}",
             ...     enabled=False,
             ... )
-            ... if err:
-            ...     print(f"Error creating private controller: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"private controller created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
@@ -185,24 +166,15 @@ class PrivateCloudControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PrivateCloudController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, PrivateCloudController)
         if response is None:
-            return (PrivateCloudController({"id": controller_id}), None, None)
+            return PrivateCloudController({"id": controller_id})
 
-        try:
-            result = PrivateCloudController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = PrivateCloudController(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_cloud_controller(self, controller_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_cloud_controller(self, controller_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified Private Cloud Controller from ZPA.
 
@@ -213,12 +185,12 @@ class PrivateCloudControllerAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, _, err = client.zpa.private_cloud_controller.delete_cloud_controller(
+            >>> try:
+            ...     _ = client.zpa.private_cloud_controller.delete_cloud_controller(
             ...     controller_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting Private Cloud Controller: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Private Cloud Controller with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -231,21 +203,15 @@ class PrivateCloudControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
     def restart_private_controller(
         self,
         controller_id: str,
         microtenant_id: str = None
-    ) -> APIResult[dict]:
+    ) -> Any:
         """
         Triggers restart of the Private Cloud Controller
 
@@ -256,12 +222,12 @@ class PrivateCloudControllerAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, _, err = client.zpa.private_cloud_controller.restart_private_controller(
+            >>> try:
+            ...     _ = client.zpa.private_cloud_controller.restart_private_controller(
             ...     controller_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error restarting Private Cloud Controller: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Private Cloud Controller with ID {'999999'} restarted successfully.")
         """
         http_method = "put".upper()
@@ -274,12 +240,6 @@ class PrivateCloudControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
         return (None, response, None)

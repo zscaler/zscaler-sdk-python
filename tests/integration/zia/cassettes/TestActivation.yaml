@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
     uri: https://identity.test.zscaler.com/oauth2/v1/token
   response:
@@ -31,7 +31,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 26 Nov 2025 23:46:32 GMT
+      - Sat, 06 Dec 2025 00:10:12 GMT
       expires:
       - '0'
       pragma:
@@ -77,9 +77,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/status
+    uri: https://easm.test.zscaler.com/zia/api/v1/status
   response:
     body:
       string: '{"status":"ACTIVE"}'
@@ -104,7 +104,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:36 GMT
+      - Sat, 06 Dec 2025 00:10:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -112,23 +112,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3665'
+      - '3068'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3c128bd1-cc3f-9750-bf2f-3fd07191467a
+      - 023ec893-2800-9492-9c9c-2f49af499405
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4999'
       x-ratelimit-reset:
-      - '28'
+      - '48'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -150,9 +150,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/status/activate
+    uri: https://easm.test.zscaler.com/zia/api/v1/status/activate
   response:
     body:
       string: '{"status":"ACTIVE"}'
@@ -177,7 +177,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:37 GMT
+      - Sat, 06 Dec 2025 00:10:16 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -185,23 +185,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '517'
+      - '751'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 90f53cbb-106d-9fa1-aa61-d5d0662ae7f1
+      - 89d7818a-2175-900b-8cc5-4d93777e3c81
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4998'
       x-ratelimit-reset:
-      - '24'
+      - '45'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.users import Users
 from zscaler.zidentity.models.users import UserRecord
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class UsersAPI(APIClient):
@@ -34,7 +33,7 @@ class UsersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_users(self, query_params: Optional[dict] = None) -> APIResult[Users]:
+    def list_users(self, query_params: Optional[dict] = None) -> Users:
         """
         Retrieves a list of users with optional query parameters for pagination and filtering
 
@@ -62,7 +61,6 @@ class UsersAPI(APIClient):
                 identity provider names.
 
         Returns:
-            tuple: A tuple containing (list of Users instances, Response, error)
 
         Examples:
             List users using default settings:
@@ -96,24 +94,14 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = Users(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Users(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_user(self, user_id: str) -> APIResult[dict]:
+    def get_user(self, user_id: str) -> UserRecord:
         """
         Retrieves detailed information about a specific user using the provided user ID.
 
@@ -121,7 +109,6 @@ class UsersAPI(APIClient):
             user_id (int): Unique identifier of the user to retrieve.
 
         Returns:
-            tuple: A tuple containing Users instance, Response, error).
 
         Examples:
             Print a specific User
@@ -144,22 +131,13 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, UserRecord)
+        result = UserRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_user(self, **kwargs) -> APIResult[dict]:
+    def add_user(self, **kwargs) -> UserRecord:
         """
         Creates a new Zidentity User.
 
@@ -184,7 +162,6 @@ class UsersAPI(APIClient):
             idp (dict): Identity provider information containing id, name, and displayName.
 
         Returns:
-            tuple: A tuple containing the newly added User, response, and error.
 
         Examples:
             Add a new user:
@@ -215,26 +192,17 @@ class UsersAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, UserRecord)
+        result = UserRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_user(self, user_id: str, **kwargs) -> APIResult[dict]:
+    def update_user(self, user_id: str, **kwargs) -> UserRecord:
         """
         Updates information for the specified Zidentity User.
 
@@ -242,7 +210,6 @@ class UsersAPI(APIClient):
             user_id (int): The unique ID for the User.
 
         Returns:
-            tuple: A tuple containing the updated User, response, and error.
 
         Examples:
             Update an existing User :
@@ -275,26 +242,17 @@ class UsersAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, UserRecord)
+        result = UserRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_user(self, user_id: str) -> APIResult[dict]:
+    def delete_user(self, user_id: str) -> None:
         """
         Deletes the specified User.
 
@@ -302,7 +260,6 @@ class UsersAPI(APIClient):
             user_id (str): The unique identifier of the User.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a User:
@@ -323,16 +280,11 @@ class UsersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def list_user_group_details(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[List[UserRecord]]:
+    def list_user_group_details(self, user_id: str, query_params: Optional[dict] = None) -> List[UserRecord]:
         """
         Retrieves a paginated list of groups associated with a specific user ID.
 
@@ -345,7 +297,6 @@ class UsersAPI(APIClient):
                 request. Minimum: 0, Maximum: 1000
 
         Returns:
-            tuple: A tuple containing (list of Users instances, Response, error)
 
         Examples:
             List users using default settings:
@@ -378,21 +329,11 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(UserRecord(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(UserRecord(self.form_response_body(item)))
+        return result

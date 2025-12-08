@@ -42,7 +42,7 @@ class TestURLCategories:
     #     try:
     #         # Step 1: Create a new URL category
     #         try:
-    #             created_category, _, error = client.zia.url_categories.add_url_category(
+    #             created_category = client.zia.url_categories.add_url_category(
     #                 configured_name=category_name,
     #                 description=category_description,
     #                 super_category="BUSINESS_AND_ECONOMY",
@@ -63,7 +63,7 @@ class TestURLCategories:
 
     #         # Step 2: Retrieve the created URL category
     #         try:
-    #             retrieved_category, _, error = client.zia.url_categories.get_category(category_id)
+    #             retrieved_category = client.zia.url_categories.get_category(category_id)
     #             assert error is None, f"Error retrieving category: {error}"
     #             assert retrieved_category.id == category_id
     #             assert retrieved_category.configured_name == category_name
@@ -73,7 +73,7 @@ class TestURLCategories:
     #         # Step 3: Update the URL category
     #         try:
     #             updated_name = category_name + "-Updated"
-    #             update_category, _, error = client.zia.url_categories.update_url_category(
+    #             update_category = client.zia.url_categories.update_url_category(
     #                 category_id=category_id,
     #                 configured_name=updated_name,
     #                 description=category_description,
@@ -93,7 +93,7 @@ class TestURLCategories:
 
     #         # Step 4: List categories and validate presence
     #         try:
-    #             category_list, _, error = client.zia.url_categories.list_categories(
+    #             category_list = client.zia.url_categories.list_categories(
     #                 query_params={"search": updated_name}
     #             )
     #             assert error is None, f"Error listing categories: {error}"
@@ -105,7 +105,7 @@ class TestURLCategories:
     #         # Step 5: Cleanup
     #         if category_id:
     #             try:
-    #                 _, _, error = client.zia.url_categories.delete_category(category_id)
+    #                 _ = client.zia.url_categories.delete_category(category_id)
     #                 assert error is None, f"Error deleting category: {error}"
     #             except Exception as exc:
     #                 errors.append(f"Cleanup failed: {exc}")
@@ -262,8 +262,7 @@ class TestURLCategories:
         """Test listing URL categories."""
         client = MockZIAClient(fs)
 
-        categories, _, error = client.zia.url_categories.list_categories()
-        assert error is None, f"Error listing categories: {error}"
+        categories = client.zia.url_categories.list_categories()
         assert categories is not None, "Categories list is None"
         assert isinstance(categories, list), "Categories is not a list"
         assert len(categories) > 0, "Expected at least one category"

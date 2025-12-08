@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dns_gateways import DNSGateways
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 import logging
 
 logger = logging.getLogger(__name__)
@@ -33,7 +32,7 @@ class DNSGatewayAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_dns_gateways(self, query_params: Optional[dict] = None) -> APIResult[List[DNSGateways]]:
+    def list_dns_gateways(self, query_params: Optional[dict] = None) -> List[DNSGateways]:
         """
         Returns a list of dns gateways.
 
@@ -47,7 +46,7 @@ class DNSGatewayAPI(APIClient):
 
         Returns:
             tuple:
-                List of configured dns gateways as (DNSGatways, Response, error).
+                List of configured dns gateways as List[DNSGateways].
 
         Examples:
             List all dns gateways
@@ -86,39 +85,28 @@ class DNSGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                if isinstance(item, dict):
-                    results.append(DNSGateways(self.form_response_body(item)))
-                else:
-                    logger.warning(f"Skipping non-dict item in DNS Gateways list: {item}")
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            if isinstance(item, dict):
+                results.append(DNSGateways(self.form_response_body(item)))
+            else:
+                logger.warning(f"Skipping non-dict item in DNS Gateways list: {item}")
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_dns_gateways(
         self,
         gateway_id: int,
-    ) -> APIResult[dict]:
+    ) -> DNSGateways:
         """
         Retrieves a list of Proxy Gateways.
 
         Returns:
-            tuple: A tuple containing:
                 N/A
 
         Examples:
@@ -139,23 +127,14 @@ class DNSGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, DNSGateways)
 
-        response, error = self._request_executor.execute(request, DNSGateways)
+        result = DNSGateways(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DNSGateways(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_dns_gateway(self, **kwargs) -> APIResult[dict]:
+    def add_dns_gateway(self, **kwargs) -> DNSGateways:
         """
         Creates a new ZIA DNS Gateway.
 
@@ -172,7 +151,6 @@ class DNSGatewayAPI(APIClient):
                 Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
 
         Returns:
-            tuple: A tuple containing the newly added DNS Gateway, response, and error.
 
         Examples:
             Add a new DNS Gateway:
@@ -201,27 +179,18 @@ class DNSGatewayAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, DNSGateways)
 
-        response, error = self._request_executor.execute(request, DNSGateways)
+        result = DNSGateways(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DNSGateways(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_dns_gateway(self, gateway_id: int, **kwargs) -> APIResult[dict]:
+    def update_dns_gateway(self, gateway_id: int, **kwargs) -> DNSGateways:
         """
         Updates information for the specified ZIA DNS Gateway.
 
@@ -239,7 +208,6 @@ class DNSGatewayAPI(APIClient):
                 Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
 
         Returns:
-            tuple: A tuple containing the updated DNS Gateway, response, and error.
 
         Examples:
             Updating an existing DNS Gateway:
@@ -269,26 +237,17 @@ class DNSGatewayAPI(APIClient):
         body = kwargs
         body["id"] = gateway_id
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, DNSGateways)
+        result = DNSGateways(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, DNSGateways)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DNSGateways(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_dns_gateway(self, gateway_id: int) -> APIResult[dict]:
+    def delete_dns_gateway(self, gateway_id: int) -> None:
         """
         Deletes the specified DNS Gateway.
 
@@ -296,7 +255,6 @@ class DNSGatewayAPI(APIClient):
             gateway_id (str): The unique identifier of the DNS Gateway.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Updating an existing DNS Gateway:
@@ -317,11 +275,6 @@ class DNSGatewayAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

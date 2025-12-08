@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_domain import CustomerDomainController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CustomerDomainControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class CustomerDomainControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_domains(self, type: str, query_params: Optional[dict] = None) -> APIResult[CustomerDomainController]:
+    def list_domains(self, type: str, query_params: Optional[dict] = None) -> CustomerDomainController:
         """
         Get all customer domains.
 
@@ -42,15 +41,15 @@ class CustomerDomainControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of CustomerDomainController instances, Response, error)
+            :obj:`Tuple`: A tuple containing CustomerDomainController
 
         Example:
             Fetch all customer domains
 
-            >>> domain_list, _, err = client.zpa.customer_domain.list_domains()
-            ... if err:
-            ...     print(f"Error listing domains: {err}")
-            ...     return
+            >>> try:
+            ...     domain_list = client.zpa.customer_domain.list_domains()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total domains found: {len(domain_list)}")
             ... for domain in domain_list:
             ...     print(domain.as_dict())
@@ -68,21 +67,12 @@ class CustomerDomainControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CustomerDomainController)
+        result = CustomerDomainController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CustomerDomainController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CustomerDomainController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_update_domain(self, type: str, domain_list: list, microtenant_id: str = None) -> APIResult[dict]:
+    def add_update_domain(self, type: str, domain_list: list, microtenant_id: str = None) -> CustomerDomainController:
         """
         Add or update domains for a customer.
         Association type field in request body is ignored
@@ -97,14 +87,15 @@ class CustomerDomainControllerAPI(APIClient):
                 Pass an empty list [] to remove all domains.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (CustomerDomainController instance, Response, error)
+            :obj:`Tuple`: A tuple containing CustomerDomainController
                 - CustomerDomainController: The created/updated customer domain object or success status
                 - Response: HTTP response object (None for 204 No Content)
                 - error: Error object if an error occurred, None otherwise
 
         Example:
             # Add multiple domains in a single request
-            >>> added_domain, _, err = client.zpa.customer_domain.add_update_domain(
+            >>> try:
+            ...     added_domain = client.zpa.customer_domain.add_update_domain(
             ...     type="SEARCH_SUFFIX",
             ...     domain_list=[
             ...         {
@@ -123,7 +114,8 @@ class CustomerDomainControllerAPI(APIClient):
             ... print(f"Successfully added/updated domains: {result.as_dict()}")
 
             # Remove all domains
-            >>> added_domain, _, err = client.zpa.customer_domain.add_update_domain(
+            >>> try:
+            ...     added_domain = client.zpa.customer_domain.add_update_domain(
             ...     type="SEARCH_SUFFIX",
             ...     domain_list=[]
             ... )
@@ -143,24 +135,15 @@ class CustomerDomainControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             body=domain_list,
             params=params,
         )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CustomerDomainController)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, CustomerDomainController)
         if response is None:
-            return (CustomerDomainController({"status": "success", "message": "204 No Content"}), None, None)
+            return CustomerDomainController({"status": "success", "message": "204 No Content"})
 
-        try:
-            result = CustomerDomainController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = CustomerDomainController(self.form_response_body(response.get_body()))
+        return result

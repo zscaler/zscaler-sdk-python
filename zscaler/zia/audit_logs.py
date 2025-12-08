@@ -18,7 +18,6 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 import time
 
 
@@ -33,7 +32,7 @@ class AuditLogsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_status(self) -> APIResult[dict]:
+    def get_status(self) -> Any:
         """
         Get the status of a request for an audit log report.
 
@@ -52,17 +51,11 @@ class AuditLogsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        response = self._request_executor.execute(request)
         return response.get_body()
 
-    def create(self, start_time: str, end_time: str) -> APIResult[dict]:
+    def create(self, start_time: str, end_time: str) -> None:
         """
         Creates an audit log report for the specified time period and saves it as a CSV file.
 
@@ -90,17 +83,12 @@ class AuditLogsAPI(APIClient):
             "endTime": end_time,
         }
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request, None)
-        if error:
-            return None
+        request = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        response = self._request_executor.execute(request, None)
         time.sleep(2)
         return response.get_status()
 
-    def cancel(self) -> APIResult[dict]:
+    def cancel(self) -> None:
         """
         Cancels the request to create an audit log report.
 
@@ -119,17 +107,11 @@ class AuditLogsAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request, None)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        response = self._request_executor.execute(request, None)
         return response.status_code
 
-    def get_report(self) -> APIResult[dict]:
+    def get_report(self) -> None:
         """
         Returns the most recently created audit log report.
 
@@ -151,12 +133,6 @@ class AuditLogsAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request, None)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        response = self._request_executor.execute(request, None)
         return response.get_body()

@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"name": "tests-bacert-vcr0001", "certBlob": "-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUGykbTjtTjHSKJ21CUHcJsZSU3vUwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODA3WhcN\nMzUxMTI0MjExODA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPYj7VKXErRfdZXy9eK+4PyVDzexAgv\nnUhqh7WEvlwmjDHWLXEbTe8WchGiFKLAuLjpHWdtiuMJdPvMmCDVdQiEaCJc0Xgg\n8ae+zBHcG/vVwdeHhpXMmDw7ApwNrl0ExY4OnzguFb3EUiqeuYpDyBLWzlGXDEKn\nyDDoSy91w9L0Fbnrq9N8s5hMNJM4WqwusYAyLTp9/Bqy3HwPwHcXsbI3znt12X6Z\n+wPvRAwLBgulzYYggDjkGHf4Wij4D0S0gM521aNv92923/fjpJcqG/AfG+t0gYFm\nbfw4rnB0Igsqf5OZ8LB7tTpXMgCs2s+F/ho3PsFTKibTdgODMvsJUeRGC8Zf4ISo\n+dTgy7QoZkc4pHEmNd4RtnUf1lCHbxWr77Zw0VnzKihwXJUVUSt36gleRWI28zsW\ngeCQ4IIM6zrBx2VwNPsiruURwgspRL5aE94kwIg2aKqa3s1OPyv8y6/kvwC1yeaN\nuc7PIt8WYtVdPYmqcA9GfW/hvubrZCK4XLKLSNlE2x/sDhFt8u6caDeB0+kRpkgj\nuLZ/y7OWYC4jyaH0LoGrJ5J17S8RCWK3x3tY0BJEVZ5igKItMslDcwcLh0wOQDfy\ndwhQtnE3QGZQEsA8p9Qmj9rM/wgxK0DaHlf5gJKAQdGjQ+Qrf/mLcaVaSwyVZCLC\nBTz9dNJE0gQpAgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAHo2RFlG1TMpTDSs/XsRlUUbqPnWcZgpmINRCd7t8cIN4QHD6cKqaOQE\n/4Tj9gGEvMAKw2DPGB25A9mJDy/axKwot1OPrJHzGrUzFI5+O8qz21+ho1j9C4XH\nV4SohE9cNRAi1Mz6M4pLEvxjZ2JaYFQaYkvDXeo1wZ5uCqrLqrxWgEhINXMGSJpL\nNysvsTvvKT8PurujHhIp6Z6Ih2NQNyLQzH5ozpqveoRpN9I4JiosBhFKSh5+cRa8\nFbjDe1l9wu7Zop3WFgWDOaC/VeTEGKg5XYdYA/9XRhZ6dXcxQyQvum7k2rKnhcfl\nhlm8aG5QqzHfp9AYrHyctOtia37HMcz2zAF354tgpu/qFSlZwfmMFlWt53zNsVTL\nrOkpk55RDAMhS+7QO8RVDzQbaphCDUcw3kRILP7zDDkQdEcpXmQyqKbfdXb4E9QQ\nif9zfPSRa+4SdnDjm9IdkMRU07CrVylfPgbiD6oTxgs3rorK2fj4bu78kB0+fWow\nObIQdO7smmTbDz49mz7CjW35Xaa+d8iRN029xURfBDoVM3+9Sx2OR/UpYd30TzLV\ngSwa3jD0jNXPf51qWuKfdIzfLF1Cfj+jS+070ErK/fMp6Zzy0K4dxp6FS+COa7x+\nm345p3RMaLXCmqK2VoNZ/v85D5Mcg3fzE9fM/I5J/yfBZrkCE6LT\n-----END
-      CERTIFICATE-----\n-----BEGIN RSA PRIVATE KEY-----\n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\n-----END
+    body: '{"name": "tests-bacert-vcr0001", "certBlob": "-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUIo/FmFDfThWeK+Gao5xc/iF6ChowDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzAzWhcN\nMzUxMjAzMjMyMzAzWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPaoSyNrDH6DcrzTa0CBFRKyaT7/BJl\n2O704aiRY8Vl88ztyHP/igGscO/ApfT8P1vZt1EHuwLfDW/6VNi38fXxoryRP/rM\nacFmFvOWF7WV/9IDqDs7lPLWcWVpSj+9sh+bepIkBZ+7y3ur6Z5MxvLNdQV/m0bI\nIZwsXBg+iSZs0y+UfJmVKevhVKqafN4AC+rD0EXfcDOy+akopjPTUKqB9Y2mgTe1\nd9xVPBXe5wPnfkfKUHOD1Wica8wziAsOZSZtBIKVo/98gu8MkVP19BwbtopZ3T70\nDie7jBFHyx+yGV03DAniQwkWaBMVSgzzhrKq5uULuKu1QpbAaIcWyV10E4wAHBDZ\n4jx3q4y8e9ldfuBJm4ijzO+SO2zbeO4dCTk3vxt+oyHbOhKwFTcfZBMq0YimVK5A\nH23OY1x5jGzX51G/6204/nE/2XG3O807LrCh+EoErKDQqkMRjj98g5gU4J8Ca9Tp\nbA8vhUh2FY4/DDGGtkM2h7yLHU2PG0FHhuTNja9v87DREN6uT9b4PJAz3Gql3Vbz\nsI6MVl5xs1YBRaZ37dxkUMD8luyWOEy2CUM1A+Wy3LOCEaLGmNHQA1b+CkuIMXR+\nvOiBTiyZsq9jvSHVm4h6kuJwSqbjnYh6xmMWGuWy67nMdiU4xV6IiOmpQyYDHZiS\nbldrEajFIG07AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAJZ3olTy6Wxnf61jpi+D+EybLAS12rwNvrrWwi9iSisOiUl87SbXYSwk\nqim1fI2bk/0qpftAQs9HcINifX0HTd0Te7YKMWMQ46bI99mpLoMm19OmpEteAhNC\nvzY0KZdgP19v8CO5cBRLzLkuVbhh721N/sFHFmavIGMO0DpEl+grpg94Jz+cjfnY\nwF+UmDZkTq/EWObC51J0lJUoUs2znn0KvfO3ndwe4JS+XQlLFsNcYvWFCUXAR14O\nHmi3h5ek+vNwfBKsQAzMLS81XJKLJ8ga4BBWezIvrs9+EvOC+nmc8BYWKQ0OCX0+\ndWXHHecoHavbTI8cnmGPSP57xd9zYXF9X93M/S0uigL2TnogZl2QJRXIrtzZJpQX\nnBpp6xW4owoR9qrySGK0iKwmvit2DOXSmrPdW8Uizn0OLGnqoiq2HcySmDW8L2Bg\nesEPa9OHDF5GjSki7GWHk+0mU7MxcC2+qkPaJw7sTjKlWtDLy/K+HfMjquDv27CY\ngDPGgRx5sQkcDcnYQAMJofe3KSAkQIdM5VT4y0JvN+zi/Snnqe8yDJ+H+qNb0cVk\n9dJ5b4Kurv1l7othZPIgZkWQ6trZHYnYqKe+00RQvx/sTpyobTYo0FvfFtHC+1NO\nBavCDTaLKd0j7S8K0g6SZYuQKW6pkqvXZNS6Ee/Vk2s+xcRoEaXz\n-----END
+      CERTIFICATE-----\n-----BEGIN RSA PRIVATE KEY-----\n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\n-----END
       RSA PRIVATE KEY-----\n"}'
     headers:
       Accept:
@@ -15,17 +15,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate
   response:
     body:
-      string: '{"id":"216196257331394558","modifiedTime":"1764191887","creationTime":"1764191887","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764191887","validToInEpochSec":"2079551887","certificate":"-----BEGIN
-        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUGykbTjtTjHSKJ21CUHcJsZSU3vUwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODA3WhcN\nMzUxMTI0MjExODA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPYj7VKXErRfdZXy9eK+4PyVDzexAgv\nnUhqh7WEvlwmjDHWLXEbTe8WchGiFKLAuLjpHWdtiuMJdPvMmCDVdQiEaCJc0Xgg\n8ae+zBHcG/vVwdeHhpXMmDw7ApwNrl0ExY4OnzguFb3EUiqeuYpDyBLWzlGXDEKn\nyDDoSy91w9L0Fbnrq9N8s5hMNJM4WqwusYAyLTp9/Bqy3HwPwHcXsbI3znt12X6Z\n+wPvRAwLBgulzYYggDjkGHf4Wij4D0S0gM521aNv92923/fjpJcqG/AfG+t0gYFm\nbfw4rnB0Igsqf5OZ8LB7tTpXMgCs2s+F/ho3PsFTKibTdgODMvsJUeRGC8Zf4ISo\n+dTgy7QoZkc4pHEmNd4RtnUf1lCHbxWr77Zw0VnzKihwXJUVUSt36gleRWI28zsW\ngeCQ4IIM6zrBx2VwNPsiruURwgspRL5aE94kwIg2aKqa3s1OPyv8y6/kvwC1yeaN\nuc7PIt8WYtVdPYmqcA9GfW/hvubrZCK4XLKLSNlE2x/sDhFt8u6caDeB0+kRpkgj\nuLZ/y7OWYC4jyaH0LoGrJ5J17S8RCWK3x3tY0BJEVZ5igKItMslDcwcLh0wOQDfy\ndwhQtnE3QGZQEsA8p9Qmj9rM/wgxK0DaHlf5gJKAQdGjQ+Qrf/mLcaVaSwyVZCLC\nBTz9dNJE0gQpAgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAHo2RFlG1TMpTDSs/XsRlUUbqPnWcZgpmINRCd7t8cIN4QHD6cKqaOQE\n/4Tj9gGEvMAKw2DPGB25A9mJDy/axKwot1OPrJHzGrUzFI5+O8qz21+ho1j9C4XH\nV4SohE9cNRAi1Mz6M4pLEvxjZ2JaYFQaYkvDXeo1wZ5uCqrLqrxWgEhINXMGSJpL\nNysvsTvvKT8PurujHhIp6Z6Ih2NQNyLQzH5ozpqveoRpN9I4JiosBhFKSh5+cRa8\nFbjDe1l9wu7Zop3WFgWDOaC/VeTEGKg5XYdYA/9XRhZ6dXcxQyQvum7k2rKnhcfl\nhlm8aG5QqzHfp9AYrHyctOtia37HMcz2zAF354tgpu/qFSlZwfmMFlWt53zNsVTL\nrOkpk55RDAMhS+7QO8RVDzQbaphCDUcw3kRILP7zDDkQdEcpXmQyqKbfdXb4E9QQ\nif9zfPSRa+4SdnDjm9IdkMRU07CrVylfPgbiD6oTxgs3rorK2fj4bu78kB0+fWow\nObIQdO7smmTbDz49mz7CjW35Xaa+d8iRN029xURfBDoVM3+9Sx2OR/UpYd30TzLV\ngSwa3jD0jNXPf51qWuKfdIzfLF1Cfj+jS+070ErK/fMp6Zzy0K4dxp6FS+COa7x+\nm345p3RMaLXCmqK2VoNZ/v85D5Mcg3fzE9fM/I5J/yfBZrkCE6LT\n-----END
+      string: '{"id":"216196257331395899","modifiedTime":"1764976983","creationTime":"1764976983","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764976983","validToInEpochSec":"2080336983","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUIo/FmFDfThWeK+Gao5xc/iF6ChowDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzAzWhcN\nMzUxMjAzMjMyMzAzWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPaoSyNrDH6DcrzTa0CBFRKyaT7/BJl\n2O704aiRY8Vl88ztyHP/igGscO/ApfT8P1vZt1EHuwLfDW/6VNi38fXxoryRP/rM\nacFmFvOWF7WV/9IDqDs7lPLWcWVpSj+9sh+bepIkBZ+7y3ur6Z5MxvLNdQV/m0bI\nIZwsXBg+iSZs0y+UfJmVKevhVKqafN4AC+rD0EXfcDOy+akopjPTUKqB9Y2mgTe1\nd9xVPBXe5wPnfkfKUHOD1Wica8wziAsOZSZtBIKVo/98gu8MkVP19BwbtopZ3T70\nDie7jBFHyx+yGV03DAniQwkWaBMVSgzzhrKq5uULuKu1QpbAaIcWyV10E4wAHBDZ\n4jx3q4y8e9ldfuBJm4ijzO+SO2zbeO4dCTk3vxt+oyHbOhKwFTcfZBMq0YimVK5A\nH23OY1x5jGzX51G/6204/nE/2XG3O807LrCh+EoErKDQqkMRjj98g5gU4J8Ca9Tp\nbA8vhUh2FY4/DDGGtkM2h7yLHU2PG0FHhuTNja9v87DREN6uT9b4PJAz3Gql3Vbz\nsI6MVl5xs1YBRaZ37dxkUMD8luyWOEy2CUM1A+Wy3LOCEaLGmNHQA1b+CkuIMXR+\nvOiBTiyZsq9jvSHVm4h6kuJwSqbjnYh6xmMWGuWy67nMdiU4xV6IiOmpQyYDHZiS\nbldrEajFIG07AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAJZ3olTy6Wxnf61jpi+D+EybLAS12rwNvrrWwi9iSisOiUl87SbXYSwk\nqim1fI2bk/0qpftAQs9HcINifX0HTd0Te7YKMWMQ46bI99mpLoMm19OmpEteAhNC\nvzY0KZdgP19v8CO5cBRLzLkuVbhh721N/sFHFmavIGMO0DpEl+grpg94Jz+cjfnY\nwF+UmDZkTq/EWObC51J0lJUoUs2znn0KvfO3ndwe4JS+XQlLFsNcYvWFCUXAR14O\nHmi3h5ek+vNwfBKsQAzMLS81XJKLJ8ga4BBWezIvrs9+EvOC+nmc8BYWKQ0OCX0+\ndWXHHecoHavbTI8cnmGPSP57xd9zYXF9X93M/S0uigL2TnogZl2QJRXIrtzZJpQX\nnBpp6xW4owoR9qrySGK0iKwmvit2DOXSmrPdW8Uizn0OLGnqoiq2HcySmDW8L2Bg\nesEPa9OHDF5GjSki7GWHk+0mU7MxcC2+qkPaJw7sTjKlWtDLy/K+HfMjquDv27CY\ngDPGgRx5sQkcDcnYQAMJofe3KSAkQIdM5VT4y0JvN+zi/Snnqe8yDJ+H+qNb0cVk\n9dJ5b4Kurv1l7othZPIgZkWQ6trZHYnYqKe+00RQvx/sTpyobTYo0FvfFtHC+1NO\nBavCDTaLKd0j7S8K0g6SZYuQKW6pkqvXZNS6Ee/Vk2s+xcRoEaXz\n-----END
         CERTIFICATE-----\n","issuedTo":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
         Jose,ST=California,C=US","issuedBy":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
-        Jose,ST=California,C=US","serialNo":"155059460017986461224093843644785612210585263861","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9iPtUpcStF91lfL14r7\ng/JUPN7ECC+dSGqHtYS+XCaMMdYtcRtN7xZyEaIUosC4uOkdZ22K4wl0+8yYINV1\nCIRoIlzReCDxp77MEdwb+9XB14eGlcyYPDsCnA2uXQTFjg6fOC4VvcRSKp65ikPI\nEtbOUZcMQqfIMOhLL3XD0vQVueur03yzmEw0kzharC6xgDItOn38GrLcfA/Adxex\nsjfOe3XZfpn7A+9EDAsGC6XNhiCAOOQYd/haKPgPRLSAznbVo2/3b3bf9+Oklyob\n8B8b63SBgWZt/DiucHQiCyp/k5nwsHu1OlcyAKzaz4X+Gjc+wVMqJtN2A4My+wlR\n5EYLxl/ghKj51ODLtChmRzikcSY13hG2dR/WUIdvFavvtnDRWfMqKHBclRVRK3fq\nCV5FYjbzOxaB4JDgggzrOsHHZXA0+yKu5RHCCylEvloT3iTAiDZoqprezU4/K/zL\nr+S/ALXJ5o25zs8i3xZi1V09iapwD0Z9b+G+5utkIrhcsotI2UTbH+wOEW3y7pxo\nN4HT6RGmSCO4tn/Ls5ZgLiPJofQugasnknXtLxEJYrfHe1jQEkRVnmKAoi0yyUNz\nBwuHTA5AN/J3CFC2cTdAZlASwDyn1CaP2sz/CDErQNoeV/mAkoBB0aND5Ct/+Ytx\npVpLDJVkIsIFPP100kTSBCkCAwEAAQ==\n-----END
+        Jose,ST=California,C=US","serialNo":"197311905722146457287341045669635988766057957914","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9qhLI2sMfoNyvNNrQIE\nVErJpPv8EmXY7vThqJFjxWXzzO3Ic/+KAaxw78Cl9Pw/W9m3UQe7At8Nb/pU2Lfx\n9fGivJE/+sxpwWYW85YXtZX/0gOoOzuU8tZxZWlKP72yH5t6kiQFn7vLe6vpnkzG\n8s11BX+bRsghnCxcGD6JJmzTL5R8mZUp6+FUqpp83gAL6sPQRd9wM7L5qSimM9NQ\nqoH1jaaBN7V33FU8Fd7nA+d+R8pQc4PVaJxrzDOICw5lJm0EgpWj/3yC7wyRU/X0\nHBu2ilndPvQOJ7uMEUfLH7IZXTcMCeJDCRZoExVKDPOGsqrm5Qu4q7VClsBohxbJ\nXXQTjAAcENniPHerjLx72V1+4EmbiKPM75I7bNt47h0JOTe/G36jIds6ErAVNx9k\nEyrRiKZUrkAfbc5jXHmMbNfnUb/rbTj+cT/Zcbc7zTsusKH4SgSsoNCqQxGOP3yD\nmBTgnwJr1OlsDy+FSHYVjj8MMYa2QzaHvIsdTY8bQUeG5M2Nr2/zsNEQ3q5P1vg8\nkDPcaqXdVvOwjoxWXnGzVgFFpnft3GRQwPyW7JY4TLYJQzUD5bLcs4IRosaY0dAD\nVv4KS4gxdH686IFOLJmyr2O9IdWbiHqS4nBKpuOdiHrGYxYa5bLrucx2JTjFXoiI\n6alDJgMdmJJuV2sRqMUgbTsCAwEAAQ==\n-----END
         PUBLIC KEY-----\n","san":["bd-redhat.com"],"cName":"bd-redhat.com"}'
     headers:
       cache-control:
@@ -37,7 +37,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:07 GMT
+      - Fri, 05 Dec 2025 23:23:03 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '182'
+      - '158'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c059788e-3313-9fd7-8ad1-92d1955f0a00
+      - 0a9b0e05-961c-9f84-b05e-bddcaa4c7e1b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4979'
+      - '4985'
       x-ratelimit-reset:
-      - '53'
+      - '57'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -91,17 +91,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate/216196257331394558
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate/216196257331395899
   response:
     body:
-      string: '{"id":"216196257331394558","modifiedTime":"1764191887","creationTime":"1764191887","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764191887","validToInEpochSec":"2079551887","certificate":"-----BEGIN
-        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUGykbTjtTjHSKJ21CUHcJsZSU3vUwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODA3WhcN\nMzUxMTI0MjExODA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPYj7VKXErRfdZXy9eK+4PyVDzexAgv\nnUhqh7WEvlwmjDHWLXEbTe8WchGiFKLAuLjpHWdtiuMJdPvMmCDVdQiEaCJc0Xgg\n8ae+zBHcG/vVwdeHhpXMmDw7ApwNrl0ExY4OnzguFb3EUiqeuYpDyBLWzlGXDEKn\nyDDoSy91w9L0Fbnrq9N8s5hMNJM4WqwusYAyLTp9/Bqy3HwPwHcXsbI3znt12X6Z\n+wPvRAwLBgulzYYggDjkGHf4Wij4D0S0gM521aNv92923/fjpJcqG/AfG+t0gYFm\nbfw4rnB0Igsqf5OZ8LB7tTpXMgCs2s+F/ho3PsFTKibTdgODMvsJUeRGC8Zf4ISo\n+dTgy7QoZkc4pHEmNd4RtnUf1lCHbxWr77Zw0VnzKihwXJUVUSt36gleRWI28zsW\ngeCQ4IIM6zrBx2VwNPsiruURwgspRL5aE94kwIg2aKqa3s1OPyv8y6/kvwC1yeaN\nuc7PIt8WYtVdPYmqcA9GfW/hvubrZCK4XLKLSNlE2x/sDhFt8u6caDeB0+kRpkgj\nuLZ/y7OWYC4jyaH0LoGrJ5J17S8RCWK3x3tY0BJEVZ5igKItMslDcwcLh0wOQDfy\ndwhQtnE3QGZQEsA8p9Qmj9rM/wgxK0DaHlf5gJKAQdGjQ+Qrf/mLcaVaSwyVZCLC\nBTz9dNJE0gQpAgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAHo2RFlG1TMpTDSs/XsRlUUbqPnWcZgpmINRCd7t8cIN4QHD6cKqaOQE\n/4Tj9gGEvMAKw2DPGB25A9mJDy/axKwot1OPrJHzGrUzFI5+O8qz21+ho1j9C4XH\nV4SohE9cNRAi1Mz6M4pLEvxjZ2JaYFQaYkvDXeo1wZ5uCqrLqrxWgEhINXMGSJpL\nNysvsTvvKT8PurujHhIp6Z6Ih2NQNyLQzH5ozpqveoRpN9I4JiosBhFKSh5+cRa8\nFbjDe1l9wu7Zop3WFgWDOaC/VeTEGKg5XYdYA/9XRhZ6dXcxQyQvum7k2rKnhcfl\nhlm8aG5QqzHfp9AYrHyctOtia37HMcz2zAF354tgpu/qFSlZwfmMFlWt53zNsVTL\nrOkpk55RDAMhS+7QO8RVDzQbaphCDUcw3kRILP7zDDkQdEcpXmQyqKbfdXb4E9QQ\nif9zfPSRa+4SdnDjm9IdkMRU07CrVylfPgbiD6oTxgs3rorK2fj4bu78kB0+fWow\nObIQdO7smmTbDz49mz7CjW35Xaa+d8iRN029xURfBDoVM3+9Sx2OR/UpYd30TzLV\ngSwa3jD0jNXPf51qWuKfdIzfLF1Cfj+jS+070ErK/fMp6Zzy0K4dxp6FS+COa7x+\nm345p3RMaLXCmqK2VoNZ/v85D5Mcg3fzE9fM/I5J/yfBZrkCE6LT\n-----END
+      string: '{"id":"216196257331395899","modifiedTime":"1764976983","creationTime":"1764976983","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764976983","validToInEpochSec":"2080336983","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUIo/FmFDfThWeK+Gao5xc/iF6ChowDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzAzWhcN\nMzUxMjAzMjMyMzAzWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPaoSyNrDH6DcrzTa0CBFRKyaT7/BJl\n2O704aiRY8Vl88ztyHP/igGscO/ApfT8P1vZt1EHuwLfDW/6VNi38fXxoryRP/rM\nacFmFvOWF7WV/9IDqDs7lPLWcWVpSj+9sh+bepIkBZ+7y3ur6Z5MxvLNdQV/m0bI\nIZwsXBg+iSZs0y+UfJmVKevhVKqafN4AC+rD0EXfcDOy+akopjPTUKqB9Y2mgTe1\nd9xVPBXe5wPnfkfKUHOD1Wica8wziAsOZSZtBIKVo/98gu8MkVP19BwbtopZ3T70\nDie7jBFHyx+yGV03DAniQwkWaBMVSgzzhrKq5uULuKu1QpbAaIcWyV10E4wAHBDZ\n4jx3q4y8e9ldfuBJm4ijzO+SO2zbeO4dCTk3vxt+oyHbOhKwFTcfZBMq0YimVK5A\nH23OY1x5jGzX51G/6204/nE/2XG3O807LrCh+EoErKDQqkMRjj98g5gU4J8Ca9Tp\nbA8vhUh2FY4/DDGGtkM2h7yLHU2PG0FHhuTNja9v87DREN6uT9b4PJAz3Gql3Vbz\nsI6MVl5xs1YBRaZ37dxkUMD8luyWOEy2CUM1A+Wy3LOCEaLGmNHQA1b+CkuIMXR+\nvOiBTiyZsq9jvSHVm4h6kuJwSqbjnYh6xmMWGuWy67nMdiU4xV6IiOmpQyYDHZiS\nbldrEajFIG07AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAJZ3olTy6Wxnf61jpi+D+EybLAS12rwNvrrWwi9iSisOiUl87SbXYSwk\nqim1fI2bk/0qpftAQs9HcINifX0HTd0Te7YKMWMQ46bI99mpLoMm19OmpEteAhNC\nvzY0KZdgP19v8CO5cBRLzLkuVbhh721N/sFHFmavIGMO0DpEl+grpg94Jz+cjfnY\nwF+UmDZkTq/EWObC51J0lJUoUs2znn0KvfO3ndwe4JS+XQlLFsNcYvWFCUXAR14O\nHmi3h5ek+vNwfBKsQAzMLS81XJKLJ8ga4BBWezIvrs9+EvOC+nmc8BYWKQ0OCX0+\ndWXHHecoHavbTI8cnmGPSP57xd9zYXF9X93M/S0uigL2TnogZl2QJRXIrtzZJpQX\nnBpp6xW4owoR9qrySGK0iKwmvit2DOXSmrPdW8Uizn0OLGnqoiq2HcySmDW8L2Bg\nesEPa9OHDF5GjSki7GWHk+0mU7MxcC2+qkPaJw7sTjKlWtDLy/K+HfMjquDv27CY\ngDPGgRx5sQkcDcnYQAMJofe3KSAkQIdM5VT4y0JvN+zi/Snnqe8yDJ+H+qNb0cVk\n9dJ5b4Kurv1l7othZPIgZkWQ6trZHYnYqKe+00RQvx/sTpyobTYo0FvfFtHC+1NO\nBavCDTaLKd0j7S8K0g6SZYuQKW6pkqvXZNS6Ee/Vk2s+xcRoEaXz\n-----END
         CERTIFICATE-----\n","issuedTo":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
         Jose,ST=California,C=US","issuedBy":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
-        Jose,ST=California,C=US","serialNo":"155059460017986461224093843644785612210585263861","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9iPtUpcStF91lfL14r7\ng/JUPN7ECC+dSGqHtYS+XCaMMdYtcRtN7xZyEaIUosC4uOkdZ22K4wl0+8yYINV1\nCIRoIlzReCDxp77MEdwb+9XB14eGlcyYPDsCnA2uXQTFjg6fOC4VvcRSKp65ikPI\nEtbOUZcMQqfIMOhLL3XD0vQVueur03yzmEw0kzharC6xgDItOn38GrLcfA/Adxex\nsjfOe3XZfpn7A+9EDAsGC6XNhiCAOOQYd/haKPgPRLSAznbVo2/3b3bf9+Oklyob\n8B8b63SBgWZt/DiucHQiCyp/k5nwsHu1OlcyAKzaz4X+Gjc+wVMqJtN2A4My+wlR\n5EYLxl/ghKj51ODLtChmRzikcSY13hG2dR/WUIdvFavvtnDRWfMqKHBclRVRK3fq\nCV5FYjbzOxaB4JDgggzrOsHHZXA0+yKu5RHCCylEvloT3iTAiDZoqprezU4/K/zL\nr+S/ALXJ5o25zs8i3xZi1V09iapwD0Z9b+G+5utkIrhcsotI2UTbH+wOEW3y7pxo\nN4HT6RGmSCO4tn/Ls5ZgLiPJofQugasnknXtLxEJYrfHe1jQEkRVnmKAoi0yyUNz\nBwuHTA5AN/J3CFC2cTdAZlASwDyn1CaP2sz/CDErQNoeV/mAkoBB0aND5Ct/+Ytx\npVpLDJVkIsIFPP100kTSBCkCAwEAAQ==\n-----END
+        Jose,ST=California,C=US","serialNo":"197311905722146457287341045669635988766057957914","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9qhLI2sMfoNyvNNrQIE\nVErJpPv8EmXY7vThqJFjxWXzzO3Ic/+KAaxw78Cl9Pw/W9m3UQe7At8Nb/pU2Lfx\n9fGivJE/+sxpwWYW85YXtZX/0gOoOzuU8tZxZWlKP72yH5t6kiQFn7vLe6vpnkzG\n8s11BX+bRsghnCxcGD6JJmzTL5R8mZUp6+FUqpp83gAL6sPQRd9wM7L5qSimM9NQ\nqoH1jaaBN7V33FU8Fd7nA+d+R8pQc4PVaJxrzDOICw5lJm0EgpWj/3yC7wyRU/X0\nHBu2ilndPvQOJ7uMEUfLH7IZXTcMCeJDCRZoExVKDPOGsqrm5Qu4q7VClsBohxbJ\nXXQTjAAcENniPHerjLx72V1+4EmbiKPM75I7bNt47h0JOTe/G36jIds6ErAVNx9k\nEyrRiKZUrkAfbc5jXHmMbNfnUb/rbTj+cT/Zcbc7zTsusKH4SgSsoNCqQxGOP3yD\nmBTgnwJr1OlsDy+FSHYVjj8MMYa2QzaHvIsdTY8bQUeG5M2Nr2/zsNEQ3q5P1vg8\nkDPcaqXdVvOwjoxWXnGzVgFFpnft3GRQwPyW7JY4TLYJQzUD5bLcs4IRosaY0dAD\nVv4KS4gxdH686IFOLJmyr2O9IdWbiHqS4nBKpuOdiHrGYxYa5bLrucx2JTjFXoiI\n6alDJgMdmJJuV2sRqMUgbTsCAwEAAQ==\n-----END
         PUBLIC KEY-----\n","san":["bd-redhat.com"],"cName":"bd-redhat.com","microtenantName":"Default"}'
     headers:
       cache-control:
@@ -113,7 +113,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:07 GMT
+      - Fri, 05 Dec 2025 23:23:03 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -131,23 +131,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '44'
+      - '33'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f64cc03e-2896-9ee0-8f51-20d43e5fc2cf
+      - 500832b0-8a79-9e98-afd9-81de10b1ef80
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4978'
+      - '4984'
       x-ratelimit-reset:
-      - '53'
+      - '57'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -167,9 +167,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/clientlessCertificate/issued
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/clientlessCertificate/issued
   response:
     body:
       string: '{"totalPages":"1","totalCount":"4","list":[{"id":"216196257331369559","modifiedTime":"1759942769","creationTime":"1696448400","modifiedBy":"216196257331372702","name":"jenkins.bd-hashicorp.com","description":"jenkins.bd-hashicorp.com","validFromInEpochSec":"1696447903","validToInEpochSec":"1759519903","certificate":"-----BEGIN
@@ -184,12 +184,12 @@ interactions:
         CERTIFICATE-----\nMIIF0DCCBLigAwIBAgITIQAAACORnkOxug7x/QAAAAAAIzANBgkqhkiG9w0BAQsF\nADBaMRMwEQYKCZImiZPyLGQBGRYDY29tMRwwGgYKCZImiZPyLGQBGRYMYmQtaGFz\naGljb3JwMSUwIwYDVQQDExxiZC1oYXNoaWNvcnAtVkNEMTI2LVNSVjAxLUNBMB4X\nDTIzMTAwNDE5MzMzOFoXDTI1MTAwMzE5MzMzOFowfDELMAkGA1UEBhMCVVMxCzAJ\nBgNVBAgTAkNBMRAwDgYDVQQHEwdTYW5Kb3NlMRcwFQYDVQQKEw5TZWN1cml0eUdl\nZWtJTzEVMBMGA1UECxMMSVREZXBhcnRtZW50MR4wHAYDVQQDExVzYWxlcy5zZWN1\ncml0eWdlZWsuaW8wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDRgE98\n4BDX2NdtDxA+wNbAPBoFBgCYJEtUAOw0vHgYqnVr4onpqgIVyc9kpWCwj0Ht0wEh\nIArIupOTCLynlEaAGD7GWe8Z9ApbpvsVeqax6b3CTMC5bAvvmlx7PA4DQaswFB9k\n5TF1lzWIfLFMoJDNppQqJ05a19Q7eVmBNbIQVpyANr5ayBYWrYkWTr843ahR3Q1W\npqjMZmiSXspW2YuucSRU9vHUymFC6UpuZ0rOwjjxEgH8wzhF22IWn3sphoLSMU2F\nyy0CwQFhlMhU5Rpa1o0JrX1LQXNHEJzcU/27z6mZIUDYck3LvFhe+PzUzTUBrmRz\n2HGCv1bTS3ikWIDBAgMBAAGjggJrMIICZzAgBgNVHREEGTAXghVzYWxlcy5zZWN1\ncml0eWdlZWsuaW8wHQYDVR0OBBYEFMQrbYVgls2D/kfW2xpCYoSGhE/+MB8GA1Ud\nIwQYMBaAFIwXB5/G2EdkETi/xRWaMe4blpHOMIHkBgNVHR8EgdwwgdkwgdaggdOg\ngdCGgc1sZGFwOi8vL0NOPWJkLWhhc2hpY29ycC1WQ0QxMjYtU1JWMDEtQ0EsQ049\nVkNEMTI2LVNSVjAxLENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxD\nTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWJkLWhhc2hpY29ycCxEQz1j\nb20/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNS\nTERpc3RyaWJ1dGlvblBvaW50MIHTBggrBgEFBQcBAQSBxjCBwzCBwAYIKwYBBQUH\nMAKGgbNsZGFwOi8vL0NOPWJkLWhhc2hpY29ycC1WQ0QxMjYtU1JWMDEtQ0EsQ049\nQUlBLENOPVB1YmxpYyUyMEtleSUyMFNlcnZpY2VzLENOPVNlcnZpY2VzLENOPUNv\nbmZpZ3VyYXRpb24sREM9YmQtaGFzaGljb3JwLERDPWNvbT9jQUNlcnRpZmljYXRl\nP2Jhc2U/b2JqZWN0Q2xhc3M9Y2VydGlmaWNhdGlvbkF1dGhvcml0eTAhBgkrBgEE\nAYI3FAIEFB4SAFcAZQBiAFMAZQByAHYAZQByMA4GA1UdDwEB/wQEAwIFoDATBgNV\nHSUEDDAKBggrBgEFBQcDATANBgkqhkiG9w0BAQsFAAOCAQEAtEMEtrikfkPY+ybv\nKBbVMsH4KR1evyxUG1ytn+XjNfSkwZN/e3dj8DKCA8viM53+UfBlThIhxl/9hBDG\nzj0BmD+bK+KukZmDeJRQPFbpGqOvghg7xMR5iIFoOYirK6Z2zDeKWfc0vjMH9SbO\niDohTe3gD0gj0fVGljHENTd+K3YirYFGsPA7kth8vVR3uNC4lUSuCyzdoO2lUQxd\n5G0EurgcLZfQheoYFl/fGy/q40wwWXrg2rUlnSC6FfealyI7YmEh9t2IzgyIbDIq\nGzlaQwtRXP0y5EPNQtsFb7vEZXUPp5HzLv1DZtOCiZcPHwo2mptJ/oXSPlkDWzqI\nvmupKQ==\n-----END
         CERTIFICATE-----\n","issuedTo":"CN=sales.securitygeek.io,OU=ITDepartment,O=SecurityGeekIO,L=SanJose,ST=CA,C=US","issuedBy":"CN=bd-hashicorp-VCD126-SRV01-CA,DC=bd-hashicorp,DC=com","serialNo":"735924591736194442111958579932008519275905059","publicKey":"-----BEGIN
         PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0YBPfOAQ19jXbQ8QPsDW\nwDwaBQYAmCRLVADsNLx4GKp1a+KJ6aoCFcnPZKVgsI9B7dMBISAKyLqTkwi8p5RG\ngBg+xlnvGfQKW6b7FXqmsem9wkzAuWwL75pcezwOA0GrMBQfZOUxdZc1iHyxTKCQ\nzaaUKidOWtfUO3lZgTWyEFacgDa+WsgWFq2JFk6/ON2oUd0NVqaozGZokl7KVtmL\nrnEkVPbx1MphQulKbmdKzsI48RIB/MM4RdtiFp97KYaC0jFNhcstAsEBYZTIVOUa\nWtaNCa19S0FzRxCc3FP9u8+pmSFA2HJNy7xYXvj81M01Aa5kc9hxgr9W00t4pFiA\nwQIDAQAB\n-----END
-        PUBLIC KEY-----\n","san":["sales.securitygeek.io"],"cName":"sales.securitygeek.io","microtenantName":"Default"},{"id":"216196257331394558","modifiedTime":"1764191887","creationTime":"1764191887","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764191887","validToInEpochSec":"2079551887","certificate":"-----BEGIN
-        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUGykbTjtTjHSKJ21CUHcJsZSU3vUwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODA3WhcN\nMzUxMTI0MjExODA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPYj7VKXErRfdZXy9eK+4PyVDzexAgv\nnUhqh7WEvlwmjDHWLXEbTe8WchGiFKLAuLjpHWdtiuMJdPvMmCDVdQiEaCJc0Xgg\n8ae+zBHcG/vVwdeHhpXMmDw7ApwNrl0ExY4OnzguFb3EUiqeuYpDyBLWzlGXDEKn\nyDDoSy91w9L0Fbnrq9N8s5hMNJM4WqwusYAyLTp9/Bqy3HwPwHcXsbI3znt12X6Z\n+wPvRAwLBgulzYYggDjkGHf4Wij4D0S0gM521aNv92923/fjpJcqG/AfG+t0gYFm\nbfw4rnB0Igsqf5OZ8LB7tTpXMgCs2s+F/ho3PsFTKibTdgODMvsJUeRGC8Zf4ISo\n+dTgy7QoZkc4pHEmNd4RtnUf1lCHbxWr77Zw0VnzKihwXJUVUSt36gleRWI28zsW\ngeCQ4IIM6zrBx2VwNPsiruURwgspRL5aE94kwIg2aKqa3s1OPyv8y6/kvwC1yeaN\nuc7PIt8WYtVdPYmqcA9GfW/hvubrZCK4XLKLSNlE2x/sDhFt8u6caDeB0+kRpkgj\nuLZ/y7OWYC4jyaH0LoGrJ5J17S8RCWK3x3tY0BJEVZ5igKItMslDcwcLh0wOQDfy\ndwhQtnE3QGZQEsA8p9Qmj9rM/wgxK0DaHlf5gJKAQdGjQ+Qrf/mLcaVaSwyVZCLC\nBTz9dNJE0gQpAgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAHo2RFlG1TMpTDSs/XsRlUUbqPnWcZgpmINRCd7t8cIN4QHD6cKqaOQE\n/4Tj9gGEvMAKw2DPGB25A9mJDy/axKwot1OPrJHzGrUzFI5+O8qz21+ho1j9C4XH\nV4SohE9cNRAi1Mz6M4pLEvxjZ2JaYFQaYkvDXeo1wZ5uCqrLqrxWgEhINXMGSJpL\nNysvsTvvKT8PurujHhIp6Z6Ih2NQNyLQzH5ozpqveoRpN9I4JiosBhFKSh5+cRa8\nFbjDe1l9wu7Zop3WFgWDOaC/VeTEGKg5XYdYA/9XRhZ6dXcxQyQvum7k2rKnhcfl\nhlm8aG5QqzHfp9AYrHyctOtia37HMcz2zAF354tgpu/qFSlZwfmMFlWt53zNsVTL\nrOkpk55RDAMhS+7QO8RVDzQbaphCDUcw3kRILP7zDDkQdEcpXmQyqKbfdXb4E9QQ\nif9zfPSRa+4SdnDjm9IdkMRU07CrVylfPgbiD6oTxgs3rorK2fj4bu78kB0+fWow\nObIQdO7smmTbDz49mz7CjW35Xaa+d8iRN029xURfBDoVM3+9Sx2OR/UpYd30TzLV\ngSwa3jD0jNXPf51qWuKfdIzfLF1Cfj+jS+070ErK/fMp6Zzy0K4dxp6FS+COa7x+\nm345p3RMaLXCmqK2VoNZ/v85D5Mcg3fzE9fM/I5J/yfBZrkCE6LT\n-----END
+        PUBLIC KEY-----\n","san":["sales.securitygeek.io"],"cName":"sales.securitygeek.io","microtenantName":"Default"},{"id":"216196257331395899","modifiedTime":"1764976983","creationTime":"1764976983","modifiedBy":"216196257331372705","name":"tests-bacert-vcr0001","validFromInEpochSec":"1764976983","validToInEpochSec":"2080336983","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUIo/FmFDfThWeK+Gao5xc/iF6ChowDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzAzWhcN\nMzUxMjAzMjMyMzAzWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBALPaoSyNrDH6DcrzTa0CBFRKyaT7/BJl\n2O704aiRY8Vl88ztyHP/igGscO/ApfT8P1vZt1EHuwLfDW/6VNi38fXxoryRP/rM\nacFmFvOWF7WV/9IDqDs7lPLWcWVpSj+9sh+bepIkBZ+7y3ur6Z5MxvLNdQV/m0bI\nIZwsXBg+iSZs0y+UfJmVKevhVKqafN4AC+rD0EXfcDOy+akopjPTUKqB9Y2mgTe1\nd9xVPBXe5wPnfkfKUHOD1Wica8wziAsOZSZtBIKVo/98gu8MkVP19BwbtopZ3T70\nDie7jBFHyx+yGV03DAniQwkWaBMVSgzzhrKq5uULuKu1QpbAaIcWyV10E4wAHBDZ\n4jx3q4y8e9ldfuBJm4ijzO+SO2zbeO4dCTk3vxt+oyHbOhKwFTcfZBMq0YimVK5A\nH23OY1x5jGzX51G/6204/nE/2XG3O807LrCh+EoErKDQqkMRjj98g5gU4J8Ca9Tp\nbA8vhUh2FY4/DDGGtkM2h7yLHU2PG0FHhuTNja9v87DREN6uT9b4PJAz3Gql3Vbz\nsI6MVl5xs1YBRaZ37dxkUMD8luyWOEy2CUM1A+Wy3LOCEaLGmNHQA1b+CkuIMXR+\nvOiBTiyZsq9jvSHVm4h6kuJwSqbjnYh6xmMWGuWy67nMdiU4xV6IiOmpQyYDHZiS\nbldrEajFIG07AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAJZ3olTy6Wxnf61jpi+D+EybLAS12rwNvrrWwi9iSisOiUl87SbXYSwk\nqim1fI2bk/0qpftAQs9HcINifX0HTd0Te7YKMWMQ46bI99mpLoMm19OmpEteAhNC\nvzY0KZdgP19v8CO5cBRLzLkuVbhh721N/sFHFmavIGMO0DpEl+grpg94Jz+cjfnY\nwF+UmDZkTq/EWObC51J0lJUoUs2znn0KvfO3ndwe4JS+XQlLFsNcYvWFCUXAR14O\nHmi3h5ek+vNwfBKsQAzMLS81XJKLJ8ga4BBWezIvrs9+EvOC+nmc8BYWKQ0OCX0+\ndWXHHecoHavbTI8cnmGPSP57xd9zYXF9X93M/S0uigL2TnogZl2QJRXIrtzZJpQX\nnBpp6xW4owoR9qrySGK0iKwmvit2DOXSmrPdW8Uizn0OLGnqoiq2HcySmDW8L2Bg\nesEPa9OHDF5GjSki7GWHk+0mU7MxcC2+qkPaJw7sTjKlWtDLy/K+HfMjquDv27CY\ngDPGgRx5sQkcDcnYQAMJofe3KSAkQIdM5VT4y0JvN+zi/Snnqe8yDJ+H+qNb0cVk\n9dJ5b4Kurv1l7othZPIgZkWQ6trZHYnYqKe+00RQvx/sTpyobTYo0FvfFtHC+1NO\nBavCDTaLKd0j7S8K0g6SZYuQKW6pkqvXZNS6Ee/Vk2s+xcRoEaXz\n-----END
         CERTIFICATE-----\n","issuedTo":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
         Jose,ST=California,C=US","issuedBy":"CN=bd-redhat.com,OU=IT Department,O=BD-RedHat,L=San
-        Jose,ST=California,C=US","serialNo":"155059460017986461224093843644785612210585263861","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9iPtUpcStF91lfL14r7\ng/JUPN7ECC+dSGqHtYS+XCaMMdYtcRtN7xZyEaIUosC4uOkdZ22K4wl0+8yYINV1\nCIRoIlzReCDxp77MEdwb+9XB14eGlcyYPDsCnA2uXQTFjg6fOC4VvcRSKp65ikPI\nEtbOUZcMQqfIMOhLL3XD0vQVueur03yzmEw0kzharC6xgDItOn38GrLcfA/Adxex\nsjfOe3XZfpn7A+9EDAsGC6XNhiCAOOQYd/haKPgPRLSAznbVo2/3b3bf9+Oklyob\n8B8b63SBgWZt/DiucHQiCyp/k5nwsHu1OlcyAKzaz4X+Gjc+wVMqJtN2A4My+wlR\n5EYLxl/ghKj51ODLtChmRzikcSY13hG2dR/WUIdvFavvtnDRWfMqKHBclRVRK3fq\nCV5FYjbzOxaB4JDgggzrOsHHZXA0+yKu5RHCCylEvloT3iTAiDZoqprezU4/K/zL\nr+S/ALXJ5o25zs8i3xZi1V09iapwD0Z9b+G+5utkIrhcsotI2UTbH+wOEW3y7pxo\nN4HT6RGmSCO4tn/Ls5ZgLiPJofQugasnknXtLxEJYrfHe1jQEkRVnmKAoi0yyUNz\nBwuHTA5AN/J3CFC2cTdAZlASwDyn1CaP2sz/CDErQNoeV/mAkoBB0aND5Ct/+Ytx\npVpLDJVkIsIFPP100kTSBCkCAwEAAQ==\n-----END
+        Jose,ST=California,C=US","serialNo":"197311905722146457287341045669635988766057957914","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAs9qhLI2sMfoNyvNNrQIE\nVErJpPv8EmXY7vThqJFjxWXzzO3Ic/+KAaxw78Cl9Pw/W9m3UQe7At8Nb/pU2Lfx\n9fGivJE/+sxpwWYW85YXtZX/0gOoOzuU8tZxZWlKP72yH5t6kiQFn7vLe6vpnkzG\n8s11BX+bRsghnCxcGD6JJmzTL5R8mZUp6+FUqpp83gAL6sPQRd9wM7L5qSimM9NQ\nqoH1jaaBN7V33FU8Fd7nA+d+R8pQc4PVaJxrzDOICw5lJm0EgpWj/3yC7wyRU/X0\nHBu2ilndPvQOJ7uMEUfLH7IZXTcMCeJDCRZoExVKDPOGsqrm5Qu4q7VClsBohxbJ\nXXQTjAAcENniPHerjLx72V1+4EmbiKPM75I7bNt47h0JOTe/G36jIds6ErAVNx9k\nEyrRiKZUrkAfbc5jXHmMbNfnUb/rbTj+cT/Zcbc7zTsusKH4SgSsoNCqQxGOP3yD\nmBTgnwJr1OlsDy+FSHYVjj8MMYa2QzaHvIsdTY8bQUeG5M2Nr2/zsNEQ3q5P1vg8\nkDPcaqXdVvOwjoxWXnGzVgFFpnft3GRQwPyW7JY4TLYJQzUD5bLcs4IRosaY0dAD\nVv4KS4gxdH686IFOLJmyr2O9IdWbiHqS4nBKpuOdiHrGYxYa5bLrucx2JTjFXoiI\n6alDJgMdmJJuV2sRqMUgbTsCAwEAAQ==\n-----END
         PUBLIC KEY-----\n","san":["bd-redhat.com"],"cName":"bd-redhat.com","microtenantName":"Default"}]}'
     headers:
       cache-control:
@@ -201,7 +201,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:08 GMT
+      - Fri, 05 Dec 2025 23:23:03 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -219,23 +219,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '40'
+      - '39'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6e590b7a-0fad-95f3-aaaf-c6be537b98d0
+      - cb031ea0-832b-971a-8f82-4c1708770ca5
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4977'
+      - '4983'
       x-ratelimit-reset:
-      - '52'
+      - '57'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -255,9 +255,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate/216196257331394558
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/certificate/216196257331395899
   response:
     body:
       string: ''
@@ -267,7 +267,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:08 GMT
+      - Fri, 05 Dec 2025 23:23:04 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -283,23 +283,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '66'
+      - '54'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 888815e1-3d01-91e9-b1d8-4228701127c7
+      - 2852f180-d7c6-91fb-9cb1-bbc4c4cf3c34
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4976'
+      - '4982'
       x-ratelimit-reset:
-      - '52'
+      - '56'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

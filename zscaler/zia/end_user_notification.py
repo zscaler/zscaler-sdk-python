@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.endusernotification import EndUserNotification
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class EndUserNotificationAPI(APIClient):
@@ -33,14 +32,13 @@ class EndUserNotificationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_eun_settings(self) -> APIResult[dict]:
+    def get_eun_settings(self) -> Any:
         """
         Retrieves the current End User Notification configured in the ZIA Admin Portal.
 
         This method makes a GET request to the ZIA Admin API and returns detailed End User Notification settings,
 
         Returns:
-            tuple: A tuple containing:
                 - EndUserNotification: The current end user notification settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -61,23 +59,17 @@ class EndUserNotificationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = EndUserNotification(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_eun_settings(self, **kwargs) -> APIResult[dict]:
+    def update_eun_settings(self, **kwargs) -> EndUserNotification:
         """
         Updates advanced threat protection settings in the ZIA Admin Portal.
 
@@ -120,7 +112,6 @@ class EndUserNotificationAPI(APIClient):
                     - idp_proxy_notification_text (str): Message shown in IdP Proxy notification
                     - quarantine_custom_notification_text (str): Message shown in quarantine notification
         Returns:
-            tuple: A tuple containing:
                 - EndUserNotification: The updated end user notification settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the update failed; otherwise, `None`.
@@ -147,20 +138,14 @@ class EndUserNotificationAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, EndUserNotification)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, EndUserNotification)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = EndUserNotification(self.form_response_body(response.get_body()))
             else:
                 result = EndUserNotification()
         except Exception as error:
-            return (None, response, error)
+            return EndUserNotification
 
-        return (result, response, None)
+        return result

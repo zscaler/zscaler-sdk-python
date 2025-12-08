@@ -43,13 +43,12 @@ class TestLocationManagement:
             # Step 1: Create VPN Credential (UFQDN)
             try:
                 email = "tests-" + generate_random_string() + "@securitygeek.io"
-                created_vpn_credential, _, error = client.zia.traffic_vpn_credentials.add_vpn_credential(
+                created_vpn_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                     type="UFQDN",
                     pre_shared_key="testkey-" + generate_random_string(),
                     fqdn=email,
                     comments="Integration test UFQDN credential",
                 )
-                assert error is None, f"VPN Credential creation failed: {error}"
                 assert created_vpn_credential is not None
                 vpn_id = created_vpn_credential.id
             except Exception as exc:
@@ -58,7 +57,7 @@ class TestLocationManagement:
             # Step 2: Create Location
             try:
                 location_name = "tests-" + generate_random_string()
-                created_location, _, error = client.zia.locations.add_location(
+                created_location = client.zia.locations.add_location(
                     name=location_name,
                     description=location_name,
                     country="UNITED_STATES",
@@ -68,7 +67,6 @@ class TestLocationManagement:
                     profile="SERVER",
                     vpn_credentials=[{"id": vpn_id, "type": "UFQDN"}],
                 )
-                assert error is None, f"Location creation failed: {error}"
                 assert created_location is not None, "Location creation returned None"
                 location_id = created_location.id
             except Exception as exc:
@@ -76,8 +74,7 @@ class TestLocationManagement:
 
             # Step 3: Retrieve Location
             try:
-                retrieved_location, _, error = client.zia.locations.get_location(location_id)
-                assert error is None, f"Error retrieving location: {error}"
+                retrieved_location = client.zia.locations.get_location(location_id)
                 assert retrieved_location.id == location_id, "Incorrect location retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Location failed: {exc}")
@@ -85,7 +82,7 @@ class TestLocationManagement:
             # Step 4: Update Location
             try:
                 updated_description = "Updated integration test location management"
-                updated_location, _, error = client.zia.locations.update_location(
+                updated_location = client.zia.locations.update_location(
                     location_id=location_id,
                     name=location_name,
                     description=updated_description,
@@ -100,15 +97,13 @@ class TestLocationManagement:
                     profile="SERVER",
                     vpn_credentials=[{"id": vpn_id, "type": "UFQDN"}],
                 )
-                assert error is None, f"Location update failed: {error}"
                 assert updated_location.description == updated_description, "Location description not updated"
             except Exception as exc:
                 errors.append(f"Updating Location failed: {exc}")
 
             # Step 5: List all locations and validate presence
             try:
-                locations, _, error = client.zia.locations.list_locations()
-                assert error is None, f"Error listing locations: {error}"
+                locations = client.zia.locations.list_locations()
                 assert any(loc.id == location_id for loc in locations), "Location not found in list"
             except Exception as exc:
                 errors.append(f"Listing locations failed: {exc}")
@@ -119,16 +114,14 @@ class TestLocationManagement:
             # Step 6: Delete Location
             if location_id:
                 try:
-                    _, _, error = client.zia.locations.delete_location(location_id)
-                    assert error is None, f"Error deleting location: {error}"
+                    _ = client.zia.locations.delete_location(location_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting location failed: {exc}")
 
             # Step 7: Delete VPN Credential
             if vpn_id:
                 try:
-                    _, _, error = client.zia.traffic_vpn_credentials.delete_vpn_credential(vpn_id)
-                    assert error is None, f"Error deleting VPN Credential: {error}"
+                    _ = client.zia.traffic_vpn_credentials.delete_vpn_credential(vpn_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting VPN Credential failed: {exc}")
 

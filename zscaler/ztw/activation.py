@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.activation import Activation
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ActivationAPI(APIClient):
@@ -33,7 +32,7 @@ class ActivationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def activate(self, force: bool = False, **kwargs) -> APIResult[dict]:
+    def activate(self, force: bool = False, **kwargs) -> Activation:
         """
         Activate the configuration.
 
@@ -65,21 +64,11 @@ class ActivationAPI(APIClient):
         body = kwargs
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, headers={}, params={})
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body, headers={}, params={})
         # Execute the request and parse the response using the Activation model
-        response, error = self._request_executor.execute(request, Activation)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Activation(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request, Activation)
+        result = Activation(response.get_body())
+        return result
 
     def get_status(self):
         """
@@ -102,15 +91,9 @@ class ActivationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             activation = Activation(response.get_body())

@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.traffic_capture import TrafficCapture, TrafficCaptureRuleLabels
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class TrafficCaptureAPI(APIClient):
@@ -33,7 +32,7 @@ class TrafficCaptureAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[TrafficCapture]]:
+    ) -> List[TrafficCapture]:
         """
        Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
 
@@ -61,7 +60,6 @@ class TrafficCaptureAPI(APIClient):
                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
 
         Returns:
-            tuple: A tuple containing (list of traffic capture rules instances, Response, error)
 
         Examples:
         >>> rules, response, error = zia.traffic_capture.list_rules()
@@ -85,26 +83,18 @@ class TrafficCaptureAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficCapture(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficCapture(self.form_response_body(item)))
+        return result
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[TrafficCapture]:
+    ) -> TrafficCapture:
         """
         Retrieves the Traffic Capture policy rule based on the specified rule ID
 
@@ -131,26 +121,17 @@ class TrafficCaptureAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficCapture)
 
-        response, error = self._request_executor.execute(request, TrafficCapture)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficCapture(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = TrafficCapture(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[TrafficCapture]:
+    ) -> TrafficCapture:
         """
         Adds a new traffic Capture Policy Rule.
 
@@ -245,27 +226,18 @@ class TrafficCaptureAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficCapture)
 
-        response, error = self._request_executor.execute(request, TrafficCapture)
+        result = TrafficCapture(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficCapture(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[TrafficCapture]:
+    def update_rule(self, rule_id: int, **kwargs) -> TrafficCapture:
         """
         Updates an existing traffic capturerule.
 
@@ -360,23 +332,17 @@ class TrafficCaptureAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, TrafficCapture)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, TrafficCapture)
+        result = TrafficCapture(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = TrafficCapture(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[None]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified traffic capturerule.
 
@@ -408,16 +374,11 @@ class TrafficCaptureAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def list_traffic_capture_rule_order(self) -> APIResult[dict]:
+    def list_traffic_capture_rule_order(self) -> None:
         """
         Retrieves the rule order information for the Traffic Capture policy, including the admin rank
         and rule order mappings and the maximum configured rule order.
@@ -456,22 +417,13 @@ class TrafficCaptureAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def traffic_capture_rule_count(self) -> APIResult[List[TrafficCapture]]:
+    def traffic_capture_rule_count(self) -> List[TrafficCapture]:
         """
         Retrieves the rule count for Traffic Capture policy based on the specified search criteria
 
@@ -503,26 +455,17 @@ class TrafficCaptureAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficCapture(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficCapture(self.form_response_body(item)))
+        return result
 
     def list_rule_labels(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[TrafficCapture]]:
+    ) -> List[TrafficCapture]:
         """
        Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
 
@@ -542,7 +485,6 @@ class TrafficCaptureAPI(APIClient):
                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is 1024
 
         Returns:
-            tuple: A tuple containing (list of traffic capture rule labels instances, Response, error)
 
         Examples:
         >>> rules, response, error = zia.traffic_capture.list_rule_labels()
@@ -566,18 +508,10 @@ class TrafficCaptureAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficCaptureRuleLabels(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficCaptureRuleLabels(self.form_response_body(item)))
+        return result

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_region import CBIRegion
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CBIRegionAPI(APIClient):
@@ -33,18 +32,17 @@ class CBIRegionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_regions(self) -> APIResult[List[CBIRegion]]:
+    def list_cbi_regions(self) -> List[CBIRegion]:
         """
         Returns a list of all cloud browser isolation regions.
 
         Returns:
-            tuple: A tuple containing a list of `CBIRegion` instances, response object, and error if any.
 
         Examples:
-            >>> region_list, _, err = client.zpa.cbi_region.list_cbi_regions()
-            ... if err:
-            ...     print(f"Error listing regions: {err}")
-            ...     return
+            >>> try:
+            ...     region_list = client.zpa.cbi_region.list_cbi_regions()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -54,18 +52,9 @@ class CBIRegionAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CBIRegion(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CBIRegion(self.form_response_body(item)))
+        return result

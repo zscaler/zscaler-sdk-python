@@ -38,8 +38,7 @@ class TestScimAttributes:
 
         try:
             # Step 1: List all IDPs and find the one with sso_type = USER
-            idps, _, err = client.zpa.idp.list_idps()
-            assert err is None, f"Error listing IDPs: {err}"
+            idps = client.zpa.idp.list_idps()
             user_idp = next((idp for idp in idps if "USER" in idp.sso_type), None)
             assert user_idp is not None, "No IdP with sso_type 'USER' found."
 
@@ -50,8 +49,7 @@ class TestScimAttributes:
         if user_idp_id:
             try:
                 # Step 2: List SCIM attributes for the USER IdP
-                scim_attributes, _, err = client.zpa.scim_attributes.list_scim_attributes(user_idp_id)
-                assert err is None, f"Error listing SCIM attributes: {err}"
+                scim_attributes = client.zpa.scim_attributes.list_scim_attributes(user_idp_id)
                 assert isinstance(scim_attributes, list), "Response is not in the expected list format."
                 assert len(scim_attributes) > 0, "No SCIM attributes were found for the specified IdP."
 
@@ -63,8 +61,7 @@ class TestScimAttributes:
         if first_attribute_id:
             try:
                 # Step 3: Get the SCIM attribute using the retrieved ID
-                scim_attribute, _, err = client.zpa.scim_attributes.get_scim_attribute(user_idp_id, first_attribute_id)
-                assert err is None, f"Error getting SCIM attribute: {err}"
+                scim_attribute = client.zpa.scim_attributes.get_scim_attribute(user_idp_id, first_attribute_id)
                 assert scim_attribute is not None, "No SCIM attribute found for the specified ID."
                 assert scim_attribute.id == first_attribute_id, "Retrieved SCIM attribute ID does not match the requested ID."
             except Exception as exc:
@@ -72,8 +69,7 @@ class TestScimAttributes:
 
             try:
                 # Step 4: Get the values for the SCIM attribute
-                attribute_values, _, err = client.zpa.scim_attributes.get_scim_values(user_idp_id, first_attribute_id)
-                assert err is None, f"Error getting SCIM attribute values: {err}"
+                attribute_values = client.zpa.scim_attributes.get_scim_values(user_idp_id, first_attribute_id)
                 assert isinstance(attribute_values, list), "Expected a list of values for the SCIM attribute."
                 assert len(attribute_values) > 0, "No values returned for the SCIM attribute."
             except Exception as exc:

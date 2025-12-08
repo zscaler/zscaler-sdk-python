@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
@@ -22,20 +22,20 @@ from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.models.application_segment import MultiMatchUnsupportedReferences
 from zscaler.utils import format_url, add_id_groups
-from zscaler.types import APIResult
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 class ApplicationSegmentAPI(APIClient):
+    """
+    A client object for the Application Segments resource.
+    """
+
     reformat_params = [
         ("clientless_app_ids", "clientlessApps"),
         ("server_group_ids", "serverGroups"),
     ]
-    """
-    A client object for the Application Segments resource.
-    """
 
     def __init__(self, request_executor, config):
         super().__init__()
@@ -44,242 +44,119 @@ class ApplicationSegmentAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segments(self, query_params: Optional[dict] = None) -> APIResult[List[ApplicationSegments]]:
+    def list_segments(self, query_params: Optional[dict] = None) -> List[ApplicationSegments]:
         """
         Enumerates application segments in your organization with pagination.
-        A subset of application segments can be returned that match a supported
-        filter expression or query.
-
-        See the
-        `Retrieving a list of Application Segments Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
-        for further detail on optional keyword parameter structures.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page]`` {str}: Specifies the page number.
-
-                ``[query_params.page_size]`` {str}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of ApplicationSegment instances, Response, error)
+            List[ApplicationSegments]: A list of ApplicationSegment instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> segment_list, _, err = client.zpa.application_segment.list_segments(
-            ... query_params={'search': 'AppSegment01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing application segments: {err}")
-            ...     return
-            ... print(f"Total application segments found: {len(segment_list)}")
-            ... for app in segments:
-            ...     print(app.as_dict())
+            >>> try:
+            ...     segments = client.zpa.application_segment.list_segments()
+            ...     for segment in segments:
+            ...         print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        return [ApplicationSegments(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApplicationSegments(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_segment(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[ApplicationSegments]:
+    def get_segment(self, segment_id: str, query_params: Optional[dict] = None) -> ApplicationSegments:
         """
         Retrieve an application segment by its ID.
 
-        See the
-        `Retrieving a Application Segment Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
-        for further detail on optional keyword parameter structures.
-
         Args:
             segment_id (str): The unique identifier of the application segment.
-
-        Keyword Args:
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
+            ApplicationSegments: The application segment object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_segment, _, err = client.zpa.application_segment.get_segment('999999')
-            ... if err:
-            ...     print(f"Error fetching segment by ID: {err}")
-            ...     return
-            ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
+            >>> try:
+            ...     segment = client.zpa.application_segment.get_segment('999999')
+            ...     print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        return ApplicationSegments(self.form_response_body(response.get_body()))
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_segment(self, **kwargs) -> APIResult[ApplicationSegments]:
+    def add_segment(self, **kwargs) -> ApplicationSegments:
         """
         Create a new application segment.
 
-        See the
-        `Adding a Application Segment Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-post>`_
-        for further detail on optional keyword parameter structures.
-
         Args:
-            name (str): **Required**. Name of the application segment (user-defined).
-            domain_names (list of str): **Required**. Domain names or IP addresses for the segment.
-            segment_group_id (str): **Required**. Unique identifier for the segment group.
-            server_group_ids (list of str): **Required**. List of server group IDs this segment belongs to.
-            tcp_port_ranges (list of str, optional): **Legacy format**. TCP port range pairs (e.g., `['22', '22']`).
-            udp_port_ranges (list of str, optional): **Legacy format**. UDP port range pairs (e.g., `['35000', '35000']`).
-            tcp_port_range (list of dict, optional): **New format**. TCP port range pairs `[{"from": "8081", "to": "8081"}]`.
-            udp_port_range (list of dict, optional): **New format**. UDP port range pairs `[{"from": "8081", "to": "8081"}]`.
-
-        Keyword Args:
-            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
-            clientless_app_ids (list): IDs for associated clientless apps.
-            description (str): Additional information about the segment.
-            double_encrypt (bool): If true, enables double encryption.
-            enabled (bool): If true, enables the application segment.
-            health_check_type (str): Health Check Type. Values: `DEFAULT`, `NONE`.
-            health_reporting (str): Health Reporting mode. Values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
-            ip_anchored (bool): If true, enables IP Anchoring.
-            is_cname_enabled (bool): If true, enables CNAMEs for the segment.
-            passive_health_enabled (bool): If true, enables Passive Health Checks.
-            icmp_access_type (str): Sets ICMP access type for ZPA clients.
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+            name (str): Name of the application segment.
+            domain_names (list): Domain names or IP addresses for the segment.
+            segment_group_id (str): Unique identifier for the segment group.
+            server_group_ids (list): List of server group IDs.
+            tcp_port_ranges (list, optional): Legacy TCP port range pairs.
+            tcp_port_range (list, optional): New format TCP port ranges.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
+            ApplicationSegments: The created application segment.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
+            ValueError: If conflicting port range formats are used.
 
         Examples:
-
-            Create an application segment using **legacy TCP port format** (`tcp_port_ranges`):
-
-            >>> added_segment, _, err = client.zpa.application_segment.add_segment(
-            ...     name=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_ranges=["8081", "8081"],
-            ... )
-            ... if err:
-            ...     print(f"Error creating segment: {err}")
-            ...     return
-            ... print(f"segment created successfully: {added_segment.as_dict()}")
-
-           Create an application segment using **new TCP port format** (`tcp_port_range`):
-
-            >>> added_segment, _, err = client.zpa.application_segment.add_segment(
-            ...     name=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "8081", "to": "8081"}],  # Single port range using 'from' and 'to'
-            ... )
-            ... if err:
-            ...     print(f"Error creating segment: {err}")
-            ...     return
-            ... print(f"segment created successfully: {added_segment.as_dict()}")
-
-           Create an Browser Access application segment:
-
-            >>> added_segment, _, err = client.zpa.application_segment.add_segment(
-            ...     name=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"NewAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "8081", "to": "8081"}],
-            ...     clientless_app_ids=[
-            ...         {
-            ...             "name": "jenkins.securitygeek.io",
-            ...             "enabled": True,
-            ...             "certificate_id": "72058304855021564",
-            ...             "application_port": "4443",
-            ...             "application_protocol": "HTTPS",
-            ...             "domain": "jenkins.securitygeek.io",
-            ...         }
-            ...     ]
-            ... )
-            ... if err:
-            ...     print(f"Error creating segment: {err}")
-            ...     return
-            ... print(f"segment created successfully: {added_segment.as_dict()}")
+            >>> try:
+            ...     segment = client.zpa.application_segment.add_segment(
+            ...         name="NewSegment",
+            ...         domain_names=["test.example.com"],
+            ...         segment_group_id="12345",
+            ...         server_group_ids=["67890"],
+            ...         tcp_port_ranges=["8081", "8081"]
+            ...     )
+            ...     print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application")
 
         body = kwargs
-
-        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
+        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
-        # --- Prevent mixed legacy + structured port range usage ---
+        # Prevent mixed legacy + structured port range usage
         if "tcp_port_ranges" in body and "tcp_port_range" in body:
-            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
-
+            raise ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
         if "udp_port_ranges" in body and "udp_port_range" in body:
-            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+            raise ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
         if "tcp_port_ranges" in body:
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
@@ -296,141 +173,68 @@ class ApplicationSegmentAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, ApplicationSegments)
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        return ApplicationSegments(self.form_response_body(response.get_body()))
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_segment(self, segment_id: str, **kwargs) -> APIResult[ApplicationSegments]:
+    def update_segment(self, segment_id: str, **kwargs) -> ApplicationSegments:
         """
         Update an existing application segment.
 
-        See the
-        `Updating Application Segments Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-put>`_
-        for further detail on optional keyword parameter structures.
-
         Args:
             segment_id (str): The unique identifier of the application segment.
-
-        Keyword Args:
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+            **kwargs: Fields to update.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the updated `ApplicationSegment` instance, response object, and error if any.
+            ApplicationSegments: The updated application segment.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
+            ValueError: If conflicting port range formats are used.
 
         Examples:
-
-            Update an application segment using **legacy TCP port format** (`tcp_port_ranges`):
-
-            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
-            ...     segment_id='56687421',
-            ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_ranges=["8081", "8081"],
-            ... )
-            ... if err:
-            ...     print(f"Error updating segment: {err}")
-            ...     return
-            ... print(f"segment updated successfully: {update_segment.as_dict()}")
-
-            Update an application segment using **new TCP port format** (`tcp_port_range`):
-
-            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
-            ...     segment_id='56687421',
-            ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "8081", "to": "8081"}],
-            ... )
-            ... if err:
-            ...     print(f"Error updating segment: {err}")
-            ...     return
-            ... print(f"segment updated successfully: {update_segment.as_dict()}")
-
-            Update an Browser Access application segment
-
-            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
-            ...     segment_id='99999',
-            ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
-            ...     enabled=True,
-            ...     domain_names=["test.example.com", "test1.example.com"],
-            ...     segment_group_id="72058304855089379",
-            ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "8081", "to": "8081"}],
-            ...     clientless_app_ids=[
-                        {
-                            "name": "jenkins.securitygeek.io",
-                            "enabled": True,
-                            "certificate_id": "72058304855021564",
-                            "application_port": "4443",
-                            "application_protocol": "HTTPS",
-                            "domain": "jenkins.securitygeek.io",
-                        }
-                    ]
-            ... )
-            ... if err:
-            ...     print(f"Error updating segment: {err}")
-            ...     return
-            ... print(f"segment updated successfully: {update_segment.as_dict()}")
+            >>> try:
+            ...     segment = client.zpa.application_segment.update_segment(
+            ...         "999999",
+            ...         name="UpdatedSegment",
+            ...         enabled=True
+            ...     )
+            ...     print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
+        http_method = "PUT"
         api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}")
 
         body = kwargs
 
-        # --- Prevent mixed legacy + structured port range usage ---
+        # Prevent mixed legacy + structured port range usage
         if "tcp_port_ranges" in body and "tcp_port_range" in body:
-            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
-
+            raise ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
         if "udp_port_ranges" in body and "udp_port_range" in body:
-            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+            raise ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
-        microtenant_id = body.get("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
         if "clientless_app_ids" in body:
             clientless_apps = body.pop("clientless_app_ids")
-
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
-
-            segments_list, _, err = app_segment_api.get_segments_by_type(application_type="BROWSER_ACCESS")
-
-            if err:
-                return (None, None, f"Error fetching application segment data: {err}")
-
+            segments_list = app_segment_api.get_segments_by_type(application_type="BROWSER_ACCESS")
             matched_segment = next((app for app in segments_list if app.get("appId") == segment_id), None)
 
             if not matched_segment:
-                return (None, None, f"Error: No matching clientless App found with appId '{segment_id}' in existing segments.")
+                raise ValueError(f"No matching clientless App found with appId '{segment_id}' in existing segments.")
 
             clientless_app_id = matched_segment["id"]
-
             body["clientlessApps"] = []
             for app in clientless_apps:
                 app["appId"] = segment_id
                 app["id"] = clientless_app_id
-
                 body["clientlessApps"].append(app)
 
         if "tcp_port_ranges" in body:
@@ -446,130 +250,90 @@ class ApplicationSegmentAPI(APIClient):
         if "udp_port_ranges" in body:
             body["udpPortRanges"] = body.pop("udp_port_ranges")
         else:
-            body["udpPortRanges"] = []  # Explicitly clear if not provided
+            body["udpPortRanges"] = []
 
         if "udp_port_range" in body:
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
         else:
-            body["udpPortRange"] = []  # Explicitly clear if not provided
+            body["udpPortRange"] = []
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, ApplicationSegments)
 
         if response is None:
-            return (ApplicationSegments({"id": segment_id}), None, None)
+            return ApplicationSegments({"id": segment_id})
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        return ApplicationSegments(self.form_response_body(response.get_body()))
 
     def delete_segment(
         self,
         segment_id: str,
         force_delete: bool = False,
         microtenant_id: Optional[str] = None
-    ) -> APIResult[None]:
+    ) -> None:
         """
         Deletes the specified Application Segment from ZPA.
 
-        See the
-        `Deleting a Application Segment Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-delete>`_
-        for further detail on optional keyword parameter structures.
-
         Args:
             segment_id (str): The unique identifier for the Application Segment.
-            force_delete (bool):
-                Setting this field to true deletes the mapping between Application Segment and Segment Group.
-            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+            force_delete (bool): Setting this to true deletes mapping between segment and group.
+            microtenant_id (str, optional): The microtenant ID.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
+            None
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> _, _, err = client.zpa.application_segment.delete_segment(
-            ...     segment_id='999999'
-            ... )
-            ... if err:
-            ...     print(f"Error deleting application segment: {err}")
-            ...     return
-            ... print(f"Application segment with ID {'999999'} deleted successfully.")
+            >>> try:
+            ...     client.zpa.application_segment.delete_segment('999999')
+            ...     print("Segment deleted successfully")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "delete".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}
-        """
-        )
+        http_method = "DELETE"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}")
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
-
         if force_delete:
             params["forceDelete"] = "true"
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def app_segment_move(self, application_id: str, **kwargs) -> APIResult[dict]:
+    def app_segment_move(self, application_id: str, **kwargs) -> dict:
         """
-        Moves application segments from one microtenant to another
-        Note: Application segments can only be moved from a Default Microtenant microtenant_id as 0 to a child tenant
-
-        See the
-        `Moving Application Segments between Microtenants Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}/move-post>`_
-        for further detail on optional keyword parameter structures.
+        Moves application segments from one microtenant to another.
 
         Args:
-            application_id (str):
-                The unique identifier of the Application Segment.
-            target_segment_group_id (str):
-                The unique identifier of the target segment group that the application segment is being moved to.
-            target_server_group_id (str):
-                The unique identifier of the target server group that the application segment is being moved to.
-            target_microtenant_id (str):
-                The unique identifier of the Microtenant that the application segment is being moved to.
-
-        Keyword Args:
+            application_id (str): The unique identifier of the Application Segment.
+            target_segment_group_id (str): Target segment group ID.
+            target_server_group_id (str): Target server group ID.
+            target_microtenant_id (str): Target microtenant ID.
 
         Returns:
-            :obj:`Tuple`: The resource record for the moved application segment.
+            dict: Result of the move operation.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Moving an application segment to another microtenant:
-
-            >>> zpa.app_segments.app_segment_move(
-            ...    application_id='216199618143373016',
-            ...    target_segment_group_id='216199618143373010',
-            ...    target_server_group_id='216199618143373012',
-            ...    target_microtenant_id='216199618143372994'
-            ... )
+            >>> try:
+            ...     result = client.zpa.application_segment.app_segment_move(
+            ...         '216199618143373016',
+            ...         target_segment_group_id='216199618143373010',
+            ...         target_server_group_id='216199618143373012',
+            ...         target_microtenant_id='216199618143372994'
+            ...     )
+            ...     print(result)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{application_id}/move
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{application_id}/move")
 
         payload = {
             "targetSegmentGroupId": kwargs.pop("target_segment_group_id", None),
@@ -580,206 +344,96 @@ class ApplicationSegmentAPI(APIClient):
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=payload, params=params
         )
-
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         if response and response.status_code == 204:
             logger.debug("Move operation completed successfully with 204 No Content.")
-            return ({"message": "Move operation completed successfully."}, response, None)
+            return {"message": "Move operation completed successfully."}
 
-        try:
-            result = response.get_body() if response else {}
-        except Exception as error:
-            logger.debug(f"Error retrieving response body: {error}")
-            return (None, response, error)
+        return response.get_body() if response else {}
 
-        return (result, response, None)
-
-    def app_segment_share(self, application_id: str, **kwargs) -> APIResult[dict]:
+    def app_segment_share(self, application_id: str, **kwargs) -> dict:
         """
-        Shares the application segment to the Microtenant for the specified ID.
-
-        See the
-        `Sharing Application Segments between Microtenants Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}/share-put>`_
-        for further detail on optional keyword parameter structures.
+        Shares the application segment to the Microtenant.
 
         Args:
-            application_id (str):
-                The unique identifier of the Application Segment.
-            share_to_microtenants (:obj:`list` of :obj:`str`):
-                The unique identifier of the Microtenant that the application segment is being shared to.
-                This field is required if you want to share an application segment.
-                To remove the share send the attribute as an empty list.
-        Keyword Args:
+            application_id (str): The unique identifier of the Application Segment.
+            share_to_microtenants (list): List of microtenant IDs to share to.
 
         Returns:
-            :obj:`Tuple`: An empty tuple object if the operation is successful.
+            dict: Result of the share operation.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Moving an application segment to another microtenant:
-
-            >>> zpa.app_segments.app_segment_share(
-            ...    application_id='216199618143373016',
-            ...    share_to_microtenants=['216199618143373010']
-            ... )
+            >>> try:
+            ...     result = client.zpa.application_segment.app_segment_share(
+            ...         '216199618143373016',
+            ...         share_to_microtenants=['216199618143373010']
+            ...     )
+            ...     print(result)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{application_id}/share
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{application_id}/share")
 
-        payload = {
-            "shareToMicrotenants": kwargs.pop("share_to_microtenants", None),
-        }
+        payload = {"shareToMicrotenants": kwargs.pop("share_to_microtenants", None)}
 
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=payload, params=params
         )
-
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         if response and response.status_code == 204:
             logger.debug("Sharing operation completed successfully with 204 No Content.")
-            return ({"message": "Sharing operation completed successfully."}, response, None)
+            return {"message": "Sharing operation completed successfully."}
 
-        try:
-            result = response.get_body() if response else {}
-        except Exception as error:
-            logger.debug(f"Error retrieving response body: {error}")
-            return (None, response, error)
+        return response.get_body() if response else {}
 
-        return (result, response, None)
-
-    def add_segment_provision(self, **kwargs) -> APIResult[dict]:
+    def add_segment_provision(self, **kwargs) -> ApplicationSegments:
         """
-        Provision a new application segment for a given customer, creating all related objects as needed.
-
-        This endpoint allows you to create and provision an application segment along with advanced options
-        such as server group DTOs, extranet settings, health reporting, ICMP control, and more.
+        Provision a new application segment with all related objects.
 
         Args:
-            name (str): **Required.** Name of the application segment.
-            domain_names (list of str): **Required.** List of domain names or FQDNs for the application.
-            segment_group_id (str): **Required.** ID of the segment group the application belongs to.
-            server_group_ids (list of str): **Required.** List of server group IDs assigned to the application.
-
-            tcp_port_ranges (list of str, optional): Legacy TCP port ranges (e.g., `['8081', '8081']`).
-            udp_port_ranges (list of str, optional): Legacy UDP port ranges.
-            tcp_port_range (list of dict, optional): Modern TCP port range object list (e.g., `[{'from': 80, 'to': 443}]`).
-            udp_port_range (list of dict, optional): Modern UDP port range object list.
-
-        Keyword Args:
-            description (str): Description of the application segment.
-            enabled (bool): Whether the application is enabled.
-            health_reporting (str): Health reporting mode. Valid values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
-            ip_anchored (bool): Whether IP Anchoring is enabled.
-            select_connector_close_to_app (bool): Prefer nearest connector routing.
-            icmp_access_type (str): ICMP access policy. Values: `PING`, `NONE`.
-            match_style (str): Segment matching style. Values: `EXCLUSIVE`, `INCLUSIVE`.
-            is_cname_enabled (bool): Whether CNAME support is enabled.
-            tcp_keep_alive (str): TCP keepalive option. Usually `"0"` or `"1"`.
-            fqdn_dns_check (bool): Whether FQDN DNS checking is enabled.
-            adp_enabled (bool): Enable App Discovery Protection.
-            domain (str): Domain alias for the application.
-            trust_untrusted_cert (bool): Trust untrusted server certificates.
-            bypass_on_reauth (bool): Bypass policy evaluation on reauthentication.
-            bypass_type (str): Bypass mode. Values: `NEVER`, `ALWAYS`, `ON_NET`.
-            hide_dependencies (bool): Whether to hide dependency discovery info.
-            extranet_enabled (bool): Whether Extranet Application Support is enabled
-            application_group (dict): Application group metadata. Example: `{"id": "72058304855114308"}`.
-            server_group_dtos (list of dict): Full definition of server groups, including nested Extranet DTO structure:
-
-                - id (str): Server group ID
-                - dynamic_discovery (bool)
-                - name (str)
-                - extranet_dto (dict): Extranet settings
-                    - zia_er_name (str)
-                    - zpn_er_id (str)
-                    - location_group_dto (list of dict): Each with:
-                        - id (str)
-                        - zia_locations (list of dict): Each with `id`
-                    - location_dto (list of dict): Each with `id`
-                - extranet_enabled (bool): Whether Extranet Application Support is enabled
+            name (str): Name of the application segment.
+            domain_names (list): List of domain names.
+            segment_group_id (str): ID of the segment group.
+            server_group_ids (list): List of server group IDs.
 
         Returns:
-            tuple: A tuple of (`ApplicationSegment` object, raw response, error).
+            ApplicationSegments: The provisioned application segment.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> added_segment, _, err = client.zpa.application_segment.add_segment_provision(
-            ...     name="app02",
-            ...     description="App with Extranet",
-            ...     domain_names=["app02.acme.com"],
-            ...     server_group_ids=["72058304855116228"],
-            ...     application_group={"id": "72058304855114308"},
-            ...     server_group_dtos=[
-            ...         {
-            ...             "id": "72058304855116228",
-            ...             "dynamic_discovery": True,
-            ...             "name": "SRV_Extranet01",
-            ...             "extranet_dto": {
-            ...                 "zia_er_name": "NewExtranet 1002",
-            ...                 "zpn_er_id": "72058304855111768",
-            ...                 "location_group_dto": [
-            ...                     {
-            ...                         "id": "72058304855111771",
-            ...                         "zia_locations": [{"id": "72058304855116226"}]
-            ...                     }
-            ...                 ],
-            ...                 "location_dto": [{"id": "72058304855116226"}]
-            ...             },
-            ...             "extranet_enabled": True
-            ...         }
-            ...     ],
-            ...     extranet_enabled=True,
-            ...     tcp_port_ranges=["8081", "8081"],
-            ...     icmp_access_type="PING",
-            ...     is_cname_enabled=True,
-            ...     trust_untrusted_cert=True,
-            ...     tcp_keep_alive="0",
-            ...     bypass_on_reauth=True,
-            ...     bypass_type="NEVER",
-            ...     enabled=True
-            ... )
-            >>> if err:
-            ...     print(f"Error adding segment: {err}")
-            ... else:
-            ...     print(f"Segment added successfully: {added_segment.as_dict()}")
+            >>> try:
+            ...     segment = client.zpa.application_segment.add_segment_provision(
+            ...         name="app02",
+            ...         domain_names=["app02.acme.com"],
+            ...         server_group_ids=["72058304855116228"]
+            ...     )
+            ...     print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/provision
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/provision")
 
         body = kwargs
-
-        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
+        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
         if "tcp_port_ranges" in body:
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
@@ -796,484 +450,284 @@ class ApplicationSegmentAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, ApplicationSegments)
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        return ApplicationSegments(self.form_response_body(response.get_body()))
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_weighted_lb_config(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[WeightedLBConfig]:
+    def get_weighted_lb_config(self, segment_id: str, query_params: Optional[dict] = None) -> WeightedLBConfig:
         """
-        Get Weighted Load Balancer Config for AppSegment
-
-        See the
-        `Retrieving Load Balancer Config for AppSegment Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
-        for further detail on optional keyword parameter structures.
+        Get Weighted Load Balancer Config for AppSegment.
 
         Args:
             segment_id (str): The unique identifier of the application segment.
-
-        Keyword Args:
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
+            WeightedLBConfig: The load balancer configuration.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_lb_config, _, err = client.zpa.application_segment.get_weighted_lb_config('999999')
-            ... if err:
-            ...     print(f"Error fetching app segment LB config by ID: {err}")
-            ...     return
-            ... print(f"Fetched app segment LB by ID: {fetched_lb_config.as_dict()}")
+            >>> try:
+            ...     config = client.zpa.application_segment.get_weighted_lb_config('999999')
+            ...     print(config.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}/weightedLbConfig
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}/weightedLbConfig")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, WeightedLBConfig)
 
-        response, error = self._request_executor.execute(request, WeightedLBConfig)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = WeightedLBConfig(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return WeightedLBConfig(self.form_response_body(response.get_body()))
 
     def update_weighted_lb_config(
         self,
         segment_id: str,
         query_params: Optional[dict] = None,
         **kwargs
-    ) -> APIResult[WeightedLBConfig]:
+    ) -> WeightedLBConfig:
         """
-        Updates the Weighted Load Balancing configuration for the specified Application Segment.
-
-        This operation allows you to configure load balancing behavior for the application
-        segment by assigning server groups, weights, and passive mode settings.
-
-        See the
-        `Weighted Load Balancing API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{segmentId}/weightedLbConfig-put>`_
-        for further detail on payload structure.
+        Updates the Weighted Load Balancing configuration.
 
         Args:
-            segment_id (str):
-                The unique identifier of the Application Segment whose weighted load balancing
-                configuration is to be updated.
-
-        Keyword Args:
-            weighted_load_balancing (bool):
-                Flag to enable or disable weighted load balancing on the segment.
-            application_to_server_group_mappings (list of dict):
-                A list of mappings that define server groups and their associated weights and passive flags.
-                Each item must be a dictionary with the following keys:
-
-                - `id` (str): The ID of the server group.
-                - `weight` (str): The weight assigned to this server group.
-                - `passive` (bool): Indicates whether the server group operates in passive mode.
-
-            microtenant_id (str, optional):
-                The ID of the microtenant, if applicable in a multi-tenant environment.
+            segment_id (str): The unique identifier of the Application Segment.
+            weighted_load_balancing (bool): Enable/disable weighted load balancing.
+            application_to_server_group_mappings (list): List of server group mappings.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the updated :obj:`WeightedLBConfig` object,
-            the raw response object, and an error object (if any).
+            WeightedLBConfig: The updated configuration.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Updating an application segment with new weighted load balancing settings:
-
-            >>> update_lb, _, err = client.zpa.application_segment.update_weighted_lb_config(
-            ...     segment_id='72058304855090129',
-            ...     weighted_load_balancing=True,
-            ...     application_to_server_group_mappings=[
-            ...         {
-            ...             "id": "72058304855090128",
-            ...             "weight": "10",
-            ...             "passive": True
-            ...         },
-            ...         {
-            ...             "id": "72058304855047747",
-            ...             "weight": "20",
-            ...             "passive": False
-            ...         }
-            ...     ])
-            >>> if err:
-            ...     print(f"Error updating application segment lb: {err}")
-            ...     return
-            ... print(f"Application segment lb updated successfully: {update_lb.as_dict()}")
+            >>> try:
+            ...     config = client.zpa.application_segment.update_weighted_lb_config(
+            ...         '72058304855090129',
+            ...         weighted_load_balancing=True,
+            ...         application_to_server_group_mappings=[
+            ...             {"id": "72058304855090128", "weight": "10", "passive": True}
+            ...         ]
+            ...     )
+            ...     print(config.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}/weightedLbConfig
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}/weightedLbConfig")
 
         body = dict(kwargs)
 
         query_params = query_params.copy() if query_params else {}
-        microtenant_id = query_params.pop("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.pop("microtenant_id", None):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, {}, params=query_params
-        )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, WeightedLBConfig)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params=query_params)
+        response = self._request_executor.execute(request, WeightedLBConfig)
 
         if response is None:
-            return (WeightedLBConfig({"id": segment_id}), None, None)
+            return WeightedLBConfig({"id": segment_id})
 
-        try:
-            result = WeightedLBConfig(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        return WeightedLBConfig(self.form_response_body(response.get_body()))
 
-        return (result, response, None)
-
-    def bulk_update_multimatch(self, **kwargs) -> APIResult[dict]:
+    def bulk_update_multimatch(self, **kwargs) -> Union[MultiMatchUnsupportedReferences, dict]:
         """
         Update multimatch feature in multiple application segments.
 
         Args:
-            application_ids (list of str): List of application segment IDs to update.
-            match_style (str): The match style to apply. Values: `EXCLUSIVE`, `INCLUSIVE`.
-
-        Keyword Args:
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+            application_ids (list): List of application segment IDs.
+            match_style (str): The match style ('EXCLUSIVE', 'INCLUSIVE').
 
         Returns:
-            :obj:`Tuple`: A tuple containing the updated :obj:`MultiMatchUnsupportedReferences` object,
-            the raw response object, and an error object (if any).
+            MultiMatchUnsupportedReferences or dict: Result of the update.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Updating multiple application segments with new multimatch settings:
-
-            >>> bulk_update, _, err = client.zpa.application_segment.bulk_update_multimatch(
-            ...     application_ids=["216196257331372697", "216196257331372698"],
-            ...     match_style="INCLUSIVE"
-            ... )
-            >>> if err:
-            ...     print(f"Error updating multimatch: {err}")
-            ...     return
-            ... print(f"Multimatch updated successfully: {bulk_update.as_dict()}")
+            >>> try:
+            ...     result = client.zpa.application_segment.bulk_update_multimatch(
+            ...         application_ids=["216196257331372697"],
+            ...         match_style="INCLUSIVE"
+            ...     )
+            ...     print(result)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/bulkUpdateMultiMatch
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/bulkUpdateMultiMatch")
 
         body = kwargs
-
-        microtenant_id = kwargs.get("microtenant_id", None)
+        microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request)
 
         if response is None:
-            return ({"message": "Bulk update multimatch operation completed successfully."}, response, None)
+            return {"message": "Bulk update multimatch operation completed successfully."}
 
-        try:
-            result = MultiMatchUnsupportedReferences(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return MultiMatchUnsupportedReferences(self.form_response_body(response.get_body()))
 
-    def get_multimatch_unsupported_references(self, domains, **kwargs) -> APIResult[List[MultiMatchUnsupportedReferences]]:
+    def get_multimatch_unsupported_references(self, domains, **kwargs) -> List[MultiMatchUnsupportedReferences]:
         """
-        Get the unsupported feature references for multimatch for domains.
-
-        This endpoint checks which application segments have unsupported features
-        when using multimatch functionality for the specified domains.
+        Get unsupported feature references for multimatch domains.
 
         Args:
-            domains (list of str): List of domain names to check for unsupported features.
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+            domains (list): List of domain names to check.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of MultiMatchUnsupportedReferences instances, Response, error).
+            List[MultiMatchUnsupportedReferences]: List of unsupported references.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> references, _, err = client.zpa.application_segment.get_multimatch_unsupported_references(
-            ...     ["app2.securitygeek.io"]
-            ... )
-            ... if err:
-            ...     print(f"Error getting multimatch unsupported references: {err}")
-            ...     return
-            ... print(f"Found {len(references)} references with unsupported features:")
-            ... for ref in references:
-            ...     print(f"Reference: {ref.as_dict()}")
-            ...     print("---")
+            >>> try:
+            ...     refs = client.zpa.application_segment.get_multimatch_unsupported_references(
+            ...         ["app2.securitygeek.io"]
+            ...     )
+            ...     for ref in refs:
+            ...         print(ref.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/multimatchUnsupportedReferences
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/multimatchUnsupportedReferences")
 
-        # The API expects a simple array of domain strings as the body
         body = domains
-
-        microtenant_id = kwargs.get("microtenant_id", None)
+        microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, MultiMatchUnsupportedReferences)
 
-        response, error = self._request_executor.execute(request, MultiMatchUnsupportedReferences)
-        if error:
-            return (None, response, error)
+        return [MultiMatchUnsupportedReferences(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(MultiMatchUnsupportedReferences(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_current_and_max_limit(self) -> APIResult[dict]:
+    def get_current_and_max_limit(self) -> dict:
         """
-        Get current Applications count and maxLimit configured for a given customer.
-
-        This endpoint returns the current number of applications and the maximum limit
-        allowed for the customer without requiring any parameters.
+        Get current applications count and maxLimit for the customer.
 
         Returns:
-            :obj:`Tuple`: A tuple containing a dictionary with `currentAppsCount` and `maxAppsLimit`,
-            the response object, and error if any.
+            dict: Dictionary with currentAppsCount and maxAppsLimit.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> limits, _, err = client.zpa.application_segment.get_current_and_max_limit()
-            ... if err:
-            ...     print(f"Error getting current and max limit: {err}")
-            ...     return
-            ... print(f"Current apps count: {limits.get('currentAppsCount')}")
-            ... print(f"Max apps limit: {limits.get('maxAppsLimit')}")
+            >>> try:
+            ...     limits = client.zpa.application_segment.get_current_and_max_limit()
+            ...     print(f"Current: {limits.get('currentAppsCount')}")
+            ...     print(f"Max: {limits.get('maxAppsLimit')}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/count/currentAndMaxLimit
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/count/currentAndMaxLimit")
+
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+
+        return self.form_response_body(response.get_body())
+
+    def get_application_segment_count(self) -> List[dict]:
         """
-        )
-
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_application_segment_count(self) -> APIResult[List[dict]]:
-        """
-        Returns the count of configured application segments for the provided customer.
-
-        This endpoint returns a list of dictionaries, each containing the number of
-        applications configured and the date when the configuration was set.
+        Returns the count of configured application segments.
 
         Returns:
-            :obj:`Tuple`: A tuple containing a list of dictionaries with `appsConfigured`
-            and `configuredDateInEpochSeconds`, the response object, and error if any.
+            List[dict]: List of count records.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> counts, _, err = client.zpa.application_segment.get_application_segment_count()
-            ... if err:
-            ...     print(f"Error getting application segment count: {err}")
-            ...     return
-            ... print(f"Found {len(counts)} count records:")
-            ... for count in counts:
-            ...     print(f"Apps configured: {count.get('appsConfigured')}")
-            ...     print(f"Configured date: {count.get('configuredDateInEpochSeconds')}")
+            >>> try:
+            ...     counts = client.zpa.application_segment.get_application_segment_count()
+            ...     for count in counts:
+            ...         print(count)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/configured/count
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/configured/count")
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        return [self.form_response_body(item) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(self.form_response_body(item))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_application_segment_mappings(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[List[dict]]:
+    def get_application_segment_mappings(self, segment_id: str, query_params: Optional[dict] = None) -> List[dict]:
         """
         Get the Application Segment Mapping details.
 
-        This endpoint returns a list of mappings for the specified application segment,
-        each containing names and a type.
-
         Args:
             segment_id (str): The unique identifier of the application segment.
-
-        Keyword Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing a list of dictionaries with `names` (list of strings)
-            and `type` (string), the response object, and error if any.
+            List[dict]: List of mapping dictionaries.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> mappings, _, err = client.zpa.application_segment.get_application_segment_mappings(
-            ...     segment_id='999999'
-            ... )
-            ... if err:
-            ...     print(f"Error getting application segment mappings: {err}")
-            ...     return
-            ... print(f"Found {len(mappings)} mappings:")
-            ... for mapping in mappings:
-            ...     print(f"Type: {mapping.get('type')}")
-            ...     print(f"Names: {mapping.get('names')}")
+            >>> try:
+            ...     mappings = client.zpa.application_segment.get_application_segment_mappings('999999')
+            ...     for mapping in mappings:
+            ...         print(mapping)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}/mappings
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}/mappings")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        return [self.form_response_body(item) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(self.form_response_body(item))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def application_segment_export(self, query_params: Optional[dict] = None) -> APIResult[str]:
+    def application_segment_export(self, query_params: Optional[dict] = None) -> str:
         """
         Export application segments as a CSV document.
 
-        This endpoint returns a raw CSV file containing application segment data
-        with headers and comma-separated values.
-
         Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.single]`` {bool}: Returns a single application segment
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the CSV content as a string, the response object, and error if any.
+            str: The CSV content as a string.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> csv_content, _, err = client.zpa.application_segment.application_segment_export()
-            ... if err:
-            ...     print(f"Error exporting application segments: {err}")
-            ...     return
-            ... print(csv_content)
-            ... # Optionally save to file
-            ... with open('application_segments.csv', 'w', encoding='utf-8') as f:
-            ...     f.write(csv_content)
+            >>> try:
+            ...     csv_content = client.zpa.application_segment.application_segment_export()
+            ...     print(csv_content)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/export
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/export")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
         headers = {"Accept": "text/csv"}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params, headers=headers)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params, headers=headers)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            # Return the raw CSV content as a string
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return response.get_body()

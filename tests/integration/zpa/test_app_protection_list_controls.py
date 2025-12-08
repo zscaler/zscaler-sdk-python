@@ -97,18 +97,15 @@ class TestAppProtectionControls:
     def test_list_predef_controls(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
-        # version = "OWASP_CRS/3.3.0"  # Example version for the test
+        version = "OWASP_CRS/4.8.0"  # Required version for the test
 
         try:
-            # Fetch predefined controls without search term
-            predef_controls = client.zpa.app_protection.list_predef_controls()
+            # Fetch predefined controls with version
+            predef_controls = client.zpa.app_protection.list_predef_controls(
+                query_params={"version": version}
+            )
             assert len(predef_controls) > 0, "No predefined controls returned for version"
             print("Predefined Controls for Version:", predef_controls)
-
-            # Fetch predefined controls with search term
-            predef_controls_with_search = client.zpa.app_protection.list_predef_controls()
-            assert len(predef_controls_with_search) > 0, "No predefined controls returned for search"
-            print("Predefined Controls for Search Term:", predef_controls_with_search)
 
         except Exception as exc:
             errors.append(f"Failed to list predefined controls: {exc}")

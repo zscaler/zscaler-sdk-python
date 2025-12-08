@@ -37,8 +37,7 @@ class TestMachineGroups:
 
         # List all machine groups
         try:
-            groups_response, _, err = client.zpa.machine_groups.list_machine_groups()  # Correctly unpack the tuple
-            assert err is None, f"Error listing machine groups: {err}"
+            groups_response = client.zpa.machine_groups.list_machine_groups()  # Correctly unpack the tuple
             assert isinstance(groups_response, list), "Expected a list of machine groups"
             if groups_response:  # If there are any machine groups, proceed with further operations
                 first_group = groups_response[0]
@@ -50,8 +49,7 @@ class TestMachineGroups:
         if group_id:
             # Fetch the selected machine group by its ID
             try:
-                fetched_group, _, err = client.zpa.machine_groups.get_group(group_id)
-                assert err is None, f"Error fetching machine group by ID: {err}"
+                fetched_group = client.zpa.machine_groups.get_group(group_id)
                 assert fetched_group is not None, "Expected a valid machine group object"
                 assert fetched_group.id == group_id, "Mismatch in machine group ID"  # Use dot notation for object access
             except Exception as exc:

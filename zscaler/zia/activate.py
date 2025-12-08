@@ -21,7 +21,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.activation import Activation
 from zscaler.zia.models.activation import EusaStatus
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ActivationAPI(APIClient):
@@ -35,7 +34,7 @@ class ActivationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def status(self) -> APIResult[Activation]:
+    def status(self) -> Activation:
         """
         Returns the activation status for a configuration change.
 
@@ -54,25 +53,15 @@ class ActivationAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
 
         # Execute the request
-        response, error = self._request_executor.execute(request, Activation)
+        response = self._request_executor.execute(request, Activation)
 
-        if error:
-            return (None, response, error)
+        result = Activation(response.get_body())
+        return result
 
-        try:
-            result = Activation(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def activate(self) -> APIResult[Activation]:
+    def activate(self) -> Activation:
         """
         Activates configuration changes.
 
@@ -91,25 +80,15 @@ class ActivationAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
 
         # Execute the request
-        response, error = self._request_executor.execute(request, Activation)
+        response = self._request_executor.execute(request, Activation)
 
-        if error:
-            return (None, response, error)
+        result = Activation(response.get_body())
+        return result
 
-        try:
-            result = Activation(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_eusa_status(self) -> APIResult[EusaStatus]:
+    def get_eusa_status(self) -> EusaStatus:
         """
         Retrieves the End User Subscription Agreement (EUSA) acceptance status.
         If the status does not exist, it returns a status object with no ID.
@@ -118,7 +97,6 @@ class ActivationAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing (Eusa status instance, Response, error).
 
         Examples:
             Print latest Eusa status
@@ -140,22 +118,13 @@ class ActivationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, EusaStatus)
+        result = EusaStatus(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, EusaStatus)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = EusaStatus(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_eusa_status(self, status_id: int, **kwargs) -> APIResult[EusaStatus]:
+    def update_eusa_status(self, status_id: int, **kwargs) -> EusaStatus:
         """
         Updates the EUSA status based on the specified status ID
 
@@ -170,7 +139,6 @@ class ActivationAPI(APIClient):
                 If set to false, the EUSA is in an 'agreement pending' state.
 
         Returns:
-            tuple: A tuple containing the updated EUSA status, response, and error.
 
         Examples:
             Update an existing EUSA status :
@@ -194,16 +162,7 @@ class ActivationAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, EusaStatus)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = EusaStatus(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, EusaStatus)
+        result = EusaStatus(self.form_response_body(response.get_body()))
+        return result

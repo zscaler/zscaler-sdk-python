@@ -43,7 +43,7 @@ class TestServerGroup:
 
         try:
             # Create the App Connector Group
-            created_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
+            created_connector_group = client.zpa.app_connector_groups.add_connector_group(
                 name=group_name,
                 description=group_description,
                 enabled=True,
@@ -61,7 +61,6 @@ class TestServerGroup:
                 tcp_quick_ack_assistant=True,
                 tcp_quick_ack_read_assistant=True,
             )
-            assert err is None, f"Error creating app connector group: {err}"
             assert created_connector_group is not None
             assert created_connector_group.name == group_name
             assert created_connector_group.description == group_description
@@ -80,13 +79,12 @@ class TestServerGroup:
 
         try:
             # Create a Server Group
-            created_server_group, _, err = client.zpa.server_groups.add_group(
+            created_server_group = client.zpa.server_groups.add_group(
                 name=group_name,
                 description=group_description,
                 dynamic_discovery=True,
                 app_connector_group_ids=[connector_group_id],  # Pass the connector group ID
             )
-            assert err is None, f"Error creating server group: {err}"
             assert created_server_group is not None
             assert created_server_group.name == group_name
             assert created_server_group.description == group_description
@@ -104,23 +102,19 @@ class TestServerGroup:
         try:
             if server_group_id:
                 # Retrieve the specific Server Group
-                retrieved_group, _, err = client.zpa.server_groups.get_group(server_group_id)
-                assert err is None, f"Error fetching server group: {err}"
+                retrieved_group = client.zpa.server_groups.get_group(server_group_id)
                 assert retrieved_group.id == server_group_id
                 assert retrieved_group.name == group_name
 
                 # Update the server group
                 updated_name = group_name + " Updated"
-                _, _, err = client.zpa.server_groups.update_group(server_group_id, name=updated_name)
-                assert err is None, f"Error updating server group: {err}"
+                _ = client.zpa.server_groups.update_group(server_group_id, name=updated_name)
 
-                updated_group, _, err = client.zpa.server_groups.get_group(server_group_id)
-                assert err is None, f"Error fetching updated server group: {err}"
+                updated_group = client.zpa.server_groups.get_group(server_group_id)
                 assert updated_group.name == updated_name
 
                 # List server groups and ensure the updated group is in the list
-                groups_list, _, err = client.zpa.server_groups.list_groups()
-                assert err is None, f"Error listing server groups: {err}"
+                groups_list = client.zpa.server_groups.list_groups()
                 assert any(group.id == server_group_id for group in groups_list)
         except Exception as exc:
             errors.append(f"Server group operation failed: {exc}")
@@ -131,8 +125,7 @@ class TestServerGroup:
 
             if server_group_id:
                 try:
-                    delete_response, _, err = client.zpa.server_groups.delete_group(server_group_id)
-                    assert err is None, f"Error deleting server group: {err}"
+                    delete_response = client.zpa.server_groups.delete_group(server_group_id)
                     # Since a 204 No Content response returns None, assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

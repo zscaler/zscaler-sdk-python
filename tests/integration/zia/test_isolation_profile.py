@@ -36,8 +36,7 @@ class TestIsolationProfile:
 
         try:
             # Step 1: List all isolation profiles
-            profiles, _, error = client.zia.cloud_browser_isolation.list_isolation_profiles()
-            assert error is None, f"List Isolation Profiles Error: {error}"
+            profiles = client.zia.cloud_browser_isolation.list_isolation_profiles()
             assert isinstance(profiles, list), "Expected a list of profiles"
 
             if profiles:
@@ -53,4 +52,4 @@ class TestIsolationProfile:
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

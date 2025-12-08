@@ -42,13 +42,12 @@ class TestAccessPolicyForwardingRuleV2:
                 rule_name = "tests-apfr2-" + generate_random_string()
                 rule_description = "Integration test Client Forwarding Rule V2"
 
-                created_rule, _, err = client.zpa.policies.add_client_forwarding_rule_v2(
+                created_rule = client.zpa.policies.add_client_forwarding_rule_v2(
                     name=rule_name,
                     description=rule_description,
                     action="intercept",
                     conditions=[("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])],
                 )
-                assert err is None, f"Error creating forwarding rule: {err}"
                 assert created_rule is not None
                 rule_id = created_rule.id
             except Exception as exc:
@@ -56,8 +55,7 @@ class TestAccessPolicyForwardingRuleV2:
 
             # Step 2: Retrieve rule and verify
             try:
-                retrieved_rule, _, err = client.zpa.policies.get_rule("client_forwarding", rule_id)
-                assert err is None, f"Error retrieving forwarding rule: {err}"
+                retrieved_rule = client.zpa.policies.get_rule("client_forwarding", rule_id)
                 assert retrieved_rule.id == rule_id
             except Exception as exc:
                 errors.append(f"Rule retrieval failed: {exc}")
@@ -65,22 +63,19 @@ class TestAccessPolicyForwardingRuleV2:
             # Step 3: Update rule
             try:
                 updated_description = "Updated rule " + generate_random_string()
-                _, _, err = client.zpa.policies.update_client_forwarding_rule_v2(
+                _ = client.zpa.policies.update_client_forwarding_rule_v2(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
                     action="intercept",
                     conditions=[("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])],
                 )
-                if err and str(err) != "Response is None":
-                    raise AssertionError(f"Unexpected update error: {err}")
             except Exception as exc:
                 errors.append(f"Rule update failed: {exc}")
 
             # Step 4: List rules and confirm
             try:
-                rules, _, err = client.zpa.policies.list_rules("client_forwarding")
-                assert err is None, f"Error listing forwarding rules: {err}"
+                rules = client.zpa.policies.list_rules("client_forwarding")
                 assert any(r.id == rule_id for r in rules), "Rule not found in client forwarding policy list"
             except Exception as exc:
                 errors.append(f"Rule list verification failed: {exc}")
@@ -89,8 +84,7 @@ class TestAccessPolicyForwardingRuleV2:
             cleanup_errors = []
             if rule_id:
                 try:
-                    _, _, err = client.zpa.policies.delete_rule("client_forwarding", rule_id)
-                    assert err is None, f"Error deleting rule: {err}"
+                    _ = client.zpa.policies.delete_rule("client_forwarding", rule_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Rule deletion failed: {exc}")
 

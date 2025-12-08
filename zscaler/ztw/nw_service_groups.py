@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class NWServiceGroupsAPI(APIClient):
@@ -33,7 +32,7 @@ class NWServiceGroupsAPI(APIClient):
     def list_network_svc_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[NetworkServiceGroups]]:
+    ) -> List[NetworkServiceGroups]:
         """
             Lists network service groups in your organization with pagination.
             A subset of network service groups can be returned that match a supported
@@ -46,7 +45,6 @@ class NWServiceGroupsAPI(APIClient):
                     a group's name or description attributes.
 
         Returns:
-            tuple: List of Network Service Group resource records.
 
         Examples:
             Gets a list of all network services group.
@@ -87,21 +85,11 @@ class NWServiceGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(NetworkServiceGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(NetworkServiceGroups(self.form_response_body(item)))
+        return result

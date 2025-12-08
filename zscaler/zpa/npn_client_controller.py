@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.npn_client_controller import NPNClientController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class NPNClientControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class NPNClientControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_vpn_connected_users(self, query_params: Optional[dict] = None) -> APIResult[List[NPNClientController]]:
+    def list_vpn_connected_users(self, query_params: Optional[dict] = None) -> List[NPNClientController]:
         """
         Returns a list of all configured applications configured.
 
@@ -52,10 +51,10 @@ class NPNClientControllerAPI(APIClient):
         Examples:
             Retrieve all applications configured with pagination parameters:
 
-            >>> vpn_list, _, err = client.zpa.npn_client_controller.list_vpn_connected_users()
-            ... if err:
-            ...     print(f"Error listing vpn connected users: {err}")
-            ...     return
+            >>> try:
+            ...     vpn_list = client.zpa.npn_client_controller.list_vpn_connected_users()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total vpn connected users found: {len(vpn_list)}")
             ... for vpn in vpn_list:
             ...     print(vpn.as_dict())
@@ -73,18 +72,9 @@ class NPNClientControllerAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, NPNClientController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(NPNClientController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request, NPNClientController)
+        result = []
+        for item in response.get_results():
+            result.append(NPNClientController(self.form_response_body(item)))
+        return result

@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/nssServers
+    uri: https://easm.test.zscaler.com/zia/api/v1/nssServers
   response:
     body:
-      string: '{"id":23226,"name":"tests-nss-server","status":"ENABLED","type":"NSS_FOR_FIREWALL"}'
+      string: '{"id":23425,"name":"tests-nss-server","status":"ENABLED","type":"NSS_FOR_FIREWALL"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:37 GMT
+      - Sat, 06 Dec 2025 00:17:13 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -48,23 +48,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3437'
+      - '2824'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 28fab899-776a-9007-92ab-6f9ca5b44450
+      - 79be0873-afd1-9312-a5b0-0946bc416e3d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4996'
       x-ratelimit-reset:
-      - '26'
+      - '49'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -86,12 +86,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/nssServers/23226
+    uri: https://easm.test.zscaler.com/zia/api/v1/nssServers/23425
   response:
     body:
-      string: '{"id":23226,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}'
+      string: '{"id":23425,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -113,7 +113,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:39 GMT
+      - Sat, 06 Dec 2025 00:17:16 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -125,23 +125,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2229'
+      - '2205'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 74b7ad15-df4a-987f-ab22-2bf05007fb1f
+      - d89b9f1e-93f0-96c6-b719-4cb0722ad121
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4984'
+      - '4995'
       x-ratelimit-reset:
-      - '23'
+      - '46'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -163,12 +163,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/nssServers/23226
+    uri: https://easm.test.zscaler.com/zia/api/v1/nssServers/23425
   response:
     body:
-      string: '{"id":23226,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}'
+      string: '{"id":23425,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -190,7 +190,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:40 GMT
+      - Sat, 06 Dec 2025 00:17:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -202,23 +202,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '522'
+      - '717'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b20d61ad-675b-9378-bda5-a468c384bd97
+      - 2fde19e0-510d-96ef-bfd4-16e826d5a137
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4983'
+      - '4994'
       x-ratelimit-reset:
-      - '21'
+      - '44'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -240,12 +240,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/nssServers?search=tests-nss-server
+    uri: https://easm.test.zscaler.com/zia/api/v1/nssServers?search=tests-nss-server
   response:
     body:
-      string: '[{"id":13242,"name":"Azure-ZNSS-VM01","status":"ENABLED","state":"UNHEALTHY","type":"NSS_FOR_FIREWALL"},{"id":23188,"name":"TestNSSServer_1884","status":"ENABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"},{"id":23226,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}]'
+      string: '[{"id":23425,"name":"tests-nss-server","status":"DISABLED","state":"HEALTHY","type":"NSS_FOR_FIREWALL"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -267,7 +267,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:40 GMT
+      - Sat, 06 Dec 2025 00:17:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -279,23 +279,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '413'
+      - '396'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 1a0e4a23-42ac-94f5-8993-6f2a4edba6dc
+      - b4f69529-fec7-9883-8a24-99a131c271cc
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4982'
+      - '4993'
       x-ratelimit-reset:
-      - '20'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -317,9 +317,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/nssServers/23226
+    uri: https://easm.test.zscaler.com/zia/api/v1/nssServers/23425
   response:
     body:
       string: ''
@@ -340,7 +340,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:51:42 GMT
+      - Sat, 06 Dec 2025 00:17:20 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -350,23 +350,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1501'
+      - '2545'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2bb862c1-534b-932f-92cd-11c8fd16f67f
+      - 0f45c6dd-9578-925d-bacd-ed33c3b9e6a2
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4981'
+      - '4992'
       x-ratelimit-reset:
-      - '19'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

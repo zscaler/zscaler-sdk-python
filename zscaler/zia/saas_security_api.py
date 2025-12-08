@@ -23,7 +23,6 @@ from zscaler.zia.models.saas_security_api import CasbEmailLabel
 from zscaler.zia.models.saas_security_api import CasbTenant
 from zscaler.zia.models.saas_security_api import SaaSScanInfo
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class SaaSSecurityAPI(APIClient):
@@ -37,7 +36,7 @@ class SaaSSecurityAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_domain_profiles_lite(self) -> APIResult[List[DomainProfiles]]:
+    def list_domain_profiles_lite(self) -> List[DomainProfiles]:
         """
         Retrieves the domain profile summary
 
@@ -50,7 +49,6 @@ class SaaSSecurityAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing (domain profiles lite instance, Response, error).
 
         Examples:
             List domain profiles :
@@ -74,24 +72,15 @@ class SaaSSecurityAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, DomainProfiles)
+        result = []
+        for item in response.get_results():
+            result.append(DomainProfiles(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, DomainProfiles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DomainProfiles(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_quarantine_tombstone_lite(self) -> APIResult[List[QuarantineTombstoneTemplate]]:
+    def list_quarantine_tombstone_lite(self) -> List[QuarantineTombstoneTemplate]:
         """
         Retrieves the templates for the tombstone file created when a file is quarantined
 
@@ -104,7 +93,6 @@ class SaaSSecurityAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing (tombstone file lite instance, Response, error).
 
         Examples:
             List tombstone templates :
@@ -128,24 +116,15 @@ class SaaSSecurityAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, QuarantineTombstoneTemplate)
+        result = []
+        for item in response.get_results():
+            result.append(QuarantineTombstoneTemplate(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, QuarantineTombstoneTemplate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(QuarantineTombstoneTemplate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_casb_email_label_lite(self) -> APIResult[List[CasbEmailLabel]]:
+    def list_casb_email_label_lite(self) -> List[CasbEmailLabel]:
         """
         Retrieves the email labels generated for the SaaS Security API policies in a user's email account
 
@@ -158,7 +137,6 @@ class SaaSSecurityAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing (email labels lite instance, Response, error).
 
         Examples:
             List email label :
@@ -182,24 +160,15 @@ class SaaSSecurityAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CasbEmailLabel)
+        result = []
+        for item in response.get_results():
+            result.append(CasbEmailLabel(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, CasbEmailLabel)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CasbEmailLabel(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_casb_tenant_lite(self, query_params: Optional[dict] = None) -> APIResult[List[CasbTenant]]:
+    def list_casb_tenant_lite(self, query_params: Optional[dict] = None) -> List[CasbTenant]:
         """
         Retrieves the email labels generated for the SaaS Security API policies in a user's email account
 
@@ -236,7 +205,6 @@ class SaaSSecurityAPI(APIClient):
                     `COLLAB`, `REPO`, `STORAGE`, `TP_APP`, `GENAI`, `MISC`
 
         Returns:
-            tuple: A tuple containing (SaaS Application Tenants lite instance, Response, error).
 
         Examples:
             List SaaS Application Tenant :
@@ -264,24 +232,15 @@ class SaaSSecurityAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CasbTenant)
+        result = []
+        for item in response.get_results():
+            result.append(CasbTenant(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, CasbTenant)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CasbTenant(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_saas_scan_info(self, query_params: Optional[dict] = None) -> APIResult[List[SaaSScanInfo]]:
+    def list_saas_scan_info(self, query_params: Optional[dict] = None) -> List[SaaSScanInfo]:
         """
         Retrieves the SaaS Security Scan Configuration information.
 
@@ -296,12 +255,13 @@ class SaaSSecurityAPI(APIClient):
 
         Returns:
             tuple:
-                List SaaS Security Scan Configuration information (SaaSScanInfo, Response, error).
+                List SaaS Security Scan Configuration information List[SaaSScanInfo].
 
         Examples:
             List all SaaS Security Scan Configuration information:
 
-            >>> scan_info_list, _, err = client.zia.saas_security_api.list_saas_scan_info()
+            >>> try:
+            ...     scan_info_list = client.zia.saas_security_api.list_saas_scan_info()
             >>> if err:
             ...     print(f"Error listing scan information: {err}")
             ...     return
@@ -322,20 +282,11 @@ class SaaSSecurityAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(SaaSScanInfo(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(SaaSScanInfo(self.form_response_body(item)))
+        return result

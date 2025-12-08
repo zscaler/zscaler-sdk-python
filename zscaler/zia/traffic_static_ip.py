@@ -20,7 +20,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_static_ip import TrafficStaticIP
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TrafficStaticIPAPI(APIClient):
@@ -34,7 +33,7 @@ class TrafficStaticIPAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_static_ips(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficStaticIP]]:
+    def list_static_ips(self, query_params: Optional[dict] = None) -> List[TrafficStaticIP]:
         """
         Returns the list of all configured static IPs.
 
@@ -50,7 +49,6 @@ class TrafficStaticIPAPI(APIClient):
                 ``[query_params.ip_address]`` {str}: Include VPN credential only if not associated with any location.
 
         Returns:
-            tuple: A tuple containing (list of the configured static IPs instances, Response, error)
 
         Examples:
             List static IPs using default settings:
@@ -82,25 +80,16 @@ class TrafficStaticIPAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficStaticIP(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficStaticIP(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_static_ip(self, static_ip_id: int) -> APIResult[dict]:
+    def get_static_ip(self, static_ip_id: int) -> TrafficStaticIP:
         """
         Returns information for the specified static IP.
 
@@ -126,23 +115,14 @@ class TrafficStaticIPAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficStaticIP)
 
-        response, error = self._request_executor.execute(request, TrafficStaticIP)
+        result = TrafficStaticIP(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficStaticIP(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_static_ip(self, **kwargs) -> APIResult[dict]:
+    def add_static_ip(self, **kwargs) -> TrafficStaticIP:
         """
         Adds a new static IP.
 
@@ -176,9 +156,8 @@ class TrafficStaticIPAPI(APIClient):
             ...     comment=f"NewStaticIP {random.randint(1000, 10000)}",
             ...     ip_address="200.201.203.204",
             ... )
-            ... if err:
-            ...     print(f"Error adding static_ip: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"static_ip added successfully: {added_static_ip.as_dict()}")
         """
         http_method = "post".upper()
@@ -191,26 +170,17 @@ class TrafficStaticIPAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficStaticIP)
+        result = TrafficStaticIP(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficStaticIP)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficStaticIP(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_static_ip(self, static_ip_id: int, **kwargs) -> APIResult[dict]:
+    def update_static_ip(self, static_ip_id: int, **kwargs) -> TrafficStaticIP:
         """
         Updates information relating to the specified static IP.
 
@@ -230,9 +200,7 @@ class TrafficStaticIPAPI(APIClient):
         )
 
         # Fetch the current static IP data
-        current_ip, _, err = self.get_static_ip(static_ip_id)
-        if err:
-            return (None, None, err)
+        current_ip = self.get_static_ip(static_ip_id)
 
         body = {}
 
@@ -243,30 +211,21 @@ class TrafficStaticIPAPI(APIClient):
 
         # Validation: Ensure the IP address is not being updated
         if body["ip_address"] != current_ip.ip_address:
-            return (None, None, ValueError("The IP address cannot be updated once it is set."))
+            raise ValueError("The IP address cannot be updated once it is set.")
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, TrafficStaticIP)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, TrafficStaticIP)
+        result = TrafficStaticIP(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = TrafficStaticIP(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_static_ip(self, static_ip_id: int) -> APIResult[dict]:
+    def delete_static_ip(self, static_ip_id: int) -> None:
         """
         Delete the specified static IP.
 
@@ -291,17 +250,11 @@ class TrafficStaticIPAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def check_static_ip(self, ip_address: str) -> APIResult[dict]:
+    def check_static_ip(self, ip_address: str) -> Any:
         """
         Validates if a static IP address can be added to the organization.
 
@@ -313,7 +266,6 @@ class TrafficStaticIPAPI(APIClient):
             ip_address (str): The static IP address to validate.
 
         Returns:
-            tuple: A tuple of (is_valid, response, error) where:
                 - **is_valid=True, response=None, error=None**: IP is available (not in system)
                 - **is_valid=False, response=raw_response, error=error_obj**: IP already exists (HTTP 409)
                 - **is_valid=False, response=None, error=error_obj**: Network or request error
@@ -321,7 +273,8 @@ class TrafficStaticIPAPI(APIClient):
         Examples:
             Check if an IP address is available:
 
-            >>> is_valid, _, err = client.zia.traffic_static_ip.check_static_ip('203.0.113.11')
+            >>> try:
+            ...     is_valid = client.zia.traffic_static_ip.check_static_ip('203.0.113.11')
             >>> if err:
             ...     print(f"Error: {err}")
             >>> elif is_valid:
@@ -342,59 +295,29 @@ class TrafficStaticIPAPI(APIClient):
         payload = {"ipAddress": ip_address}
 
         # Create the request
-        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
-
-        if error:
-            return (False, None, error)
+        request = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
         # Get raw response - this endpoint returns plain text "SUCCESS" for valid IPs
-        raw_response, error = self._request_executor.execute(request, return_raw_response=True)
+        raw_response = self._request_executor.execute(request, return_raw_response=True)
 
-        # Check the actual HTTP status code, not the error object
-        # The executor may return an "error" for non-JSON responses even on HTTP 200
-        # When return_raw_response=True, we need to check the actual response status
+        # Check the actual HTTP status code
         if raw_response is None:
-            # True network/request error
-            return (False, None, error)
+            raise ValueError("Network/request error - no response received")
 
-        try:
-            # Ensure we have a valid response object with status_code attribute
-            if not hasattr(raw_response, 'status_code'):
-                return (False, raw_response, error if error else "Invalid response object")
+        # Ensure we have a valid response object with status_code attribute
+        if not hasattr(raw_response, 'status_code'):
+            raise ValueError("Invalid response - no status code")
 
-            status_code = raw_response.status_code
-            body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
+        status_code = raw_response.status_code
+        body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
 
-            # HTTP 200 with "SUCCESS" = IP is valid (not in system)
-            # Important: Ignore any error that might have been set for non-JSON responses
-            if status_code == 200 and body_text.upper() == "SUCCESS":
-                return (True, None, None)
+        # HTTP 200 with "SUCCESS" = IP is valid (not in system)
+        if status_code == 200 and body_text.upper() == "SUCCESS":
+            return True
 
-            # HTTP 409 = IP already exists (duplicate)
-            # For 409, parse the JSON error from the response body
-            elif status_code == 409:
-                # Try to parse the error from the response body
-                try:
-                    if body_text:
-                        error_data = json.loads(body_text)
-                        # Create a structured error object if available
-                        # Ensure status code is included in the error dict
-                        if isinstance(error_data, dict):
-                            structured_error = error_data.copy()
-                            structured_error["status"] = 409
-                        else:
-                            structured_error = error
-                    else:
-                        structured_error = error
-                except (json.JSONDecodeError, ValueError):
-                    # If parsing fails, use the provided error or create a generic one
-                    structured_error = error if error else {"status": 409, "message": "IP already exists"}
+        # HTTP 409 = IP already exists (duplicate)
+        if status_code == 409:
+            return False
 
-                return (False, raw_response, structured_error)
-
-            # Any other response = invalid
-            else:
-                return (False, raw_response, error if error else f"Unexpected response: {status_code}")
-
-        except Exception as ex:
-            return (False, raw_response, ex)
+        # Any other response = invalid
+        raise ValueError(f"Unexpected response: status={status_code}, body={body_text}")

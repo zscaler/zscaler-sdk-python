@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.tenancy_restriction_profile import TenancyRestrictionProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TenancyRestrictionProfileAPI(APIClient):
@@ -33,7 +32,7 @@ class TenancyRestrictionProfileAPI(APIClient):
     def list_restriction_profile(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[TenancyRestrictionProfile]]:
+    ) -> List[TenancyRestrictionProfile]:
         """
         Retrieves all the restricted tenant profiles.
 
@@ -43,7 +42,6 @@ class TenancyRestrictionProfileAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Tenancy Restiction Profiles, Response, error)
 
         Examples:
             Print all Tenancy Restiction Profiles
@@ -71,28 +69,18 @@ class TenancyRestrictionProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(TenancyRestrictionProfile(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(TenancyRestrictionProfile(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def get_restriction_profile(self, profile_id: int) -> APIResult[dict]:
+    def get_restriction_profile(self, profile_id: int) -> TenancyRestrictionProfile:
         """
         Retrieves the restricted tenant profile based on the specified ID
 
@@ -100,7 +88,6 @@ class TenancyRestrictionProfileAPI(APIClient):
             profile_id (int): The unique identifier for the restricted tenant profile.
 
         Returns:
-            tuple: A tuple containing (restricted tenant profile, Response, error).
 
         Examples:
             Print a specific Tenancy Restriction Profile
@@ -123,22 +110,13 @@ class TenancyRestrictionProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TenancyRestrictionProfile)
+        result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_restriction_profile(self, **kwargs) -> APIResult[dict]:
+    def add_restriction_profile(self, **kwargs) -> TenancyRestrictionProfile:
         """
         Creates restricted tenant profiles.
 
@@ -189,7 +167,6 @@ class TenancyRestrictionProfileAPI(APIClient):
             allow_gcp_cloud_storage_read (bool): Flag to allow or disallow GCP cloud storage reads.
 
         Returns:
-            tuple: A tuple containing:
                 - The newly added restricted tenant profile.
                 - The HTTP response.
                 - Any error message encountered.
@@ -222,26 +199,17 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TenancyRestrictionProfile)
+        result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_restriction_profile(self, profile_id: int, **kwargs) -> APIResult[dict]:
+    def update_restriction_profile(self, profile_id: int, **kwargs) -> TenancyRestrictionProfile:
         """
         Updates the restricted tenant profile based on the specified ID
 
@@ -249,7 +217,6 @@ class TenancyRestrictionProfileAPI(APIClient):
             profile_id (int): The unique ID for the restricted tenant profile
 
         Returns:
-            tuple: A tuple containing the updated restricted tenant profile, response, and error.
 
         Examples:
             Update a restricted tenant profile
@@ -281,21 +248,12 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, TenancyRestrictionProfile)
+        result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_restriction_profile(self, profile_id: int) -> APIResult[dict]:
+    def delete_restriction_profile(self, profile_id: int) -> None:
         """
         Deletes a restricted tenant profile based on the specified ID
 
@@ -303,7 +261,6 @@ class TenancyRestrictionProfileAPI(APIClient):
             instance_id (str): The unique identifier of the restricted tenant profile.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a specific Tenant Restriction Profile
@@ -325,20 +282,15 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
     def list_app_item_count(
         self,
         app_type: str,
         item_type: str,
-    ) -> APIResult[List[Dict[str, Any]]]:
+    ) -> List[Dict[str, Any]]:
         """
         Retrieves the item count of the specified item type for a given application, excluding any specified profile.
 
@@ -361,7 +313,6 @@ class TenancyRestrictionProfileAPI(APIClient):
             exclude_profile (int, optional): Profile ID to exclude from the item count calculation.
 
         Returns:
-            tuple: A tuple containing:
                 - list: List of item counts matching the application and item type.
                 - Response: The full API response object.
                 - error: Any error encountered during the request.
@@ -387,21 +338,11 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         # body = {"cloudApps": cloud_apps}
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-            if not isinstance(result, list):
-                raise ValueError("Unexpected response format: Expected a list.")
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = response.get_body()
+        if not isinstance(result, list):
+            raise ValueError("Unexpected response format: Expected a list.")
+        return result

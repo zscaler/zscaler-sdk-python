@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.failopenpolicy import FailOpenPolicy
-from zscaler.types import APIResult
 
 
 class FailOpenPolicyAPI(APIClient):
@@ -29,7 +28,7 @@ class FailOpenPolicyAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[FailOpenPolicy]]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> List[FailOpenPolicy]:
         """
         Returns the list of Fail Open Policy By Company in the Client Connector Portal.
 
@@ -64,24 +63,15 @@ class FailOpenPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(FailOpenPolicy(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(FailOpenPolicy(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_failopen_policy(self, **kwargs) -> APIResult[dict]:
+    def update_failopen_policy(self, **kwargs) -> FailOpenPolicy:
         """
         Update Fail Open Policy
 
@@ -90,7 +80,6 @@ class FailOpenPolicyAPI(APIClient):
            policy_id: (int):
 
         Returns:
-            tuple: A tuple containing the Updated Fail Open Policy, response, and error.
 
         Examples:
            Updates a fail open policy.
@@ -124,16 +113,7 @@ class FailOpenPolicyAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, FailOpenPolicy)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FailOpenPolicy(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, FailOpenPolicy)
+        result = FailOpenPolicy(self.form_response_body(response.get_body()))
+        return result

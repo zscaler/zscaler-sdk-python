@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/ftpSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/ftpSettings
   response:
     body:
       string: '{"ftpOverHttpEnabled":true,"ftpEnabled":true,"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"],"urls":["test1.acme.com"]}'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:05 GMT
+      - Sat, 06 Dec 2025 00:16:42 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +52,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '811'
+      - '1015'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d3dd7ad0-487a-9656-8903-21ddbcc8737c
+      - 08e9312b-ee65-90f4-a002-19277beb6956
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4991'
       x-ratelimit-reset:
-      - '56'
+      - '20'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -91,9 +91,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/ftpSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/ftpSettings
   response:
     body:
       string: '{"ftpOverHttpEnabled":true,"ftpEnabled":true,"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"],"urls":["test1.acme.com"]}'
@@ -118,7 +118,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:08 GMT
+      - Sat, 06 Dec 2025 00:16:45 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -130,23 +130,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2852'
+      - '2720'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ab84c59e-c2e1-9153-9994-f1eff205ea05
+      - 22be2cc5-44bf-9851-b983-588baad713e9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4990'
       x-ratelimit-reset:
-      - '55'
+      - '18'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zeasm.models.organizations import Organizations
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class OrganizationsAPI(APIClient):
@@ -36,12 +35,11 @@ class OrganizationsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_organizations(self) -> APIResult[Organizations]:
+    def list_organizations(self) -> Organizations:
         """
         Retrieves all organizations configured for a tenant in the EASM Admin Portal.
 
         Returns:
-            tuple: A tuple containing:
                 - Organizations: Object containing results list and total_results count
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -49,7 +47,8 @@ class OrganizationsAPI(APIClient):
         Examples:
             List all organizations::
 
-                >>> orgs, _, err = client.zeasm.organizations.list_organizations()
+                >>> try:
+            ...     orgs = client.zeasm.organizations.list_organizations()
                 >>> if err:
                 ...     print(f"Error: {err}")
                 ...     return
@@ -59,7 +58,8 @@ class OrganizationsAPI(APIClient):
 
             Get the first organization ID for use with other ZEASM APIs::
 
-                >>> orgs, _, err = client.zeasm.organizations.list_organizations()
+                >>> try:
+            ...     orgs = client.zeasm.organizations.list_organizations()
                 >>> if err:
                 ...     print(f"Error: {err}")
                 ...     return
@@ -78,18 +78,9 @@ class OrganizationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Organizations(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = Organizations(response.get_body())
+        return result

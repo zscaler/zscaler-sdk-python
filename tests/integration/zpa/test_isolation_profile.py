@@ -36,16 +36,14 @@ class TestIsolationProfile:
 
         # Attempt to list all isolation profiles
         try:
-            isolation_profiles, _, err = client.zpa.cbi_zpa_profile.list_isolation_profiles()
-            assert err is None, f"Expected a list of isolation profiles: {err}"
+            isolation_profiles = client.zpa.cbi_zpa_profile.list_isolation_profiles()
             assert isinstance(isolation_profiles, list), "Expected a list of isolation profiles"
         except Exception as exc:
             errors.append(f"Listing isolation profiles failed: {str(exc)}")
 
         # Attempt to list all isolation profiles
         try:
-            isolation_profiles, _, err = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
-            assert err is None, f"Expected a list of isolation profiles: {err}"
+            isolation_profiles = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
             assert isinstance(isolation_profiles, list), "Expected a list of isolation profiles"
         except Exception as exc:
             errors.append(f"Listing isolation profiles failed: {str(exc)}")

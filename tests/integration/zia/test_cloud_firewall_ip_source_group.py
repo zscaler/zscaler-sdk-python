@@ -44,13 +44,12 @@ class TestCloudFirewallIPSourceGroup:
         try:
             # Step 1: Create the IP source group
             try:
-                created_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
+                created_group = client.zia.cloud_firewall.add_ip_source_group(
                     name=group_name,
                     description=group_description,
                     ip_addresses=group_addresses,
                 )
                 print(f"Created Group: {created_group.as_dict() if created_group else 'Not Found'}, Error: {error}")
-                assert error is None, f"Error creating group: {error}"
                 assert created_group is not None, "Group creation returned None"
                 assert created_group.name == group_name, "Group name mismatch"
                 assert created_group.description == group_description, "Group description mismatch"
@@ -73,14 +72,13 @@ class TestCloudFirewallIPSourceGroup:
 
                     # Update
                     time.sleep(3)
-                    updated_group, _, error = client.zia.cloud_firewall.update_ip_source_group(
+                    updated_group = client.zia.cloud_firewall.update_ip_source_group(
                         group_id=group_id,
                         name=updated_name,
                         description=updated_description,
                         ip_addresses=group_addresses,
                     )
                     print(f"Updated Group: {updated_group.as_dict() if updated_group else 'Not Found'}, Error: {error}")
-                    assert error is None, f"Error updating group: {error}"
                     assert updated_group is not None, "Updated group response is None"
                     assert updated_group.name == updated_name, "Group name mismatch after update"
                     assert updated_group.description == updated_description, "Group description mismatch after update"
@@ -102,12 +100,11 @@ class TestCloudFirewallIPSourceGroup:
             try:
                 if group_id:
                     time.sleep(3)
-                    _, _, error = client.zia.cloud_firewall.delete_ip_source_group(group_id)
-                    assert error is None, f"Failed to delete IP source group: {error}"
+                    _ = client.zia.cloud_firewall.delete_ip_source_group(group_id)
                     print(f"Group deleted successfully with ID: {group_id}")
             except Exception as exc:
                 errors.append(f"Cleanup failed: {exc}")
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

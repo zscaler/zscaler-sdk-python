@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.vzen_nodes import VZenNodes
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class VZENNodesAPI(APIClient):
@@ -33,7 +32,7 @@ class VZENNodesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_zen_nodes(self, query_params: Optional[dict] = None) -> APIResult[List[VZenNodes]]:
+    def list_zen_nodes(self, query_params: Optional[dict] = None) -> List[VZenNodes]:
         """
         Retrieves the ZIA Virtual Service Edge for an organization
 
@@ -43,7 +42,6 @@ class VZENNodesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of VZenNodes instances, Response, error)
 
         Examples:
             List Zen Nodes using default settings:
@@ -70,25 +68,16 @@ class VZENNodesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(VZenNodes(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(VZenNodes(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_zen_node(self, node_id: int) -> APIResult[dict]:
+    def get_zen_node(self, node_id: int) -> VZenNodes:
         """
         Fetches a specific Zen Node by ID.
 
@@ -96,7 +85,6 @@ class VZENNodesAPI(APIClient):
             node_id (int): The unique identifier for the Zen Node.
 
         Returns:
-            tuple: A tuple containing (Zen Node instance, Response, error).
 
         Examples:
             Print a specific Zen Node by ID:
@@ -119,22 +107,13 @@ class VZENNodesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, VZenNodes)
+        result = VZenNodes(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZenNodes)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZenNodes(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_zen_node(self, **kwargs) -> APIResult[dict]:
+    def add_zen_node(self, **kwargs) -> VZenNodes:
         """
         Creates a new ZIA Virtual Zen Node.
 
@@ -159,7 +138,6 @@ class VZENNodesAPI(APIClient):
             description (str): Additional notes or information about the Virtual Zen Node.
 
         Returns:
-            tuple: A tuple containing the newly added Virtual Zen Node, response, and error.
 
         Examples:
             Add a new Virtual Zen Node with basic configuration:
@@ -219,26 +197,17 @@ class VZENNodesAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["status"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, VZenNodes)
+        result = VZenNodes(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZenNodes)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZenNodes(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_zen_node(self, node_id: int, **kwargs) -> APIResult[dict]:
+    def update_zen_node(self, node_id: int, **kwargs) -> VZenNodes:
         """
         Updates information for the specified ZIA Virtual Zen Node.
 
@@ -264,7 +233,6 @@ class VZENNodesAPI(APIClient):
             description (str): Additional notes or information about the Virtual Zen Node.
 
         Returns:
-            tuple: A tuple containing the updated Virtual Zen Node, response, and error.
 
         Examples:
             Update an existing Virtual Zen Node with basic configuration:
@@ -325,21 +293,12 @@ class VZENNodesAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["status"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, VZenNodes)
+        result = VZenNodes(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZenNodes)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZenNodes(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_zen_node(self, node_id: int) -> APIResult[dict]:
+    def delete_zen_node(self, node_id: int) -> None:
         """
         Deletes the specified Zen Node.
 
@@ -347,7 +306,6 @@ class VZENNodesAPI(APIClient):
             node_id (str): The unique identifier of the Zen Node.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Zen Node:
@@ -368,11 +326,6 @@ class VZENNodesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

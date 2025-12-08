@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.devices import Devices
 from zscaler.zia.models.device_groups import DeviceGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class DeviceManagementAPI(APIClient):
@@ -37,7 +36,7 @@ class DeviceManagementAPI(APIClient):
     def list_device_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DeviceGroups]]:
+    ) -> List[DeviceGroups]:
         """
         Returns the list of ZIA Device Groups.
 
@@ -50,7 +49,6 @@ class DeviceManagementAPI(APIClient):
                     Cloud Browser Isolation-related device groups.
 
         Returns:
-            tuple: A tuple containing (list of Device Group instances, Response, error)
 
         Examples:
             Print all device groups
@@ -74,29 +72,19 @@ class DeviceManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceGroups(self.form_response_body(item)))
+        return result
 
     def list_devices(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[Devices]]:
+    ) -> List[Devices]:
         """
         Returns the list of Devices.
 
@@ -114,7 +102,6 @@ class DeviceManagementAPI(APIClient):
                     The default size is 100, but the maximum size is 1000.
 
         Returns:
-            tuple: A tuple containing (list of Devices instances, Response, error)
 
         Examples:
             Print all devices
@@ -139,30 +126,20 @@ class DeviceManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(Devices(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Devices(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_device_lite(self) -> APIResult[List[DeviceGroups]]:
+    def list_device_lite(self) -> List[DeviceGroups]:
         """
         Returns the list of devices that includes device ID, name, and owner name.
 
         Returns:
-            tuple: List of Device/ids.
 
         Examples:
             Get Device Lite results
@@ -183,21 +160,11 @@ class DeviceManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceGroups(self.form_response_body(item)))
+        return result

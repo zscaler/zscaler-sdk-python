@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.provisioning_url import ProvisioningURL
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ProvisioningURLAPI(APIClient):
@@ -33,7 +32,7 @@ class ProvisioningURLAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_provisioning_url(self, query_params: Optional[dict] = None) -> APIResult[List[ProvisioningURL]]:
+    def list_provisioning_url(self, query_params: Optional[dict] = None) -> List[ProvisioningURL]:
         """
         List all provisioning URLs.
 
@@ -67,25 +66,16 @@ class ProvisioningURLAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ProvisioningURL(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ProvisioningURL(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_provisioning_url(self, provision_id: str) -> APIResult[dict]:
+    def get_provisioning_url(self, provision_id: str) -> ProvisioningURL:
         """
         Get details for a provisioning template by ID.
 
@@ -112,17 +102,8 @@ class ProvisioningURLAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ProvisioningURL)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ProvisioningURL(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, ProvisioningURL)
+        result = ProvisioningURL(self.form_response_body(response.get_body()))
+        return result

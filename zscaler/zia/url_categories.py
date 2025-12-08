@@ -21,7 +21,6 @@ from zscaler.utils import chunker
 from zscaler.api_client import APIClient
 from zscaler.zia.models.urlcategory import URLCategory
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class URLCategoriesAPI(APIClient):
@@ -38,7 +37,7 @@ class URLCategoriesAPI(APIClient):
     def list_categories(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[URLCategory]]:
+    ) -> List[URLCategory]:
         """
         Returns information on URL categories.
 
@@ -52,13 +51,12 @@ class URLCategoriesAPI(APIClient):
                 ``[query_params.search]`` {str}: Local client-side search filter (not sent to API).
 
         Returns:
-            tuple: A tuple containing (list of url categories instances, Response, error)
 
         Examples:
-            >>> category_list, _, err = client.zia.url_categories.list_categories()
-            ... if err:
-            ...     print(f"Error listing url categories: {err}")
-            ...     return
+            >>> try:
+            ...     category_list = client.zia.url_categories.list_categories()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total url categories found: {len(category_list)}")
             ... for url in category_list:
             ...     print(url.as_dict())
@@ -82,28 +80,18 @@ class URLCategoriesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(URLCategory(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(URLCategory(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.configured_name.lower() if r.configured_name else "")]
 
-        return (results, response, None)
+        return results
 
-    def get_category(self, category_id: str) -> APIResult[URLCategory]:
+    def get_category(self, category_id: str) -> URLCategory:
         """
         Returns URL category information for the provided category.
 
@@ -132,21 +120,12 @@ class URLCategoriesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLCategory)
 
-        response, error = self._request_executor.execute(request, URLCategory)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
     def add_url_category(
         self,
@@ -154,7 +133,7 @@ class URLCategoriesAPI(APIClient):
         urls: Optional[List[str]] = None,
         configured_name: Optional[str] = None,
         **kwargs
-    ) -> APIResult[URLCategory]:
+    ) -> URLCategory:
         """
         Adds a new custom URL category.
 
@@ -248,26 +227,16 @@ class URLCategoriesAPI(APIClient):
 
         payload.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=payload,
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLCategory)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, URLCategory)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as parse_error:
-            return (None, response, parse_error)
-
-        return (result, response, None)
-
-    def add_tld_category(self, configured_name: str, tlds: List[str], **kwargs) -> APIResult[URLCategory]:
+    def add_tld_category(self, configured_name: str, tlds: List[str], **kwargs) -> URLCategory:
         """
         Adds a new custom TLD category.
 
@@ -321,27 +290,18 @@ class URLCategoriesAPI(APIClient):
 
         payload.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=payload,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLCategory)
 
-        response, error = self._request_executor.execute(request, URLCategory)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_url_category(self, category_id: str, action: Optional[str] = None, **kwargs) -> APIResult[URLCategory]:
+    def update_url_category(self, category_id: str, action: Optional[str] = None, **kwargs) -> URLCategory:
         """
         Updates a URL category.
 
@@ -464,26 +424,16 @@ class URLCategoriesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, URLCategory)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, URLCategory)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as parse_error:
-            return (None, response, parse_error)
-
-        return (result, response, None)
-
-    def add_urls_to_category(self, category_id: str, **kwargs) -> APIResult[URLCategory]:
+    def add_urls_to_category(self, category_id: str, **kwargs) -> URLCategory:
         """
         Adds URLS to a URL category.
 
@@ -517,23 +467,17 @@ class URLCategoriesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, URLCategory)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, URLCategory)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_urls_from_category(self, category_id: str, **kwargs) -> APIResult[URLCategory]:
+    def delete_urls_from_category(self, category_id: str, **kwargs) -> None:
         """
         Deletes URLS from a URL category.
 
@@ -570,23 +514,17 @@ class URLCategoriesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, URLCategory)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, URLCategory)
+        result = URLCategory(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = URLCategory(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_category(self, category_id: str) -> APIResult[None]:
+    def delete_category(self, category_id: str) -> None:
         """
         Deletes the specified URL category.
 
@@ -598,10 +536,10 @@ class URLCategoriesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, _, err = client.zia.url_categories.delete_category(CUSTOM_01)
-            ... if err:
-            ...     print(f"Error deleting url category: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zia.url_categories.delete_category(CUSTOM_01)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"url category with ID {CUSTOM_01} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -614,14 +552,9 @@ class URLCategoriesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
     def lookup(self, urls: list) -> list:
         """
@@ -653,14 +586,8 @@ class URLCategoriesAPI(APIClient):
 
         results = []
         for chunk in chunker(urls, 100):
-            request, error = self._request_executor.create_request(http_method, api_url, chunk)
-            if error:
-                return None, error
-
-            response, error = self._request_executor.execute(request)
-            if error:
-                return None, error
-
+            request = self._request_executor.create_request(http_method, api_url, chunk)
+            response = self._request_executor.execute(request)
             results.extend(response.get_results())
             time.sleep(1)
 
@@ -700,14 +627,8 @@ class URLCategoriesAPI(APIClient):
 
         results = []
         for chunk in chunker(urls, 100):
-            request, error = self._request_executor.create_request(http_method, api_url, chunk, {}, {})
-            if error:
-                continue
-
-            response, error = self._request_executor.execute(request)
-            if error:
-                continue
-
+            request = self._request_executor.create_request(http_method, api_url, chunk, {}, {})
+            response = self._request_executor.execute(request)
             results.extend(response.get_results())
             time.sleep(1)
 
@@ -743,14 +664,8 @@ class URLCategoriesAPI(APIClient):
 
         results = []
         for chunk in chunker(urls, 100):
-            request, error = self._request_executor.create_request(http_method, api_url, chunk, {}, {})
-            if error:
-                continue
-
-            response, error = self._request_executor.execute(request)
-            if error:
-                continue
-
+            request = self._request_executor.create_request(http_method, api_url, chunk, {}, {})
+            response = self._request_executor.execute(request)
             results.extend(response.get_results())
             time.sleep(1)
 
@@ -775,12 +690,6 @@ class URLCategoriesAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
-        if error:
-            raise Exception(f"Error creating request: {error}")
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            raise Exception(f"Error executing request: {error}")
-
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
+        response = self._request_executor.execute(request)
         return response.get_body()

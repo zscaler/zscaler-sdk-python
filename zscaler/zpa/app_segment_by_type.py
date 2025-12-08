@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zpa.models.application_segment import AppSegmentByType
-from zscaler.types import APIResult
 
 
 class ApplicationSegmentByTypeAPI(APIClient):
@@ -34,124 +33,95 @@ class ApplicationSegmentByTypeAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
     def get_segments_by_type(
-        self, application_type: str,
+        self,
+        application_type: str,
         expand_all: bool = False,
         query_params: Optional[dict] = None,
         **kwargs
-    ) -> APIResult[dict]:
+    ) -> List[AppSegmentByType]:
         """
-        Retrieve all configured application segments of a specified type, optionally expanding all related data.
+        Retrieve all configured application segments of a specified type.
 
         Args:
             application_type (str): Type of application segment to retrieve.
-            Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
-            expand_all (bool, optional): Whether to expand all related data. Defaults to False.
-
-        Keyword Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.expand_all]`` {bool}: Additional information related to the applications
-                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
+                Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
+            expand_all (bool, optional): Whether to expand all related data.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            tuple: List of application segments.
+            List[AppSegmentByType]: List of application segments.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
+            ValueError: If application_type is not provided.
 
         Examples:
-            >>> app_type = 'BROWSER_ACCESS'
-            >>> expand_all = True
-            >>> search = "ba_server01"
-            >>> app_segments = zpa.app_segments.get_segments_by_type(app_type, expand_all, search=search)
+            >>> try:
+            ...     segments = client.zpa.app_segment_by_type.get_segments_by_type(
+            ...         'BROWSER_ACCESS',
+            ...         expand_all=True
+            ...     )
+            ...     for segment in segments:
+            ...         print(segment.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
         if not application_type:
             raise ValueError("The 'application_type' parameter must be provided.")
 
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/getAppsByType
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/getAppsByType")
 
         query_params = query_params or {}
         query_params.update(kwargs)
         query_params["application_type"] = application_type
         query_params["expand_all"] = str(expand_all).lower()
 
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request, AppSegmentByType)
 
-        response, error = self._request_executor.execute(request, AppSegmentByType)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AppSegmentByType(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return [AppSegmentByType(self.form_response_body(item)) for item in response.get_results()]
 
     def delete_segments_by_type(
         self,
         segment_id: str,
         application_type: str,
         microtenant_id: Optional[str] = None
-    ) -> APIResult[None]:
+    ) -> None:
         """
         Deletes the specified Application Segment from ZPA by type.
-
-        See the
-        `Deleting a Application Segment Using API reference:
-        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-delete>`_
-        for further detail on optional keyword parameter structures.
 
         Args:
             segment_id (str): The unique identifier for the Application Segment.
             application_type (str): Type of application segment to delete.
                 Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
-
-        Keyword Args:
-            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+            microtenant_id (str, optional): The microtenant ID.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
+            None
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> _, _, err = client.zpa.app_segments.delete_segments_by_type(
-            ...     segment_id='999999',
-            ...     application_type='BROWSER_ACCESS'
-            ... )
-            ... if err:
-            ...     print(f"Error deleting application segment type: {err}")
-            ...     return
-            ... print(f"Application segment with ID 999999 deleted successfully.")
+            >>> try:
+            ...     client.zpa.app_segment_by_type.delete_segments_by_type(
+            ...         segment_id='999999',
+            ...         application_type='BROWSER_ACCESS'
+            ...     )
+            ...     print("Segment deleted successfully")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "delete".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /application/{segment_id}/deleteAppByType
-        """
-        )
+        http_method = "DELETE"
+        api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}/deleteAppByType")
 
         params = {"applicationType": application_type}
         if microtenant_id:
             params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)

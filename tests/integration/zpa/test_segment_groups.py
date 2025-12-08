@@ -43,12 +43,11 @@ class TestSegmentGroup:
 
         try:
             # Create a new segment group
-            created_group, _, err = client.zpa.segment_groups.add_group(
+            created_group = client.zpa.segment_groups.add_group(
                 name=segment_group_name,
                 description=segment_group_description,
                 enabled=True,
             )
-            assert err is None, f"Error creating group: {err}"
             assert created_group is not None
             assert created_group.name == segment_group_name
             assert created_group.description == segment_group_description
@@ -61,23 +60,19 @@ class TestSegmentGroup:
         try:
             if group_id:
                 # Retrieve the created segment group by ID
-                retrieved_group, _, err = client.zpa.segment_groups.get_group(group_id)
-                assert err is None, f"Error fetching group: {err}"
+                retrieved_group = client.zpa.segment_groups.get_group(group_id)
                 assert retrieved_group.id == group_id
                 assert retrieved_group.name == segment_group_name
 
                 # Update the segment group
                 updated_name = segment_group_name + " Updated"
-                _, _, err = client.zpa.segment_groups.update_group(group_id, name=updated_name)
-                assert err is None, f"Error updating group: {err}"
+                _ = client.zpa.segment_groups.update_group(group_id, name=updated_name)
 
-                updated_group, _, err = client.zpa.segment_groups.get_group(group_id)
-                assert err is None, f"Error fetching updated group: {err}"
+                updated_group = client.zpa.segment_groups.get_group(group_id)
                 assert updated_group.name == updated_name
 
                 # List segment groups and ensure the updated group is in the list
-                groups_list, _, err = client.zpa.segment_groups.list_groups()
-                assert err is None, f"Error listing groups: {err}"
+                groups_list = client.zpa.segment_groups.list_groups()
                 assert any(group.id == group_id for group in groups_list)
         except Exception as exc:
             errors.append(f"Segment group operation failed: {exc}")
@@ -86,8 +81,7 @@ class TestSegmentGroup:
             # Cleanup: Delete the segment group if it was created
             if group_id:
                 try:
-                    delete_response, _, err = client.zpa.segment_groups.delete_group(group_id)
-                    assert err is None, f"Error deleting group: {err}"
+                    delete_response = client.zpa.segment_groups.delete_group(group_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

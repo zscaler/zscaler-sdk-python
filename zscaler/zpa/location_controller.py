@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.common import CommonIDName, LocationGroupDTO
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LocationControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class LocationControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_location_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
+    def get_location_summary(self, query_params: Optional[dict] = None) -> List[CommonIDName]:
         """
            Get all Location ID and names configured for a given customer.
 
@@ -48,14 +47,14 @@ class LocationControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of ExtranetResource instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CommonIDName]
 
         Examples:
-            >>> location_list, _, err = client.zpa.location_controller.get_location_summary(
+            >>> try:
+            ...     location_list = client.zpa.location_controller.get_location_summary(
             ... query_params={'search': 'Location01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing locations: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total locations found: {len(location_list)}")
             ... for location in location_list:
             ...     print(location.as_dict())
@@ -70,23 +69,14 @@ class LocationControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_location_extranet_resource(self, zpn_er_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_location_extranet_resource(self, zpn_er_id: str, query_params: Optional[dict] = None) -> CommonIDName:
         """
         Gets information on the specified location extranet resource.
 
@@ -109,10 +99,10 @@ class LocationControllerAPI(APIClient):
         Example:
             Retrieve details of a specific extranet resource
 
-            >>> fetched_extranet_resource, _, err = client.zpa.location_controller.get_location_extranet_resource('999999')
-            ... if err:
-            ...     print(f"Error fetching location extranet resource by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_extranet_resource = client.zpa.location_controller.get_location_extranet_resource('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched location extranet resource by ID: {fetched_extranet_resource.as_dict()}")
         """
         http_method = "get".upper()
@@ -125,25 +115,16 @@ class LocationControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result
 
     def get_location_group_extranet_resource(
         self, zpn_er_id: str, query_params: Optional[dict] = None
-    ) -> APIResult[List[LocationGroupDTO]]:
+    ) -> List[LocationGroupDTO]:
         """
         Get information about location groups associated with a specific extranet resource.
 
@@ -167,7 +148,7 @@ class LocationControllerAPI(APIClient):
                 ``[query_params.is_special_location_group_included]`` {bool}: Include special location groups in the response.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of LocationGroupDTO instances, Response, error).
+            :obj:`Tuple`: A tuple containing List[LocationGroupDTO].
                 Each LocationGroupDTO includes:
                 - id: The unique identifier of the location group
                 - name: The name of the location group
@@ -181,9 +162,8 @@ class LocationControllerAPI(APIClient):
             ...         '72058304855108633'
             ...     )
             ... )
-            ... if err:
-            ...     print(f"Error fetching location groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total location groups found: {len(location_groups)}")
             ... for group in location_groups:
             ...     print(f"Group: {group.name} (ID: {group.id})")
@@ -193,7 +173,8 @@ class LocationControllerAPI(APIClient):
 
             Get location groups with pagination and search:
 
-            >>> location_groups, _, err = client.zpa.location_controller.get_location_group_extranet_resource(
+            >>> try:
+            ...     location_groups = client.zpa.location_controller.get_location_group_extranet_resource(
             ...     '72058304855108633',
             ...     query_params={
             ...         'page': '1',
@@ -202,9 +183,8 @@ class LocationControllerAPI(APIClient):
             ...         'is_special_location_group_included': True
             ...     }
             ... )
-            ... if err:
-            ...     print(f"Error fetching location groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for group in location_groups:
             ...     print(group.as_dict())
         """
@@ -218,18 +198,9 @@ class LocationControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, LocationGroupDTO)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationGroupDTO(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, LocationGroupDTO)
+        result = []
+        for item in response.get_results():
+            result.append(LocationGroupDTO(self.form_response_body(item)))
+        return result

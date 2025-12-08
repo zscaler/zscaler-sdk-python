@@ -42,7 +42,7 @@ class TestVZENClusters:
 
         try:
             try:
-                create_cluster, _, error = client.zia.vzen_clusters.add_vzen_cluster(
+                create_cluster = client.zia.vzen_clusters.add_vzen_cluster(
                     name=names.name, 
                     enabled=True,
                     type='VIP',
@@ -51,7 +51,6 @@ class TestVZENClusters:
                     default_gateway='192.168.90.254',
                     ip_sec_enabled=False,
                 )
-                assert error is None, f"Add Cluster Error: {error}"
                 assert create_cluster is not None, "Cluster creation failed."
                 cluster_id = create_cluster.id
             except Exception as e:
@@ -59,7 +58,7 @@ class TestVZENClusters:
 
             try:
                 if cluster_id:
-                    update_cluster, _, error = client.zia.vzen_clusters.update_vzen_cluster(
+                    update_cluster = client.zia.vzen_clusters.update_vzen_cluster(
                         cluster_id=cluster_id,
                         name=names.updated_name,
                         enabled=True,
@@ -69,23 +68,20 @@ class TestVZENClusters:
                         default_gateway='192.168.90.254',
                         ip_sec_enabled=False,
                     )
-                    assert error is None, f"Update Cluster Error: {error}"
                     assert update_cluster is not None, "Cluster update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_vzen_cluster: {str(e)}")
 
             try:
                 if update_cluster:
-                    cluster, _, error = client.zia.vzen_clusters.get_vzen_cluster(update_cluster.id)
-                    assert error is None, f"Get Cluster Error: {error}"
+                    cluster = client.zia.vzen_clusters.get_vzen_cluster(update_cluster.id)
                     assert cluster.id == cluster_id, "Retrieved cluster ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_vzen_cluster: {str(e)}")
 
             try:
                 if update_cluster:
-                    clusters, _, error = client.zia.vzen_clusters.list_vzen_clusters(query_params={"search": update_cluster.name})
-                    assert error is None, f"List clusters Error: {error}"
+                    clusters = client.zia.vzen_clusters.list_vzen_clusters(query_params={"search": update_cluster.name})
                     assert clusters is not None and isinstance(clusters, list), "No clusters found or invalid format."
             except Exception as e:
                 errors.append(f"Exception during list_vzen_clusters: {str(e)}")
@@ -93,10 +89,9 @@ class TestVZENClusters:
         finally:
             try:
                 if update_cluster:
-                    _, _, error = client.zia.vzen_clusters.delete_vzen_cluster(update_cluster.id)
-                    assert error is None, f"Delete Cluster Error: {error}"
+                    _ = client.zia.vzen_clusters.delete_vzen_cluster(update_cluster.id)
             except Exception as e:
                 errors.append(f"Exception during delete_vzen_cluster: {str(e)}")
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

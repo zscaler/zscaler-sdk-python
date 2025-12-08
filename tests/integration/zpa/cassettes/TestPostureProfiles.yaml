@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/posture
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/posture
   response:
     body:
       string: '{"totalPages":"1","totalCount":"14","list":[{"id":"216196257331285223","modifiedTime":"1631571278","creationTime":"1631571278","modifiedBy":"72057594037928115","name":"CrowdStrike_ZPA_Pre-ZTA
@@ -23,16 +23,16 @@ interactions:
         (zscalerthree.net)","postureUdid":"13ba3d97-aefb-4acc-9e54-6cc230dee4a5","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331285222","modifiedTime":"1631571253","creationTime":"1631571253","modifiedBy":"72057594037928115","name":"CrowdStrike_ZPA_ZTA_80
         (zscalerthree.net)","postureUdid":"9d16f2c7-9bf2-4dea-b3ef-2ea24cd5b0b8","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331285224","modifiedTime":"1631571303","creationTime":"1631571303","modifiedBy":"72057594037928115","name":"Detect
         SentinelOne (zscalerthree.net)","postureUdid":"ec41c3d3-f79d-4694-8069-f38fd8a500c9","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364776","modifiedTime":"1689616620","creationTime":"1689616620","modifiedBy":"72057594037928115","name":"Domain_Joined
-        (zscalerthree.net)","postureUdid":"0db83d3c-c278-46aa-8572-a196a62982cb","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331283524","modifiedTime":"1763603850","creationTime":"1630875954","modifiedBy":"72057594037928115","name":"Falcon
-        Agent - macOS and Windows (zscalerthree.net)","postureUdid":"c056f5a5-d09e-48b2-afa1-85b09af786f0","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364779","modifiedTime":"1689616835","creationTime":"1689616835","modifiedBy":"72057594037928115","name":"iOS_Ownership
-        (zscalerthree.net)","postureUdid":"e8ac3393-2dc9-45cf-8272-c9024abc5dd8","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364780","modifiedTime":"1689616866","creationTime":"1689616866","modifiedBy":"72057594037928115","name":"iOS_trust_RWE_root_ca
+        (zscalerthree.net)","postureUdid":"0db83d3c-c278-46aa-8572-a196a62982cb","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364778","modifiedTime":"1764737429","creationTime":"1689616763","modifiedBy":"72057594037928115","name":"faa_certtrust_RADAR
+        (zscalerthree.net)","postureUdid":"948c84fa-ec6a-4f56-82f1-34fc1961e371","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364779","modifiedTime":"1764737444","creationTime":"1689616835","modifiedBy":"72057594037928115","name":"faa-cfe-windows-firewall-check
+        (zscalerthree.net)","postureUdid":"e8ac3393-2dc9-45cf-8272-c9024abc5dd8","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291094","modifiedTime":"1764737521","creationTime":"1638237288","modifiedBy":"72057594037928115","name":"faa-defender-check-all-gfe
+        (zscalerthree.net)","postureUdid":"c404434d-dd40-4d2b-9e8b-37aff0a56b07","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291093","modifiedTime":"1764737509","creationTime":"1638237249","modifiedBy":"72057594037928115","name":"faa-domain-check-win-gfe_ad-faa-gov
+        (zscalerthree.net)","postureUdid":"de0a5caf-11b9-4728-be1c-cd03416d9b3f","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364777","modifiedTime":"1764737463","creationTime":"1689616656","modifiedBy":"72057594037928115","name":"faa-domain-check-win-gfe_faa-gov
+        (zscalerthree.net)","postureUdid":"c020791a-4aff-4578-9ccd-94538dd5e818","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331283524","modifiedTime":"1764737122","creationTime":"1630875954","modifiedBy":"72057594037928115","name":"faa-ios-ownership-variable
+        (zscalerthree.net)","postureUdid":"c056f5a5-d09e-48b2-afa1-85b09af786f0","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291095","modifiedTime":"1764737477","creationTime":"1638237334","modifiedBy":"72057594037928115","name":"faa-ios-unauth-mod-nojailbreak
+        (zscalerthree.net)","postureUdid":"1031e18b-6e31-4241-bfd0-c545475b84ce","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364780","modifiedTime":"1689616866","creationTime":"1689616866","modifiedBy":"72057594037928115","name":"iOS_trust_RWE_root_ca
         (zscalerthree.net)","postureUdid":"5986aa55-cf7e-4a98-9f15-748b89cfb6b0","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291092","modifiedTime":"1638237193","creationTime":"1638237193","modifiedBy":"72057594037928115","name":"Microsoft
-        Windows Defender (zscalerthree.net)","postureUdid":"e7ac7e3f-2098-42fc-a659-030bdca2c4a7","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364778","modifiedTime":"1689616763","creationTime":"1689616763","modifiedBy":"72057594037928115","name":"Valid_Client_Cert_from_RWE_Root
-        (zscalerthree.net)","postureUdid":"948c84fa-ec6a-4f56-82f1-34fc1961e371","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331364777","modifiedTime":"1689616656","creationTime":"1689616656","modifiedBy":"72057594037928115","name":"Windows_Defender_Detected
-        (zscalerthree.net)","postureUdid":"c020791a-4aff-4578-9ccd-94538dd5e818","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291093","modifiedTime":"1664571313","creationTime":"1638237249","modifiedBy":"72057594037928115","name":"Windows_Detect
-        Anti - Virus (zscalerthree.net)","postureUdid":"de0a5caf-11b9-4728-be1c-cd03416d9b3f","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291094","modifiedTime":"1638237288","creationTime":"1638237288","modifiedBy":"72057594037928115","name":"Windows
-        - Detect Disk Encryption (zscalerthree.net)","postureUdid":"c404434d-dd40-4d2b-9e8b-37aff0a56b07","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"},{"id":"216196257331291095","modifiedTime":"1638237334","creationTime":"1638237334","modifiedBy":"72057594037928115","name":"Windows
-        - Detect Firewall (zscalerthree.net)","postureUdid":"1031e18b-6e31-4241-bfd0-c545475b84ce","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"}]}'
+        Windows Defender (zscalerthree.net)","postureUdid":"e7ac7e3f-2098-42fc-a659-030bdca2c4a7","applyToMachineTunnelEnabled":false,"crlCheckEnabled":false,"nonExportablePrivateKeyEnabled":false,"zscalerCloud":"zscalerthree"}]}'
     headers:
       cache-control:
       - no-store
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:16 GMT
+      - Fri, 05 Dec 2025 23:23:10 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -61,23 +61,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '63'
+      - '70'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6905d840-df01-95a1-add4-5f4e9bd0619a
+      - 8f83cd7b-25e9-9443-aeaf-22c4924b7636
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4943'
+      - '4949'
       x-ratelimit-reset:
-      - '44'
+      - '50'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -97,9 +97,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/posture/216196257331285223
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/posture/216196257331285223
   response:
     body:
       string: '{"id":"216196257331285223","modifiedTime":"1631571278","creationTime":"1631571278","modifiedBy":"72057594037928115","name":"CrowdStrike_ZPA_Pre-ZTA
@@ -114,7 +114,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:16 GMT
+      - Fri, 05 Dec 2025 23:23:11 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -132,23 +132,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '49'
+      - '46'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 943a3a4e-1419-9a1d-b915-304ad16f6de7
+      - 1fe5af5a-1735-9662-975e-0cd7b343b3e6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4942'
+      - '4948'
       x-ratelimit-reset:
-      - '44'
+      - '49'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

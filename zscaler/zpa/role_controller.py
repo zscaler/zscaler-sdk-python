@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.role_controller import RoleController
 from zscaler.zpa.models.role_controller import ClassPermissionGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class RoleControllerAPI(APIClient):
@@ -34,7 +33,7 @@ class RoleControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[RoleController]]:
+    def list_roles(self, query_params: Optional[dict] = None) -> List[RoleController]:
         """
         Get All configured roles.
 
@@ -43,15 +42,15 @@ class RoleControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of RoleController instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[RoleController]
 
         Example:
             Fetch all roles without filtering
 
-            >>> role_list, _, err = client.zpa.role_controller.list_roles()
-            ... if err:
-            ...     print(f"Error listing roles: {err}")
-            ...     return
+            >>> try:
+            ...     role_list = client.zpa.role_controller.list_roles()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total roles found: {len(role_list)}")
             ... for role in role_list:
             ...     print(role.as_dict())
@@ -69,23 +68,14 @@ class RoleControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(RoleController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(RoleController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_role(self, role_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_role(self, role_id: str, query_params: Optional[dict] = None) -> RoleController:
         """
         Gets information on the specified role by ID.
 
@@ -100,10 +90,10 @@ class RoleControllerAPI(APIClient):
         Example:
             Retrieve details of a specific role
 
-            >>> fetched_role, _, err = client.zpa.role_controller.get_role('999999')
-            ... if err:
-            ...     print(f"Error fetching role by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_role = client.zpa.role_controller.get_role('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched role by ID: {fetched_role.as_dict()}")
         """
         http_method = "get".upper()
@@ -119,21 +109,12 @@ class RoleControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, RoleController)
+        result = RoleController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, RoleController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RoleController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_role(self, **kwargs) -> APIResult[dict]:
+    def add_role(self, **kwargs) -> RoleController:
         """
         Adds a new role.
 
@@ -159,7 +140,6 @@ class RoleControllerAPI(APIClient):
             :param str class_permission_groups[].class_permissions[].class_type.id: ID representing the class type
 
         Returns:
-            tuple: A tuple containing:
                 - RoleController: The created role object.
                 - HTTP response object.
                 - Error object, if any.
@@ -209,21 +189,12 @@ class RoleControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, RoleController)
+        result = RoleController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, RoleController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RoleController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_role(self, role_id: str, **kwargs) -> APIResult[dict]:
+    def update_role(self, role_id: str, **kwargs) -> RoleController:
         """
         Updates the specified role.
 
@@ -247,7 +218,6 @@ class RoleControllerAPI(APIClient):
             :param str class_permission_groups[].class_permissions[].class_type.id: ID representing the class type
 
         Returns:
-            tuple: A tuple containing:
                 - RoleController: The created role object.
                 - Response: The raw HTTP response.
                 - Error: Any error returned.
@@ -305,24 +275,15 @@ class RoleControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, RoleController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, RoleController)
         if response is None:
-            return (RoleController({"id": role_id}), None, None)
+            return RoleController({"id": role_id})
 
-        try:
-            result = RoleController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = RoleController(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_role(self, role_id: str, microtenant_id: str = None) -> APIResult[None]:
+    def delete_role(self, role_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified role.
 
@@ -334,10 +295,10 @@ class RoleControllerAPI(APIClient):
 
         Example:
             Delete a role by ID
-            >>> _, _, err = client.zpa.role_controller.delete_role('2445851154')
-            ... if err:
-            ...     print(f"Error deleting role: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zpa.role_controller.delete_role('2445851154')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Role with ID {'2445851154'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -350,17 +311,12 @@ class RoleControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        return None
 
-        if error:
-            return (None, response, error)
-        return (None, response, error)
-
-    def list_permission_groups(self, query_params: Optional[dict] = None) -> APIResult[List[ClassPermissionGroups]]:
+    def list_permission_groups(self, query_params: Optional[dict] = None) -> List[ClassPermissionGroups]:
         """
         Get All the default permission groups
 
@@ -369,12 +325,13 @@ class RoleControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of ClassPermissionGroups instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[ClassPermissionGroups]
 
         Example:
             Fetch all default permission groups
 
-            >>> permission_groups, _, err = client.zpa.role_controller.list_permission_groups()
+            >>> try:
+            ...     permission_groups = client.zpa.role_controller.list_permission_groups()
             >>> if err:
             ...     print(f"Error listing permission groups: {err}")
             ...     return
@@ -394,18 +351,9 @@ class RoleControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ClassPermissionGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ClassPermissionGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ClassPermissionGroups)
+        result = []
+        for item in response.get_results():
+            result.append(ClassPermissionGroups(self.form_response_body(item)))
+        return result

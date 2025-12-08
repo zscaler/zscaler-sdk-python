@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.browser_protection import BrowserProtectionProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class BrowserProtectionProfileAPI(APIClient):
@@ -33,20 +32,20 @@ class BrowserProtectionProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_active_browser_protection_profile(self) -> APIResult[List[BrowserProtectionProfile]]:
+    def list_active_browser_protection_profile(self) -> List[BrowserProtectionProfile]:
         """
         Get the active browser protection profile details for the specified customer.
 
         This endpoint returns the active browser protection profile without requiring any parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of BrowserProtectionProfile instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[BrowserProtectionProfile]
 
         Examples:
-            >>> profile_list, _, err = client.zpa.browser_protection.list_active_browser_protection_profile()
-            ... if err:
-            ...     print(f"Error listing browser protection profiles: {err}")
-            ...     return
+            >>> try:
+            ...     profile_list = client.zpa.browser_protection.list_active_browser_protection_profile()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total browser protection profiles found: {len(profile_list)}")
             ... for profile in profile_list:
             ...     print(profile.as_dict())
@@ -59,25 +58,16 @@ class BrowserProtectionProfileAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, BrowserProtectionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(BrowserProtectionProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, BrowserProtectionProfile)
+        result = []
+        for item in response.get_results():
+            result.append(BrowserProtectionProfile(self.form_response_body(item)))
+        return result
 
     def list_browser_protection_profile(
         self, query_params: Optional[dict] = None
-    ) -> APIResult[List[BrowserProtectionProfile]]:
+    ) -> List[BrowserProtectionProfile]:
         """
         Gets all configured browser protection profiles for the specified customer.
 
@@ -98,14 +88,14 @@ class BrowserProtectionProfileAPI(APIClient):
                     Default: `ASC`.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of BrowserProtectionProfile instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[BrowserProtectionProfile]
 
         Examples:
-            >>> profile_list, _, err = client.zpa.browser_protection.list_browser_protection_profile(
+            >>> try:
+            ...     profile_list = client.zpa.browser_protection.list_browser_protection_profile(
             ...     query_params={'search': 'Profile01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing browser protection profiles: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total browser protection profiles found: {len(profile_list)}")
             ... for profile in profile_list:
             ...     print(profile.as_dict())
@@ -120,23 +110,14 @@ class BrowserProtectionProfileAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, BrowserProtectionProfile)
+        result = []
+        for item in response.get_results():
+            result.append(BrowserProtectionProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, BrowserProtectionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(BrowserProtectionProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_browser_protection_profile(self, profile_id: str, **kwargs) -> APIResult[BrowserProtectionProfile]:
+    def update_browser_protection_profile(self, profile_id: str, **kwargs) -> BrowserProtectionProfile:
         """
         Sets a specified browser protection profile as active for the specified customer.
 
@@ -191,12 +172,12 @@ class BrowserProtectionProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing the updated BrowserProtectionProfile instance, response object, and error if any.
 
         Examples:
-            >>> updated_profile, _, err = client.zpa.browser_protection.update_browser_protection_profile(
+            >>> try:
+            ...     updated_profile = client.zpa.browser_protection.update_browser_protection_profile(
             ...     profile_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error updating browser protection profile: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Browser protection profile updated successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
@@ -209,20 +190,11 @@ class BrowserProtectionProfileAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body)
         # Execute the request
-        response, error = self._request_executor.execute(request, BrowserProtectionProfile)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, BrowserProtectionProfile)
         if response is None:
-            return (BrowserProtectionProfile({"id": profile_id}), None, None)
+            return BrowserProtectionProfile({"id": profile_id})
 
-        try:
-            result = BrowserProtectionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = BrowserProtectionProfile(self.form_response_body(response.get_body()))
+        return result

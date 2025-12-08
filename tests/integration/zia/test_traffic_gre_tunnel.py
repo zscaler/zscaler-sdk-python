@@ -42,10 +42,9 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: Create Static IP for GRE Tunnel
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     ip_address=randomIP, comment="tests-" + generate_random_string()
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 static_ip_id = created_static_ip.id
                 static_ip_address = created_static_ip.ip_address
             except Exception as exc:
@@ -53,12 +52,11 @@ class TestTrafficGRETunnel:
 
             # Step 2: Create GRE Tunnel using the static IP
             try:
-                gre_tunnel, _, error = client.zia.gre_tunnel.add_gre_tunnel(
+                gre_tunnel = client.zia.gre_tunnel.add_gre_tunnel(
                     source_ip=static_ip_address,
                     ip_unnumbered=True,
                     comment="tests-" + generate_random_string(),
                 )
-                assert error is None, f"Error creating GRE Tunnel: {error}"
                 assert gre_tunnel is not None, "GRE Tunnel creation returned None"
                 gre_tunnel_ids.append(gre_tunnel.id)
             except Exception as exc:
@@ -68,29 +66,26 @@ class TestTrafficGRETunnel:
             if gre_tunnel_ids:
                 try:
                     updated_comment = "Updated GRE Tunnel " + generate_random_string()
-                    updated_tunnel, _, error = client.zia.gre_tunnel.update_gre_tunnel(
+                    updated_tunnel = client.zia.gre_tunnel.update_gre_tunnel(
                         tunnel_id=gre_tunnel_ids[0],
                         source_ip=static_ip_address,
                         ip_unnumbered=True,
                         comment=updated_comment,
                     )
-                    assert error is None, f"Error updating GRE Tunnel: {error}"
                     assert updated_tunnel.comment == updated_comment, "GRE Tunnel update failed"
                 except Exception as exc:
                     errors.append(f"Update GRE Tunnel failed: {exc}")
 
             # Step 4: Retrieve GRE Tunnel
             try:
-                fetched_tunnel, _, error = client.zia.gre_tunnel.get_gre_tunnel(gre_tunnel_ids[0])
-                assert error is None, f"Error fetching GRE Tunnel: {error}"
+                fetched_tunnel = client.zia.gre_tunnel.get_gre_tunnel(gre_tunnel_ids[0])
                 assert fetched_tunnel.id == gre_tunnel_ids[0], "Fetched tunnel ID mismatch"
             except Exception as exc:
                 errors.append(f"Fetch GRE Tunnel failed: {exc}")
 
             # Step 5: List GRE Tunnels and verify presence
             try:
-                tunnels_list, _, error = client.zia.gre_tunnel.list_gre_tunnels()
-                assert error is None, f"Error listing GRE Tunnels: {error}"
+                tunnels_list = client.zia.gre_tunnel.list_gre_tunnels()
                 assert any(tunnel.id == gre_tunnel_ids[0] for tunnel in tunnels_list), "Created GRE Tunnel not listed"
             except Exception as exc:
                 errors.append(f"List GRE Tunnels failed: {exc}")
@@ -101,15 +96,13 @@ class TestTrafficGRETunnel:
 
             for tunnel_id in gre_tunnel_ids:
                 try:
-                    _, _, error = client.zia.gre_tunnel.delete_gre_tunnel(tunnel_id)
-                    assert error is None, f"Error deleting GRE Tunnel: {error}"
+                    _ = client.zia.gre_tunnel.delete_gre_tunnel(tunnel_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting GRE Tunnel failed: {exc}")
 
             if static_ip_id:
                 try:
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting static IP failed: {exc}")
 
@@ -128,10 +121,9 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: Create Static IP
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
                 static_ip_id = created_static_ip.id
             except Exception as exc:
@@ -139,10 +131,9 @@ class TestTrafficGRETunnel:
 
             # Step 2: Fetch Recommended VIPs using that IP
             try:
-                recommended_vips, _, error = client.zia.gre_tunnel.list_vips_recommended(
+                recommended_vips = client.zia.gre_tunnel.list_vips_recommended(
                     query_params={"source_ip": static_ip_address}
                 )
-                assert error is None, f"Error retrieving recommended VIPs: {error}"
                 assert isinstance(recommended_vips, list), "Expected list of recommended VIPs"
                 assert recommended_vips, "Received empty recommended VIP list"
             except Exception as exc:
@@ -153,8 +144,7 @@ class TestTrafficGRETunnel:
             cleanup_errors = []
             if static_ip_id:
                 try:
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting Static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Static IP failed: {exc}")
 
@@ -173,10 +163,9 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: Create Static IP
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
                 static_ip_id = created_static_ip.id
             except Exception as exc:
@@ -184,10 +173,9 @@ class TestTrafficGRETunnel:
 
             # Step 2: Fetch VIP Groups by Datacenter using the created static IP
             try:
-                vip_groups, _, error = client.zia.gre_tunnel.list_vip_group_by_dc(
+                vip_groups = client.zia.gre_tunnel.list_vip_group_by_dc(
                     query_params={"source_ip": static_ip_address}
                 )
-                assert error is None, f"Error fetching VIP groups: {error}"
                 assert isinstance(vip_groups, list), "Expected list of VIP groups"
                 assert vip_groups, "Received empty VIP group list"
             except Exception as exc:
@@ -198,8 +186,7 @@ class TestTrafficGRETunnel:
             cleanup_errors = []
             if static_ip_id:
                 try:
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting Static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Static IP failed: {exc}")
 
@@ -218,10 +205,9 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: Create Static IP
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
                 static_ip_id = created_static_ip.id
             except Exception as exc:
@@ -241,8 +227,7 @@ class TestTrafficGRETunnel:
             cleanup_errors = []
             if static_ip_id:
                 try:
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting Static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Static IP failed: {exc}")
 
@@ -259,8 +244,7 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: List VIPs with a page size of 10.
             try:
-                vips, _, error = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
-                assert error is None, f"Error listing VIPs with page_size 10: {error}"
+                vips = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
                 assert isinstance(vips, list), "Expected VIPs to be returned as a list."
                 assert len(vips) <= 10, f"Expected at most 10 VIPs, but got {len(vips)}."
             except Exception as exc:
@@ -268,8 +252,7 @@ class TestTrafficGRETunnel:
 
             # Step 2: List VIPs with the same query parameters for additional validation.
             try:
-                vips_large, _, error = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
-                assert error is None, f"Error listing VIPs with the same query: {error}"
+                vips_large = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
                 assert isinstance(vips_large, list), "Expected VIPs to be returned as a list."
                 # Optionally, further validations on vips_large can be added if needed.
             except Exception as exc:

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.admin_users import AdminUsers
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdminUsersAPI(APIClient):
@@ -33,7 +32,7 @@ class AdminUsersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def change_password(self, username: str, old_password: str, new_password: str, **kwargs) -> APIResult[dict]:
+    def change_password(self, username: str, old_password: str, new_password: str, **kwargs) -> Any:
         """
         Change the password for the specified admin user.
 
@@ -70,26 +69,17 @@ class AdminUsersAPI(APIClient):
         body = {**payload, **kwargs}
 
         # Create the request with the merged body
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_admins(self, query_params: Optional[dict] = None) -> APIResult[List[AdminUsers]]:
+    def list_admins(self, query_params: Optional[dict] = None) -> List[AdminUsers]:
         """
         List all existing admin users.
 
@@ -135,27 +125,17 @@ class AdminUsersAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
+        result = []
+        for item in response.get_results():
+            result.append(AdminUsers(self.form_response_body(item)))
+        return result
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AdminUsers(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_admin(self, admin_id: str) -> APIResult[dict]:
+    def get_admin(self, admin_id: str) -> AdminUsers:
         """
         Get details for a specific admin user.
 
@@ -182,26 +162,16 @@ class AdminUsersAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, AdminUsers)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, AdminUsers)
 
         # Parse the response
-        try:
-            result = AdminUsers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = AdminUsers(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def add_admin(self, user_name: str, login_name: str, role: str, email: str, password: str, **kwargs) -> APIResult[dict]:
+    def add_admin(self, user_name: str, login_name: str, role: str, email: str, password: str, **kwargs) -> AdminUsers:
         """
         Create a new admin user.
 
@@ -233,7 +203,6 @@ class AdminUsersAPI(APIClient):
                 Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
 
         Returns:
-            Tuple: A Box object representing the newly created admin user.
 
         Examples:
             Create a new admin user with only the required parameters::
@@ -278,27 +247,18 @@ class AdminUsersAPI(APIClient):
         body = {**payload, **kwargs}
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, AdminUsers)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, AdminUsers)
+        result = AdminUsers(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = AdminUsers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_admin(self, admin_id: str, **kwargs) -> APIResult[dict]:
+    def update_admin(self, admin_id: str, **kwargs) -> AdminUsers:
         """
         Update an existing admin user.
 
@@ -329,7 +289,6 @@ class AdminUsersAPI(APIClient):
                 Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
 
         Returns:
-            Tuple: A Box object representing the updated admin user.
 
         Examples:
             Update an admin user::
@@ -352,21 +311,12 @@ class AdminUsersAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AdminUsers)
+        result = AdminUsers(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminUsers)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminUsers(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_admin(self, admin_id: str) -> int:
+    def delete_admin(self, admin_id: str) -> None:
         """
         Delete the specified admin user.
 
@@ -392,11 +342,6 @@ class AdminUsersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

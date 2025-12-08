@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_destination_groups import IPDestinationGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IPDestinationGroupsAPI(APIClient):
@@ -30,7 +29,7 @@ class IPDestinationGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> List[IPDestinationGroups]:
         """
         Returns a list of IP Destination Groups.
 
@@ -44,7 +43,7 @@ class IPDestinationGroupsAPI(APIClient):
 
         Returns:
             tuple:
-                A tuple containing (list of IPDestinationGroups instances, Response, error)
+                A tuple containing List[IPDestinationGroups]
 
         Examples:
             Gets a list of all IP destination groups.
@@ -99,27 +98,18 @@ class IPDestinationGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IPDestinationGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(IPDestinationGroups(self.form_response_body(item)))
+        return result
 
     def list_ip_destination_groups_lite(
         self, exclude_type: str = None, query_params: Optional[dict] = None
-    ) -> APIResult[List[IPDestinationGroups]]:
+    ) -> List[IPDestinationGroups]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -134,7 +124,6 @@ class IPDestinationGroupsAPI(APIClient):
                     Accepted values: ``DSTN_IP``, ``DSTN_FQDN``, ``DSTN_DOMAIN``, ``DSTN_OTHER``.
 
         Returns:
-            tuple: List of IP Destination Groups resource records.
 
         Examples:
             Gets a list of all IP destination groups.
@@ -199,27 +188,18 @@ class IPDestinationGroupsAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         # Parse the response into IPDestinationGroups instances
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IPDestinationGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(IPDestinationGroups(self.form_response_body(item)))
+        return result
 
-    def add_ip_destination_group(self, **kwargs) -> APIResult[dict]:
+    def add_ip_destination_group(self, **kwargs) -> IPDestinationGroups:
         """
         Adds a new IP Destination Group.
 
@@ -268,28 +248,19 @@ class IPDestinationGroupsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, IPDestinationGroups)
+        response = self._request_executor.execute(request, IPDestinationGroups)
 
-        if error:
-            return (None, response, error)
+        result = IPDestinationGroups(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = IPDestinationGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_ip_destination_group(self, group_id: int) -> APIResult[dict]:
+    def delete_ip_destination_group(self, group_id: int) -> None:
         """
         Deletes the specified IP Destination Group.
 
@@ -316,11 +287,6 @@ class IPDestinationGroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

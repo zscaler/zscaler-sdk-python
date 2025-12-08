@@ -41,8 +41,7 @@ class TestCBISecurityProfile:
 
         try:
             try:
-                banners_list, _, err = client.zpa.cbi_banner.list_cbi_banners()
-                assert err is None, f"Error listing banner: {err}"
+                banners_list = client.zpa.cbi_banner.list_cbi_banners()
                 assert isinstance(banners_list, list), "Expected a list of banner"
                 if banners_list:  # If there are any banner, proceed with further operations
                     first_banner = banners_list[0]  # Fetch the first certificate in the list
@@ -52,8 +51,7 @@ class TestCBISecurityProfile:
                 errors.append(f"Listing banner failed: {str(exc)}")
 
             try:
-                certs_list, _, err = client.zpa.cbi_certificate.list_cbi_certificates()
-                assert err is None, f"Error listing certificate: {err}"
+                certs_list = client.zpa.cbi_certificate.list_cbi_certificates()
                 assert isinstance(certs_list, list), "Expected a list of certificate"
                 if certs_list:  # If there are any certificate, proceed with further operations
                     first_cert = certs_list[0]  # Fetch the first certificate in the list
@@ -63,8 +61,7 @@ class TestCBISecurityProfile:
                 errors.append(f"Listing certificate failed: {str(exc)}")
 
             try:
-                regions, _, err = client.zpa.cbi_region.list_cbi_regions()
-                assert err is None, f"Error listing CBI regions: {err}"
+                regions = client.zpa.cbi_region.list_cbi_regions()
                 assert isinstance(regions, list), f"Expected a list of CBI regions, got {type(regions)}"
                 assert len(regions) >= 2, "Expected at least two CBI regions"
                 tested_regions = [regions[0].id, regions[1].id]  # Extract IDs from the first two regions
@@ -76,7 +73,7 @@ class TestCBISecurityProfile:
 
             # try:
             #     # Create a new isolation profile
-            #     created_profile, _, err = client.zpa.cbi_profile.add_cbi_profile(
+            #     created_profile = client.zpa.cbi_profile.add_cbi_profile(
             #         name=profile_name,
             #         description=profile_description,
             #         region_ids=tested_regions,

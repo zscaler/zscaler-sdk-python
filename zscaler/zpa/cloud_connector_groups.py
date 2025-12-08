@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cloud_connector_groups import CloudConnectorGroup
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CloudConnectorGroupsAPI(APIClient):
@@ -33,7 +32,7 @@ class CloudConnectorGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
+    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> List[CloudConnectorGroup]:
         """
         Returns a list of all configured cloud connector groups.
 
@@ -51,11 +50,11 @@ class CloudConnectorGroupsAPI(APIClient):
             list: A list of `CloudConnectorGroup` instances.
 
         Examples:
-            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_groups(
+            >>> try:
+            ...     group_list = client.zpa.cloud_connector_groups.list_cloud_connector_groups(
             ... query_params={'search': 'CloudConnectorGroup01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing connector groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total connector groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -70,26 +69,17 @@ class CloudConnectorGroupsAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CloudConnectorGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudConnectorGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CloudConnectorGroup)
+        result = []
+        for item in response.get_results():
+            result.append(CloudConnectorGroup(self.form_response_body(item)))
+        return result
 
     def get_cloud_connector_groups(
         self,
         group_id: str,
-    ) -> APIResult[dict]:
+    ) -> CloudConnectorGroup:
         """
         Returns information on the specified cloud connector group.
 
@@ -101,10 +91,10 @@ class CloudConnectorGroupsAPI(APIClient):
             dict: The cloud connector group object.
 
         Examples:
-            >>> fetched_group, _, err = client.zpa.cloud_connector_groups.get_cloud_connector_groups('999999')
-            ... if err:
-            ...     print(f"Error fetching group by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_group = client.zpa.cloud_connector_groups.get_cloud_connector_groups('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
@@ -115,21 +105,12 @@ class CloudConnectorGroupsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, CloudConnectorGroup)
+        result = CloudConnectorGroup(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CloudConnectorGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CloudConnectorGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
+    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> List[CloudConnectorGroup]:
         """
         Retrieves all configured cloud connector groups Name and IDs
 
@@ -144,14 +125,14 @@ class CloudConnectorGroupsAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of CloudConnectorGroups instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CloudConnectorGroup]
 
         Examples:
-            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_group_summary(
+            >>> try:
+            ...     group_list = client.zpa.cloud_connector_groups.list_cloud_connector_group_summary(
             ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing cloud connector groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total cloud connector groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -166,18 +147,9 @@ class CloudConnectorGroupsAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CloudConnectorGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudConnectorGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CloudConnectorGroup)
+        result = []
+        for item in response.get_results():
+            result.append(CloudConnectorGroup(self.form_response_body(item)))
+        return result

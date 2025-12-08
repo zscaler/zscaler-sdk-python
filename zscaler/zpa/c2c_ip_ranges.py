@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.c2c_ip_ranges import IpRanges
 from zscaler.zpa.models.common import CommonFilterSearch
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IPRangesAPI(APIClient):
@@ -34,7 +33,7 @@ class IPRangesAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_ip_ranges(self) -> APIResult[List[IpRanges]]:
+    def list_ip_ranges(self) -> List[IpRanges]:
         """
         Enumerates ip ranges in your organization with pagination.
         A subset of ip ranges can be returned that match a supported
@@ -48,25 +47,25 @@ class IPRangesAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of SegmentGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[IpRanges]
 
         Example:
             Fetch all ip ranges without filtering
 
-            >>> group_list, _, err = client.zpa.segment_groups.list_groups()
-            ... if err:
-            ...     print(f"Error listing ip ranges: {err}")
-            ...     return
+            >>> try:
+            ...     group_list = client.zpa.segment_groups.list_groups()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total ip ranges found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
 
             Fetch ip ranges with query_params filters
-            >>> group_list, _, err = client.zpa.segment_groups.list_groups(
+            >>> try:
+            ...     group_list = client.zpa.segment_groups.list_groups(
             ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing ip ranges: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total ip ranges found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -79,23 +78,14 @@ class IPRangesAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, IpRanges)
+        result = []
+        for item in response.get_results():
+            result.append(IpRanges(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, IpRanges)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IpRanges(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ip_range(self, range_id: str) -> APIResult[dict]:
+    def get_ip_range(self, range_id: str) -> IpRanges:
         """
         Gets information on the specified ip range.
 
@@ -108,10 +98,10 @@ class IPRangesAPI(APIClient):
         Example:
             Retrieve details of a specific ip range
 
-            >>> fetched_range, _, err = client.zpa.c2c_ip_ranges.get_ip_range('999999')
-            ... if err:
-            ...     print(f"Error fetching ip range by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_range = client.zpa.c2c_ip_ranges.get_ip_range('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched ip range by ID: {fetched_range.as_dict()}")
         """
         http_method = "get".upper()
@@ -122,21 +112,12 @@ class IPRangesAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, IpRanges)
+        result = IpRanges(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IpRanges)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IpRanges(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_ip_range(self, **kwargs) -> APIResult[dict]:
+    def add_ip_range(self, **kwargs) -> IpRanges:
         """
         Adds a new ip range.
 
@@ -162,7 +143,8 @@ class IPRangesAPI(APIClient):
 
         Example:
             # Basic example: Add a new ip range
-            >>> added_range, _, err = client.zpa.c2c_ip_ranges.add_ip_range(
+            >>> try:
+            ...     added_range = client.zpa.c2c_ip_ranges.add_ip_range(
             ...     name=f"NewIPRange_{random.randint(1000, 10000)}",
             ...     description=f"NewIPRange_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -190,21 +172,12 @@ class IPRangesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, IpRanges)
+        result = IpRanges(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IpRanges)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IpRanges(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_ip_range(self, range_id: str, **kwargs) -> APIResult[dict]:
+    def update_ip_range(self, range_id: str, **kwargs) -> IpRanges:
         """
         Updates the specified ip range.
 
@@ -233,7 +206,8 @@ class IPRangesAPI(APIClient):
             Update an existing ip range
 
             >>> range_id = "216196257331370181"
-            >>> updated_range, _, err = client.zpa.c2c_ip_ranges.update_ip_range(
+            >>> try:
+            ...     updated_range = client.zpa.c2c_ip_ranges.update_ip_range(
             ...     range_id,
             ...     name=f"UpdatedIPRange_{random.randint(1000, 10000)}",
             ...     description=f"UpdatedIPRange_{random.randint(1000, 10000)}",
@@ -264,24 +238,15 @@ class IPRangesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, IpRanges)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {})
+        response = self._request_executor.execute(request, IpRanges)
         if response is None:
-            return (IpRanges({"id": range_id}), None, None)
+            return IpRanges({"id": range_id})
 
-        try:
-            result = IpRanges(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = IpRanges(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_ip_range(self, range_id: str) -> APIResult[None]:
+    def delete_ip_range(self, range_id: str) -> None:
         """
         Deletes the specified ip range.
 
@@ -294,10 +259,10 @@ class IPRangesAPI(APIClient):
         Example:
             Delete a ip range by ID
 
-            >>> _, _, err = client.zpa.c2c_ip_ranges.delete_ip_range(72058304855141483)
-            ... if err:
-            ...     print(f"Error deleting ip range: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zpa.c2c_ip_ranges.delete_ip_range(72058304855141483)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"IP Range with ID {72058304855141483} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -308,17 +273,12 @@ class IPRangesAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        return None
 
-        if error:
-            return (None, response, error)
-        return (None, response, error)
-
-    def get_ip_range_search(self, **kwargs) -> APIResult[dict]:
+    def get_ip_range_search(self, **kwargs) -> CommonFilterSearch:
         """
         Gets the IP range by page and pageSize for the specified customer based on given filters.
 
@@ -348,7 +308,6 @@ class IPRangesAPI(APIClient):
                     - **sort_order** (str): Sorting direction (e.g., `ASC` or `DESC`).
 
         Returns:
-            tuple: A tuple containing:
 
                 - **CommonFilterSearch**: The parsed response object containing filter results, paging, and sorting.
                 - **Response**: The raw response object returned by the request executor.
@@ -374,7 +333,8 @@ class IPRangesAPI(APIClient):
             ...         }
             ...     }
             ... }
-            >>> result, _, err = client.zpa.c2c_ip_ranges.get_ip_range_search(**search_payload)
+            >>> try:
+            ...     result = client.zpa.c2c_ip_ranges.get_ip_range_search(**search_payload)
             >>> if err:
             ...     print(f"Error searching ip range: {err}")
             ... else:
@@ -391,16 +351,7 @@ class IPRangesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonFilterSearch)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CommonFilterSearch(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, CommonFilterSearch)
+        result = CommonFilterSearch(self.form_response_body(response.get_body()))
+        return result

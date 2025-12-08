@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_browser_isolation import CBIProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CBIProfileAPI(APIClient):
@@ -36,7 +35,7 @@ class CBIProfileAPI(APIClient):
     def list_isolation_profiles(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[CBIProfile]]:
+    ) -> List[CBIProfile]:
         """
         Lists isolation profiles in your organization with pagination.
         A subset of isolation profiles  can be returned that match a supported
@@ -47,7 +46,6 @@ class CBIProfileAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of isolation profiles instances, Response, error)
 
         Examples:
             >>> isolation_profiles = zia.isolation_profiles.list_isolation_profiles()
@@ -68,22 +66,12 @@ class CBIProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = [CBIProfile(self.form_response_body(item)) for item in response.get_results()]
-        except Exception as exc:
-            return (None, response, exc)
-
+        response = self._request_executor.execute(request)
+        results = [CBIProfile(self.form_response_body(item)) for item in response.get_results()]
         if local_search:
             lower_search = local_search.lower()
             results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
 
-        return (results, response, None)
+        return results

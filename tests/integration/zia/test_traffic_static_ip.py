@@ -50,11 +50,10 @@ class TestTrafficStaticIP:
         try:
             # Step 1: Create Static IP
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     comment=comment,
                     ip_address=randomIP,
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
                 assert created_static_ip.comment == comment
                 assert created_static_ip.ip_address == randomIP
@@ -66,8 +65,7 @@ class TestTrafficStaticIP:
             try:
                 if static_ip_id:
                     time.sleep(2)
-                    retrieved_ip, _, error = client.zia.traffic_static_ip.get_static_ip(static_ip_id)
-                    assert error is None, f"Error retrieving static IP: {error}"
+                    retrieved_ip = client.zia.traffic_static_ip.get_static_ip(static_ip_id)
                     assert retrieved_ip.id == static_ip_id
                     assert retrieved_ip.comment == comment
             except Exception as exc:
@@ -76,9 +74,7 @@ class TestTrafficStaticIP:
             # Step 3: Check if a brand new IP is valid
             try:
                 time.sleep(2)
-                is_valid, _, error = client.zia.traffic_static_ip.check_static_ip(checkIP)
-                if error:
-                    raise AssertionError(f"Error checking static IP validity: {error}")
+                is_valid = client.zia.traffic_static_ip.check_static_ip(checkIP)
                 assert is_valid is True, f"Static IP {checkIP} is not valid or already in use"
             except Exception as exc:
                 errors.append(f"Static IP validation check failed: {exc}")
@@ -86,8 +82,7 @@ class TestTrafficStaticIP:
             # Step 4: List static IPs and check if created IP exists
             try:
                 time.sleep(2)
-                ip_list, _, error = client.zia.traffic_static_ip.list_static_ips()
-                assert error is None, f"Error listing static IPs: {error}"
+                ip_list = client.zia.traffic_static_ip.list_static_ips()
                 assert any(ip.id == static_ip_id for ip in ip_list), "Created static IP not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list static IPs: {exc}")
@@ -98,8 +93,7 @@ class TestTrafficStaticIP:
             if static_ip_id:
                 try:
                     time.sleep(2)
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting static IP failed: {exc}")
 

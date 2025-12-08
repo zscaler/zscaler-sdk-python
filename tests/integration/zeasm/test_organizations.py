@@ -35,11 +35,8 @@ class TestOrganizations:
         errors = []
 
         try:
-            orgs, _, err = client.zeasm.organizations.list_organizations()
-
-            if err:
-                errors.append(f"Error listing organizations: {err}")
-            elif orgs:
+            orgs = client.zeasm.organizations.list_organizations()
+            if orgs:
                 print(f"Total organizations found: {orgs.total_results}")
                 pprint(orgs.as_dict())
                 for org in orgs.results:

@@ -125,7 +125,7 @@ class RequestExecutor:
             zwa_legacy_client=self.zwa_legacy_client,
         )
 
-        exceptions.raise_exception = self._config["client"].get("raiseException", False)
+        exceptions.raise_exception = self._config["client"].get("raiseException", True)
         self._custom_headers = {}
 
         # Track whether any mutations (POST/PUT/DELETE) have occurred during this session
@@ -288,7 +288,7 @@ class RequestExecutor:
         else:
             json_payload = self._prepare_body(endpoint, body)
             request["json"] = json_payload
-        return request, None
+        return request
 
     def _prepare_headers(self, headers, endpoint=""):
         # Special handling for PAC file validation - preserve custom Content-Type
@@ -424,45 +424,49 @@ class RequestExecutor:
         request: Dict[str, Any],
         response_type: Optional[type] = None,
         return_raw_response: bool = False,
-    ) -> Tuple[Optional["ZscalerAPIResponse"], Optional[Exception]]:
+    ) -> Optional["ZscalerAPIResponse"]:
         """
         High-level request execution method.
+
         Args:
             request (dict): Request dictionary.
             response_type (type): Expected data type.
+            return_raw_response (bool): If True, return raw response for file downloads.
+
         Returns:
-            Tuple (API response, Error)
+            ZscalerAPIResponse: The API response object, or None for 204 responses.
+
+        Raises:
+            Exception: If the request fails.
         """
         try:
             request, response, response_body, error = self.fire_request(request)
         except Exception as ex:
             logger.error(f"Exception during HTTP request: {ex}")
-            return None, ex
+            raise
 
         if response is None and error is None:
-            return None, None  # silently return None without manufacturing errors
+            return None  # silently return None without manufacturing errors
 
         if error:
-            # logger.error(f"Error during request execution: {error}")
-            return None, error
+            raise error
 
         if response.status_code == 204:
             logger.debug(f"Received 204 No Content from {request['url']}")
-            return None, None
+            return None
 
         # If raw response is requested, return it for file download purposes
         if return_raw_response:
-            return response, None
+            return response
 
         try:
             response_data, error = check_response_for_error(request["url"], response, response_body)
         except Exception as ex:
             logger.error(f"Exception while checking response for errors: {ex}")
-            return None, ex
+            raise
 
         if error:
-            # logger.error(f"Error in HTTP response: {error}")
-            return None, error
+            raise error
 
         logger.debug(f"Successful response from {request['url']}")
         logger.debug(f"Response Data: {response_data}")
@@ -470,16 +474,13 @@ class RequestExecutor:
         if isinstance(response_data, (dict, list)):
             response_data = convert_keys_to_snake_case(response_data)
 
-        return (
-            ZscalerAPIResponse(
-                request_executor=self,
-                req=request,
-                res_details=response,
-                response_body=response_body,
-                data_type=response_type,
-                service_type=request.get("service_type", ""),
-            ),
-            None,
+        return ZscalerAPIResponse(
+            request_executor=self,
+            req=request,
+            res_details=response,
+            response_body=response_body,
+            data_type=response_type,
+            service_type=request.get("service_type", ""),
         )
 
     def _extract_and_append_query_params(self, url, params):

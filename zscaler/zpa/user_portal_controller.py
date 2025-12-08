@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_controller import UserPortalController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class UserPortalControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class UserPortalControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_user_portals(self, query_params: Optional[dict] = None) -> APIResult[List[UserPortalController]]:
+    def list_user_portals(self, query_params: Optional[dict] = None) -> List[UserPortalController]:
         """
         Enumerates user portals in an organization with pagination.
 
@@ -46,25 +45,25 @@ class UserPortalControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of UserPortalController instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[UserPortalController]
 
         Example:
             Fetch all user portals without filtering
 
-            >>> portal_list, _, err = client.zpa.user_portal_controller.list_user_portals()
-            ... if err:
-            ...     print(f"Error listing user portals: {err}")
-            ...     return
+            >>> try:
+            ...     portal_list = client.zpa.user_portal_controller.list_user_portals()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total user portals found: {len(portal_list)}")
             ... for portal in portal_list:
             ...     print(portal.as_dict())
 
             Fetch user portals with query_params filters
-            >>> portal_list, _, err = client.zpa.user_portal_controller.list_user_portals(
+            >>> try:
+            ...     portal_list = client.zpa.user_portal_controller.list_user_portals(
             ... query_params={'search': 'UserPortal01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing user portals: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total user portals found: {len(portal_list)}")
             ... for portal in portal_list:
             ...     print(portal.as_dict())
@@ -82,23 +81,14 @@ class UserPortalControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, UserPortalController)
+        result = []
+        for item in response.get_results():
+            result.append(UserPortalController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(UserPortalController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_user_portal(self, portal_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_user_portal(self, portal_id: str, query_params: Optional[dict] = None) -> UserPortalController:
         """
         Gets information on the specified user portal.
 
@@ -113,10 +103,10 @@ class UserPortalControllerAPI(APIClient):
         Example:
             Retrieve details of a specific user portal
 
-            >>> fetched_portal, _, err = client.zpa.user_portal_controller.get_user_portal('999999')
-            ... if err:
-            ...     print(f"Error fetching user portal by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_portal = client.zpa.user_portal_controller.get_user_portal('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched user portal by ID: {fetched_portal.as_dict()}")
         """
         http_method = "get".upper()
@@ -132,21 +122,12 @@ class UserPortalControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, UserPortalController)
+        result = UserPortalController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserPortalController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_user_portal(self, **kwargs) -> APIResult[dict]:
+    def add_user_portal(self, **kwargs) -> UserPortalController:
         """
         Adds a new user portal.
 
@@ -167,7 +148,8 @@ class UserPortalControllerAPI(APIClient):
         Example:
             Basic example: Add a new user portal
 
-            >>> added_portal, _, err = client.zpa.user_portal_controller.add_user_portal(
+            >>> try:
+            ...     added_portal = client.zpa.user_portal_controller.add_user_portal(
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -196,21 +178,12 @@ class UserPortalControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, UserPortalController)
+        result = UserPortalController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, UserPortalController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = UserPortalController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_user_portal(self, portal_id: str, **kwargs) -> APIResult[dict]:
+    def update_user_portal(self, portal_id: str, **kwargs) -> UserPortalController:
         """
         Updates the specified user portal.
 
@@ -223,7 +196,8 @@ class UserPortalControllerAPI(APIClient):
         Example:
             Updating a user portal for a specific microtenant
 
-            >>> updated_portal, _, err = client.zpa.user_portal_controller.update_user_portal(
+            >>> try:
+            ...     updated_portal = client.zpa.user_portal_controller.update_user_portal(
             ...     portal_id='25456654',
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
@@ -255,24 +229,15 @@ class UserPortalControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, UserPortalController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, UserPortalController)
         if response is None:
-            return (UserPortalController({"id": portal_id}), None, None)
+            return UserPortalController({"id": portal_id})
 
-        try:
-            result = UserPortalController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = UserPortalController(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_user_portal(self, portal_id: str, microtenant_id: str = None) -> APIResult[None]:
+    def delete_user_portal(self, portal_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified user portal.
 
@@ -284,10 +249,10 @@ class UserPortalControllerAPI(APIClient):
 
         Example:
             # Delete a user portal by ID
-            >>> _, _, err = client.zpa.user_portal_controller.delete_user_portal('513265')
-            ... if err:
-            ...     print(f"Error deleting user portal: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zpa.user_portal_controller.delete_user_portal('513265')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"User Portal with ID {'513265'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -300,12 +265,7 @@ class UserPortalControllerAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-        return (None, response, error)
+        return None

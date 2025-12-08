@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"name": "tests-isolcert-vcr0001", "pem": "-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUaCN6sqz1me/HlA9c6tnvmHUfxdgwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODExWhcN\nMzUxMTI0MjExODExWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAL1bq+eemyTZ8ggDDUGlLdCfqus0UeVT\n+bnX6ROXl6TjiRlj+yiojZVDLDWP8AJrmNFUhnzTNG/IJ5NZPl2FfXdWR9uG2jsh\noxSugGkzqxNh1kmnvH+vSCAtvHo94Zlfg5I12nVUdFWshQNkCh9/VZuUtcC7OH+f\nJPHH2Zcegaskn6hy3M9hST2qMNpN5RHwzZB1g9QlNsyAzW1Y30aX9e29nNnz7+4v\ntGfcgj28/GGoEUxJv4aC46UK9ZwY0tr1m40npIQYBWwhie9lKMcvttnEzDfNlFIW\npB07LGU101V4V4nk2aK+wq0RkcD51aVIrpT9nYlNzmKkmscIoow5mbgYNsnXgXiK\nLVB9U9SMa7Ea31ivnfN7/mb/a+RnJUwWf7C14Uy4w4Lh9f8lKKZNCtgm+SuLHii7\nEugY1Qh+LuEICbAZhrlvSCRTT2tCF5RZcngPgAyo6s+6PTGYQDw0Mt7WWjyVuwtM\nnu9djdZfe20WfR/D18Jus2pWxD55l6PD5zZaDdcXfmBMLoLIiDpIbNXl/B/aYxOw\nZ7ptpz3dfTAeJxYQSYdu47/rdklM8OefO5MCrBFvPyszrAeFn8eZ0kKyxdRb3CuZ\nebhkZwnHwJ0rSEAkQN0C0Wxcy462b38bggbTFbVtQuY6Sm3e9JcpDnqZsRd0JKiu\nKFokUd19Kli9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBABHkwobOoM20qYfG7UG7YY3POWHnm32dtmsmJZ1bDqDgevbhnMpX+NJD\n5w4xxBhFAr4g7KJ3s2W/QfUjUUF3U1BEb2ZYEfhQqciq0qzTGVddwmXoliF+CwND\n/KayfEai2ViNtsK/s/v5ZGGENMrlPlGtQ5GvsOiDfVybGonOPlaRPS4os0XvKXEw\nJE5ZbSG+ewL6zZfISXqN88Nu8plQ7MZVQcAziH+CfFYK5vTMpRDWlUZoWBVHteIH\nc4xcpKJOHmZlTq84ydJDoMiHQ3OKofE3ntK8Mk2vFIEXp5QPhsxQfDYCufQ3XaqY\nQkLHxJhn9loGsxtUj3FbFxhFSfEWfjp38tDfy7s1NkPM8LOit3q2cV5R7+EZgVp5\nhhfIpz0L/+t5ruJce9WMtmChLJihnlqy//bs3THvRXG/sw9UuEL+FjVVYU9TY6hY\n42rMqzq69z+9XwHbw1xjRhQLXl0yr88wP6vAKcUa7U9W2TN1AKpV1R6GXkHRxB5G\n3s7CmY8aV+cUBIxpTfsVS4EaXQAVwdGlA8pGIs2TDexI/3hWcsCNmNZqQBWNWU0y\nzzRNw1b9m73PPeOzAzZUZeiKyvBSdzVK6VZXugpY6OqsZ65VtaNYgrFBDNMEHiF6\ncYnCgso19x4S8TYaEFh7bUx5XuJvRGDoQSGzTSVXbAm8RLO0YNFc\n-----END
+    body: '{"name": "tests-isolcert-vcr0001", "pem": "-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUTUJpPrnVJbEQ6wyBGqrc9IEqXZ0wDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzA3WhcN\nMzUxMjAzMjMyMzA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMA8ZTL+/4vtr+HtR98xHBuioFHCObCw\nF0NUnpUyJ+nJEIZLokT7ZJwmmxNTJakbuxXZL35DAgWaRWf4YP5d650bajFJXAZU\nXLIKNFXyoKujYc1yQe5gs9uDQ9nZpB9MXSDfnybyaw2w7wJiL3v+Xnry2xrh3HU8\ndG87z1qQgl1Ul984ogSpmB83Fc6FaBs9WDnnkTfIQtid60vAwgim5xUcRif8Raym\nk8jNnEJghAAAsMwjjYHZ7WH8RMDXDfSuKu2ANzMQW2uJ4yoWn8MUc1TSL89QfPWH\n4b0gQZCrE92DRmL7k8VaZTRAfhH/jqJRmUtDkjPrMrHjY6t9aurPLHPsmO/y5K0c\noh02d6ZxJywvRajmMpIANA6ZgM3mddoeBoS5b+cf+gcElKHGHDx50k2XEmbLLfU8\n7tJXmWwWQX9U5fj03v0DcpSESWMtHx0Z4uavA4ywkJWRH9IllerBzxln1V29Hc2E\nk7fBiaR5HU5vjQT09AqEyODBnuZo/1H482BPpYEjcU6flpF8Wy5v01lcl5cZnnUD\nluaz4co2G1jElCbVRNR7bipcs8b6ZzftMxjDySuPjZI6hzb0+dNLcWMtVIYbrXoV\ndQZx2T1hGFgJ/FNIpYj1pz7B+i1HfHhZmH5dK4Lr+BA7euFCQgN3o+Xl7wrqL+ml\nYcF6Mo9DGuy9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAIRoOnrMZmoiWCOcLiA5TRkjpCCgJJICnaRighmUjfxkjcE/7+n/Q0xB\njlXJBfOG4oAgN4G62turYegUlS4rbd7aLQ3cgwTrHaygRVrcegliUO8Y4n85XbZj\nlXKBvL0bblMD686g47WZHn7jlz2zX442R13Wm+QWXMoBSCc2qsmJADPk28qXVz3x\nR43AGtNf++qXIc6bz6vjeSCCNRMyzXdAQOoBlJxXBeCtUVOrr3MI49hfTCKXIsIb\nR4OSdUV8onrEoUiNt2ASR5r7PWQFXKJwu6SnoLc4K/U+NtkzmXLqsigIKvSFMiSk\nNUUTes6fMJlqKoGQMnyNyzemq19MsIWWkzk2Q85/RtKgdvV0uX/LmRqt7+M+6LVa\nyUA/DLXTS2gmvo2A4x42/J3rBIFiTpcV6RQSSRfXgW82j+mCrP3KeWbEgG/Ip1Bx\nchuuXcPxB/lgLSAD+maUMMWCrdZ80iQuhA7E6X/l6PkCaW34Z7pV0nuMaUnue/+p\n6zUrYE/YwyY7ORNnfPPtLt08sl5XLrOALXfs52IgUaws81Bp8hDK8gHnyPeIF1Cr\n5Ti+/vVU0VgbLZXfRhF7//KMsna2K3hKXNcTW7FOD0EqeltvWc4K2fD7EZOlTiBn\nYjMmTU7e14lC9Xhqxor8WFUpXI5lsUwQqkO0+MnUIre4ydHHME6b\n-----END
       CERTIFICATE-----\n"}'
     headers:
       Accept:
@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificate
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificate
   response:
     body:
-      string: '{"id":"37b62dc2-297f-47f0-95a7-6ad997bc3180"}'
+      string: '{"id":"b644f4fe-67e5-467b-92c1-58b43afea48d"}'
     headers:
       cache-control:
       - no-store
@@ -30,7 +30,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:11 GMT
+      - Fri, 05 Dec 2025 23:23:07 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -44,7 +44,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '108'
+      - '78'
       x-frame-options:
       - DENY
       x-http2-stream-id:
@@ -52,17 +52,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ea7e6f88-ecfc-903d-a12d-ac45acfffb7b
+      - 2e4cad96-712c-97d9-87a5-0af346070421
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4964'
+      - '4970'
       x-ratelimit-reset:
-      - '49'
+      - '53'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -82,13 +82,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/37b62dc2-297f-47f0-95a7-6ad997bc3180
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/b644f4fe-67e5-467b-92c1-58b43afea48d
   response:
     body:
-      string: '{"id":"37b62dc2-297f-47f0-95a7-6ad997bc3180","name":"tests-isolcert-vcr0001
-        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUaCN6sqz1me/HlA9c6tnvmHUfxdgwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODExWhcN\nMzUxMTI0MjExODExWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAL1bq+eemyTZ8ggDDUGlLdCfqus0UeVT\n+bnX6ROXl6TjiRlj+yiojZVDLDWP8AJrmNFUhnzTNG/IJ5NZPl2FfXdWR9uG2jsh\noxSugGkzqxNh1kmnvH+vSCAtvHo94Zlfg5I12nVUdFWshQNkCh9/VZuUtcC7OH+f\nJPHH2Zcegaskn6hy3M9hST2qMNpN5RHwzZB1g9QlNsyAzW1Y30aX9e29nNnz7+4v\ntGfcgj28/GGoEUxJv4aC46UK9ZwY0tr1m40npIQYBWwhie9lKMcvttnEzDfNlFIW\npB07LGU101V4V4nk2aK+wq0RkcD51aVIrpT9nYlNzmKkmscIoow5mbgYNsnXgXiK\nLVB9U9SMa7Ea31ivnfN7/mb/a+RnJUwWf7C14Uy4w4Lh9f8lKKZNCtgm+SuLHii7\nEugY1Qh+LuEICbAZhrlvSCRTT2tCF5RZcngPgAyo6s+6PTGYQDw0Mt7WWjyVuwtM\nnu9djdZfe20WfR/D18Jus2pWxD55l6PD5zZaDdcXfmBMLoLIiDpIbNXl/B/aYxOw\nZ7ptpz3dfTAeJxYQSYdu47/rdklM8OefO5MCrBFvPyszrAeFn8eZ0kKyxdRb3CuZ\nebhkZwnHwJ0rSEAkQN0C0Wxcy462b38bggbTFbVtQuY6Sm3e9JcpDnqZsRd0JKiu\nKFokUd19Kli9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBABHkwobOoM20qYfG7UG7YY3POWHnm32dtmsmJZ1bDqDgevbhnMpX+NJD\n5w4xxBhFAr4g7KJ3s2W/QfUjUUF3U1BEb2ZYEfhQqciq0qzTGVddwmXoliF+CwND\n/KayfEai2ViNtsK/s/v5ZGGENMrlPlGtQ5GvsOiDfVybGonOPlaRPS4os0XvKXEw\nJE5ZbSG+ewL6zZfISXqN88Nu8plQ7MZVQcAziH+CfFYK5vTMpRDWlUZoWBVHteIH\nc4xcpKJOHmZlTq84ydJDoMiHQ3OKofE3ntK8Mk2vFIEXp5QPhsxQfDYCufQ3XaqY\nQkLHxJhn9loGsxtUj3FbFxhFSfEWfjp38tDfy7s1NkPM8LOit3q2cV5R7+EZgVp5\nhhfIpz0L/+t5ruJce9WMtmChLJihnlqy//bs3THvRXG/sw9UuEL+FjVVYU9TY6hY\n42rMqzq69z+9XwHbw1xjRhQLXl0yr88wP6vAKcUa7U9W2TN1AKpV1R6GXkHRxB5G\n3s7CmY8aV+cUBIxpTfsVS4EaXQAVwdGlA8pGIs2TDexI/3hWcsCNmNZqQBWNWU0y\nzzRNw1b9m73PPeOzAzZUZeiKyvBSdzVK6VZXugpY6OqsZ65VtaNYgrFBDNMEHiF6\ncYnCgso19x4S8TYaEFh7bUx5XuJvRGDoQSGzTSVXbAm8RLO0YNFc\n-----END
+      string: '{"id":"b644f4fe-67e5-467b-92c1-58b43afea48d","name":"tests-isolcert-vcr0001
+        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUTUJpPrnVJbEQ6wyBGqrc9IEqXZ0wDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzA3WhcN\nMzUxMjAzMjMyMzA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMA8ZTL+/4vtr+HtR98xHBuioFHCObCw\nF0NUnpUyJ+nJEIZLokT7ZJwmmxNTJakbuxXZL35DAgWaRWf4YP5d650bajFJXAZU\nXLIKNFXyoKujYc1yQe5gs9uDQ9nZpB9MXSDfnybyaw2w7wJiL3v+Xnry2xrh3HU8\ndG87z1qQgl1Ul984ogSpmB83Fc6FaBs9WDnnkTfIQtid60vAwgim5xUcRif8Raym\nk8jNnEJghAAAsMwjjYHZ7WH8RMDXDfSuKu2ANzMQW2uJ4yoWn8MUc1TSL89QfPWH\n4b0gQZCrE92DRmL7k8VaZTRAfhH/jqJRmUtDkjPrMrHjY6t9aurPLHPsmO/y5K0c\noh02d6ZxJywvRajmMpIANA6ZgM3mddoeBoS5b+cf+gcElKHGHDx50k2XEmbLLfU8\n7tJXmWwWQX9U5fj03v0DcpSESWMtHx0Z4uavA4ywkJWRH9IllerBzxln1V29Hc2E\nk7fBiaR5HU5vjQT09AqEyODBnuZo/1H482BPpYEjcU6flpF8Wy5v01lcl5cZnnUD\nluaz4co2G1jElCbVRNR7bipcs8b6ZzftMxjDySuPjZI6hzb0+dNLcWMtVIYbrXoV\ndQZx2T1hGFgJ/FNIpYj1pz7B+i1HfHhZmH5dK4Lr+BA7euFCQgN3o+Xl7wrqL+ml\nYcF6Mo9DGuy9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAIRoOnrMZmoiWCOcLiA5TRkjpCCgJJICnaRighmUjfxkjcE/7+n/Q0xB\njlXJBfOG4oAgN4G62turYegUlS4rbd7aLQ3cgwTrHaygRVrcegliUO8Y4n85XbZj\nlXKBvL0bblMD686g47WZHn7jlz2zX442R13Wm+QWXMoBSCc2qsmJADPk28qXVz3x\nR43AGtNf++qXIc6bz6vjeSCCNRMyzXdAQOoBlJxXBeCtUVOrr3MI49hfTCKXIsIb\nR4OSdUV8onrEoUiNt2ASR5r7PWQFXKJwu6SnoLc4K/U+NtkzmXLqsigIKvSFMiSk\nNUUTes6fMJlqKoGQMnyNyzemq19MsIWWkzk2Q85/RtKgdvV0uX/LmRqt7+M+6LVa\nyUA/DLXTS2gmvo2A4x42/J3rBIFiTpcV6RQSSRfXgW82j+mCrP3KeWbEgG/Ip1Bx\nchuuXcPxB/lgLSAD+maUMMWCrdZ80iQuhA7E6X/l6PkCaW34Z7pV0nuMaUnue/+p\n6zUrYE/YwyY7ORNnfPPtLt08sl5XLrOALXfs52IgUaws81Bp8hDK8gHnyPeIF1Cr\n5Ti+/vVU0VgbLZXfRhF7//KMsna2K3hKXNcTW7FOD0EqeltvWc4K2fD7EZOlTiBn\nYjMmTU7e14lC9Xhqxor8WFUpXI5lsUwQqkO0+MnUIre4ydHHME6b\n-----END
         CERTIFICATE-----\n","isDefault":false}'
     headers:
       cache-control:
@@ -100,7 +100,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:11 GMT
+      - Fri, 05 Dec 2025 23:23:07 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -116,25 +116,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '120'
+      - '106'
       x-frame-options:
       - DENY
       x-http2-stream-id:
-      - '3'
+      - '5'
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7749347d-5c0a-99eb-9720-f8dd34bd1931
+      - d866a662-6405-9611-a9a6-f98c07fa2351
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4963'
+      - '4969'
       x-ratelimit-reset:
-      - '49'
+      - '53'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -154,13 +154,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/37b62dc2-297f-47f0-95a7-6ad997bc3180
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/b644f4fe-67e5-467b-92c1-58b43afea48d
   response:
     body:
-      string: '{"isDefault":false,"id":"37b62dc2-297f-47f0-95a7-6ad997bc3180","name":"tests-isolcert-vcr0001
-        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUaCN6sqz1me/HlA9c6tnvmHUfxdgwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODExWhcN\nMzUxMTI0MjExODExWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAL1bq+eemyTZ8ggDDUGlLdCfqus0UeVT\n+bnX6ROXl6TjiRlj+yiojZVDLDWP8AJrmNFUhnzTNG/IJ5NZPl2FfXdWR9uG2jsh\noxSugGkzqxNh1kmnvH+vSCAtvHo94Zlfg5I12nVUdFWshQNkCh9/VZuUtcC7OH+f\nJPHH2Zcegaskn6hy3M9hST2qMNpN5RHwzZB1g9QlNsyAzW1Y30aX9e29nNnz7+4v\ntGfcgj28/GGoEUxJv4aC46UK9ZwY0tr1m40npIQYBWwhie9lKMcvttnEzDfNlFIW\npB07LGU101V4V4nk2aK+wq0RkcD51aVIrpT9nYlNzmKkmscIoow5mbgYNsnXgXiK\nLVB9U9SMa7Ea31ivnfN7/mb/a+RnJUwWf7C14Uy4w4Lh9f8lKKZNCtgm+SuLHii7\nEugY1Qh+LuEICbAZhrlvSCRTT2tCF5RZcngPgAyo6s+6PTGYQDw0Mt7WWjyVuwtM\nnu9djdZfe20WfR/D18Jus2pWxD55l6PD5zZaDdcXfmBMLoLIiDpIbNXl/B/aYxOw\nZ7ptpz3dfTAeJxYQSYdu47/rdklM8OefO5MCrBFvPyszrAeFn8eZ0kKyxdRb3CuZ\nebhkZwnHwJ0rSEAkQN0C0Wxcy462b38bggbTFbVtQuY6Sm3e9JcpDnqZsRd0JKiu\nKFokUd19Kli9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBABHkwobOoM20qYfG7UG7YY3POWHnm32dtmsmJZ1bDqDgevbhnMpX+NJD\n5w4xxBhFAr4g7KJ3s2W/QfUjUUF3U1BEb2ZYEfhQqciq0qzTGVddwmXoliF+CwND\n/KayfEai2ViNtsK/s/v5ZGGENMrlPlGtQ5GvsOiDfVybGonOPlaRPS4os0XvKXEw\nJE5ZbSG+ewL6zZfISXqN88Nu8plQ7MZVQcAziH+CfFYK5vTMpRDWlUZoWBVHteIH\nc4xcpKJOHmZlTq84ydJDoMiHQ3OKofE3ntK8Mk2vFIEXp5QPhsxQfDYCufQ3XaqY\nQkLHxJhn9loGsxtUj3FbFxhFSfEWfjp38tDfy7s1NkPM8LOit3q2cV5R7+EZgVp5\nhhfIpz0L/+t5ruJce9WMtmChLJihnlqy//bs3THvRXG/sw9UuEL+FjVVYU9TY6hY\n42rMqzq69z+9XwHbw1xjRhQLXl0yr88wP6vAKcUa7U9W2TN1AKpV1R6GXkHRxB5G\n3s7CmY8aV+cUBIxpTfsVS4EaXQAVwdGlA8pGIs2TDexI/3hWcsCNmNZqQBWNWU0y\nzzRNw1b9m73PPeOzAzZUZeiKyvBSdzVK6VZXugpY6OqsZ65VtaNYgrFBDNMEHiF6\ncYnCgso19x4S8TYaEFh7bUx5XuJvRGDoQSGzTSVXbAm8RLO0YNFc\n-----END
+      string: '{"isDefault":false,"id":"b644f4fe-67e5-467b-92c1-58b43afea48d","name":"tests-isolcert-vcr0001
+        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUTUJpPrnVJbEQ6wyBGqrc9IEqXZ0wDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzA3WhcN\nMzUxMjAzMjMyMzA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMA8ZTL+/4vtr+HtR98xHBuioFHCObCw\nF0NUnpUyJ+nJEIZLokT7ZJwmmxNTJakbuxXZL35DAgWaRWf4YP5d650bajFJXAZU\nXLIKNFXyoKujYc1yQe5gs9uDQ9nZpB9MXSDfnybyaw2w7wJiL3v+Xnry2xrh3HU8\ndG87z1qQgl1Ul984ogSpmB83Fc6FaBs9WDnnkTfIQtid60vAwgim5xUcRif8Raym\nk8jNnEJghAAAsMwjjYHZ7WH8RMDXDfSuKu2ANzMQW2uJ4yoWn8MUc1TSL89QfPWH\n4b0gQZCrE92DRmL7k8VaZTRAfhH/jqJRmUtDkjPrMrHjY6t9aurPLHPsmO/y5K0c\noh02d6ZxJywvRajmMpIANA6ZgM3mddoeBoS5b+cf+gcElKHGHDx50k2XEmbLLfU8\n7tJXmWwWQX9U5fj03v0DcpSESWMtHx0Z4uavA4ywkJWRH9IllerBzxln1V29Hc2E\nk7fBiaR5HU5vjQT09AqEyODBnuZo/1H482BPpYEjcU6flpF8Wy5v01lcl5cZnnUD\nluaz4co2G1jElCbVRNR7bipcs8b6ZzftMxjDySuPjZI6hzb0+dNLcWMtVIYbrXoV\ndQZx2T1hGFgJ/FNIpYj1pz7B+i1HfHhZmH5dK4Lr+BA7euFCQgN3o+Xl7wrqL+ml\nYcF6Mo9DGuy9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAIRoOnrMZmoiWCOcLiA5TRkjpCCgJJICnaRighmUjfxkjcE/7+n/Q0xB\njlXJBfOG4oAgN4G62turYegUlS4rbd7aLQ3cgwTrHaygRVrcegliUO8Y4n85XbZj\nlXKBvL0bblMD686g47WZHn7jlz2zX442R13Wm+QWXMoBSCc2qsmJADPk28qXVz3x\nR43AGtNf++qXIc6bz6vjeSCCNRMyzXdAQOoBlJxXBeCtUVOrr3MI49hfTCKXIsIb\nR4OSdUV8onrEoUiNt2ASR5r7PWQFXKJwu6SnoLc4K/U+NtkzmXLqsigIKvSFMiSk\nNUUTes6fMJlqKoGQMnyNyzemq19MsIWWkzk2Q85/RtKgdvV0uX/LmRqt7+M+6LVa\nyUA/DLXTS2gmvo2A4x42/J3rBIFiTpcV6RQSSRfXgW82j+mCrP3KeWbEgG/Ip1Bx\nchuuXcPxB/lgLSAD+maUMMWCrdZ80iQuhA7E6X/l6PkCaW34Z7pV0nuMaUnue/+p\n6zUrYE/YwyY7ORNnfPPtLt08sl5XLrOALXfs52IgUaws81Bp8hDK8gHnyPeIF1Cr\n5Ti+/vVU0VgbLZXfRhF7//KMsna2K3hKXNcTW7FOD0EqeltvWc4K2fD7EZOlTiBn\nYjMmTU7e14lC9Xhqxor8WFUpXI5lsUwQqkO0+MnUIre4ydHHME6b\n-----END
         CERTIFICATE-----\n"}'
     headers:
       cache-control:
@@ -172,7 +172,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:12 GMT
+      - Fri, 05 Dec 2025 23:23:07 GMT
       expires:
       - '0'
       pragma:
@@ -188,7 +188,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '54'
+      - '96'
       x-frame-options:
       - DENY
       x-http2-stream-id:
@@ -196,17 +196,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f38ccc5a-ede5-9e16-8902-e9783d6d20ee
+      - aa463093-0d21-9336-ba58-43664fcb5326
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4962'
+      - '4968'
       x-ratelimit-reset:
-      - '48'
+      - '53'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -226,13 +226,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates
   response:
     body:
-      string: '[{"isDefault":false,"id":"37b62dc2-297f-47f0-95a7-6ad997bc3180","name":"tests-isolcert-vcr0001
-        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUaCN6sqz1me/HlA9c6tnvmHUfxdgwDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMTI2MjExODExWhcN\nMzUxMTI0MjExODExWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAL1bq+eemyTZ8ggDDUGlLdCfqus0UeVT\n+bnX6ROXl6TjiRlj+yiojZVDLDWP8AJrmNFUhnzTNG/IJ5NZPl2FfXdWR9uG2jsh\noxSugGkzqxNh1kmnvH+vSCAtvHo94Zlfg5I12nVUdFWshQNkCh9/VZuUtcC7OH+f\nJPHH2Zcegaskn6hy3M9hST2qMNpN5RHwzZB1g9QlNsyAzW1Y30aX9e29nNnz7+4v\ntGfcgj28/GGoEUxJv4aC46UK9ZwY0tr1m40npIQYBWwhie9lKMcvttnEzDfNlFIW\npB07LGU101V4V4nk2aK+wq0RkcD51aVIrpT9nYlNzmKkmscIoow5mbgYNsnXgXiK\nLVB9U9SMa7Ea31ivnfN7/mb/a+RnJUwWf7C14Uy4w4Lh9f8lKKZNCtgm+SuLHii7\nEugY1Qh+LuEICbAZhrlvSCRTT2tCF5RZcngPgAyo6s+6PTGYQDw0Mt7WWjyVuwtM\nnu9djdZfe20WfR/D18Jus2pWxD55l6PD5zZaDdcXfmBMLoLIiDpIbNXl/B/aYxOw\nZ7ptpz3dfTAeJxYQSYdu47/rdklM8OefO5MCrBFvPyszrAeFn8eZ0kKyxdRb3CuZ\nebhkZwnHwJ0rSEAkQN0C0Wxcy462b38bggbTFbVtQuY6Sm3e9JcpDnqZsRd0JKiu\nKFokUd19Kli9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBABHkwobOoM20qYfG7UG7YY3POWHnm32dtmsmJZ1bDqDgevbhnMpX+NJD\n5w4xxBhFAr4g7KJ3s2W/QfUjUUF3U1BEb2ZYEfhQqciq0qzTGVddwmXoliF+CwND\n/KayfEai2ViNtsK/s/v5ZGGENMrlPlGtQ5GvsOiDfVybGonOPlaRPS4os0XvKXEw\nJE5ZbSG+ewL6zZfISXqN88Nu8plQ7MZVQcAziH+CfFYK5vTMpRDWlUZoWBVHteIH\nc4xcpKJOHmZlTq84ydJDoMiHQ3OKofE3ntK8Mk2vFIEXp5QPhsxQfDYCufQ3XaqY\nQkLHxJhn9loGsxtUj3FbFxhFSfEWfjp38tDfy7s1NkPM8LOit3q2cV5R7+EZgVp5\nhhfIpz0L/+t5ruJce9WMtmChLJihnlqy//bs3THvRXG/sw9UuEL+FjVVYU9TY6hY\n42rMqzq69z+9XwHbw1xjRhQLXl0yr88wP6vAKcUa7U9W2TN1AKpV1R6GXkHRxB5G\n3s7CmY8aV+cUBIxpTfsVS4EaXQAVwdGlA8pGIs2TDexI/3hWcsCNmNZqQBWNWU0y\nzzRNw1b9m73PPeOzAzZUZeiKyvBSdzVK6VZXugpY6OqsZ65VtaNYgrFBDNMEHiF6\ncYnCgso19x4S8TYaEFh7bUx5XuJvRGDoQSGzTSVXbAm8RLO0YNFc\n-----END
+      string: '[{"isDefault":false,"id":"b644f4fe-67e5-467b-92c1-58b43afea48d","name":"tests-isolcert-vcr0001
+        Updated","pem":"-----BEGIN CERTIFICATE-----\nMIIFkzCCA3ugAwIBAgIUTUJpPrnVJbEQ6wyBGqrc9IEqXZ0wDQYJKoZIhvcNAQEL\nBQAweTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcM\nCFNhbiBKb3NlMRIwEAYDVQQKDAlCRC1SZWRIYXQxFjAUBgNVBAsMDUlUIERlcGFy\ndG1lbnQxFjAUBgNVBAMMDWJkLXJlZGhhdC5jb20wHhcNMjUxMjA1MjMyMzA3WhcN\nMzUxMjAzMjMyMzA3WjB5MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5p\nYTERMA8GA1UEBwwIU2FuIEpvc2UxEjAQBgNVBAoMCUJELVJlZEhhdDEWMBQGA1UE\nCwwNSVQgRGVwYXJ0bWVudDEWMBQGA1UEAwwNYmQtcmVkaGF0LmNvbTCCAiIwDQYJ\nKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMA8ZTL+/4vtr+HtR98xHBuioFHCObCw\nF0NUnpUyJ+nJEIZLokT7ZJwmmxNTJakbuxXZL35DAgWaRWf4YP5d650bajFJXAZU\nXLIKNFXyoKujYc1yQe5gs9uDQ9nZpB9MXSDfnybyaw2w7wJiL3v+Xnry2xrh3HU8\ndG87z1qQgl1Ul984ogSpmB83Fc6FaBs9WDnnkTfIQtid60vAwgim5xUcRif8Raym\nk8jNnEJghAAAsMwjjYHZ7WH8RMDXDfSuKu2ANzMQW2uJ4yoWn8MUc1TSL89QfPWH\n4b0gQZCrE92DRmL7k8VaZTRAfhH/jqJRmUtDkjPrMrHjY6t9aurPLHPsmO/y5K0c\noh02d6ZxJywvRajmMpIANA6ZgM3mddoeBoS5b+cf+gcElKHGHDx50k2XEmbLLfU8\n7tJXmWwWQX9U5fj03v0DcpSESWMtHx0Z4uavA4ywkJWRH9IllerBzxln1V29Hc2E\nk7fBiaR5HU5vjQT09AqEyODBnuZo/1H482BPpYEjcU6flpF8Wy5v01lcl5cZnnUD\nluaz4co2G1jElCbVRNR7bipcs8b6ZzftMxjDySuPjZI6hzb0+dNLcWMtVIYbrXoV\ndQZx2T1hGFgJ/FNIpYj1pz7B+i1HfHhZmH5dK4Lr+BA7euFCQgN3o+Xl7wrqL+ml\nYcF6Mo9DGuy9AgMBAAGjEzARMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggIBAIRoOnrMZmoiWCOcLiA5TRkjpCCgJJICnaRighmUjfxkjcE/7+n/Q0xB\njlXJBfOG4oAgN4G62turYegUlS4rbd7aLQ3cgwTrHaygRVrcegliUO8Y4n85XbZj\nlXKBvL0bblMD686g47WZHn7jlz2zX442R13Wm+QWXMoBSCc2qsmJADPk28qXVz3x\nR43AGtNf++qXIc6bz6vjeSCCNRMyzXdAQOoBlJxXBeCtUVOrr3MI49hfTCKXIsIb\nR4OSdUV8onrEoUiNt2ASR5r7PWQFXKJwu6SnoLc4K/U+NtkzmXLqsigIKvSFMiSk\nNUUTes6fMJlqKoGQMnyNyzemq19MsIWWkzk2Q85/RtKgdvV0uX/LmRqt7+M+6LVa\nyUA/DLXTS2gmvo2A4x42/J3rBIFiTpcV6RQSSRfXgW82j+mCrP3KeWbEgG/Ip1Bx\nchuuXcPxB/lgLSAD+maUMMWCrdZ80iQuhA7E6X/l6PkCaW34Z7pV0nuMaUnue/+p\n6zUrYE/YwyY7ORNnfPPtLt08sl5XLrOALXfs52IgUaws81Bp8hDK8gHnyPeIF1Cr\n5Ti+/vVU0VgbLZXfRhF7//KMsna2K3hKXNcTW7FOD0EqeltvWc4K2fD7EZOlTiBn\nYjMmTU7e14lC9Xhqxor8WFUpXI5lsUwQqkO0+MnUIre4ydHHME6b\n-----END
         CERTIFICATE-----\n"},{"id":"87122222-457f-11ed-b878-0242ac120002","name":"Zscaler
         Root Certificate","isDefault":true}]'
     headers:
@@ -245,7 +245,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:12 GMT
+      - Fri, 05 Dec 2025 23:23:07 GMT
       expires:
       - '0'
       pragma:
@@ -261,7 +261,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '52'
+      - '53'
       x-frame-options:
       - DENY
       x-http2-stream-id:
@@ -269,17 +269,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8aa09962-4aef-9ec7-a096-72cb3e4dc048
+      - 88b29130-b931-9c30-b4a9-315bc15a46b3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4961'
+      - '4967'
       x-ratelimit-reset:
-      - '48'
+      - '53'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -299,9 +299,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/37b62dc2-297f-47f0-95a7-6ad997bc3180
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/certificates/b644f4fe-67e5-467b-92c1-58b43afea48d
   response:
     body:
       string: '{"message":"Certificate deleted successfully."}'
@@ -315,7 +315,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:12 GMT
+      - Fri, 05 Dec 2025 23:23:07 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -329,7 +329,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '112'
+      - '53'
       x-frame-options:
       - DENY
       x-http2-stream-id:
@@ -337,17 +337,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 65346388-a968-941c-8880-08789479fe12
+      - 5153c8f8-7b6d-9c61-8507-b58b30f9d5a0
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4960'
+      - '4966'
       x-ratelimit-reset:
-      - '48'
+      - '53'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

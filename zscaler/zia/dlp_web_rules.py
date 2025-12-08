@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_web_rules import DLPWebRules
 from zscaler.utils import transform_common_id_fields, format_url, reformat_params
-from zscaler.types import APIResult
 
 
 class DLPWebRuleAPI(APIClient):
@@ -36,7 +35,7 @@ class DLPWebRuleAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPWebRules]]:
+    ) -> List[DLPWebRules]:
         """
         List dlp web rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -46,7 +45,6 @@ class DLPWebRuleAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of DLP Web Rules instances, Response, error)
 
 
         Examples:
@@ -72,31 +70,21 @@ class DLPWebRuleAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPWebRules(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPWebRules(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> DLPWebRules:
         """
         Returns a DLP policy rule, excluding SaaS Security API DLP policy rules.
 
@@ -124,23 +112,14 @@ class DLPWebRuleAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, DLPWebRules)
 
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        result = DLPWebRules(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_rules_lite(self, query_params: dict = None) -> APIResult[List[DLPWebRules]]:
+    def list_rules_lite(self, query_params: dict = None) -> List[DLPWebRules]:
         """
         Lists name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules
 
@@ -188,28 +167,18 @@ class DLPWebRuleAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPWebRules(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPWebRules(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def add_rule(self, **kwargs) -> APIResult[dict]:
+    def add_rule(self, **kwargs) -> DLPWebRules:
         """
         Adds a new DLP policy rule.
 
@@ -286,38 +255,26 @@ class DLPWebRuleAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-
-        if error:
-            return (None, None, error)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response = self._request_executor.execute(request, DLPWebRules)
 
-        if error:
-            return (None, response, error)
+        result = DLPWebRules(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: str, **kwargs) -> DLPWebRules:
         """
         Updates an existing DLP policy rule. Not applicable to SaaS Security API DLP policy rules.
 
@@ -386,23 +343,17 @@ class DLPWebRuleAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, DLPWebRules)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, DLPWebRules)
+        result = DLPWebRules(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
@@ -430,12 +381,6 @@ class DLPWebRuleAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

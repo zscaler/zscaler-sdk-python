@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/browserIsolation/profiles
+    uri: https://easm.test.zscaler.com/zia/api/v1/browserIsolation/profiles
   response:
     body:
       string: '[{"profileSeq":0,"id":"15e73a58-fe18-4e4a-8778-e3ae2dd50ba3","name":"BD_SA_Profile1_ZIA","url":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/15e73a58-fe18-4e4a-8778-e3ae2dd50ba3","defaultProfile":true},{"profileSeq":0,"id":"791c2d14-e9a7-4c47-8a3c-8988caad925b","name":"BD_SA_Profile2_ZIA","url":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/791c2d14-e9a7-4c47-8a3c-8988caad925b"},{"profileSeq":0,"id":"b9ea3eab-a8f7-4ec5-bbc2-ac002c9f5dd8","name":"BD   SA   Profile  ZIA","url":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/b9ea3eab-a8f7-4ec5-bbc2-ac002c9f5dd8"},{"profileSeq":0,"id":"bcee4d01-0d74-435e-b433-5a41f70b17f9","name":"BD  SA
@@ -45,7 +45,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:08 GMT
+      - Sat, 06 Dec 2025 00:16:45 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -57,23 +57,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '566'
+      - '515'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c72c20ff-2796-986f-b893-02c6485b7b1d
+      - be928bad-eb7c-9837-8072-96d9fde1fc46
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4989'
       x-ratelimit-reset:
-      - '52'
+      - '15'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

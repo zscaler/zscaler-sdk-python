@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
 from zscaler.zia.models.dedicated_ip_gateways import DedicatedIPGateways
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class DedicatedIPGatewaysAPI(APIClient):
@@ -37,14 +36,13 @@ class DedicatedIPGatewaysAPI(APIClient):
     def list_dedicated_ip_gw_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DedicatedIPGateways]]:
+    ) -> List[DedicatedIPGateways]:
         """
         Retrieves a list of dedicated IP gateways
 
         Args:
 
         Returns:
-            tuple: A tuple containing (Proxies instance, Response, error).
 
         Examples:
             >>> gw_list, _, error = client.zia.dedicated_ip_gateways.list_dedicated_ip_gw_lite()
@@ -66,19 +64,10 @@ class DedicatedIPGatewaysAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, DedicatedIPGateways)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DedicatedIPGateways(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, DedicatedIPGateways)
+        result = []
+        for item in response.get_results():
+            result.append(DedicatedIPGateways(self.form_response_body(item)))
+        return result

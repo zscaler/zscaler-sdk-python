@@ -18,7 +18,6 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IOTReportAPI(APIClient):
@@ -32,13 +31,12 @@ class IOTReportAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_device_types(self) -> APIResult[dict]:
+    def get_device_types(self) -> Any:
         """
         Retrieve the mapping between device type universally unique identifier (UUID)
         values and the device type names for all the device types supported by the Zscaler AI/ML.
 
         Returns:
-            tuple: A tuple containing:
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
 
@@ -59,30 +57,23 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             iot_report = response.get_body()
-            return (iot_report, response, None)
+            return iot_report
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_categories(self) -> APIResult[dict]:
+    def get_categories(self) -> Any:
         """
         Retrieve the mapping between the device category universally unique identifier (UUID)
         values and the category names for all the device categories supported by the Zscaler AI/ML.
         The parent of device category is device type.
 
         Returns:
-            tuple: A tuple containing:
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
 
@@ -103,30 +94,23 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             iot_report = response.get_body()
-            return (iot_report, response, None)
+            return iot_report
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_classifications(self) -> APIResult[dict]:
+    def get_classifications(self) -> Any:
         """
         Retrieve the mapping between the device classification universally unique identifier (UUID)
         values and the classification names for all the device classifications supported by Zscaler AI/ML.
         The parent of device classification is device category.
 
         Returns:
-            tuple: A tuple containing:
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
 
@@ -147,29 +131,22 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             iot_report = response.get_body()
-            return (iot_report, response, None)
+            return iot_report
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_device_list(self) -> APIResult[dict]:
+    def get_device_list(self) -> Any:
         """
         Retrieve a list of discovered devices with the following key contexts, IP address,
         location, ML auto-label, classification, category, and type.
 
         Returns:
-            tuple: A tuple containing:
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
 
@@ -190,18 +167,12 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             iot_report = response.get_body()
-            return (iot_report, response, None)
+            return iot_report
         except Exception as ex:
-            return (None, response, ex)
+            raise ex

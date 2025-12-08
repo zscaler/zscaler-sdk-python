@@ -18,7 +18,6 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdminSSOControllerAPI(APIClient):
@@ -32,7 +31,7 @@ class AdminSSOControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def get_sso_controller(self) -> APIResult[dict]:
+    def get_sso_controller(self) -> Any:
         """
         Fetches Admin SSO Login Details
 
@@ -47,7 +46,8 @@ class AdminSSOControllerAPI(APIClient):
                 - Or an `Exception` if an error occurred.
 
         Examples:
-            >>> fetched, _, err = client.zpa.admin_sso_controller.get_sso_controller()
+            >>> try:
+            ...     fetched = client.zpa.admin_sso_controller.get_sso_controller()
             >>> if err:
             ...     print(f"Error fetching updated SSO setting: {err}")
             ...     return
@@ -61,22 +61,12 @@ class AdminSSOControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def update_sso_controller(self, **kwargs) -> APIResult[dict]:
+    def update_sso_controller(self, **kwargs) -> Any:
         """
         Update SSO Options
 
@@ -96,7 +86,8 @@ class AdminSSOControllerAPI(APIClient):
 
             Enable SSO Login Option
 
-            >>> _, _, err = client.zpa.admin_sso_controller.update_sso_controller(
+            >>> try:
+            ...     _ = client.zpa.admin_sso_controller.update_sso_controller(
             ...     ssologinonly=True
             ... )
             >>> if err:
@@ -113,20 +104,10 @@ class AdminSSOControllerAPI(APIClient):
         )
 
         body = kwargs
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-        if error or response is None:
-            return (None, response, error)
+        if response is None or getattr(response, "status_code", None) == 204:
+            return {}
 
-        if getattr(response, "status_code", None) == 204:
-            return ({}, response, None)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        return response.get_body()

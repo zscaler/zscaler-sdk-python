@@ -41,7 +41,7 @@ class TestCloudFirewallDNSRules:
             # Step 3: Create a Firewall Rule
             try:
                 rule_name = "tests-" + generate_random_string()
-                created_rule, _, error = client.zia.cloud_firewall_dns.add_rule(
+                created_rule = client.zia.cloud_firewall_dns.add_rule(
                     name=rule_name,
                     description="Integration test firewall rule",
                     enabled=True,
@@ -53,7 +53,6 @@ class TestCloudFirewallDNSRules:
                     source_countries=["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
                     protocols=["ANY_RULE"],
                 )
-                assert error is None, f"Firewall Rule creation failed: {error}"
                 assert created_rule is not None, "Firewall Rule creation returned None"
                 rule_id = created_rule.id
             except Exception as exc:
@@ -61,8 +60,7 @@ class TestCloudFirewallDNSRules:
 
             # Step 4: Retrieve the Firewall Rule by ID
             try:
-                retrieved_rule, _, error = client.zia.cloud_firewall_dns.get_rule(rule_id)
-                assert error is None, f"Error retrieving Firewall Rule: {error}"
+                retrieved_rule = client.zia.cloud_firewall_dns.get_rule(rule_id)
                 assert retrieved_rule is not None, "Retrieved Firewall Rule is None"
                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
@@ -71,7 +69,7 @@ class TestCloudFirewallDNSRules:
             # Step 5: Update the Firewall Rule
             try:
                 updated_description = "Updated integration test firewall dns rule"
-                updated_rule, _, error = client.zia.cloud_firewall_dns.update_rule(
+                updated_rule = client.zia.cloud_firewall_dns.update_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -84,7 +82,6 @@ class TestCloudFirewallDNSRules:
                     source_countries=["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
                     protocols=["ANY_RULE"],
                 )
-                assert error is None, f"Error updating Firewall DNS Rule: {error}"
                 assert updated_rule is not None, "Updated Firewall DNS Rule is None"
                 assert (
                     updated_rule.description == updated_description
@@ -94,8 +91,7 @@ class TestCloudFirewallDNSRules:
 
             # Step 6: List Firewall DNS Rules and verify the rule is present
             try:
-                rules, _, error = client.zia.cloud_firewall_dns.list_rules()
-                assert error is None, f"Error listing Firewall DNS Rules: {error}"
+                rules = client.zia.cloud_firewall_dns.list_rules()
                 assert rules is not None, "Firewall DNS Rules list is None"
                 assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in the list of rules."
             except Exception as exc:
@@ -106,12 +102,11 @@ class TestCloudFirewallDNSRules:
             try:
                 if rule_id:
                     # Delete the firewall rule
-                    _, _, error = client.zia.cloud_firewall_dns.delete_rule(rule_id)
-                    assert error is None, f"Error deleting Firewall DNS Rule: {error}"
+                    _ = client.zia.cloud_firewall_dns.delete_rule(rule_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Firewall DNS Rule failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

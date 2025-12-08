@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zwa.models.audit_logs import AuditLogs
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AuditLogsAPI(APIClient):
@@ -29,7 +28,7 @@ class AuditLogsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"
 
-    def audit_logs(self, query_params: Optional[dict] = None, fields=None, time_range=None, **kwargs) -> APIResult[dict]:
+    def audit_logs(self, query_params: Optional[dict] = None, fields=None, time_range=None, **kwargs) -> AuditLogs:
         """
         Filters audit logs based on the specified time period and field values.
 
@@ -82,7 +81,6 @@ class AuditLogsAPI(APIClient):
                     }
 
         Returns:
-            tuple: The audit log search results.
 
         Examples:
             Perform an audit log search with a severity filter:
@@ -98,8 +96,6 @@ class AuditLogsAPI(APIClient):
 
             .. code-block:: python
 
-                if error:
-                    print(f"Error fetching audit logs: {error}")
                 else:
                     for log in search:
                         print(log.as_dict())
@@ -113,22 +109,13 @@ class AuditLogsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             params=query_params,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AuditLogs)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AuditLogs(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, AuditLogs)
+        result = AuditLogs(self.form_response_body(response.get_body()))
+        return result

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_templates import LocationTemplate
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LocationTemplateAPI(APIClient):
@@ -33,7 +32,7 @@ class LocationTemplateAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_location_templates(self, query_params: Optional[dict] = None) -> APIResult[List[LocationTemplate]]:
+    def list_location_templates(self, query_params: Optional[dict] = None) -> List[LocationTemplate]:
         """
         List all existing location templates.
 
@@ -86,25 +85,16 @@ class LocationTemplateAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationTemplate(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationTemplate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_template_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationTemplate]]:
+    def list_template_lite(self, query_params: Optional[dict] = None) -> List[LocationTemplate]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -143,25 +133,16 @@ class LocationTemplateAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationTemplate(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationTemplate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_location_template(self, name: str, template: dict = None, **kwargs) -> APIResult[dict]:
+    def add_location_template(self, name: str, template: dict = None, **kwargs) -> LocationTemplate:
         """
         Add a new location template.
 
@@ -236,23 +217,14 @@ class LocationTemplateAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, LocationTemplate)
+        result = LocationTemplate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, LocationTemplate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationTemplate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_location_template(self, template_id: str, **kwargs) -> APIResult[dict]:
+    def update_location_template(self, template_id: str, **kwargs) -> LocationTemplate:
         """
         Update an existing location template.
 
@@ -330,23 +302,14 @@ class LocationTemplateAPI(APIClient):
 
         payload = {k: v for k, v in kwargs.items() if v is not None}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=payload,
         )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, LocationTemplate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationTemplate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, LocationTemplate)
+        result = LocationTemplate(self.form_response_body(response.get_body()))
+        return result
 
     def delete_location_template(self, template_id: str):
         """
@@ -380,12 +343,6 @@ class LocationTemplateAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/incidentReceiverServers
+    uri: https://easm.test.zscaler.com/zia/api/v1/incidentReceiverServers
   response:
     body:
       string: '[{"id":1664,"name":"ZS_BD_INC_RECEIVER_01","url":"icaps://192.168.100.1:1344/","status":"ENABLED","flags":1},{"id":1809,"name":"ZS_BD_INC_RECEIVER_02","url":"icaps://192.168.100.2:1344/","status":"ENABLED","flags":1},{"id":1819,"name":"ZIR-BD-SA01","url":"icaps://44.234.89.194:1344/","status":"ENABLED","flags":1},{"id":1823,"name":"ZIR-BD-TITANIAM","url":"icaps://18.117.103.173:1344/","status":"ENABLED","flags":1}]'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:55 GMT
+      - Sat, 06 Dec 2025 00:15:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +52,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '836'
+      - '759'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d29120c2-433f-9463-95cc-99b609f555c0
+      - 5625d305-7e35-996b-86c0-e2e4aee4416a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4965'
+      - '4988'
       x-ratelimit-reset:
-      - '6'
+      - '44'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -90,9 +90,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/incidentReceiverServers/1664
+    uri: https://easm.test.zscaler.com/zia/api/v1/incidentReceiverServers/1664
   response:
     body:
       string: '{"id":1664,"name":"ZS_BD_INC_RECEIVER_01","url":"icaps://192.168.100.1:1344/","status":"ENABLED","flags":1}'
@@ -117,7 +117,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:56 GMT
+      - Sat, 06 Dec 2025 00:15:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -129,23 +129,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '396'
+      - '345'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - cf330c42-5cba-982b-92e6-f3e864c6144a
+      - a2b9388b-b681-9a1e-a7e7-bcc4247191ce
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4964'
+      - '4987'
       x-ratelimit-reset:
-      - '5'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

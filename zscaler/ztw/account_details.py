@@ -18,7 +18,6 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AccountDetailsAPI(APIClient):
@@ -32,7 +31,7 @@ class AccountDetailsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_public_account_details(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
+    def list_public_account_details(self, query_params: Optional[dict] = None) -> List[Dict[str, Any]]:
         """
         Returns a list of public cloud account information.
 
@@ -75,25 +74,16 @@ class AccountDetailsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append((self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_public_account_details(self, account_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_public_account_details(self, account_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns information for the public (Cloud Connector) cloud account information for the specified ID.
 
@@ -128,25 +118,16 @@ class AccountDetailsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append((self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
+    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> List[Dict[str, Any]]:
         """
         Returns a subset of public (Cloud Connector) cloud account information.
 
@@ -190,25 +171,16 @@ class AccountDetailsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append((self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_public_account_status(self) -> APIResult[Dict[str, Any]]:
+    def list_public_account_status(self) -> Dict[str, Any]:
         """
         Returns a List of public (Cloud Connector) cloud account status information (enabled/disabled).
 
@@ -228,15 +200,9 @@ class AccountDetailsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = response.get_body()
@@ -244,7 +210,7 @@ class AccountDetailsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_public_account_status(self, **kwargs) -> APIResult[dict]:
+    def update_public_account_status(self, **kwargs) -> Any:
         """
         Update an existing public account status.
 
@@ -271,16 +237,7 @@ class AccountDetailsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result

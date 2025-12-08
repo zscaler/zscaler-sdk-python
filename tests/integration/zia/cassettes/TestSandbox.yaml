@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/sandbox/report/quota
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandbox/report/quota
   response:
     body:
       string: '[{"startTime":-1,"used":0,"allowed":3000,"scale":"DAYS","unused":3000}]'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:00 GMT
+      - Sat, 06 Dec 2025 00:17:35 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -48,23 +48,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '175'
+      - '114'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 782141ce-e8b8-9a83-bd70-a3cc4cfac2f2
+      - e9bd414c-55dc-9f3c-9fc2-9b07cc8e7d4f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4985'
       x-ratelimit-reset:
-      - '60'
+      - '25'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -86,9 +86,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/sandbox/report/F69CA01D65E6C8F9E3540029E5F6AB92?details=summary
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandbox/report/F69CA01D65E6C8F9E3540029E5F6AB92?details=summary
   response:
     body:
       string: '{"Summary":{"Summary":{"Status":"CONTENT_NOTFOUND","Message":"Content
@@ -114,7 +114,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:02 GMT
+      - Sat, 06 Dec 2025 00:17:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -122,23 +122,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1825'
+      - '2147'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 309f7483-417e-9814-89e3-c9a0b1d1c2fd
+      - 3a4dd49f-5589-923a-8ab3-abc8ba9ac6ca
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4984'
       x-ratelimit-reset:
-      - '60'
+      - '25'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

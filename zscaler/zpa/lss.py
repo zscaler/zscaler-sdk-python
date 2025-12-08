@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.lss import LSSResourceModel
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LSSConfigControllerAPI(APIClient):
@@ -90,7 +89,7 @@ class LSSConfigControllerAPI(APIClient):
 
         return template
 
-    def list_configs(self, query_params: Optional[dict] = None) -> APIResult[List[LSSResourceModel]]:
+    def list_configs(self, query_params: Optional[dict] = None) -> List[LSSResourceModel]:
         """
         Enumerates log receivers in your organization with pagination.
         A subset of log receivers can be returned that match a supported
@@ -107,7 +106,6 @@ class LSSConfigControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            tuple: A tuple containing (list of LSS Config instances, Response, error)
 
         Example:
             >>> lss_configs = zpa.lss.list_configs(search="example", pagesize=100)
@@ -123,24 +121,15 @@ class LSSConfigControllerAPI(APIClient):
         query_params = query_params or {}
 
         # Prepare request
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
         # Execute the request
-        response, error = self._request_executor.execute(request, LSSResourceModel)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, LSSResourceModel)
+        result = []
+        for item in response.get_results():
+            result.append(LSSResourceModel(self.form_response_body(item)))
+        return result
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LSSResourceModel(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_config(self, lss_config_id: str, query_params: Optional[dict] = None) -> APIResult[LSSResourceModel]:
+    def get_config(self, lss_config_id: str, query_params: Optional[dict] = None) -> LSSResourceModel:
         """
         Gets information on the specified LSS Receiver config.
 
@@ -160,19 +149,10 @@ class LSSConfigControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, LSSResourceModel)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LSSResourceModel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, LSSResourceModel)
+        result = LSSResourceModel(self.form_response_body(response.get_body()))
+        return result
 
     def add_lss_config(
         self,
@@ -185,7 +165,7 @@ class LSSConfigControllerAPI(APIClient):
         source_log_format: str = "csv",
         use_tls: bool = False,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> LSSResourceModel:
         """
         Adds a new LSS Receiver Config to ZPA.
 
@@ -279,22 +259,13 @@ class LSSConfigControllerAPI(APIClient):
             payload["config"]["filter"] = kwargs.pop("filter_status_codes")
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=payload)
         # Execute the request
-        response, error = self._request_executor.execute(request, LSSResourceModel)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, LSSResourceModel)
+        result = LSSResourceModel(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = LSSResourceModel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_lss_config(self, lss_config_id: str, **kwargs) -> APIResult[dict]:
+    def update_lss_config(self, lss_config_id: str, **kwargs) -> LSSResourceModel:
         """
         Updates the specified LSS Receiver Config.
 
@@ -339,9 +310,6 @@ class LSSConfigControllerAPI(APIClient):
 
         # Fetch the current configuration so we can merge with the new values
         current_config, _, error = self.get_config(lss_config_id)
-        if error:
-            return (None, None, error)
-
         # Convert current config to dictionary format, if it's an object
         if hasattr(current_config, "as_dict"):
             current_config = current_config.as_dict()
@@ -397,29 +365,19 @@ class LSSConfigControllerAPI(APIClient):
             current_config["config"]["filter"] = kwargs.pop("filter_status_codes")
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=current_config)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=current_config)
         # Execute the request
-        response, error = self._request_executor.execute(request, LSSResourceModel)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, LSSResourceModel)
         # Handle case where no content is returned (204 No Content)
         if response is None:
             # Return a meaningful result to indicate success
-            return (LSSResourceModel({"id": lss_config_id}), None, None)
+            return LSSResourceModel({"id": lss_config_id})
 
         # Parse the response into an LSSConfig instance
-        try:
-            result = LSSResourceModel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = LSSResourceModel(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def delete_lss_config(self, lss_config_id: str) -> APIResult[None]:
+    def delete_lss_config(self, lss_config_id: str) -> None:
         """
         Deletes the specified LSS Receiver Config.
 
@@ -438,16 +396,10 @@ class LSSConfigControllerAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url)
         # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        response = self._request_executor.execute(request)
+        return None
 
     def get_client_types(self, client_type=None) -> dict:
         """
@@ -471,14 +423,8 @@ class LSSConfigControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
         client_types = response.get_body()
         reverse_map = {v.lower().replace(" ", "_"): k for k, v in client_types.items()}
 
@@ -523,14 +469,8 @@ class LSSConfigControllerAPI(APIClient):
             )
 
         # Prepare request and execute
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
         # Return the response
         return response.get_body()
 
@@ -556,14 +496,8 @@ class LSSConfigControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
         all_status_codes = response.get_body()
 
         if log_type == "all":

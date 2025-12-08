@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_certificate import CBICertificate
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CBICertificateAPI(APIClient):
@@ -33,7 +32,7 @@ class CBICertificateAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_certificates(self) -> APIResult[List[CBICertificate]]:
+    def list_cbi_certificates(self) -> List[CBICertificate]:
         """
         Returns a list of all cloud browser isolation certificates.
 
@@ -41,10 +40,10 @@ class CBICertificateAPI(APIClient):
             :obj:`Tuple`: A tuple containing a list of `CBICertificate` instances, response object, and error if any.
 
         Examples:
-            >>> cert_list, _, err = client.zpa.cbi_certificate.list_cbi_certificates(
-            ... if err:
-            ...     print(f"Error listing certificates: {err}")
-            ...     return
+            >>> try:
+            ...     cert_list = client.zpa.cbi_certificate.list_cbi_certificates(
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total certificates found: {len(certs_list)}")
             ... for certificate in certs_list:
             ...     print(certificate.as_dict())
@@ -57,23 +56,14 @@ class CBICertificateAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CBICertificate(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CBICertificate(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_cbi_certificate(self, certificate_id: str) -> APIResult[dict]:
+    def get_cbi_certificate(self, certificate_id: str) -> CBICertificate:
         """
         Returns information on the specified cloud browser isolation certificate.
 
@@ -84,11 +74,11 @@ class CBICertificateAPI(APIClient):
             :obj:`Tuple`: A tuple containing the `CBICertificate` instance, response object, and error if any.
 
         Examples:
-            >>> fetched_cert, _, err = client.zpa.pra_portal.get_portal(
+            >>> try:
+            ...     fetched_cert = client.zpa.pra_portal.get_portal(
                 'a3a6b841-965c-4c75-8dd9-cefd83d740d4')
-            ... if err:
-            ...     print(f"Error fetching certificate by ID: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched certificate by ID: {fetched_certificate.as_dict()}")
         """
         http_method = "get".upper()
@@ -99,21 +89,12 @@ class CBICertificateAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, CBICertificate)
+        result = CBICertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CBICertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CBICertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_cbi_certificate(self, **kwargs) -> APIResult[dict]:
+    def add_cbi_certificate(self, **kwargs) -> CBICertificate:
         """
         Adds a new cloud browser isolation certificate.
 
@@ -127,7 +108,8 @@ class CBICertificateAPI(APIClient):
         Examples:
             Creating a Cloud browser isolation with the minimum required parameters:
 
-            >>> added_certificate, _, err = client.zpa.cbi_certificate.add_cbi_certificate(
+            >>> try:
+            ...     added_certificate = client.zpa.cbi_certificate.add_cbi_certificate(
             ...   name='new_certificate',
             ...   pem=("-----BEGIN CERTIFICATE-----\\n"
             ...              "nMIIF2DCCA8CgAwIBAgIBATANBgkqhkiG==\\n"
@@ -144,21 +126,12 @@ class CBICertificateAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, CBICertificate)
+        result = CBICertificate(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CBICertificate)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CBICertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> APIResult[dict]:
+    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> CBICertificate:
         """
         Updates an existing cloud browser isolation certificate.
 
@@ -166,7 +139,6 @@ class CBICertificateAPI(APIClient):
             certificate_id (str): The unique identifier for the cloud browser isolation certificate.
 
         Returns:
-            tuple: A tuple containing the `CBICertificate` instance, response object, and error if any.
 
         Examples:
             Updating the name of a Cloud browser isolation:
@@ -174,7 +146,8 @@ class CBICertificateAPI(APIClient):
         Examples:
             Creating a Cloud browser isolation with the minimum required parameters:
 
-            >>> updated_certificate, _, err = client.zpa.cbi_certificate.update_cbi_certificate(
+            >>> try:
+            ...     updated_certificate = client.zpa.cbi_certificate.update_cbi_certificate(
             ...     certificate_id='a3a6b841-965c-4c75-8dd9-cefd83d740d4'
             ...     name='new_certificate',
             ...     pem=("-----BEGIN CERTIFICATE-----\\n"
@@ -194,26 +167,17 @@ class CBICertificateAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CBICertificate)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {})
+        response = self._request_executor.execute(request, CBICertificate)
         # Handle case where no content is returned (204 No Content)
         if response is None:
             # Return a meaningful result to indicate success
-            return (CBICertificate({"id": certificate_id}), None, None)
+            return CBICertificate({"id": certificate_id})
 
-        try:
-            result = CBICertificate(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = CBICertificate(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_cbi_certificate(self, certificate_id: str) -> APIResult[dict]:
+    def delete_cbi_certificate(self, certificate_id: str) -> None:
         """
         Deletes the specified cloud browser isolation certificate.
 
@@ -221,15 +185,14 @@ class CBICertificateAPI(APIClient):
             certificate_id (str): The unique identifier for the cloud browser isolation certificate.
 
         Returns:
-            tuple: A tuple containing the response object and error if any.
 
         Examples:
-            >>> _, _, err = client.zpa.cbi_certificate.delete_cbi_certificate(
+            >>> try:
+            ...     _ = client.zpa.cbi_certificate.delete_cbi_certificate(
             ...     certificate_id='a3a6b841-965c-4c75-8dd9-cefd83d740d4'
             ... )
-            ... if err:
-            ...     print(f"Error deleting cbi certificate: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"CBI Certificate with ID {updated_certificate.id} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -240,12 +203,6 @@ class CBICertificateAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        return None

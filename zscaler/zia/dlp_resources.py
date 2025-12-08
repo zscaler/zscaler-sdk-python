@@ -21,7 +21,6 @@ from zscaler.zia.models.dlp_resources import DLPICAPServer
 from zscaler.zia.models.dlp_resources import DLPIDMProfile
 from zscaler.zia.models.dlp_resources import DLPEDMSchema
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class DLPResourcesAPI(APIClient):
@@ -38,7 +37,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_icap_servers(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPICAPServer]]:
+    ) -> List[DLPICAPServer]:
         """
         Returns the list of ZIA DLP ICAP Servers.
 
@@ -47,7 +46,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
 
         Returns:
-            tuple: A tuple containing (list of DLP ICAP Server instances, Response, error)
 
         Example:
             List all dlp icap servers:
@@ -88,31 +86,21 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPICAPServer(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPICAPServer(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def list_dlp_icap_servers_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPICAPServer]]:
+    ) -> List[DLPICAPServer]:
         """
         Lists name and ID of all ICAP servers.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -122,7 +110,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to match against a ICAP servers name.
 
         Returns:
-            tuple: List of ICAP servers resource records.
 
         Example:
             List all dlp icap servers:
@@ -163,31 +150,21 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPICAPServer(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPICAPServer(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_dlp_icap_servers(
         self,
         icap_server_id: int,
-    ) -> APIResult[dict]:
+    ) -> Any:
         """
         Returns the dlp icap server details for a given DLP ICAP Server.
 
@@ -195,7 +172,6 @@ class DLPResourcesAPI(APIClient):
             icap_server_id (str): The unique identifier for the DLP ICAP Server.
 
         Returns:
-            tuple: A tuple containing (DLP Resources instance, Response, error).
 
         Examples:
             >>> icap = zia.dlp_resources.get_dlp_icap_servers('99999')
@@ -212,26 +188,17 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DLPICAPServer(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = DLPICAPServer(self.form_response_body(response.get_body()))
+        return result
 
     def list_dlp_incident_receiver(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPICAPServer]]:
+    ) -> List[DLPICAPServer]:
         """
         Returns the list of ZIA DLP Incident Receiver.
 
@@ -240,7 +207,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
 
         Returns:
-            tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
 
         Example:
             List all incident receivers
@@ -281,31 +247,21 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPICAPServer(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPICAPServer(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def list_dlp_incident_receiver_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPICAPServer]]:
+    ) -> List[DLPICAPServer]:
         """
         Lists name and ID DLP Incident Receiver.
 
@@ -314,7 +270,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to match against a Incident Receiver name attributes.
 
         Returns:
-            tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
 
         Example:
             List all incident receivers
@@ -355,28 +310,18 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(DLPICAPServer(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(DLPICAPServer(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def get_dlp_incident_receiver(self, receiver_id: int) -> APIResult[dict]:
+    def get_dlp_incident_receiver(self, receiver_id: int) -> DLPICAPServer:
         """
         Returns the dlp incident receiver details for a given DLP Incident Receiver.
 
@@ -384,7 +329,6 @@ class DLPResourcesAPI(APIClient):
             receiver_id (str): The unique identifier for the DLP Incident Receiver.
 
         Returns:
-            tuple: A tuple containing (IncidentReceiver instance, Response, error).
 
         Examples:
             >>> incident_receiver = zia.dlp_resources.get_dlp_incident_receiver('99999')
@@ -401,26 +345,17 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DLPICAPServer(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = DLPICAPServer(self.form_response_body(response.get_body()))
+        return result
 
     def list_dlp_idm_profiles(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPIDMProfile]]:
+    ) -> List[DLPIDMProfile]:
         """
         Returns the list of ZIA DLP IDM Profiles.
 
@@ -430,7 +365,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of DLP IDM Profile instances, Response, error)
 
         Examples:
             Print all idm profiles
@@ -456,25 +390,16 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DLPIDMProfile(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DLPIDMProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_dlp_idm_profiles(self, profile_id: int) -> APIResult[dict]:
+    def get_dlp_idm_profiles(self, profile_id: int) -> DLPIDMProfile:
         """
         Returns the dlp idmp profile details for a given DLP IDM Profile.
 
@@ -482,7 +407,6 @@ class DLPResourcesAPI(APIClient):
             icap_server_id (str): The unique identifier for the DLP IDM Profile.
 
         Returns:
-            tuple: A tuple containing (IDM Profiles instance, Response, error).
 
         Examples:
             >>> idm = zia.dlp_resources.get_dlp_idm_profiles('99999')
@@ -499,26 +423,17 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DLPIDMProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = DLPIDMProfile(self.form_response_body(response.get_body()))
+        return result
 
     def list_edm_schemas(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPEDMSchema]]:
+    ) -> List[DLPEDMSchema]:
         """
         Returns the list of ZIA DLP Exact Data Match Schemas.
 
@@ -532,7 +447,6 @@ class DLPResourcesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of DLP EDM Schema instances, Response, error)
 
         Examples:
             Print all dlp edms
@@ -552,23 +466,14 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DLPEDMSchema(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DLPEDMSchema(self.form_response_body(item)))
+        return result
 
     def list_edm_schema_lite(
         self,
@@ -576,7 +481,7 @@ class DLPResourcesAPI(APIClient):
         active_only: bool = None,
         fetch_tokens: bool = None,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[DLPEDMSchema]]:
+    ) -> List[DLPEDMSchema]:
         """
         Returns the list of active EDM templates (or EDM schemas) and their criteria (or token details), only.
 
@@ -586,7 +491,6 @@ class DLPResourcesAPI(APIClient):
             fetch_tokens (bool): If set to true, the criteria for the active templates are returned in the response.
 
         Returns:
-            tuple: A tuple containing (list of EDM Schema instances, Response, error)
 
         Examples:
 
@@ -617,21 +521,11 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DLPEDMSchema(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DLPEDMSchema(self.form_response_body(item)))
+        return result

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.forwardingprofile import ForwardingProfile
-from zscaler.types import APIResult
 
 
 class ForwardingProfileAPI(APIClient):
@@ -29,7 +28,7 @@ class ForwardingProfileAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[ForwardingProfile]]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> List[ForwardingProfile]:
         """
         Returns the list of Forwarding Profiles By Company ID in the Client Connector Portal.
 
@@ -65,24 +64,15 @@ class ForwardingProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ForwardingProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ForwardingProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_forwarding_profile(self, **kwargs) -> APIResult[dict]:
+    def update_forwarding_profile(self, **kwargs) -> ForwardingProfile:
         """
        Updates a forwarding profile.
 
@@ -90,7 +80,6 @@ class ForwardingProfileAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing the Create Forwarding Profile, response, and error.
 
         Examples:
            Updates a forwarding profile.
@@ -116,21 +105,12 @@ class ForwardingProfileAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, ForwardingProfile)
+        result = ForwardingProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ForwardingProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ForwardingProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_forwarding_profile(self, profile_id: int) -> APIResult[dict]:
+    def delete_forwarding_profile(self, profile_id: int) -> None:
         """
         Deletes the specified Forwarding Profile.
 
@@ -138,7 +118,6 @@ class ForwardingProfileAPI(APIClient):
             profile_id (str): The unique identifier of the Forwarding Profile.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete an existing Forwarding Profile:
@@ -159,11 +138,6 @@ class ForwardingProfileAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_connector_groups import AppConnectorGroup
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AppConnectorGroupAPI(APIClient):
@@ -33,7 +32,7 @@ class AppConnectorGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorGroup]]:
+    def list_connector_groups(self, query_params: Optional[dict] = None) -> List[AppConnectorGroup]:
         """
         Enumerates connector groups in your organization with pagination.
         A subset of connector groups can be returned that match a supported
@@ -41,116 +40,83 @@ class AppConnectorGroupAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-
                 ``[query_params.page]`` {str}: Specifies the page number.
-
                 ``[query_params.page_size]`` {str}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
-
                 ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            List[AppConnectorGroup]: A list of AppConnectorGroup instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> group_list, _, err = client.zpa.app_connector_groups.list_connector_groups(
-            ... query_params={'search': 'ConnectorGRP01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing app connector group: {err}")
-            ...     return
-            ... print(f"Total app connector groups found: {len(group_list)}")
-            ... for group in groups:
-            ...     print(group.as_dict())
+            >>> try:
+            ...     groups = client.zpa.app_connector_groups.list_connector_groups(
+            ...         query_params={'search': 'ConnectorGRP01', 'page': '1', 'page_size': '100'}
+            ...     )
+            ...     print(f"Total app connector groups found: {len(groups)}")
+            ...     for group in groups:
+            ...         print(group.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error listing app connector groups: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /appConnectorGroup
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        return [AppConnectorGroup(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AppConnectorGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_connector_groups_summary(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorGroup]]:
+    def list_connector_groups_summary(self, query_params: Optional[dict] = None) -> List[AppConnectorGroup]:
         """
-        Retrieves all configured app connector groups Name and IDs
+        Retrieves all configured app connector groups Name and IDs.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-
                 ``[query_params.page]`` {str}: Specifies the page number.
-
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+                ``[query_params.search]`` {str}: The search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of AppConnectorGroups instances, Response, error)
+            List[AppConnectorGroup]: A list of AppConnectorGroup instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> group_list, _, err = client.zpa.app_connector_groups.list_connector_groups_summary(
-            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing app connector groups: {err}")
-            ...     return
-            ... print(f"Total app connector groups found: {len(group_list)}")
-            ... for group in group_list:
-            ...     print(group.as_dict())
+            >>> try:
+            ...     groups = client.zpa.app_connector_groups.list_connector_groups_summary(
+            ...         query_params={'search': 'Group01', 'page': '1', 'page_size': '100'}
+            ...     )
+            ...     print(f"Total app connector groups found: {len(groups)}")
+            ...     for group in groups:
+            ...         print(group.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error listing app connector groups: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /appConnectorGroup/summary
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup/summary")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        return [AppConnectorGroup(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AppConnectorGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_connector_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[AppConnectorGroup]:
+    def get_connector_group(self, group_id: str, query_params: Optional[dict] = None) -> AppConnectorGroup:
         """
         Fetches a specific connector group by ID.
 
@@ -160,45 +126,33 @@ class AppConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AppConnectorGroup instance, Response, error).
+            AppConnectorGroup: The connector group instance.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_group, _, err = client.zpa.app_connector_groups.get_connector_group('999999')
-            ... if err:
-            ...     print(f"Error fetching group by ID: {err}")
-            ...     return
-            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
+            >>> try:
+            ...     group = client.zpa.app_connector_groups.get_connector_group('999999')
+            ...     print(f"Fetched group: {group.as_dict()}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error fetching group: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /appConnectorGroup/{group_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup/{group_id}")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        return AppConnectorGroup(self.form_response_body(response.get_body()))
 
-        try:
-            result = AppConnectorGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_connector_group_sg(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[AppConnectorGroup]:
+    def get_connector_group_sg(self, group_id: str, query_params: Optional[dict] = None) -> AppConnectorGroup:
         """
-        Fetches a specific connector group by ID with server group details
+        Fetches a specific connector group by ID with server group details.
 
         Args:
             group_id (str): The unique identifier for the connector group.
@@ -206,43 +160,31 @@ class AppConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AppConnectorGroup instance, Response, error).
+            AppConnectorGroup: The connector group instance with server group details.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_group, _, err = client.zpa.app_connector_groups.get_connector_group_sg('999999')
-            ... if err:
-            ...     print(f"Error fetching group by ID: {err}")
-            ...     return
-            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
+            >>> try:
+            ...     group = client.zpa.app_connector_groups.get_connector_group_sg('999999')
+            ...     print(f"Fetched group: {group.as_dict()}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error fetching group: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /appConnectorGroup/{group_id}/sg
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup/{group_id}/sg")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        return AppConnectorGroup(self.form_response_body(response.get_body()))
 
-        try:
-            result = AppConnectorGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_connector_group(self, **kwargs) -> APIResult[AppConnectorGroup]:
+    def add_connector_group(self, **kwargs) -> AppConnectorGroup:
         """
         Adds a new ZPA App Connector Group.
 
@@ -253,86 +195,56 @@ class AppConnectorGroupAPI(APIClient):
             longitude (int): The longitude representing the App Connector's physical location.
 
         Keyword Args:
-            **connector_ids (list):
-                The unique ids for the App Connectors that will be added to this App Connector Group.
-            **city_country (str):
-                The City and Country for where the App Connectors are located. Format is:
-
-                ``<City>, <Country Code>`` e.g. ``Sydney, AU``
-            **country_code (str):
-                The ISO<std> Country Code that represents the country where the App Connectors are located.
-            **description (str):
-                Additional information about the App Connector Group.
-            **dns_query_type (str):
-                The type of DNS queries that are enabled for this App Connector Group. Accepted values are:
-                ``IPV4_IPV6``, ``IPV4`` and ``IPV6``
-            **enabled (bool):
-                Is the App Connector Group enabled? Defaults to ``True``.
-            **override_version_profile (bool):
-                Override the local App Connector version according to ``version_profile``. Defaults to ``False``.
-            **server_group_ids (list):
-                The unique ids of the Server Groups that are associated with this App Connector Group
-            **lss_app_connector_group (bool):
-            **upgrade_day (str):
-                The day of the week that upgrades will be pushed to the App Connector.
-            **upgrade_time_in_secs (str):
-                The time of the day that upgrades will be pushed to the App Connector.
-            **version_profile (str):
-                The version profile to use. This will automatically set ``override_version_profile`` to True.
-                Accepted values are:
-                ``default``, ``previous_default`` and ``new_release``
+            **connector_ids (list): The unique ids for the App Connectors to add.
+            **city_country (str): The City and Country. Format: ``<City>, <Country Code>``
+            **country_code (str): The ISO Country Code.
+            **description (str): Additional information about the App Connector Group.
+            **dns_query_type (str): DNS query type. Values: ``IPV4_IPV6``, ``IPV4``, ``IPV6``
+            **enabled (bool): Is the App Connector Group enabled? Defaults to ``True``.
+            **override_version_profile (bool): Override version profile. Defaults to ``False``.
+            **server_group_ids (list): Server Group IDs associated with this group.
+            **lss_app_connector_group (bool): LSS App Connector Group flag.
+            **upgrade_day (str): Day of the week for upgrades.
+            **upgrade_time_in_secs (str): Time of day for upgrades.
+            **version_profile (str): Version profile. Values: ``default``, ``previous_default``, ``new_release``
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AppConnectorGroup, Response, error)
+            AppConnectorGroup: The created App Connector Group.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> added_group, _, err = client.zpa.app_connector_groups.add_connector_group(
-            ...     name=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
-            ...     description=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
-            ...     enabled= True,
-            ...     city_country= "San Jose, US",
-            ...     country_code= "US",
-            ...     latitude= "37.3382082",
-            ...     longitude= "-121.8863286",
-            ...     location= "San Jose, CA, USA",
-            ...     upgrade_day= "SUNDAY",
-            ...     dns_query_type= "IPV4_IPV6",
-            ... )
-            ... if err:
-            ...     print(f"Error creating connector group: {err}")
-            ...     return
-            ... print(f"connector group created successfully: {added_group.as_dict()}")
+            >>> try:
+            ...     group = client.zpa.app_connector_groups.add_connector_group(
+            ...         name="NewAppConnectorGroup",
+            ...         description="New connector group",
+            ...         enabled=True,
+            ...         city_country="San Jose, US",
+            ...         country_code="US",
+            ...         latitude="37.3382082",
+            ...         longitude="-121.8863286",
+            ...         location="San Jose, CA, USA",
+            ...         upgrade_day="SUNDAY",
+            ...         dns_query_type="IPV4_IPV6",
+            ...     )
+            ...     print(f"Created group: {group.as_dict()}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error creating group: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /appConnectorGroup
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup")
 
         body = kwargs
-
-        microtenant_id = body.get("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        return AppConnectorGroup(self.form_response_body(response.get_body()))
 
-        try:
-            result = AppConnectorGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_connector_group(self, group_id: str, **kwargs) -> APIResult[AppConnectorGroup]:
+    def update_connector_group(self, group_id: str, **kwargs) -> AppConnectorGroup:
         """
         Updates an existing ZPA App Connector Group.
 
@@ -340,129 +252,81 @@ class AppConnectorGroupAPI(APIClient):
             group_id (str): The unique id for the App Connector Group in ZPA.
 
         Keyword Args:
-            **connector_ids (list):
-                The unique ids for the App Connectors that will be added to this App Connector Group.
-            **city_country (str):
-                The City and Country for where the App Connectors are located. Format is:
-
-                ``<City>, <Country Code>`` e.g. ``Sydney, AU``
-            **country_code (str):
-                The ISO<std> Country Code that represents the country where the App Connectors are located.
-            **description (str):
-                Additional information about the App Connector Group.
-            **dns_query_type (str):
-                The type of DNS queries that are enabled for this App Connector Group. Accepted values are:
-                ``IPV4_IPV6``, ``IPV4`` and ``IPV6``
-            **enabled (bool):
-                Is the App Connector Group enabled? Defaults to ``True``.
+            **connector_ids (list): The unique ids for the App Connectors to add.
+            **city_country (str): The City and Country. Format: ``<City>, <Country Code>``
+            **country_code (str): The ISO Country Code.
+            **description (str): Additional information about the App Connector Group.
+            **dns_query_type (str): DNS query type. Values: ``IPV4_IPV6``, ``IPV4``, ``IPV6``
+            **enabled (bool): Is the App Connector Group enabled?
             **name (str): The name of the App Connector Group.
-            **latitude (int): The latitude representing the App Connector's physical location.
-            **location (str): The name of the location that the App Connector Group represents.
-            **longitude (int): The longitude representing the App Connector's physical location.
-            **override_version_profile (bool):
-                Override the local App Connector version according to ``version_profile``. Defaults to ``False``.
-            **server_group_ids (list):
-                The unique ids of the Server Groups that are associated with this App Connector Group
-            **lss_app_connector_group (bool):
-            **upgrade_day (str):
-                The day of the week that upgrades will be pushed to the App Connector.
-            **upgrade_time_in_secs (str):
-                The time of the day that upgrades will be pushed to the App Connector.
-            **version_profile (str):
-                The version profile to use. This will automatically set ``override_version_profile`` to True.
-                Accepted values are:
-
-                ``default``, ``previous_default`` and ``new_release``
+            **latitude (int): The latitude of the App Connector's location.
+            **location (str): The location name.
+            **longitude (int): The longitude of the App Connector's location.
+            **override_version_profile (bool): Override version profile.
+            **server_group_ids (list): Server Group IDs.
+            **lss_app_connector_group (bool): LSS flag.
+            **upgrade_day (str): Day of the week for upgrades.
+            **upgrade_time_in_secs (str): Time of day for upgrades.
+            **version_profile (str): Version profile.
 
         Returns:
-            tuple: A tuple containing (AppConnectorGroup, Response, error)
+            AppConnectorGroup: The updated App Connector Group.
 
-            >>> update_group, _, err = client.zpa.app_connector_groups.update_connector_group(
-            ...     name=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
-            ...     description=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
-            ...     enabled= True,
-            ...     city_country= "San Jose, US",
-            ...     country_code= "US",
-            ...     latitude= "37.3382082",
-            ...     longitude= "-121.8863286",
-            ...     location= "San Jose, CA, USA",
-            ...     upgrade_day= "SUNDAY",
-            ...     dns_query_type= "IPV4_IPV6",
-            ... )
-            ... if err:
-            ...     print(f"Error creating connector group: {err}")
-            ...     return
-            ... print(f"connector group created successfully: {new_portal.as_dict()}")
+        Raises:
+            ZscalerAPIException: If the API request fails.
+
+        Examples:
+            >>> try:
+            ...     group = client.zpa.app_connector_groups.update_connector_group(
+            ...         "999999",
+            ...         name="UpdatedConnectorGroup",
+            ...         description="Updated description",
+            ...         enabled=True,
+            ...     )
+            ...     print(f"Updated group: {group.as_dict()}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error updating group: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /appConnectorGroup/{group_id}
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup/{group_id}")
 
-        body = {}
-
-        body.update(kwargs)
-
-        microtenant_id = body.get("microtenant_id", None)
+        body = dict(kwargs)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorGroup)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, AppConnectorGroup)
 
         if response is None:
-            return (AppConnectorGroup({"id": group_id}), None, None)
+            return AppConnectorGroup({"id": group_id})
 
-        try:
-            result = AppConnectorGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return AppConnectorGroup(self.form_response_body(response.get_body()))
 
-    def delete_connector_group(self, group_id: str, microtenant_id: Optional[str] = None) -> APIResult[None]:
+    def delete_connector_group(self, group_id: str, microtenant_id: Optional[str] = None) -> None:
         """
         Deletes the specified App Connector Group from ZPA.
 
         Args:
             group_id (str): The unique identifier for the App Connector Group.
-            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+            microtenant_id (str, optional): The optional ID of the microtenant.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
+            None
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> _, _, err = client.zpa.app_connector_groups.delete_connector_group(
-            ...     group_id='999999'
-            ... )
-            ... if err:
-            ...     print(f"Error deleting app connector group: {err}")
-            ...     return
-            ... print(f"app connector group with ID {'999999'} deleted successfully.")
+            >>> try:
+            ...     client.zpa.app_connector_groups.delete_connector_group('999999')
+            ...     print("App connector group deleted successfully")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error deleting app connector group: {e}")
         """
-        http_method = "delete".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /appConnectorGroup/{group_id}
-        """
-        )
+        http_method = "DELETE"
+        api_url = format_url(f"{self._zpa_base_endpoint}/appConnectorGroup/{group_id}")
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_dr_tool import CustomerDRToolVersion
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CustomerDRToolVersionAPI(APIClient):
@@ -33,7 +32,7 @@ class CustomerDRToolVersionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_latest_dr_tool_versions(self, query_params: Optional[dict] = None) -> APIResult[List[CustomerDRToolVersion]]:
+    def list_latest_dr_tool_versions(self, query_params: Optional[dict] = None) -> List[CustomerDRToolVersion]:
         """
         Fetch latest the Customer Support DR Tool Versions sorted by latest filter.
 
@@ -48,15 +47,15 @@ class CustomerDRToolVersionAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of CustomerDRToolVersion instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CustomerDRToolVersion]
 
         Example:
             Fetch latest the Customer Support DR Tool Versions sorted by latest filter
 
-            >>> fetch_tools, _, err = client.zpa.customer_dr_tool.list_latest_dr_tool_versions()
-            ... if err:
-            ...     print(f"Error fetching latest Customer Support DR Tool Versions: {err}")
-            ...     return
+            >>> try:
+            ...     fetch_tools = client.zpa.customer_dr_tool.list_latest_dr_tool_versions()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total Customer Support DR Tool Versions found: {len(fetch_tools)}")
             ... for tool in fetch_tools:
             ...     print(tool.as_dict())
@@ -71,18 +70,9 @@ class CustomerDRToolVersionAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CustomerDRToolVersion)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CustomerDRToolVersion(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CustomerDRToolVersion)
+        result = []
+        for item in response.get_results():
+            result.append(CustomerDRToolVersion(self.form_response_body(item)))
+        return result

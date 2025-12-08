@@ -44,7 +44,7 @@ class TestUserPortalLink:
 
         try:
             # Create the User Portal
-            created_portal, _, err = client.zpa.user_portal_controller.add_user_portal(
+            created_portal = client.zpa.user_portal_controller.add_user_portal(
                 name=portal_name,
                 description=portal_description,
                 enabled=True,
@@ -56,7 +56,6 @@ class TestUserPortalLink:
                 ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                 ext_domain="securitygeek.io"
             )
-            assert err is None, f"Error creating user portal: {err}"
             assert created_portal is not None
             assert created_portal.name == portal_name
             assert created_portal.description == portal_description
@@ -75,7 +74,7 @@ class TestUserPortalLink:
 
         try:
             # Create a User Portal Links
-            created_portal_link, _, err = client.zpa.user_portal_link.add_portal_link(
+            created_portal_link = client.zpa.user_portal_link.add_portal_link(
                 name=portal_name,
                 description=portal_description,
                 enabled=True,
@@ -85,7 +84,6 @@ class TestUserPortalLink:
                 protocol='https://',
                 user_portal_ids=[portal_id],
             )
-            assert err is None, f"Error creating user portal link: {err}"
             assert created_portal_link is not None
             assert created_portal_link.name == portal_name
             assert created_portal_link.description == portal_description
@@ -103,14 +101,13 @@ class TestUserPortalLink:
         try:
             if portal_link_id:
                 # Retrieve the specific user portal link
-                retrieved_portal, _, err = client.zpa.user_portal_link.get_portal_link(portal_link_id)
-                assert err is None, f"Error fetching user portal link: {err}"
+                retrieved_portal = client.zpa.user_portal_link.get_portal_link(portal_link_id)
                 assert retrieved_portal.id == portal_link_id
                 assert retrieved_portal.name == portal_name
 
                 # Update the user portal link
                 updated_name = portal_name + " Updated"
-                _, _, err = client.zpa.user_portal_link.update_portal_link(
+                _ = client.zpa.user_portal_link.update_portal_link(
                     portal_link_id, 
                     name=updated_name,
                     enabled=True,
@@ -120,15 +117,12 @@ class TestUserPortalLink:
                     protocol='https://',
                     user_portal_ids=[portal_id],
                 )
-                assert err is None, f"Error updating user portal link: {err}"
 
-                updated_portal, _, err = client.zpa.user_portal_link.get_portal_link(portal_link_id)
-                assert err is None, f"Error fetching updated user portal link: {err}"
+                updated_portal = client.zpa.user_portal_link.get_portal_link(portal_link_id)
                 assert updated_portal.name == updated_name
 
                 # List user portal link and ensure the updated portal is in the list
-                portal_list, _, err = client.zpa.user_portal_link.list_portal_link()
-                assert err is None, f"Error listing user portal link: {err}"
+                portal_list = client.zpa.user_portal_link.list_portal_link()
                 assert any(portal.id == portal_link_id for portal in portal_list)
         except Exception as exc:
             errors.append(f"user portal link operation failed: {exc}")
@@ -139,8 +133,7 @@ class TestUserPortalLink:
 
             if portal_link_id:
                 try:
-                    delete_response, _, err = client.zpa.user_portal_link.delete_portal_link(portal_link_id)
-                    assert err is None, f"Error deleting user portal link: {err}"
+                    delete_response = client.zpa.user_portal_link.delete_portal_link(portal_link_id)
                     # Since a 204 No Content response returns None, assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

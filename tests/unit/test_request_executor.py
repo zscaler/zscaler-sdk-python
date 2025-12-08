@@ -434,7 +434,7 @@ def test_create_request():
     mock_http_client = Mock()
     executor._http_client = mock_http_client
     
-    request, error = executor.create_request(
+    request = executor.create_request(
         method="GET",
         endpoint="/zia/api/v1/users",
         body={"key": "value"},
@@ -442,7 +442,6 @@ def test_create_request():
         params={"page": 1}
     )
     
-    assert error is None
     assert request is not None
     assert request["method"] == "GET"
     assert request["url"] is not None
@@ -468,12 +467,11 @@ def test_create_request_with_none_values():
     mock_http_client = Mock()
     executor._http_client = mock_http_client
     
-    request, error = executor.create_request(
+    request = executor.create_request(
         method="GET",
         endpoint="/zia/api/v1/users"
     )
     
-    assert error is None
     assert request is not None
     assert request["method"] == "GET"
 
@@ -498,12 +496,11 @@ def test_create_request_with_legacy_client():
     mock_http_client = Mock()
     executor._http_client = mock_http_client
     
-    request, error = executor.create_request(
+    request = executor.create_request(
         method="GET",
         endpoint="/zpa/api/v1/apps"
     )
     
-    assert error is None
     assert request is not None
     assert request["method"] == "GET"
 
@@ -526,12 +523,11 @@ def test_create_request_with_zidentity_endpoint():
     mock_http_client = Mock()
     executor._http_client = mock_http_client
     
-    request, error = executor.create_request(
+    request = executor.create_request(
         method="GET",
         endpoint="/admin/api/v1/users"
     )
     
-    assert error is None
     assert request is not None
     assert request["method"] == "GET"
 
@@ -1106,14 +1102,13 @@ class TestPartnerIdHeader:
         mock_oauth = Mock()
         mock_oauth._get_access_token.return_value = "mock-token"
         with patch.object(executor, '_oauth', mock_oauth):
-            request, error = executor.create_request(
+            request = executor.create_request(
                 method="GET",
                 endpoint="/zia/api/v1/test",
                 headers={},
                 params={}
             )
             
-            assert error is None
             assert "headers" in request
             assert "x-partner-id" in request["headers"]
             assert request["headers"]["x-partner-id"] == "test-partner-456"

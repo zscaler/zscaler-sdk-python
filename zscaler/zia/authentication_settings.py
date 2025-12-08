@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.authentication_settings import AuthenticationSettings
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 import time
 
 
@@ -34,12 +33,11 @@ class AuthenticationSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_exempted_urls(self) -> APIResult[dict]:
+    def get_exempted_urls(self) -> dict:
         """
         Gets a list of URLs that were exempted from cookie authentication.
 
         Returns:
-            tuple: A tuple containing:
                 - list[str]: List of domains or URLs which are exempted from SSL Inspection
                 - Response: The raw HTTP response from the API.
                 - error: Error details if the request fails.
@@ -52,23 +50,17 @@ class AuthenticationSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, dict)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, dict)
         try:
             bypass_urls = response.get_body().get("urls", [])
             if not isinstance(bypass_urls, list):
                 raise ValueError("Unexpected response format: Exempted should be a list.")
-            return (bypass_urls, response, None)
+            return bypass_urls
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def add_urls_to_exempt_list(self, url_list: list) -> APIResult[dict]:
+    def add_urls_to_exempt_list(self, url_list: list) -> Any:
         """
         Adds the provided URLs to the exempt list.
 
@@ -76,7 +68,6 @@ class AuthenticationSettingsAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs to be added.
 
         Returns:
-            tuple: A tuple containing (updated AuthenticationSettings instance, Response, error)
 
         Examples:
             >>> exempted_urls, response, error = zia.authentication_settings.add_urls_to_exempt_list(["example.com"])
@@ -94,19 +85,14 @@ class AuthenticationSettingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, payload, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
         time.sleep(2)
         return self.get_exempted_urls()
 
-    def delete_urls_from_exempt_list(self, url_list: list) -> APIResult[dict]:
+    def delete_urls_from_exempt_list(self, url_list: list) -> None:
         """
         Deletes the provided URLs from the exemption list.
 
@@ -114,7 +100,6 @@ class AuthenticationSettingsAPI(APIClient):
             url_list (:obj:`list` of :obj:`str`): The list of URLs to be removed.
 
         Returns:
-            tuple: A tuple containing (updated AuthenticationSettings instance, Response, error)
 
         Examples:
             >>> exempted_urls, response, error = zia.authentication_settings.delete_urls_from_exempt_list(["example.com"])
@@ -132,24 +117,18 @@ class AuthenticationSettingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, payload, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
         time.sleep(2)
         return self.get_exempted_urls()
 
-    def get_authentication_settings(self) -> APIResult[dict]:
+    def get_authentication_settings(self) -> Any:
         """
         Retrieves the organization's default authentication settings.
 
         Returns:
-            tuple: A tuple containing:
                 - AuthenticationSettings: The current authentication settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -171,28 +150,21 @@ class AuthenticationSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             auth_settings = AuthenticationSettings(response.get_body())
-            return (auth_settings, response, None)
+            return auth_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_authentication_settings_lite(self) -> APIResult[dict]:
+    def get_authentication_settings_lite(self) -> Any:
         """
         Retrieves the organization's default authentication settings information.
 
         Returns:
-            tuple: A tuple containing:
                 - AuthenticationSettings: The current authentication settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -214,23 +186,17 @@ class AuthenticationSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             auth_settings = AuthenticationSettings(response.get_body())
-            return (auth_settings, response, None)
+            return auth_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_authentication_settings(self, **kwargs) -> APIResult[dict]:
+    def update_authentication_settings(self, **kwargs) -> AuthenticationSettings:
         """
         Updates the organization's default authentication settings information.
 
@@ -260,7 +226,6 @@ class AuthenticationSettingsAPI(APIClient):
             - directory_sync_migrate_to_scim_enabled (bool): Enables migration to SCIM by disabling legacy sync.
 
         Returns:
-            tuple: A tuple containing:
                 - AuthenticationSettings: The updated authentication settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the update failed; otherwise, `None`.
@@ -288,11 +253,8 @@ class AuthenticationSettingsAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
@@ -300,6 +262,6 @@ class AuthenticationSettingsAPI(APIClient):
             else:
                 result = AuthenticationSettings()
         except Exception as error:
-            return (None, response, error)
+            return AuthenticationSettings
 
-        return (result, response, None)
+        return result

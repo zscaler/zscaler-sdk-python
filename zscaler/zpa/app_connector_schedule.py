@@ -14,13 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Optional
 import os
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_connector_schedule import AppConnectorSchedule
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AppConnectorScheduleAPI(APIClient):
@@ -31,93 +30,80 @@ class AppConnectorScheduleAPI(APIClient):
     def __init__(self, request_executor, config):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        # Attempt to fetch customer_id from config, else fallback to environment variable
         self.customer_id = config["client"].get("customerId") or os.getenv("ZPA_CUSTOMER_ID")
         if not self.customer_id:
             raise ValueError("customer_id is required either in the config or as an environment variable ZPA_CUSTOMER_ID")
 
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{self.customer_id}"
 
-    def get_connector_schedule(self, customer_id=None) -> APIResult[dict]:
+    def get_connector_schedule(self, customer_id: str = None) -> AppConnectorSchedule:
         """
         Returns the configured App Connector Schedule frequency.
 
         Args:
-            customer_id (str, optional): Unique identifier of the ZPA tenant. If not provided, will look up from env var.
+            customer_id (str, optional): Unique identifier of the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
-        """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /connectorSchedule
-        """
-        )
+            AppConnectorSchedule: The schedule configuration.
 
-        # Use passed customer_id or fallback to initialized customer_id
+        Raises:
+            ZscalerAPIException: If the API request fails.
+
+        Examples:
+            >>> try:
+            ...     schedule = client.zpa.app_connector_schedule.get_connector_schedule()
+            ...     print(schedule.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
+        """
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/connectorSchedule")
+
         customer_id = customer_id or self.customer_id
-
-        # Check if microtenant_id exists in env vars (optional)
-        microtenant_id = os.getenv("ZPA_MICROTENANT_ID", None)
+        microtenant_id = os.getenv("ZPA_MICROTENANT_ID")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request with headers
-        request, error = self._request_executor.create_request(http_method, api_url, body=None, headers={}, params=params)
+        request = self._request_executor.create_request(http_method, api_url, body=None, headers={}, params=params)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, None, error)
+        return AppConnectorSchedule(self.form_response_body(response.get_body()))
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            # Expect a single object, not a list
-            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_connector_schedule(self, **kwargs) -> APIResult[dict]:
+    def add_connector_schedule(self, **kwargs) -> AppConnectorSchedule:
         """
-        Configure an App Connector schedule frequency to delete inactive connectors based on the configured frequency.
+        Configure an App Connector schedule frequency.
 
         Args:
-            schedule (dict): Dictionary containing:
-                frequency (str): Frequency at which disconnected App Connectors are deleted.
-                interval (str): Interval for the frequency value.
-                disabled (bool, optional): Whether to include disconnected connectors for deletion.
-                enabled (bool, optional): Whether the deletion setting is enabled.
+            frequency (str): Frequency at which disconnected App Connectors are deleted.
+            frequency_interval (str): Interval for the frequency value.
+            delete_disabled (bool, optional): Whether to include disconnected connectors.
+            enabled (bool, optional): Whether the deletion setting is enabled.
 
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
+            AppConnectorSchedule: The created schedule configuration.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
+            ValueError: If customer_id is not provided.
+
+        Examples:
+            >>> try:
+            ...     schedule = client.zpa.app_connector_schedule.add_connector_schedule(
+            ...         frequency="days",
+            ...         frequency_interval="5",
+            ...         enabled=True
+            ...     )
+            ...     print(schedule.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /connectorSchedule
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/connectorSchedule")
 
         customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:
-            return (
-                None,
-                None,
-                ValueError(
-                    "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
-                ),
-            )
+            raise ValueError("customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID")
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
-
-        # Construct payload using snake_case to camelCase conversion
         payload = {
             "customerId": customer_id,
             "frequency": body.get("frequency"),
@@ -128,66 +114,52 @@ class AppConnectorScheduleAPI(APIClient):
         if "enabled" in body:
             payload["enabled"] = body["enabled"]
 
-        # Add microtenant_id to query parameters if set
-        microtenant_id = body.get("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        response = self._request_executor.execute(request, AppConnectorSchedule)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorSchedule)
-        if error:
-            return (None, response, error)
+        return AppConnectorSchedule(self.form_response_body(response.get_body()))
 
-        try:
-            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_connector_schedule(self, scheduler_id: str, **kwargs) -> APIResult[dict]:
+    def update_connector_schedule(self, scheduler_id: str, **kwargs) -> AppConnectorSchedule:
         """
-        Updates App Connector schedule frequency to delete inactive connectors based on the configured frequency.
+        Updates App Connector schedule frequency.
 
         Args:
             scheduler_id (str): Unique identifier for the schedule.
             frequency (str): Frequency at which disconnected App Connectors are deleted.
-            interval (str): Interval for the frequency value.
-            disabled (bool): Whether to include disconnected connectors for deletion.
+            frequency_interval (str): Interval for the frequency value.
+            delete_disabled (bool): Whether to include disconnected connectors.
             enabled (bool): Whether the deletion setting is enabled.
 
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
-        """
+            AppConnectorSchedule: The updated schedule configuration.
 
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /connectorSchedule/{scheduler_id}
+        Raises:
+            ZscalerAPIException: If the API request fails.
+            ValueError: If customer_id is not provided.
+
+        Examples:
+            >>> try:
+            ...     schedule = client.zpa.app_connector_schedule.update_connector_schedule(
+            ...         "12345",
+            ...         frequency="days",
+            ...         frequency_interval="7",
+            ...         enabled=True
+            ...     )
+            ...     print(schedule.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/connectorSchedule/{scheduler_id}")
 
         customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:
-            return (
-                None,
-                None,
-                ValueError(
-                    "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
-                ),
-            )
+            raise ValueError("customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID")
 
-        # Start with an empty body or an existing resource's current data
-        body = {}
-
-        # Update the body with the fields passed in kwargs
-        body.update(kwargs)
-
-        # Construct payload using snake_case to camelCase conversion
+        body = dict(kwargs)
         payload = {
             "customerId": customer_id,
             "frequency": body.get("frequency"),
@@ -198,28 +170,13 @@ class AppConnectorScheduleAPI(APIClient):
         if "enabled" in body:
             payload["enabled"] = body["enabled"]
 
-        # Use get instead of pop to keep microtenant_id in the body
-        microtenant_id = body.get("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, AppConnectorSchedule)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorSchedule)
-        if error:
-            return (None, response, error)
-
-        # Handle case where no content is returned (204 No Content)
         if response is None:
-            # Return a meaningful result to indicate success
-            return (AppConnectorSchedule({"id": scheduler_id}), None, None)
+            return AppConnectorSchedule({"id": scheduler_id})
 
-        # Parse the response into an AppConnectorGroup instance
-        try:
-            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return AppConnectorSchedule(self.form_response_body(response.get_body()))

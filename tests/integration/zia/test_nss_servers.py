@@ -42,12 +42,11 @@ class TestNSSServers:
 
         try:
             try:
-                create_server, _, error = client.zia.nss_servers.add_nss_server(
+                create_server = client.zia.nss_servers.add_nss_server(
                     name=names.name,
                     status="ENABLED",
                     type="NSS_FOR_FIREWALL",
                 )
-                assert error is None, f"Add NSS Server Error: {error}"
                 assert create_server is not None, "NSS Server creation failed."
                 nss_id = create_server.id
             except Exception as e:
@@ -55,29 +54,26 @@ class TestNSSServers:
 
             try:
                 if nss_id:
-                    update_server, _, error = client.zia.nss_servers.update_nss_server(
+                    update_server = client.zia.nss_servers.update_nss_server(
                         nss_id=nss_id,
                         name=names.updated_name,
                         status="DISABLED",
                         type="NSS_FOR_FIREWALL",
                     )
-                    assert error is None, f"Update NSS Server Error: {error}"
                     assert update_server is not None, "NSS Server update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_server: {str(e)}")
 
             try:
                 if update_server:
-                    nss, _, error = client.zia.nss_servers.get_nss_server(update_server.id)
-                    assert error is None, f"Get NSS Server Error: {error}"
+                    nss = client.zia.nss_servers.get_nss_server(update_server.id)
                     assert nss.id == nss_id, "Retrieved NSS Server ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_nss_server: {str(e)}")
 
             try:
                 if update_server:
-                    servers, _, error = client.zia.nss_servers.list_nss_servers(query_params={"search": update_server.name})
-                    assert error is None, f"List NSS Servers Error: {error}"
+                    servers = client.zia.nss_servers.list_nss_servers(query_params={"search": update_server.name})
                     assert servers is not None and isinstance(servers, list), "No NSS Servers found or invalid format."
             except Exception as e:
                 errors.append(f"Exception during list_nss_servers: {str(e)}")
@@ -85,11 +81,10 @@ class TestNSSServers:
         finally:
             try:
                 if update_server:
-                    _, _, error = client.zia.nss_servers.delete_nss_server(update_server.id)
-                    assert error is None, f"Delete NSS Servers Error: {error}"
+                    _ = client.zia.nss_servers.delete_nss_server(update_server.id)
             except Exception as e:
                 errors.append(f"Exception during delete_nss_server: {str(e)}")
 
         # Final Assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

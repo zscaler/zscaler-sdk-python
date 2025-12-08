@@ -21,7 +21,6 @@ from zscaler.zia.models.ipv6_config import IPV6PrefixMask
 from zscaler.zia.models.ipv6_config import IPV6Configuration
 
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TrafficIPV6ConfigAPI(APIClient):
@@ -35,20 +34,19 @@ class TrafficIPV6ConfigAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_ipv6_config(self) -> APIResult[dict]:
+    def get_ipv6_config(self) -> IPV6Configuration:
         """
         Gets the IPv6 configuration details for the organization.
 
         Returns:
-            tuple: A tuple containing (IPV6 Configuration instance, Response, error)
 
         Examples:
             List IPV6 Configuration:
 
-        >>> ipv6_config, _, err = client.zia.ipv6_config.get_ipv6_config()
-        ... if err:
-        ...     print(f"Error fetching ipv6 config: {err}")
-        ...  return ipv6_config
+        >>> try:
+            ...     ipv6_config = client.zia.ipv6_config.get_ipv6_config()
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}") ipv6_config
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -61,22 +59,13 @@ class TrafficIPV6ConfigAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, IPV6Configuration)
+        result = IPV6Configuration(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, IPV6Configuration)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IPV6Configuration(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_dns64_prefix(self, query_params: Optional[dict] = None) -> APIResult[List[IPV6PrefixMask]]:
+    def list_dns64_prefix(self, query_params: Optional[dict] = None) -> List[IPV6PrefixMask]:
         """
         Fetches the list of NAT64 prefixes configured as the DNS64 prefix for the organization
 
@@ -87,15 +76,14 @@ class TrafficIPV6ConfigAPI(APIClient):
                     description, or prefixMask attributes.
 
         Returns:
-            tuple: A tuple containing (IPV6Config instance, Response, error).
 
         Examples:
             List IPV6 Configuration:
 
-        >>> ipv6_list, _, err = client.zia.gre_tunnel.get_ipv6_config()
-        ... if err:
-        ...     print(f"Error listing ipv6 config: {err}")
-        ...     return
+        >>> try:
+            ...     ipv6_list = client.zia.gre_tunnel.get_ipv6_config()
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... for ipv6 in ipv6_list:
         ...     print(ipv6.as_dict())
         """
@@ -112,15 +100,9 @@ class TrafficIPV6ConfigAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, IPV6PrefixMask)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, IPV6PrefixMask)
 
         try:
             response_data = self.form_response_body(response.get_body())
@@ -128,12 +110,12 @@ class TrafficIPV6ConfigAPI(APIClient):
             for item in response_data:
                 results.append(IPV6PrefixMask(item))
 
-            return (results, response, None)
+            return results
 
         except Exception as error:
-            return (None, response, error)
+            return List[IPV6PrefixMask]
 
-    def list_nat64_prefix(self, query_params: Optional[dict] = None) -> APIResult[List[IPV6PrefixMask]]:
+    def list_nat64_prefix(self, query_params: Optional[dict] = None) -> List[IPV6PrefixMask]:
         """
         Fetches the list of NAT64 prefixes configured for the organization
 
@@ -148,15 +130,14 @@ class TrafficIPV6ConfigAPI(APIClient):
                     description, or prefixMask attributes.
 
         Returns:
-            tuple: A tuple containing (IPV6Config instance, Response, error).
 
         Examples:
             List IPV6 Configuration:
 
-        >>> ipv6_list, _, err = client.zia.gre_tunnel.get_nat64_prefix()
-        ... if err:
-        ...     print(f"Error listing ipv6 config: {err}")
-        ...     return
+        >>> try:
+            ...     ipv6_list = client.zia.gre_tunnel.get_nat64_prefix()
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... for ipv6 in ipv6_list:
         ...     print(ipv6.as_dict())
         """
@@ -173,20 +154,11 @@ class TrafficIPV6ConfigAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IPV6PrefixMask(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(IPV6PrefixMask(self.form_response_body(item)))
+        return result

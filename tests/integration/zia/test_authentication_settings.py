@@ -39,8 +39,7 @@ class TestExemptedUrls:
         try:
             # Step 1: Add URLs to the exempt list
             try:
-                updated_urls, _, error = client.zia.authentication_settings.add_urls_to_exempt_list(test_urls)
-                assert error is None, f"Error adding URLs to exempt list: {error}"
+                updated_urls = client.zia.authentication_settings.add_urls_to_exempt_list(test_urls)
                 assert isinstance(updated_urls, list), "Expected a list in response"
                 assert all(url in updated_urls for url in test_urls), "Some test URLs were not added"
             except Exception as exc:
@@ -48,8 +47,7 @@ class TestExemptedUrls:
 
             # Step 2: Retrieve and verify the exempt list
             try:
-                current_urls, _, error = client.zia.authentication_settings.get_exempted_urls()
-                assert error is None, f"Error retrieving exempt list: {error}"
+                current_urls = client.zia.authentication_settings.get_exempted_urls()
                 assert isinstance(current_urls, list), "Expected list response from get_exempted_urls"
                 assert all(url in current_urls for url in test_urls), "Some test URLs not found in exempt list"
             except Exception as exc:
@@ -58,8 +56,7 @@ class TestExemptedUrls:
         finally:
             # Step 3: Cleanup - delete all URLs
             try:
-                _, _, error = client.zia.authentication_settings.delete_urls_from_exempt_list([])
-                assert error is None, f"Error clearing exempt list: {error}"
+                _ = client.zia.authentication_settings.delete_urls_from_exempt_list([])
             except Exception as exc:
                 errors.append(f"Cleanup failed: {exc}")
 

@@ -22,7 +22,6 @@ from zscaler.ztw.models.public_cloud_info import PublicCloudInfo
 from zscaler.ztw.models.common import CommonPublicCloudInfo
 from zscaler.ztw.models.public_cloud_info import AccountDetails
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class PublicCloudInfoAPI(APIClient):
@@ -33,7 +32,7 @@ class PublicCloudInfoAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_public_cloud_info(self, query_params: Optional[dict] = None) -> APIResult[List[PublicCloudInfo]]:
+    def list_public_cloud_info(self, query_params: Optional[dict] = None) -> List[PublicCloudInfo]:
         """
         Retrieves the list of AWS accounts with metadata.
 
@@ -51,7 +50,6 @@ class PublicCloudInfoAPI(APIClient):
                     size is 100, but the maximum size is 1000.
 
         Returns:
-            tuple: A tuple containing (list of PublicCloudInfo instances, Response, error)
 
         Examples:
             Gets a list of all public cloud info.
@@ -89,25 +87,16 @@ class PublicCloudInfoAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(PublicCloudInfo(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PublicCloudInfo(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_public_cloud_info_lite(self, query_params: Optional[dict] = None) -> APIResult[List[PublicCloudInfo]]:
+    def list_public_cloud_info_lite(self, query_params: Optional[dict] = None) -> List[PublicCloudInfo]:
         """
         Retrieves basic information about the public cloud accounts.
 
@@ -130,7 +119,8 @@ class PublicCloudInfoAPI(APIClient):
         Examples:
             List public accounts with default settings:
 
-            >>> public_accounts_list, _, err = client.ztw.public_cloud_info.list_public_cloud_info_lite()
+            >>> try:
+            ...     public_accounts_list = client.ztw.public_cloud_info.list_public_cloud_info_lite()
             >>> if err:
             ...     print(f"Error listing public accounts: {err}")
             ...     return
@@ -151,25 +141,16 @@ class PublicCloudInfoAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(PublicCloudInfo(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PublicCloudInfo(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_public_cloud_info(self, cloud_id: int) -> APIResult[PublicCloudInfo]:
+    def get_public_cloud_info(self, cloud_id: int) -> PublicCloudInfo:
         """
         Retrieves the existing AWS account details based on the provided ID.
 
@@ -177,7 +158,6 @@ class PublicCloudInfoAPI(APIClient):
             cloud_id (int): The unique ID of the AWS account.
 
         Returns:
-            tuple: A tuple containing (PublicCloudInfo instance, Response, error)
 
         Examples:
             >>> fetched_public_cloud_info, response, error = (
@@ -200,23 +180,14 @@ class PublicCloudInfoAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, PublicCloudInfo)
 
-        response, error = self._request_executor.execute(request, PublicCloudInfo)
+        result = PublicCloudInfo(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PublicCloudInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_public_cloud_info(self, **kwargs) -> APIResult[PublicCloudInfo]:
+    def add_public_cloud_info(self, **kwargs) -> PublicCloudInfo:
         """
         Creates a new AWS account with the provided account and region details.
         You can create a maximum of 512 accounts in each organization.
@@ -246,7 +217,6 @@ class PublicCloudInfoAPI(APIClient):
         for further detail on payload structure.
 
         Returns:
-            tuple: A tuple containing (PublicCloudInfo instance, Response, error)
 
         Examples:
             Add a new Public Cloud Info:
@@ -283,26 +253,17 @@ class PublicCloudInfoAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, PublicCloudInfo)
+        result = PublicCloudInfo(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PublicCloudInfo)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PublicCloudInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_public_cloud_info(self, cloud_id: int, **kwargs) -> APIResult[PublicCloudInfo]:
+    def update_public_cloud_info(self, cloud_id: int, **kwargs) -> PublicCloudInfo:
         """
         Updates the existing AWS account details based on the provided ID.
 
@@ -329,7 +290,6 @@ class PublicCloudInfoAPI(APIClient):
             supported_region_ids (list, optional): List of supported region IDs.
 
         Returns:
-            tuple: A tuple containing (PublicCloudInfo instance, Response, error)
 
         Examples:
             Update public cloud info:
@@ -368,21 +328,12 @@ class PublicCloudInfoAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, PublicCloudInfo)
+        result = PublicCloudInfo(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PublicCloudInfo)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PublicCloudInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_public_cloud_info(self, cloud_id: int) -> APIResult[None]:
+    def delete_public_cloud_info(self, cloud_id: int) -> None:
         """
         Removes a specific AWS account based on the provided ID.
 
@@ -390,7 +341,6 @@ class PublicCloudInfoAPI(APIClient):
             cloud_id (int): The unique ID of the AWS account.
 
         Returns:
-            tuple: A tuple containing (None, Response, error). The API returns 204 No Content on success.
 
         Examples:
             >>> _, _, error = client.ztw.public_cloud_info.delete_public_cloud_info(545845)
@@ -410,16 +360,11 @@ class PublicCloudInfoAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def get_cloud_formation_template(self, aws_account_id: Optional[str] = None) -> APIResult[str]:
+    def get_cloud_formation_template(self, aws_account_id: Optional[str] = None) -> str:
         """
         Retrieves the CloudFormation template URL.
 
@@ -432,7 +377,6 @@ class PublicCloudInfoAPI(APIClient):
                 account-specific values. If not provided, a generic template URL is returned.
 
         Returns:
-            tuple: A tuple containing (URL string, Response, error)
 
         Examples:
             Get generic CloudFormation template URL:
@@ -467,43 +411,29 @@ class PublicCloudInfoAPI(APIClient):
 
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method, api_url, body={}, headers=headers, params=query_params
         )
-        if error:
-            return (None, None, error)
-
         # Get raw response - this endpoint returns plain text URL even though Content-Type is application/json
-        raw_response, error = self._request_executor.execute(request, return_raw_response=True)
+        raw_response = self._request_executor.execute(request, return_raw_response=True)
 
-        # Check the actual HTTP status code, not the error object
-        # The executor may return an "error" for non-JSON responses even on HTTP 200
-        # When return_raw_response=True, we need to check the actual response status
         if raw_response is None:
-            # True network/request error
-            return (None, None, error)
+            raise ValueError("Network/request error - no response received")
 
-        try:
-            # Ensure we have a valid response object with status_code attribute
-            if not hasattr(raw_response, 'status_code'):
-                return (None, raw_response, error if error else "Invalid response object")
+        if not hasattr(raw_response, 'status_code'):
+            raise ValueError("Invalid response - no status code")
 
-            status_code = raw_response.status_code
-            body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
+        status_code = raw_response.status_code
+        body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
 
-            # HTTP 200 = successful response with URL string
-            if status_code == 200:
-                # Return the URL string from the response body
-                return (body_text, raw_response, None)
+        # HTTP 200 = successful response with URL string
+        if status_code == 200:
+            return body_text
 
-            # Any other response = error
-            else:
-                return (None, raw_response, error if error else f"Unexpected response: {status_code}")
+        # Any other response = error
+        raise ValueError(f"Unexpected response: status={status_code}, body={body_text}")
 
-        except Exception as ex:
-            return (None, raw_response, ex)
-
-    def get_public_cloud_info_count(self) -> APIResult[List[dict]]:
+    def get_public_cloud_info_count(self) -> List[dict]:
         """
         Returns the count of configured public cloud accounts for the provided customer.
 
@@ -531,23 +461,14 @@ class PublicCloudInfoAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(self.form_response_body(item))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(self.form_response_body(item))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def generate_external_id(self, **kwargs) -> APIResult[AccountDetails]:
+    def generate_external_id(self, **kwargs) -> AccountDetails:
         """
         Generates an external ID for an AWS account.
 
@@ -565,7 +486,6 @@ class PublicCloudInfoAPI(APIClient):
         for further detail on payload structure.
 
         Returns:
-            tuple: A tuple containing (AccountDetails instance with the generated external_id,
             Response, error)
 
         Examples:
@@ -592,22 +512,16 @@ class PublicCloudInfoAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Use raw response to avoid JSON parsing error for plain text response
-        raw_response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error:
-            return (None, None, error)
-
+        raw_response = self._request_executor.execute(request, return_raw_response=True)
         if not raw_response:
-            return (None, None, "No response received")
+            raise ValueError("No response received")
 
         # API returns plain text external ID string
         external_id = raw_response.text.strip()
@@ -619,7 +533,7 @@ class PublicCloudInfoAPI(APIClient):
         result = AccountDetails(account_details_config)
         return (result, raw_response, None)
 
-    def change_state_public_cloud_info(self, cloud_id: int, **kwargs) -> APIResult[PublicCloudInfo]:
+    def change_state_public_cloud_info(self, cloud_id: int, **kwargs) -> PublicCloudInfo:
         """
         Enables or disables a specific AWS account in all regions based on the provided ID.
 
@@ -632,7 +546,6 @@ class PublicCloudInfoAPI(APIClient):
                 ``[query_params.enable]`` {bool}: Set true to enable the AWS account, and false to disable it.
 
         Returns:
-            tuple: A tuple containing (PublicCloudInfo instance, Response, error)
 
         Examples:
             Update public cloud info:
@@ -659,16 +572,7 @@ class PublicCloudInfoAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PublicCloudInfo)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PublicCloudInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, PublicCloudInfo)
+        result = PublicCloudInfo(self.form_response_body(response.get_body()))
+        return result

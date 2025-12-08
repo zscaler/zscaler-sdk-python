@@ -20,7 +20,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.alert_subscriptions import AlertSubscriptions
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AlertSubscriptionsAPI(APIClient):
@@ -34,7 +33,7 @@ class AlertSubscriptionsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_alert_subscriptions(self) -> APIResult[List[AlertSubscriptions]]:
+    def list_alert_subscriptions(self) -> List[AlertSubscriptions]:
         """
         Retrieves a list of all alert subscriptions.
 
@@ -42,7 +41,6 @@ class AlertSubscriptionsAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - AlertSubscriptions: The current alert subscriptions object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -64,23 +62,14 @@ class AlertSubscriptionsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        results = [AlertSubscriptions(item) for item in response.get_body()]
+        return results
 
-        if error:
-            return (None, response, error)
-
-        try:
-            results = [AlertSubscriptions(item) for item in response.get_body()]
-            return (results, response, None)
-        except Exception as ex:
-            return (None, response, ex)
-
-    def get_alert_subscription(self, subscription_id: int) -> APIResult[AlertSubscriptions]:
+    def get_alert_subscription(self, subscription_id: int) -> AlertSubscriptions:
         """
         Retrieves the alert subscription information based on the specified ID
 
@@ -88,7 +77,6 @@ class AlertSubscriptionsAPI(APIClient):
             subscription_id (int): The unique identifier for the Alert Subscription.
 
         Returns:
-            tuple: A tuple containing Alert Subscription instance, Response, error).
 
         Examples:
             Retrieve and print specific alert subscription:
@@ -110,22 +98,13 @@ class AlertSubscriptionsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AlertSubscriptions)
+        result = AlertSubscriptions(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AlertSubscriptions)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AlertSubscriptions(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_alert_subscription(self, **kwargs) -> APIResult[AlertSubscriptions]:
+    def add_alert_subscription(self, **kwargs) -> AlertSubscriptions:
         """
         Adds a new alert subscription.
 
@@ -140,7 +119,8 @@ class AlertSubscriptionsAPI(APIClient):
         Examples:
             Add a new alert subscription:
 
-            >>> added_alert, _, err = client.zia.alert_subscriptions.update_alert_subscription(
+            >>> try:
+            ...     added_alert = client.zia.alert_subscriptions.update_alert_subscription(
             ...     description = 'Zscaler Subscription Alert',
             ...     email = 'alert@acme.com',
             ...     pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
@@ -165,26 +145,17 @@ class AlertSubscriptionsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AlertSubscriptions)
+        result = AlertSubscriptions(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AlertSubscriptions)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AlertSubscriptions(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_alert_subscription(self, subscription_id: int, **kwargs) -> APIResult[AlertSubscriptions]:
+    def update_alert_subscription(self, subscription_id: int, **kwargs) -> AlertSubscriptions:
         """
         Updates an existing alert subscription based on the specified ID
 
@@ -217,7 +188,8 @@ class AlertSubscriptionsAPI(APIClient):
         Examples:
             Add a new alert subscription:
 
-            >>> updated_alert, _, err = client.zia.alert_subscriptions.update_alert_subscription(
+            >>> try:
+            ...     updated_alert = client.zia.alert_subscriptions.update_alert_subscription(
             ...     description = 'Zscaler Subscription Alert',
             ...     email = 'alert@acme.com',
             ...     pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
@@ -243,25 +215,19 @@ class AlertSubscriptionsAPI(APIClient):
         body = kwargs
         body["id"] = subscription_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AlertSubscriptions)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AlertSubscriptions)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = AlertSubscriptions(self.form_response_body(response.get_body()))
             else:
                 result = AlertSubscriptions()
         except Exception as error:
-            return (None, response, error)
+            return AlertSubscriptions
 
-        return (result, response, None)
+        return result
 
-    def delete_alert_subscription(self, subscription_id: int) -> APIResult[None]:
+    def delete_alert_subscription(self, subscription_id: int) -> None:
         """
         Deletes the specified Alert Subscription
 
@@ -269,7 +235,6 @@ class AlertSubscriptionsAPI(APIClient):
             subscription_id (str): The unique identifier of the Alert Subscription.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Alert Subscription:
@@ -290,11 +255,6 @@ class AlertSubscriptionsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

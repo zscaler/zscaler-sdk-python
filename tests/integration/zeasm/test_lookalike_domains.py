@@ -31,9 +31,7 @@ class TestLookALikeDomains:
 
     def _get_org_id(self, client):
         """Helper to get the first organization ID."""
-        orgs, _, err = client.zeasm.organizations.list_organizations()
-        if err:
-            raise Exception(f"Error listing organizations: {err}")
+        orgs = client.zeasm.organizations.list_organizations()
         if not orgs or not orgs.results:
             raise Exception("No organizations found")
         return orgs.results[0].id
@@ -47,13 +45,10 @@ class TestLookALikeDomains:
             org_id = self._get_org_id(client)
             print(f"Using org_id: {org_id}")
 
-            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(
+            domains = client.zeasm.lookalike_domains.list_lookalike_domains(
                 org_id=org_id
             )
-
-            if err:
-                errors.append(f"Error listing lookalike domains: {err}")
-            elif domains:
+            if domains:
                 print(f"Total lookalike domains found: {domains.total_results}")
                 pprint(domains.as_dict())
             else:
@@ -73,13 +68,9 @@ class TestLookALikeDomains:
             print(f"Using org_id: {org_id}")
 
             # First get the list of lookalike domains to get a lookalike_raw
-            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(
+            domains = client.zeasm.lookalike_domains.list_lookalike_domains(
                 org_id=org_id
             )
-
-            if err:
-                errors.append(f"Error listing lookalike domains: {err}")
-                return
 
             if not domains or not domains.results:
                 print("No lookalike domains found to get details for")
@@ -88,14 +79,11 @@ class TestLookALikeDomains:
             lookalike_raw = domains.results[0].lookalike_raw
             print(f"Using lookalike_raw: {lookalike_raw}")
 
-            domain_details, _, err = client.zeasm.lookalike_domains.get_lookalike_domain(
+            domain_details = client.zeasm.lookalike_domains.get_lookalike_domain(
                 org_id=org_id,
                 lookalike_raw=lookalike_raw
             )
-
-            if err:
-                errors.append(f"Error getting lookalike domain details: {err}")
-            elif domain_details:
+            if domain_details:
                 print("Lookalike domain details retrieved successfully:")
                 pprint(domain_details.as_dict())
             else:

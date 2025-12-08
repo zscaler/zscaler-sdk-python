@@ -13,13 +13,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/staticIP
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
   response:
     body:
-      string: '{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":3603318,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1764980303,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-static-ip"}'
     headers:
       cache-control:
@@ -42,7 +42,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:55 GMT
+      - Sat, 06 Dec 2025 00:18:24 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -54,23 +54,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '4157'
+      - '4147'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 07499bc5-d6e8-9b43-a9a4-b044c570fe91
+      - 9de12bb9-2e04-9b64-b859-c677df48917f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4963'
+      - '4989'
       x-ratelimit-reset:
-      - '9'
+      - '40'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -92,13 +92,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/staticIP/3339426
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/3603318
   response:
     body:
-      string: '{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":3603318,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1764980303,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-static-ip"}'
     headers:
       cache-control:
@@ -121,7 +121,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:00 GMT
+      - Sat, 06 Dec 2025 00:18:27 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -133,23 +133,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2200'
+      - '584'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5eaef683-4956-9512-844e-35ba85458270
+      - 28735fc0-463a-9891-a657-fb76cae96e7a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4962'
+      - '4988'
       x-ratelimit-reset:
-      - '3'
+      - '34'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -171,9 +171,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/staticIP/validate
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/validate
   response:
     body:
       string: SUCCESS
@@ -198,7 +198,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:03 GMT
+      - Sat, 06 Dec 2025 00:18:29 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -206,23 +206,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '528'
+      - '522'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 19fa182b-d7cd-9cc6-9251-bdc2e6c7f1ef
+      - 83d8b5c7-42a4-9642-a6fd-55e5da1cadaf
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4987'
       x-ratelimit-reset:
-      - '58'
+      - '31'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -244,14 +244,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/staticIP
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
   response:
     body:
-      string: '[{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
-        Client Secret Authentication"},"comment":"tests-static-ip"},{"id":2881702,"ipAddress":"96.53.93.170","geoOverride":false,"latitude":49.2838,"longitude":-122.7762,"city":{"id":5927690,"name":"Coquitlam,
+      string: '[{"id":3603318,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1764980303,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"tests-static-ip"},{"id":3553112,"ipAddress":"121.234.54.113","geoOverride":false,"latitude":31.2222,"longitude":121.4581,"city":{"id":1796236,"name":"Shanghai,
+        Shanghai, China"},"routableIP":true,"lastModificationTime":1764688758,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"lmhhvblphg"},{"id":2881702,"ipAddress":"96.53.93.170","geoOverride":false,"latitude":49.2838,"longitude":-122.7762,"city":{"id":5927690,"name":"Coquitlam,
         British Columbia, Canada"},"routableIP":true,"lastModificationTime":1759796937,"lastModifiedBy":{"id":117781255,"name":"William
         Guilherme"}}]'
     headers:
@@ -275,7 +277,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:05 GMT
+      - Sat, 06 Dec 2025 00:18:32 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -287,23 +289,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '420'
+      - '453'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e846990b-d825-9910-bb88-f6206f4d7bed
+      - 94676fa5-6972-9268-aaf9-98e1567b4117
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4986'
       x-ratelimit-reset:
-      - '55'
+      - '29'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -325,9 +327,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/staticIP/3339426
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/3603318
   response:
     body:
       string: ''
@@ -348,7 +350,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:53:09 GMT
+      - Sat, 06 Dec 2025 00:18:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -358,23 +360,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2215'
+      - '2529'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a0d6fe02-a86f-9a84-bc8c-024041ce7bc3
+      - 678d078b-36c9-9777-bd65-462bbcfc2551
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4985'
       x-ratelimit-reset:
-      - '53'
+      - '26'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
