@@ -256,8 +256,9 @@ class SegmentGroupsAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (SegmentGroup({"id": group_id}), None, None)
+        # Handle 204 No Content - response exists but body is empty
+        if response is None or not response.get_body():
+            return (SegmentGroup({"id": group_id}), response, None)
 
         try:
             result = SegmentGroup(self.form_response_body(response.get_body()))
@@ -318,8 +319,9 @@ class SegmentGroupsAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (SegmentGroup({"id": group_id}), None, None)
+        # Handle 204 No Content - response exists but body is empty
+        if response is None or not response.get_body():
+            return (SegmentGroup({"id": group_id}), response, None)
 
         try:
             result = SegmentGroup(self.form_response_body(response.get_body()))

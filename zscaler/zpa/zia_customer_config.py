@@ -262,8 +262,8 @@ class ZIACustomerConfigAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (None, None, None)
+        if response is None or not response.get_body():
+            return (None, response, None)
 
         try:
             result = SessionTerminationOnReauth(self.form_response_body(response.get_body()))

@@ -185,9 +185,9 @@ class ServiceEdgeControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
+        if response is None or not response.get_body():
             # Return a meaningful result to indicate success
-            return (ServiceEdge({"id": service_edge_id}), None, None)
+            return (ServiceEdge({"id": service_edge_id}), response, None)
 
         try:
             result = ServiceEdge(self.form_response_body(response.get_body()))

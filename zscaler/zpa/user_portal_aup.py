@@ -316,8 +316,8 @@ class UserPortalAUPAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (UserPortalAUP({"id": portal_id}), None, None)
+        if response is None or not response.get_body():
+            return (UserPortalAUP({"id": portal_id}), response, None)
 
         try:
             result = UserPortalAUP(self.form_response_body(response.get_body()))
