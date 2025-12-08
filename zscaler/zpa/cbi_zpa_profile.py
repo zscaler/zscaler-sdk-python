@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_zpa_profile import ZPACBIProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CBIZPAProfileAPI(APIClient):
@@ -34,7 +33,7 @@ class CBIZPAProfileAPI(APIClient):
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cbi_zpa_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ZPACBIProfile]]:
+    def list_cbi_zpa_profiles(self, query_params: Optional[dict] = None, **kwargs) -> List[ZPACBIProfile]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 
@@ -46,10 +45,10 @@ class CBIZPAProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
 
         Examples:
-            >>> profile_list, _, err = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
-            ... if err:
-            ...     print(f"Error listing cbi profile: {err}")
-            ...     return
+            >>> try:
+            ...     profile_list = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -62,23 +61,14 @@ class CBIZPAProfileAPI(APIClient):
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ZPACBIProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZPACBIProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_isolation_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ZPACBIProfile]]:
+    def list_isolation_profiles(self, query_params: Optional[dict] = None, **kwargs) -> List[ZPACBIProfile]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 
@@ -90,10 +80,10 @@ class CBIZPAProfileAPI(APIClient):
             :obj:`Tuple`: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
 
         Examples:
-            >>> profile_list, _, err = client.zpa.cbi_zpa_profile.list_isolation_profiles()
-            ... if err:
-            ...     print(f"Error listing cbi profile: {err}")
-            ...     return
+            >>> try:
+            ...     profile_list = client.zpa.cbi_zpa_profile.list_isolation_profiles()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -106,18 +96,9 @@ class CBIZPAProfileAPI(APIClient):
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZPACBIProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ZPACBIProfile(self.form_response_body(item)))
+        return result

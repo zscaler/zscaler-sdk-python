@@ -39,8 +39,7 @@ class TestScimGroups:
 
         try:
             # Step 1: List all IDPs and find the one with sso_type = USER
-            idps, _, err = client.zpa.idp.list_idps()
-            assert err is None, f"Error listing IDPs: {err}"
+            idps = client.zpa.idp.list_idps()
             user_idp = next((idp for idp in idps if "USER" in idp.sso_type), None)
             assert user_idp is not None, "No IdP with sso_type 'USER' found."
 
@@ -51,8 +50,7 @@ class TestScimGroups:
         if user_idp_id:
             try:
                 # Step 2: List SCIM groups for the USER IdP
-                scim_groups, _, err = client.zpa.scim_groups.list_scim_groups(user_idp_id)
-                assert err is None, f"Error listing SCIM groups: {err}"
+                scim_groups = client.zpa.scim_groups.list_scim_groups(user_idp_id)
                 assert isinstance(scim_groups, list), "Response is not in the expected list format."
                 assert len(scim_groups) > 0, "No SCIM groups were found for the specified IdP."
 
@@ -64,8 +62,7 @@ class TestScimGroups:
         if first_group_id:
             try:
                 # Step 3: Get the SCIM group using the retrieved ID
-                scim_group, _, err = client.zpa.scim_groups.get_scim_group(first_group_id)
-                assert err is None, f"Error getting SCIM group: {err}"
+                scim_group = client.zpa.scim_groups.get_scim_group(first_group_id)
                 assert scim_group is not None, "No SCIM group found for the specified ID."
                 assert scim_group.id == first_group_id, "Retrieved SCIM group ID does not match the requested ID."
             except Exception as exc:

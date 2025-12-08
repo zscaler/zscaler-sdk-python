@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.admin_roles import AdminRoles
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdminRolesAPI(APIClient):
@@ -33,7 +32,7 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
+    def list_roles(self, query_params: Optional[dict] = None) -> List[AdminRoles]:
         """
         List all existing admin roles.
 
@@ -84,20 +83,10 @@ class AdminRolesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = [AdminRoles(self.form_response_body(item)) for item in response.get_results()]
-        except Exception as exc:
-            return (None, response, exc)
-
+        response = self._request_executor.execute(request)
+        results = [AdminRoles(self.form_response_body(item)) for item in response.get_results()]
         if local_search:
             lower_search = local_search.lower()
             results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
@@ -112,7 +101,7 @@ class AdminRolesAPI(APIClient):
         username_access: str = "NONE",
         dashboard_access: str = "NONE",
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> AdminRoles:
         """
         Create a new admin role.
 
@@ -193,26 +182,17 @@ class AdminRolesAPI(APIClient):
         body = {**payload, **kwargs}
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminRoles)
+        result = AdminRoles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminRoles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminRoles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_role(self, role_id: str, **kwargs) -> APIResult[dict]:
+    def update_role(self, role_id: str, **kwargs) -> AdminRoles:
         """
         Update an existing admin role.
 
@@ -280,21 +260,12 @@ class AdminRolesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AdminRoles)
+        result = AdminRoles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminRoles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminRoles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_role(self, role_id: str) -> APIResult[dict]:
+    def delete_role(self, role_id: str) -> None:
         """
         Delete the specified admin role.
 
@@ -320,11 +291,6 @@ class AdminRolesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

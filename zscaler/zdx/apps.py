@@ -24,7 +24,6 @@ from zscaler.zdx.models.applications import ApplicationMetrics
 from zscaler.zdx.models.application_users import ApplicationUserDetails
 from zscaler.zdx.models.application_users import ApplicationActiveUsers
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class AppsAPI(APIClient):
@@ -35,7 +34,7 @@ class AppsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[List[ActiveApplications]]:
+    def list_apps(self, query_params: Optional[dict] = None) -> List[ActiveApplications]:
         """
         Returns a list of all active applications configured within the ZDX tenant.
 
@@ -56,20 +55,20 @@ class AppsAPI(APIClient):
         Examples:
             List all applications in ZDX for the past 2 hours:
 
-            >>> app_list, _, err = client.zdx.apps.list_apps()
-            ... if err:
-            ...     print(f"Error listing applications: {err}")
-            ...     return
+            >>> try:
+            ...     app_list = client.zdx.apps.list_apps()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_list:
             ...     print(app.as_dict())
 
             List applications in ZDX for a specific time frame:
 
-            >>> app_list, _, err = client.zdx.apps.list_apps(
+            >>> try:
+            ...     app_list = client.zdx.apps.list_apps(
             ... query_params={'since': 10, 'location_id': [545845]})
-            ... if err:
-            ...     print(f"Error listing applications: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_list:
             ...     print(app.as_dict())
         """
@@ -86,25 +85,16 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ActiveApplications(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ActiveApplications(self.form_response_body(item)))
+        return result
 
     @zdx_params
-    def get_app(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_app(self, app_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns information on the application's ZDX Score (for the previous 2 hours).
         Including most impacted locations, and the total number of users impacted.
@@ -129,10 +119,10 @@ class AppsAPI(APIClient):
         Examples:
             Return information on the application with the ID of 999999999:
 
-            >>> apps, _, err = client.zdx.apps.get_app('1')
-            ... if err:
-            ...      print(f"Error listing application: {err}")
-            ...     return
+            >>> try:
+            ...     apps = client.zdx.apps.get_app('1')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in apps:
             ...     print(app.as_dict())
         """
@@ -149,24 +139,14 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [ApplicationScore(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [ApplicationScore(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_app_score(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_app_score(self, app_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns the ZDX score trend for the specified application configured within the ZDX tenant.
 
@@ -190,20 +170,20 @@ class AppsAPI(APIClient):
         Examples:
             Return the ZDX score trend for the application with the ID of 999999999:
 
-            >>> app_score, _, err = client.zdx.apps.get_app_score('1')
-            ... if err:
-            ...     print(f"Error listing application score: {err}")
-            ...     return
+            >>> try:
+            ...     app_score = client.zdx.apps.get_app_score('1')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_score:
             ...     print(app.as_dict())
 
             Return the ZDX score trend for the application with the ID of 999999999 and location_id 125584:
 
-            >>> app_score, _, err = client.zdx.apps.get_app_score(
+            >>> try:
+            ...     app_score = client.zdx.apps.get_app_score(
             ... '999999999', query_params={"location_id": [125584]})
-            ... if err:
-            ...     print(f"Error listing application score: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_score:
             ...     print(app.as_dict())
         """
@@ -220,24 +200,14 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [ApplicationScoreTrend(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [ApplicationScoreTrend(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_app_metrics(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_app_metrics(self, app_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns the ZDX metrics for the specified application configured within the ZDX tenant.
 
@@ -266,21 +236,21 @@ class AppsAPI(APIClient):
         Examples:
             Return the ZDX metrics for the application with the ID of 999999999:
 
-            >>> app_avg, _, err = client.zdx.apps.get_app_metrics(app_id='999999999')
-            ... if err:
-            ...     print(f"Error listing application metric: {err}")
-            ...     return
+            >>> try:
+            ...     app_avg = client.zdx.apps.get_app_metrics(app_id='999999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_avg:
             ...     print(app.as_dict())
 
             Return the ZDX metrics for the app with an ID of 999999999 for the last 24 hours, including dns matrics,
             geolocation, department and location IDs:
 
-            >>> app_avg, _, err = client.zdx.apps.get_app_metrics(
+            >>> try:
+            ...     app_avg = client.zdx.apps.get_app_metrics(
             ...    app_id='999999999', query_params={"since": '24', 'metric_name': 'dns', location_id=['888888888']})
-            ... if err:
-            ...     print(f"Error listing application metric: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_avg:
             ...     print(app.as_dict())
         """
@@ -297,26 +267,16 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApplicationMetrics(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ApplicationMetrics(item))
+        return result
 
     @zdx_params
-    def list_app_users(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[List[ApplicationActiveUsers]]:
+    def list_app_users(self, app_id: str, query_params: Optional[dict] = None) -> List[ApplicationActiveUsers]:
         """
         Returns a list of users and devices that were used to access the specified application configured within
         the ZDX tenant.
@@ -346,20 +306,20 @@ class AppsAPI(APIClient):
         Examples:
             Return a list of users and devices who have accessed the application with the ID of 999999999:
 
-            >>> app_users, _, err = client.zdx.apps.list_app_users('999999999')
-            ... if err:
-            ...     print(f"Error listing app users: {err}")
-            ...     return
+            >>> try:
+            ...     app_users = client.zdx.apps.list_app_users('999999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_users:
             ...     print(app.as_dict())
 
             Return a list of users and devices who have accessed the application with the ID of 999999999
             with score_bucket of poor:
 
-            >>> app_users, _, err = client.zdx.apps.list_app_users('999999999', query_params={"score_bucket": poor})
-            ... if err:
-            ...     print(f"Error listing app users: {err}")
-            ...     return
+            >>> try:
+            ...     app_users = client.zdx.apps.list_app_users('999999999', query_params={"score_bucket": poor})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_users:
             ...     print(app.as_dict())
         """
@@ -376,24 +336,14 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [ApplicationActiveUsers(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [ApplicationActiveUsers(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_app_user(self, app_id: str, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_app_user(self, app_id: str, user_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns information on the specified user and device that was used to access the specified application
         configured within the ZDX tenant.
@@ -414,20 +364,20 @@ class AppsAPI(APIClient):
             Return information on the user with the ID of 24328827 who has accessed the application with the ID of
             888888888:
 
-            >>> app_list, _, err = client.zdx.apps.get_app_user(app_id='1', user_id='24328827')
-            ... if err:
-            ...     print(f"Error listing application user details: {err}")
-            ...     return
+            >>> try:
+            ...     app_list = client.zdx.apps.get_app_user(app_id='1', user_id='24328827')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_list:
             ...     print(app.as_dict())
 
             Return information on the application ID 1 and user with the ID of 24328827 for the past 2 hours.
 
-            >>> app_list, _, err = client.zdx.apps.get_app_user(
+            >>> try:
+            ...     app_list = client.zdx.apps.get_app_user(
             ...    app_id='1', user_id='24328827', query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing application user details: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in app_list:
             ...     print(app.as_dict())
         """
@@ -444,18 +394,8 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [ApplicationUserDetails(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [ApplicationUserDetails(self.form_response_body(response.get_body()))]
+        return result

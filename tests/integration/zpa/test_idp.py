@@ -37,8 +37,7 @@ class TestIdP:
 
         # List all identity providers
         try:
-            idps_response, _, err = client.zpa.idp.list_idps()  # Correctly unpack the tuple
-            assert err is None, f"Error listing identity providers: {err}"
+            idps_response = client.zpa.idp.list_idps()  # Correctly unpack the tuple
             assert isinstance(idps_response, list), "Expected a list of identity providers"
             if idps_response:  # If there are any identity providers, proceed with further operations
                 first_idp = idps_response[0]
@@ -50,8 +49,7 @@ class TestIdP:
         if idp_id:
             # Fetch the selected identity provider by its ID
             try:
-                fetched_idp, _, err = client.zpa.idp.get_idp(idp_id)
-                assert err is None, f"Error fetching identity provider by ID: {err}"
+                fetched_idp = client.zpa.idp.get_idp(idp_id)
                 assert fetched_idp is not None, "Expected a valid identity provider object"
                 assert fetched_idp.id == idp_id, "Mismatch in identity provider ID"  # Use dot notation for object access
             except Exception as exc:

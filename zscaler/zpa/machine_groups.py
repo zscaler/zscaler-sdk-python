@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.machine_groups import MachineGroup
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class MachineGroupsAPI(APIClient):
@@ -33,163 +32,101 @@ class MachineGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_machine_groups(self, query_params: Optional[dict] = None) -> APIResult[List[MachineGroup]]:
+    def list_machine_groups(self, query_params: Optional[dict] = None) -> List[MachineGroup]:
         """
-        Enumerates machine groups in your organization with pagination.
-        A subset of machine groups can be returned that match a supported
-        filter expression or query.
+        Enumerates machine groups in your organization.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            tuple: A tuple containing (list of MachineGroup instances, Response, error)
+            List[MachineGroup]: A list of MachineGroup instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Retrieve machine groups with pagination parameters:
-
-            >>> group_list, _, err = client.zpa.machine_groups.list_machine_groups(
-            ... query_params={'search': 'MGRP01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing machine groups: {err}")
-            ...     return
-            ... print(f"Total certificates found: {len(group_list)}")
-            ... for group in group_list:
-            ...     print(group.as_dict())
+            >>> try:
+            ...     groups = client.zpa.machine_groups.list_machine_groups()
+            ...     for group in groups:
+            ...         print(group.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /machineGroup
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/machineGroup")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, MachineGroup)
 
-        response, error = self._request_executor.execute(request, MachineGroup)
-        if error:
-            return (None, response, error)
+        return [MachineGroup(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(MachineGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_machine_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[MachineGroup]]:
+    def list_machine_group_summary(self, query_params: Optional[dict] = None) -> List[MachineGroup]:
         """
-        Retrieves all configured machine groups Name and IDs
+        Retrieves all configured machine groups Name and IDs.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page]`` {str}: Specifies the page number.
-
-                ``[query_params.page_size]`` {int}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of MachineGroup instances, Response, error)
+            List[MachineGroup]: A list of MachineGroup instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> group_list, _, err = client.zpa.machine_groups.list_machine_group_summary(
-            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing machine groups: {err}")
-            ...     return
-            ... print(f"Total machine groups found: {len(group_list)}")
-            ... for group in group_list:
-            ...     print(group.as_dict())
+            >>> try:
+            ...     groups = client.zpa.machine_groups.list_machine_group_summary()
+            ...     for group in groups:
+            ...         print(group.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /machineGroup/summary
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/machineGroup/summary")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, MachineGroup)
 
-        response, error = self._request_executor.execute(request, MachineGroup)
-        if error:
-            return (None, response, error)
+        return [MachineGroup(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(MachineGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> MachineGroup:
         """
         Fetches information on the specified machine group.
 
         Args:
             group_id (str): The ID of the machine group.
-            query_params (dict, optional): Map of query parameters for the request.
-                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            dict: The machine group object.
+            MachineGroup: The machine group object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_group, _, err = client.zpa.machine_groups.get_group('999999')
-            ... if err:
-            ...     print(f"Error fetching machine group by ID: {err}")
-            ...     return
-            ... print(fetched_group.id)
+            >>> try:
+            ...     group = client.zpa.machine_groups.get_group('999999')
+            ...     print(group.id)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /machineGroup/{group_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/machineGroup/{group_id}")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, MachineGroup)
 
-        response, error = self._request_executor.execute(request, MachineGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = MachineGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return MachineGroup(self.form_response_body(response.get_body()))

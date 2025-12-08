@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.groups import Groups
 from zscaler.zidentity.models.groups import GroupRecord
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class GroupsAPI(APIClient):
@@ -34,7 +33,7 @@ class GroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[Groups]:
+    def list_groups(self, query_params: Optional[dict] = None) -> Groups:
         """
         Retrieves a paginated list of groups with optional query parameters
         for pagination and filtering by group name or dynamic group status.
@@ -53,7 +52,6 @@ class GroupsAPI(APIClient):
                 ``[query_params.exclude_dynamic_groups]`` {bool}: Excludes dynamic groups from the results.
 
         Returns:
-            tuple: A tuple containing (list of Groups instances, Response, error)
 
         Examples:
             List groups using default settings:
@@ -87,24 +85,14 @@ class GroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = Groups(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Groups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_group(self, group_id: int) -> APIResult[dict]:
+    def get_group(self, group_id: int) -> GroupRecord:
         """
         Fetches a specific zidentity group by ID.
 
@@ -112,7 +100,6 @@ class GroupsAPI(APIClient):
             group_id (int): Unique identifier of the group to retrieve.
 
         Returns:
-            tuple: A tuple containing Groups instance, Response, error).
 
         Examples:
             Print a specific Group
@@ -135,22 +122,13 @@ class GroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_group(self, **kwargs) -> APIResult[dict]:
+    def add_group(self, **kwargs) -> GroupRecord:
         """
         Creates a new Zidentity Group.
 
@@ -168,7 +146,6 @@ class GroupsAPI(APIClient):
             idp (dict, optional): Identity provider information associated with the group.
 
         Returns:
-            tuple: A tuple containing the newly added Group, response, and error.
 
         Examples:
             Add a new Group:
@@ -197,26 +174,17 @@ class GroupsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_group(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def update_group(self, group_id: str, **kwargs) -> GroupRecord:
         """
         Updates information for the specified Zidentity Group.
 
@@ -224,7 +192,6 @@ class GroupsAPI(APIClient):
             group_id (str): The unique ID for the Group.
 
         Returns:
-            tuple: A tuple containing the updated Group, response, and error.
 
         Examples:
             Update an existing Group :
@@ -254,26 +221,17 @@ class GroupsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_group(self, group_id: str) -> APIResult[dict]:
+    def delete_group(self, group_id: str) -> None:
         """
         Deletes the specified Group.
 
@@ -281,7 +239,6 @@ class GroupsAPI(APIClient):
             group_id (str): The unique identifier of the Group.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Group:
@@ -302,16 +259,11 @@ class GroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def list_group_users_details(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[Groups]:
+    def list_group_users_details(self, group_id: str, query_params: Optional[dict] = None) -> Groups:
         """
         Retrieves the list of users details for a specific group using the group ID.
 
@@ -334,7 +286,6 @@ class GroupsAPI(APIClient):
                 provider names.
 
         Returns:
-            tuple: A tuple containing (list of Groups instances, Response, error)
 
         Examples:
             List users using default settings:
@@ -360,29 +311,19 @@ class GroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Groups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = Groups(self.form_response_body(response.get_body()))
+        return result
 
     def add_user_to_group(
         self,
         group_id: str,
         user_id: str,
         **kwargs
-    ) -> APIResult[dict]:
+    ) -> GroupRecord:
         """
         Adds a specific user to an existing group using the group ID and the user ID.
 
@@ -421,26 +362,17 @@ class GroupsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_users_to_group(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def add_users_to_group(self, group_id: str, **kwargs) -> GroupRecord:
         """
         Adds users to an existing group using the unique identifier ID of the group.
 
@@ -488,26 +420,17 @@ class GroupsAPI(APIClient):
         else:
             body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def replace_users_groups(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def replace_users_groups(self, group_id: str, **kwargs) -> GroupRecord:
         """
         Replaces the list of users in a specific group using the group ID.
         This operation completely replaces all existing users in the group.
@@ -556,26 +479,17 @@ class GroupsAPI(APIClient):
         else:
             body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, GroupRecord)
+        result = GroupRecord(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, GroupRecord)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = GroupRecord(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def remove_user_from_group(self, group_id: str, user_id: str) -> APIResult[dict]:
+    def remove_user_from_group(self, group_id: str, user_id: str) -> GroupRecord:
         """
         Deletes the specified Group.
 
@@ -613,11 +527,6 @@ class GroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
         return (None, response, None)

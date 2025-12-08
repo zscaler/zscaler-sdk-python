@@ -18,7 +18,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.advanced_settings import AdvancedSettings
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdvancedSettingsAPI(APIClient):
@@ -32,7 +31,7 @@ class AdvancedSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_advanced_settings(self) -> APIResult[AdvancedSettings]:
+    def get_advanced_settings(self) -> AdvancedSettings:
         """
         Retrieves the current advanced settings configured in the ZIA Admin Portal.
 
@@ -40,7 +39,6 @@ class AdvancedSettingsAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - AdvancedSettings: The current advanced settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -62,23 +60,17 @@ class AdvancedSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = AdvancedSettings(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_advanced_settings(self, **kwargs) -> APIResult[AdvancedSettings]:
+    def update_advanced_settings(self, **kwargs) -> AdvancedSettings:
         """
         Updates advanced settings in the ZIA Admin Portal with the provided configuration.
 
@@ -192,20 +184,14 @@ class AdvancedSettingsAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AdvancedSettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AdvancedSettings)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = AdvancedSettings(self.form_response_body(response.get_body()))
             else:
                 result = AdvancedSettings()
         except Exception as error:
-            return (None, response, error)
+            return AdvancedSettings
 
-        return (result, response, None)
+        return result

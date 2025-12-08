@@ -20,7 +20,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.service_edge_schedule import ServiceEdgeSchedule
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ServiceEdgeScheduleAPI(APIClient):
@@ -38,7 +37,7 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{self.customer_id}"
 
-    def get_service_edge_schedule(self, customer_id=None) -> APIResult[dict]:
+    def get_service_edge_schedule(self, customer_id=None) -> ServiceEdgeSchedule:
         """
         Returns the configured Service Edge Schedule frequency.
 
@@ -48,7 +47,6 @@ class ServiceEdgeScheduleAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -66,25 +64,19 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request with headers
-        request, error = self._request_executor.create_request(http_method, api_url, body=None, headers={}, params=params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=None, headers={}, params=params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             # Expect a single object, not a list
             result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return ServiceEdgeSchedule
+        return result
 
-    def add_service_edge_schedule(self, schedule) -> APIResult[dict]:
+    def add_service_edge_schedule(self, schedule) -> ServiceEdgeSchedule:
         """
         Configure an Service Edge schedule frequency to delete inactive connectors based on the configured frequency.
 
@@ -96,7 +88,6 @@ class ServiceEdgeScheduleAPI(APIClient):
                 ``enabled`` (bool, optional): Whether the deletion setting is enabled.
                 ``microtenant_id`` (str): The unique identifier of the Microtenant for the ZPA tenant.
         Returns:
-            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -135,22 +126,13 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         # Execute the request
-        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, ServiceEdgeSchedule)
+        result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_service_edge_schedule(self, scheduler_id: str, schedule) -> APIResult[dict]:
+    def update_service_edge_schedule(self, scheduler_id: str, schedule) -> ServiceEdgeSchedule:
         """
         Updates Service Edge schedule frequency to delete inactive connectors based on the configured frequency.
 
@@ -163,7 +145,6 @@ class ServiceEdgeScheduleAPI(APIClient):
             **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
 
         http_method = "put".upper()
@@ -203,23 +184,14 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
         # Execute the request
-        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, ServiceEdgeSchedule)
         # Handle case where no content is returned (204 No Content)
         if response is None:
             # Return a meaningful result to indicate success
-            return (ServiceEdgeSchedule({"id": scheduler_id}), None, None)
+            return ServiceEdgeSchedule({"id": scheduler_id})
 
         # Parse the response into an AppConnectorGroup instance
-        try:
-            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
+        return result

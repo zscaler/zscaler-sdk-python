@@ -37,8 +37,7 @@ class TestTrustedNetworks:
 
         # List all trusted networks
         try:
-            network_response, _, err = client.zpa.trusted_networks.list_trusted_networks()
-            assert err is None, f"Error listing trusted networks: {err}"
+            network_response = client.zpa.trusted_networks.list_trusted_networks()
             assert isinstance(network_response, list), "Expected a list of trusted networks"
             if network_response:
                 first_network = network_response[0]
@@ -50,8 +49,7 @@ class TestTrustedNetworks:
         if network_id:
             # Fetch the selected trusted network by its ID
             try:
-                fetched_group, _, err = client.zpa.trusted_networks.get_network(network_id)
-                assert err is None, f"Error fetching trusted network by ID: {err}"
+                fetched_group = client.zpa.trusted_networks.get_network(network_id)
                 assert fetched_group is not None, "Expected a valid trusted network object"
                 assert fetched_group.id == network_id, "Mismatch in trusted network ID"
             except Exception as exc:

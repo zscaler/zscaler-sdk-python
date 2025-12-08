@@ -41,10 +41,9 @@ class TestAccessPolicyReorderRule:
                 for i in range(5):
                     rule_name = f"tests-{generate_random_string()}"
                     rule_description = f"tests-{generate_random_string()}"
-                    created_rule, _, err = client.zpa.policies.add_access_rule(
+                    created_rule = client.zpa.policies.add_access_rule(
                         name=rule_name, description=rule_description, action="allow"
                     )
-                    assert err is None, f"Error creating access rule: {err}"
                     assert created_rule is not None, "Created rule is None"
                     created_rules.append(created_rule.as_dict())  # Store as dictionaries for consistency
                     print(f"Created Rule: {created_rule.as_dict()}")
@@ -56,11 +55,10 @@ class TestAccessPolicyReorderRule:
                 for index, rule in enumerate(created_rules):
                     rule_id = rule["id"]
                     rule_order = index + 1
-                    _, response, err = client.zpa.policies.reorder_rule(
+                    client.zpa.policies.reorder_rule(
                         policy_type="access", rule_id=rule_id, rule_order=str(rule_order)
                     )
-                    assert err is None, f"Error reordering rule {rule_id}: {err}"
-                    print(f"Reordered Rule ID: {rule_id}, Response: {response}")
+                    print(f"Reordered Rule ID: {rule_id}")
             except Exception as exc:
                 errors.append(f"Reordering rules failed: {exc}")
 
@@ -68,8 +66,7 @@ class TestAccessPolicyReorderRule:
             # Clean up: Delete the created rules
             for rule in created_rules:
                 try:
-                    _, _, err = client.zpa.policies.delete_rule(policy_type="access", rule_id=rule["id"])
-                    assert err is None, f"Error deleting rule {rule['id']}: {err}"
+                    _ = client.zpa.policies.delete_rule(policy_type="access", rule_id=rule["id"])
                     print(f"Rule deleted successfully with ID: {rule['id']}")
                 except Exception as exc:
                     errors.append(f"Cleanup failed for rule ID {rule['id']}: {exc}")

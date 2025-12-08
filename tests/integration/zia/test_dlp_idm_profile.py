@@ -36,8 +36,7 @@ class TestDLPIDMProfile:
 
         try:
             # Step 1: List all IDM profiles
-            profiles, _, error = client.zia.dlp_resources.list_dlp_idm_profiles()
-            assert error is None, f"List IDM Profiles Error: {error}"
+            profiles = client.zia.dlp_resources.list_dlp_idm_profiles()
             assert isinstance(profiles, list), "Expected a list of IDM profiles"
 
             if profiles:
@@ -47,8 +46,7 @@ class TestDLPIDMProfile:
 
                 # Step 3: Fetch by ID
                 try:
-                    fetched_profile, _, error = client.zia.dlp_resources.get_dlp_idm_profiles(profile_id)
-                    assert error is None, f"Get IDM Profile Error: {error}"
+                    fetched_profile = client.zia.dlp_resources.get_dlp_idm_profiles(profile_id)
                     assert fetched_profile is not None, "Expected a valid profile object"
                     assert fetched_profile.profile_id == profile_id, "Mismatch in profile ID"
                 except Exception as exc:
@@ -59,4 +57,4 @@ class TestDLPIDMProfile:
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

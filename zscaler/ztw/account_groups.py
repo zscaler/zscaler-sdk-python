@@ -19,7 +19,6 @@ from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.account_groups import AccountGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AccountGroupsAPI(APIClient):
@@ -30,7 +29,7 @@ class AccountGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_account_groups(self, query_params: Optional[dict] = None) -> APIResult[List[AccountGroups]]:
+    def list_account_groups(self, query_params: Optional[dict] = None) -> List[AccountGroups]:
         """
         Retrieves the details of AWS account groups with metadata.
 
@@ -47,7 +46,6 @@ class AccountGroupsAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
-            tuple: A tuple containing (list of AccountGroups instances, Response, error)
 
         Examples:
             Gets a list of all account groups.
@@ -72,25 +70,16 @@ class AccountGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AccountGroups(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AccountGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_account_groups_lite(self) -> APIResult[List[AccountGroups]]:
+    def list_account_groups_lite(self) -> List[AccountGroups]:
         """
         Retrieves the ID and name of all the AWS account groups.
 
@@ -98,7 +87,6 @@ class AccountGroupsAPI(APIClient):
         only the essential information (ID and name) for all account groups.
 
         Returns:
-            tuple: A tuple containing (list of AccountGroups instances, Response, error)
 
         Examples:
             Get a list of all account groups (lite version):
@@ -122,25 +110,16 @@ class AccountGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AccountGroups(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AccountGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_account_group(self, account_group_id: int) -> APIResult[AccountGroups]:
+    def get_account_group(self, account_group_id: int) -> AccountGroups:
         """
         Retrieves the existing AWS account group based on the provided ID.
 
@@ -148,7 +127,6 @@ class AccountGroupsAPI(APIClient):
             account_group_id (int): The ID of the AWS account group.
 
         Returns:
-            tuple: A tuple containing (AccountGroups instance, Response, error)
 
         Examples:
             >>> fetched_public_cloud_info, response, error = (
@@ -171,23 +149,14 @@ class AccountGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AccountGroups)
 
-        response, error = self._request_executor.execute(request, AccountGroups)
+        result = AccountGroups(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AccountGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_account_group(self, **kwargs) -> APIResult[AccountGroups]:
+    def add_account_group(self, **kwargs) -> AccountGroups:
         """
         Creates an AWS account group. You can create a maximum of 128 groups in each organization.
 
@@ -201,7 +170,6 @@ class AccountGroupsAPI(APIClient):
             cloud_type (str): The cloud provider type (e.g., "AWS").
 
         Returns:
-            tuple: A tuple containing (AccountGroups instance, Response, error)
 
         Examples:
             Add a new Account Group:
@@ -226,26 +194,17 @@ class AccountGroupsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AccountGroups)
+        result = AccountGroups(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AccountGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AccountGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_account_group(self, account_group_id: int, **kwargs) -> APIResult[AccountGroups]:
+    def update_account_group(self, account_group_id: int, **kwargs) -> AccountGroups:
         """
         Updates the existing AWS account group details based on the provided ID.
 
@@ -257,7 +216,6 @@ class AccountGroupsAPI(APIClient):
             cloud_type (str, optional): The cloud provider type (e.g., "AWS").
 
         Returns:
-            tuple: A tuple containing (AccountGroups instance, Response, error)
 
         Examples:
             Update account group:
@@ -284,21 +242,12 @@ class AccountGroupsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, AccountGroups)
+        result = AccountGroups(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AccountGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AccountGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_account_group(self, account_group_id: int) -> APIResult[None]:
+    def delete_account_group(self, account_group_id: int) -> None:
         """
         Removes a specific AWS account group based on the provided ID.
 
@@ -306,7 +255,6 @@ class AccountGroupsAPI(APIClient):
             account_group_id (int): The unique ID of the AWS account group.
 
         Returns:
-            tuple: A tuple containing (None, Response, error). The API returns 204 No Content on success.
 
         Examples:
             >>> _, _, error = client.ztw.account_groups.delete_account_group(545845)
@@ -326,16 +274,11 @@ class AccountGroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def get_account_group_count(self) -> APIResult[List[dict]]:
+    def get_account_group_count(self) -> List[dict]:
         """
         Retrieves the total number of AWS account groups.
 
@@ -364,18 +307,9 @@ class AccountGroupsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(self.form_response_body(item))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(self.form_response_body(item))
+        return result

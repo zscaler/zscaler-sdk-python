@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_portal import PrivilegedRemoteAccessPortal
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class PRAPortalAPI(APIClient):
@@ -33,110 +32,73 @@ class PRAPortalAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_portals(self, query_params: Optional[dict] = None) -> APIResult[List[PrivilegedRemoteAccessPortal]]:
+    def list_portals(self, query_params: Optional[dict] = None) -> List[PrivilegedRemoteAccessPortal]:
         """
-        Returns a list of all configured PRA portals with pagination support.
+        Returns a list of all configured PRA portals.
 
-        Keyword Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page]`` {str}: Specifies the page number.
-
-                ``[query_params.page_size]`` {int}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
+        Args:
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            :obj:`Tuple`: A list of `PrivilegedRemoteAccessPortal` instances.
+            List[PrivilegedRemoteAccessPortal]: A list of PRA portal instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> portals_list, _, err = client.zpa.pra_portal.list_portals(
-            ... query_params={'search': 'portal01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing pra portals: {err}")
-            ...     return
-            ... print(f"Total pra portals found: {len(portals_list)}")
-            ... for pra in portals_list:
-            ...     print(pra.as_dict())
+            >>> try:
+            ...     portals = client.zpa.pra_portal.list_portals()
+            ...     for portal in portals:
+            ...         print(portal.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /praPortal
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/praPortal")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
-        if error:
-            return (None, response, error)
+        return [PrivilegedRemoteAccessPortal(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PrivilegedRemoteAccessPortal(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_portal(self, portal_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_portal(self, portal_id: str, query_params: Optional[dict] = None) -> PrivilegedRemoteAccessPortal:
         """
         Provides information on the specified PRA portal.
 
         Args:
             portal_id (str): The unique identifier of the portal.
-            query_params (dict, optional): Map of query parameters for the request.
-                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            :obj:`Tuple`: PrivilegedRemoteAccessPortal: The corresponding portal object.
+            PrivilegedRemoteAccessPortal: The portal object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_portal, _, err = client.zpa.pra_portal.get_portal('999999')
-            ... if err:
-            ...     print(f"Error fetching portal by ID: {err}")
-            ...     return
-            ... print(f"Fetched portal by ID: {fetched_portal.as_dict()}")
+            >>> try:
+            ...     portal = client.zpa.pra_portal.get_portal('999999')
+            ...     print(portal.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /praPortal/{portal_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/praPortal/{portal_id}")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
-        if error:
-            return (None, response, error)
+        return PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
 
-        try:
-            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_portal(self, **kwargs) -> APIResult[dict]:
+    def add_portal(self, **kwargs) -> PrivilegedRemoteAccessPortal:
         """
         Adds a new PRA portal.
 
@@ -144,148 +106,103 @@ class PRAPortalAPI(APIClient):
             name (str): The name of the PRA portal.
             certificate_id (str): The unique identifier of the certificate.
             domain (str): The domain of the PRA portal.
-            enabled (bool): Whether the PRA portal is enabled (default is True).
+            enabled (bool): Whether the PRA portal is enabled.
 
         Returns:
-            :obj:`Tuple`: PrivilegedRemoteAccessPortal: The newly created portal object.
+            PrivilegedRemoteAccessPortal: The newly created portal object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> new_portal, _, err = client.zpa.pra_portal.add_portal(
-            ...     name="PRA Portal",
-            ...     description="PRA Portal",
-            ...     enabled=True,
-            ...     domain="portal.acme.com",
-            ...     certificate_id="72058304855021564",
-            ...     user_notification="PRA Portal",
-            ...     user_notification_enabled= True,
-            ... )
-            ... if err:
-            ...     print(f"Error creating portal: {err}")
-            ...     return
-            ... print(f"portal created successfully: {new_portal.as_dict()}")
+            >>> try:
+            ...     portal = client.zpa.pra_portal.add_portal(
+            ...         name="PRA Portal",
+            ...         domain="portal.acme.com",
+            ...         certificate_id="72058304855021564",
+            ...         enabled=True
+            ...     )
+            ...     print(portal.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""{
-            self._zpa_base_endpoint}
-            /praPortal
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/praPortal")
 
         body = kwargs
-
-        microtenant_id = body.get("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
-        if error:
-            return (None, response, error)
+        return PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
 
-        try:
-            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_portal(self, portal_id: str, **kwargs) -> APIResult[dict]:
+    def update_portal(self, portal_id: str, **kwargs) -> PrivilegedRemoteAccessPortal:
         """
         Updates the specified PRA portal.
 
         Args:
-            portal_id (str): The unique identifier of the portal being updated.
-            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+            portal_id (str): The unique identifier of the portal.
+            **kwargs: Fields to update.
 
         Returns:
-            :obj:`Tuple`: PrivilegedRemoteAccessPortal: The updated portal object.
+            PrivilegedRemoteAccessPortal: The updated portal object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> update_portal, _, err = client.zpa.pra_portal.update_portal(
-            ...     portal_id="999999",
-            ...     name="PRA Portal",
-            ...     description="Update PRA Portal",
-            ...     enabled=True,
-            ...     domain="portal.acme.com",
-            ...     certificate_id="72058304855021564",
-            ...     user_notification="Update PRA Portal",
-            ...     user_notification_enabled= True,
-            ... )
-            ... if err:
-            ...     print(f"Error creating portal: {err}")
-            ...     return
-            ... print(f"portal created successfully: {new_portal.as_dict()}")
+            >>> try:
+            ...     portal = client.zpa.pra_portal.update_portal(
+            ...         "999999",
+            ...         name="Updated Portal",
+            ...         enabled=True
+            ...     )
+            ...     print(portal.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /praPortal/{portal_id}
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/praPortal/{portal_id}")
 
-        body = {}
-
-        body.update(kwargs)
-
-        microtenant_id = body.get("microtenant_id", None)
+        body = dict(kwargs)
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
 
         if response is None:
-            return (PrivilegedRemoteAccessPortal({"id": portal_id}), None, None)
+            return PrivilegedRemoteAccessPortal({"id": portal_id})
 
-        try:
-            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
 
-    def delete_portal(self, portal_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_portal(self, portal_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified PRA portal.
 
         Args:
-            portal_id (str): The unique identifier of the portal to be deleted.
-            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+            portal_id (str): The unique identifier of the portal.
+            microtenant_id (str, optional): The microtenant ID.
 
         Returns:
-            int: Status code of the delete operation.
+            None
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> _, _, err = client.zpa.pra_portal.delete_portal(
-            ...     portal_id='999999'
-            ... )
-            ... if err:
-            ...     print(f"Error deleting pra portal: {err}")
-            ...     return
-            ... print(f"PRA Portal with ID {'999999'} deleted successfully.")
+            >>> try:
+            ...     client.zpa.pra_portal.delete_portal('999999')
+            ...     print("Portal deleted successfully")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "delete".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /praPortal/{portal_id}
-        """
-        )
+        http_method = "DELETE"
+        api_url = format_url(f"{self._zpa_base_endpoint}/praPortal/{portal_id}")
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)

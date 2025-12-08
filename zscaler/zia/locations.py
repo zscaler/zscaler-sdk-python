@@ -22,7 +22,6 @@ from zscaler.zia.models.location_management import LocationManagement
 from zscaler.zia.models.location_management import RegionInfo
 from zscaler.zia.models.location_group import LocationGroup
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LocationsAPI(APIClient):
@@ -36,7 +35,7 @@ class LocationsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
+    def list_locations(self, query_params: Optional[dict] = None) -> List[LocationManagement]:
         """
         Returns a list of locations.
 
@@ -71,12 +70,13 @@ class LocationsAPI(APIClient):
 
         Returns:
             tuple:
-                List of configured locations as (LocationManagement, Response, error).
+                List of configured locations as List[LocationManagement].
 
         Examples:
             List all locations:
 
-            >>> locations_list, _, err = client.zia.locations.list_locations()
+            >>> try:
+            ...     locations_list = client.zia.locations.list_locations()
             >>> if err:
             ...     print(f"Error listing locations: {err}")
             ...     return
@@ -85,7 +85,8 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
             Filter locations:
 
-            >>> locations_list, _, err = client.zia.locations.list_locations(
+            >>> try:
+            ...     locations_list = client.zia.locations.list_locations(
             ... query_params={'page': 1, 'page_size': 10, 'search': 'HQ_SanJose'}
             )
             >>> if err:
@@ -108,25 +109,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationManagement(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationManagement(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_location(self, location_id: int) -> APIResult[LocationManagement]:
+    def get_location(self, location_id: int) -> LocationManagement:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -134,10 +126,10 @@ class LocationsAPI(APIClient):
             location_id (int): The unique identifier for the location.
 
         Returns:
-           tuple: A tuple containing (Location instance, Response, error).
 
         Examples:
-            >>> fetched_location, _, err = client.zia.locations.get_location(updated_location.id)
+            >>> try:
+            ...     fetched_location = client.zia.locations.get_location(updated_location.id)
             >>> if err:
             ...     print(f"Error fetching location by ID: {err}")
             ...     return
@@ -154,23 +146,14 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, LocationManagement)
 
-        response, error = self._request_executor.execute(request, LocationManagement)
+        result = LocationManagement(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationManagement(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_location(self, **kwargs) -> APIResult[LocationManagement]:
+    def add_location(self, **kwargs) -> LocationManagement:
         """
         Adds a new location.
 
@@ -279,7 +262,8 @@ class LocationsAPI(APIClient):
         Examples:
             Add a new location with a VPN Credential and Static IP Address.
 
-            >>> added_location, _, err = client.zia.locations.add_location(
+            >>> try:
+            ...     added_location = client.zia.locations.add_location(
             ...     name=f"NewLocation_{random.randint(1000, 10000)}",
             ...     description=f"NewLocation_{random.randint(1000, 10000)}",
             ...     country='UNITED_STATES',
@@ -310,27 +294,18 @@ class LocationsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, LocationManagement)
 
-        response, error = self._request_executor.execute(request, LocationManagement)
+        result = LocationManagement(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationManagement(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_location(self, location_id: int, **kwargs) -> APIResult[LocationManagement]:
+    def update_location(self, location_id: int, **kwargs) -> LocationManagement:
         """
         Update the specified location.
 
@@ -435,7 +410,8 @@ class LocationsAPI(APIClient):
         Examples:
             Update location Enable Surrogate IP:
 
-            >>> update_location, _, err = client.zia.locations.update_location(
+            >>> try:
+            ...     update_location = client.zia.locations.update_location(
             ...     location_id='546874',
             ...     name=f"UpdateLocation_{random.randint(1000, 10000)}",
             ...     description=f"NewLocation_{random.randint(1000, 10000)}",
@@ -473,21 +449,12 @@ class LocationsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, LocationManagement)
+        result = LocationManagement(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, LocationManagement)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationManagement(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_location(self, location_id: int) -> APIResult[None]:
+    def delete_location(self, location_id: int) -> None:
         """
         Deletes the location or sub-location for the specified ID
 
@@ -499,7 +466,8 @@ class LocationsAPI(APIClient):
             :obj:`int`: Response code for the operation.
 
         Examples:
-            >>> _, _, err = client.zia.locations.delete_location('123454')
+            >>> try:
+            ...     _ = client.zia.locations.delete_location('123454')
             >>> if err:
             ...     print(f"Error deleting location: {err}")
             ...     return
@@ -515,16 +483,11 @@ class LocationsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def bulk_delete_locations(self, location_ids: List[int]) -> APIResult[None]:
+    def bulk_delete_locations(self, location_ids: List[int]) -> None:
         """
         Deletes all specified Location Management from ZIA.
 
@@ -536,7 +499,8 @@ class LocationsAPI(APIClient):
 
         Examples:
             >>> location_ids_to_delete = ['8665786', '8766865']
-            ... bulk_delete_response, _, err = client.zia.locations.bulk_delete_locations(location_ids_to_delete)
+            ... try:
+            ...     bulk_delete_response = client.zia.locations.bulk_delete_locations(location_ids_to_delete)
             >>> if err:
             ...     print(f"Error in bulk deleting locations: {err}")
             ...     return
@@ -544,10 +508,10 @@ class LocationsAPI(APIClient):
         """
         # Validate input before making the request
         if not location_ids:
-            return (None, ValueError("Empty location_ids list provided"))
+            raise ValueError("Empty location_ids list provided")
 
         if len(location_ids) > 100:
-            return (None, ValueError("Maximum 100 location IDs allowed per bulk delete request"))
+            raise ValueError("Maximum 100 location IDs allowed per bulk delete request")
 
         http_method = "post".upper()
         api_url = format_url(
@@ -559,24 +523,14 @@ class LocationsAPI(APIClient):
 
         payload = {"ids": location_ids}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
-        if error:
-            return (None, error)
+        self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        return None
 
-        # For 204 No Content responses, the executor may return None
-        if error:
-            return (None, error)
-        elif response is None:
-            # This is the expected case for 204 No Content
-            return (None, None)
-
-        return (response, None)
-
-    def list_sub_locations(self, location_id: int, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
+    def list_sub_locations(self, location_id: int, query_params: Optional[dict] = None) -> List[LocationManagement]:
         """
         Returns sub-location information for the specified location ID.
 
@@ -611,7 +565,8 @@ class LocationsAPI(APIClient):
             :obj:`Tuple`: A list of sub-locations configured for the parent location.
 
         Examples:
-            >>> locations_list, _, err = client.zia.locations.list_sub_locations()
+            >>> try:
+            ...     locations_list = client.zia.locations.list_sub_locations()
             >>> if err:
             ...     print(f"Error listing locations: {err}")
             ...     return
@@ -632,25 +587,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationManagement(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationManagement(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> List[LocationManagement]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -685,7 +631,8 @@ class LocationsAPI(APIClient):
         Examples:
             List locations with default settings:
 
-            >>> locations_list, _, err = client.zia.locations.list_locations_lite()
+            >>> try:
+            ...     locations_list = client.zia.locations.list_locations_lite()
             >>> if err:
             ...     print(f"Error listing locations: {err}")
             ...     return
@@ -706,25 +653,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationManagement(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationManagement(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_location_groups(self, query_params: Optional[dict] = None) -> APIResult[List[LocationGroup]]:
+    def list_location_groups(self, query_params: Optional[dict] = None) -> List[LocationGroup]:
         """
         Return a list of location groups in ZIA.
 
@@ -753,7 +691,8 @@ class LocationsAPI(APIClient):
         Examples:
             Get a list of all configured location groups:
 
-            >>> locations_list, _, err = client.zia.locations.list_location_groups()
+            >>> try:
+            ...     locations_list = client.zia.locations.list_location_groups()
             >>> if err:
             ...     print(f"Error listing locations: {err}")
             ...     return
@@ -774,25 +713,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationGroup(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_location_group(self, group_id: int) -> APIResult[LocationGroup]:
+    def get_location_group(self, group_id: int) -> LocationGroup:
         """
         Fetches a specific location group for the specified ID.
 
@@ -800,12 +730,12 @@ class LocationsAPI(APIClient):
             group_id (int): The unique identifier for the location group.
 
         Returns:
-            tuple: A tuple containing (Rule Label instance, Response, error).
 
         Examples:
             Get a list of all configured location groups:
 
-            >>> fetched_location, _, err = client.zia.locations.get_location_group('87687')
+            >>> try:
+            ...     fetched_location = client.zia.locations.get_location_group('87687')
             >>> if err:
             ...     print(f"Error fetching location by ID: {err}")
             ...     return
@@ -822,22 +752,13 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, LocationGroup)
+        result = LocationGroup(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, LocationGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_location_groups_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationGroup]]:
+    def list_location_groups_lite(self, query_params: Optional[dict] = None) -> List[LocationGroup]:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
 
@@ -858,7 +779,8 @@ class LocationsAPI(APIClient):
         Examples:
             Get a list of all configured location groups:
 
-            >>> locations_list, _, err = client.zia.locations.list_location_groups_lite()
+            >>> try:
+            ...     locations_list = client.zia.locations.list_location_groups_lite()
             >>> if err:
             ...     print(f"Error listing locations: {err}")
             ...     return
@@ -879,25 +801,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationGroup(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_location_groups_count(self, query_params: Optional[dict] = None) -> APIResult[int]:
+    def list_location_groups_count(self, query_params: Optional[dict] = None) -> int:
         """
         Returns a list of location groups for your organization.
 
@@ -936,28 +849,22 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             body = response.get_body()
             if isinstance(body, int):
-                return (body, response, None)
+                return body
             elif isinstance(body, str) and body.strip().isdigit():
-                return (int(body.strip()), response, None)
+                return int(body.strip())
             else:
                 raise ValueError(f"Unexpected response format: {body}")
         except Exception as error:
-            return (None, response, error)
+            return int
 
-    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> APIResult[RegionInfo]:
+    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> RegionInfo:
         """
         Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
         coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
@@ -981,7 +888,7 @@ class LocationsAPI(APIClient):
             ... print(f"Fetched coordinates by latitude and longitude: {fetched_ip.as_dict()}")
         """
         if latitude is None or longitude is None:
-            return (None, None, ValueError("Both latitude and longitude must be provided"))
+            raise ValueError("Both latitude and longitude must be provided")
 
         http_method = "get".upper()
         api_url = format_url(
@@ -996,26 +903,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, RegionInfo)
 
-        response, error = self._request_executor.execute(request, RegionInfo)
+        result = RegionInfo(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RegionInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_geo_by_ip(self, ip: str) -> APIResult[RegionInfo]:
+    def get_geo_by_ip(self, ip: str) -> RegionInfo:
         """
         Retrieves the geographical data of the region or city that is located in the specified IP address. The
         geographical data includes the city name, state, country, geographical ID of the city and state, etc.
@@ -1036,7 +933,7 @@ class LocationsAPI(APIClient):
             ... print(f"Fetched geo by IP: {fetched_ip.as_dict()}")
         """
         if not ip:
-            return (None, None, ValueError("IP address must be provided"))
+            raise ValueError("IP address must be provided")
 
         http_method = "get".upper()
         api_url = format_url(
@@ -1049,26 +946,16 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=body, headers=headers
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, RegionInfo)
 
-        response, error = self._request_executor.execute(request, RegionInfo)
+        result = RegionInfo(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RegionInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_cities_by_name(self, query_params: Optional[dict] = None) -> APIResult[List[RegionInfo]]:
+    def list_cities_by_name(self, query_params: Optional[dict] = None) -> List[RegionInfo]:
         """
         Retrieves the list of cities (along with their geographical data) that match the prefix search.
         The geographical data includes the latitude and longitude coordinates of the city, geographical
@@ -1116,27 +1003,18 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(RegionInfo(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(RegionInfo(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_supported_countries(self) -> APIResult[List[str]]:
+    def get_supported_countries(self) -> List[str]:
         """
         Retrieves the list of countries supported in location configuration
         Note: The response shows the current list of supported values in an Enum list.
@@ -1146,10 +1024,10 @@ class LocationsAPI(APIClient):
         Args:
 
         Returns:
-           tuple: A tuple containing (Location instance, Response, error).
 
         Examples:
-            >>> fetched_location, _, err = client.zia.locations.get_location(updated_location.id)
+            >>> try:
+            ...     fetched_location = client.zia.locations.get_location(updated_location.id)
             >>> if err:
             ...     print(f"Error fetching location by ID: {err}")
             ...     return
@@ -1166,18 +1044,9 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = (self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = (self.form_response_body(response.get_body()))
+        return result

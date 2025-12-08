@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.filetyperules import FileTypeControlRules
-from zscaler.types import APIResult
 
 
 class FileTypeControlRuleAPI(APIClient):
@@ -33,7 +32,7 @@ class FileTypeControlRuleAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[FileTypeControlRules]]:
+    ) -> List[FileTypeControlRules]:
         """
         Lists file type control rules rules in your organization with pagination.
         A subset of file type control rules rules  can be returned that match a supported
@@ -45,7 +44,6 @@ class FileTypeControlRuleAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of file type control rules rules instances, Response, error).
 
         Example:
             List all file type control rules rules with a specific page size:
@@ -71,30 +69,20 @@ class FileTypeControlRuleAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(FileTypeControlRules(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(FileTypeControlRules(self.form_response_body(item)))
+        return result
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> FileTypeControlRules:
         """
         Returns information for the specified file type control rules filter rule.
 
@@ -102,7 +90,6 @@ class FileTypeControlRuleAPI(APIClient):
             rule_id (str): The unique identifier for the file type control rules filter rule.
 
         Returns:
-            tuple: A tuple containing (file type control rules rule instance, Response, error).
 
         Example:
             Retrieve a file type control rules rule by its ID:
@@ -122,27 +109,18 @@ class FileTypeControlRuleAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, FileTypeControlRules)
+        response = self._request_executor.execute(request, FileTypeControlRules)
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FileTypeControlRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = FileTypeControlRules(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> FileTypeControlRules:
         """
         Adds a new file type control rules rule.
 
@@ -183,7 +161,6 @@ class FileTypeControlRuleAPI(APIClient):
             zpa_app_segments (list[dict]): ZPA Application Segments applicable to the rule.
 
         Returns:
-            tuple: Updated firewall dns filtering rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -214,27 +191,18 @@ class FileTypeControlRuleAPI(APIClient):
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, FileTypeControlRules)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, FileTypeControlRules)
+        result = FileTypeControlRules(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = FileTypeControlRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> FileTypeControlRules:
         """
         Updates an existing file type control rules rule.
 
@@ -277,7 +245,6 @@ class FileTypeControlRuleAPI(APIClient):
             zpa_app_segments (list[dict]): ZPA Application Segments applicable to the rule.
 
         Returns:
-            tuple: Updated firewall dns filtering rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -308,27 +275,18 @@ class FileTypeControlRuleAPI(APIClient):
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, FileTypeControlRules)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, FileTypeControlRules)
+        result = FileTypeControlRules(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = FileTypeControlRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified file type control rules filter rule.
 
@@ -352,12 +310,6 @@ class FileTypeControlRuleAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

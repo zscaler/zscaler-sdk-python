@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.ftp_control_policy import FTPControlPolicy
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class FTPControlPolicyAPI(APIClient):
@@ -33,12 +32,11 @@ class FTPControlPolicyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_ftp_settings(self) -> APIResult[dict]:
+    def get_ftp_settings(self) -> Any:
         """
         Retrieves the FTP Control status and the list of URL categories for which FTP is allowed.
 
         Returns:
-            tuple: A tuple containing:
                 - FTPControlPolicy: The current ftp control settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -46,7 +44,8 @@ class FTPControlPolicyAPI(APIClient):
         Examples:
             Retrieve and print the current mobile settings:
 
-            >>> settings, _, err = client.zia.ftp_control_policy.get_ftp_settings()
+            >>> try:
+            ...     settings = client.zia.ftp_control_policy.get_ftp_settings()
             >>> if err:
             ...     print(f"Error fetching ftp control settings: {err}")
             ...     return
@@ -61,23 +60,17 @@ class FTPControlPolicyAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = FTPControlPolicy(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_ftp_settings(self, **kwargs) -> APIResult[dict]:
+    def update_ftp_settings(self, **kwargs) -> FTPControlPolicy:
         """
         Updates the FTP Control settings.
 
@@ -101,7 +94,8 @@ class FTPControlPolicyAPI(APIClient):
         Examples:
             Update mobile setting options:
 
-            >>> ftp_settings, _, err = client.zia.ftp_control_policy.update_ftp_settings(
+            >>> try:
+            ...     ftp_settings = client.zia.ftp_control_policy.update_ftp_settings(
             ...     ftp_over_http_enabled = True,
             ...     ftp_enabled = True,
             ...     url_categories = ["ADULT_THEMES", "ADULT_SEX_EDUCATION"],
@@ -124,20 +118,14 @@ class FTPControlPolicyAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, FTPControlPolicy)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, FTPControlPolicy)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = FTPControlPolicy(self.form_response_body(response.get_body()))
             else:
                 result = FTPControlPolicy()
         except Exception as error:
-            return (None, response, error)
+            return FTPControlPolicy
 
-        return (result, response, None)
+        return result

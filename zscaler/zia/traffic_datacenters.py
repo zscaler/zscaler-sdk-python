@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_datacenters import TrafficDatacenters
 from zscaler.zia.models.traffic_dc_exclusions import TrafficDcExclusions
 from zscaler.utils import format_url, validate_and_convert_times
-from zscaler.types import APIResult
 
 
 class TrafficDatacentersAPI(APIClient):
@@ -37,7 +36,7 @@ class TrafficDatacentersAPI(APIClient):
     def list_dc_exclusions(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[TrafficDcExclusions]]:
+    ) -> List[TrafficDcExclusions]:
         """
         Retrieves the list of Zscaler data centers (DCs) that are
         currently excluded from service to your organization based
@@ -48,7 +47,6 @@ class TrafficDatacentersAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of DC Exclusions instances, Response, error)
 
         Examples:
             List DC Exclusions:
@@ -74,28 +72,18 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(TrafficDcExclusions(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(TrafficDcExclusions(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def add_dc_exclusion(self, **kwargs) -> APIResult[dict]:
+    def add_dc_exclusion(self, **kwargs) -> Any:
         """
         Adds a data center (DC) exclusion to disable the tunnels terminating at a virtual IP address of a Zscaler DC
         triggering a failover from primary to secondary tunnels in the event of service disruptions
@@ -116,7 +104,6 @@ class TrafficDatacentersAPI(APIClient):
             end_time (int): The time interval end time.
 
         Returns:
-            tuple: A tuple containing the newly added DC Exclusion, response, and error.
 
         Examples:
             Add a multiple DC Exclusion
@@ -166,14 +153,12 @@ class TrafficDatacentersAPI(APIClient):
             dcid = kwargs.get("dcid")
             if not dcid:
                 dc_list, _, error = self.list_datacenters()
-                if error:
-                    return (None, None, error)
                 if not dc_list:
-                    return (None, None, ValueError("No data centers found to use as default."))
+                    raise ValueError("No data centers found to use as default.")
                 dcid = dc_list[0].id
 
         except Exception as e:
-            return (None, None, e)
+            raise e
 
         body = [
             {
@@ -183,27 +168,17 @@ class TrafficDatacentersAPI(APIClient):
             }
         ]
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [TrafficDcExclusions(self.form_response_body(item)) for item in response.get_body()]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [TrafficDcExclusions(self.form_response_body(item)) for item in response.get_body()]
+        return result
 
     # Submit JIRA Case - Method is returning 405.
-    def update_dc_exclusion(self, dcid: int, **kwargs) -> APIResult[dict]:
+    def update_dc_exclusion(self, dcid: int, **kwargs) -> TrafficDcExclusions:
         """
         Updates a Zscaler data center DC Exclusion configuration based on the specified ID.
 
@@ -211,7 +186,6 @@ class TrafficDatacentersAPI(APIClient):
             dc_id (int): The unique ID for the DC Exclusion.
 
         Returns:
-            tuple: A tuple containing the updated DC Exclusion, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -235,14 +209,12 @@ class TrafficDatacentersAPI(APIClient):
             dcid = kwargs.get("dcid")
             if not dcid:
                 dc_list, _, error = self.list_datacenters()
-                if error:
-                    return (None, None, error)
                 if not dc_list:
-                    return (None, None, ValueError("No data centers found to use as default."))
+                    raise ValueError("No data centers found to use as default.")
                 dcid = dc_list[0].id
 
         except Exception as e:
-            return (None, None, e)
+            raise e
 
         body = [
             {
@@ -252,21 +224,12 @@ class TrafficDatacentersAPI(APIClient):
             }
         ]
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, TrafficDcExclusions)
+        result = TrafficDcExclusions(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficDcExclusions)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficDcExclusions(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_dc_exclusion(self, dc_id: int) -> APIResult[dict]:
+    def delete_dc_exclusion(self, dc_id: int) -> None:
         """
         Deletes a Zscaler data center DC exclusion configuration based on the specified ID
         The DC exclusion configuration ID can be obtained by sending a GET via the method `list_dc_exclusions`.
@@ -275,7 +238,6 @@ class TrafficDatacentersAPI(APIClient):
             dc_id (str): The unique identifier of the DC exclusion.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete DC Exclusion:
@@ -296,16 +258,11 @@ class TrafficDatacentersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def list_datacenters(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficDatacenters]]:
+    def list_datacenters(self, query_params: Optional[dict] = None) -> List[TrafficDatacenters]:
         """
         Retrieves the list of Zscaler data centers (DCs) that can be excluded from service to your organization
 
@@ -315,7 +272,6 @@ class TrafficDatacentersAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
-            tuple: A tuple containing (risk profile lite instance, Response, error).
 
         Examples:
             List datacenters:
@@ -341,20 +297,11 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficDatacenters(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficDatacenters(self.form_response_body(item)))
+        return result

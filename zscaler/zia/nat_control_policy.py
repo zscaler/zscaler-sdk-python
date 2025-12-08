@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.nat_control_policy import NatControlPolicy
-from zscaler.types import APIResult
 
 
 class NatControlPolicyAPI(APIClient):
@@ -33,7 +32,7 @@ class NatControlPolicyAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[NatControlPolicy]]:
+    ) -> List[NatControlPolicy]:
         """
         List nat control rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -43,7 +42,6 @@ class NatControlPolicyAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of nat control rules instances, Response, error).
 
         Example:
             List all nat control rules:
@@ -83,31 +81,21 @@ class NatControlPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(NatControlPolicy(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(NatControlPolicy(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> NatControlPolicy:
         """
         Returns information for the specified nat control rule.
 
@@ -115,7 +103,6 @@ class NatControlPolicyAPI(APIClient):
             rule_id (str): The unique identifier for the nat control rule.
 
         Returns:
-            tuple: A tuple containing (nat control rule instance, Response, error).
 
         Example:
             Retrieve a nat control rules rule by its ID:
@@ -137,27 +124,18 @@ class NatControlPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, NatControlPolicy)
+        response = self._request_executor.execute(request, NatControlPolicy)
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NatControlPolicy(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = NatControlPolicy(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> NatControlPolicy:
         """
         Adds a new nat control rules rule.
 
@@ -227,26 +205,17 @@ class NatControlPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NatControlPolicy)
+        result = NatControlPolicy(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, NatControlPolicy)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NatControlPolicy(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> NatControlPolicy:
         """
         Updates an existing nat control rule.
 
@@ -282,7 +251,6 @@ class NatControlPolicyAPI(APIClient):
             nw_service_groups (list): The IDs for the network service groups that this rule applies to.
 
         Returns:
-            tuple: Updated nat control rule resource record.
 
         Example:
             Update an existing nat control rule:
@@ -319,26 +287,17 @@ class NatControlPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NatControlPolicy)
+        result = NatControlPolicy(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, NatControlPolicy)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NatControlPolicy(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified nat control rule.
 
@@ -362,12 +321,6 @@ class NatControlPolicyAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

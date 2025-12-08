@@ -37,8 +37,7 @@ class TestZPACBIProfile:
 
         # List all CBI ZPA profiles
         try:
-            profiles_response, _, err = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
-            assert err is None, f"Error listing ZPA CBI Profiles: {err}"
+            profiles_response = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
             assert isinstance(profiles_response, list), "Expected a list of ZPA CBI Profiles"
 
             if profiles_response:  # If there are any ZPA CBI Profiles, proceed with further operations

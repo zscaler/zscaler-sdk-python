@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.private_cloud_group import PrivateCloudGroup
 from zscaler.zpa.models.common import CommonIDName
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class PrivateCloudGroupAPI(APIClient):
@@ -34,7 +33,7 @@ class PrivateCloudGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_groups(self, query_params: Optional[dict] = None) -> APIResult[List[PrivateCloudGroup]]:
+    def list_cloud_groups(self, query_params: Optional[dict] = None) -> List[PrivateCloudGroup]:
         """
         Enumerates Private Cloud Groups in your organization with pagination.
         A subset of Private Cloud Groups can be returned that match a supported
@@ -52,14 +51,14 @@ class PrivateCloudGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[PrivateCloudGroup]
 
         Examples:
-            >>> group_list, _, err = client.zpa.private_cloud_group.list_cloud_groups(
+            >>> try:
+            ...     group_list = client.zpa.private_cloud_group.list_cloud_groups(
             ... query_params={'search': 'ConnectorGRP01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing app Private Cloud Group: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total app Private Cloud Groups found: {len(group_list)}")
             ... for group in groups:
             ...     print(group.as_dict())
@@ -77,23 +76,14 @@ class PrivateCloudGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivateCloudGroup)
+        result = []
+        for item in response.get_results():
+            result.append(PrivateCloudGroup(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivateCloudGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PrivateCloudGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_cloud_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_cloud_group(self, group_id: str, query_params: Optional[dict] = None) -> PrivateCloudGroup:
         """
         Fetches a specific Private Cloud Group by ID.
 
@@ -103,13 +93,13 @@ class PrivateCloudGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (AppConnectorGroup instance, Response, error).
+            :obj:`Tuple`: A tuple containing SegmentGroup.
 
         Examples:
-            >>> fetched_group, _, err = client.zpa.private_cloud_group.get_cloud_group('999999')
-            ... if err:
-            ...     print(f"Error fetching group by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_group = client.zpa.private_cloud_group.get_cloud_group('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
@@ -125,21 +115,12 @@ class PrivateCloudGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivateCloudGroup)
+        result = PrivateCloudGroup(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivateCloudGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PrivateCloudGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_cloud_group(self, **kwargs) -> APIResult[dict]:
+    def add_cloud_group(self, **kwargs) -> PrivateCloudGroup:
         """
         Adds a new ZPA App Private Cloud Group.
 
@@ -176,10 +157,11 @@ class PrivateCloudGroupAPI(APIClient):
                 The unique identifier of the site associated with this Private Cloud Group.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (PrivateCloudGroup, Response, error)
+            :obj:`Tuple`: A tuple containing SegmentGroup
 
         Examples:
-            >>> added_group, _, err = client.zpa.private_cloud_group.add_cloud_group(
+            >>> try:
+            ...     added_group = client.zpa.private_cloud_group.add_cloud_group(
             ...     name=f"NewPrivateCloudGroup_{random.randint(1000, 10000)}",
             ...     description=f"NewPrivateCloudGroup_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -201,9 +183,8 @@ class PrivateCloudGroupAPI(APIClient):
             ...         }
             ...     ]
             ... )
-            ... if err:
-            ...     print(f"Error adding private cloud group: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"private cloud group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
@@ -219,21 +200,12 @@ class PrivateCloudGroupAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, PrivateCloudGroup)
+        result = PrivateCloudGroup(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivateCloudGroup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PrivateCloudGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_cloud_group(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def update_cloud_group(self, group_id: str, **kwargs) -> PrivateCloudGroup:
         """
         Updates an existing ZPA App Private Cloud Group.
 
@@ -271,10 +243,10 @@ class PrivateCloudGroupAPI(APIClient):
                 The unique identifier of the site associated with this Private Cloud Group.
 
         Returns:
-            tuple: A tuple containing (PrivateCloudGroup, Response, error)
 
         Examples:
-            >>> update_group, _, err = client.zpa.private_cloud_group.update_cloud_group(
+            >>> try:
+            ...     update_group = client.zpa.private_cloud_group.update_cloud_group(
             ...     group_id="999999",
             ...     name=f"UpdatePrivateCloudGroup_{random.randint(1000, 10000)}",
             ...     description=f"UpdatePrivateCloudGroup_{random.randint(1000, 10000)}",
@@ -297,9 +269,8 @@ class PrivateCloudGroupAPI(APIClient):
             ...         }
             ...     ]
             ... )
-            ... if err:
-            ...     print(f"Error updating private cloud group: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"private cloud group updated successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
@@ -317,24 +288,15 @@ class PrivateCloudGroupAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PrivateCloudGroup)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, PrivateCloudGroup)
         if response is None:
-            return (PrivateCloudGroup({"id": group_id}), None, None)
+            return PrivateCloudGroup({"id": group_id})
 
-        try:
-            result = PrivateCloudGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = PrivateCloudGroup(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_cloud_group(self, group_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_cloud_group(self, group_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified App Private Cloud Group from ZPA.
 
@@ -343,15 +305,14 @@ class PrivateCloudGroupAPI(APIClient):
             microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
 
         Examples:
-            >>> _, _, err = client.zpa.private_cloud_group.delete_cloud_group(
+            >>> try:
+            ...     _ = client.zpa.private_cloud_group.delete_cloud_group(
             ...     group_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting app Private Cloud Group: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"app Private Cloud Group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -364,17 +325,11 @@ class PrivateCloudGroupAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def list_private_cloud_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
+    def list_private_cloud_group_summary(self, query_params: Optional[dict] = None) -> List[CommonIDName]:
         """
         Returns the name and ID of the configured Private Cloud Group.
 
@@ -394,9 +349,8 @@ class PrivateCloudGroupAPI(APIClient):
 
         Examples:
             >>> group_list, err = client.zpa.private_cloud_group.get_private_cloud_group_summary()
-            ... if err:
-            ...     print(f"Error listing groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -414,18 +368,9 @@ class PrivateCloudGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result

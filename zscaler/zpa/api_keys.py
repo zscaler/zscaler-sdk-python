@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.api_keys import ApiKeys
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ApiKeysAPI(APIClient):
@@ -33,7 +32,7 @@ class ApiKeysAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[List[ApiKeys]]:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> List[ApiKeys]:
         """
         List all API keys details.
 
@@ -49,14 +48,14 @@ class ApiKeysAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of ApiKeys instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[ApiKeys]
 
         Examples:
-            >>> key_list, _, err = client.zpa.api_keys.list_api_keys(
+            >>> try:
+            ...     key_list = client.zpa.api_keys.list_api_keys(
             ... query_params={'search': 'ZPA_Dev01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing api key: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total api key found: {len(key_list)}")
             ... for key in keys:
             ...     print(key.as_dict())
@@ -74,23 +73,14 @@ class ApiKeysAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApiKeys)
+        result = []
+        for item in response.get_results():
+            result.append(ApiKeys(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ApiKeys)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApiKeys(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_api_key(self, key_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_api_key(self, key_id: str, query_params: Optional[dict] = None) -> ApiKeys:
         """
         Fetches a specific api key by ID.
 
@@ -100,13 +90,13 @@ class ApiKeysAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (ApiKeys instance, Response, error).
+            :obj:`Tuple`: A tuple containing ApiKeys.
 
         Examples:
-            >>> fetched_key, _, err = client.zpa.api_keys.get_api_key('999999')
-            ... if err:
-            ...     print(f"Error fetching key by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_key = client.zpa.api_keys.get_api_key('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched key by ID: {fetched_key.as_dict()}")
         """
         http_method = "get".upper()
@@ -122,21 +112,12 @@ class ApiKeysAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApiKeys)
+        result = ApiKeys(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ApiKeys)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApiKeys(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_api_key(self, **kwargs) -> APIResult[dict]:
+    def add_api_key(self, **kwargs) -> ApiKeys:
         """
         Adds a new ZPA API Key.
 
@@ -157,15 +138,15 @@ class ApiKeysAPI(APIClient):
                 - This returns the client_secret attribute
 
         Examples:
-            >>> added_key, _, err = client.zpa.api_keys.add_api_key(
+            >>> try:
+            ...     added_key = client.zpa.api_keys.add_api_key(
             ...     name=f"NewAPIKey_{random.randint(1000, 10000)}",
             ...     enabled=True,
             ...     token_expiry_time_in_sec= '3600',
             ...     role_id='28',
             ... )
-            ... if err:
-            ...     print(f"Error creating api key: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"API key created successfully: {added_key.as_dict()}")
             ... key_dict = added_key.as_dict()
             ... client_secret = key_dict.get('client_secret')
@@ -184,21 +165,12 @@ class ApiKeysAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, ApiKeys)
+        result = ApiKeys(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ApiKeys)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApiKeys(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_api_key(self, key_id: str, **kwargs) -> APIResult[dict]:
+    def update_api_key(self, key_id: str, **kwargs) -> ApiKeys:
         """
         Update a new ZPA API Key.
 
@@ -225,15 +197,15 @@ class ApiKeysAPI(APIClient):
                 The dictionary is always empty since the API returns no response body.
 
         Examples:
-            >>> added_key, _, err = client.zpa.api_keys.add_api_key(
+            >>> try:
+            ...     added_key = client.zpa.api_keys.add_api_key(
             ...     name=f"NewAPIKey_{random.randint(1000, 10000)}",
             ...     enabled=True,
             ...     token_expiry_time_in_sec= '3600',
             ...     role_id='28',
             ... )
-            ... if err:
-            ...     print(f"Error creating api key: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"API key created successfully: {added_key.as_dict()}")
         """
         http_method = "put".upper()
@@ -251,24 +223,15 @@ class ApiKeysAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ApiKeys)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, ApiKeys)
         if response is None:
-            return (ApiKeys({"id": key_id}), None, None)
+            return ApiKeys({"id": key_id})
 
-        try:
-            result = ApiKeys(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = ApiKeys(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_api_key(self, key_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_api_key(self, key_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified API Key from ZPA.
 
@@ -277,15 +240,14 @@ class ApiKeysAPI(APIClient):
             microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
         Returns:
-            tuple: A tuple containing the response and error (if any).
 
         Examples:
-            >>> _, _, err = client.zpa.api_keys.delete_key_id(
+            >>> try:
+            ...     _ = client.zpa.api_keys.delete_key_id(
             ...     key_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting api key: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"API Key with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -298,12 +260,6 @@ class ApiKeysAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

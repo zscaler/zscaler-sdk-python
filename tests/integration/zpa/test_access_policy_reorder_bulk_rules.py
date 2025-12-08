@@ -41,10 +41,9 @@ class TestAccessPolicyBulkReorderRule:
                 for i in range(5):
                     rule_name = f"tests-{generate_random_string()}"
                     rule_description = f"tests-{generate_random_string()}"
-                    created_rule, _, err = client.zpa.policies.add_access_rule(
+                    created_rule = client.zpa.policies.add_access_rule(
                         name=rule_name, description=rule_description, action="allow"
                     )
-                    assert err is None, f"Error creating access rule: {err}"
                     assert created_rule is not None, "Created rule is None"
                     created_rules.append(created_rule.as_dict())  # Store as dictionaries for consistency
                     print(f"Created Rule: {created_rule.as_dict()}")
@@ -54,8 +53,7 @@ class TestAccessPolicyBulkReorderRule:
             # Step 2: List all access rules
             all_rule_ids = []
             try:
-                all_rules, _, err = client.zpa.policies.list_rules(policy_type="access")
-                assert err is None, f"Error listing access rules: {err}"
+                all_rules = client.zpa.policies.list_rules(policy_type="access")
                 assert all_rules is not None, "No rules returned from list_rules"
                 all_rules = [rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in all_rules]
                 all_rule_ids = [rule["id"] for rule in all_rules]
@@ -80,16 +78,14 @@ class TestAccessPolicyBulkReorderRule:
 
             # Step 4: Bulk reorder the rules
             try:
-                _, _, err = client.zpa.policies.bulk_reorder_rules(policy_type="access", rules_orders=new_rule_order)
-                assert err is None, f"Error reordering access rules: {err}"
+                _ = client.zpa.policies.bulk_reorder_rules(policy_type="access", rules_orders=new_rule_order)
                 print(f"Rules reordered successfully: {reversed_rule_ids}")
             except Exception as exc:
                 errors.append(f"Bulk reordering rules failed: {exc}")
 
             # Step 5: Verify the order by listing the rules again
             try:
-                reordered_rules, _, err = client.zpa.policies.list_rules(policy_type="access")
-                assert err is None, f"Error listing reordered rules: {err}"
+                reordered_rules = client.zpa.policies.list_rules(policy_type="access")
                 reordered_rules = [rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in reordered_rules]
                 reordered_rule_ids = [rule["id"] for rule in reordered_rules]
 
@@ -103,8 +99,7 @@ class TestAccessPolicyBulkReorderRule:
             # Clean up: Delete the created rules
             for rule in created_rules:
                 try:
-                    _, _, err = client.zpa.policies.delete_rule(policy_type="access", rule_id=rule["id"])
-                    assert err is None, f"Error deleting rule {rule['id']}: {err}"
+                    _ = client.zpa.policies.delete_rule(policy_type="access", rule_id=rule["id"])
                     print(f"Rule deleted successfully with ID: {rule['id']}")
                 except Exception as exc:
                     errors.append(f"Cleanup failed for rule ID {rule['id']}: {exc}")

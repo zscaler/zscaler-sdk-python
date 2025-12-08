@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_dns_rules import FirewallDNSRules
-from zscaler.types import APIResult
 
 
 class FirewallDNSRulesAPI(APIClient):
@@ -33,7 +32,7 @@ class FirewallDNSRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[FirewallDNSRules]]:
+    ) -> List[FirewallDNSRules]:
         """
         List firewall dns rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -43,7 +42,6 @@ class FirewallDNSRulesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of cloud firewall dns rules instances, Response, error).
 
         Example:
             List all cloud firewall dns rules:
@@ -83,31 +81,21 @@ class FirewallDNSRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(FirewallDNSRules(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(FirewallDNSRules(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[FirewallDNSRules]:
+    ) -> FirewallDNSRules:
         """
         Returns information for the specified cloud firewall dns filter rule.
 
@@ -115,7 +103,6 @@ class FirewallDNSRulesAPI(APIClient):
             rule_id (str): The unique identifier for the cloud firewall dns filter rule.
 
         Returns:
-            tuple: A tuple containing (cloud firewall dns rule instance, Response, error).
 
         Example:
             Retrieve a cloud firewall dns rule by its ID:
@@ -138,26 +125,17 @@ class FirewallDNSRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, FirewallDNSRules)
 
-        response, error = self._request_executor.execute(request, FirewallDNSRules)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FirewallDNSRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = FirewallDNSRules(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[FirewallDNSRules]:
+    ) -> FirewallDNSRules:
         """
         Adds a new cloud firewall dns rule.
 
@@ -202,7 +180,6 @@ class FirewallDNSRulesAPI(APIClient):
             dns_gateway (str): DNS gateway for redirecting traffic when the action is set to redirect DNS requests.
             zpa_ip_group (str): ZPA IP pool specified when resolving domain names of ZPA applications.
         Returns:
-            tuple: Updated firewall dns filtering rule resource record.
 
         Example:
             Add a new rule to change its name and action:
@@ -240,26 +217,17 @@ class FirewallDNSRulesAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, FirewallDNSRules)
+        result = FirewallDNSRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, FirewallDNSRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FirewallDNSRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[FirewallDNSRules]:
+    def update_rule(self, rule_id: int, **kwargs) -> FirewallDNSRules:
         """
         Updates an existing cloud firewall dns rule.
 
@@ -307,7 +275,6 @@ class FirewallDNSRulesAPI(APIClient):
             zpa_ip_group (str): ZPA IP pool specified when resolving domain names of ZPA applications.
 
         Returns:
-            tuple: Updated firewall dns filtering rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -347,27 +314,18 @@ class FirewallDNSRulesAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, FirewallDNSRules)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, FirewallDNSRules)
+        result = FirewallDNSRules(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = FirewallDNSRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[None]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified cloud firewall dns filter rule.
 
@@ -391,12 +349,6 @@ class FirewallDNSRulesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/isolation/profiles
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/isolation/profiles
   response:
     body:
       string: '{"totalPages":"1","currentCount":"6","totalCount":"6","list":[{"id":"216196257331370022","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD   SA   Profile","description":"BD   SA   Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"dff035b0-ee81-42dd-ae35-1f988d202745","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/dff035b0-ee81-42dd-ae35-1f988d202745/zpa/render"},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
@@ -31,7 +31,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:12 GMT
+      - Fri, 05 Dec 2025 23:23:08 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -49,23 +49,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '38'
+      - '35'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5ffe2d55-af43-9303-bb7d-561956ca0326
+      - 8bf82b55-4e47-9d7b-9a01-3ecf5f1cf937
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4959'
+      - '4965'
       x-ratelimit-reset:
-      - '48'
+      - '52'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -85,9 +85,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/zpaprofiles
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/zpaprofiles
   response:
     body:
       string: '[{"id":"216196257331286656","modifiedTime":"1696830629","creationTime":"1632023548","modifiedBy":"216196257331281921","name":"BD_SA_Profile1","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"0068dde3-ba14-453c-a481-201c5a3004d1","description":"BD_SA_Profile1","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0068dde3-ba14-453c-a481-201c5a3004d1/zpa/render","enabled":true},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
@@ -105,7 +105,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:12 GMT
+      - Fri, 05 Dec 2025 23:23:08 GMT
       expires:
       - '0'
       pragma:
@@ -123,25 +123,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '31'
+      - '77'
       x-frame-options:
       - DENY
       x-http2-stream-id:
-      - '5'
+      - '7'
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c9db4d58-316f-91f8-86d3-f3389f5396e4
+      - 53006c89-8f30-90a4-9194-fc5b6de87b30
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4958'
+      - '4964'
       x-ratelimit-reset:
-      - '48'
+      - '52'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

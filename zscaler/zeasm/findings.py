@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zeasm.models.findings import CommonFindings, Findings, FindingDetails
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class FindingsAPI(APIClient):
@@ -37,7 +36,7 @@ class FindingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_findings(self, org_id: str) -> APIResult[Findings]:
+    def list_findings(self, org_id: str) -> Findings:
         """
         Retrieves the list of findings identified and tracked for an organization's
         internet-facing assets scanned by EASM.
@@ -46,7 +45,6 @@ class FindingsAPI(APIClient):
             org_id (str): The unique identifier for the organization.
 
         Returns:
-            tuple: A tuple containing:
                 - Findings: Object containing results list and total_results count
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -54,7 +52,8 @@ class FindingsAPI(APIClient):
         Examples:
             List all findings for an organization::
 
-                >>> findings, _, err = client.zeasm.findings.list_findings(
+                >>> try:
+            ...     findings = client.zeasm.findings.list_findings(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c"
                 ... )
                 >>> if err:
@@ -75,23 +74,14 @@ class FindingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = Findings(response.get_body())
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Findings(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_finding_details(self, org_id: str, finding_id: str) -> APIResult[FindingDetails]:
+    def get_finding_details(self, org_id: str, finding_id: str) -> FindingDetails:
         """
         Retrieves details for a finding based on the specified ID.
 
@@ -100,7 +90,6 @@ class FindingsAPI(APIClient):
             finding_id (str): The unique identifier for the finding.
 
         Returns:
-            tuple: A tuple containing:
                 - FindingDetails: Object containing the finding details
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -108,7 +97,8 @@ class FindingsAPI(APIClient):
         Examples:
             Get details for a specific finding::
 
-                >>> finding, _, err = client.zeasm.findings.get_finding_details(
+                >>> try:
+            ...     finding = client.zeasm.findings.get_finding_details(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c",
                 ...     finding_id="8abfc6a2b3058cb75de44c4c65ca4641"
                 ... )
@@ -128,22 +118,13 @@ class FindingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, FindingDetails)
+        result = FindingDetails(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request, FindingDetails)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FindingDetails(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_finding_evidence(self, org_id: str, finding_id: str) -> APIResult[CommonFindings]:
+    def get_finding_evidence(self, org_id: str, finding_id: str) -> CommonFindings:
         """
         Retrieves scan evidence details for a finding based on the specified ID.
 
@@ -155,7 +136,6 @@ class FindingsAPI(APIClient):
             finding_id (str): The unique identifier for the finding.
 
         Returns:
-            tuple: A tuple containing:
                 - CommonFindings: Object containing the evidence content and source_type
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -163,7 +143,8 @@ class FindingsAPI(APIClient):
         Examples:
             Get evidence for a specific finding::
 
-                >>> evidence, _, err = client.zeasm.findings.get_finding_evidence(
+                >>> try:
+            ...     evidence = client.zeasm.findings.get_finding_evidence(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c",
                 ...     finding_id="8abfc6a2b3058cb75de44c4c65ca4641"
                 ... )
@@ -184,22 +165,13 @@ class FindingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CommonFindings)
+        result = CommonFindings(response.get_body())
+        return result
 
-        response, error = self._request_executor.execute(request, CommonFindings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CommonFindings(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_finding_scan_output(self, org_id: str, finding_id: str) -> APIResult[CommonFindings]:
+    def get_finding_scan_output(self, org_id: str, finding_id: str) -> CommonFindings:
         """
         Retrieves the complete scan output for a finding based on the specified ID.
 
@@ -208,7 +180,6 @@ class FindingsAPI(APIClient):
             finding_id (str): The unique identifier for the finding.
 
         Returns:
-            tuple: A tuple containing:
                 - CommonFindings: Object containing the scan output content and source_type
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -216,7 +187,8 @@ class FindingsAPI(APIClient):
         Examples:
             Get complete scan output for a specific finding::
 
-                >>> scan_output, _, err = client.zeasm.findings.get_finding_scan_output(
+                >>> try:
+            ...     scan_output = client.zeasm.findings.get_finding_scan_output(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c",
                 ...     finding_id="8abfc6a2b3058cb75de44c4c65ca4641"
                 ... )
@@ -237,17 +209,8 @@ class FindingsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonFindings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CommonFindings(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, CommonFindings)
+        result = CommonFindings(response.get_body())
+        return result

@@ -16,9 +16,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/dlpDictionaries
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpDictionaries
   response:
     body:
       string: '{"id":3,"name":"tests-vcr0001","description":"tests-vcr0002","phrases":[{"action":"PHRASE_COUNT_TYPE_ALL","phrase":"YourPhrase"}],"customPhraseMatchType":"MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY","patterns":[{"action":"PATTERN_COUNT_TYPE_UNIQUE","pattern":"YourPattern"}],"nameL10nTag":false,"dictionaryType":"PATTERNS_AND_PHRASES","exactDataMatchDetails":[],"idmProfileMatchAccuracyDetails":[],"proximity":0,"parentDictionaryId":0,"predefinedPhrases":[],"ignoreExactMatchIdmDict":false,"includeBinNumbers":true,"dictTemplateId":0,"predefinedClone":false,"thresholdAllowed":false,"proximityEnabledForCustomDictionary":false,"includeSsnNumbers":true,"unicodePhraseMatchingEnabled":false,"custom":true,"dictionaryCloningEnabled":false,"viewOnly":false,"proximityLengthEnabled":true,"customPhraseSupported":false,"hierarchicalDictionary":false,"lowConfidenceDisabled":false,"parentDictionary":true}'
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:37 GMT
+      - Sat, 06 Dec 2025 00:14:56 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1854'
+      - '3108'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b0d025c2-0b5b-9337-a4d9-a5fa6f2e8c03
+      - 244f4841-e923-9989-af5b-fd079d003de3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4979'
+      - '4978'
       x-ratelimit-reset:
-      - '25'
+      - '7'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -96,9 +96,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/dlpDictionaries/3
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpDictionaries/3
   response:
     body:
       string: '{"id":3,"name":"updated-vcr0003","description":"updated-vcr0003","phrases":[{"action":"PHRASE_COUNT_TYPE_ALL","phrase":"YourUpdatedPhrase"}],"customPhraseMatchType":"MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY","patterns":[{"action":"PATTERN_COUNT_TYPE_UNIQUE","pattern":"YourUpdatedPattern"}],"nameL10nTag":false,"dictionaryType":"PATTERNS_AND_PHRASES","exactDataMatchDetails":[],"idmProfileMatchAccuracyDetails":[],"proximity":0,"parentDictionaryId":0,"predefinedPhrases":[],"ignoreExactMatchIdmDict":false,"includeBinNumbers":true,"dictTemplateId":0,"predefinedClone":false,"thresholdAllowed":false,"proximityEnabledForCustomDictionary":false,"includeSsnNumbers":true,"unicodePhraseMatchingEnabled":false,"custom":true,"dictionaryCloningEnabled":false,"viewOnly":false,"proximityLengthEnabled":true,"customPhraseSupported":false,"hierarchicalDictionary":false,"lowConfidenceDisabled":false,"parentDictionary":true}'
@@ -123,7 +123,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:39 GMT
+      - Sat, 06 Dec 2025 00:14:58 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -135,23 +135,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2161'
+      - '2195'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9200efa7-4df2-9bed-bfcd-9cfed2750c34
+      - e3d43949-3856-9a6a-8176-c04ef837b198
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4978'
+      - '4977'
       x-ratelimit-reset:
-      - '23'
+      - '4'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -173,9 +173,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpDictionaries
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpDictionaries
   response:
     body:
       string: "[{\"id\":1,\"name\":\"DictionaryTest01\",\"description\":\"test_test_1761180039256_test_1761191407330_test_1761418092202-test-1761429749486-test-1761429910048\",\"phrases\":[],\"patterns\":[],\"nameL10nTag\":false,\"dictionaryType\":\"EXACT_DATA_MATCH\",\"exactDataMatchDetails\":[{\"dictionaryEdmMappingId\":2749911,\"schemaId\":4,\"primaryFields\":[1],\"secondaryFields\":[],\"secondaryFieldMatchOn\":\"MATCHON_NONE\"}],\"idmProfileMatchAccuracyDetails\":[],\"proximity\":0,\"parentDictionaryId\":0,\"predefinedPhrases\":[],\"ignoreExactMatchIdmDict\":false,\"includeBinNumbers\":true,\"dictTemplateId\":0,\"predefinedClone\":false,\"thresholdAllowed\":true,\"proximityEnabledForCustomDictionary\":false,\"includeSsnNumbers\":true,\"unicodePhraseMatchingEnabled\":false,\"custom\":true,\"dictionaryCloningEnabled\":false,\"viewOnly\":false,\"proximityLengthEnabled\":false,\"customPhraseSupported\":false,\"hierarchicalDictionary\":false,\"lowConfidenceDisabled\":false,\"parentDictionary\":true},{\"id\":2,\"name\":\"Example_Dictionary\",\"description\":\"Example_Dictionary_Update\",\"phrases\":[{\"action\":\"PHRASE_COUNT_TYPE_UNIQUE\",\"phrase\":\"YourPhrase\"}],\"customPhraseMatchType\":\"MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY\",\"patterns\":[{\"action\":\"PATTERN_COUNT_TYPE_ALL\",\"pattern\":\"YourPattern\"}],\"nameL10nTag\":false,\"dictionaryType\":\"PATTERNS_AND_PHRASES\",\"exactDataMatchDetails\":[],\"idmProfileMatchAccuracyDetails\":[],\"proximity\":0,\"parentDictionaryId\":0,\"predefinedPhrases\":[],\"ignoreExactMatchIdmDict\":false,\"includeBinNumbers\":true,\"dictTemplateId\":0,\"predefinedClone\":false,\"thresholdAllowed\":false,\"proximityEnabledForCustomDictionary\":false,\"includeSsnNumbers\":true,\"unicodePhraseMatchingEnabled\":false,\"custom\":true,\"dictionaryCloningEnabled\":false,\"viewOnly\":false,\"proximityLengthEnabled\":true,\"customPhraseSupported\":false,\"hierarchicalDictionary\":false,\"lowConfidenceDisabled\":false,\"parentDictionary\":true},{\"id\":3,\"name\":\"updated-vcr0003\",\"description\":\"updated-vcr0003\",\"phrases\":[{\"action\":\"PHRASE_COUNT_TYPE_ALL\",\"phrase\":\"YourUpdatedPhrase\"}],\"customPhraseMatchType\":\"MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY\",\"patterns\":[{\"action\":\"PATTERN_COUNT_TYPE_UNIQUE\",\"pattern\":\"YourUpdatedPattern\"}],\"nameL10nTag\":false,\"dictionaryType\":\"PATTERNS_AND_PHRASES\",\"exactDataMatchDetails\":[],\"idmProfileMatchAccuracyDetails\":[],\"proximity\":0,\"parentDictionaryId\":0,\"predefinedPhrases\":[],\"ignoreExactMatchIdmDict\":false,\"includeBinNumbers\":true,\"dictTemplateId\":0,\"predefinedClone\":false,\"thresholdAllowed\":false,\"proximityEnabledForCustomDictionary\":false,\"includeSsnNumbers\":true,\"unicodePhraseMatchingEnabled\":false,\"custom\":true,\"dictionaryCloningEnabled\":false,\"viewOnly\":false,\"proximityLengthEnabled\":true,\"customPhraseSupported\":false,\"hierarchicalDictionary\":false,\"lowConfidenceDisabled\":false,\"parentDictionary\":true},{\"id\":5,\"name\":\"Qazvn\",\"description\":\"test_test_1761180039256_test_1761191407330_test_1761418092202-test-1761429749486-test-1761429910048\",\"phrases\":[],\"patterns\":[],\"nameL10nTag\":false,\"dictionaryType\":\"EXACT_DATA_MATCH\",\"exactDataMatchDetails\":[{\"dictionaryEdmMappingId\":2961815,\"schemaId\":4,\"primaryFields\":[1],\"secondaryFields\":[],\"secondaryFieldMatchOn\":\"MATCHON_NONE\"}],\"idmProfileMatchAccuracyDetails\":[],\"proximity\":0,\"parentDictionaryId\":0,\"predefinedPhrases\":[],\"ignoreExactMatchIdmDict\":false,\"includeBinNumbers\":true,\"dictTemplateId\":0,\"predefinedClone\":false,\"thresholdAllowed\":true,\"proximityEnabledForCustomDictionary\":false,\"includeSsnNumbers\":true,\"unicodePhraseMatchingEnabled\":false,\"custom\":true,\"dictionaryCloningEnabled\":false,\"viewOnly\":false,\"proximityLengthEnabled\":false,\"customPhraseSupported\":false,\"hierarchicalDictionary\":false,\"lowConfidenceDisabled\":false,\"parentDictionary\":true},{\"id\":32,\"name\":\"TNID_LEAKAGE\",\"description\":\"TNID_LEAKAGE_DESC\",\"confidenceThreshold\":\"CONFIDENCE_LEVEL_MEDIUM\",\"phrases\":[],\"customPhraseMatchType\":\"MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY\",\"nameL10nTag\":true,\"dictionaryType\":\"PATTERNS_AND_PHRASES\",\"exactDataMatchDetails\":[],\"idmProfileMatchAccuracyDetails\":[],\"proximity\":0,\"parentDictionaryId\":0,\"predefinedPhrases\":[\"taiwanese
@@ -346,7 +346,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:40 GMT
+      - Sat, 06 Dec 2025 00:14:59 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -358,23 +358,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '698'
+      - '1175'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 35be2cce-5a26-9ce1-aa67-79e989ff0c1b
+      - 88b8c40e-f861-95d1-8b2e-ae4366686713
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4977'
+      - '4976'
       x-ratelimit-reset:
-      - '21'
+      - '2'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -396,9 +396,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpDictionaries/3
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpDictionaries/3
   response:
     body:
       string: '{"id":3,"name":"updated-vcr0003","description":"updated-vcr0003","phrases":[{"action":"PHRASE_COUNT_TYPE_ALL","phrase":"YourUpdatedPhrase"}],"customPhraseMatchType":"MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY","patterns":[{"action":"PATTERN_COUNT_TYPE_UNIQUE","pattern":"YourUpdatedPattern"}],"nameL10nTag":false,"dictionaryType":"PATTERNS_AND_PHRASES","exactDataMatchDetails":[],"idmProfileMatchAccuracyDetails":[],"proximity":0,"parentDictionaryId":0,"predefinedPhrases":[],"ignoreExactMatchIdmDict":false,"includeBinNumbers":true,"dictTemplateId":0,"predefinedClone":false,"thresholdAllowed":false,"proximityEnabledForCustomDictionary":false,"includeSsnNumbers":true,"unicodePhraseMatchingEnabled":false,"custom":true,"dictionaryCloningEnabled":false,"viewOnly":false,"proximityLengthEnabled":true,"customPhraseSupported":false,"hierarchicalDictionary":false,"lowConfidenceDisabled":false,"parentDictionary":true}'
@@ -423,7 +423,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:40 GMT
+      - Sat, 06 Dec 2025 00:15:00 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -435,23 +435,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '427'
+      - '377'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 04d06323-6ce1-919d-9887-d8e53b861d90
+      - e7dc9dee-50d1-9e95-86be-828b0b1948b3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4976'
+      - '4999'
       x-ratelimit-reset:
-      - '20'
+      - '60'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -473,9 +473,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/dlpDictionaries/3
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpDictionaries/3
   response:
     body:
       string: ''
@@ -496,7 +496,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:49:42 GMT
+      - Sat, 06 Dec 2025 00:15:02 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -506,23 +506,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1272'
+      - '1353'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fd0deb60-0171-9cc1-80cb-3b4dc0d349c8
+      - 4b0962d5-1d74-9410-b7a8-a7c72d3bf2c9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4975'
+      - '4998'
       x-ratelimit-reset:
-      - '19'
+      - '60'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

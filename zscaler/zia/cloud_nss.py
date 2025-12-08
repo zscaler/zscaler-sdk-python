@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_nss import NSSTestConnectivity
 from zscaler.zia.models.cloud_nss import NssFeeds
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CloudNSSAPI(APIClient):
@@ -34,7 +33,7 @@ class CloudNSSAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_feed(self, query_params: Optional[dict] = None) -> APIResult[List[NssFeeds]]:
+    def list_nss_feed(self, query_params: Optional[dict] = None) -> List[NssFeeds]:
         """
         Retrieves the cloud NSS feeds configured in the ZIA Admin Portal
 
@@ -43,12 +42,12 @@ class CloudNSSAPI(APIClient):
                 ``[query_params.feed_type]`` {str}: The cloud NSS feed type
 
         Returns:
-            tuple: A tuple containing (Retries the cloud nss feed instances, Response, error)
 
         Examples:
             List the cloud nss feed:
 
-            >>> feeds, _, err = client.zia.cloud_nss.list_nss_feed(query_params={"feed_type": "JSON"})
+            >>> try:
+            ...     feeds = client.zia.cloud_nss.list_nss_feed(query_params={"feed_type": "JSON"})
             >>> if err:
             ...     print(f"[Error] Listing Cloud NSS Feeds: {err}")
             ...     return
@@ -70,26 +69,17 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(NssFeeds(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(NssFeeds(self.form_response_body(item)))
+        return result
 
     def get_nss_feed(
         self,
         feed_id: int,
-    ) -> APIResult[dict]:
+    ) -> NssFeeds:
         """
         Retrieves information about cloud NSS feed based on the specified ID
 
@@ -97,7 +87,6 @@ class CloudNSSAPI(APIClient):
             feed_id (str): The unique identifier for the cloud cloud NSS feed.
 
         Returns:
-            tuple: A tuple containing (cloud NSS feed instance, Response, error).
 
         Example:
             Retrieve a cloud NSS feed by its feed_id:
@@ -117,26 +106,17 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NssFeeds)
 
-        response, error = self._request_executor.execute(request, NssFeeds)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NssFeeds(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = NssFeeds(self.form_response_body(response.get_body()))
+        return result
 
     def add_nss_feed(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> NssFeeds:
         """
         Adds a new cloud NSS feed.
 
@@ -273,7 +253,6 @@ class CloudNSSAPI(APIClient):
             tunnel_source_port (list): Filter based on the tunnel source port
 
         Returns:
-            tuple: Add a new NSS feed.
 
         Example:
             Add a new NSS feed.:
@@ -315,26 +294,17 @@ class CloudNSSAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NssFeeds)
+        result = NssFeeds(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, NssFeeds)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NssFeeds(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_nss_feed(self, feed_id: int, **kwargs) -> APIResult[dict]:
+    def update_nss_feed(self, feed_id: int, **kwargs) -> NssFeeds:
         """
         Updates cloud NSS feed configuration based on the specified ID
 
@@ -474,7 +444,6 @@ class CloudNSSAPI(APIClient):
             tunnel_source_port (list): Filter based on the tunnel source port
 
         Returns:
-            tuple: Updated cloud NSS feed resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -497,27 +466,18 @@ class CloudNSSAPI(APIClient):
         body = kwargs
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, NssFeeds)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, NssFeeds)
+        result = NssFeeds(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = NssFeeds(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_feed(self, feed_id: int) -> APIResult[dict]:
+    def delete_feed(self, feed_id: int) -> None:
         """
         Deletes cloud NSS feed configuration based on the specified ID
 
@@ -541,17 +501,11 @@ class CloudNSSAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def list_feed_output(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
+    def list_feed_output(self, query_params: Optional[dict] = None) -> List[Dict[str, Any]]:
         """
         Retrieves the default cloud NSS feed output format for different log types
 
@@ -565,7 +519,6 @@ class CloudNSSAPI(APIClient):
                 ``[query_params.field_format]`` {str}: The feed output type of your SIEM
 
         Returns:
-            tuple: A tuple containing (Retrieve the default cloud NSS feed output format, Response, error)
 
 
         Examples:
@@ -586,25 +539,15 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_results()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = response.get_results()
+        return result
 
     def test_connectivity(
         self,
         feed_id: int,
-    ) -> APIResult[dict]:
+    ) -> NSSTestConnectivity:
         """
         Tests the connectivity of cloud NSS feed based on the specified ID
 
@@ -612,7 +555,6 @@ class CloudNSSAPI(APIClient):
             feed_id (int): Unique identifier for the cloud NSS feed
 
         Returns:
-            tuple: A tuple containing (Cloud NSS Connectivity Feed instance, Response, error).
 
         Example:
             Retrieve a Cloud NSS Connectivity Feed by its feed ID:
@@ -632,23 +574,14 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NSSTestConnectivity)
 
-        response, error = self._request_executor.execute(request, NSSTestConnectivity)
+        result = NSSTestConnectivity(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NSSTestConnectivity(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def validate_feed_format(self, feed_type: str = None) -> APIResult[dict]:
+    def validate_feed_format(self, feed_type: str = None) -> Any:
         """
         Validates the cloud NSS feed format and returns the validation result.
 
@@ -656,7 +589,6 @@ class CloudNSSAPI(APIClient):
             feed_type (str, optional): The type of log feed to validate (e.g., WEBLOG, FWLOG, CASB_FILELOG etc).
 
         Returns:
-            tuple: A tuple containing the validated cloud NSS feed format, response, and error.
 
         Example:
             >>> validation_result, response, error = zia.cloud_nss.validate_feed_format(feed_type="WEBLOG")
@@ -673,22 +605,12 @@ class CloudNSSAPI(APIClient):
 
         query_params = {"type": feed_type} if feed_type else {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             params=query_params,
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result

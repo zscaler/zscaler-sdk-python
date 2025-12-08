@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cloud_connector_controller import CloudConnectorController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CloudConnectorControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class CloudConnectorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_connectors(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorController]]:
+    def list_cloud_connectors(self, query_params: Optional[dict] = None) -> List[CloudConnectorController]:
         """
         Get all EdgeConnectors configured for a given customer.
 
@@ -48,14 +47,14 @@ class CloudConnectorControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of Branch Connector instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CloudConnectorController]
 
         Examples:
-            >>> connector_list, _, err = client.zpa.cloud_connector_controller.list_cloud_connectors(
+            >>> try:
+            ...     connector_list = client.zpa.cloud_connector_controller.list_cloud_connectors(
             ... query_params={'search': 'CloudConnector01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing cloud connector: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total cloud connectors found: {len(connector_list)}")
             ... for connector in connector_list:
             ...     print(connector.as_dict())
@@ -70,18 +69,9 @@ class CloudConnectorControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CloudConnectorController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudConnectorController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CloudConnectorController)
+        result = []
+        for item in response.get_results():
+            result.append(CloudConnectorController(self.form_response_body(item)))
+        return result

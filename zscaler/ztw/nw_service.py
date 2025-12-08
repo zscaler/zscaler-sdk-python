@@ -20,7 +20,6 @@ from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service import NetworkServices
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class NWServiceAPI(APIClient):
@@ -31,7 +30,7 @@ class NWServiceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[List[NetworkServices]]:
+    def list_network_services(self, query_params: Optional[dict] = None) -> List[NetworkServices]:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported
@@ -49,7 +48,6 @@ class NWServiceAPI(APIClient):
                     ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application
                     description is localized into the requested language.
         Returns:
-            tuple: A tuple containing (list of network services instances, Response, error)
 
         Examples:
             Gets a list of all network services.
@@ -87,25 +85,16 @@ class NWServiceAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(NetworkServices(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(NetworkServices(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_network_service(self, ports: list = None, **kwargs) -> APIResult[dict]:
+    def add_network_service(self, ports: list = None, **kwargs) -> NetworkServices:
         """
         Adds a new Network Service.
 
@@ -168,28 +157,19 @@ class NWServiceAPI(APIClient):
                     port_dict["end"] = int(items[3])
                 body.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, NetworkServices)
+        response = self._request_executor.execute(request, NetworkServices)
 
-        if error:
-            return (None, response, error)
+        result = NetworkServices(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = NetworkServices(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> APIResult[dict]:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> NetworkServices:
         """
         Updates the specified Network Service.
 
@@ -250,23 +230,14 @@ class NWServiceAPI(APIClient):
                     port_dict["end"] = int(items[3])
                 body.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, NetworkServices)
 
-        response, error = self._request_executor.execute(request, NetworkServices)
+        result = NetworkServices(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = NetworkServices(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_network_service(self, service_id: int) -> APIResult[dict]:
+    def delete_network_service(self, service_id: int) -> None:
         """
         Deletes the specified Network Service.
 
@@ -293,11 +264,6 @@ class NWServiceAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

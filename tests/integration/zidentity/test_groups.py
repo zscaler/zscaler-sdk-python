@@ -41,7 +41,7 @@ class TestGroups:
         try:
             # Test: Add Group
             try:
-                create_group, _, error = client.zidentity.groups.add_group(
+                create_group = client.zidentity.groups.add_group(
                     name=f"ZidentityGroup_{random.randint(1000, 10000)}",
                     description=f"ZidentityGroup_{random.randint(1000, 10000)}",
                     source='SCIM',
@@ -49,7 +49,6 @@ class TestGroups:
                     service_entitlement_enabled=True,
                     dynamic_group=False,
                 )
-                assert error is None, f"Add Group Error: {error}"
                 assert create_group is not None, "Group creation failed."
                 group_id = create_group.id
             except Exception as e:
@@ -58,7 +57,7 @@ class TestGroups:
             # Test: Update Group
             try:
                 if group_id:
-                    update_group, _, error = client.zidentity.groups.update_group(
+                    update_group = client.zidentity.groups.update_group(
                         group_id=group_id,
                         name=f"ZidentityGroupUpdate_{random.randint(1000, 10000)}",
                         description=f"ZidentityGroupUpdate_{random.randint(1000, 10000)}",
@@ -67,7 +66,6 @@ class TestGroups:
                         service_entitlement_enabled=True,
                         dynamic_group=False,
                     )
-                    assert error is None, f"Update Group Error: {error}"
                     assert update_group is not None, "Group update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_group: {str(e)}")
@@ -75,8 +73,7 @@ class TestGroups:
             # Test: Get Group
             try:
                 if update_group:
-                    group, _, error = client.zidentity.groups.get_group(update_group.id)
-                    assert error is None, f"Get Group Error: {error}"
+                    group = client.zidentity.groups.get_group(update_group.id)
                     assert group.id == group_id, "Retrieved Group ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_group: {str(e)}")
@@ -84,8 +81,7 @@ class TestGroups:
             # Test: List Groups
             try:
                 if update_group:
-                    groups_response, _, error = client.zidentity.groups.list_groups(query_params={"search": update_group.name})
-                    assert error is None, f"List Groups Error: {error}"
+                    groups_response = client.zidentity.groups.list_groups(query_params={"search": update_group.name})
                     assert groups_response is not None, "Expected a groups response object"
                     assert hasattr(groups_response, 'records'), "Expected groups_response to have records field"
             except Exception as e:
@@ -95,11 +91,10 @@ class TestGroups:
             # Ensure group cleanup
             try:
                 if update_group:
-                    _, _, error = client.zidentity.groups.delete_group(update_group.id)
-                    assert error is None, f"Delete Group Error: {error}"
+                    _ = client.zidentity.groups.delete_group(update_group.id)
             except Exception as e:
                 errors.append(f"Exception during delete_group: {str(e)}")
 
         # Final Assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

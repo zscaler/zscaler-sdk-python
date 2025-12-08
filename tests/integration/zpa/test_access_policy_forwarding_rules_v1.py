@@ -42,8 +42,7 @@ class TestAccessPolicyForwardingRuleV1:
 
             # Step 2: Get USER IdP
             try:
-                idps, _, err = client.zpa.idp.list_idps()
-                assert err is None, f"Error listing IdPs: {err}"
+                idps = client.zpa.idp.list_idps()
                 user_idp = next((idp for idp in idps if isinstance(idp.sso_type, list) and "USER" in idp.sso_type), None)
                 assert user_idp, "No USER IdP found"
                 user_idp_id = user_idp.id
@@ -52,8 +51,7 @@ class TestAccessPolicyForwardingRuleV1:
 
             # Step 3: Get SCIM Groups
             try:
-                scim_groups, _, err = client.zpa.scim_groups.list_scim_groups(idp_id=user_idp_id)
-                assert err is None, f"Error listing SCIM groups: {err}"
+                scim_groups = client.zpa.scim_groups.list_scim_groups(idp_id=user_idp_id)
                 assert len(scim_groups) >= 2, "Less than 2 SCIM groups returned"
                 scim_group_ids = [g.id for g in scim_groups[:2]]
             except Exception as exc:
@@ -63,7 +61,7 @@ class TestAccessPolicyForwardingRuleV1:
             try:
                 rule_name = "tests-apfr1-" + generate_random_string()
                 rule_description = "Access rule with SCIM group conditions"
-                created_rule, _, err = client.zpa.policies.add_client_forwarding_rule(
+                created_rule = client.zpa.policies.add_client_forwarding_rule(
                     name=rule_name,
                     description=rule_description,
                     action="intercept",
@@ -72,15 +70,13 @@ class TestAccessPolicyForwardingRuleV1:
                         ("scim_group", user_idp_id, scim_group_ids[1]),
                     ],
                 )
-                assert err is None, f"Error creating access rule: {err}"
                 rule_id = created_rule.id
             except Exception as exc:
                 errors.append(f"Access Policy Rule creation failed: {exc}")
 
             # Step 5: Get Rule by ID
             try:
-                retrieved_rule, _, err = client.zpa.policies.get_rule("client_forwarding", rule_id)
-                assert err is None, f"Error retrieving rule: {err}"
+                retrieved_rule = client.zpa.policies.get_rule("client_forwarding", rule_id)
                 assert retrieved_rule.id == rule_id, "Retrieved rule ID mismatch"
             except Exception as exc:
                 errors.append(f"Access Policy Rule retrieval failed: {exc}")
@@ -88,7 +84,7 @@ class TestAccessPolicyForwardingRuleV1:
             # Step 6: Update Rule
             try:
                 updated_description = "Updated access rule " + generate_random_string()
-                _, _, err = client.zpa.policies.update_client_forwarding_rule(
+                _ = client.zpa.policies.update_client_forwarding_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -98,15 +94,12 @@ class TestAccessPolicyForwardingRuleV1:
                         ("scim_group", user_idp_id, scim_group_ids[1]),
                     ],
                 )
-                if err and str(err) != "Response is None":
-                    raise AssertionError(f"Unexpected update error: {err}")
             except Exception as exc:
                 errors.append(f"Access Policy Rule update failed: {exc}")
 
             # Step 7: List Rules and Confirm Presence
             try:
-                rules, _, err = client.zpa.policies.list_rules("client_forwarding")
-                assert err is None, f"Error listing rules: {err}"
+                rules = client.zpa.policies.list_rules("client_forwarding")
                 assert any(r.id == rule_id for r in rules), "Created rule not found in rule list"
             except Exception as exc:
                 errors.append(f"Access Policy Rule list verification failed: {exc}")
@@ -117,8 +110,7 @@ class TestAccessPolicyForwardingRuleV1:
             # Delete Rule
             if rule_id:
                 try:
-                    _, _, err = client.zpa.policies.delete_rule("client_forwarding", rule_id)
-                    assert err is None, f"Error deleting rule: {err}"
+                    _ = client.zpa.policies.delete_rule("client_forwarding", rule_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Failed to delete rule ID {rule_id}: {exc}")
 

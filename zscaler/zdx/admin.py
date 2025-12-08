@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.administration import Administration
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class AdminAPI(APIClient):
@@ -30,7 +29,7 @@ class AdminAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_departments(self, query_params: Optional[dict] = None) -> APIResult[List[Administration]]:
+    def list_departments(self, query_params: Optional[dict] = None) -> List[Administration]:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
 
@@ -48,20 +47,20 @@ class AdminAPI(APIClient):
         Examples:
             Prints all configured departments.
 
-            >>> dept_list, _, err = client.zdx.admin.list_departments()
-            ... if err:
-            ...     print(f"Error listing department: {err}")
-            ...     return
+            >>> try:
+            ...     dept_list = client.zdx.admin.list_departments()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total department found: {len(dept_list)}")
             ...  for dept in dept_list:
             ...     print(dept.as_dict())
 
             Search specific configured department.
 
-            >>> dept_list, _, err = client.zdx.admin.list_departments(query_params={"search": 'Finance'})
-            ... if err:
-            ...     print(f"Error listing department: {err}")
-            ...     return
+            >>> try:
+            ...     dept_list = client.zdx.admin.list_departments(query_params={"search": 'Finance'})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total department found: {len(dept_list)}")
             ...  for dept in dept_list:
             ...     print(dept.as_dict())
@@ -79,25 +78,16 @@ class AdminAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Administration(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(Administration(self.form_response_body(item)))
+        return result
 
     @zdx_params
-    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[List[Administration]]:
+    def list_locations(self, query_params: Optional[dict] = None) -> List[Administration]:
         """
         Returns the list of all configured Zscaler locations if the search filters are not specified.
 
@@ -115,20 +105,20 @@ class AdminAPI(APIClient):
         Examples:
             Prints all configured Zscaler locations.
 
-            >>> locations_list, _, err = client.zdx.admin.list_locations()
-            ... if err:
-            ...     print(f"Error listing department: {err}")
-            ...     return
+            >>> try:
+            ...     locations_list = client.zdx.admin.list_locations()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total location found: {len(locations_list)}")
             ...  for location in locations_list:
             ...     print(location.as_dict())
 
             Search specific configured Zscaler locations.
 
-            >>> locations_list, _, err = client.zdx.admin.list_locations(query_params={"search": 'San Jose'})
-            ... if err:
-            ...     print(f"Error listing department: {err}")
-            ...     return
+            >>> try:
+            ...     locations_list = client.zdx.admin.list_locations(query_params={"search": 'San Jose'})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total location found: {len(locations_list)}")
             ...  for location in locations_list:
             ...     print(location.as_dict())
@@ -146,19 +136,10 @@ class AdminAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Administration(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(Administration(self.form_response_body(item)))
+        return result

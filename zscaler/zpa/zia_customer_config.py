@@ -21,7 +21,6 @@ from zscaler.zpa.models.zia_customer_config import ZIACustomerConfig
 from zscaler.zpa.models.zia_customer_config import SessionTerminationOnReauth
 from zscaler.api_client import APIClient
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ZIACustomerConfigAPI(APIClient):
@@ -35,7 +34,7 @@ class ZIACustomerConfigAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def check_zia_cloud_config(self) -> APIResult[bool]:
+    def check_zia_cloud_config(self) -> bool:
         """
         Check if ZIA cloud config for a given customer is available.
 
@@ -47,10 +46,10 @@ class ZIACustomerConfigAPI(APIClient):
             the response object, and error if any.
 
         Examples:
-            >>> is_available, _, err = client.zpa.zia_customer_config.check_zia_cloud_config()
-            ... if err:
-            ...     print(f"Error checking ZIA cloud config availability: {err}")
-            ...     return
+            >>> try:
+            ...     is_available = client.zpa.zia_customer_config.check_zia_cloud_config()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... if is_available:
             ...     print("ZIA cloud config is available")
             ... else:
@@ -64,21 +63,12 @@ class ZIACustomerConfigAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = response.get_body()
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_zia_cloud_service_config(self) -> APIResult[List[ZIACustomerConfig]]:
+    def get_zia_cloud_service_config(self) -> List[ZIACustomerConfig]:
         """
         Get ZIA cloud service configuration for a given customer.
 
@@ -86,13 +76,13 @@ class ZIACustomerConfigAPI(APIClient):
         including domain, API keys, username, password, and sandbox API token settings.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of ZIACustomerConfig instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[ZIACustomerConfig]
 
         Examples:
-            >>> config_list, _, err = client.zpa.zia_customer_config.get_zia_cloud_service_config()
-            ... if err:
-            ...     print(f"Error getting ZIA cloud service config: {err}")
-            ...     return
+            >>> try:
+            ...     config_list = client.zpa.zia_customer_config.get_zia_cloud_service_config()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total ZIA customer configs found: {len(config_list)}")
             ... for config in config_list:
             ...     print(config.as_dict())
@@ -105,23 +95,14 @@ class ZIACustomerConfigAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, ZIACustomerConfig)
+        result = []
+        for item in response.get_results():
+            result.append(ZIACustomerConfig(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ZIACustomerConfig)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZIACustomerConfig(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_zia_cloud_service_config(self, **kwargs) -> APIResult[ZIACustomerConfig]:
+    def add_zia_cloud_service_config(self, **kwargs) -> ZIACustomerConfig:
         """
         Add or update ZIA cloud service configuration for a given customer.
 
@@ -139,16 +120,16 @@ class ZIACustomerConfigAPI(APIClient):
             :obj:`Tuple`: A tuple containing the ZIACustomerConfig instance, response object, and error if any.
 
         Examples:
-            >>> config, _, err = client.zpa.zia_customer_config.add_zia_cloud_service_config(
+            >>> try:
+            ...     config = client.zpa.zia_customer_config.add_zia_cloud_service_config(
             ...     zia_cloud_domain="example.zscaler.net",
             ...     zia_cloud_service_api_key="your_api_key_here",
             ...     zia_username="admin@example.com",
             ...     zia_password="your_password",
             ...     zia_sandbox_api_token="your_sandbox_token"
             ... )
-            ... if err:
-            ...     print(f"Error adding ZIA cloud service config: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"ZIA cloud service config added successfully: {config.as_dict()}")
         """
         http_method = "post".upper()
@@ -161,21 +142,12 @@ class ZIACustomerConfigAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, ZIACustomerConfig)
+        result = ZIACustomerConfig(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ZIACustomerConfig)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZIACustomerConfig(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_session_termination_on_reauth(self) -> APIResult[dict]:
+    def get_session_termination_on_reauth(self) -> SessionTerminationOnReauth:
         """
         Get session termination on reauth configuration for a given customer.
 
@@ -189,10 +161,10 @@ class ZIACustomerConfigAPI(APIClient):
             The response object, and error if any.
 
         Examples:
-            >>> config, _, err = client.zpa.zia_customer_config.get_session_termination_on_reauth()
-            ... if err:
-            ...     print(f"Error getting session termination on reauth config: {err}")
-            ...     return
+            >>> try:
+            ...     config = client.zpa.zia_customer_config.get_session_termination_on_reauth()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Session termination on reauth: {config.get('session_termination_on_reauth')}")
             ... print(f"Allow disable: {config.get('allow_disable_session_termination_on_reauth')}")
         """
@@ -204,21 +176,12 @@ class ZIACustomerConfigAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, SessionTerminationOnReauth)
+        result = SessionTerminationOnReauth(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SessionTerminationOnReauth)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SessionTerminationOnReauth(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_session_termination_on_reauth(self, **kwargs) -> APIResult[SessionTerminationOnReauth]:
+    def update_session_termination_on_reauth(self, **kwargs) -> SessionTerminationOnReauth:
         """
         Update the session termination on reauth configuration for a given customer.
 
@@ -236,12 +199,12 @@ class ZIACustomerConfigAPI(APIClient):
             updated configuration, call `get_session_termination_on_reauth()` after this operation.
 
         Examples:
-            >>> updated_config, _, err = client.zpa.zia_customer_config.update_session_termination_on_reauth(
+            >>> try:
+            ...     updated_config = client.zpa.zia_customer_config.update_session_termination_on_reauth(
             ...     session_termination_on_reauth=True
             ... )
-            ... if err:
-            ...     print(f"Error updating session termination on reauth: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Session termination on reauth updated: {updated_config.session_termination_on_reauth}")
         """
         http_method = "put".upper()
@@ -254,19 +217,9 @@ class ZIACustomerConfigAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, SessionTerminationOnReauth)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, SessionTerminationOnReauth)
         if response is None:
-            return (None, None, None)
+            return None
 
-        try:
-            result = SessionTerminationOnReauth(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return SessionTerminationOnReauth(self.form_response_body(response.get_body()))

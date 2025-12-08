@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/actionTypes
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/actionTypes
   response:
     body:
       string: '["PASS","BLOCK","REDIRECT","ALLOW"]'
@@ -29,77 +29,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
-      expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      pragma:
-      - no-cache
-      referrer-policy:
-      - strict-origin-when-cross-origin
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '32'
-      x-frame-options:
-      - DENY
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 2faa471e-1846-9e79-9a1e-870bca54fc96
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4841'
-      x-ratelimit-reset:
-      - '11'
-      x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/severityTypes
-  response:
-    body:
-      string: '["CRITICAL","ERROR","WARNING","INFO"]'
-    headers:
-      cache-control:
-      - no-store
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - default-src 'none'; upgrade-insecure-requests
-      content-type:
-      - application/json;charset=utf-8
-      date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 05 Dec 2025 23:22:49 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -123,17 +53,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0ea9c494-8f0c-9ff7-a02b-1c78346e1009
+      - d5242df1-5e95-9784-b25a-eeb898027b9f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4840'
+      - '4841'
       x-ratelimit-reset:
       - '11'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -153,9 +83,79 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/controlTypes
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/severityTypes
+  response:
+    body:
+      string: '["CRITICAL","ERROR","WARNING","INFO"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 05 Dec 2025 23:22:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '31'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 42a9aa85-1cca-9b10-9434-d3234b76c750
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4840'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/controlTypes
   response:
     body:
       string: '["WEBSOCKET_PREDEFINED","WEBSOCKET_CUSTOM","THREATLABZ","CUSTOM","PREDEFINED","API_PREDEFINED","ADP_PREDEFINED"]'
@@ -169,7 +169,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 05 Dec 2025 23:22:49 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -187,15 +187,15 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '33'
+      - '30'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 784ad2a1-120a-9cbd-998e-74ee43992b9e
+      - 9c0e9eb0-e6eb-9db2-bb6f-f5942a58df61
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
@@ -203,7 +203,7 @@ interactions:
       x-ratelimit-reset:
       - '11'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -223,9 +223,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/httpMethods
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/httpMethods
   response:
     body:
       string: '["GET","HEAD","POST","OPTIONS","PUT","PATCH","DELETE","CHECKOUT","COPY","LOCK","MERGE","MKACTIVITY","MKCOL","MOVE","PROPFIND","PROPPATCH","UNLOCK","TRACE","CONNECT"]'
@@ -239,7 +239,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 05 Dec 2025 23:22:49 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -257,15 +257,15 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '42'
+      - '41'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - dad6720c-736b-9e88-9f8c-235b0a603712
+      - 8218e7aa-cead-94cd-ac00-0bbaf2b37751
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
@@ -273,7 +273,7 @@ interactions:
       x-ratelimit-reset:
       - '11'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -293,9 +293,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined/versions
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined/versions
   response:
     body:
       string: '["OWASP_CRS/4.8.0","OWASP_CRS/3.3.5","OWASP_CRS/3.3.0"]'
@@ -309,7 +309,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:50 GMT
+      - Fri, 05 Dec 2025 23:22:49 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -327,23 +327,960 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '36'
+      - '34'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8ceb45bc-f88c-982b-8ec8-ee2e0d84bafa
+      - 0c16b05b-58e9-9162-931e-c81c1b39a910
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4837'
       x-ratelimit-reset:
-      - '10'
+      - '11'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined?version=OWASP_CRS%2F4.8.0
+  response:
+    body:
+      string: '[{"controlGroup":"Protocol Issues","predefinedInspectionControls":[{"id":"72057594037935359","modifiedTime":"1740244373","creationTime":"1740244373","name":"Failed
+        to parse request body","description":"Failed to parse request body","severity":"CRITICAL","controlNumber":"200002","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935360","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multipart
+        request body failed strict validation","description":"Multipart request body
+        failed strict validation","severity":"CRITICAL","controlNumber":"200003","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935361","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multipart
+        parser detected a possible unmatched boundary","description":"Multipart parser
+        detected a possible unmatched boundary","severity":"CRITICAL","controlNumber":"200004","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037937204","modifiedTime":"1758960431","creationTime":"1758960431","name":"Failed
+        to fully parse request body due to large argument count","description":"Failed
+        to fully parse request body due to large argument count","severity":"CRITICAL","controlNumber":"200007","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935362","modifiedTime":"1740244373","creationTime":"1740244373","name":"Attempted
+        multipart/form-data bypass","description":"These rules check for the existence
+        of the &#39; &#34; ; = meta-characters in either the &#34;name&#34; (FILES)
+        and &#34;filename&#34; (FILES_NAMES) variables","severity":"CRITICAL","controlNumber":"920120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935403","modifiedTime":"1740244373","creationTime":"1740244373","name":"Attempted
+        multipart/form-data bypass","description":"This is a stricter sibling of 920120","severity":"CRITICAL","controlNumber":"920121","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935363","modifiedTime":"1740244373","creationTime":"1740244373","name":"Attempted
+        multipart/form-data bypass","description":"These rules check for the existence
+        of the &#39; &#34; ; = meta-characters in either the &#34;name&#34; (FILES)
+        and &#34;filename&#34; (FILES_NAMES) variables","severity":"CRITICAL","controlNumber":"920170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935364","modifiedTime":"1740244373","creationTime":"1740244373","name":"GET
+        or HEAD Request with Transfer-Encoding","description":"GET or HEAD Request
+        with Transfer-Encoding","severity":"CRITICAL","controlNumber":"920171","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935365","modifiedTime":"1740244373","creationTime":"1740244373","name":"POST
+        without Content-Length or Transfer-Encoding headers","description":"This chained
+        rule checks if the protocol is not HTTP/2 or HTTP/3, then checks request method
+        is POST, if so, it checks that a Content-Length or Transfer-Encoding headers
+        are also present.","severity":"WARNING","controlNumber":"920180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935366","modifiedTime":"1740244373","creationTime":"1740244373","name":"Range:
+        Invalid Last Byte Value","description":"This rule compares the first and second
+        byte ranges and flags when the first value is greater than the second","severity":"WARNING","controlNumber":"920190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935398","modifiedTime":"1740244373","creationTime":"1740244373","name":"Range:
+        Too many fields (6 or more)","description":"Check the number of range fields
+        in the Range request header","severity":"WARNING","controlNumber":"920200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935399","modifiedTime":"1740244373","creationTime":"1740244373","name":"Range:
+        Too many fields for pdf request (63 or more)","description":"This is a sibling
+        of rule 920200","severity":"WARNING","controlNumber":"920201","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935412","modifiedTime":"1740244373","creationTime":"1740244373","name":"Range:
+        Too many fields for pdf request (6 or more)","description":"Check the number
+        of range fields in the Range request header for pdf file if its more than
+        5.","severity":"WARNING","controlNumber":"920202","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935367","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multiple/Conflicting
+        Connection Header Data Found","description":"This rule inspects the Connection
+        header and looks for duplicates of the keep-alive and close options","severity":"WARNING","controlNumber":"920210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935406","modifiedTime":"1740244373","creationTime":"1740244373","name":"URL
+        Encoding Abuse Attack Attempt in POST data","description":"Check for URL encodings
+        in Request Body.","severity":"WARNING","controlNumber":"920240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935369","modifiedTime":"1740244373","creationTime":"1740244373","name":"UTF8
+        Encoding Abuse Attack Attempt","description":"This chained rule first checks
+        to see if the admin has set the TX:CRS_VALIDATE_UTF8_ENCODING","severity":"WARNING","controlNumber":"920250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935372","modifiedTime":"1740244373","creationTime":"1740244373","name":"Unicode
+        Full/Half Width Abuse Attack Attempt","description":"Disallow use of full-width
+        unicode as decoding evasions may be possible.","severity":"WARNING","controlNumber":"920260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935370","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        character in request (null character)","description":"Restrict type of characters
+        : Full ASCII range without null character sent.","severity":"CRITICAL","controlNumber":"920270","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935401","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        character in request (non printable characters)","description":"Restrict type
+        of characters : Full visible ASCII range, tab, newline sent.","severity":"CRITICAL","controlNumber":"920271","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935414","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        character in request headers (outside of very strict set)","description":"Restrict
+        type of characters : A-Z a-z 0-9 = - _ . , : &amp; &#34; * + / SPACE sent.","severity":"CRITICAL","controlNumber":"920274","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935415","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        character in Sec-Fetch-User request header (outside of very strict set)","description":"Restrict
+        type of characters : Full ASCII range without null character sent in Sec-Fetch-User
+        header.","severity":"CRITICAL","controlNumber":"920275","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935373","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Missing a Host Header","description":"These rules will first check to see
+        if a Host header is present.","severity":"WARNING","controlNumber":"920280","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935374","modifiedTime":"1740244373","creationTime":"1740244373","name":"Empty
+        Host Header","description":"These rules will first check to see if a Host
+        header is present.","severity":"CRITICAL","controlNumber":"920290","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935408","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Missing an Accept Header","description":"This rule generates a notice if the
+        Accept header is missing","severity":"INFO","controlNumber":"920300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935375","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Has an Empty Accept Header","description":"This rule checks if an Accept header
+        exists, but has an empty value","severity":"INFO","controlNumber":"920310","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935376","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Has an Empty Accept Header","description":"This rule is a sibling of rule
+        920310","severity":"INFO","controlNumber":"920311","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935402","modifiedTime":"1740244373","creationTime":"1740244373","name":"Missing
+        User Agent Header","description":"This rules will check to see if there is
+        a User-Agent header or not","severity":"INFO","controlNumber":"920320","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935377","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Has an Empty Accept Header","description":"This rules will check to see if
+        the User-Agent header is empty","severity":"INFO","controlNumber":"920330","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935378","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Containing Content, but Missing Content-Type header","description":"This rule
+        will first check to see if the value of the Content-Length header is non-equal
+        to 0","severity":"INFO","controlNumber":"920340","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935404","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        Containing Content Requires Content-Type header","description":"Block on Missing
+        Content-Type Header with Request Body","severity":"CRITICAL","controlNumber":"920341","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935379","modifiedTime":"1740244373","creationTime":"1740244373","name":"Host
+        header is a numeric IP address","description":"This rule triggers if the Host
+        header contains an IPv4 or IPv6 address, optionally extended with a port number","severity":"WARNING","controlNumber":"920350","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935381","modifiedTime":"1740244373","creationTime":"1740244373","name":"Argument
+        name too long","description":"This rule checks for argument name length is
+        more than predefined length.","severity":"CRITICAL","controlNumber":"920360","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935382","modifiedTime":"1740244373","creationTime":"1740244373","name":"Argument
+        value too long","description":"This rule checks for argument value length
+        is more than predefined length.","severity":"CRITICAL","controlNumber":"920370","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935380","modifiedTime":"1740244373","creationTime":"1740244373","name":"Too
+        many arguments in request","description":"This rule checks for number of argument
+        is more than predefined value.","severity":"CRITICAL","controlNumber":"920380","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935383","modifiedTime":"1740244373","creationTime":"1740244373","name":"Total
+        arguments size exceeded","description":"This rule checks for total argument
+        value length is more than predefined value.","severity":"CRITICAL","controlNumber":"920390","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935385","modifiedTime":"1740244373","creationTime":"1740244373","name":"Uploaded
+        file size too large","description":"This rule inspects File upload limits","severity":"CRITICAL","controlNumber":"920400","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935384","modifiedTime":"1740244373","creationTime":"1740244373","name":"Total
+        uploaded files size too large","description":"This rule checks for total file
+        size is more than predefined value.","severity":"CRITICAL","controlNumber":"920410","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935387","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        content type is not allowed by policy","description":"This rule check the
+        mime-type against the policy defined in the &#39;allowed_request_content_type&#39;
+        variable","severity":"CRITICAL","controlNumber":"920420","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935391","modifiedTime":"1740244373","creationTime":"1740244373","name":"URL
+        file extension is restricted by policy","description":"Restrict file extension","severity":"CRITICAL","controlNumber":"920440","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935393","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        header is restricted by policy (%{MATCHED_VAR})","description":"The use of
+        certain headers is restricted. They are listed in two variables: - TX.restricted_headers_basic:
+        Known security risks, always forbidden (rule 920450) - TX.restricted_headers_extended:
+        Possible false positives, possible security risks, may be forbidden (rule
+        920451)","severity":"CRITICAL","controlNumber":"920450","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935405","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        header is restricted by policy (%{MATCHED_VAR})","description":"This is a
+        stricter sibling of 920450","severity":"CRITICAL","controlNumber":"920451","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935416","modifiedTime":"1740244373","creationTime":"1740244373","name":"Abnormal
+        character escapes in request","description":"This rule aims to detect non-necessary,
+        abnormal escapes.","severity":"CRITICAL","controlNumber":"920460","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935386","modifiedTime":"1740244373","creationTime":"1740244373","name":"Illegal
+        Content-Type header","description":"This provides generic allow list protection
+        against vulnerabilities like Apache Struts Content-Type arbitrary command
+        execution","severity":"CRITICAL","controlNumber":"920470","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935389","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        content type charset is not allowed by policy","description":"This rule Restrict
+        charset parameter within the content-type header.","severity":"CRITICAL","controlNumber":"920480","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935409","modifiedTime":"1740244373","creationTime":"1740244373","name":"Request
+        header x-up-devcap-post-charset detected in combination with prefix ''UP''
+        to User-Agent","description":"This rule checks for Request header x-up-devcap-post-charset
+        header in combination with prefix &#39;UP&#39; into User-Agent header.","severity":"CRITICAL","controlNumber":"920490","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935392","modifiedTime":"1740244373","creationTime":"1740244373","name":"Attempt
+        to access a backup or working file","description":"Backup or &#34;working&#34;
+        file extension","severity":"CRITICAL","controlNumber":"920500","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935410","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        Cache-Control request header","description":"This rule aims to strictly allow
+        list the Cache-Control request header values and to blocks all violations","severity":"CRITICAL","controlNumber":"920510","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935394","modifiedTime":"1740244373","creationTime":"1740244373","name":"Accept-Encoding
+        header exceeded sensible length","description":"This rule blocks Accept-Encoding
+        headers longer than 100 characters","severity":"CRITICAL","controlNumber":"920520","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935411","modifiedTime":"1740244373","creationTime":"1740244373","name":"Illegal
+        Accept-Encoding header","description":"This rule checks for valid Accept-Encoding
+        headers","severity":"CRITICAL","controlNumber":"920521","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935390","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multiple
+        charsets detected in content type header","description":"This rule Restrict
+        charset parameter inside the content-type header.","severity":"CRITICAL","controlNumber":"920530","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935395","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Unicode character bypass detected","description":"This rule make Unicode character
+        bypass check for non JSON requests","severity":"CRITICAL","controlNumber":"920540","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935388","modifiedTime":"1740244373","creationTime":"1740244373","name":"Illegal
+        Accept header: charset parameter","description":"This rule make sure that
+        the response will be in an ASCII-compatible charset that","severity":"CRITICAL","controlNumber":"920600","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935396","modifiedTime":"1740244373","creationTime":"1740244373","name":"Raw
+        (unencoded) fragment in request URI","description":"This rule Disallow any
+        raw URL fragments. The &#39;#&#39; character should be omitted or URL-encoded","severity":"CRITICAL","controlNumber":"920610","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"},{"id":"72057594037935397","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multiple
+        Content-Type Request Headers","description":"This rule restricts presence
+        of 2 or more request Content-Type headers","severity":"CRITICAL","controlNumber":"920620","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Protocol
+        Issues"}],"defaultGroup":false},{"controlGroup":"Internal Error","predefinedInspectionControls":[{"id":"72057594037935357","modifiedTime":"1740244373","creationTime":"1740244373","name":"Internal
+        error flagged","description":"Internal error flagged","severity":"CRITICAL","controlNumber":"200005","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Internal
+        Error"}],"defaultGroup":true},{"controlGroup":"Preprocessors","predefinedInspectionControls":[{"id":"72057594037935352","modifiedTime":"1740244373","creationTime":"1740244373","name":"Method
+        is not allowed by policy","description":"This rule check if the Method is
+        allowed by policy.","severity":"CRITICAL","controlNumber":"911100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Preprocessors"},{"id":"72057594037935353","modifiedTime":"1740244373","creationTime":"1740244373","name":"Invalid
+        HTTP Request Line","description":"Validate request line against the format
+        specified in the HTTP RFC.","severity":"WARNING","controlNumber":"920100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Preprocessors"},{"id":"72057594037935355","modifiedTime":"1740244373","creationTime":"1740244373","name":"Content-Length
+        HTTP header is not numeric","description":"Accept only digits in content length.","severity":"CRITICAL","controlNumber":"920160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Preprocessors"},{"id":"72057594037935354","modifiedTime":"1740244373","creationTime":"1740244373","name":"Content-Length
+        and Transfer-Encoding headers present","description":"Validate request line
+        against the format specified in the HTTP RFC","severity":"WARNING","controlNumber":"920181","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Preprocessors"},{"id":"72057594037935356","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        protocol version is not allowed by policy","description":"Restrict protocol
+        versions","severity":"CRITICAL","controlNumber":"920430","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Preprocessors"}],"defaultGroup":false},{"controlGroup":"Environment
+        and port scanners","predefinedInspectionControls":[{"id":"72057594037935358","modifiedTime":"1740244373","creationTime":"1740244373","name":"Found
+        User-Agent associated with security scanner","description":"This rule inspects
+        the default User-Agent and Header values sent by various commercial and open
+        source scanners, mostly security / vulnerability scanners","severity":"CRITICAL","controlNumber":"913100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"scanners-user-agents.data","controlGroup":"Environment
+        and port scanners"}],"defaultGroup":false},{"controlGroup":"Request smuggling
+        or Response split or Header injection","predefinedInspectionControls":[{"id":"72057594037935417","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Request Smuggling Attack with HTTP Method Insertion","description":"This rule
+        looks for a HTTP / WEBDAV method name in combination with the word http/\\d
+        or a CR/LF character.","severity":"CRITICAL","controlNumber":"921110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935418","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Response Splitting Attack with Header Name - Value Insertion with new line
+        char","description":"These rules look for Carriage Return (CR) %0d and Linefeed
+        (LF) %0a characters with header names.","severity":"CRITICAL","controlNumber":"921120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935419","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Response Splitting Attack with HTTP Protocol name insertion or HTML tag insertion","description":"These
+        rules look for HTTP Protocol name insertion or HTML tag insertion.","severity":"CRITICAL","controlNumber":"921130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935420","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Header Injection Attack via headers","description":"These rules look for Carriage
+        Return (CR) %0d and Linefeed (LF) %0a characters, on their own or in combination
+        with header field names.","severity":"CRITICAL","controlNumber":"921140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935421","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Header Injection Attack via payload (CR/LF detected)","description":"This
+        rule Detect newlines in argument names.","severity":"CRITICAL","controlNumber":"921150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935427","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Header Injection Attack via payload (CR/LF detected)","description":"This
+        rule Detect newlines in GET argument values.","severity":"CRITICAL","controlNumber":"921151","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935422","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Header Injection Attack via payload (CR/LF and header-name detected)","description":"This
+        rule Detect newlines in GET argument names in combination with header values.","severity":"CRITICAL","controlNumber":"921160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935430","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Parameter Pollution (%{MATCHED_VAR_NAME})","description":"This rule look for
+        multiple parameters with the same name.","severity":"CRITICAL","controlNumber":"921180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935423","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Splitting (CR/LF in request filename detected)","description":"This rule detect
+        \\n or \\r in the REQUEST FILENAME.","severity":"CRITICAL","controlNumber":"921190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935424","modifiedTime":"1740244373","creationTime":"1740244373","name":"HLDAP
+        Injection Attack","description":"This is a rule trying to prevent LDAP injection
+        with known attack patterns.","severity":"CRITICAL","controlNumber":"921200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935431","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Parameter Pollution after detecting bogus char after parameter array","description":"Parameter
+        pollution rule 921180 PL3 can by bypassed when a weak backend parameter parser
+        is ignoring additional characters in a parameter array name after the closing
+        of the array","severity":"CRITICAL","controlNumber":"921210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935432","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Parameter Pollution possible via array notation","description":"Parameter
+        pollution rule 921180 PL3 and 921210 PL3 can by bypassed if a weak backend
+        parameter parser ignores parameter array alltogether at cuts parameter names
+        at the first occurrence of the &#34;[&#34; character","severity":"CRITICAL","controlNumber":"921220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935429","modifiedTime":"1740244373","creationTime":"1740244373","name":"HTTP
+        Range Header detected","description":"Forbid Request Range Header","severity":"CRITICAL","controlNumber":"921230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935426","modifiedTime":"1740244373","creationTime":"1740244373","name":"mod_proxy
+        attack attempt detected","description":"This rule Rule against CVE-2021-40438.","severity":"CRITICAL","controlNumber":"921240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935425","modifiedTime":"1740244373","creationTime":"1740244373","name":"Content-Type
+        header: Dangerous content type outside the mime type declaration","description":"This
+        rule intends to detect content types in the Content-Type header outside of
+        the actual content type declaration","severity":"CRITICAL","controlNumber":"921421","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"},{"id":"72057594037935428","modifiedTime":"1740244373","creationTime":"1740244373","name":"Content-Type
+        header: Dangerous content type outside the mime type declaration","description":"This
+        rule intends to detect content types in the Content-Type header outside of
+        the actual content type declaration","severity":"CRITICAL","controlNumber":"921422","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Request
+        smuggling or Response split or Header injection"}],"defaultGroup":false},{"controlGroup":"Multipart
+        Attack","predefinedInspectionControls":[{"id":"72057594037935433","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multipart
+        content type global _charset_ definition is not allowed by policy","description":"Only
+        allow specific charsets when using &#34;_charset_&#34;","severity":"CRITICAL","controlNumber":"922100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Multipart
+        Attack"},{"id":"72057594037935434","modifiedTime":"1740244373","creationTime":"1740244373","name":"Illegal
+        MIME Multipart Header content-type: charset parameter","description":"Only
+        allow specific charsets same as Rule 920600","severity":"CRITICAL","controlNumber":"922110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Multipart
+        Attack"},{"id":"72057594037935435","modifiedTime":"1740244373","creationTime":"1740244373","name":"Content-Transfer-Encoding
+        was deprecated by rfc7578 in 2015 and should not be used","description":"Content-Transfer-Encoding
+        was deprecated by rfc7578 in 2015 and should not be used (see: https://www.rfc-editor.org/rfc/rfc7578#section-4.7)","severity":"CRITICAL","controlNumber":"922120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Multipart
+        Attack"},{"id":"72057594037935436","modifiedTime":"1740244373","creationTime":"1740244373","name":"Multipart
+        header contains characters outside of valid range","description":"Multipart
+        header names cant contain any characters outside of range 33 and 126","severity":"CRITICAL","controlNumber":"922130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Multipart
+        Attack"}],"defaultGroup":false},{"controlGroup":"Local File Inclusion","predefinedInspectionControls":[{"id":"72057594037935437","modifiedTime":"1740244373","creationTime":"1740244373","name":"Path
+        Traversal Attack (/../) - Encoded Payloads","description":"This rule checks
+        for path traversal attack where payloads are encoded form.","severity":"CRITICAL","controlNumber":"930100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Local
+        File Inclusion"},{"id":"72057594037935438","modifiedTime":"1740244373","creationTime":"1740244373","name":"Path
+        Traversal Attack (/../) - Decoded Payloads","description":"This rule checks
+        for path traversal attack where payloads are decoded form.","severity":"CRITICAL","controlNumber":"930110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Local
+        File Inclusion"},{"id":"72057594037935439","modifiedTime":"1740244373","creationTime":"1740244373","name":"OS
+        File Access Attempt","description":"This rule checks for known OS file access
+        attempt.","severity":"CRITICAL","controlNumber":"930120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"lfi-os-files.data","controlGroup":"Local
+        File Inclusion"},{"id":"72057594037935441","modifiedTime":"1740244373","creationTime":"1740244373","name":"OS
+        File Access Attempt in REQUEST_HEADERS","description":"This rule is a stricter
+        sibling of rule 930120","severity":"CRITICAL","controlNumber":"930121","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"lfi-os-files.data","controlGroup":"Local
+        File Inclusion"},{"id":"72057594037935440","modifiedTime":"1740244373","creationTime":"1740244373","name":"Restricted
+        File Access Attempt","description":"This rule Detects attempts to retrieve
+        application source code, metadata, credentials and version control history
+        possibly reachable in a web root.","severity":"CRITICAL","controlNumber":"930130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"restricted-files.data","controlGroup":"Local
+        File Inclusion"}],"defaultGroup":false},{"controlGroup":"Remote file inclusion","predefinedInspectionControls":[{"id":"72057594037935442","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Remote File Inclusion (RFI) Attack: URL Parameter using IP Address","description":"These
+        rules look for common types of Remote File Inclusion (RFI) attack methods
+        like URL Contains an IP Address.","severity":"CRITICAL","controlNumber":"931100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        file inclusion"},{"id":"72057594037935443","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Remote File Inclusion (RFI) Attack: Common RFI Vulnerable Parameter Name used
+        w/URL Payload","description":"These rules look for common types of Remote
+        File Inclusion (RFI) attack methods like Common RFI Vulnerable Parameter Name
+        used w/URL Payload.","severity":"CRITICAL","controlNumber":"931110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        file inclusion"},{"id":"72057594037935444","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Remote File Inclusion (RFI) Attack: URL Payload Used w/Trailing Question Mark
+        Character (?)","description":"These rules look for common types of Remote
+        File Inclusion (RFI) attack methods like Data Ends with Question Mark(s) (?).","severity":"CRITICAL","controlNumber":"931120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        file inclusion"},{"id":"72057594037935445","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Remote File Inclusion (RFI) Attack: Off-Domain Reference/Link","description":"These
+        rules look for common types of Remote File Inclusion (RFI) attack methods
+        like Host Doesn&#39;t Match Local Host.","severity":"CRITICAL","controlNumber":"931130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        file inclusion"},{"id":"72057594037935446","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Remote File Inclusion (RFI) Attack: Off-Domain Reference/Link","description":"This
+        is a (stricter) sibling of 931130","severity":"CRITICAL","controlNumber":"931131","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        file inclusion"}],"defaultGroup":false},{"controlGroup":"Remote Code Execution","predefinedInspectionControls":[{"id":"72057594037935449","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Windows PowerShell Command Found","description":"Detect
+        some common PowerShell commands, cmdlets and options. These commands should
+        be relatively uncommon in normal text, but potentially useful for code injection.","severity":"CRITICAL","controlNumber":"932120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"windows-powershell-commands.data","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935450","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Windows Powershell Alias Command Injection","description":"This
+        rule detect aliases of the common PowerShell","severity":"CRITICAL","controlNumber":"932125","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935451","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Expression Found","description":"This rule has
+        a stricter sibling: 932131 (PL2) that applies the same regex to User-Agent
+        and Referer","severity":"CRITICAL","controlNumber":"932130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935465","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Expression Found","description":"This is a stricter
+        sibling of rule 932130","severity":"CRITICAL","controlNumber":"932131","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935452","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Windows FOR/IF Command Found","description":"This rule
+        detect Regular expression in Windows FOR/IF Command","severity":"CRITICAL","controlNumber":"932140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935457","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Code Found","description":"This rule detect
+        Detect some common sequences found in shell commands and scripts","severity":"CRITICAL","controlNumber":"932160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"unix-shell.data","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935477","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Code Found in REQUEST_HEADERS","description":"This
+        rule detects Unix RCE in request headers Referer and User-Agent","severity":"CRITICAL","controlNumber":"932161","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"unix-shell.data","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935458","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Shellshock (CVE-2014-6271)","description":"This rule Detect
+        exploitation of Shellshock GNU Bash RCE vulnerability.","severity":"CRITICAL","controlNumber":"932170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935459","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Shellshock (CVE-2014-6271)","description":"This rule Detect
+        exploitation of Shellshock GNU Bash RCE vulnerability.","severity":"CRITICAL","controlNumber":"932171","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935460","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix shell alias invocation","description":"This rule Detects
+        Unix shell alias invocations in any context.","severity":"CRITICAL","controlNumber":"932175","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935461","modifiedTime":"1740244373","creationTime":"1740244373","name":"Restricted
+        File Upload Attempt","description":"This rule Detects attempts to upload a
+        file with a forbidden filename.","severity":"CRITICAL","controlNumber":"932180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"restricted-upload.data","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935481","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Wildcard bypass technique attempt","description":"When
+        Paranoia Level is set to 1 and 2, a Remote Command Execution could be exploited
+        bypassing rule 930120 (OS File Access Attempt)","severity":"CRITICAL","controlNumber":"932190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935466","modifiedTime":"1740244373","creationTime":"1740244373","name":"RCE
+        Bypass Technique","description":"This rule Block RCE Bypass using different
+        techniques - uninitialized variables, string concatenations, globbing patterns","severity":"CRITICAL","controlNumber":"932200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935467","modifiedTime":"1740244373","creationTime":"1740244373","name":"RCE
+        Bypass Technique","description":"This rule Block RCE Bypass using different
+        techniques - uninitialized variables, string concatenations, globbing patterns","severity":"CRITICAL","controlNumber":"932205","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935468","modifiedTime":"1740244373","creationTime":"1740244373","name":"RCE
+        Bypass Technique","description":"This rule Sibling of 932200 targeting the
+        Referer header","severity":"CRITICAL","controlNumber":"932206","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935471","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: SQLite System Command Execution","description":"This rule
+        prevents execution of SQLite CLI commands like .system and .shell","severity":"CRITICAL","controlNumber":"932210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935469","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection with pipe","description":"This rule
+        Sibling of 932200 targeting the Referer header","severity":"CRITICAL","controlNumber":"932220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935447","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection (2-3 chars)","description":"This
+        rule detects Unix command injections","severity":"CRITICAL","controlNumber":"932230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935464","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection","description":"This rule detects
+        Unix Command Injection","severity":"CRITICAL","controlNumber":"932231","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935478","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection","description":"Detect some common
+        sequences found in shell commands and scripts","severity":"CRITICAL","controlNumber":"932232","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935448","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection (command without evasion)","description":"This
+        rule detects Regular expression generated from regex-assembly","severity":"CRITICAL","controlNumber":"932235","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935475","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection (command without evasion)","description":"This
+        rule detects Unix RCE with and without prefix and words of any length","severity":"CRITICAL","controlNumber":"932236","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935479","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Code Found in REQUEST_HEADERS","description":"Detects
+        Unix shell code in request headers user-agent and referer only","severity":"CRITICAL","controlNumber":"932237","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935480","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Code Found in REQUEST_HEADERS","description":"Detects
+        Unix shell code in request headers user-agent and referer only","severity":"CRITICAL","controlNumber":"932238","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935476","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection found in user-agent or referer header","description":"This
+        rule detects Unix RCE in request headers Referer and User-Agent","severity":"CRITICAL","controlNumber":"932239","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935470","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Command Injection evasion attempt detected","description":"This
+        rule detect Remote Command Execution: Unix Command Injection evasion attempt
+        detected","severity":"CRITICAL","controlNumber":"932240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935454","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Direct Unix Command Execution","description":"This rule
+        detect Regular expression in Direct Unix Command","severity":"CRITICAL","controlNumber":"932250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935455","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Direct Unix Command Execution","description":"This rule
+        detect Regular expression in Direct Unix Command","severity":"CRITICAL","controlNumber":"932260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935453","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix Shell Expression Found","description":"This rule detect
+        Regular expression in Unix Shell Expression","severity":"CRITICAL","controlNumber":"932270","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935472","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: SMTP Command Execution","description":"This rule prevents
+        execution of SMTP related system commands","severity":"CRITICAL","controlNumber":"932300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935482","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: SMTP Command Execution","description":"This rule prevents
+        execution of SMTP related system commands.","severity":"CRITICAL","controlNumber":"932301","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935473","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: IMAP Command Execution","description":"This rule prevents
+        execution of IMAP4 related system commands","severity":"CRITICAL","controlNumber":"932310","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935483","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: IMAP Command Execution","description":"This rule prevents
+        execution of IMAP4 related system commands","severity":"CRITICAL","controlNumber":"932311","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935474","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: POP3 Command Execution","description":"This rule prevents
+        execution of POP3 related system commands","severity":"CRITICAL","controlNumber":"932320","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935484","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: POP3 Command Execution","description":"This rule prevents
+        execution of POP3 related system commands","severity":"CRITICAL","controlNumber":"932321","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935456","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix shell history invocation","description":"This rule
+        detect Unix shell history invocation","severity":"CRITICAL","controlNumber":"932330","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935485","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Unix shell history invocation","description":"This rule
+        is a stricter sibling of 932330","severity":"CRITICAL","controlNumber":"932331","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935462","modifiedTime":"1740244373","creationTime":"1740244373","name":"Restricted
+        File Upload Attempt","description":"This rule Detects Windows shell command
+        injections","severity":"CRITICAL","controlNumber":"932370","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"},{"id":"72057594037935463","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Windows Command Injection","description":"This rule detects
+        Windows shell command injections","severity":"CRITICAL","controlNumber":"932380","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Remote
+        Code Execution"}],"defaultGroup":false},{"controlGroup":"PHP Injection","predefinedInspectionControls":[{"id":"72057594037935486","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: PHP Open Tag Found","description":"Detects PHP open tags
+        &#34;&lt;?&#34; and &#34;&lt;?php&#34;","severity":"CRITICAL","controlNumber":"933100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935487","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: PHP Script File Upload Found","description":"Block file
+        uploads with filenames ending in PHP related extensions (.php, .phps, .phtml,
+        .php5 etc).","severity":"CRITICAL","controlNumber":"933110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935500","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: PHP Script File Upload Found","description":"This rule lock
+        file uploads with PHP related extensions (.php, .phps, .phtml, .php5 etc)
+        anywhere in the name, followed by a dot.","severity":"CRITICAL","controlNumber":"933111","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935488","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Configuration Directive Found","description":"Detects attempt
+        to access for PHP Configuration Directives.","severity":"CRITICAL","controlNumber":"933120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"php-config-directives.data","controlGroup":"PHP
+        Injection"},{"id":"72057594037935489","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Variables Found","description":"Detects attempt to access
+        for PHP variables.","severity":"CRITICAL","controlNumber":"933130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"php-variables.data","controlGroup":"PHP
+        Injection"},{"id":"72057594037935498","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Variables Found with additional check","description":"This
+        rule does additional check for parameters to many PHP variables.","severity":"CRITICAL","controlNumber":"933131","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935490","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: I/O Stream Found","description":"The &#34;php://&#34; syntax
+        can be used to refer to various objects, such as local files (for LFI),  remote
+        urls (for RFI), or standard input/request body. Its occurrence indicates a
+        possible attempt to either inject PHP code or exploit a file inclusion vulnerability
+        in a PHP web app.","severity":"CRITICAL","controlNumber":"933140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935492","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: High-Risk PHP Function Name Found","description":"This rule
+        checks for a  list of function names which are highly indicative of a PHP
+        injection attack","severity":"CRITICAL","controlNumber":"933150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"php-function-names-933150.data","controlGroup":"PHP
+        Injection"},{"id":"72057594037935497","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: High-Risk PHP Function Name Found","description":"This rule
+        checks for a bigger list of function names which are highly indicative of
+        a PHP injection attack.","severity":"CRITICAL","controlNumber":"933151","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"php-function-names-933151.data","controlGroup":"PHP
+        Injection"},{"id":"72057594037935493","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: High-Risk PHP Function Call Found","description":"This rule
+        checks for a  list of function names which are highly indicative of a PHP
+        injection attack with words which are common in PHP code.","severity":"CRITICAL","controlNumber":"933160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935499","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Low-Value PHP Function Call Found","description":"This rule
+        checks for a  list of function names which are highly indicative of a PHP
+        injection attack with words with short or trivial names.","severity":"CRITICAL","controlNumber":"933161","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935494","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Serialized Object Injection","description":"Detects PHP
+        Object Injection which is an application level vulnerability that could allow
+        an attacker to perform different kinds of malicious attacks, such as Code
+        Injection, SQL Injection, Path Traversal and Application Denial of Service,
+        depending on the context.","severity":"CRITICAL","controlNumber":"933170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935495","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Serialized Object Injection","description":"Detects PHP
+        Object Injection which is an application level vulnerability that could allow
+        an attacker to perform different kinds of malicious attacks, such as Code
+        Injection, SQL Injection, Path Traversal and Application Denial of Service,
+        depending on the context.","severity":"CRITICAL","controlNumber":"933180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935501","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: PHP Closing Tag Found","description":"This rule detects
+        PHP Closing Tagin cookies , argument name and values.","severity":"CRITICAL","controlNumber":"933190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935491","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Wrapper scheme detected","description":"This rule detects
+        PHP wrapper scheme. PHP comes with many built-in wrappers for various URL-style
+        protocols for use with the filesystem functions such as fopen(), copy(), file_exists()
+        and filesize(). Abusing of PHP wrappers like phar:// could lead to RCE.","severity":"CRITICAL","controlNumber":"933200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935496","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Variable Function Call Found with bypass attempt","description":"Detects
+        PHP Functions: Variable Function Prevent Bypass.","severity":"CRITICAL","controlNumber":"933210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"},{"id":"72057594037935502","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        Injection Attack: Variable Function Call Found","description":"This rule is
+        a stricter sibling of 933210","severity":"CRITICAL","controlNumber":"933211","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"PHP
+        Injection"}],"defaultGroup":false},{"controlGroup":"Attack generic","predefinedInspectionControls":[{"id":"72057594037935503","modifiedTime":"1740244373","creationTime":"1740244373","name":"Node.js
+        Injection Attack 1/2","description":"Node.js Injection Attack 1/2","severity":"CRITICAL","controlNumber":"934100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935509","modifiedTime":"1740244373","creationTime":"1740244373","name":"Node.js
+        Injection Attack 2/2","description":"Node.js Injection Attack 2/2","severity":"CRITICAL","controlNumber":"934101","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935504","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Server Side Request Forgery (SSRF) Attack: Cloud provider metadata URL in
+        Parameter","description":"Node.js Injection Attack 1/2","severity":"CRITICAL","controlNumber":"934110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"ssrf.data","controlGroup":"Attack
+        generic"},{"id":"72057594037935510","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Server Side Request Forgery (SSRF) Attack: URL Parameter using IP Address","description":"Possible
+        Server Side Request Forgery (SSRF) Attack: URL Parameter using IP Address","severity":"CRITICAL","controlNumber":"934120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935505","modifiedTime":"1740244373","creationTime":"1740244373","name":"JavaScript
+        Prototype Pollution","description":"JavaScript Prototype Pollution","severity":"CRITICAL","controlNumber":"934130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935511","modifiedTime":"1740244373","creationTime":"1740244373","name":"Perl
+        Injection Attack","description":"Perl Injection Attack","severity":"CRITICAL","controlNumber":"934140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935506","modifiedTime":"1740244373","creationTime":"1740244373","name":"Ruby
+        Injection Attack","description":"This rule detects Ruby Injection Attack","severity":"CRITICAL","controlNumber":"934150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935507","modifiedTime":"1740244373","creationTime":"1740244373","name":"Node.js
+        DoS attack","description":"Node.js DoS attack","severity":"CRITICAL","controlNumber":"934160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"},{"id":"72057594037935508","modifiedTime":"1740244373","creationTime":"1740244373","name":"PHP
+        data scheme attack","description":"PHP data scheme attack","severity":"CRITICAL","controlNumber":"934170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Attack
+        generic"}],"defaultGroup":false},{"controlGroup":"XSS","predefinedInspectionControls":[{"id":"72057594037935512","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Attack Detected via libinjection","description":"This rule detects Cross-site
+        Scripting attack using pre defined libraries in cookies, argument etc.","severity":"CRITICAL","controlNumber":"941100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935537","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Attack Detected via libinjection","description":"This rule checks for Attack
+        Detected via libinjection.","severity":"CRITICAL","controlNumber":"941101","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935513","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Filter - Category 1: Script Tag Vector","description":"This rule detects Cross-site
+        Scripting attack using &lt;script tag.","severity":"CRITICAL","controlNumber":"941110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935538","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Filter - Category 2: Event Handler Vector","description":"This rule checks
+        for Filter - Category 2: Event Handler Vector.","severity":"CRITICAL","controlNumber":"941120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935514","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Filter - Category 3: Attribute Vector","description":"This rule detects Cross-site
+        Scripting attack using HTML Attributes.","severity":"CRITICAL","controlNumber":"941130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935515","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Filter - Category 4: Javascript URI Vector","description":"This rule detects
+        XSS vectors making use of javascript uri and tags, e.g., &lt;p style=&#34;background:url(javascript:alert(1))&#34;&gt;","severity":"CRITICAL","controlNumber":"941140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935539","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        Filter - Category 5: Disallowed HTML Attributes","description":"This rule
+        checks for bypass by using Disallowed HTML Attributes","severity":"CRITICAL","controlNumber":"941150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935516","modifiedTime":"1740244373","creationTime":"1740244373","name":"NoScript
+        XSS InjectionChecker: HTML Injection","description":"This rule detects XSS
+        vectors making use of NoScript Injection in HTML injection.","severity":"CRITICAL","controlNumber":"941160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935517","modifiedTime":"1740244373","creationTime":"1740244373","name":"NoScript
+        XSS InjectionChecker: Attribute Injection","description":"This rule detects
+        XSS vectors making use of NoScript Injection in attribute injection.","severity":"CRITICAL","controlNumber":"941170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935518","modifiedTime":"1740244373","creationTime":"1740244373","name":"Node-Validator
+        Blacklist Keywords","description":"This rule detects XSS vectors making use
+        of blacklisted keywords which are commonly used.","severity":"CRITICAL","controlNumber":"941180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935540","modifiedTime":"1740244373","creationTime":"1740244373","name":"Node-Validator
+        Deny List Keywords","description":"This rule checks for bypass Node-Validator
+        Deny List Keywords","severity":"CRITICAL","controlNumber":"941181","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935519","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - style sheet","description":"This rule detects XSS attack for
+        IE using style sheet attributes.","severity":"CRITICAL","controlNumber":"941190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935520","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - vml frames","description":"This rule detects XSS attack for
+        IE using VML frames.","severity":"CRITICAL","controlNumber":"941200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935521","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - javascript obfuscated","description":"This rule detects XSS
+        attack for IE using javascript attributes.","severity":"CRITICAL","controlNumber":"941210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935522","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - vbscript obfuscated","description":"This rule detects XSS attack
+        for IE using vbscript attributes.","severity":"CRITICAL","controlNumber":"941220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935523","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - embed tag","description":"This rule detects XSS attack for IE
+        using embed tag.","severity":"CRITICAL","controlNumber":"941230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935524","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - import attribute","description":"This rule detects XSS attack
+        for IE using import attribute.","severity":"CRITICAL","controlNumber":"941240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935525","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - Encoded Attack Detected","description":"This rule detects XSS
+        attack for IE using encoded attributes.","severity":"CRITICAL","controlNumber":"941250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935526","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - meta tag","description":"This rule detects XSS attack for IE
+        using meta tag.","severity":"CRITICAL","controlNumber":"941260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935527","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - link href","description":"This rule detects XSS attack for IE
+        using link href tag.","severity":"CRITICAL","controlNumber":"941270","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935528","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - base tag","description":"This rule detects XSS attack for IE
+        using base href tag.","severity":"CRITICAL","controlNumber":"941280","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935529","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - applet tag","description":"This rule detects XSS attack for
+        IE using applet tag.","severity":"CRITICAL","controlNumber":"941290","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935530","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - object tag","description":"This rule detects XSS attack for
+        IE using object type tag.","severity":"CRITICAL","controlNumber":"941300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935531","modifiedTime":"1740244373","creationTime":"1740244373","name":"US-ASCII
+        Malformed Encoding XSS Filter - Attack Detected","description":"This rule
+        checks for US-ASCII encoding bypass for XSS filter evasion.","severity":"CRITICAL","controlNumber":"941310","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935541","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        XSS Attack Detected - HTML Tag Handler","description":"This rule checks for
+        bypass by HTML Tag Handler","severity":"CRITICAL","controlNumber":"941320","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935542","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - Attack Detected","description":"This rule checks for bypass
+        by IE XSS Filters","severity":"CRITICAL","controlNumber":"941330","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935543","modifiedTime":"1740244373","creationTime":"1740244373","name":"IE
+        XSS Filters - Attack Detected 2","description":"This rule checks for bypass
+        by IE XSS Filters 2","severity":"CRITICAL","controlNumber":"941340","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935532","modifiedTime":"1740244373","creationTime":"1740244373","name":"UTF-7
+        Encoding IE XSS - Attack Detected","description":"This rule checks for UTF-7
+        encoding XSS filter evasion for IE.","severity":"CRITICAL","controlNumber":"941350","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935533","modifiedTime":"1740244373","creationTime":"1740244373","name":"JSFuck
+        / Hieroglyphy obfuscation detected","description":"This rule Defend against
+        JSFuck and Hieroglyphy obfuscation of Javascript code.","severity":"CRITICAL","controlNumber":"941360","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935534","modifiedTime":"1740244373","creationTime":"1740244373","name":"JavaScript
+        global variable found","description":"This rule checks for bypass by using
+        JavaScript global variables.","severity":"CRITICAL","controlNumber":"941370","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935544","modifiedTime":"1740244373","creationTime":"1740244373","name":"AngularJS
+        client side template injection detected","description":"This rule checks for
+        bypass AngularJS client side template injection detected","severity":"CRITICAL","controlNumber":"941380","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935535","modifiedTime":"1740244373","creationTime":"1740244373","name":"Javascript
+        method detected","description":"This rule checks for bypass by using JavaScript
+        method.","severity":"CRITICAL","controlNumber":"941390","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"},{"id":"72057594037935536","modifiedTime":"1740244373","creationTime":"1740244373","name":"XSS
+        JavaScript function without parentheses","description":"This rule checks for
+        bypass by using JavaScript function without parentheses.","severity":"CRITICAL","controlNumber":"941400","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"XSS"}],"defaultGroup":false},{"controlGroup":"SQL
+        Injection","predefinedInspectionControls":[{"id":"72057594037935545","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack Detected via libinjection","description":"This rule detects
+        SQL Injection attack using pre defined libraries in cookies, argument etc.","severity":"CRITICAL","controlNumber":"942100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935593","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack Detected via libinjection","description":"This rule detects
+        SQL Injection Attack Detected via libinjection.","severity":"CRITICAL","controlNumber":"942101","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935565","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: SQL Operator Detected","description":"This rule identifies
+        common initial SQLi probing requests where attackers insert/append SQL Operators
+        to the existing normal payload to see how the app/db responds.","severity":"CRITICAL","controlNumber":"942120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935566","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: SQL Boolean-based attack detected","description":"This rule
+        identifies SQL Boolean-based attack.","severity":"CRITICAL","controlNumber":"942130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935567","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: SQL Boolean-based attack detected","description":"This rule
+        identifies SQL Boolean-based attack.","severity":"CRITICAL","controlNumber":"942131","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935546","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: Common DB Names Detected","description":"This rule identifies
+        common DB names insertion to perform SQL Injection.","severity":"CRITICAL","controlNumber":"942140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935568","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: SQL function name detected","description":"This rule identifies
+        SQL function name detected.","severity":"CRITICAL","controlNumber":"942150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935547","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: Uncommon SQL Strings Detected","description":"This rule
+        identifies SQL function names in request headers referer and user-agent","severity":"CRITICAL","controlNumber":"942151","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935594","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack: SQL function name detected","description":"This rule detects
+        SQL Injection Attack: SQL function name.","severity":"CRITICAL","controlNumber":"942152","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935548","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        blind sqli tests using sleep() or benchmark()","description":"This rule detects
+        sqli tests using sleep() or benchmark() to perform blind SQL Injection attack.","severity":"CRITICAL","controlNumber":"942160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935549","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        SQL benchmark and sleep injection attempts including conditional queries","description":"This
+        rule detects SQL benchmark and sleep injection attempts including conditional
+        queries.","severity":"CRITICAL","controlNumber":"942170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935569","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 1/3","description":"This rule detects
+        basic SQL authentication bypass attempts.","severity":"CRITICAL","controlNumber":"942180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935550","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MSSQL code execution and information gathering attempts","description":"This
+        rule detects MSSQL code execution and information gathering attempts.","severity":"CRITICAL","controlNumber":"942190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935570","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL comment-/space-obfuscated injections and backtick termination","description":"This
+        rule detects MySQL comment-/space-obfuscated injections and backtick termination.","severity":"CRITICAL","controlNumber":"942200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935571","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        chained SQL injection attempts 1/2","description":"This rule detects chained
+        SQL injection attempts.","severity":"CRITICAL","controlNumber":"942210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935551","modifiedTime":"1740244373","creationTime":"1740244373","name":"Looking
+        for intiger overflow attacks with \"magic number\" crash","description":"This
+        rule detects  intiger overflow attacks with &#34;magic number&#34; crash.","severity":"CRITICAL","controlNumber":"942220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935552","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        conditional SQL injection attempts","description":"This rule detects conditional
+        SQL injection attempts.","severity":"CRITICAL","controlNumber":"942230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935553","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL charset switch and MSSQL DoS attempts","description":"It detects MySQL
+        charset switch and MSSQL DoS attempts.","severity":"CRITICAL","controlNumber":"942240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935554","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MATCH AGAINST, MERGE and EXECUTE IMMEDIATE injections","description":"It detects
+        MATCH AGAINST, MERGE and EXECUTE IMMEDIATE injections.","severity":"CRITICAL","controlNumber":"942250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935596","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        HAVING injections","description":"It detects having injection in conjuction
+        with non text chars.","severity":"CRITICAL","controlNumber":"942251","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935572","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 2/3","description":"This rule detects
+        basic SQL authentication bypass attempts with select, from, union, like etc
+        keywords.","severity":"CRITICAL","controlNumber":"942260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935555","modifiedTime":"1740244373","creationTime":"1740244373","name":"Looking
+        for basic sql injection. Common attack string for mysql, oracle and others","description":"This
+        rule checks for basic sql injection and common attack string for mysql, oracle
+        and others DBs.","severity":"CRITICAL","controlNumber":"942270","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935556","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts","description":"This
+        rule detects Postgres pg_sleep injection, waitfor delay attacks and database
+        shutdown attempts.","severity":"CRITICAL","controlNumber":"942280","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935557","modifiedTime":"1740244373","creationTime":"1740244373","name":"Finds
+        basic MongoDB SQL injection attempts","description":"This rule checks for
+        basic MongoDB SQL injection attempts.","severity":"CRITICAL","controlNumber":"942290","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935573","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL comments, conditions and ch(a)r injections","description":"This rule
+        detects MySQL comments, conditions and ch(a)r injections.","severity":"CRITICAL","controlNumber":"942300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935574","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        chained SQL injection attempts 2/2","description":"This rule detects chained
+        SQL injection attempts with select, order by, from, while, if etc keyowrds.","severity":"CRITICAL","controlNumber":"942310","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935558","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL and PostgreSQL stored procedure/function injections","description":"This
+        rule detects MySQL and PostgreSQL stored procedure/function injections","severity":"CRITICAL","controlNumber":"942320","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935595","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL and PostgreSQL stored procedure/function injections","description":"This
+        rule detects MySQL and PostgreSQL stored procedure/function injections.","severity":"CRITICAL","controlNumber":"942321","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935575","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        classic SQL injection probings 1/2","description":"This rule checks for classic
+        SQL injection probings.","severity":"CRITICAL","controlNumber":"942330","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935576","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 3/3","description":"This rule detects
+        basic SQL authentication bypass attempts using div,like,between,sounds like
+        etc keywords.","severity":"CRITICAL","controlNumber":"942340","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935559","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        MySQL UDF injection and other data/structure manipulation attempts","description":"This
+        rule detects MySQL UDF injection and other data/structure manipulation attempts.","severity":"CRITICAL","controlNumber":"942350","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935560","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        concatenated basic SQL injection and SQLLFI attempts","description":"This
+        rule detects concatenated basic SQL injection and SQLLFI attempts for advanced
+        SQL injection attempts.","severity":"CRITICAL","controlNumber":"942360","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935577","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL injection based on keyword alter or union","description":"This rule
+        detects basic SQL injection based on keyword alter or union.","severity":"CRITICAL","controlNumber":"942361","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935578","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        concatenated basic SQL injection and SQLLFI attempts","description":"This
+        rule detects Detects concatenated basic SQL injection and SQLLFI.","severity":"CRITICAL","controlNumber":"942362","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935579","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        classic SQL injection probings 2/3","description":"This rule detects classic
+        SQL injection probings using between, like, xor, or etc keywords.","severity":"CRITICAL","controlNumber":"942370","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935580","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack - Function Names","description":"This rule detects SQL Injection
+        Attack using SQL Function Names.","severity":"CRITICAL","controlNumber":"942380","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935581","modifiedTime":"1740244373","creationTime":"1740244373","name":"Boolean
+        based SQL Injection Attack","description":"This rule detects Boolean based
+        SQL Injection Attack using or, xor keywords.","severity":"CRITICAL","controlNumber":"942390","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935582","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injectoin attack with AND keyword detected","description":"This rule detects
+        Boolean based SQL Injection Attack using AND keyword.","severity":"CRITICAL","controlNumber":"942400","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935583","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack with uncommon keywords","description":"It detects SQL Injection
+        Attack with uncommon keyword appearences in attack.","severity":"CRITICAL","controlNumber":"942410","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935587","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Comment Sequence Detected","description":"This rule detects SQL Comment Sequence.","severity":"CRITICAL","controlNumber":"942440","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935588","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Hex Encoding Identified","description":"This rule identifies SQL Hex Encoding
+        for SQL Injection attacks.","severity":"CRITICAL","controlNumber":"942450","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935584","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack by DB creation attempt","description":"This rule detects
+        SQL Injection Attack by DB creation attempt.","severity":"CRITICAL","controlNumber":"942470","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935585","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Injection Attack Data fetch attempt","description":"This rule detects SQL
+        Injection Attack by Data fetch attempt.","severity":"CRITICAL","controlNumber":"942480","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935597","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        classic SQL injection probings 3/3","description":"This rule detects classic
+        SQL injection probings using single and double quotes.","severity":"CRITICAL","controlNumber":"942490","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935561","modifiedTime":"1740244373","creationTime":"1740244373","name":"MySQL
+        in-line comment detected","description":"This rule detects MySQL in-line comment
+        appearances.","severity":"CRITICAL","controlNumber":"942500","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935589","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQLi
+        bypass attempt by ticks or backticks detected","description":"This rule detects
+        SQL Injection bypass attempt by ticks or backticks.","severity":"CRITICAL","controlNumber":"942510","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935590","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 4.0/4","description":"This rule detects
+        SQL authentication bypass attempts 4.0/4.","severity":"CRITICAL","controlNumber":"942520","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935591","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 4.1/4","description":"This rule detects
+        SQL authentication bypass attempts 4.1/4.","severity":"CRITICAL","controlNumber":"942521","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935592","modifiedTime":"1740244373","creationTime":"1740244373","name":"Detects
+        basic SQL authentication bypass attempts 4.1/4","description":"This rule detects
+        SQL authentication bypass attempts 4.1/4.","severity":"CRITICAL","controlNumber":"942522","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935602","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQLi
+        bypass attempt by ticks detected","description":"This rule detects SQL Injection
+        bypass attempt by ticks.","severity":"CRITICAL","controlNumber":"942530","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935562","modifiedTime":"1740244373","creationTime":"1740244373","name":"SQL
+        Authentication bypass (split query)","description":"This rule detects SQL
+        Authentication bypass","severity":"CRITICAL","controlNumber":"942540","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935564","modifiedTime":"1740244373","creationTime":"1740244373","name":"JSON-Based
+        SQL Injection","description":"This rule detects JSON-Based SQL Injection.","severity":"CRITICAL","controlNumber":"942550","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"},{"id":"72057594037935563","modifiedTime":"1740244373","creationTime":"1740244373","name":"MySQL
+        Scientific Notation payload detected","description":"This rule detects MySQL
+        Scientific Notation payload.","severity":"CRITICAL","controlNumber":"942560","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"SQL
+        Injection"}],"defaultGroup":false},{"controlGroup":"Session Fixation","predefinedInspectionControls":[{"id":"72057594037935605","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Session Fixation Attack: Setting Cookie Values in HTML","description":"This
+        rule checks for possible Session Fixation Attack by setting Cookie Values
+        in Request.","severity":"CRITICAL","controlNumber":"943100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Session
+        Fixation"},{"id":"72057594037935606","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Session Fixation Attack: SessionID Parameter Name with Off-Domain Referer","description":"This
+        rule checks for possible Session Fixation Attack by checking presense of SessionID
+        Parameter Name with Off-Domain Referer.","severity":"CRITICAL","controlNumber":"943110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Session
+        Fixation"},{"id":"72057594037935607","modifiedTime":"1740244373","creationTime":"1740244373","name":"Possible
+        Session Fixation Attack: SessionID Parameter Name with No Referer","description":"This
+        rule checks for possible Session Fixation Attack with SessionID Parameter
+        Name with No Referer present.","severity":"CRITICAL","controlNumber":"943120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Session
+        Fixation"}],"defaultGroup":false},{"controlGroup":"Deserialization Issues","predefinedInspectionControls":[{"id":"72057594037935608","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Suspicious Java class detected","description":"This rule
+        checks for Remote Command Execution attmpt by inserting Suspicious Java class.","severity":"CRITICAL","controlNumber":"944100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935609","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Java process spawn (CVE-2017-9805)","description":"This
+        rule checks for Remote Command Execution attempt using Java process spawn
+        for (CVE-2017-9805).","severity":"CRITICAL","controlNumber":"944110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935610","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Java serialization (CVE-2015-4852)","description":"This
+        rule checks for Remote Command Execution attemot by doing Java serialization
+        for (CVE-2015-4852) in conjuctoin with processbuilder or runtime keywords.
+        It check for Magic bytes and payload included possibly RCE vulnerable classes
+        and process execution methods.","severity":"CRITICAL","controlNumber":"944120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935611","modifiedTime":"1740244373","creationTime":"1740244373","name":"Suspicious
+        Java class detected","description":"This rule checks for Suspicious Java class
+        insertion.","severity":"CRITICAL","controlNumber":"944130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"java-classes.data","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935612","modifiedTime":"1740244373","creationTime":"1740244373","name":"Java
+        Injection Attack: Java Script File Upload Found","description":"This rule
+        checks Java Script File Upload Found","severity":"CRITICAL","controlNumber":"944140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935613","modifiedTime":"1740244373","creationTime":"1740244373","name":"Potential
+        Remote Command Execution: Log4j / Log4shell","description":"This rule checks
+        Potential Remote Command Execution: Log4j / Log4shell.","severity":"CRITICAL","controlNumber":"944150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935614","modifiedTime":"1740244373","creationTime":"1740244373","name":"Potential
+        Remote Command Execution: Log4j / Log4shell","description":"This rule checks
+        Potential Remote Command Execution: Log4j / Log4shell.","severity":"CRITICAL","controlNumber":"944151","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935621","modifiedTime":"1740244373","creationTime":"1740244373","name":"Potential
+        Remote Command Execution: Log4j / Log4shell","description":"This rule checks
+        Potential Remote Command Execution: Log4j / Log4shell.","severity":"CRITICAL","controlNumber":"944152","version":"OWASP_CRS/4.8.0","paranoiaLevel":"4","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935615","modifiedTime":"1740244373","creationTime":"1740244373","name":"Magic
+        bytes Detected, probable java serialization in use","description":"This rule
+        checks for Magic bytes as probable java serialization attempt. It detects
+        exploitation of &#34;Java deserialization&#34; Apache Commons.","severity":"CRITICAL","controlNumber":"944200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935616","modifiedTime":"1740244373","creationTime":"1740244373","name":"Magic
+        bytes Detected Base64 Encoded, probable java serialization in use","description":"This
+        rule checks for Base64 encoded Magic bytes with padding encoded in Base64
+        as probable java serialization attempt.","severity":"CRITICAL","controlNumber":"944210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935617","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Java serialization (CVE-2015-4852)","description":"This
+        rule checks for Remote Command Execution attemot by doing Java serialization
+        for (CVE-2015-4852). It check for Magic bytes and payload included possibly
+        RCE vulnerable classes and process execution methods.","severity":"CRITICAL","controlNumber":"944240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935618","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Suspicious Java method detected","description":"This rule
+        detects Remote Command Execution attempt with Suspicious Java method.","severity":"CRITICAL","controlNumber":"944250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935619","modifiedTime":"1740244373","creationTime":"1740244373","name":"Remote
+        Command Execution: Malicious class-loading payload","description":"This rule
+        checks Malicious class-loading payload.","severity":"CRITICAL","controlNumber":"944260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"},{"id":"72057594037935620","modifiedTime":"1740244373","creationTime":"1740244373","name":"Base64
+        encoded string matched suspicious keyword","description":"This rule checks
+        for Base64 encoded string matched suspicious keyword.","severity":"CRITICAL","controlNumber":"944300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"3","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Deserialization
+        Issues"}],"defaultGroup":false},{"controlGroup":"Anomalies","predefinedInspectionControls":[{"id":"72057594037935624","modifiedTime":"1740244373","creationTime":"1740244373","name":"The
+        Application Returned a 500-Level Status Code","description":"This rule blocks
+        response if server returned with 500-Level status code with error.","severity":"ERROR","controlNumber":"950100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037935622","modifiedTime":"1740244373","creationTime":"1740244373","name":"Directory
+        Listing","description":"This rule blocks directory listing attempt.","severity":"ERROR","controlNumber":"950130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037935623","modifiedTime":"1740244373","creationTime":"1740244373","name":"CGI
+        source code leakage","description":"This rule blockes CGI source code leakage.","severity":"ERROR","controlNumber":"950140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037936501","modifiedTime":"1751125874","creationTime":"1751125874","name":"Microsoft
+        access SQL information leakage","description":"951110 | Microsoft access SQL
+        information leakage","severity":"CRITICAL","controlNumber":"951110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037936502","modifiedTime":"1751125874","creationTime":"1751125874","name":"Oracle
+        SQL information leakage","description":"951120 | Oracle SQL information leakage","severity":"CRITICAL","controlNumber":"951120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037936503","modifiedTime":"1751125874","creationTime":"1751125874","name":"Mssql
+        SQL information leakage","description":"951220 | Mssql SQL information leakage","severity":"CRITICAL","controlNumber":"951220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037936504","modifiedTime":"1751125874","creationTime":"1751125874","name":"Mysql
+        SQL information leakage","description":"951230 | Mysql SQL information leakage","severity":"CRITICAL","controlNumber":"951230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037936505","modifiedTime":"1751125874","creationTime":"1751125874","name":"Java
+        source code leakage","description":"952100 | Java source code leakage","severity":"ERROR","controlNumber":"952100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"java-code-leakages.data","controlGroup":"Anomalies"},{"id":"72057594037936506","modifiedTime":"1751125874","creationTime":"1751125874","name":"Java
+        errors","description":"952110 | Java errors","severity":"ERROR","controlNumber":"952110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"PASS","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"java-errors.data","controlGroup":"Anomalies"},{"id":"72057594037935625","modifiedTime":"1740244373","creationTime":"1740244373","name":"Disclosure
+        of IIS install location","description":"This rule blockes IIS server installation
+        location appeared in response.","severity":"ERROR","controlNumber":"954100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037935626","modifiedTime":"1740244373","creationTime":"1740244373","name":"Application
+        Availability Error","description":"This rule blocks response if server error
+        appeared in response.","severity":"ERROR","controlNumber":"954110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"},{"id":"72057594037935627","modifiedTime":"1740244373","creationTime":"1740244373","name":"IIS
+        Information Leakage","description":"This rule blocks response if server error
+        appeared in response and information leakage found.","severity":"ERROR","controlNumber":"954120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"iis-errors.data","controlGroup":"Anomalies"},{"id":"72057594037935628","modifiedTime":"1740244373","creationTime":"1740244373","name":"IIS
+        Information Leakage with response status check","description":"This rule blocks
+        response if server error appeared in response and information leakage found
+        with status code other than 404 found.","severity":"ERROR","controlNumber":"954130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Anomalies"}],"defaultGroup":false},{"controlGroup":"Web
+        shells","predefinedInspectionControls":[{"id":"72057594037935629","modifiedTime":"1740244373","creationTime":"1740244373","name":"Web
+        shell detected","description":"This rule detects Web shell.","severity":"CRITICAL","controlNumber":"955100","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","attachment":"web-shells-php.data","controlGroup":"Web
+        shells"},{"id":"72057594037935630","modifiedTime":"1740244373","creationTime":"1740244373","name":"r57
+        web shell","description":"This rule detects r57 web shell.","severity":"CRITICAL","controlNumber":"955110","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935631","modifiedTime":"1740244373","creationTime":"1740244373","name":"WSO
+        web shell","description":"This rule detects WSO web shell.","severity":"CRITICAL","controlNumber":"955120","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935632","modifiedTime":"1740244373","creationTime":"1740244373","name":"b4tm4n
+        web shell","description":"This rule detects b4tm4n web shell.","severity":"CRITICAL","controlNumber":"955130","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935633","modifiedTime":"1740244373","creationTime":"1740244373","name":"Mini
+        Shell web shell","description":"This rule detects Mini Shell web shell.","severity":"CRITICAL","controlNumber":"955140","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935634","modifiedTime":"1740244373","creationTime":"1740244373","name":"Ashiyane
+        web shell","description":"This rule detects Ashiyane web shell.","severity":"CRITICAL","controlNumber":"955150","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935635","modifiedTime":"1740244373","creationTime":"1740244373","name":"Symlink_Sa
+        web shell","description":"This rule detects Symlink_Sa web shell.","severity":"CRITICAL","controlNumber":"955160","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935636","modifiedTime":"1740244373","creationTime":"1740244373","name":"CasuS
+        web shell","description":"This rule detects CasuS web shell.","severity":"CRITICAL","controlNumber":"955170","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935637","modifiedTime":"1740244373","creationTime":"1740244373","name":"GRP
+        WebShell","description":"This rule detects GRP WebShell.","severity":"CRITICAL","controlNumber":"955180","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935638","modifiedTime":"1740244373","creationTime":"1740244373","name":"NGHshell
+        web shell","description":"This rule detects NGHshell web shell.","severity":"CRITICAL","controlNumber":"955190","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935639","modifiedTime":"1740244373","creationTime":"1740244373","name":"SimAttacker
+        web shell","description":"This rule detects SimAttacker web shell.","severity":"CRITICAL","controlNumber":"955200","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935640","modifiedTime":"1740244373","creationTime":"1740244373","name":"Unknown
+        web shell","description":"This rule detects Unknown web shell.","severity":"CRITICAL","controlNumber":"955210","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935641","modifiedTime":"1740244373","creationTime":"1740244373","name":"lama''s''hell
+        web shell","description":"This rule detects lama&#39;s&#39;hell web shell.","severity":"CRITICAL","controlNumber":"955220","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935642","modifiedTime":"1740244373","creationTime":"1740244373","name":"lostDC
+        web shell","description":"This rule detects lostDC web shell.","severity":"CRITICAL","controlNumber":"955230","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935643","modifiedTime":"1740244373","creationTime":"1740244373","name":"Unknown
+        web shell","description":"This rule detects Unknown web shell.","severity":"CRITICAL","controlNumber":"955240","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935644","modifiedTime":"1740244373","creationTime":"1740244373","name":"Unknown
+        web shell","description":"This rule detects Unknown web shell.","severity":"CRITICAL","controlNumber":"955250","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935645","modifiedTime":"1740244373","creationTime":"1740244373","name":"Ru24PostWebShell
+        web shell","description":"This rule detects Ru24PostWebShell web shell.","severity":"CRITICAL","controlNumber":"955260","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935646","modifiedTime":"1740244373","creationTime":"1740244373","name":"s72
+        Shell web shell","description":"This rule detects s72 Shell web shell.","severity":"CRITICAL","controlNumber":"955270","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935647","modifiedTime":"1740244373","creationTime":"1740244373","name":"PhpSpy
+        web shel","description":"This rule detects PhpSpy web shel.","severity":"CRITICAL","controlNumber":"955280","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935648","modifiedTime":"1740244373","creationTime":"1740244373","name":"g00nshell
+        web shell","description":"This rule detects g00nshell web shell.","severity":"CRITICAL","controlNumber":"955290","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935649","modifiedTime":"1740244373","creationTime":"1740244373","name":"PuNkHoLic
+        shell web shell","description":"This rule detects PuNkHoLic shell web shell.","severity":"CRITICAL","controlNumber":"955300","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935650","modifiedTime":"1740244373","creationTime":"1740244373","name":"azrail
+        web shell","description":"This rule detects azrail web shell.","severity":"CRITICAL","controlNumber":"955310","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935651","modifiedTime":"1740244373","creationTime":"1740244373","name":"SmEvK_PaThAn
+        Shell web shell","description":"This rule detects SmEvK_PaThAn Shell web shell.","severity":"CRITICAL","controlNumber":"955320","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935652","modifiedTime":"1740244373","creationTime":"1740244373","name":"Shell
+        I web shell","description":"This rule detects Shell I web shell.","severity":"CRITICAL","controlNumber":"955330","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935653","modifiedTime":"1740244373","creationTime":"1740244373","name":"b374k
+        m1n1 web shell","description":"This rule detects b374k m1n1 web shell.","severity":"CRITICAL","controlNumber":"955340","version":"OWASP_CRS/4.8.0","paranoiaLevel":"1","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"},{"id":"72057594037935654","modifiedTime":"1740244373","creationTime":"1740244373","name":"webadmin.php
+        file manager","description":"This rule detects webadmin.php file manager.","severity":"CRITICAL","controlNumber":"955350","version":"OWASP_CRS/4.8.0","paranoiaLevel":"2","defaultAction":"BLOCK","controlType":"PREDEFINED","protocolType":"HTTP","controlGroup":"Web
+        shells"}],"defaultGroup":false}]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 05 Dec 2025 23:22:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '70'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f015ad28-90fb-91cd-9bf4-e628f7943a01
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4836'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

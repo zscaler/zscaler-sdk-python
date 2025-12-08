@@ -24,7 +24,6 @@ from zscaler.zcc.models.devices import ForceRemoveDevices
 from zscaler.zcc.models.devices import SetDeviceCleanupInfo
 from zscaler.zcc.models.devices import DeviceCleanup
 from zscaler.zcc.models.devices import DeviceDetails
-from zscaler.types import APIResult
 from datetime import datetime
 
 
@@ -98,19 +97,14 @@ class DevicesAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadDevices")
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             params=params,
             headers={"Accept": "*/*"}
         )
 
-        if error:
-            raise Exception("Error creating request for downloading devices.")
-
-        response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error:
-            raise error
+        response = self._request_executor.execute(request, return_raw_response=True)
         if response is None:
             raise Exception("No response received when downloading devices.")
 
@@ -186,19 +180,14 @@ class DevicesAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadServiceStatus")
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             params=params,
             headers={"Accept": "*/*"}
         )
 
-        if error:
-            raise Exception("Error creating request for downloading service status.")
-
-        response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error:
-            raise error
+        response = self._request_executor.execute(request, return_raw_response=True)
         if response is None:
             raise Exception("No response received when downloading devices.")
 
@@ -284,19 +273,14 @@ class DevicesAPI(APIClient):
         if "Time-Zone" in params:
             headers["Time-Zone"] = params.pop("Time-Zone")
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             params=params,
             headers=headers
         )
 
-        if error:
-            raise Exception("Error creating request for downloading disable reasons report.")
-
-        response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error:
-            raise error
+        response = self._request_executor.execute(request, return_raw_response=True)
         if response is None:
             raise Exception("No response received when downloading disable reasons report.")
 
@@ -310,7 +294,7 @@ class DevicesAPI(APIClient):
         return filename
 
     @zcc_param_mapper
-    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[List[Device]]:
+    def list_devices(self, query_params: Optional[dict] = None) -> List[Device]:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
 
@@ -334,7 +318,8 @@ class DevicesAPI(APIClient):
         Examples:
             Prints all devices in the Client Connector Portal to the console:
 
-            >>> device_list, _, err = client.zcc.devices.list_devices(
+            >>> try:
+            ...     device_list = client.zcc.devices.list_devices(
             ... query_params = {'username': 'jdoe@acme.com', "os_type": "3", 'page': 1, 'page_size': 1})
             >>> if err:
             ...     print(f"Error listing devices: {err}")
@@ -356,23 +341,13 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, Device)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_results()
-        except Exception as error:
-            return None, response, error
-
+        response = self._request_executor.execute(request, Device)
+        result = response.get_results()
         return result, response, None
 
-    def get_device_cleanup_info(self) -> APIResult[dict]:
+    def get_device_cleanup_info(self) -> DeviceCleanup:
         """
         Returns device cleanup sync information from the Client Connector Portal.
 
@@ -385,7 +360,8 @@ class DevicesAPI(APIClient):
         Examples:
             Prints all devices in the Client Connector Portal to the console:
 
-            >>> devices, _, err = client.zcc.devices.get_device_cleanup_info()
+            >>> try:
+            ...     devices = client.zcc.devices.get_device_cleanup_info()
             >>>     if err:
             ...         print(f"Error fetching device clean up: {err}")
             ...         return
@@ -403,23 +379,13 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, DeviceCleanup)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_results()
-        except Exception as error:
-            return None, response, error
-
+        response = self._request_executor.execute(request, DeviceCleanup)
+        result = response.get_results()
         return result, response, None
 
-    def update_device_cleanup_info(self, **kwargs) -> APIResult[dict]:
+    def update_device_cleanup_info(self, **kwargs) -> SetDeviceCleanupInfo:
         """
         Set Device Cleaup Information
 
@@ -427,12 +393,12 @@ class DevicesAPI(APIClient):
            N/A
 
         Returns:
-            tuple: A tuple containing the updated Device Cleaup Information, response, and error.
 
         Examples:
             Updated Device Cleaup Information:
 
-            >>> device, _, err = client.zcc.devices.update_device_cleanup_info(
+            >>> try:
+            ...     device = client.zcc.devices.update_device_cleanup_info(
             ...     active=1,
             ...     force_remove_type=1,
             ...     device_exceed_limit=16
@@ -454,21 +420,12 @@ class DevicesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, SetDeviceCleanupInfo)
+        result = SetDeviceCleanupInfo(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SetDeviceCleanupInfo)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SetDeviceCleanupInfo(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_device_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_device_details(self, query_params: Optional[dict] = None) -> DeviceDetails:
         """
        Lists device details of enrolled devices of your organization.
 
@@ -482,7 +439,8 @@ class DevicesAPI(APIClient):
         Examples:
             Prints device details in the Client Connector Portal to the console:
 
-            >>> details, _, err = client.zcc.devices.get_device_details()
+            >>> try:
+            ...     details = client.zcc.devices.get_device_details()
             >>> if err:
             ...     print(f"Error listing device details: {err}")
             ...     return
@@ -490,7 +448,8 @@ class DevicesAPI(APIClient):
 
             Prints device details in the Client Connector Portal to the console:
 
-            >>> details, _, err = client.zcc.devices.get_device_details(
+            >>> try:
+            ...     details = client.zcc.devices.get_device_details(
             ... query_params:{'username': 'jdoe'})
             >>> if err:
             ...     print(f"Error listing device details: {err}")
@@ -510,24 +469,18 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request)
         try:
             # Handle single object response directly since getDeviceDetails returns a single object
             result = DeviceDetails(self.form_response_body(response.get_body()))
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return DeviceDetails
+        return result
 
     @zcc_param_mapper
-    def remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> ForceRemoveDevices:
         """
         Remove of the devices from the Client Connector Portal.
 
@@ -573,30 +526,21 @@ class DevicesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             params=query_params
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ForceRemoveDevices)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ForceRemoveDevices(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, ForceRemoveDevices)
+        result = []
+        for item in response.get_results():
+            result.append(ForceRemoveDevices(self.form_response_body(item)))
+        return result
 
     @zcc_param_mapper
-    def force_remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def force_remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> ForceRemoveDevices:
         """
         Force remove of the devices from the Client Connector Portal.
 
@@ -642,29 +586,20 @@ class DevicesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             params=query_params
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, ForceRemoveDevices)
+        result = []
+        for item in response.get_results():
+            result.append(ForceRemoveDevices(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ForceRemoveDevices)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ForceRemoveDevices(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def remove_machine_tunnel(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def remove_machine_tunnel(self, query_params: Optional[dict] = None, **kwargs) -> Any:
         """
         Remove machine tunnel devices from the Client Connector Portal.
 
@@ -703,7 +638,7 @@ class DevicesAPI(APIClient):
         body = convert_keys_to_camel_case(kwargs or {})
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method,
             api_url,
             body=body,
@@ -711,16 +646,6 @@ class DevicesAPI(APIClient):
             params=query_params,
         )
 
-        if error:
-            return None, None, error
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None, response, error
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return None, response, error
-
+        response = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
         return result, response, None

@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.trusted_network import TrustedNetwork
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TrustedNetworksAPI(APIClient):
@@ -34,76 +33,38 @@ class TrustedNetworksAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_trusted_networks(self, query_params: Optional[dict] = None) -> APIResult[List[TrustedNetwork]]:
+    def list_trusted_networks(self, query_params: Optional[dict] = None) -> List[TrustedNetwork]:
         """
         Returns a list of all configured trusted networks.
 
-        Keyword Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page]`` {str}: Specifies the page number.
-
-                ``[query_params.page_size]`` {int}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+        Args:
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            list: A list of `TrustedNetwork` instances.
+            List[TrustedNetwork]: A list of TrustedNetwork instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Retrieve trusted networks with pagination parameters:
-
-            >>> network_list, _, err = client.zpa.trusted_networks.list_trusted_networks(
-            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing trusted networks: {err}")
-            ...     return
-            ... print(f"Total trusted networks found: {len(network_list)}")
-            ... for network in network_list:
-            ...     print(network.as_dict())
-
-            Retrieve posture profiles udid with:
-
-            >>> network_list, _, err = client.zpa.trusted_networks.list_trusted_networks()
-            ... if err:
-            ...     print(f"Error trusted networks: {err}")
-            ...     return
-            ... print("Extracted network_id values:")
-            ... for profile in network_list:
-            ...     if profile.network_id:
-            ...         print(profile.network_id)
+            >>> try:
+            ...     networks = client.zpa.trusted_networks.list_trusted_networks()
+            ...     for network in networks:
+            ...         print(network.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint_v2}
-            /network
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint_v2}/network")
 
         query_params = query_params or {}
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
+        response = self._request_executor.execute(request, TrustedNetwork)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        return [TrustedNetwork(self.form_response_body(item)) for item in response.get_results()]
 
-        response, error = self._request_executor.execute(request, TrustedNetwork)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrustedNetwork(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_network(self, network_id: str) -> APIResult[dict]:
+    def get_network(self, network_id: str) -> TrustedNetwork:
         """
         Returns information on the specified trusted network.
 
@@ -113,36 +74,20 @@ class TrustedNetworksAPI(APIClient):
         Returns:
             TrustedNetwork: The corresponding trusted network object.
 
+        Raises:
+            ZscalerAPIException: If the API request fails.
+
         Examples:
-            >>> fetched_network, _, err = client.zpa.trusted_networks.get_network('999999')
-            ... if err:
-            ...     print(f"Error fetching network by ID: {err}")
-            ...     return
-            ... print(fetched_network.network_id)
+            >>> try:
+            ...     network = client.zpa.trusted_networks.get_network('999999')
+            ...     print(network.network_id)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /network/{network_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/network/{network_id}")
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
+        response = self._request_executor.execute(request, TrustedNetwork)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, TrustedNetwork)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrustedNetwork(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return TrustedNetwork(self.form_response_body(response.get_body()))

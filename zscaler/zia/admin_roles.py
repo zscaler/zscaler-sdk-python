@@ -21,7 +21,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_roles import AdminRoles
 from zscaler.zia.models.admin_roles import PasswordExpiry
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AdminRolesAPI(APIClient):
@@ -35,7 +34,7 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
+    def list_roles(self, query_params: Optional[dict] = None) -> List[AdminRoles]:
         """
         Return a list of the configured admin roles in ZIA.
 
@@ -51,7 +50,6 @@ class AdminRolesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by admin role name.
 
         Returns:
-            tuple: (list of AdminRoles instances, Response, error)
 
         Examples:
             Get a list of all admin roles:
@@ -86,27 +84,17 @@ class AdminRolesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = [AdminRoles(self.form_response_body(item)) for item in response.get_results()]
-        except Exception as exc:
-            return (None, response, exc)
-
+        response = self._request_executor.execute(request)
+        results = [AdminRoles(self.form_response_body(item)) for item in response.get_results()]
         if local_search:
             lower_search = local_search.lower()
             results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def get_role(self, role_id: int) -> APIResult[AdminRoles]:
+    def get_role(self, role_id: int) -> AdminRoles:
         """
         Fetches a specific admin role by ID.
 
@@ -114,7 +102,6 @@ class AdminRolesAPI(APIClient):
             role_id (int): The unique identifier for the admin role .
 
         Returns:
-            tuple: A tuple containing (admin role  instance, Response, error).
 
         Examples:
             >>> fetched_role, _, error = client.zia.admin_roles.get_role(143783113)
@@ -134,22 +121,13 @@ class AdminRolesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminRoles)
+        result = AdminRoles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminRoles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminRoles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_role(self, **kwargs) -> APIResult[AdminRoles]:
+    def add_role(self, **kwargs) -> AdminRoles:
         """
         Creates a new ZIA admin roles.
 
@@ -250,7 +228,6 @@ class AdminRolesAPI(APIClient):
                     - `APIKEY_MANAGEMENT`: Supported Values: "READ_WRITE"
 
         Returns:
-            tuple: A tuple containing the newly added admin roles, response, and error.
 
         Examples:
 
@@ -356,26 +333,17 @@ class AdminRolesAPI(APIClient):
         if "feature_permissions" in body and isinstance(body["feature_permissions"], dict):
             body["featurePermissions"] = body.pop("feature_permissions")
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminRoles)
+        result = AdminRoles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminRoles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminRoles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_role(self, role_id: int, **kwargs) -> APIResult[AdminRoles]:
+    def update_role(self, role_id: int, **kwargs) -> AdminRoles:
         """
         Updates information for the specified ZIA admin role.
 
@@ -383,7 +351,6 @@ class AdminRolesAPI(APIClient):
             role_id (int): The unique ID for the admin role.
 
         Returns:
-            tuple: A tuple containing the updated admin role, response, and error.
 
         Examples:
 
@@ -491,25 +458,16 @@ class AdminRolesAPI(APIClient):
         if "feature_permissions" in body and isinstance(body["feature_permissions"], dict):
             body["featurePermissions"] = body.pop("feature_permissions")
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AdminRoles)
+        result = AdminRoles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AdminRoles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AdminRoles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_role(self, role_id: int) -> APIResult[None]:
+    def delete_role(self, role_id: int) -> None:
         """
         Deletes the specified admin roles.
 
@@ -517,7 +475,6 @@ class AdminRolesAPI(APIClient):
             role_id (str): The unique identifier of the admin roles.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             >>> _, _, error = client.zia.admin_roles.delete_role(143783113)
@@ -536,23 +493,17 @@ class AdminRolesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def get_password_expiry_settings(self) -> APIResult[PasswordExpiry]:
+    def get_password_expiry_settings(self) -> PasswordExpiry:
         """
         Retrieves the password expiration information for all the admins
 
         Note: This method is not compatible with Zidentity enabled Tenants
 
         Returns:
-            tuple: A tuple containing:
                 - PasswordExpiry: The current password expiry settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -560,7 +511,8 @@ class AdminRolesAPI(APIClient):
         Examples:
             Retrieves the password expiration information for all the admins
 
-            >>> settings, _, err = client.zia.admin_roles.get_password_expiry_settings()
+            >>> try:
+            ...     settings = client.zia.admin_roles.get_password_expiry_settings()
             >>> if err:
             ...     print(f"Error fetching password expiry settings: {err}")
             ...     return
@@ -575,23 +527,17 @@ class AdminRolesAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = PasswordExpiry(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_password_expiry_settings(self, **kwargs) -> APIResult[PasswordExpiry]:
+    def update_password_expiry_settings(self, **kwargs) -> PasswordExpiry:
         """
         Updates the password expiration information for all the admins.
 
@@ -603,7 +549,6 @@ class AdminRolesAPI(APIClient):
                 - password_expiry_days (int): Password expiration duration, calculated in days
 
         Returns:
-            tuple: A tuple containing:
                 - PasswordExpiry: The updated password expiry settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the update failed; otherwise, `None`.
@@ -611,7 +556,8 @@ class AdminRolesAPI(APIClient):
         Examples:
             Update advanced threat protection settings by blocking specific threats:
 
-            >>> settings, _, err = client.zia.admin_roles.update_password_expiry_settings(
+            >>> try:
+            ...     settings = client.zia.admin_roles.update_password_expiry_settings(
             ...     password_expiration_enabled = True,
             ...     password_expiry_days = '90',
             ... )
@@ -632,20 +578,14 @@ class AdminRolesAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PasswordExpiry)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, PasswordExpiry)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = PasswordExpiry(self.form_response_body(response.get_body()))
             else:
                 result = PasswordExpiry()
         except Exception as error:
-            return (None, response, error)
+            return PasswordExpiry
 
-        return (result, response, None)
+        return result

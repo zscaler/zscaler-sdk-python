@@ -38,7 +38,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gre_tunnels(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficGRETunnel]]:
+    def list_gre_tunnels(self, query_params: Optional[dict] = None) -> List[TrafficGRETunnel]:
         """
         Returns the list of all configured GRE tunnels.
 
@@ -54,12 +54,12 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         Examples:
             List configured GRE tunnels with default settings:
 
-        >>> tunnels_list, _, err = client.zia.gre_tunnel.list_gre_tunnels(
+        >>> try:
+            ...     tunnels_list = client.zia.gre_tunnel.list_gre_tunnels(
             query_params={'page': 1, 'page_size': 100}
         )
-        ... if err:
-        ...     print(f"Error listing tunnels: {err}")
-        ...     return
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... for tunnel in tunnels_list:
         ...     print(tunnel.as_dict())
         """
@@ -76,25 +76,16 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficGRETunnel(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficGRETunnel(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_gre_tunnel(self, tunnel_id: int) -> APIResult[dict]:
+    def get_gre_tunnel(self, tunnel_id: int) -> TrafficGRETunnel:
         """
         Returns information for the specified GRE tunnel.
 
@@ -106,10 +97,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             :obj:`tuple`: The GRE tunnel resource record.
 
         Examples:
-        >>> tunnel, _, err = client.zia.gre_tunnel.get_gre_tunnel('4190936')
-        ... if err:
-        ...     print(f"Error fetching tunnel by ID: {err}")
-        ...     return
+        >>> try:
+            ...     tunnel = client.zia.gre_tunnel.get_gre_tunnel('4190936')
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... print(f"Fetched tunnel by ID: {tunnel.as_dict()}")
         """
         http_method = "get".upper()
@@ -123,26 +114,17 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficGRETunnel)
 
-        response, error = self._request_executor.execute(request, TrafficGRETunnel)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficGRETunnel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = TrafficGRETunnel(self.form_response_body(response.get_body()))
+        return result
 
     def add_gre_tunnel(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> TrafficGRETunnel:
         """
         Add a new GRE tunnel.
 
@@ -229,26 +211,17 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             body["primaryDestVip"] = {"id": recommended_vips[0]}
             body["secondaryDestVip"] = {"id": recommended_vips[1]}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficGRETunnel)
+        result = TrafficGRETunnel(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficGRETunnel)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficGRETunnel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_gre_tunnel(self, tunnel_id: str, **kwargs) -> APIResult[dict]:
+    def update_gre_tunnel(self, tunnel_id: str, **kwargs) -> TrafficGRETunnel:
         """
         Update an existing GRE tunnel.
 
@@ -335,26 +308,17 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             body["primaryDestVip"] = {"id": recommended_vips[0]}
             body["secondaryDestVip"] = {"id": recommended_vips[1]}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficGRETunnel)
+        result = TrafficGRETunnel(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficGRETunnel)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficGRETunnel(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_gre_tunnel(self, tunnel_id: int) -> APIResult[dict]:
+    def delete_gre_tunnel(self, tunnel_id: int) -> None:
         """
         Delete the specified GRE Tunnel.
 
@@ -363,13 +327,12 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 The unique identifier for the GRE Tunnel.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
-            >>> _, _, err = client.zia.gre_tunnel.delete_gre_tunnel(updated_tunnel.id)
-            ... if err:
-            ...     print(f"Error deleting tunnel: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zia.gre_tunnel.delete_gre_tunnel(updated_tunnel.id)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Tunnel with ID {updated_tunnel.id} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -382,17 +345,11 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def list_gre_ranges(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
+    def list_gre_ranges(self, query_params: Optional[dict] = None) -> List[Dict[str, Any]]:
         """
         Returns a list of available GRE tunnel ranges.
 
@@ -403,7 +360,6 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 ``[query_params.limit]`` {int}: The maximum number of GRE tunnel IP ranges that can be added.
 
         Returns:
-            tuple: List of configured gre .
 
         Examples:
             >>> ranges, _, error = client.zia.gre_tunnel.list_gre_ranges(
@@ -427,22 +383,12 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = response.get_results()
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_results()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_vips_recommended(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficGRERecommendedVIP]]:
+    def list_vips_recommended(self, query_params: Optional[dict] = None) -> List[TrafficGRERecommendedVIP]:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
@@ -461,7 +407,6 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             - **[query_params.sub_cloud]** (str): The subcloud for the VIP.
 
         Returns:
-            tuple: A tuple containing:
 
                 - **list[TrafficGRERecommendedVIP]**: A list of recommended VIPs.
                 - **Response**: The raw API response object.
@@ -472,9 +417,8 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
             >>> recommended_vips, zscaler_resp, err = client.zia.traffic_gre_tunnel.list_vips_recommended(
             ... source_ip=source_ip, query_params={'routable_ip': True, 'within_country_only': True})
-            ... if err:
-            ...     print(f"Error listing recommended VIPs: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... if len(recommended_vips) < 2:
             ...     print("Error: Not enough VIPs found to assign both primary and secondary.")
             ...     return
@@ -497,25 +441,16 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         headers = {}
         body = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
         )
 
-        if error:
-            return (False, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (False, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficGRERecommendedVIP(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficGRERecommendedVIP(self.form_response_body(item)))
+        return result
 
     def get_closest_diverse_vip_ids(self, ip_address: str) -> APIResult[dict]:
         """
@@ -533,10 +468,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         """
         # Fetch the recommended VIPs
-        vips_list, _, err = self.list_vips_recommended(query_params={"source_ip": ip_address})
-
-        if err:
-            raise ValueError(f"Error fetching recommended VIPs: {err}")
+        vips_list = self.list_vips_recommended(query_params={"source_ip": ip_address})
 
         if not vips_list:
             raise ValueError("No VIPs found for the given source IP.")
@@ -555,7 +487,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return recommended_vips
 
-    def list_vip_group_by_dc(self, query_params: Optional[dict] = None) -> APIResult[List[GroupByDatacenter]]:
+    def list_vip_group_by_dc(self, query_params: Optional[dict] = None) -> List[GroupByDatacenter]:
         """
         Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
 
@@ -573,7 +505,6 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 ``[query_params.geo_override]`` {bool}: Override the geographic coordinates. Default: False.
 
         Returns:
-            tuple: A tuple containing (list of VIP groups by data center, Response, error)
 
         Examples:
             List VIP groups for a given source IP:
@@ -596,25 +527,16 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(GroupByDatacenter(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(GroupByDatacenter(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_vips(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficVips]]:
+    def list_vips(self, query_params: Optional[dict] = None) -> List[TrafficVips]:
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
@@ -629,7 +551,6 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 - sub_cloud (str): Filter based on the subcloud for the VIP.
 
         Returns:
-            tuple: A tuple containing:
                 - list: List of VIPs.
                 - Response: The raw HTTP response object.
                 - error: Any error encountered during the request.
@@ -637,7 +558,8 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         Examples:
             List VIPs using default settings:
 
-            >>> vip_list, _, err = client.zia.gre_tunnel.list_vips(
+            >>> try:
+            ...     vip_list = client.zia.gre_tunnel.list_vips(
             ...     query_params={'dc': 'DFW1', 'region': 'NorthAmerica'})
             >>> if err:
             ...     print(f"Error listing vips: {err}")
@@ -659,25 +581,16 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficVips(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficVips(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ip_gre_tunnel_info(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_ip_gre_tunnel_info(self, query_params: Optional[dict] = None) -> Any:
         """
         Returns information for the list of IP addresses with GRE tunnel details.
 
@@ -686,13 +599,12 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 ``[query_params.ip_addresses]`` {list[int]}: Filter based on an IP address range.
 
         Returns:
-            tuple: A tuple containing a list of GreTunnelInfo instances, Response, error.
 
         Example:
-        >>> tunnels_list, _, err = client.zia.gre_tunnel.get_ip_gre_tunnel_info()
-        ... if err:
-        ...     print(f"Error listing tunnels: {err}")
-        ...     return
+        >>> try:
+            ...     tunnels_list = client.zia.gre_tunnel.get_ip_gre_tunnel_info()
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... for tunnel in tunnels_list:
         ...     print(tunnel.as_dict())
         """
@@ -709,23 +621,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [GreTunnelInfo(item) for item in response.get_body()]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [GreTunnelInfo(item) for item in response.get_body()]
+        return result

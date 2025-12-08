@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.sandboxrules import SandboxRules
-from zscaler.types import APIResult
 
 
 class SandboxRulesAPI(APIClient):
@@ -33,7 +32,7 @@ class SandboxRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[SandboxRules]]:
+    ) -> List[SandboxRules]:
         """
         Lists sandbox rules in your organization with pagination.
         A subset of sandbox rules  can be returned that match a supported
@@ -45,7 +44,6 @@ class SandboxRulesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of sandbox rules instances, Response, error).
 
         Example:
             List all sandbox rules with a specific page size:
@@ -69,31 +67,21 @@ class SandboxRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(SandboxRules(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(SandboxRules(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> SandboxRules:
         """
         Returns information for the specified sandbox filter rule.
 
@@ -101,7 +89,6 @@ class SandboxRulesAPI(APIClient):
             rule_id (str): The unique identifier for the sandbox filter rule.
 
         Returns:
-            tuple: A tuple containing (sandbox rule instance, Response, error).
 
         Example:
             Retrieve a sandbox rule by its ID:
@@ -123,26 +110,17 @@ class SandboxRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SandboxRules)
 
-        response, error = self._request_executor.execute(request, SandboxRules)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SandboxRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = SandboxRules(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> SandboxRules:
         """
         Adds a new sandbox filter rule.
 
@@ -215,26 +193,17 @@ class SandboxRulesAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SandboxRules)
+        result = SandboxRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SandboxRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SandboxRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> SandboxRules:
         """
         Updates an existing sandbox filter rule.
 
@@ -262,7 +231,6 @@ class SandboxRulesAPI(APIClient):
             location_groups (list): The IDs for the location groups that this rule applies to.
 
         Returns:
-            tuple: Updated sandbox filter rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -309,26 +277,17 @@ class SandboxRulesAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SandboxRules)
+        result = SandboxRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SandboxRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SandboxRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified sandbox filter rule.
 
@@ -355,12 +314,6 @@ class SandboxRulesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/zpaprofiles
+    uri: https://easm.test.zscaler.com/zpa/cbiconfig/cbi/api/customers/216196257331281920/zpaprofiles
   response:
     body:
       string: '[{"id":"216196257331286656","modifiedTime":"1696830629","creationTime":"1632023548","modifiedBy":"216196257331281921","name":"BD_SA_Profile1","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"0068dde3-ba14-453c-a481-201c5a3004d1","description":"BD_SA_Profile1","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0068dde3-ba14-453c-a481-201c5a3004d1/zpa/render","enabled":true},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
@@ -33,7 +33,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 21:18:13 GMT
+      - Fri, 05 Dec 2025 23:23:09 GMT
       expires:
       - '0'
       pragma:
@@ -51,25 +51,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '32'
+      - '80'
       x-frame-options:
       - DENY
       x-http2-stream-id:
-      - '7'
+      - '9'
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ee24420e-7654-9cba-9d0a-df0af9272db5
+      - 6d06a159-3b09-90fa-8a7d-601aa0c10837
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4953'
+      - '4959'
       x-ratelimit-reset:
-      - '47'
+      - '51'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

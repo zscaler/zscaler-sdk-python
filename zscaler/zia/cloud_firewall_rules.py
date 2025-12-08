@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_rules import FirewallRule
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class FirewallPolicyAPI(APIClient):
@@ -33,7 +32,7 @@ class FirewallPolicyAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[FirewallRule]]:
+    ) -> List[FirewallRule]:
         """
         List firewall rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -63,7 +62,6 @@ class FirewallPolicyAPI(APIClient):
                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
 
         Returns:
-            tuple: A tuple containing (list of firewall rules instances, Response, error)
 
         Examples:
         >>> rules, response, error = zia.zia.cloud_firewall_rules.list_rules()
@@ -87,26 +85,18 @@ class FirewallPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(FirewallRule(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(FirewallRule(self.form_response_body(item)))
+        return result
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[FirewallRule]:
+    ) -> FirewallRule:
         """
         Returns information for the specified firewall filter rule.
 
@@ -133,26 +123,17 @@ class FirewallPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, FirewallRule)
 
-        response, error = self._request_executor.execute(request, FirewallRule)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = FirewallRule(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[FirewallRule]:
+    ) -> FirewallRule:
         """
         Adds a new firewall filter rule.
 
@@ -235,27 +216,18 @@ class FirewallPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, FirewallRule)
 
-        response, error = self._request_executor.execute(request, FirewallRule)
+        result = FirewallRule(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[FirewallRule]:
+    def update_rule(self, rule_id: int, **kwargs) -> FirewallRule:
         """
         Updates an existing firewall filter rule.
 
@@ -337,23 +309,17 @@ class FirewallPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, FirewallRule)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, FirewallRule)
+        result = FirewallRule(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[None]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified firewall filter rule.
 
@@ -380,11 +346,6 @@ class FirewallPolicyAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

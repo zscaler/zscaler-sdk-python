@@ -66,8 +66,7 @@ class TestPostureProfiles:
 
         # List all posture profiles
         try:
-            profile_response, _, err = client.zpa.posture_profiles.list_posture_profiles()
-            assert err is None, f"Error listing posture profiles: {err}"
+            profile_response = client.zpa.posture_profiles.list_posture_profiles()
             assert isinstance(profile_response, list), "Expected a list of posture profiles"
             if profile_response:
                 first_profile = profile_response[0]
@@ -81,8 +80,7 @@ class TestPostureProfiles:
         if profile_id:
             # Fetch the selected posture profile by its ID
             try:
-                fetched_group, _, err = client.zpa.posture_profiles.get_profile(profile_id)
-                assert err is None, f"Error fetching posture profile by ID: {err}"
+                fetched_group = client.zpa.posture_profiles.get_profile(profile_id)
                 assert fetched_group is not None, "Expected a valid posture profile object"
                 assert fetched_group.id == profile_id, "Mismatch in posture profile ID"
             except Exception as exc:

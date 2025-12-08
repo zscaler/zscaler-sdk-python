@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_source_groups import IPSourceGroup
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IPSourceGroupsAPI(APIClient):
@@ -33,7 +32,7 @@ class IPSourceGroupsAPI(APIClient):
     def list_ip_source_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[IPSourceGroup]]:
+    ) -> List[IPSourceGroup]:
         """
             List IP Source Groups in your organization.
 
@@ -43,7 +42,6 @@ class IPSourceGroupsAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of IP Source Groups instances, Response, error)
 
         Examples:
             List all IP Source Groups:
@@ -82,29 +80,20 @@ class IPSourceGroupsAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IPSourceGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(IPSourceGroup(self.form_response_body(item)))
+        return result
 
     def list_ip_source_groups_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[IPSourceGroup]]:
+    ) -> List[IPSourceGroup]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -117,7 +106,6 @@ class IPSourceGroupsAPI(APIClient):
                     a group's name or description attributes.
 
         Returns:
-            tuple: List of IP Source Groups resource records.
 
         Examples:
             Gets a list of all IP source groups.
@@ -160,28 +148,18 @@ class IPSourceGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(IPSourceGroup(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(IPSourceGroup(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
-    def add_ip_source_group(self, **kwargs) -> APIResult[dict]:
+    def add_ip_source_group(self, **kwargs) -> IPSourceGroup:
         """
         Adds a new IP Source Group.
 
@@ -191,7 +169,6 @@ class IPSourceGroupsAPI(APIClient):
             description (str): Additional information for the IP Source Group.
 
         Returns:
-            tuple: The new IP Source Group resource record.
 
         Examples:
             Add a new IP Source Group:
@@ -211,27 +188,18 @@ class IPSourceGroupsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, IPSourceGroup)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, IPSourceGroup)
+        result = IPSourceGroup(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = IPSourceGroup(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_ip_source_group(self, group_id: int) -> APIResult[dict]:
+    def delete_ip_source_group(self, group_id: int) -> None:
         """
         Deletes an IP Source Group.
 
@@ -258,11 +226,6 @@ class IPSourceGroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

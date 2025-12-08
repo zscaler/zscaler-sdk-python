@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.zdxgroupentitlements import ZdxGroupEntitlements
 from zscaler.zcc.models.zpagroupentitlements import ZpaGroupEntitlements
-from zscaler.types import APIResult
 
 
 class EntitlementAPI(APIClient):
@@ -30,7 +29,7 @@ class EntitlementAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_zdx_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_zdx_group_entitlements(self, query_params: Optional[dict] = None) -> ZdxGroupEntitlements:
         """
         Returns the list ZDX group entitlements in the Client Connector Portal.
 
@@ -63,24 +62,15 @@ class EntitlementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ZdxGroupEntitlements(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZdxGroupEntitlements(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_zdx_group_entitlement(self) -> APIResult[dict]:
+    def update_zdx_group_entitlement(self) -> ZdxGroupEntitlements:
         """
         Updates ZDX Group Entitlement.
 
@@ -88,7 +78,6 @@ class EntitlementAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing the ZDX Group Entitlement.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -99,21 +88,12 @@ class EntitlementAPI(APIClient):
         )
         body = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, ZdxGroupEntitlements)
+        result = ZdxGroupEntitlements(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ZdxGroupEntitlements)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZdxGroupEntitlements(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_zpa_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_zpa_group_entitlements(self, query_params: Optional[dict] = None) -> ZdxGroupEntitlements:
         """
         Returns the list ZPA group entitlements in the Client Connector Portal.
 
@@ -146,24 +126,15 @@ class EntitlementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ZpaGroupEntitlements(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZpaGroupEntitlements(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_zpa_group_entitlement(self) -> APIResult[dict]:
+    def update_zpa_group_entitlement(self) -> ZdxGroupEntitlements:
         """
         Updates ZPA Group Entitlement.
 
@@ -171,7 +142,6 @@ class EntitlementAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing the ZPA Group Entitlement.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -182,16 +152,7 @@ class EntitlementAPI(APIClient):
         )
         body = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ZpaGroupEntitlements)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZpaGroupEntitlements(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, ZpaGroupEntitlements)
+        result = ZpaGroupEntitlements(self.form_response_body(response.get_body()))
+        return result

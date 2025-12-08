@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_approval import PrivilegedRemoteAccessApproval
 from zscaler.utils import format_url
 from zscaler.utils import validate_and_convert_times
-from zscaler.types import APIResult
 
 
 class PRAApprovalAPI(APIClient):
@@ -34,7 +33,7 @@ class PRAApprovalAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_approval(self, query_params: Optional[dict] = None) -> APIResult[List[PrivilegedRemoteAccessApproval]]:
+    def list_approval(self, query_params: Optional[dict] = None) -> List[PrivilegedRemoteAccessApproval]:
         """
         Returns a list of all privileged remote access approvals.
 
@@ -52,13 +51,11 @@ class PRAApprovalAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            tuple: A tuple containing (list of PrivilegedRemoteAccessApproval instances, Response, error)
 
         Examples:
         >>> approvals_list, _, err = zpa.pra_approval.list_approval()
-        ... if err:
-        ...     print(f"Error listing approvals: {err}")
-        ...     return
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... for approval in approvals_list:
         ...     print(approval.as_dict())
         """
@@ -75,23 +72,14 @@ class PRAApprovalAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
+        result = []
+        for item in response.get_results():
+            result.append(PrivilegedRemoteAccessApproval(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PrivilegedRemoteAccessApproval(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_approval(self, approval_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_approval(self, approval_id: str, query_params: Optional[dict] = None) -> PrivilegedRemoteAccessApproval:
         """
         Returns information on the specified pra approval.
 
@@ -101,15 +89,14 @@ class PRAApprovalAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (PrivilegedRemoteAccessApproval instance, Response, error)
 
         Examples:
-        >>> approval, _, err = client.zpa.pra_approval.get_approval(
+        >>> try:
+            ...     approval = client.zpa.pra_approval.get_approval(
         ... approval_id=99999
         ... )
-        ... if err:
-        ...     print(f"Error fetching approval by ID: {err}")
-        ...     return
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... print(f"Fetched approval by ID: {approval.as_dict()}")
         """
         http_method = "get".upper()
@@ -125,21 +112,12 @@ class PRAApprovalAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
+        result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_approval(self, **kwargs) -> APIResult[dict]:
+    def add_approval(self, **kwargs) -> PrivilegedRemoteAccessApproval:
         """
         Adds a privileged remote access approval.
 
@@ -217,22 +195,13 @@ class PRAApprovalAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         # Execute the request
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
+        result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_approval(self, approval_id: str, **kwargs) -> APIResult[dict]:
+    def update_approval(self, approval_id: str, **kwargs) -> PrivilegedRemoteAccessApproval:
         """
         Updates a specified approval based on provided keyword arguments.
 
@@ -306,27 +275,17 @@ class PRAApprovalAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         # Execute the request
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, PrivilegedRemoteAccessApproval)
         # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (PrivilegedRemoteAccessApproval({"id": approval_id}), None, None)
+            return PrivilegedRemoteAccessApproval({"id": approval_id})
 
-        try:
-            result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def delete_approval(self, approval_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_approval(self, approval_id: str, microtenant_id: str = None) -> None:
         """
         Deletes a specified privileged remote access approval.
 
@@ -338,12 +297,12 @@ class PRAApprovalAPI(APIClient):
             int: Status code of the delete operation.
 
         Examples:
-        >>> _, _, err = client.zpa.pra_approval.delete_approval(
+        >>> try:
+            ...     _ = client.zpa.pra_approval.delete_approval(
         ... approval_id=99999
         ... )
-        ... if err:
-        ...     print(f"Error deleting approval: {err}")
-        ...     return
+        ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         ... print(f"PRA Approval with ID {99999} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -356,17 +315,11 @@ class PRAApprovalAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def expired_approval(self, microtenant_id: str = None) -> APIResult[dict]:
+    def expired_approval(self, microtenant_id: str = None) -> Any:
         """
         Deletes all expired privileged approvals.
 
@@ -383,11 +336,6 @@ class PRAApprovalAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
         return (None, response, None)

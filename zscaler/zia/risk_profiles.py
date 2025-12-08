@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.risk_profiles import RiskProfiles
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class RiskProfilesAPI(APIClient):
@@ -33,7 +32,7 @@ class RiskProfilesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_risk_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[RiskProfiles]]:
+    def list_risk_profiles(self, query_params: Optional[dict] = None) -> List[RiskProfiles]:
         """
         Retrieves the cloud application risk profile
 
@@ -43,7 +42,6 @@ class RiskProfilesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of risk profile  instances, Response, error)
 
         Examples:
             List risk profile :
@@ -70,25 +68,16 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(RiskProfiles(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(RiskProfiles(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_risk_profiles_lite(self) -> APIResult[List[RiskProfiles]]:
+    def list_risk_profiles_lite(self) -> List[RiskProfiles]:
         """
         Retrieves the cloud application risk profile lite
 
@@ -96,7 +85,6 @@ class RiskProfilesAPI(APIClient):
             N/A
 
         Returns:
-            tuple: A tuple containing (risk profile lite instance, Response, error).
 
         Examples:
             List risk profile :
@@ -120,24 +108,15 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, RiskProfiles)
+        result = []
+        for item in response.get_results():
+            result.append(RiskProfiles(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, RiskProfiles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(RiskProfiles(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_risk_profile(self, profile_id: int) -> APIResult[dict]:
+    def get_risk_profile(self, profile_id: int) -> RiskProfiles:
         """
         Fetches a specific risk profile by ID.
 
@@ -145,7 +124,6 @@ class RiskProfilesAPI(APIClient):
             profile_id (int): The unique identifier for the risk profile.
 
         Returns:
-            tuple: A tuple containing (Risk Profile instance, Response, error).
 
         Examples:
             Print a specific Risk Profile
@@ -168,22 +146,13 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, RiskProfiles)
+        result = RiskProfiles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, RiskProfiles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RiskProfiles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_risk_profile(self, **kwargs) -> APIResult[dict]:
+    def add_risk_profile(self, **kwargs) -> RiskProfiles:
         """
         Creates a new ZIA Risk Profile.
 
@@ -259,7 +228,6 @@ class RiskProfilesAPI(APIClient):
             custom_tags (list[dict]): List of custom tags for inclusion or exclusion.
 
         Returns:
-            tuple: A tuple containing the added Risk Profile object, response, and error.
 
         Examples:
             Add a new Risk Profile :
@@ -315,26 +283,17 @@ class RiskProfilesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, RiskProfiles)
+        result = RiskProfiles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, RiskProfiles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RiskProfiles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_risk_profile(self, profile_id: int, **kwargs) -> APIResult[dict]:
+    def update_risk_profile(self, profile_id: int, **kwargs) -> RiskProfiles:
         """
         Updates information for the specified ZIA Risk Profile.
 
@@ -342,7 +301,6 @@ class RiskProfilesAPI(APIClient):
             profile_id (int): The unique ID for the Risk Profile.
 
         Returns:
-            tuple: A tuple containing the updated Risk Profile, response, and error.
 
         Examples:
             Add a new Risk Profile :
@@ -400,21 +358,12 @@ class RiskProfilesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, RiskProfiles)
+        result = RiskProfiles(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, RiskProfiles)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = RiskProfiles(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_risk_profile(self, profile_id: int) -> APIResult[dict]:
+    def delete_risk_profile(self, profile_id: int) -> None:
         """
         Deletes the specified Risk Profile.
 
@@ -422,7 +371,6 @@ class RiskProfilesAPI(APIClient):
             profile_id (str): The unique identifier of the Risk Profile.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             List risk profile :
@@ -443,11 +391,6 @@ class RiskProfilesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

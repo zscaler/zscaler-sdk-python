@@ -21,7 +21,6 @@ from zscaler.zpa.models.app_protection_profile import AppProtectionProfile
 from zscaler.zpa.models.app_protection_profile import CustomControls
 from zscaler.zpa.models.app_protection_predefined_controls import PredefinedInspectionControlResource
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 from requests.utils import quote
 
 
@@ -60,7 +59,7 @@ class InspectionControllerAPI(APIClient):
     def list_profiles(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[AppProtectionProfile]]:
+    ) -> List[AppProtectionProfile]:
         """
         Enumerates App Protection Profile in your organization with pagination.
         A subset of App Protection Profile can be returned that match a supported
@@ -77,7 +76,6 @@ class InspectionControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of InspectionProfile instances, Response, error)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -89,23 +87,14 @@ class InspectionControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(AppProtectionProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(AppProtectionProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_profile(self, profile_id: str, **kwargs) -> APIResult[AppProtectionProfile]:
+    def get_profile(self, profile_id: str, **kwargs) -> AppProtectionProfile:
         """
         Gets information on the specified inspection profile.
 
@@ -123,21 +112,12 @@ class InspectionControllerAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, kwargs)
-        if error:
-            return None
+        request = self._request_executor.create_request(http_method, api_url, {}, kwargs)
+        response = self._request_executor.execute(request, AppProtectionProfile)
+        result = AppProtectionProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, AppProtectionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AppProtectionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_profile(self, **kwargs) -> APIResult[dict]:
+    def add_profile(self, **kwargs) -> AppProtectionProfile:
         """
         Create a new inspection profile.
 
@@ -226,9 +206,9 @@ class InspectionControllerAPI(APIClient):
         )
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
 
-        groups, _, err = self.list_predef_controls(query_params={"version": version})
-        if err or not groups:
-            return None, None, f"Failed to retrieve predefined control groups: {err}"
+        groups = self.list_predef_controls(query_params={"version": version})
+        if not groups:
+            raise ValueError("Failed to retrieve predefined control groups")
 
         default_predefs = []
         for grp in groups:
@@ -242,7 +222,7 @@ class InspectionControllerAPI(APIClient):
                     })
 
         if not default_predefs:
-            return None, None, "Default predefined controls are missing or empty."
+            raise ValueError("Default predefined controls are missing or empty.")
 
         payload = {
             "predefinedControls": default_predefs,
@@ -260,28 +240,15 @@ class InspectionControllerAPI(APIClient):
 
         payload.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload)
-        if error:
-            return None, None, error
+        request = self._request_executor.create_request(http_method, api_url, body=payload)
+        response = self._request_executor.execute(request, AppProtectionProfile)
+        created_profile = AppProtectionProfile(self.form_response_body(response.get_body()))
 
-        response, error = self._request_executor.execute(request, AppProtectionProfile)
-        if error:
-            return None, response, error
+        # Fetch the full created profile explicitly
+        profile_id = created_profile.id
+        return self.get_profile(profile_id)
 
-        try:
-            created_profile = AppProtectionProfile(self.form_response_body(response.get_body()))
-
-            # Fetch the full created profile explicitly
-            profile_id = created_profile.id
-            full_profile, _, fetch_error = self.get_profile(profile_id)
-            if fetch_error:
-                return None, None, f"Profile created but failed to fetch full details: {fetch_error}"
-            return full_profile, response, None
-
-        except Exception as error:
-            return None, response, error
-
-    def update_profile(self, profile_id: str, **kwargs) -> APIResult[dict]:
+    def update_profile(self, profile_id: str, **kwargs) -> AppProtectionProfile:
         """
         Updates the specified inspection profile.
 
@@ -289,7 +256,7 @@ class InspectionControllerAPI(APIClient):
             profile_id (str): The unique ID of the profile to be updated.
 
         Returns:
-            InspectionProfile: The updated inspection profile object.
+            AppProtectionProfile: The updated inspection profile object.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -301,9 +268,9 @@ class InspectionControllerAPI(APIClient):
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
 
         # Get default predefined controls
-        groups, _, err = self.list_predef_controls(query_params={"version": version})
-        if err or not groups:
-            return None, None, f"Failed to retrieve predefined control groups: {err}"
+        groups = self.list_predef_controls(query_params={"version": version})
+        if not groups:
+            raise ValueError("Failed to retrieve predefined control groups")
 
         default_predefs = []
         for grp in groups:
@@ -317,7 +284,7 @@ class InspectionControllerAPI(APIClient):
                     })
 
         if not default_predefs:
-            return None, None, "Default predefined controls are missing or empty."
+            raise ValueError("Default predefined controls are missing or empty.")
 
         # Build base payload with predefined controls
         payload = {
@@ -337,26 +304,16 @@ class InspectionControllerAPI(APIClient):
 
         payload.update(kwargs)
 
-        req, err = self._request_executor.create_request(http_method, api_url, body=payload)
-        if err:
-            return None, None, err
-
-        resp, err = self._request_executor.execute(req, AppProtectionProfile)
-        if err:
-            return None, resp, err
+        request = self._request_executor.create_request(http_method, api_url, body=payload)
+        response = self._request_executor.execute(request, AppProtectionProfile)
 
         # If backend returns 204 No Content
-        if resp is None:
-            return AppProtectionProfile({"id": profile_id}), None, None
+        if response is None:
+            return AppProtectionProfile({"id": profile_id})
 
-        try:
-            result = AppProtectionProfile(self.form_response_body(resp.get_body()))
-        except Exception as exc:
-            return None, resp, exc
+        return AppProtectionProfile(self.form_response_body(response.get_body()))
 
-        return result, resp, None
-
-    def delete_profile(self, profile_id: str) -> int:
+    def delete_profile(self, profile_id: str) -> None:
         """
         Deletes the specified inspection profile.
 
@@ -375,18 +332,12 @@ class InspectionControllerAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url)
         # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
+        return None
 
-        return (None, response, None)
-
-    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> APIResult[dict]:
+    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> AppProtectionProfile:
         """
         Attaches or detaches all predefined ZPA Inspection Controls to a ZPA Inspection Profile.
 
@@ -414,26 +365,17 @@ class InspectionControllerAPI(APIClient):
         else:
             raise ValueError("Unknown action provided. Valid actions are 'attach' or 'detach'.")
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
-        if error:
-            return None
-
+        request = self._request_executor.create_request(http_method, api_url, payload)
         # Execute the request
-        response, error = self._request_executor.execute(request, AppProtectionProfile)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, AppProtectionProfile)
         # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (AppProtectionProfile({"id": profile_id}), None, None)
+            return AppProtectionProfile({"id": profile_id})
 
-        try:
-            result = AppProtectionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = AppProtectionProfile(self.form_response_body(response.get_body()))
+        return result
 
-    def update_profile_and_controls(self, profile_id: str, **kwargs) -> APIResult[dict]:
+    def update_profile_and_controls(self, profile_id: str, **kwargs) -> AppProtectionProfile:
         """
         Updates the inspection profile and controls for the specified ID.
 
@@ -454,9 +396,9 @@ class InspectionControllerAPI(APIClient):
         )
 
         # Fetch all predefined control groups
-        control_groups, _, err = self.list_predef_controls()
-        if err or not control_groups:
-            return (None, None, f"Failed to retrieve predefined control groups: {err}")
+        control_groups = self.list_predef_controls()
+        if not control_groups:
+            raise ValueError("Failed to retrieve predefined control groups")
 
         # Aggregate controls from all groups marked as `defaultGroup`
         predefined_controls = []
@@ -471,9 +413,9 @@ class InspectionControllerAPI(APIClient):
                         }
                     )
 
-        # Debugging: Ensure predefined_controls is populated
+        # Ensure predefined_controls is populated
         if not predefined_controls:
-            return (None, None, "Default predefined controls are missing or empty.")
+            raise ValueError("Default predefined controls are missing or empty.")
 
         # Construct the payload starting with predefined controls and predefinedControlsVersion
         payload = {
@@ -507,30 +449,21 @@ class InspectionControllerAPI(APIClient):
         print("Payload being sent:", payload)
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, headers={}, params={})
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=payload, headers={}, params={})
         # Execute the request
-        response, error = self._request_executor.execute(request, AppProtectionProfile)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, AppProtectionProfile)
         # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (AppProtectionProfile({"id": profile_id}), None, None)
+            return AppProtectionProfile({"id": profile_id})
 
         # Parse the response into an InspectionProfile instance
-        try:
-            result = AppProtectionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = AppProtectionProfile(self.form_response_body(response.get_body()))
+        return result
 
     def list_custom_controls(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[CustomControls]]:
+    ) -> List[CustomControls]:
         """
         Enumerates App Protection Custom Control in your organization with pagination.
         A subset of App Protection Custom Control can be returned that match a supported
@@ -547,7 +480,6 @@ class InspectionControllerAPI(APIClient):
                     Available values : ASC, DESC
 
         Returns:
-            tuple: A tuple containing (list of AppProtectionCustomControl instances, Response, error)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -559,26 +491,17 @@ class InspectionControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CustomControls(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CustomControls(self.form_response_body(item)))
+        return result
 
     def get_all_predef_control(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> PredefinedInspectionControlResource:
         """
         Returns all predefined inspection controls.
 
@@ -593,7 +516,8 @@ class InspectionControllerAPI(APIClient):
             PredefinedInspectionControlResource: The corresponding predefined control object.
 
         Examples:
-            >>> predef_controls, _, err = client.zpa.app_protection.get_all_predef_control(
+            >>> try:
+            ...     predef_controls = client.zpa.app_protection.get_all_predef_control(
             ... query_params={'version': 'OWASP_CRS/4.8.0'})
             >>> if err:
             ...     print(f"Error listing predefined controls: {err}")
@@ -612,23 +536,14 @@ class InspectionControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PredefinedInspectionControlResource)
+        result = []
+        for item in response.get_results():
+            result.append(PredefinedInspectionControlResource(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PredefinedInspectionControlResource)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PredefinedInspectionControlResource(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_predef_control(self, control_id: str) -> APIResult[dict]:
+    def get_predef_control(self, control_id: str) -> PredefinedInspectionControlResource:
         """
         Returns the specified predefined ZPA Inspection Control.
 
@@ -639,7 +554,8 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The corresponding predefined control object.
 
         Examples:
-            >>> fetched_predf_control, _, err = client.zpa.app_protection.get_predef_control(control_id='72057594037928524')
+            >>> try:
+            ...     fetched_predf_control = client.zpa.app_protection.get_predef_control(control_id='72057594037928524')
             >>> if err:
             ...     print(f"Error fetching ba predefined control by ID: {err}")
             ...     return
@@ -653,21 +569,12 @@ class InspectionControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {})
-        if error:
-            return None
+        request = self._request_executor.create_request(http_method, api_url, {})
+        response = self._request_executor.execute(request, PredefinedInspectionControlResource)
+        result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PredefinedInspectionControlResource)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_custom_control(self, control_id: str) -> APIResult[CustomControls]:
+    def get_custom_control(self, control_id: str) -> CustomControls:
         """
         Returns the specified custom ZPA Inspection Control.
 
@@ -684,21 +591,12 @@ class InspectionControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {})
-        if error:
-            return None
+        request = self._request_executor.create_request(http_method, api_url, {})
+        response = self._request_executor.execute(request, CustomControls)
+        result = CustomControls(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CustomControls)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CustomControls(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_custom_control(self, **kwargs) -> APIResult[CustomControls]:
+    def add_custom_control(self, **kwargs) -> CustomControls:
         """
         Adds a new ZPA Inspection Custom Control.
 
@@ -720,22 +618,13 @@ class InspectionControllerAPI(APIClient):
         kwargs["rules"] = [self._create_rule(rule) for rule in rules]
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, kwargs)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, kwargs)
         # Execute the request
-        response, error = self._request_executor.execute(request, CustomControls)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, CustomControls)
+        result = CustomControls(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = CustomControls(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_custom_control(self, control_id: str, **kwargs) -> APIResult[dict]:
+    def update_custom_control(self, control_id: str, **kwargs) -> CustomControls:
         """
         Updates the specified custom ZPA Inspection Control.
 
@@ -754,10 +643,10 @@ class InspectionControllerAPI(APIClient):
         """
         )
 
-        # Fetch existing control and handle errors
-        existing_control, _, err = self.get_custom_control(control_id)
-        if err or not existing_control:
-            return (None, None, f"Failed to retrieve custom control with ID {control_id}: {err}")
+        # Fetch existing control
+        existing_control = self.get_custom_control(control_id)
+        if not existing_control:
+            raise ValueError(f"Failed to retrieve custom control with ID {control_id}")
 
         # Prepare the payload using the existing control
         payload = existing_control.request_format()
@@ -771,26 +660,17 @@ class InspectionControllerAPI(APIClient):
         payload.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, payload)
         # Execute the request
-        response, error = self._request_executor.execute(request, CustomControls)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request, CustomControls)
         # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (CustomControls({"id": control_id}), None, None)
+            return CustomControls({"id": control_id})
 
-        try:
-            result = CustomControls(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = CustomControls(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_custom_control(self, control_id: str) -> int:
+    def delete_custom_control(self, control_id: str) -> None:
         """
         Deletes the specified custom ZPA Inspection Control.
 
@@ -808,17 +688,11 @@ class InspectionControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {})
-        if error:
-            return None
+        request = self._request_executor.create_request(http_method, api_url, {})
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def list_predef_controls(self, query_params: Optional[dict] = None) -> APIResult[List[PredefinedInspectionControlResource]]:
+    def list_predef_controls(self, query_params: Optional[dict] = None) -> List[PredefinedInspectionControlResource]:
         """
         Returns a list of predefined ZPA Inspection Controls.
 
@@ -831,20 +705,19 @@ class InspectionControllerAPI(APIClient):
                     Supported values: `OWASP_CRS/3.3.0`, `OWASP_CRS/3.3.5`, `OWASP_CRS/4.8.0`
 
         Returns:
-            tuple:
-                A tuple containing (list of PredefinedInspectionControl objects, Response, error).
+            List[PredefinedInspectionControlResource]: List of predefined inspection control objects.
 
         Examples:
-            >>> fetched_predf_control, _, err = client.zpa.app_protection.list_predef_controls(
-                query_params={
-                    "version": "OWASP_CRS/4.8.0",
-                    "search": "name",
-                    "search_field": "PHP Injection Attack: High-Risk PHP Function Name Found"
-                })
-            >>> if err:
-                    print(f"Error fetching predefined control adp: {err}")
-                    return
-                print(f"Fetched predefined control adp: {fetched_predf_control.as_dict()}")
+            >>> try:
+            ...     controls = client.zpa.app_protection.list_predef_controls(
+            ...         query_params={
+            ...             "version": "OWASP_CRS/4.8.0",
+            ...             "search": "name",
+            ...             "search_field": "PHP Injection Attack: High-Risk PHP Function Name Found"
+            ...         })
+            ...     print(f"Fetched predefined controls: {len(controls)}")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
 
         """
         SUPPORTED = {"OWASP_CRS/4.8.0", "OWASP_CRS/3.3.5", "OWASP_CRS/3.3.0"}
@@ -852,18 +725,10 @@ class InspectionControllerAPI(APIClient):
 
         version = qp.get("version")
         if version is None:
-            return (
-                None,
-                None,
-                ValueError("'version' is required in query_params")
-            )
+            raise ValueError("'version' is required in query_params")
         if version not in SUPPORTED:
-            return (
-                None,
-                None,
-                ValueError(
-                    f"Unsupported version '{version}'. Supported values: {', '.join(sorted(SUPPORTED))}"
-                )
+            raise ValueError(
+                f"Unsupported version '{version}'. Supported values: {', '.join(sorted(SUPPORTED))}"
             )
 
         search_field = qp.pop("search_field", None)
@@ -874,32 +739,21 @@ class InspectionControllerAPI(APIClient):
         query_str = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in qp.items())
         api_url = f"{base_url}?{query_str}"
 
-        request, err = self._request_executor.create_request("GET", api_url)
-        if err:
-            return (None, None, err)
+        request = self._request_executor.create_request("GET", api_url)
+        response = self._request_executor.execute(request)
 
-        response, err = self._request_executor.execute(request)
-        if err:
-            return (None, response, err)
+        body = self.form_response_body(response.get_body())
+        # Handle both list and single item responses
+        if isinstance(body, list):
+            return [PredefinedInspectionControlResource(item) for item in body]
+        else:
+            return [PredefinedInspectionControlResource(body)]
 
-        try:
-            body = self.form_response_body(response.get_body())
-            # Handle both list and single item responses
-            if isinstance(body, list):
-                result = [PredefinedInspectionControlResource(item) for item in body]
-            else:
-                result = [PredefinedInspectionControlResource(body)]
-        except Exception as exc:
-            return (None, response, exc)
-
-        return (result, response, None)
-
-    def list_control_action_types(self) -> APIResult[List[str]]:
+    def list_control_action_types(self) -> List[str]:
         """
         Returns a list of ZPA Inspection Control Action Types.
 
         Returns:
-            tuple: A tuple containing (list of action types, Response, error).
 
         Examples:
             >>> for action_type in zpa.inspection.list_control_action_types():
@@ -918,29 +772,18 @@ class InspectionControllerAPI(APIClient):
         headers = {}
         form = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, form)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_control_severity_types(self) -> APIResult[List[str]]:
+    def list_control_severity_types(self) -> List[str]:
         """
         Returns a list of Inspection Control Severity Types.
 
         Returns:
-            tuple: A dictionary containing all valid Inspection Control Severity Types.
 
         Examples:
             >>> for severity in zpa.inspection.list_control_severity_types():
@@ -959,29 +802,18 @@ class InspectionControllerAPI(APIClient):
         headers = {}
         form = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, form)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_control_types(self) -> APIResult[List[str]]:
+    def list_control_types(self) -> List[str]:
         """
         Returns a list of ZPA Inspection Control Types.
 
         Returns:
-            tuple: A dictionary containing ZPA Inspection Control Types.
 
         Examples:
             >>> for control_type in zpa.inspection.list_control_types():
@@ -1000,29 +832,18 @@ class InspectionControllerAPI(APIClient):
         headers = {}
         form = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, form)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_custom_http_methods(self) -> APIResult[List[str]]:
+    def list_custom_http_methods(self) -> List[str]:
         """
         Returns a list of custom ZPA Inspection Control HTTP Methods.
 
         Returns:
-            tuple: A dictionary containing custom ZPA Inspection Control HTTP Methods.
 
         Examples:
             >>> for method in zpa.inspection.list_custom_http_methods():
@@ -1041,29 +862,18 @@ class InspectionControllerAPI(APIClient):
         headers = {}
         form = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, form)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_predef_control_versions(self) -> APIResult[List[str]]:
+    def list_predef_control_versions(self) -> List[str]:
         """
         Returns a list of predefined ZPA Inspection Control versions.
 
         Returns:
-            tuple: A dictionary containing all predefined ZPA Inspection Control versions.
 
 
         """
@@ -1079,24 +889,14 @@ class InspectionControllerAPI(APIClient):
         headers = {}
         form = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, form)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
+        result = response.get_body()
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_predef_control_adp(self, query_params: Optional[dict] = None) -> APIResult[PredefinedInspectionControlResource]:
+    def list_predef_control_adp(self, query_params: Optional[dict] = None) -> PredefinedInspectionControlResource:
         """
         Returns all predefined ADP inspection controls for the specified customer.
 
@@ -1123,22 +923,13 @@ class InspectionControllerAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
+        result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_predef_control_api(self, query_params: Optional[dict] = None) -> APIResult[PredefinedInspectionControlResource]:
+    def list_predef_control_api(self, query_params: Optional[dict] = None) -> PredefinedInspectionControlResource:
         """
         Returns all predefined inspection controls for the specified customer.
 
@@ -1165,17 +956,8 @@ class InspectionControllerAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = PredefinedInspectionControlResource(self.form_response_body(response.get_body()))
+        return result

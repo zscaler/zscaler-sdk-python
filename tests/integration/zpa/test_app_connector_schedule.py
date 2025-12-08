@@ -37,7 +37,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #         try:
 #             # Step 1: Get the existing App Connector Schedule
 #             try:
-#                 schedule, _, err = client.zpa.app_connector_schedule.get_connector_schedule()
+#                 schedule = client.zpa.app_connector_schedule.get_connector_schedule()
 #                 assert err is None, f"Error retrieving App Connector Schedule: {err}"
 #                 assert schedule is not None, "Failed to retrieve App Connector Schedule"
 #                 pprint(schedule.as_dict())
@@ -47,7 +47,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 2: Add a new App Connector Schedule
 #             try:
-#                 _, _, err = client.zpa.app_connector_schedule.add_connector_schedule(
+#                 _ = client.zpa.app_connector_schedule.add_connector_schedule(
 #                     frequency="days",
 #                     interval="5",
 #                     disabled=False,
@@ -66,7 +66,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Step 3: Update the App Connector Schedule
 #             try:
 #                 assert scheduler_id is not None, "Scheduler ID is None"
-#                 _, _, err = client.zpa.app_connector_schedule.update_connector_schedule(
+#                 _ = client.zpa.app_connector_schedule.update_connector_schedule(
 #                     scheduler_id=scheduler_id,
 #                     frequency="days",
 #                     interval="7",

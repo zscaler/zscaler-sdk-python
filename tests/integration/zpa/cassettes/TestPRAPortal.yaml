@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/clientlessCertificate/issued
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/clientlessCertificate/issued
   response:
     body:
       string: '{"totalPages":"1","totalCount":"3","list":[{"id":"216196257331369559","modifiedTime":"1759942769","creationTime":"1696448400","modifiedBy":"216196257331372702","name":"jenkins.bd-hashicorp.com","description":"jenkins.bd-hashicorp.com","validFromInEpochSec":"1696447903","validToInEpochSec":"1759519903","certificate":"-----BEGIN
@@ -41,7 +41,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:42 GMT
+      - Fri, 05 Dec 2025 23:23:35 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -59,23 +59,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '38'
+      - '34'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 1a657744-6bda-9dc3-b49a-bd59ddd7ef6d
+      - 20e64f6a-5319-925d-8f59-ec69b4f5b5ce
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4905'
+      - '4911'
       x-ratelimit-reset:
-      - '18'
+      - '25'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -98,12 +98,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
   response:
     body:
-      string: '{"id":"216196257331394582","modifiedTime":"1764191922","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
+      string: '{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
         Test PRA Portal","userNotificationEnabled":true}'
     headers:
       cache-control:
@@ -115,7 +115,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:42 GMT
+      - Fri, 05 Dec 2025 23:23:36 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -133,23 +133,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '95'
+      - '89'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 14c076cd-e228-9f2d-a308-83d9f6cf448d
+      - 82672ec3-afd9-918a-baa7-04435d6bc586
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4904'
+      - '4910'
       x-ratelimit-reset:
-      - '18'
+      - '24'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -169,12 +169,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331387235","modifiedTime":"1761677811","creationTime":"1761677811","modifiedBy":"216196257331372702","name":"portal01","enabled":true,"description":"portal01","domain":"portal01-securitygeek-io.pra.p.zscalerportal.net","userNotification":"portal01","userNotificationEnabled":true,"userPortalGid":"216196257331387233","extLabel":"portal01","extDomainTranslation":"securitygeek.io","approvalReviewers":["REDACTED"],"extDomain":"securitygeek.io","extDomainName":"securitygeek-io.pra.p.zscalerportal.net","microtenantName":"Default"},{"id":"216196257331394582","modifiedTime":"1764191922","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331394582.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331395923.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
         Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}]}'
     headers:
       cache-control:
@@ -186,7 +186,78 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:42 GMT
+      - Fri, 05 Dec 2025 23:23:36 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '36'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 41061bf9-822b-9048-9305-61378681b154
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4909'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331395923
+  response:
+    body:
+      string: '{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331395923.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
+        Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 05 Dec 2025 23:23:36 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -210,17 +281,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5e6438e2-f809-96c1-bdf8-72a2fa499b28
+      - d70ccaa5-dc72-94b7-9d5e-b33cc1fd9510
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4903'
+      - '4908'
       x-ratelimit-reset:
-      - '18'
+      - '24'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -240,12 +311,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331394582
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331395923
   response:
     body:
-      string: '{"id":"216196257331394582","modifiedTime":"1764191922","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331394582.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
+      string: '{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331395923.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
         Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}'
     headers:
       cache-control:
@@ -257,7 +328,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:42 GMT
+      - Fri, 05 Dec 2025 23:23:36 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -275,94 +346,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '40'
+      - '36'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7e7ed508-dff1-9653-91a8-e54ed299c093
+      - b3a8b98c-0207-936a-b4de-facde8734650
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4902'
+      - '4907'
       x-ratelimit-reset:
-      - '18'
+      - '24'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331394582
-  response:
-    body:
-      string: '{"id":"216196257331394582","modifiedTime":"1764191922","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0002","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331394582.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0003acme.com","userNotification":"zscaler_python_sdk
-        Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}'
-    headers:
-      cache-control:
-      - no-store
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - default-src 'none'; upgrade-insecure-requests
-      content-type:
-      - application/json;charset=utf-8
-      date:
-      - Wed, 26 Nov 2025 21:18:42 GMT
-      expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      pragma:
-      - no-cache
-      referrer-policy:
-      - strict-origin-when-cross-origin
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '38'
-      x-frame-options:
-      - DENY
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - e85735ca-1866-997f-bcc9-ecf950e703fe
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4901'
-      x-ratelimit-reset:
-      - '18'
-      x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -385,9 +385,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331394582
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331395923
   response:
     body:
       string: ''
@@ -397,7 +397,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:43 GMT
+      - Fri, 05 Dec 2025 23:23:36 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -413,23 +413,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '87'
+      - '84'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2ebf7f90-cdbc-9e22-b036-f265fd2969a5
+      - 8ed2249b-b290-92ec-99b6-f4ae07f3ac59
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4900'
+      - '4906'
       x-ratelimit-reset:
-      - '17'
+      - '24'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -449,13 +449,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331394582
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331395923
   response:
     body:
-      string: '{"id":"216196257331394582","modifiedTime":"1764191923","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0001
-        Updated","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331394582.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0004acme.com","userNotification":"zscaler_python_sdk
+      string: '{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0001
+        Updated","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331395923.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0004acme.com","userNotification":"zscaler_python_sdk
         Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}'
     headers:
       cache-control:
@@ -467,7 +467,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:43 GMT
+      - Fri, 05 Dec 2025 23:23:36 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -485,23 +485,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '44'
+      - '36'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fa521fc5-c22d-90a8-b981-2aa0c56fefaa
+      - cdb5a37a-4173-9f0d-8662-e76d532019d9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4899'
+      - '4905'
       x-ratelimit-reset:
-      - '17'
+      - '24'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -521,13 +521,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331387235","modifiedTime":"1761677811","creationTime":"1761677811","modifiedBy":"216196257331372702","name":"portal01","enabled":true,"description":"portal01","domain":"portal01-securitygeek-io.pra.p.zscalerportal.net","userNotification":"portal01","userNotificationEnabled":true,"userPortalGid":"216196257331387233","extLabel":"portal01","extDomainTranslation":"securitygeek.io","approvalReviewers":["REDACTED"],"extDomain":"securitygeek.io","extDomainName":"securitygeek-io.pra.p.zscalerportal.net","microtenantName":"Default"},{"id":"216196257331394582","modifiedTime":"1764191923","creationTime":"1764191922","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0001
-        Updated","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331394582.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0004acme.com","userNotification":"zscaler_python_sdk
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"216196257331395923","modifiedTime":"1764977016","creationTime":"1764977016","modifiedBy":"216196257331372705","name":"tests-praport-vcr0001","enabled":true,"description":"tests-praport-vcr0001
+        Updated","certificateId":"216196257331369559","certificateName":"jenkins.bd-hashicorp.com","cName":"216196257331395923.216196257331281920.pra.p.zpa-app.net","domain":"tests-praport-vcr0004acme.com","userNotification":"zscaler_python_sdk
         Test PRA Portal","userNotificationEnabled":true,"microtenantName":"Default"}]}'
     headers:
       cache-control:
@@ -539,7 +539,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:43 GMT
+      - Fri, 05 Dec 2025 23:23:37 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -557,23 +557,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '43'
+      - '32'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 18282573-7b3e-9a41-b8a1-cad321762508
+      - 5706f1ef-d248-9dac-99ab-bd024e4281f4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4898'
+      - '4904'
       x-ratelimit-reset:
-      - '17'
+      - '23'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -593,9 +593,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331394582
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/praPortal/216196257331395923
   response:
     body:
       string: ''
@@ -605,7 +605,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:43 GMT
+      - Fri, 05 Dec 2025 23:23:37 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -621,23 +621,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '52'
+      - '50'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c1267853-4942-978c-972c-c9ba8e7965d6
+      - 21cc9130-f4c9-910e-9d69-d629a730bfa9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4897'
+      - '4903'
       x-ratelimit-reset:
-      - '17'
+      - '23'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

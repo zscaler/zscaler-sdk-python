@@ -56,11 +56,7 @@ class TestInventory:
 
         try:
             # List software to get a software key
-            software_list, _, error = client.zdx.inventory.list_softwares()
-            if error:
-                errors.append(f"Error listing software list: {error}")
-                return
-
+            software_list = client.zdx.inventory.list_softwares()
             if not software_list or not isinstance(software_list, list):
                 print("No software found within the specified time range.")
                 return

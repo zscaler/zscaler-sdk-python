@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups
   response:
     body:
       string: '[{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"comments":"Default
@@ -55,7 +55,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:09 GMT
+      - Sat, 06 Dec 2025 00:16:46 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -67,23 +67,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '820'
+      - '813'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7c70ad17-ae19-94cc-8bf1-026640705e9a
+      - 37ad9e13-e389-9b5a-9767-4cd11199380a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4988'
       x-ratelimit-reset:
-      - '52'
+      - '15'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -105,9 +105,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/lite
   response:
     body:
       string: '[{"id":24326827,"name":"Unassigned Locations","dynamicLocationGroupCriteria":{"profiles":["NONE"]}},{"id":24326828,"name":"Corporate
@@ -138,7 +138,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:10 GMT
+      - Sat, 06 Dec 2025 00:16:47 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -150,23 +150,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '237'
+      - '341'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a4d552ea-5e69-9de8-ae61-bba5f61b6b77
+      - e9a73c2a-4a15-96ae-a83a-3344e941a96d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4987'
       x-ratelimit-reset:
-      - '51'
+      - '14'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -188,9 +188,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups/count
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/count
   response:
     body:
       string: '9'
@@ -215,7 +215,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:10 GMT
+      - Sat, 06 Dec 2025 00:16:47 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -223,23 +223,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '219'
+      - '430'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6ab661c1-2708-9798-81d3-38beb7c254b5
+      - dcaec069-2887-9349-b5fb-c02331bba051
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4986'
       x-ratelimit-reset:
-      - '50'
+      - '13'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

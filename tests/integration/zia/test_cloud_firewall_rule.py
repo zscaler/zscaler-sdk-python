@@ -41,7 +41,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #         try:
 #             # Step 1: Create a Destination IP Group
 #             try:
-#                 created_dst_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+#                 created_dst_group = client.zia.cloud_firewall.add_ip_destination_group(
 #                     name="tests-" + generate_random_string(),
 #                     description="tests-" + generate_random_string(),
 #                     type="DSTN_IP",
@@ -57,7 +57,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 2: Create a Source IP Group
 #             try:
-#                 created_src_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
+#                 created_src_group = client.zia.cloud_firewall.add_ip_source_group(
 #                     name="tests-" + generate_random_string(),
 #                     description="Integration test source group",
 #                     ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
@@ -71,7 +71,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Step 3: Create a Firewall Rule
 #             try:
 #                 rule_name = "tests-" + generate_random_string()
-#                 created_rule, _, error = client.zia.cloud_firewall_rules.add_rule(
+#                 created_rule = client.zia.cloud_firewall_rules.add_rule(
 #                     name=rule_name,
 #                     description="Integration test firewall rule",
 #                     enabled=True,
@@ -89,7 +89,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 4: Retrieve the Firewall Rule by ID
 #             try:
-#                 retrieved_rule, _, error = client.zia.cloud_firewall_rules.get_rule(rule_id)
+#                 retrieved_rule = client.zia.cloud_firewall_rules.get_rule(rule_id)
 #                 assert error is None, f"Error retrieving Firewall Rule: {error}"
 #                 assert retrieved_rule is not None, "Retrieved Firewall Rule is None"
 #                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
@@ -99,7 +99,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Step 5: Update the Firewall Rule
 #             try:
 #                 updated_description = "Updated integration test firewall rule"
-#                 updated_rule, _, error = client.zia.cloud_firewall_rules.update_rule(
+#                 updated_rule = client.zia.cloud_firewall_rules.update_rule(
 #                     rule_id=rule_id,
 #                     name=rule_name,
 #                     description=updated_description,
@@ -118,7 +118,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 6: List Firewall Rules and verify the rule is present
 #             try:
-#                 rules, _, error = client.zia.cloud_firewall_rules.list_rules()
+#                 rules = client.zia.cloud_firewall_rules.list_rules()
 #                 assert error is None, f"Error listing Firewall Rules: {error}"
 #                 assert rules is not None, "Firewall Rules list is None"
 #                 assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in the list of rules."
@@ -130,7 +130,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             try:
 #                 if rule_id:
 #                     # Delete the firewall rule
-#                     _, _, error = client.zia.cloud_firewall_rules.delete_rule(rule_id)
+#                     _ = client.zia.cloud_firewall_rules.delete_rule(rule_id)
 #                     assert error is None, f"Error deleting Firewall Rule: {error}"
 #             except Exception as exc:
 #                 cleanup_errors.append(f"Deleting Firewall Rule failed: {exc}")
@@ -138,7 +138,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             try:
 #                 if dst_group_id:
 #                     # Delete the destination IP group
-#                     _, _, error = client.zia.cloud_firewall.delete_ip_destination_group(dst_group_id)
+#                     _ = client.zia.cloud_firewall.delete_ip_destination_group(dst_group_id)
 #                     # No assertion needed here if deletion returns status code in a different manner; adjust as needed.
 #                     # For consistency, you may check error is None.
 #                     assert error is None, f"Error deleting Destination IP Group: {error}"
@@ -148,7 +148,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             try:
 #                 if src_group_id:
 #                     # Delete the source IP group
-#                     _, _, error = client.zia.cloud_firewall.delete_ip_source_group(src_group_id)
+#                     _ = client.zia.cloud_firewall.delete_ip_source_group(src_group_id)
 #                     assert error is None, f"Error deleting Source IP Group: {error}"
 #             except Exception as exc:
 #                 cleanup_errors.append(f"Deleting Source IP Group failed: {exc}")

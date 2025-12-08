@@ -36,8 +36,7 @@ class TestSandbox:
         """Test retrieving sandbox quota."""
         client = MockZIAClient(fs)
 
-        quota_info, _, err = client.zia.sandbox.get_quota()
-        assert err is None, f"Error fetching sandbox quota: {err}"
+        quota_info = client.zia.sandbox.get_quota()
         assert isinstance(quota_info, list), "Expected quota_info to be a list"
 
     @pytest.mark.vcr()
@@ -46,8 +45,7 @@ class TestSandbox:
         client = MockZIAClient(fs)
         test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
 
-        report, _, error = client.zia.sandbox.get_report(test_md5_hash, report_details="summary")
-        assert error is None, f"Error fetching sandbox report: {error}"
+        report = client.zia.sandbox.get_report(test_md5_hash, report_details="summary")
         assert isinstance(report, dict), "Expected sandbox report to be a dictionary"
 
     # def test_sandbox_submit_files(self, fs):
@@ -71,7 +69,7 @@ class TestSandbox:
     #                 downloaded_files.append(local_file_path)
 
     #                 # Submit to sandbox
-    #                 submission_response, _, error = client.zia.sandbox.submit_file(
+    #                 submission_response = client.zia.sandbox.submit_file(
     #                     file_path=local_file_path,
     #                     force=True
     #                 )
@@ -111,7 +109,7 @@ class TestSandbox:
     #             downloaded_files.append(local_file_path)
 
     #             # Submit the file for inspection
-    #             submission_response, _, error = client.zia.sandbox.submit_file_for_inspection(local_file_path)
+    #             submission_response = client.zia.sandbox.submit_file_for_inspection(local_file_path)
     #             assert error is None, f"Error submitting {file_name} for inspection: {error}"
     #             assert isinstance(submission_response, dict), "Expected dictionary response"
     #             assert submission_response.get("code") == 200, f"Unexpected response: {submission_response}"

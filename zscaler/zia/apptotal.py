@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.apptotal import AppTotal
 from zscaler.zia.models.apptotal import AppTotalSearch
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class AppTotalAPI(APIClient):
@@ -34,7 +33,7 @@ class AppTotalAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_app(self, app_id: str, verbose: bool = False) -> APIResult[dict]:
+    def get_app(self, app_id: str, verbose: bool = False) -> AppTotal:
         """
         Searches the AppTotal App Catalog by app ID. If the app exists in the catalog, the app's information is
         returned. If not, the app is submitted for analysis. After analysis is complete, a subsequent GET request is
@@ -45,7 +44,6 @@ class AppTotalAPI(APIClient):
             verbose (bool, optional): Defaults to False.
 
         Returns:
-            tuple: A tuple containing the AppTotal object and the response object.
 
         Examples:
             Return verbose information on an app with ID 12345::
@@ -62,24 +60,14 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AppTotal)
 
-        response, error = self._request_executor.execute(request, AppTotal)
+        result = AppTotal(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AppTotal(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def scan_app(self, app_id: str) -> APIResult[dict]:
+    def scan_app(self, app_id: str) -> AppTotal:
         """
         Submits an app for analysis in the AppTotal Sandbox. After analysis is complete, a subsequent GET request is
         required to fetch the app's information.
@@ -88,7 +76,6 @@ class AppTotalAPI(APIClient):
             app_id (str): The app ID to scan.
 
         Returns:
-            tuple: The response object.
 
         Examples:
             Scan an app with ID 12345::
@@ -108,23 +95,13 @@ class AppTotalAPI(APIClient):
             "appId": app_id,
         }
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        response = self._request_executor.execute(request, AppTotal)
 
-        response, error = self._request_executor.execute(request, AppTotal)
+        result = AppTotal(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AppTotal(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def search_app(self, app_name: str) -> APIResult[dict]:
+    def search_app(self, app_name: str) -> AppTotalSearch:
         """
         Searches for an app by name. Any app whose name contains the search term (app_name) is returned.
         Note: The maximum number of results that are returned is 200.
@@ -133,7 +110,6 @@ class AppTotalAPI(APIClient):
             app_name (str): The app name to search for.
 
         Returns:
-            tuple: A tuple containing the AppTotalSearch object and the response object.
 
         Examples:
             Search for an app by name "Slack"::
@@ -156,24 +132,14 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AppTotalSearch)
 
-        response, error = self._request_executor.execute(request, AppTotalSearch)
+        result = AppTotalSearch(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AppTotalSearch(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def app_views(self, app_view_id: str) -> APIResult[dict]:
+    def app_views(self, app_view_id: str) -> AppTotalSearch:
         """
         Searches for an app by name. Any app whose name contains the search term (app_name) is returned.
         Note: The maximum number of results that are returned is 200.
@@ -182,7 +148,6 @@ class AppTotalAPI(APIClient):
             app_name (str): The app name to search for.
 
         Returns:
-            tuple: A tuple containing the AppTotalSearch object and the response object.
 
         Examples:
             Search for an app by name "Slack"::
@@ -205,19 +170,9 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, AppTotalSearch)
 
-        response, error = self._request_executor.execute(request, AppTotalSearch)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = AppTotalSearch(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = AppTotalSearch(self.form_response_body(response.get_body()))
+        return result

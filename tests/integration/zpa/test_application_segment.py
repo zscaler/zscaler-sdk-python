@@ -49,7 +49,7 @@ class TestApplicationSegment:
             try:
                 app_connector_group_name = "tests-appseg-" + generate_random_string()
                 app_connector_group_description = "tests-appseg-" + generate_random_string()
-                created_app_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
+                created_app_connector_group = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
                     enabled=True,
@@ -67,19 +67,15 @@ class TestApplicationSegment:
                     tcp_quick_ack_assistant=True,
                     tcp_quick_ack_read_assistant=True,
                 )
-                if err:
-                    errors.append(f"App Connector Group creation failed: {err}")
-                else:
-                    app_connector_group_id = created_app_connector_group.id
-                    assert app_connector_group_id is not None, "App Connector Group creation failed"
+                app_connector_group_id = created_app_connector_group.id
+                assert app_connector_group_id is not None, "App Connector Group creation failed"
             except Exception as exc:
                 errors.append(f"App Connector Group creation failed: {exc}")
 
             # Create a Segment Group
             try:
                 segment_group_name = "tests-appseg-" + generate_random_string()
-                created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
-                assert err is None, f"Error during segment group creation: {err}"
+                created_segment_group = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 segment_group_id = created_segment_group.id
             except Exception as exc:
                 errors.append(f"Error during segment group creation: {exc}")
@@ -88,13 +84,12 @@ class TestApplicationSegment:
             try:
                 server_group_name = "tests-appseg-" + generate_random_string()
                 server_group_description = "tests-appseg-" + generate_random_string()
-                created_server_group, _, err = client.zpa.server_groups.add_group(
+                created_server_group = client.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
                     dynamic_discovery=True,
                     app_connector_group_ids=[app_connector_group_id],
                 )
-                assert err is None, f"Creating Server Group failed: {err}"
                 server_group_id = created_server_group.id
             except Exception as exc:
                 errors.append(f"Creating Server Group failed: {exc}")
@@ -104,7 +99,7 @@ class TestApplicationSegment:
                 app_segment_name = domain_name
                 app_segment_description = domain_name
 
-                app_segment, _, err = client.zpa.application_segment.add_segment(
+                app_segment = client.zpa.application_segment.add_segment(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
@@ -113,7 +108,6 @@ class TestApplicationSegment:
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["9001", "9001"],  # Adjusted to tuple format
                 )
-                assert err is None, f"Creating Application Segment failed: {err}"
                 assert app_segment is not None, "No application segment data returned"
 
                 # Access the attribute directly instead of using subscript notation
@@ -125,10 +119,9 @@ class TestApplicationSegment:
             try:
                 if app_segment_id:
                     time.sleep(2)  # ZPA API requires time for eventual consistency
-                    segment_list, _, err = client.zpa.application_segment.list_segments(
+                    segment_list = client.zpa.application_segment.list_segments(
                         query_params={'search': app_segment_name}
                     )
-                    assert err is None, f"Error listing Application Segment: {err}"
                     assert segment_list is not None, "Segment list is None"
                     assert len(segment_list) > 0, f"No segments found with name '{app_segment_name}'"
             except Exception as exc:
@@ -138,14 +131,13 @@ class TestApplicationSegment:
             try:
                 if app_segment_id:
                     # Retrieve the existing segment by ID
-                    retrieved_segment, _, err = client.zpa.application_segment.get_segment(app_segment_id)
-                    assert err is None, f"Error fetching Application Segment: {err}"
+                    retrieved_segment = client.zpa.application_segment.get_segment(app_segment_id)
                     assert retrieved_segment.id == app_segment_id
                     assert retrieved_segment.name == app_segment_name
 
                     updated_description = "Updated " + generate_random_string()
                     # Provide all fields as keyword arguments, mirroring the creation style
-                    updated_app, _, err = client.zpa.application_segment.update_segment(
+                    updated_app = client.zpa.application_segment.update_segment(
                         app_segment_id,
                         name=app_segment_name,
                         description=updated_description,
@@ -155,12 +147,10 @@ class TestApplicationSegment:
                         server_group_ids=[server_group_id],
                         tcp_port_ranges=["9002", "9002"],
                     )
-                    assert err is None, f"Error updating Application Segment: {err}"
                     assert updated_app is not None, "No updated ApplicationSegment returned"
 
                     # Fetch the updated segment to validate the update
-                    verified_app, _, err = client.zpa.application_segment.get_segment(app_segment_id)
-                    assert err is None, f"Error fetching updated Application Segment: {err}"
+                    verified_app = client.zpa.application_segment.get_segment(app_segment_id)
                     assert verified_app.name == app_segment_name  # Name stays the same, only description changed
             except Exception as exc:
                 errors.append(f"Updating Application Segment failed: {exc}")

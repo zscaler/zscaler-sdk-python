@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.software_inventory import SoftwareList
 from zscaler.zdx.models.software_inventory import DeviceSoftwareInventory
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class InventoryAPI(APIClient):
@@ -31,7 +30,7 @@ class InventoryAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_softwares(self, query_params: Optional[dict] = None) -> APIResult[List[DeviceSoftwareInventory]]:
+    def list_softwares(self, query_params: Optional[dict] = None) -> List[DeviceSoftwareInventory]:
         """
         Returns a list of all software in ZDX.
 
@@ -54,19 +53,19 @@ class InventoryAPI(APIClient):
         Examples:
             List all software in ZDX for the past 2 hours:
 
-            >>> software_list, _, err = client.zdx.inventory.list_softwares()
-            ... if err:
-            ...     print(f"Error listing softwares: {err}")
-            ...     return
+            >>> try:
+            ...     software_list = client.zdx.inventory.list_softwares()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for software in software_list:
             ...     print(software)
 
             List all software in ZDX for the past 24 hours:
 
-            >>> software_list, _, err = client.zdx.inventory.list_softwares(query_params={"since": 24})
-            ... if err:
-            ...     print(f"Error listing softwares: {err}")
-            ...     return
+            >>> try:
+            ...     software_list = client.zdx.inventory.list_softwares(query_params={"since": 24})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for software in software_list:
             ...     print(software)
         """
@@ -83,26 +82,20 @@ class InventoryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-    
+        response = self._request_executor.execute(request)
         try:
             # Parse the wrapper response and extract the individual software items
             # Use response.get_body() directly to avoid camelCase conversion for ZDX
             software_list_wrapper = SoftwareList(response.get_body())
             result = software_list_wrapper.software  # This is the list of DeviceSoftwareInventory objects
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return List[DeviceSoftwareInventory]
+        return result
 
     @zdx_params
-    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceSoftwareInventory]]:
+    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> List[DeviceSoftwareInventory]:
         """
         Returns a list of all users and devices for the given software name and version.
 
@@ -157,19 +150,13 @@ class InventoryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
+        response = self._request_executor.execute(request)
         try:
             # Parse the wrapper response and extract the individual software items
             software_list_wrapper = SoftwareList(self.form_response_body(response.get_body()))
             result = software_list_wrapper.software  # This is the list of DeviceSoftwareInventory objects
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return List[DeviceSoftwareInventory]
+        return result

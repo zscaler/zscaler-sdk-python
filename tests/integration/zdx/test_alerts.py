@@ -76,11 +76,7 @@ class TestAlerts:
         errors = []
 
         try:
-            ongoing_alerts, _, error = client.zdx.alerts.list_ongoing(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing ongoing alerts: {error}")
-                return
+            ongoing_alerts = client.zdx.alerts.list_ongoing(query_params={"since": 2})
 
             if not ongoing_alerts or not isinstance(ongoing_alerts, list):
                 print("No ongoing alerts found within the specified time range.")
@@ -94,13 +90,10 @@ class TestAlerts:
 
             print(f"Using Alert ID: {alert_id}")
 
-            alert_info, _, error = client.zdx.alerts.get_alert(alert_id=alert_id)
+            alert_info = client.zdx.alerts.get_alert(alert_id=alert_id)
 
-            if error:
-                errors.append(f"Error retrieving alert details: {error}")
-            else:
-                print(f"Successfully retrieved alert {alert_id}:")
-                pprint(alert_info.as_dict() if hasattr(alert_info, "as_dict") else alert_info)
+            print(f"Successfully retrieved alert {alert_id}:")
+            pprint(alert_info.as_dict() if hasattr(alert_info, "as_dict") else alert_info)
 
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -113,11 +106,7 @@ class TestAlerts:
         errors = []
 
         try:
-            ongoing_alerts, _, error = client.zdx.alerts.list_ongoing(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing ongoing alerts: {error}")
-                return
+            ongoing_alerts = client.zdx.alerts.list_ongoing(query_params={"since": 2})
 
             if not ongoing_alerts or not isinstance(ongoing_alerts, list):
                 print("No ongoing alerts found within the specified time range.")

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_version_profile import CustomerVersionProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CustomerVersionProfileAPI(APIClient):
@@ -33,7 +32,7 @@ class CustomerVersionProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_version_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[CustomerVersionProfile]]:
+    def list_version_profiles(self, query_params: Optional[dict] = None) -> List[CustomerVersionProfile]:
         """
         Returns a list of all visible version profiles.
 
@@ -51,17 +50,16 @@ class CustomerVersionProfileAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Customer Profiles instances, Response, error)
 
         Examples:
             List all visibile version profiles:
 
         Examples:
-            >>> version_list, _, err = client.zpa.customer_version_profile.list_version_profiles(
+            >>> try:
+            ...     version_list = client.zpa.customer_version_profile.list_version_profiles(
             ... query_params={'search': 'Default', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing version profiles: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total version profiles found: {len(version_list)}")
             ... for pra in version_list:
             ...     print(pra.as_dict())
@@ -76,23 +74,14 @@ class CustomerVersionProfileAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CustomerVersionProfile)
+        result = []
+        for item in response.get_results():
+            result.append(CustomerVersionProfile(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, CustomerVersionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CustomerVersionProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_associated_version_profile(self) -> APIResult[CustomerVersionProfile]:
+    def get_associated_version_profile(self) -> CustomerVersionProfile:
         """
         Get associated version profile for a customer.
 
@@ -100,15 +89,15 @@ class CustomerVersionProfileAPI(APIClient):
         The API does not require any parameters.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (CustomerVersionProfile instance, Response, error)
+            :obj:`Tuple`: A tuple containing CustomerVersionProfile
 
         Examples:
             Get associated version profile for a customer:
 
-            >>> version_profile, _, err = client.zpa.customer_version_profile.get_associated_version_profile()
-            ... if err:
-            ...     print(f"Error getting associated version profile: {err}")
-            ...     return
+            >>> try:
+            ...     version_profile = client.zpa.customer_version_profile.get_associated_version_profile()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(version_profile.as_dict())
         """
         http_method = "get".upper()
@@ -119,21 +108,12 @@ class CustomerVersionProfileAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, CustomerVersionProfile)
+        result = CustomerVersionProfile(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CustomerVersionProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CustomerVersionProfile(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_version_profile(self, profile_id: str, remove_override_flag: bool) -> APIResult[None]:
+    def update_version_profile(self, profile_id: str, remove_override_flag: bool) -> None:
         """
         Update the version profile for a given customer.
 
@@ -151,13 +131,13 @@ class CustomerVersionProfileAPI(APIClient):
             updated version profile, call `get_associated_version_profile()` after this operation.
 
         Examples:
-            >>> updated_profile, _, err = client.zpa.customer_version_profile.update_version_profile(
+            >>> try:
+            ...     updated_profile = client.zpa.customer_version_profile.update_version_profile(
             ...     profile_id='0',
             ...     remove_override_flag=True
             ... )
-            ... if err:
-            ...     print(f"Error updating version profile: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Version profile updated: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
@@ -170,12 +150,6 @@ class CustomerVersionProfileAPI(APIClient):
 
         body = {"removeOverrideFlag": remove_override_flag}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request)
         return (None, response, None)

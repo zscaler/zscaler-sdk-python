@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_cred_pool_controller import PRACredentialPoolController
 from zscaler.utils import format_url, add_id_groups
-from zscaler.types import APIResult
 
 
 class PRACredentialPoolAPI(APIClient):
@@ -37,7 +36,7 @@ class PRACredentialPoolAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/waap-pra-config/v1/admin/customers/{customer_id}"
 
-    def list_credential_pool(self, query_params: Optional[dict] = None) -> APIResult[List[PRACredentialPoolController]]:
+    def list_credential_pool(self, query_params: Optional[dict] = None) -> List[PRACredentialPoolController]:
         """
         Returns a list of all privileged remote access credential pool details.
 
@@ -51,14 +50,13 @@ class PRACredentialPoolAPI(APIClient):
                 ``[query_params.sort_dir]`` {str}: Specifies the sort direction. Supported Values: ASC and DESC
 
         Returns:
-            tuple: A tuple containing (list of PrivilegedRemoteAccessCredential instances, Response, error)
 
         Examples:
-            >>> credential_list, _, err = client.zpa.pra_credential.list_credential_pool(
+            >>> try:
+            ...     credential_list = client.zpa.pra_credential.list_credential_pool(
             ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing pra credentials: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total pra credentials found: {len(credential_list)}")
             ... for pra in credential_list:
             ...     print(pra.as_dict())
@@ -76,23 +74,14 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PRACredentialPoolController)
+        result = []
+        for item in response.get_results():
+            result.append(PRACredentialPoolController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PRACredentialPoolController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PRACredentialPoolController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_credential_pool(self, pool_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_credential_pool(self, pool_id: str, query_params: Optional[dict] = None) -> PRACredentialPoolController:
         """
         Gets information on the specified Privileged credential pool.
 
@@ -107,10 +96,10 @@ class PRACredentialPoolAPI(APIClient):
         Example:
             Retrieve details of a specific Privileged credential pool
 
-            >>> fetched_pool, _, err = client.zpa.pra_credential_pool.get_credential_pool('999999')
-            ... if err:
-            ...     print(f"Error fetching Privileged credential pool by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_pool = client.zpa.pra_credential_pool.get_credential_pool('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched Privileged credential pool by ID: {fetched_pool.as_dict()}")
         """
         http_method = "get".upper()
@@ -126,21 +115,12 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PRACredentialPoolController)
+        result = PRACredentialPoolController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PRACredentialPoolController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PRACredentialPoolController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_credential_pool_info(self, pool_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_credential_pool_info(self, pool_id: str, query_params: Optional[dict] = None) -> PRACredentialPoolController:
         """
         Given Privileged credential pool id gets mapped privileged credential info
 
@@ -155,10 +135,10 @@ class PRACredentialPoolAPI(APIClient):
         Example:
             Retrieve details of a specific Privileged credential pool
 
-            >>> fetched_pool, _, err = client.zpa.pra_credential_pool.get_credential_pool_info('999999')
-            ... if err:
-            ...     print(f"Error fetching Privileged credential pool by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_pool = client.zpa.pra_credential_pool.get_credential_pool_info('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched Privileged credential pool by ID: {fetched_pool.as_dict()}")
         """
         http_method = "get".upper()
@@ -174,23 +154,14 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, PRACredentialPoolController)
+        result = []
+        for item in response.get_results():
+            result.append(PRACredentialPoolController(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, PRACredentialPoolController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(PRACredentialPoolController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_credential_pool(self, **kwargs) -> APIResult[dict]:
+    def add_credential_pool(self, **kwargs) -> PRACredentialPoolController:
         """
         Adds a new Privileged Credential Pool.
 
@@ -204,13 +175,13 @@ class PRACredentialPoolAPI(APIClient):
 
         Examples:
 
-            >>> add_pool, _, err = client.zpa.pra_credential_pool.update_credential_pool(
+            >>> try:
+            ...     add_pool = client.zpa.pra_credential_pool.update_credential_pool(
             ...    name='New_Credential_Pool',
             ...    credential_ids=['124545', '12545'],
             ...    credential_type='USERNAME_PASSWORD'
-            ... if err:
-            ...     print(f"Error updating Privileged credential pool: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Privileged credential pool added successfully: {add_pool.as_dict()}")
         """
         http_method = "post".upper()
@@ -231,21 +202,12 @@ class PRACredentialPoolAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, PRACredentialPoolController)
+        result = PRACredentialPoolController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, PRACredentialPoolController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = PRACredentialPoolController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_credential_pool(self, pool_id: str, **kwargs) -> APIResult[dict]:
+    def update_credential_pool(self, pool_id: str, **kwargs) -> PRACredentialPoolController:
         """
         Updates a Privileged credential pool.
 
@@ -254,18 +216,18 @@ class PRACredentialPoolAPI(APIClient):
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (PRACredentialPoolController, Response, error)
+            :obj:`Tuple`: A tuple containing PRACredential
 
         Examples:
 
-            >>> update_pool, _, err = client.zpa.pra_credential_pool.update_credential_pool(
+            >>> try:
+            ...     update_pool = client.zpa.pra_credential_pool.update_credential_pool(
             ...    pool_id="999999",
             ...    name='Update_Credential_Pool',
             ...    credential_ids=['124545', '12545'],
             ...    credential_type='USERNAME_PASSWORD'
-            ... if err:
-            ...     print(f"Error updating Privileged credential pool: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Privileged credential pool added successfully: {update_pool.as_dict()}")
         """
         http_method = "put".upper()
@@ -288,24 +250,15 @@ class PRACredentialPoolAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, PRACredentialPoolController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, PRACredentialPoolController)
         if response is None:
-            return (PRACredentialPoolController({"id": pool_id}), None, None)
+            return PRACredentialPoolController({"id": pool_id})
 
-        try:
-            result = PRACredentialPoolController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = PRACredentialPoolController(self.form_response_body(response.get_body()))
+        return result
 
-    def delete_credential_pool(self, pool_id: str, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_credential_pool(self, pool_id: str, microtenant_id: str = None) -> None:
         """
         Deletes the specified privileged credential pool.
 
@@ -314,15 +267,14 @@ class PRACredentialPoolAPI(APIClient):
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (None, Response, error)
 
         Examples:
-            >>> _, _, err = client.zpa.pra_credential_pool.delete_credential_pool(
+            >>> try:
+            ...     _ = client.zpa.pra_credential_pool.delete_credential_pool(
             ...     pool_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting privileged credential pools: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"privileged credential pools with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -335,11 +287,6 @@ class PRACredentialPoolAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

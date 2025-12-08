@@ -38,8 +38,7 @@ class TestSamlAttributes:
 
         try:
             # Test listing all SAML attributes
-            saml_attributes, _, err = client.zpa.saml_attributes.list_saml_attributes()
-            assert err is None, f"Error listing SAML attributes: {err}"
+            saml_attributes = client.zpa.saml_attributes.list_saml_attributes()
             assert isinstance(saml_attributes, list), "Response is not in the expected list format."
             assert len(saml_attributes) > 0, "No SAML attributes were found."
         except Exception as exc:
@@ -47,8 +46,7 @@ class TestSamlAttributes:
 
         try:
             # Step 1: List all IDPs and find the one with sso_type = USER
-            idps, _, err = client.zpa.idp.list_idps()
-            assert err is None, f"Error listing IDPs: {err}"
+            idps = client.zpa.idp.list_idps()
             user_idp = next((idp for idp in idps if "USER" in idp.sso_type), None)
             assert user_idp is not None, "No IdP with sso_type 'USER' found."
 
@@ -59,8 +57,7 @@ class TestSamlAttributes:
         if user_idp_id:
             try:
                 # Step 2: List SAML attributes by IDP
-                saml_attributes_by_idp, _, err = client.zpa.saml_attributes.list_saml_attributes_by_idp(user_idp_id)
-                assert err is None, f"Error listing SAML attributes by IDP: {err}"
+                saml_attributes_by_idp = client.zpa.saml_attributes.list_saml_attributes_by_idp(user_idp_id)
                 assert isinstance(saml_attributes_by_idp, list), "Response is not in the expected list format for IDP."
                 assert len(saml_attributes_by_idp) > 0, "No SAML attributes were found for the specified IdP by ID."
 
@@ -71,8 +68,7 @@ class TestSamlAttributes:
 
         if first_attribute_id:
             try:
-                saml_attribute, _, err = client.zpa.saml_attributes.get_saml_attribute(first_attribute_id)
-                assert err is None, f"Error getting SAML attribute: {err}"
+                saml_attribute = client.zpa.saml_attributes.get_saml_attribute(first_attribute_id)
                 assert saml_attribute is not None, "No SAML attribute found for the specified ID."
                 assert saml_attribute.id == first_attribute_id, "Retrieved SAML attribute ID does not match the requested ID."
             except Exception as exc:

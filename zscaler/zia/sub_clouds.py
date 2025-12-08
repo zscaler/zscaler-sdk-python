@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.subclouds import TenantSubClouds
 from zscaler.zia.models.subclouds import LastDCInCountry
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class SubCloudsAPI(APIClient):
@@ -34,7 +33,7 @@ class SubCloudsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_sub_clouds(self, query_params: Optional[dict] = None) -> APIResult[List[TenantSubClouds]]:
+    def list_sub_clouds(self, query_params: Optional[dict] = None) -> List[TenantSubClouds]:
         """
         Returns the list of all configured Tenant Sub Clouds.
 
@@ -49,9 +48,8 @@ class SubCloudsAPI(APIClient):
             List Sub Clouds with default settings:
 
             >>> subcloud_list, zscaler_resp, err = client.zia.sub_clouds.list_sub_clouds()
-            ... if err:
-            ...     print(f"Error listing sub clouds: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total sub clouds found: {len(subcloud_list)}")
             ... for cloud in subcloud_list:
             ...     print(cloud.as_dict())
@@ -70,25 +68,16 @@ class SubCloudsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TenantSubClouds(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TenantSubClouds(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_sub_clouds(self, cloud_id: int, **kwargs) -> APIResult[dict]:
+    def update_sub_clouds(self, cloud_id: int, **kwargs) -> TenantSubClouds:
         """
         Updates information for the subcloud and excluded data centers based on the specified ID.
 
@@ -96,7 +85,6 @@ class SubCloudsAPI(APIClient):
             cloud_id (int): The unique ID for the Sub Clouds.
 
         Returns:
-            tuple: A tuple containing the updated Sub Clouds, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -109,21 +97,12 @@ class SubCloudsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request)
+        result = TenantSubClouds(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TenantSubClouds(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params: Optional[dict] = None) -> Any:
         """
         Returns information for the list of all the excluded data centers in a country.
 
@@ -133,7 +112,6 @@ class SubCloudsAPI(APIClient):
                 ``[query_params.dc_id]`` {list[int]}: List of Data Center IDs.
 
         Returns:
-            tuple: A tuple containing a list of LastDCInCountry instances, Response, error.
 
         Example:
             >>> subclouds, response, err = zia.sub_clouds.get_sub_cloud_last_dc_in_country(
@@ -153,23 +131,10 @@ class SubCloudsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [LastDCInCountry(item) for item in response.get_body()]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [LastDCInCountry(item) for item in response.get_body()]
+        return result

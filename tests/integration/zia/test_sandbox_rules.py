@@ -41,7 +41,7 @@ class TestSandboxRules:
         try:
             # Step 1: Retrieve department
             # try:
-            #     departments, _, error = client.zia.user_management.list_departments(query_params={"search": "A000"})
+            #     departments = client.zia.user_management.list_departments(query_params={"search": "A000"})
             #     assert error is None, f"Department listing error: {error}"
             #     department = next((d for d in departments if hasattr(d, "id")), None)
             #     assert department, "No valid departments available for assignment"
@@ -51,7 +51,7 @@ class TestSandboxRules:
 
             # # Step 2: Retrieve group
             # try:
-            #     groups, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
+            #     groups = client.zia.user_management.list_groups(query_params={"search": "A000"})
             #     assert error is None, f"Group listing error: {error}"
             #     group = next((g for g in groups if hasattr(g, "id")), None)
             #     assert group, "No valid groups available for assignment"
@@ -62,7 +62,7 @@ class TestSandboxRules:
             # Step 3: Create a Sandbox Rule
             try:
                 rule_name = "tests-" + generate_random_string()
-                created_rule, _, error = client.zia.sandbox_rules.add_rule(
+                created_rule = client.zia.sandbox_rules.add_rule(
                     name=rule_name,
                     description="Integration test Sandbox Rule",
                     ba_rule_action="BLOCK",
@@ -80,7 +80,6 @@ class TestSandboxRules:
                     # groups=['12006601'],
                     # departments=['15616629'],
                 )
-                assert error is None, f"Sandbox Rule creation failed: {error}"
                 assert created_rule is not None, "Sandbox Rule creation returned None"
                 rule_id = created_rule.id
             except Exception as exc:
@@ -88,8 +87,7 @@ class TestSandboxRules:
 
             # Step 4: Retrieve the Sandbox Rule by ID
             try:
-                retrieved_rule, _, error = client.zia.sandbox_rules.get_rule(rule_id)
-                assert error is None, f"Error retrieving Sandbox Rule: {error}"
+                retrieved_rule = client.zia.sandbox_rules.get_rule(rule_id)
                 assert retrieved_rule is not None, "Retrieved Sandbox Rule is None"
                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
@@ -98,7 +96,7 @@ class TestSandboxRules:
             # Step 5: Update the Sandbox Rule
             try:
                 updated_description = "Updated integration test Sandbox Rule"
-                updated_rule, _, error = client.zia.sandbox_rules.update_rule(
+                updated_rule = client.zia.sandbox_rules.update_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -117,7 +115,6 @@ class TestSandboxRules:
                     # groups=['12006601'],
                     # departments=['15616629'],
                 )
-                assert error is None, f"Error updating Sandbox Rule: {error}"
                 assert updated_rule is not None, "Updated Sandbox Rule is None"
                 assert updated_rule.description == updated_description, f"Sandbox Rule update failed: {updated_rule.as_dict()}"
             except Exception as exc:
@@ -127,12 +124,11 @@ class TestSandboxRules:
             cleanup_errors = []
             try:
                 if rule_id:
-                    _, _, error = client.zia.sandbox_rules.delete_rule(rule_id)
-                    assert error is None, f"Error deleting Sandbox Rule: {error}"
+                    _ = client.zia.sandbox_rules.delete_rule(rule_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Sandbox Rule failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

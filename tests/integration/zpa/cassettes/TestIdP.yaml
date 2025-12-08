@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/idp
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/idp
   response:
     body:
       string: '{"totalPages":"1","totalCount":"3","list":[{"id":"216196257331285825","modifiedTime":"1762447670","creationTime":"1631717728","modifiedBy":"216196257331372702","name":"BD_Okta_Users","certificates":[{"cName":"dev-151399","serialNo":"1739571169880","certificate":"-----BEGIN
@@ -35,7 +35,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:09 GMT
+      - Fri, 05 Dec 2025 23:23:04 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '54'
+      - '63'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 43bc757e-7789-9489-bac7-3ef170dfcdcf
+      - cf10cf27-7123-971d-82d2-3d02a44f574f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4971'
+      - '4977'
       x-ratelimit-reset:
-      - '51'
+      - '56'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -89,9 +89,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/idp/216196257331285825
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/idp/216196257331285825
   response:
     body:
       string: '{"id":"216196257331285825","modifiedTime":"1762447670","creationTime":"1631717728","modifiedBy":"216196257331372702","name":"BD_Okta_Users","certificates":[{"cName":"dev-151399","serialNo":"1739571169880","certificate":"-----BEGIN
@@ -107,7 +107,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:09 GMT
+      - Fri, 05 Dec 2025 23:23:05 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -125,23 +125,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '59'
+      - '50'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ee618937-5751-9a36-b7ce-9b774330a9c1
+      - 2d2fd3e5-3fdd-9e85-b8c0-b4e82f8d6ed3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4970'
+      - '4976'
       x-ratelimit-reset:
-      - '51'
+      - '55'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

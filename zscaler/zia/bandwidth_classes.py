@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.bandwidth_classes import BandwidthClasses
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class BandwidthClassesAPI(APIClient):
@@ -33,7 +32,7 @@ class BandwidthClassesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_classes(self, query_params: Optional[dict] = None) -> APIResult[List[BandwidthClasses]]:
+    def list_classes(self, query_params: Optional[dict] = None) -> List[BandwidthClasses]:
         """
         Retrieves a list of bandwidth classes for an organization.
 
@@ -43,7 +42,6 @@ class BandwidthClassesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Bandwidth Classs instances, Response, error)
 
         Examples:
             List Bandwidth Classes All:
@@ -72,28 +70,18 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(BandwidthClasses(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(BandwidthClasses(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def list_classes_lite(self) -> APIResult[List[BandwidthClasses]]:
+    def list_classes_lite(self) -> List[BandwidthClasses]:
         """
         Fetches a specific bandwidth class lite by ID.
 
@@ -101,7 +89,6 @@ class BandwidthClassesAPI(APIClient):
             bwd_id (int): The unique identifier for the Bandwidth Class Lite.
 
         Returns:
-            tuple: A tuple containing (Bandwidth Class instance, Response, error).
 
         Examples:
             List Bandwidth Classes All:
@@ -126,24 +113,15 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, BandwidthClasses)
+        result = []
+        for item in response.get_results():
+            result.append(BandwidthClasses(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, BandwidthClasses)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(BandwidthClasses(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_class(self, class_id: int) -> APIResult[dict]:
+    def get_class(self, class_id: int) -> BandwidthClasses:
         """
         Fetches a specific bandwidth class by ID.
 
@@ -151,7 +129,6 @@ class BandwidthClassesAPI(APIClient):
             class_id (int): The unique identifier for the Bandwidth Class.
 
         Returns:
-            tuple: A tuple containing (Bandwidth Class instance, Response, error).
 
         Examples:
             List Bandwidth Classes All:
@@ -173,22 +150,13 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, BandwidthClasses)
+        result = BandwidthClasses(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, BandwidthClasses)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = BandwidthClasses(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_class(self, **kwargs) -> APIResult[dict]:
+    def add_class(self, **kwargs) -> BandwidthClasses:
         """
         Creates a new ZIA Bandwidth Class.
 
@@ -199,7 +167,6 @@ class BandwidthClassesAPI(APIClient):
             url_categories (:obj:`list` of :obj:`str`): The URL categories to add to the bandwidth class
 
         Returns:
-            tuple: A tuple containing the newly added Bandwidth Class, response, and error.
 
         Examples:
             Create Bandwidth Classes:
@@ -225,26 +192,17 @@ class BandwidthClassesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, BandwidthClasses)
+        result = BandwidthClasses(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, BandwidthClasses)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = BandwidthClasses(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_class(self, class_id: int, **kwargs) -> APIResult[dict]:
+    def update_class(self, class_id: int, **kwargs) -> BandwidthClasses:
         """
         Updates information for the specified ZIA Bandwidth Class.
 
@@ -252,7 +210,6 @@ class BandwidthClassesAPI(APIClient):
             class_id (int): The unique ID for the Bandwidth Class.
 
         Returns:
-            tuple: A tuple containing the updated Bandwidth Class, response, and error.
 
         Examples:
             Update Bandwidth Classes:
@@ -280,21 +237,12 @@ class BandwidthClassesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, BandwidthClasses)
+        result = BandwidthClasses(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, BandwidthClasses)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = BandwidthClasses(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_class(self, class_id: int) -> APIResult[dict]:
+    def delete_class(self, class_id: int) -> None:
         """
         Deletes the specified Bandwidth Class.
 
@@ -302,7 +250,6 @@ class BandwidthClassesAPI(APIClient):
             class_id (int): The unique identifier of the Bandwidth Class.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Bandwidth Classes:
@@ -323,11 +270,6 @@ class BandwidthClassesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

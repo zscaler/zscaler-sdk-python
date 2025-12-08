@@ -36,8 +36,7 @@ class TestAdministration:
         errors = []
 
         try:
-            departments, _, err = client.zdx.admin.list_departments(query_params={"since": 2})
-            assert err is None, f"Error listing departments: {err}"
+            departments = client.zdx.admin.list_departments(query_params={"since": 2})
             assert isinstance(departments, list), "Expected departments to be a list"
 
             if not departments:
@@ -57,8 +56,7 @@ class TestAdministration:
         errors = []
 
         try:
-            locations, _, err = client.zdx.admin.list_locations(query_params={"since": 2})
-            assert err is None, f"Error listing locations: {err}"
+            locations = client.zdx.admin.list_locations(query_params={"since": 2})
             assert isinstance(locations, list), "Expected locations to be a list"
 
             if not locations:

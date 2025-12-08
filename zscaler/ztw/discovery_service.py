@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.request_executor import RequestExecutor
 from typing import List, Optional
 from zscaler.api_client import APIClient
-from zscaler.types import APIResult
 from zscaler.ztw.models.discovery_service import DiscoveryService
 from zscaler.ztw.models.discovery_service import DiscoveryServicePermissions
 from zscaler.utils import format_url
@@ -31,12 +30,11 @@ class DiscoveryServiceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_discovery_settings(self) -> APIResult[DiscoveryService]:
+    def get_discovery_settings(self) -> DiscoveryService:
         """
         Retrieves the workload discovery service settings.
 
         Returns:
-            tuple: A tuple containing (DiscoveryService instance, Response, error)
 
         Examples:
             Get the workload discovery service settings:
@@ -58,25 +56,16 @@ class DiscoveryServiceAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DiscoveryService(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = DiscoveryService(self.form_response_body(response.get_body()))
+        return result
 
     def update_discovery_service_permissions(
         self, account_group_id: int, **kwargs
-    ) -> APIResult[DiscoveryServicePermissions]:
+    ) -> DiscoveryServicePermissions:
         """
         Verifies the specified AWS account permissions using the discovery role and external ID.
 
@@ -103,16 +92,7 @@ class DiscoveryServiceAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, DiscoveryServicePermissions)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = DiscoveryServicePermissions(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, DiscoveryServicePermissions)
+        result = DiscoveryServicePermissions(self.form_response_body(response.get_body()))
+        return result

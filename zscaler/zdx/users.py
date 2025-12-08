@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.users import ActiveUsers
 from zscaler.zdx.models.users import UserDeviceDetails
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class UsersAPI(APIClient):
@@ -31,7 +30,7 @@ class UsersAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_users(self, query_params: Optional[dict] = None) -> APIResult[List[ActiveUsers]]:
+    def list_users(self, query_params: Optional[dict] = None) -> List[ActiveUsers]:
         """
         Returns a list of all active users configured within the ZDX tenant.
 
@@ -64,19 +63,19 @@ class UsersAPI(APIClient):
         Examples:
             List all users in ZDX for the past 2 hours:
 
-            >>> user_list, _, err = client.zdx.users.list_users()
-            ... if err:
-            ...     print(f"Error listing users: {err}")
-            ...     return
+            >>> try:
+            ...     user_list = client.zdx.users.list_users()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for user in user_list:
             ...     print(user)
 
             List all users in ZDX for the past 2 hours:
 
-            >>> user_list, _, err = client.zdx.users.list_users(query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing users: {err}")
-            ...     return
+            >>> try:
+            ...     user_list = client.zdx.users.list_users(query_params={"since": 2})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for user in user_list:
             ...     print(user)
         """
@@ -93,24 +92,14 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [ActiveUsers(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [ActiveUsers(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns information on the specified user configured within the ZDX tenant.
 
@@ -129,10 +118,10 @@ class UsersAPI(APIClient):
         Examples:
             Return information on the user with the ID of 999999999:
 
-            >>> user_details, _, err = client.zdx.users.get_user('24328827')
-            ... if err:
-            ...     print(f"Error listing user details: {err}")
-            ...     return
+            >>> try:
+            ...     user_details = client.zdx.users.get_user('24328827')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for user in user_details:
             ...     print(user)
         """
@@ -149,18 +138,8 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [UserDeviceDetails(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [UserDeviceDetails(self.form_response_body(response.get_body()))]
+        return result

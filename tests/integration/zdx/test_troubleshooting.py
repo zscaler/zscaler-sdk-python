@@ -90,7 +90,7 @@ class TestTroubleshooting:
     #         # Step 5: Search for the trace by session name (only if deeptrace_session_name is set)
     #         try:
     #             if deeptrace_session_name and device_id:
-    #                 traces_list, _, err = client.zdx.troubleshooting.list_deeptraces(
+    #                 traces_list = client.zdx.troubleshooting.list_deeptraces(
     #                     device_id, query_params={"search": deeptrace_session_name}
     #                 )
     #                 if err:
@@ -114,7 +114,7 @@ class TestTroubleshooting:
     #         # Step 6: Get deep trace details using trace_id
     #         try:
     #             if device_id and trace_id:
-    #                 fetched_trace, _, err = client.zdx.troubleshooting.get_deeptrace(device_id, trace_id)
+    #                 fetched_trace = client.zdx.troubleshooting.get_deeptrace(device_id, trace_id)
     #                 if err:
     #                     errors.append(f"Error fetching deep trace: {err}")
     #                 else:
@@ -150,11 +150,7 @@ class TestTroubleshooting:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -196,11 +192,7 @@ class TestTroubleshooting:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -242,11 +234,7 @@ class TestTroubleshooting:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -288,11 +276,7 @@ class TestTroubleshooting:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")
@@ -332,11 +316,7 @@ class TestTroubleshooting:
         errors = []
 
         try:
-            devices, _, error = client.zdx.devices.list_devices(query_params={"since": 2})
-
-            if error:
-                errors.append(f"Error listing devices: {error}")
-                return
+            devices = client.zdx.devices.list_devices(query_params={"since": 2})
 
             if not devices or not isinstance(devices, list):
                 print("No devices found within the specified time range.")

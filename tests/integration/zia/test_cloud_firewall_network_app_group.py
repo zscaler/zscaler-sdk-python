@@ -40,12 +40,11 @@ class TestCloudFirewallNetworkAppGroup:
         group_id = None
 
         try:
-            created_group, _, error = client.zia.cloud_firewall.add_network_app_group(
+            created_group = client.zia.cloud_firewall.add_network_app_group(
                 name=group_name,
                 description=group_description,
                 network_applications=["APNS", "APPSTORE", "DICT"],
             )
-            assert error is None, f"Error adding network application group group: {error}"
             assert created_group is not None, "Failed to create network application group group"
             group_id = created_group.id
             assert created_group.name == group_name, "Group name mismatch in creation"
@@ -56,8 +55,7 @@ class TestCloudFirewallNetworkAppGroup:
             # Attempt to retrieve the created network application group by ID
             if group_id:
                 try:
-                    group, _, error = client.zia.cloud_firewall.get_network_app_group(group_id)
-                    assert error is None, f"Error retrieving network application group group: {error}"
+                    group = client.zia.cloud_firewall.get_network_app_group(group_id)
                     assert group is not None, "Retrieved network application group group is None"
                     assert group.id == group_id, "Incorrect network application group group retrieved"
                 except Exception as exc:
@@ -67,18 +65,16 @@ class TestCloudFirewallNetworkAppGroup:
             if group_id:
                 try:
                     updated_name = "updated-" + generate_random_string()
-                    updated_group, _, error = client.zia.cloud_firewall.update_network_app_group(
+                    updated_group = client.zia.cloud_firewall.update_network_app_group(
                         group_id=group_id, name=updated_name
                     )
-                    assert error is None, f"Error updating network application group group: {error}"
                     assert updated_group.name == updated_name, "Group name mismatch after update"
                 except Exception as exc:
                     errors.append(f"Failed to update network application group group: {exc}")
 
             # Attempt to list network application groups and check if the updated group is in the list
             try:
-                groups, _, error = client.zia.cloud_firewall.list_network_app_groups()
-                assert error is None, f"Error listing network application group groups: {error}"
+                groups = client.zia.cloud_firewall.list_network_app_groups()
                 assert groups is not None, "network application group group list is None"
                 assert any(g.id == group_id for g in groups), "Updated network application group group not found in list"
             except Exception as exc:
@@ -87,11 +83,10 @@ class TestCloudFirewallNetworkAppGroup:
         finally:
             try:
                 if group_id:
-                    _, _, error = client.zia.cloud_firewall.delete_network_app_group(group_id)
-                    assert error is None, f"Error deleting network application group: {error}"
+                    _ = client.zia.cloud_firewall.delete_network_app_group(group_id)
             except Exception as exc:
                 errors.append(f"Deleting network application group failed: {exc}")
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

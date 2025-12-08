@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.ssl_inspection_rules import SSLInspectionRules
-from zscaler.types import APIResult
 
 
 class SSLInspectionAPI(APIClient):
@@ -33,7 +32,7 @@ class SSLInspectionAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[SSLInspectionRules]]:
+    ) -> List[SSLInspectionRules]:
         """
         Lists ssl inspection rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -44,7 +43,6 @@ class SSLInspectionAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of ssl inspection rules instances, Response, error).
 
         Examples:
         >>> rules, response, error = zia.ssl_inspection.list_rules()
@@ -69,31 +67,21 @@ class SSLInspectionAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(SSLInspectionRules(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(SSLInspectionRules(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> SSLInspectionRules:
         """
         Returns information for the specified ssl inspection filter rule.
 
@@ -101,7 +89,6 @@ class SSLInspectionAPI(APIClient):
             rule_id (str): The unique identifier for the ssl inspection filter rule.
 
         Returns:
-            tuple: A tuple containing (ssl inspection rule instance, Response, error).
 
         Example:
             Retrieve a ssl inspection rule by its ID:
@@ -121,26 +108,17 @@ class SSLInspectionAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SSLInspectionRules)
 
-        response, error = self._request_executor.execute(request, SSLInspectionRules)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SSLInspectionRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = SSLInspectionRules(self.form_response_body(response.get_body()))
+        return result
 
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> SSLInspectionRules:
         """
         Adds a new ssl inspection filter rule.
 
@@ -223,26 +201,17 @@ class SSLInspectionAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SSLInspectionRules)
+        result = SSLInspectionRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SSLInspectionRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SSLInspectionRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> SSLInspectionRules:
         """
         Updates an existing ssl inspection filter rule.
 
@@ -270,7 +239,6 @@ class SSLInspectionAPI(APIClient):
             location_groups (list): The IDs for the location groups that this rule applies to.
 
         Returns:
-            tuple: Updated sandbox filter rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
@@ -319,26 +287,17 @@ class SSLInspectionAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, SSLInspectionRules)
+        result = SSLInspectionRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, SSLInspectionRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = SSLInspectionRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> None:
         """
         Deletes the specified ssl inspection filter rule.
 
@@ -365,12 +324,6 @@ class SSLInspectionAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

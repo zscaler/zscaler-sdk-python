@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.client_settings import ClientSettings
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ClientSettingsAPI(APIClient):
@@ -33,7 +32,7 @@ class ClientSettingsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_client_settings(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_client_settings(self, query_params: Optional[dict] = None) -> ClientSettings:
         """
         Returns a list of client setting details.
         ClientCertType defaults to `CLIENT_CONNECTOR`
@@ -48,21 +47,21 @@ class ClientSettingsAPI(APIClient):
         Examples:
             Return all client setting types
 
-            >>> client_settings, _, err = client.zpa.client_settings.get_client_settings()
-            ... if err:
-            ...     print(f"Error listing client settings: {err}")
-            ...     return
+            >>> try:
+            ...     client_settings = client.zpa.client_settings.get_client_settings()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for setting in client_settings:
             ...     print(setting.as_dict())
 
             Return a specific client setting type
 
-            >>> client_settings, _, err = client.zpa.client_settings.get_client_settings(
+            >>> try:
+            ...     client_settings = client.zpa.client_settings.get_client_settings(
             ... query_params={'type': 'ZAPP_CLIENT'}
             )
-            ... if err:
-            ...     print(f"Error listing client settings: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for setting in client_settings:
             ...     print(setting.as_dict())
         """
@@ -76,23 +75,14 @@ class ClientSettingsAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ClientSettings)
+        result = []
+        for item in response.get_results():
+            result.append(ClientSettings(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ClientSettings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ClientSettings(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_all_client_settings(self) -> APIResult[dict]:
+    def get_all_client_settings(self) -> Any:
         """
         Returns all client setting details.
         ClientCertType defaults to `CLIENT_CONNECTOR`
@@ -101,7 +91,8 @@ class ClientSettingsAPI(APIClient):
             :obj:`Tuple`: A tuple containing a list of `ClientSettings` instances, response object, and error if any.
 
         Examples:
-            >>> fetched_settings, _, err = client.zpa.client_settings.get_all_client_settings()
+            >>> try:
+            ...     fetched_settings = client.zpa.client_settings.get_all_client_settings()
             >>> if err:
             ...     print(f"Error fetching settings: {err}")
             ...     return
@@ -116,23 +107,14 @@ class ClientSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ClientSettings(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ClientSettings(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_client_setting(self, **kwargs) -> APIResult[dict]:
+    def add_client_setting(self, **kwargs) -> ClientSettings:
         """
         Ccreate Client Setting for a customer. `ClientCertType` defaults to `CLIENT_CONNECTOR`
 
@@ -146,7 +128,8 @@ class ClientSettingsAPI(APIClient):
 
         Example:
             # Basic example: Add a new client setting
-            >>> added_client_setting, _, err = client.zpa.client_settings.add_client_setting(
+            >>> try:
+            ...     added_client_setting = client.zpa.client_settings.add_client_setting(
             ...     name="NewClientSetting",
             ...     enrollment_cert_id='245675',
             ...     client_certificate_type='ZAPP_CLIENT'
@@ -162,21 +145,12 @@ class ClientSettingsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, ClientSettings)
+        result = ClientSettings(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ClientSettings)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ClientSettings(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_client_setting(self) -> APIResult[None]:
+    def delete_client_setting(self) -> None:
         """
         Deletes the specified client setting.
 
@@ -187,10 +161,10 @@ class ClientSettingsAPI(APIClient):
 
         Example:
             # Delete a client setting
-            >>> _, _, err = client.zpa.client settings.delete_client_setting()
-            ... if err:
-            ...     print(f"Error client setting: {err}")
-            ...     return
+            >>> try:
+            ...     _ = client.zpa.client settings.delete_client_setting()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Client setting with ID deleted successfully.")
         """
         http_method = "delete".upper()
@@ -201,12 +175,7 @@ class ClientSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-        return (None, response, error)
+        return None

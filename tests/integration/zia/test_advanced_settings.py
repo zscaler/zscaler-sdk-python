@@ -37,15 +37,14 @@ class TestAdvancedSettings:
 
         # Step 1: Retrieve current settings
         try:
-            current_settings, _, err = client.zia.advanced_settings.get_advanced_settings()
-            assert err is None, f"Error retrieving advanced settings: {err}"
+            current_settings = client.zia.advanced_settings.get_advanced_settings()
             assert hasattr(current_settings, "enable_office365"), "Missing expected attribute: enable_office365"
         except Exception as exc:
             errors.append(f"Failed to retrieve advanced settings: {exc}")
 
         # Step 2: Update advanced settings with valid fields only
         try:
-            updated_settings, _, err = client.zia.advanced_settings.update_advanced_settings(
+            updated_settings = client.zia.advanced_settings.update_advanced_settings(
                 auth_bypass_apps=[],
                 auth_bypass_urls=[".newexample1.com", ".newexample2.com"],
                 dns_resolution_on_transparent_proxy_apps=["CHATGPT_AI"],
@@ -77,7 +76,6 @@ class TestAdvancedSettings:
                 block_non_http_on_http_port_enabled=True,
                 ui_session_timeout=300,
             )
-            assert err is None, f"Error updating advanced settings: {err}"
             assert hasattr(updated_settings, "enable_office365"), "Missing expected attribute after update"
 
         except Exception as exc:

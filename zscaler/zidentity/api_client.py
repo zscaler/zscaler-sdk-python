@@ -21,7 +21,6 @@ from zscaler.zidentity.models.api_client import APIClients
 from zscaler.zidentity.models.api_client import APIClientRecords
 from zscaler.zidentity.models.api_client import APIClientSecrets
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class APIClientAPI(APIClient):
@@ -35,7 +34,7 @@ class APIClientAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_clients(self, query_params: Optional[dict] = None) -> APIResult[APIClients]:
+    def list_api_clients(self, query_params: Optional[dict] = None) -> APIClients:
         """
         Retrieves a paginated list of API clients
         providing details such as total records, current page offset, and links for pagination navigation
@@ -53,7 +52,6 @@ class APIClientAPI(APIClient):
                 ``[query_params.name[like]]`` {str}: Filters results by name using a partial match.
 
         Returns:
-            tuple: A tuple containing (list of ApiClientSecrets instances, Response, error)
 
         Examples:
             List api clients using default settings:
@@ -87,24 +85,14 @@ class APIClientAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = APIClients(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClients(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_api_client(self, client_id: str) -> APIResult[dict]:
+    def get_api_client(self, client_id: str) -> APIClientRecords:
         """
         Retrieves detailed information about a specific API client using its ID.
 
@@ -112,7 +100,6 @@ class APIClientAPI(APIClient):
             client_id (int): Unique identifier of the API client to be retrieved.
 
         Returns:
-            tuple: A tuple containing ApiClients instance, Response, error).
 
         Examples:
             Print a specific api client
@@ -135,22 +122,13 @@ class APIClientAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, APIClientRecords)
+        result = APIClientRecords(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, APIClientRecords)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClientRecords(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_api_client(self, **kwargs) -> APIResult[dict]:
+    def add_api_client(self, **kwargs) -> APIClientRecords:
         """
         Creates a new API client with authentication settings and assigned roles.
 
@@ -180,7 +158,6 @@ class APIClientAPI(APIClient):
                     - name (str, optional): Unique name for the scope.
 
         Returns:
-            tuple: A tuple containing the newly added API Client, response, and error.
 
         Examples:
             Add a new API Client:
@@ -242,26 +219,17 @@ class APIClientAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, APIClientRecords)
+        result = APIClientRecords(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, APIClientRecords)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClientRecords(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_api_client(self, client_id: str, **kwargs) -> APIResult[dict]:
+    def update_api_client(self, client_id: str, **kwargs) -> APIClientRecords:
         """
         Updates the existing API client details based on the provided ID.
         This allows modification of attributes such as name, authentication settings, and assigned roles.
@@ -270,7 +238,6 @@ class APIClientAPI(APIClient):
             client_id (int): Unique identifier of the API client to be updated.
 
         Returns:
-            tuple: A tuple containing the updated APIClient, response, and error.
 
         Examples:
             Update an existing api client :
@@ -334,26 +301,17 @@ class APIClientAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, APIClientRecords)
+        result = APIClientRecords(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, APIClientRecords)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClientRecords(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_api_client(self, client_id: str) -> APIResult[dict]:
+    def delete_api_client(self, client_id: str) -> None:
         """
         Removes an existing API client from the system.
         After deletion, the API client cannot be recovered.
@@ -362,7 +320,6 @@ class APIClientAPI(APIClient):
             client_id (str): Unique identifier of the API client to be deleted.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a API Client:
@@ -383,16 +340,11 @@ class APIClientAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
-
-    def get_api_client_secret(self, client_id: str) -> APIResult[dict]:
+    def get_api_client_secret(self, client_id: str) -> APIClientSecrets:
         """
         Retrieves a list of secrets associated with a specific API client using its ID.
 
@@ -400,7 +352,6 @@ class APIClientAPI(APIClient):
             client_id (str): The API client ID to retrieve the client secrets.
 
         Returns:
-            tuple: A tuple containing ApiClientSecrets instance, Response, error).
 
         Examples:
             Print a specific api client secret
@@ -423,22 +374,13 @@ class APIClientAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, APIClientSecrets)
+        result = APIClientSecrets(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, APIClientSecrets)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClientSecrets(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_api_client_secret(self, client_id: str, **kwargs) -> APIResult[dict]:
+    def add_api_client_secret(self, client_id: str, **kwargs) -> APIClientSecrets:
         """
        Creates and associates a new secret with a specified API client ID.
        This secret can be used for authentication with ZIdentity.
@@ -452,7 +394,6 @@ class APIClientAPI(APIClient):
             description (str): Additional notes or information
 
         Returns:
-            tuple: A tuple containing the newly added API Client Secret, response, and error.
 
         Examples:
             Add a new API client secret:
@@ -476,26 +417,17 @@ class APIClientAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, APIClientSecrets)
+        result = APIClientSecrets(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, APIClientSecrets)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = APIClientSecrets(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_api_client_secret(self, client_id: str, secret_id: str) -> APIResult[dict]:
+    def delete_api_client_secret(self, client_id: str, secret_id: str) -> None:
         """
         Removes an existing API client from the system.
         After deletion, the API client cannot be recovered.
@@ -505,7 +437,6 @@ class APIClientAPI(APIClient):
             secret_id (str): Unique identifier of the secret to be deleted.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a API Client secret:
@@ -529,11 +460,6 @@ class APIClientAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

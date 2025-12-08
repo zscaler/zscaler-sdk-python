@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_controller import RemoteAssistance
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CustomerControllerAPI(APIClient):
@@ -38,7 +37,6 @@ class CustomerControllerAPI(APIClient):
         Returns information on authentication domains.
 
         Returns:
-            tuple: A dictionary containing custom ZPA Inspection Control HTTP Methods.
 
         Example:
             >>> auth_domains, response, error = zpa.authdomains.get_auth_domains()
@@ -56,18 +54,9 @@ class CustomerControllerAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, str)
 
-        response, error = self._request_executor.execute(request, str)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = response.get_body()
+        return result

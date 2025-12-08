@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.idp import IDPController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class IDPControllerAPI(APIClient):
@@ -34,72 +33,38 @@ class IDPControllerAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_idps(self, query_params: Optional[dict] = None) -> APIResult[List[IDPController]]:
+    def list_idps(self, query_params: Optional[dict] = None) -> List[IDPController]:
         """
-        Enumerates identity provider in your organization with pagination.
-        A subset of identity provider can be returned that match a supported
-        filter expression or query.
+        Enumerates identity providers in your organization with pagination.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page]`` {int}: Specifies the page number.
-
-                ``[query_params.page_size]`` {int}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-
-                ``[query_params.scim_enabled]`` {bool}: Returns all SCIM IdPs if set to true.
-                    Returns all non SCIM IdPs if set to false.
-
-                ``[query_params.user_attributes]`` {bool}: Returns user attributes.
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of IDP instances, Response, error)
+            List[IDPController]: A list of IDP instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            Retrieve enrollment certificates with pagination parameters:
-
-            >>> idp_list, _, err = client.zpa.idp.list_idps(
-            ... query_params={'search': 'IDP01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing idps: {err}")
-            ...     return
-            ... print(f"Total certificates found: {len(idp_list)}")
-            ... for idp in idp_list:
-            ...     print(idp.as_dict())
+            >>> try:
+            ...     idps = client.zpa.idp.list_idps()
+            ...     for idp in idps:
+            ...         print(idp.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint_v2}
-            /idp
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint_v2}/idp")
 
         query_params = query_params or {}
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
+        response = self._request_executor.execute(request, IDPController)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        return [IDPController(self.form_response_body(item)) for item in response.get_results()]
 
-        response, error = self._request_executor.execute(request, IDPController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(IDPController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_idp(self, idp_id: str) -> APIResult[dict]:
+    def get_idp(self, idp_id: str) -> IDPController:
         """
         Returns information on the specified identity provider (IdP).
 
@@ -107,38 +72,22 @@ class IDPControllerAPI(APIClient):
             idp_id (str): The unique identifier for the identity provider.
 
         Returns:
-            :obj:`Tuple`: The corresponding identity provider object.
+            IDPController: The corresponding identity provider object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_cert, _, err = client.zpa.certificates.get_enrolment('999999')
-            ... if err:
-            ...     print(f"Error fetching certificate by ID: {err}")
-            ...     return
-            ... print(fetched_cert.id)
+            >>> try:
+            ...     idp = client.zpa.idp.get_idp('999999')
+            ...     print(idp.id)
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /idp/{idp_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/idp/{idp_id}")
 
-        body = {}
-        headers = {}
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
+        response = self._request_executor.execute(request, IDPController)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, IDPController)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = IDPController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return IDPController(self.form_response_body(response.get_body()))

@@ -52,7 +52,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         try:
 #             # Create a new private cloud group
-#             created_group, _, err = client.zpa.private_cloud_group.add_cloud_group(
+#             created_group = client.zpa.private_cloud_group.add_cloud_group(
 #                 name=group_name,
 #                 description=group_description,
 #                 enabled=group_enabled,
@@ -79,25 +79,25 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #         try:
 #             if group_id:
 #                 # Retrieve the created private cloud group by ID
-#                 retrieved_group, _, err = client.zpa.private_cloud_group.get_cloud_group(group_id)
+#                 retrieved_group = client.zpa.private_cloud_group.get_cloud_group(group_id)
 #                 assert err is None, f"Error fetching group: {err}"
 #                 assert retrieved_group.id == group_id
 #                 assert retrieved_group.name == group_name
 
 #                 # Update the private cloud group
 #                 updated_name = group_name + " Updated"
-#                 _, _, err = client.zpa.private_cloud_group.update_cloud_group(
+#                 _ = client.zpa.private_cloud_group.update_cloud_group(
 #                     group_id, 
 #                     name=updated_name
 #                 )
 #                 assert err is None, f"Error updating group: {err}"
 
-#                 updated_group, _, err = client.zpa.private_cloud_group.get_cloud_group(group_id)
+#                 updated_group = client.zpa.private_cloud_group.get_cloud_group(group_id)
 #                 assert err is None, f"Error fetching updated group: {err}"
 #                 assert updated_group.name == updated_name
 
 #                 # List private cloud group and ensure the updated group is in the list
-#                 groups_list, _, err = client.zpa.private_cloud_group.list_cloud_groups()
+#                 groups_list = client.zpa.private_cloud_group.list_cloud_groups()
 #                 assert err is None, f"Error listing groups: {err}"
 #                 assert any(group.id == group_id for group in groups_list)
 #         except Exception as exc:
@@ -107,7 +107,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Cleanup: Delete the private cloud group if it was created
 #             if group_id:
 #                 try:
-#                     delete_response, _, err = client.zpa.private_cloud_group.delete_cloud_group(group_id)
+#                     delete_response = client.zpa.private_cloud_group.delete_cloud_group(group_id)
 #                     assert err is None, f"Error deleting group: {err}"
 #                     # Since a 204 No Content response returns None, we assert that delete_response is None
 #                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"

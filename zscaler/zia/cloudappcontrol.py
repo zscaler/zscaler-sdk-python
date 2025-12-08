@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloudappcontrol import CloudApplicationControl
 from zscaler.utils import transform_common_id_fields, format_url, reformat_params
-from zscaler.types import APIResult
 
 
 class CloudAppControlAPI(APIClient):
@@ -30,7 +29,7 @@ class CloudAppControlAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_available_actions(self, rule_type: str, cloud_apps: list) -> APIResult[List[str]]:
+    def list_available_actions(self, rule_type: str, cloud_apps: list) -> List[str]:
         """
         Retrieves a list of granular actions supported for a specific rule type.
 
@@ -39,7 +38,6 @@ class CloudAppControlAPI(APIClient):
             **cloud_apps (list): A list of cloud applications for filtering.
 
         Returns:
-            tuple: A tuple containing:
                 - result (list): A list of actions supported for the given rule type.
                 - response (object): The full API response object.
                 - error (object): Any error encountered during the request.
@@ -64,30 +62,20 @@ class CloudAppControlAPI(APIClient):
 
         body = {"cloudApps": cloud_apps}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
+        request = self._request_executor.create_request(http_method, api_url, body, {})
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = response.get_body()
-            if not isinstance(result, list):
-                raise ValueError("Unexpected response format: Expected a list.")
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = response.get_body()
+        if not isinstance(result, list):
+            raise ValueError("Unexpected response format: Expected a list.")
+        return result
 
     def list_rules(
         self,
         rule_type: str,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[CloudApplicationControl]]:
+    ) -> List[CloudApplicationControl]:
         """
         Returns a list of all Cloud App Control rules for the specified rule type.
 
@@ -99,7 +87,6 @@ class CloudAppControlAPI(APIClient):
                 ``[query_params.rule_type]`` {str}: The type of rules to retrieve (e.g., "STREAMING_MEDIA").
 
         Returns:
-            tuple: The list of Cloud App Control rules.
 
         Examples:
             List all rules for a specific type::
@@ -121,26 +108,16 @@ class CloudAppControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudApplicationControl(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudApplicationControl(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_rule(self, rule_type: str, rule_id: str) -> APIResult[dict]:
+    def get_rule(self, rule_type: str, rule_id: str) -> CloudApplicationControl:
         """
         Returns information for the specified Cloud App Control rule under the specified rule type.
 
@@ -169,25 +146,16 @@ class CloudAppControlAPI(APIClient):
         headers = {}
 
         # Create the reques
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, CloudApplicationControl)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, CloudApplicationControl)
 
         # Parse the response
-        try:
-            result = CloudApplicationControl(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = CloudApplicationControl(self.form_response_body(response.get_body()))
+        return result
 
-    def get_rule_type_mapping(self) -> APIResult[dict]:
+    def get_rule_type_mapping(self) -> Any:
         """
         Gets the backend keys that match the application type string.
 
@@ -211,23 +179,14 @@ class CloudAppControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = self.form_response_body(response.get_body())
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = self.form_response_body(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_rule(self, rule_type: str, **kwargs) -> APIResult[dict]:
+    def add_rule(self, rule_type: str, **kwargs) -> CloudApplicationControl:
         """
         Adds a new cloud app control filter rule.
 
@@ -408,27 +367,17 @@ class CloudAppControlAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CloudApplicationControl)
+        result = CloudApplicationControl(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CloudApplicationControl)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CloudApplicationControl(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def update_rule(self, rule_type: str, rule_id: str, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_type: str, rule_id: str, **kwargs) -> CloudApplicationControl:
         """
         Updates a new cloud app control filter rule.
 
@@ -609,27 +558,18 @@ class CloudAppControlAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = CloudApplicationControl(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CloudApplicationControl(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_type: str, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_type: str, rule_id: int) -> None:
         """
         Deletes the specified cloud app control filter rule.
 
@@ -654,17 +594,11 @@ class CloudAppControlAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
-
-    def add_duplicate_rule(self, rule_type: str, rule_id: str, name: str, **kwargs) -> APIResult[dict]:
+    def add_duplicate_rule(self, rule_type: str, rule_id: str, name: str, **kwargs) -> CloudApplicationControl:
         """
         Adds a new duplicate cloud app control filter rule.
 
@@ -697,7 +631,6 @@ class CloudAppControlAPI(APIClient):
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            tuple: A tuple containing:
                 - result (CloudApplicationControl): The newly duplicated cloud app control filter rule.
                 - response (object): The full API response object.
                 - error (object): Any error encountered during the request.
@@ -745,22 +678,12 @@ class CloudAppControlAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CloudApplicationControl)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CloudApplicationControl(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request, CloudApplicationControl)
+        result = CloudApplicationControl(self.form_response_body(response.get_body()))
+        return result

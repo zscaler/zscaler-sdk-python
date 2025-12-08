@@ -45,10 +45,9 @@ class TestRuleLabels:
         try:
             # Test: Add Rule Label (deterministic name for VCR)
             try:
-                create_label, _, error = client.zia.rule_labels.add_label(
+                create_label = client.zia.rule_labels.add_label(
                     name="TestLabel_VCR_Integration", description="Test Description for VCR"
                 )
-                assert error is None, f"Add Label Error: {error}"
                 assert create_label is not None, "Label creation failed."
                 label_id = create_label.id
             except Exception as e:
@@ -57,12 +56,11 @@ class TestRuleLabels:
             # Test: Update Rule Label
             try:
                 if label_id:
-                    update_label, _, error = client.zia.rule_labels.update_label(
+                    update_label = client.zia.rule_labels.update_label(
                         label_id=label_id,
                         name="UpdatedLabel_VCR_Integration",
                         description="Updated Description for VCR",
                     )
-                    assert error is None, f"Update Label Error: {error}"
                     assert update_label is not None, "Label update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_label: {str(e)}")
@@ -70,8 +68,7 @@ class TestRuleLabels:
             # Test: Get Rule Label
             try:
                 if update_label:
-                    label, _, error = client.zia.rule_labels.get_label(update_label.id)
-                    assert error is None, f"Get Label Error: {error}"
+                    label = client.zia.rule_labels.get_label(update_label.id)
                     assert label.id == label_id, "Retrieved label ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_label: {str(e)}")
@@ -79,8 +76,7 @@ class TestRuleLabels:
             # Test: List Rule Labels
             try:
                 if update_label:
-                    labels, _, error = client.zia.rule_labels.list_labels(query_params={"search": update_label.name})
-                    assert error is None, f"List Labels Error: {error}"
+                    labels = client.zia.rule_labels.list_labels(query_params={"search": update_label.name})
                     assert labels is not None and isinstance(labels, list), "No labels found or invalid format."
             except Exception as e:
                 errors.append(f"Exception during list_labels: {str(e)}")
@@ -89,21 +85,19 @@ class TestRuleLabels:
             # Ensure label cleanup
             try:
                 if update_label:
-                    _, _, error = client.zia.rule_labels.delete_label(update_label.id)
-                    assert error is None, f"Delete Label Error: {error}"
+                    _ = client.zia.rule_labels.delete_label(update_label.id)
             except Exception as e:
                 errors.append(f"Exception during delete_label: {str(e)}")
 
         # Final Assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")
 
     @pytest.mark.vcr()
     def test_list_rule_labels(self, fs):
         """Test listing rule labels."""
         client = MockZIAClient(fs)
 
-        labels, _, error = client.zia.rule_labels.list_labels()
-        assert error is None, f"List Labels Error: {error}"
+        labels = client.zia.rule_labels.list_labels()
         assert labels is not None, "Labels list is None"
         assert isinstance(labels, list), "Labels is not a list"

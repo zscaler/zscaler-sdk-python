@@ -41,13 +41,12 @@ class TestCloudFirewallIPSRules:
         try:
             # Step 1: Create a Destination IP Group
             try:
-                created_dst_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+                created_dst_group = client.zia.cloud_firewall.add_ip_destination_group(
                     name="tests-" + generate_random_string(),
                     description="tests-" + generate_random_string(),
                     type="DSTN_IP",
                     addresses=["192.168.100.4", "192.168.100.5"],
                 )
-                assert error is None, f"Error adding IP destination group: {error}"
                 assert created_dst_group is not None, "Failed to create IP destination group"
                 dst_group_id = created_dst_group.id
                 assert created_dst_group.name.startswith("tests-"), "Group name mismatch in creation"
@@ -57,12 +56,11 @@ class TestCloudFirewallIPSRules:
 
             # Step 2: Create a Source IP Group
             try:
-                created_src_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
+                created_src_group = client.zia.cloud_firewall.add_ip_source_group(
                     name="tests-" + generate_random_string(),
                     description="Integration test source group",
                     ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
                 )
-                assert error is None, f"Error creating source IP group: {error}"
                 assert created_src_group is not None, "Source IP Group creation returned None"
                 src_group_id = created_src_group.id
             except Exception as exc:
@@ -71,7 +69,7 @@ class TestCloudFirewallIPSRules:
             # Step 3: Create a Firewall Rule
             try:
                 rule_name = "tests-" + generate_random_string()
-                created_rule, _, error = client.zia.cloud_firewall_ips.add_rule(
+                created_rule = client.zia.cloud_firewall_ips.add_rule(
                     name=rule_name,
                     description="Integration test firewall rule",
                     enabled=True,
@@ -82,7 +80,6 @@ class TestCloudFirewallIPSRules:
                     dest_ip_groups=[dst_group_id],
                     dest_countries=["COUNTRY_CA", "COUNTRY_US", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
                 )
-                assert error is None, f"Firewall Rule creation failed: {error}"
                 assert created_rule is not None, "Firewall Rule creation returned None"
                 rule_id = created_rule.id
             except Exception as exc:
@@ -90,8 +87,7 @@ class TestCloudFirewallIPSRules:
 
             # Step 4: Retrieve the Firewall Rule by ID
             try:
-                retrieved_rule, _, error = client.zia.cloud_firewall_ips.get_rule(rule_id)
-                assert error is None, f"Error retrieving Firewall Rule: {error}"
+                retrieved_rule = client.zia.cloud_firewall_ips.get_rule(rule_id)
                 assert retrieved_rule is not None, "Retrieved Firewall Rule is None"
                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
@@ -100,7 +96,7 @@ class TestCloudFirewallIPSRules:
             # Step 5: Update the Firewall Rule
             try:
                 updated_description = "Updated integration test firewall rule"
-                updated_rule, _, error = client.zia.cloud_firewall_ips.update_rule(
+                updated_rule = client.zia.cloud_firewall_ips.update_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -110,7 +106,6 @@ class TestCloudFirewallIPSRules:
                     action="ALLOW",
                     dest_countries=["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
                 )
-                assert error is None, f"Error updating Firewall Rule: {error}"
                 assert updated_rule is not None, "Updated Firewall Rule is None"
                 assert (
                     updated_rule.description == updated_description
@@ -120,8 +115,7 @@ class TestCloudFirewallIPSRules:
 
             # Step 6: List Firewall Rules and verify the rule is present
             try:
-                rules, _, error = client.zia.cloud_firewall_ips.list_rules()
-                assert error is None, f"Error listing Firewall Rules: {error}"
+                rules = client.zia.cloud_firewall_ips.list_rules()
                 assert rules is not None, "Firewall Rules list is None"
                 assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in the list of rules."
             except Exception as exc:
@@ -132,30 +126,27 @@ class TestCloudFirewallIPSRules:
             try:
                 if rule_id:
                     # Delete the firewall rule
-                    _, _, error = client.zia.cloud_firewall_ips.delete_rule(rule_id)
-                    assert error is None, f"Error deleting Firewall Rule: {error}"
+                    _ = client.zia.cloud_firewall_ips.delete_rule(rule_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Firewall Rule failed: {exc}")
 
             try:
                 if dst_group_id:
                     # Delete the destination IP group
-                    _, _, error = client.zia.cloud_firewall.delete_ip_destination_group(dst_group_id)
+                    _ = client.zia.cloud_firewall.delete_ip_destination_group(dst_group_id)
                     # No assertion needed here if deletion returns status code in a different manner; adjust as needed.
                     # For consistency, you may check error is None.
-                    assert error is None, f"Error deleting Destination IP Group: {error}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Destination IP Group failed: {exc}")
 
             try:
                 if src_group_id:
                     # Delete the source IP group
-                    _, _, error = client.zia.cloud_firewall.delete_ip_source_group(src_group_id)
-                    assert error is None, f"Error deleting Source IP Group: {error}"
+                    _ = client.zia.cloud_firewall.delete_ip_source_group(src_group_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Source IP Group failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

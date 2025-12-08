@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
 from zscaler.zia.models.proxy_gateways import ProxyGatways
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ProxiesAPI(APIClient):
@@ -34,12 +33,11 @@ class ProxiesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_proxy_gateways(self) -> APIResult[List[ProxyGatways]]:
+    def list_proxy_gateways(self) -> List[ProxyGatways]:
         """
         Retrieves a list of Proxy Gateways.
 
         Returns:
-            tuple: A tuple containing:
                 N/A
 
         Examples:
@@ -62,32 +60,21 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return None
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ProxyGatways(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ProxyGatways(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_proxy_gateway_lite(self) -> APIResult[List[ProxyGatways]]:
+    def list_proxy_gateway_lite(self) -> List[ProxyGatways]:
         """
         Retrieves the name and ID of the proxy.
 
         Args:
 
         Returns:
-            tuple: A tuple containing (Proxies instance, Response, error).
 
         Examples:
             >>> gw_list, _, error = client.zia.proxies.list_proxy_gateway_lite()
@@ -109,24 +96,15 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, ProxyGatways)
+        result = []
+        for item in response.get_results():
+            result.append(ProxyGatways(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ProxyGatways)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ProxyGatways(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_proxies(self, query_params: Optional[dict] = None) -> APIResult[List[Proxies]]:
+    def list_proxies(self, query_params: Optional[dict] = None) -> List[Proxies]:
         """
         Lists Proxiess in your organization with pagination.
         A subset of Proxiess  can be returned that match a supported
@@ -141,7 +119,6 @@ class ProxiesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Proxiess instances, Response, error)
 
         Examples:
             List Proxiess using default settings:
@@ -168,32 +145,22 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(Proxies(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Proxies(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_proxies_lite(self) -> APIResult[List[Proxies]]:
+    def list_proxies_lite(self) -> List[Proxies]:
         """
         Fetches a specific Proxies lite.
 
         Args:
 
         Returns:
-            tuple: A tuple containing (Proxies instance, Response, error).
 
         Example:
             List all proxies:
@@ -217,24 +184,15 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Proxies)
+        result = []
+        for item in response.get_results():
+            result.append(Proxies(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, Proxies)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(Proxies(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_proxy(self, proxy_id: int) -> APIResult[dict]:
+    def get_proxy(self, proxy_id: int) -> Proxies:
         """
         Fetches a specific Proxiess by ID.
 
@@ -242,7 +200,6 @@ class ProxiesAPI(APIClient):
             proxy_id (int): The unique identifier for the Proxies.
 
         Returns:
-            tuple: A tuple containing (Proxies instance, Response, error).
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -255,22 +212,13 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Proxies)
+        result = Proxies(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Proxies)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Proxies(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_proxy(self, **kwargs) -> APIResult[dict]:
+    def add_proxy(self, **kwargs) -> Proxies:
         """
         Adds a new proxy for a third-party proxy service.
 
@@ -314,26 +262,17 @@ class ProxiesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Proxies)
+        result = Proxies(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Proxies)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Proxies(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_proxy(self, proxy_id: int, **kwargs) -> APIResult[dict]:
+    def update_proxy(self, proxy_id: int, **kwargs) -> Proxies:
         """
         Updates information for the specified ZIA Proxies.
 
@@ -341,7 +280,6 @@ class ProxiesAPI(APIClient):
             proxy_id (int): The unique ID for the Proxies.
 
         Returns:
-            tuple: A tuple containing the updated Proxies, response, and error.
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -354,21 +292,12 @@ class ProxiesAPI(APIClient):
         body = kwargs
         body["id"] = proxy_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, Proxies)
+        result = Proxies(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Proxies)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Proxies(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_proxy(self, proxy_id: int) -> APIResult[dict]:
+    def delete_proxy(self, proxy_id: int) -> None:
         """
         Deletes the specified Proxies.
 
@@ -376,7 +305,6 @@ class ProxiesAPI(APIClient):
             proxy_id (str): The unique identifier of the Proxies.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -388,11 +316,6 @@ class ProxiesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

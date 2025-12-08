@@ -38,8 +38,7 @@ class TestLocations:
         try:
             # Test list_locations function
             try:
-                locations, _, error = client.ztw.location_management.list_locations()
-                assert error is None, f"Error listing locations: {error}"
+                locations = client.ztw.location_management.list_locations()
                 assert isinstance(locations, list), "Expected a list of locations"
                 # Note: Some tenants may not have locations configured
                 if len(locations) > 0:
@@ -51,8 +50,7 @@ class TestLocations:
             # Test get_location function using the location_id from the previous step
             if location_id:
                 try:
-                    location_details, _, error = client.ztw.location_management.get_location(location_id)
-                    assert error is None, f"Error getting location: {error}"
+                    location_details = client.ztw.location_management.get_location(location_id)
                     assert location_details is not None, "Expected valid location details"
                     detail_id = location_details.id if hasattr(location_details, 'id') else location_details.get("id")
                     assert detail_id == location_id, "Mismatch in location ID"
@@ -61,8 +59,7 @@ class TestLocations:
 
             # Test list_locations_lite function
             try:
-                locations_lite, _, error = client.ztw.location_management.list_locations_lite()
-                assert error is None, f"Error listing lite locations: {error}"
+                locations_lite = client.ztw.location_management.list_locations_lite()
                 assert isinstance(locations_lite, list), "Expected a list of lite locations"
                 # Note: Some tenants may not have locations configured
                 if len(locations_lite) > 0:

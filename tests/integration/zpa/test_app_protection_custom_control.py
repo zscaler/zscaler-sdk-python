@@ -40,7 +40,7 @@ class TestAppProtectionCustomControl:
 
         try:
             # Create a new custom control
-            created_control, _, err = client.zpa.app_protection.add_custom_control(
+            created_control = client.zpa.app_protection.add_custom_control(
                 name=control_name,
                 description=control_name,
                 action="PASS",
@@ -62,7 +62,6 @@ class TestAppProtectionCustomControl:
                     },
                 ],
             )
-            assert err is None, f"Error creating custom control: {err}"
             assert created_control is not None
             assert created_control.name == control_name
             assert created_control.description == control_name
@@ -74,23 +73,19 @@ class TestAppProtectionCustomControl:
         try:
             if control_id:
                 # Retrieve the created Custom Control by ID
-                retrieved_control, _, err = client.zpa.app_protection.get_custom_control(control_id)
-                assert err is None, f"Error fetching Custom Control: {err}"
+                retrieved_control = client.zpa.app_protection.get_custom_control(control_id)
                 assert retrieved_control.id == control_id
                 assert retrieved_control.name == control_name
 
                 # Update the Custom Control
                 updated_name = control_name + " Updated"
-                _, _, err = client.zpa.app_protection.update_custom_control(control_id, name=updated_name)
-                assert err is None, f"Error updating Custom Control: {err}"
+                _ = client.zpa.app_protection.update_custom_control(control_id, name=updated_name)
 
-                updated_group, _, err = client.zpa.app_protection.get_custom_control(control_id)
-                assert err is None, f"Error fetching updated Custom Control: {err}"
+                updated_group = client.zpa.app_protection.get_custom_control(control_id)
                 assert updated_group.name == updated_name
 
                 # List Custom Control and ensure the updated group is in the list
-                control_list, _, err = client.zpa.app_protection.list_custom_controls()
-                assert err is None, f"Error listing Custom Control: {err}"
+                control_list = client.zpa.app_protection.list_custom_controls()
                 assert any(control.id == control_id for control in control_list)
         except Exception as exc:
             errors.append(f"Custom Control operation failed: {exc}")
@@ -114,8 +109,7 @@ class TestAppProtectionCustomControl:
             # Cleanup resources
             if control_id:
                 try:
-                    delete_response, _, err = client.zpa.app_protection.delete_custom_control(control_id)
-                    assert err is None, f"Error deleting custom control: {err}"
+                    delete_response = client.zpa.app_protection.delete_custom_control(control_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

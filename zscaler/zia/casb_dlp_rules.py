@@ -19,7 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.casb_dlp_rules import CasbdDlpRules
-from zscaler.types import APIResult
 
 
 class CasbdDlpRulesAPI(APIClient):
@@ -33,7 +32,7 @@ class CasbdDlpRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[CasbdDlpRules]]:
+    ) -> List[CasbdDlpRules]:
         """
         Returns a list of all Casb DLP Rules for the specified rule type.
 
@@ -49,7 +48,6 @@ class CasbdDlpRulesAPI(APIClient):
                         `OFLCASB_DLP_GENAI`
 
         Returns:
-            tuple: The list of Casb DLP Rules.
 
         Examples:
             List all rules for a specific type::
@@ -76,30 +74,20 @@ class CasbdDlpRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CasbdDlpRules(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(CasbdDlpRules(self.form_response_body(item)))
+        return result
 
     def get_rule(
         self,
         rule_id: int,
         rule_type: str,
-    ) -> APIResult[dict]:
+    ) -> CasbdDlpRules:
         """
         Returns information for the specified Casb DLP Rule under the specified rule type.
 
@@ -140,25 +128,16 @@ class CasbdDlpRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CasbdDlpRules)
 
-        response, error = self._request_executor.execute(request, CasbdDlpRules)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CasbdDlpRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = CasbdDlpRules(self.form_response_body(response.get_body()))
+        return result
 
     def list_all_rules(
         self,
-    ) -> APIResult[List[CasbdDlpRules]]:
+    ) -> List[CasbdDlpRules]:
         """
         Returns a list of all Casb DLP Rules.
 
@@ -166,7 +145,6 @@ class CasbdDlpRulesAPI(APIClient):
             N/A
 
         Returns:
-            tuple: The list of all Casb DLP Rules.
 
         Examples:
             List all rules for a specific type::
@@ -190,26 +168,16 @@ class CasbdDlpRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CasbdDlpRules(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CasbdDlpRules(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def add_rule(self, **kwargs) -> APIResult[dict]:
+    def add_rule(self, **kwargs) -> CasbdDlpRules:
         """
         Adds a new cloud app control rule.
 
@@ -391,27 +359,17 @@ class CasbdDlpRulesAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CasbdDlpRules)
+        result = CasbdDlpRules(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CasbdDlpRules)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CasbdDlpRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: str, **kwargs) -> CasbdDlpRules:
         """
         Updates an existing casb dlp rule.
 
@@ -594,27 +552,18 @@ class CasbdDlpRulesAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = CasbdDlpRules(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CasbdDlpRules(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_type: str, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_type: str, rule_id: int) -> None:
         """
         Deletes the specified casb dlp rules.
 
@@ -649,12 +598,6 @@ class CasbdDlpRulesAPI(APIClient):
         )
         params = {"ruleType": rule_type}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

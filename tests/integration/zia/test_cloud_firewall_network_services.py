@@ -48,13 +48,12 @@ class TestCloudFirewallNetworkServices:
         try:
             # Step 1: Add network service
             try:
-                created_service, _, error = client.zia.cloud_firewall.add_network_service(
+                created_service = client.zia.cloud_firewall.add_network_service(
                     name=service_name,
                     description=service_description,
                     ports=service_ports,
                 )
                 print("Created Service:", created_service.as_dict() if created_service else None)
-                assert error is None, f"Error creating service: {error}"
                 assert created_service is not None, "Service creation returned None"
                 assert created_service.name == service_name
                 assert created_service.description == service_description
@@ -65,9 +64,8 @@ class TestCloudFirewallNetworkServices:
             # Step 2: Retrieve service by ID
             try:
                 if service_id:
-                    service, _, error = client.zia.cloud_firewall.get_network_service(service_id)
+                    service = client.zia.cloud_firewall.get_network_service(service_id)
                     print("Retrieved Service:", service.as_dict() if service else None)
-                    assert error is None, f"Error retrieving service: {error}"
                     assert service is not None
                     assert service.id == service_id
             except Exception as exc:
@@ -79,14 +77,13 @@ class TestCloudFirewallNetworkServices:
                     updated_name = "updated-" + generate_random_string()
                     updated_description = "updated-" + generate_random_string()
 
-                    updated_service, _, error = client.zia.cloud_firewall.update_network_service(
+                    updated_service = client.zia.cloud_firewall.update_network_service(
                         service_id=service_id,
                         name=updated_name,
                         description=updated_description,
                         ports=service_ports,
                     )
                     print("Updated Service:", updated_service.as_dict() if updated_service else None)
-                    assert error is None, f"Error updating service: {error}"
                     assert updated_service is not None
                     assert updated_service.name == updated_name
                     assert updated_service.description == updated_description
@@ -95,9 +92,8 @@ class TestCloudFirewallNetworkServices:
 
             # Step 4: List services and verify presence
             try:
-                services_list, _, error = client.zia.cloud_firewall.list_network_services()
+                services_list = client.zia.cloud_firewall.list_network_services()
                 print("Listed Services:", [s.as_dict() for s in services_list] if services_list else None)
-                assert error is None, f"Error listing services: {error}"
                 assert services_list is not None
                 assert any(s.id == service_id for s in services_list), "Updated service not found in list"
             except Exception as exc:
@@ -107,12 +103,11 @@ class TestCloudFirewallNetworkServices:
             # Step 5: Cleanup
             try:
                 if service_id:
-                    _, _, error = client.zia.cloud_firewall.delete_network_service(service_id)
-                    assert error is None, f"Error deleting service: {error}"
+                    _ = client.zia.cloud_firewall.delete_network_service(service_id)
                     print(f"Service with ID {service_id} deleted successfully.")
             except Exception as exc:
                 errors.append(f"Cleanup failed: {exc}")
 
         # Final Assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

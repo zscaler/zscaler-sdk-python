@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/samlAttribute
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/samlAttribute
   response:
     body:
       string: '{"totalPages":"1","currentCount":"5","totalCount":"5","list":[{"id":"216196257331285827","modifiedTime":"1760500686","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"DepartmentName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"DepartmentName","idpName":"BD_Okta_Users","delta":"35023fbe925a40737c72703f208f7a9f"},{"id":"216196257331285828","modifiedTime":"1760500674","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"Email_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"Email","idpName":"BD_Okta_Users","delta":"f577a34702d01747a47e190e17ecf6ae"},{"id":"216196257331285831","modifiedTime":"1760500706","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"FirstName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"FirstName","idpName":"BD_Okta_Users","delta":"b20fe6406353411dd41dcd70a504700e"},{"id":"216196257331285829","modifiedTime":"1760500717","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"GroupName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"GroupName","idpName":"BD_Okta_Users","delta":"3f7e766082dd8bb616c16fae0c7a16d6"},{"id":"216196257331285830","modifiedTime":"1760500727","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"LastName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"LastName","idpName":"BD_Okta_Users","delta":"923bdb3dba28d52cd19390c37512c9bb"}]}'
@@ -29,7 +29,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:47 GMT
+      - Fri, 05 Dec 2025 23:23:40 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -53,17 +53,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b6f5eeab-d77a-9ab5-8f18-c9d5317789f3
+      - 5797b9e7-8e00-9833-b8de-800f3f2415aa
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4880'
+      - '4886'
       x-ratelimit-reset:
-      - '13'
+      - '20'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -83,9 +83,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/idp
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/idp
   response:
     body:
       string: '{"totalPages":"1","totalCount":"3","list":[{"id":"216196257331285825","modifiedTime":"1762447670","creationTime":"1631717728","modifiedBy":"216196257331372702","name":"BD_Okta_Users","certificates":[{"cName":"dev-151399","serialNo":"1739571169880","certificate":"-----BEGIN
@@ -105,7 +105,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:47 GMT
+      - Fri, 05 Dec 2025 23:23:40 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -129,17 +129,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - cd19c8eb-3696-91c0-b6bc-2c6108210f3a
+      - 15d388de-8d76-9b61-8e99-0e6cb13a3ddc
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4879'
+      - '4885'
       x-ratelimit-reset:
-      - '13'
+      - '20'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -159,9 +159,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/samlAttribute/idp/216196257331285825
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/samlAttribute/idp/216196257331285825
   response:
     body:
       string: '{"totalPages":"1","currentCount":"5","totalCount":"5","list":[{"id":"216196257331285827","modifiedTime":"1760500686","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"DepartmentName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"DepartmentName","idpName":"BD_Okta_Users","delta":"35023fbe925a40737c72703f208f7a9f"},{"id":"216196257331285828","modifiedTime":"1760500674","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"Email_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"Email","idpName":"BD_Okta_Users","delta":"f577a34702d01747a47e190e17ecf6ae"},{"id":"216196257331285831","modifiedTime":"1760500706","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"FirstName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"FirstName","idpName":"BD_Okta_Users","delta":"b20fe6406353411dd41dcd70a504700e"},{"id":"216196257331285829","modifiedTime":"1760500717","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"GroupName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"GroupName","idpName":"BD_Okta_Users","delta":"3f7e766082dd8bb616c16fae0c7a16d6"},{"id":"216196257331285830","modifiedTime":"1760500727","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"LastName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"LastName","idpName":"BD_Okta_Users","delta":"923bdb3dba28d52cd19390c37512c9bb"}]}'
@@ -175,7 +175,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:47 GMT
+      - Fri, 05 Dec 2025 23:23:40 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -193,23 +193,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '41'
+      - '36'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9e15f59c-aa85-927c-97e7-245f05bec88e
+      - 96f3b310-d100-946f-856c-98461e719875
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4878'
+      - '4884'
       x-ratelimit-reset:
-      - '13'
+      - '20'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -229,9 +229,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/samlAttribute/216196257331285827
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/samlAttribute/216196257331285827
   response:
     body:
       string: '{"id":"216196257331285827","modifiedTime":"1760500686","creationTime":"1631718008","modifiedBy":"216196257331372702","name":"DepartmentName_BD_Okta_Users","userAttribute":false,"idpId":"216196257331285825","samlName":"DepartmentName","idpName":"BD_Okta_Users","delta":"35023fbe925a40737c72703f208f7a9f"}'
@@ -245,7 +245,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:47 GMT
+      - Fri, 05 Dec 2025 23:23:41 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -263,23 +263,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '37'
+      - '38'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 194e5788-c221-9f80-be9c-9bb6bbbc1cda
+      - 87e72b47-0b1d-987a-8e68-c0fa3e37f9b1
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4877'
+      - '4883'
       x-ratelimit-reset:
-      - '13'
+      - '20'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_management import LocationManagement
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LocationManagementAPI(APIClient):
@@ -33,7 +32,7 @@ class LocationManagementAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
+    def list_locations(self, query_params: Optional[dict] = None) -> List[LocationManagement]:
         """
         Returns a list of locations.
 
@@ -107,25 +106,16 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(LocationManagement(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationManagement(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_location(self, location_id: int) -> APIResult[dict]:
+    def get_location(self, location_id: int) -> LocationManagement:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -133,13 +123,12 @@ class LocationManagementAPI(APIClient):
             location_id (int): The unique identifier for the location.
 
         Returns:
-           tuple: A tuple containing (Location instance, Response, error).
 
         Examples:
-            >>> fetched_location, _, err = client.ztw.locations.get_location('5458745')
-            ... if err:
-            ...     print(f"Error fetching location by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_location = client.ztw.locations.get_location('5458745')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
@@ -153,23 +142,14 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, LocationManagement)
 
-        response, error = self._request_executor.execute(request, LocationManagement)
+        result = LocationManagement(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LocationManagement(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> List[LocationManagement]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -245,20 +225,11 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(LocationManagement(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(LocationManagement(self.form_response_body(item)))
+        return result

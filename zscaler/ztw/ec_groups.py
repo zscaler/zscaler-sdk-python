@@ -21,7 +21,6 @@ from zscaler.ztw.models.ecgroup import ECGroup
 from zscaler.ztw.models.ec_group_vm import ECGroupVM
 from zscaler.ztw.models.common import CommonIDNameExternalID
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ECGroupsAPI(APIClient):
@@ -35,7 +34,7 @@ class ECGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ec_groups(self, query_params: Optional[dict] = None) -> APIResult[List[ECGroup]]:
+    def list_ec_groups(self, query_params: Optional[dict] = None) -> List[ECGroup]:
         """
         List all Cloud & Branch Connector groups.
 
@@ -69,25 +68,16 @@ class ECGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ECGroup(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ECGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ec_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_ec_group(self, group_id: str, query_params: Optional[dict] = None) -> ECGroup:
         """
         Get details for a specific Cloud or Branch Connector group by ID.
 
@@ -123,25 +113,16 @@ class ECGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ECGroup(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ECGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> APIResult[List[ECGroup]]:
+    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> List[ECGroup]:
         """
         Returns the list of a subset of Cloud & Branch Connector group information.
 
@@ -175,25 +156,16 @@ class ECGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ECGroup(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ECGroup(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_ec_instance_lite(self) -> APIResult[CommonIDNameExternalID]:
+    def list_ec_instance_lite(self) -> CommonIDNameExternalID:
         """
         Returns the list of a subset of Cloud & Branch Connector instance information.
 
@@ -228,22 +200,13 @@ class ECGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, CommonIDNameExternalID)
+        result = CommonIDNameExternalID(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, CommonIDNameExternalID)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CommonIDNameExternalID(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_ec_group_vm(self, group_id: str, vm_id: str) -> APIResult[dict]:
+    def get_ec_group_vm(self, group_id: str, vm_id: str) -> ECGroup:
         """
         Gets a VM by specified Cloud or Branch Connector group ID and VM ID
 
@@ -271,20 +234,11 @@ class ECGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ECGroupVM)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ECGroupVM(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, ECGroupVM)
+        result = ECGroupVM(self.form_response_body(response.get_body()))
+        return result
 
     def delete_ec_group_vm(self, group_id: str, vm_id: str):
         """
@@ -311,11 +265,6 @@ class ECGroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

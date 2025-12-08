@@ -14,12 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.emergency_access import EmergencyAccessUser
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class EmergencyAccessAPI(APIClient):
@@ -33,318 +32,217 @@ class EmergencyAccessAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_users(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[EmergencyAccessUser]]:
+    def list_users(self, query_params: Optional[dict] = None) -> List[EmergencyAccessUser]:
         """
-        Enumerates emergency access in your organization with pagination.
-        A subset of emergency access can be returned that match a supported
-        filter expression or query.
+        Enumerates emergency access users in your organization.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.page_id]`` {str}: Specifies the page number.
-
-                ``[query_params.page_size]`` {str}: Specifies the page size.
-                    If not provided, the default page size is 20. The max page size is 500.
-
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+            query_params (dict): Map of query parameters for the request.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of Emergency Access instances, Response, error)
+            List[EmergencyAccessUser]: A list of EmergencyAccessUser instances.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> access_list, _, err = client.zpa.emergency_access.list_users(
-            ... query_params={'search': 'first_name+EQ+Emily', 'page_id': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing emergency access users: {err}")
-            ...     return
-            ... print(f"Total emergency access users found: {len(access_list)}")
-            ... for user in access_list:
-            ...     print(user.as_dict())
+            >>> try:
+            ...     users = client.zpa.emergency_access.list_users()
+            ...     for user in users:
+            ...         print(user.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/users
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/users")
 
         query_params = query_params or {}
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request, EmergencyAccessUser)
 
-        response, error = self._request_executor.execute(request, EmergencyAccessUser)
-        if error:
-            return (None, response, error)
+        return [EmergencyAccessUser(self.form_response_body(item)) for item in response.get_results()]
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(EmergencyAccessUser(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> EmergencyAccessUser:
         """
         Returns information on the specified emergency access user.
 
         Args:
             user_id (str): The unique identifier for the emergency access user.
+            query_params (dict, optional): Map of query parameters.
 
         Returns:
-            tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            EmergencyAccessUser: The emergency access user object.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> fetched_user, _, err = client.zpa.emergency_access.get_user('999999')
-            ... if err:
-            ...     print(f"Error fetching user by ID: {err}")
-            ...     return
-            ... print(f"Fetched user by ID: {fetched_user.as_dict()}")
+            >>> try:
+            ...     user = client.zpa.emergency_access.get_user('999999')
+            ...     print(user.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/user/{user_id}
-        """
-        )
+        http_method = "GET"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/user/{user_id}")
 
         query_params = query_params or {}
-
-        microtenant_id = query_params.get("microtenant_id", None)
-        if microtenant_id:
+        if microtenant_id := query_params.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, EmergencyAccessUser)
 
-        response, error = self._request_executor.execute(request, EmergencyAccessUser)
-        if error:
-            return (None, response, error)
+        return EmergencyAccessUser(self.form_response_body(response.get_body()))
 
-        try:
-            result = EmergencyAccessUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_user(self, activate_now=True, **kwargs) -> APIResult[dict]:
+    def add_user(self, activate_now=True, **kwargs) -> EmergencyAccessUser:
         """
         Add an emergency access user.
 
         Args:
-            email_id (str): The email address of the emergency access user.
-            first_name (str): The first name of the emergency access user.
-            last_name (str): The last name of the emergency access user.
-            user_id (str): The unique identifier of the emergency access user.
-            update_enabled (bool): Indicates if the emergency access user can be updated (true) or not (false).
-            activate_now (bool, optional): Indicates if the emergency access user is activated upon creation. Defaults to True.
+            activate_now (bool): Activate the user upon creation.
+            email_id (str): The email address.
+            first_name (str): The first name.
+            last_name (str): The last name.
+            user_id (str): The user identifier.
 
         Returns:
-            :obj:`Tuple`: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            EmergencyAccessUser: The newly created user.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> added_user, _, err = client.zpa.emergency_access.add_user(
-            ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
-            ...     user_id="user1",
-            ...     first_name="User1",
-            ...     last_name="Smith",
-            ...     activated_on="1",
-            ...     allowed_activate=True,
-            ...     allowed_deactivate=True,
-            ... )
-            ... if err:
-            ...     print(f"Error creating emergency user: {err}")
-            ...     return
-            ... print(f"emergency user created successfully: {added_user.as_dict()}")
+            >>> try:
+            ...     user = client.zpa.emergency_access.add_user(
+            ...         email_id="user1@acme.com",
+            ...         first_name="User1",
+            ...         last_name="Smith"
+            ...     )
+            ...     print(user.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "post".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/user
-        """
-        )
+        http_method = "POST"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/user")
 
         body = kwargs
 
-        # Check if microtenant_id is passed and set as a query parameter if present
         microtenant_id = kwargs.get("microtenant_id")
         query_params = {"microtenantId": microtenant_id} if microtenant_id else {}
+        query_params["activateNow"] = "true" if activate_now else "false"
 
-        # Append 'activateNow' to the URL query parameters based on the activate_now argument
-        query_params = {"activateNow": "true" if activate_now else "false"}
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=query_params)
+        response = self._request_executor.execute(request, EmergencyAccessUser)
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=query_params)
-        if error:
-            return (None, None, error)
+        return EmergencyAccessUser(self.form_response_body(response.get_body()))
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, EmergencyAccessUser)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = EmergencyAccessUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_user(self, user_id: str, activate_now=True, **kwargs) -> APIResult[dict]:
+    def update_user(self, user_id: str, activate_now=True, **kwargs) -> EmergencyAccessUser:
         """
         Updates the specified emergency access user.
 
         Args:
-            user_id (str): The unique identifier of the emergency access user.
-
-        Keyword Args:
-            email_id (str): The email address of the emergency access user.
-            first_name (str): The first name of the emergency access user.
-            last_name (str): The last name of the emergency access user.
+            user_id (str): The unique identifier of the user.
+            activate_now (bool): Whether to activate now.
+            **kwargs: Fields to update.
 
         Returns:
-            tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            EmergencyAccessUser: The updated user.
+
+        Raises:
+            ZscalerAPIException: If the API request fails.
 
         Examples:
-            >>> update_user, _, err = client.zpa.emergency_access.add_uupdate_userser(
-            ...     user_id='99999'
-            ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
-            ...     user_id="user1",
-            ...     first_name="User1",
-            ...     last_name="Smith",
-            ...     activated_on="1",
-            ...     allowed_activate=True,
-            ...     allowed_deactivate=True,
-            ... )
-            ... if err:
-            ...     print(f"Error updating emergency user: {err}")
-            ...     return
-            ... print(f"emergency user updated successfully: {added_update_useruser.as_dict()}")
+            >>> try:
+            ...     user = client.zpa.emergency_access.update_user(
+            ...         '999999',
+            ...         first_name="UpdatedName"
+            ...     )
+            ...     print(user.as_dict())
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
         """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/user/{user_id}
-        """
-        )
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/user/{user_id}")
 
-        body = {}
+        body = dict(kwargs)
 
-        body.update(kwargs)
-
-        # Check if microtenant_id is passed and set as a query parameter if present
         microtenant_id = kwargs.get("microtenant_id")
         query_params = {"microtenantId": microtenant_id} if microtenant_id else {}
-
-        # Append 'activateNow' to the URL query parameters based on the activate_now argument
         query_params["activateNow"] = "true" if activate_now else "false"
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=query_params)
+        response = self._request_executor.execute(request, EmergencyAccessUser)
 
-        response, error = self._request_executor.execute(request, EmergencyAccessUser)
-        if error:
-            return (None, response, error)
-
-        # Handle case where no content is returned (204 No Content)
         if response is None:
-            return (EmergencyAccessUser({"id": user_id}), None, None)
+            return EmergencyAccessUser({"id": user_id})
 
-        try:
-            result = EmergencyAccessUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return EmergencyAccessUser(self.form_response_body(response.get_body()))
 
-    def activate_user(self, user_id: str, send_email: bool = False, **kwargs) -> APIResult[dict]:
+    def activate_user(self, user_id: str, send_email: bool = False, **kwargs) -> Optional[EmergencyAccessUser]:
         """
         Activates the emergency access user.
 
         Args:
-            user_id (str): The unique identifier of the emergency access user.
-            send_email (bool, optional): Whether to send an email upon activation. Defaults to False.
+            user_id (str): The unique identifier of the user.
+            send_email (bool): Whether to send an email.
 
         Returns:
-            tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
-        """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/user/{user_id}/activate
-        """
-        )
+            Optional[EmergencyAccessUser]: The activated user or None.
 
-        # Query parameters for email notification
+        Raises:
+            ZscalerAPIException: If the API request fails.
+
+        Examples:
+            >>> try:
+            ...     user = client.zpa.emergency_access.activate_user('999999')
+            ...     print("User activated")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
+        """
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/user/{user_id}/activate")
+
         query_params = {"sendEmail": "true"} if send_email else {}
-
-        # Check if microtenant_id is passed and set as a query parameter if present
-        microtenant_id = kwargs.get("microtenant_id")
-        if microtenant_id:
+        if microtenant_id := kwargs.get("microtenant_id"):
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, {}, query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, {}, query_params)
+        response = self._request_executor.execute(request)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        # Handle case where no content is returned
         if response is None:
-            return (None, None, None)
+            return None
 
-        try:
-            # Process the response to return an EmergencyAccessUser instance
-            result = EmergencyAccessUser(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        return EmergencyAccessUser(self.form_response_body(response.get_body()))
 
-    def deactivate_user(self, user_id: str, **kwargs) -> APIResult[dict]:
+    def deactivate_user(self, user_id: str, **kwargs) -> None:
         """
         Deactivates the emergency access user.
 
         Args:
-            user_id (str): The unique identifier of the emergency access user.
+            user_id (str): The unique identifier of the user.
 
         Returns:
-            tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
-        """
-        http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zpa_base_endpoint}
-            /emergencyAccess/user/{user_id}/deactivate
-        """
-        )
+            None
 
-        # Check if microtenant_id is passed and set as a query parameter if present
+        Raises:
+            ZscalerAPIException: If the API request fails.
+
+        Examples:
+            >>> try:
+            ...     client.zpa.emergency_access.deactivate_user('999999')
+            ...     print("User deactivated")
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
+        """
+        http_method = "PUT"
+        api_url = format_url(f"{self._zpa_base_endpoint}/emergencyAccess/user/{user_id}/deactivate")
+
         microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        self._request_executor.execute(request)

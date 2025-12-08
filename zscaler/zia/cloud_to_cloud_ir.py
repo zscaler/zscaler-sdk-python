@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_to_cloud_ir import CloudToCloudIR
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class CloudToCloudIRAPI(APIClient):
@@ -33,7 +32,7 @@ class CloudToCloudIRAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_to_cloud_ir(self, query_params: Optional[dict] = None) -> APIResult[List[CloudToCloudIR]]:
+    def list_cloud_to_cloud_ir(self, query_params: Optional[dict] = None) -> List[CloudToCloudIR]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding.
 
@@ -50,7 +49,6 @@ class CloudToCloudIRAPI(APIClient):
                     Forwarding tenants and their configurations
 
         Returns:
-            tuple: A tuple containing (Retries the Cloud-to-Cloud Incident Forwarding instances, Response, error)
 
         Examples:
             List the Cloud-to-Cloud Incident Forwarding:
@@ -76,23 +74,14 @@ class CloudToCloudIRAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudToCloudIR(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudToCloudIR(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_cloud_to_cloud_ir(self, receiver_id: int) -> APIResult[dict]:
+    def get_cloud_to_cloud_ir(self, receiver_id: int) -> CloudToCloudIR:
         """
         Retrieves information about a DLP Incident Receiver configured for
         Cloud-to-Cloud DLP Incident Forwarding based on the specified ID
@@ -121,23 +110,14 @@ class CloudToCloudIRAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = CloudToCloudIR(self.form_response_body(response.get_body()))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = CloudToCloudIR(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_cloud_to_cloud_ir_lite(self, query_params: Optional[dict] = None) -> APIResult[List[CloudToCloudIR]]:
+    def list_cloud_to_cloud_ir_lite(self, query_params: Optional[dict] = None) -> List[CloudToCloudIR]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud DLP Incident Forwarding,
         with a subset of information for each Incident Receiver
@@ -181,25 +161,16 @@ class CloudToCloudIRAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudToCloudIR(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudToCloudIR(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_c2c_count(self, query_params: Optional[dict] = None) -> APIResult[int]:
+    def list_c2c_count(self, query_params: Optional[dict] = None) -> int:
         """
         Retrieves the number of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
 
@@ -234,28 +205,22 @@ class CloudToCloudIRAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             body = response.get_body()
             if isinstance(body, int):
-                return (body, response, None)
+                return body
             elif isinstance(body, str) and body.strip().isdigit():
-                return (int(body.strip()), response, None)
+                return int(body.strip())
             else:
                 raise ValueError(f"Unexpected response format: {body}")
         except Exception as error:
-            return (None, response, error)
+            return int
 
-    def c2c_validate_delete(self, receiver_id: int) -> APIResult[dict]:
+    def c2c_validate_delete(self, receiver_id: int) -> None:
         """
         Validates the specified cloud storage configuration e.g. Amazon S3 bucket configuration
         of a Cloud-to-Cloud DLP Incident Receiver by verifying he configuration's current association
@@ -270,7 +235,8 @@ class CloudToCloudIRAPI(APIClient):
             :obj:`int`: Response code for the operation.
 
         Examples:
-            >>> _, _, err = client.zia.cloud_to_cloud_ir.c2c_validate_delete('123454')
+            >>> try:
+            ...     _ = client.zia.cloud_to_cloud_ir.c2c_validate_delete('123454')
             >>> if err:
             ...     print(f"Error validating c2c deletion: {err}")
             ...     return
@@ -286,11 +252,6 @@ class CloudToCloudIRAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

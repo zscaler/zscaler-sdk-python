@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.forwarding_control_policy import ForwardingControlRule
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class ForwardingControlAPI(APIClient):
@@ -33,7 +32,7 @@ class ForwardingControlAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[ForwardingControlRule]]:
+    ) -> List[ForwardingControlRule]:
         """
         Lists forwarding control rules rules in your organization with pagination.
 
@@ -43,7 +42,6 @@ class ForwardingControlAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of forwarding control rules instances, Response, error).
 
         Examples:
             Print all forwarding control rule
@@ -81,28 +79,18 @@ class ForwardingControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            results = []
-            for item in response.get_results():
-                results.append(ForwardingControlRule(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
+        results = []
+        for item in response.get_results():
+            results.append(ForwardingControlRule(self.form_response_body(item)))
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
-        return (results, response, None)
+        return results
 
-    def get_rule(self, rule_id: str) -> APIResult[dict]:
+    def get_rule(self, rule_id: str) -> ForwardingControlRule:
         """
         Returns information for the specified forwarding control rule.
 
@@ -110,7 +98,6 @@ class ForwardingControlAPI(APIClient):
             rule_id (str): The unique identifier for the forwarding control rule.
 
         Returns:
-            tuple: A tuple containing (forwarding control rule instance, Response, error).
 
         Example:
             Retrieve a forwarding control rule by its ID:
@@ -127,20 +114,12 @@ class ForwardingControlAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, {}, {})
+        response = self._request_executor.execute(request, ForwardingControlRule)
+        result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ForwardingControlRule)
-        if error:
-            return (None, response, error)
-        try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_rule(self, **kwargs) -> APIResult[dict]:
+    def add_rule(self, **kwargs) -> ForwardingControlRule:
         """
         Adds a new forwarding control rule.
 
@@ -253,27 +232,18 @@ class ForwardingControlAPI(APIClient):
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, ForwardingControlRule)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, ForwardingControlRule)
+        result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: str, **kwargs) -> ForwardingControlRule:
         """
         Adds a new forwarding control rule.
 
@@ -387,27 +357,18 @@ class ForwardingControlAPI(APIClient):
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, ForwardingControlRule)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, ForwardingControlRule)
+        result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_rule(self, rule_id: str) -> APIResult[dict]:
+    def delete_rule(self, rule_id: str) -> None:
         """
         Deletes the specified forwarding control filter rule.
         """
@@ -421,12 +382,6 @@ class ForwardingControlAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

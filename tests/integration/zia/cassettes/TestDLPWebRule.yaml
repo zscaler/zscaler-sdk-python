@@ -16,12 +16,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules
   response:
     body:
-      string: '{"id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"description":"tests-vcr0002","fileTypes":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH"}'
+      string: '{"id":1582209,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"description":"tests-vcr0002","fileTypes":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:01 GMT
+      - Sat, 06 Dec 2025 00:15:22 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5381'
+      - '4273'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 837839be-1e65-99eb-984c-1c96ab6e77de
+      - 7045b9e8-3d89-90ee-b5f3-71b30db7caab
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4963'
+      - '4986'
       x-ratelimit-reset:
-      - '4'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -93,12 +93,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules/1571783
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules/1582209
   response:
     body:
-      string: '{"accessControl":"READ_WRITE","id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"rank":0,"description":"tests-vcr0002","fileTypes":[],"fileTypeCategories":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"lastModifiedTime":1764200999,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"receiver":{},"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH","subRules":[],"sourceIpGroups":[],"eunTemplateId":0,"ucTemplateId":0}'
+      string: '{"accessControl":"READ_WRITE","id":1582209,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"rank":0,"description":"tests-vcr0002","fileTypes":[],"fileTypeCategories":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"lastModifiedTime":1764980120,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"receiver":{},"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH","subRules":[],"sourceIpGroups":[],"eunTemplateId":0,"ucTemplateId":0}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -120,7 +120,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:03 GMT
+      - Sat, 06 Dec 2025 00:15:23 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -132,23 +132,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1696'
+      - '1450'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 31718c82-6eb2-9bdb-9812-7d6d02c314c0
+      - 6be0f8a0-1abb-90bb-9022-21a1384d6d91
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4985'
       x-ratelimit-reset:
-      - '59'
+      - '38'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -170,9 +170,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules/1571783
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules/1582209
   response:
     body:
       string: ''
@@ -193,7 +193,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:50:10 GMT
+      - Sat, 06 Dec 2025 00:15:30 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -203,23 +203,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '7383'
+      - '6598'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a0b2b88a-762a-9d41-bf38-7563ce43bbb9
+      - 0b942b5a-ecbb-955c-a0a0-f64687f43c07
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4984'
       x-ratelimit-reset:
-      - '57'
+      - '37'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

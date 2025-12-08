@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.vzen_clusters import VZENClusters
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class VZENClustersAPI(APIClient):
@@ -33,7 +32,7 @@ class VZENClustersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_vzen_clusters(self, query_params: Optional[dict] = None) -> APIResult[List[VZENClusters]]:
+    def list_vzen_clusters(self, query_params: Optional[dict] = None) -> List[VZENClusters]:
         """
         Retrieves a list of ZIA Virtual Service Edge clusters
 
@@ -43,7 +42,6 @@ class VZENClustersAPI(APIClient):
                 ``[query_params.search]`` {str}: Search for a configured Virtual Service Edge cluster
 
         Returns:
-            tuple: A tuple containing (list of Service Edges instances, Response, error)
 
         Examples:
             List Service Edges using default settings:
@@ -70,25 +68,16 @@ class VZENClustersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(VZENClusters(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(VZENClusters(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_vzen_cluster(self, cluster_id: int) -> APIResult[dict]:
+    def get_vzen_cluster(self, cluster_id: int) -> VZENClusters:
         """
         Retrieves the Virtual Service Edge cluster based on the specified ID
 
@@ -96,7 +85,6 @@ class VZENClustersAPI(APIClient):
             cluster_id (int): The unique identifier for the vzen cluster.
 
         Returns:
-            tuple: A tuple containing (VZEN Cluster instance, Response, error).
 
         Examples:
             Print a specific VZEN Cluster
@@ -119,22 +107,13 @@ class VZENClustersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, VZENClusters)
+        result = VZENClusters(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZENClusters)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZENClusters(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_vzen_cluster(self, **kwargs) -> APIResult[dict]:
+    def add_vzen_cluster(self, **kwargs) -> VZENClusters:
         """
         Adds a new Virtual Service Edge cluster.
 
@@ -159,7 +138,6 @@ class VZENClustersAPI(APIClient):
                 for further detail on optional keyword parameter structures.
 
         Returns:
-            tuple: A tuple containing the newly added Virtual ZENS, response, and error.
 
         Examples:
             Add a new Virtual ZEN :
@@ -193,26 +171,17 @@ class VZENClustersAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, VZENClusters)
+        result = VZENClusters(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZENClusters)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZENClusters(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_vzen_cluster(self, cluster_id: int, **kwargs) -> APIResult[dict]:
+    def update_vzen_cluster(self, cluster_id: int, **kwargs) -> VZENClusters:
         """
         Updates the Virtual Service Edge cluster based on the specified ID
 
@@ -220,7 +189,6 @@ class VZENClustersAPI(APIClient):
             cluster_id (int): The unique ID for the VZEN Cluster.
 
         Returns:
-            tuple: A tuple containing the updated VZEN Cluster, response, and error.
 
         Examples:
             Update a new VZEN Cluster :
@@ -254,21 +222,12 @@ class VZENClustersAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, VZENClusters)
+        result = VZENClusters(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, VZENClusters)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = VZENClusters(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_vzen_cluster(self, cluster_id: int) -> APIResult[dict]:
+    def delete_vzen_cluster(self, cluster_id: int) -> None:
         """
         Deletes the Virtual Service Edge cluster based on the specified ID
 
@@ -276,7 +235,6 @@ class VZENClustersAPI(APIClient):
             cluster_id (str): The unique identifier of the VZEN Cluster.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a VZEN Cluster:
@@ -289,9 +247,6 @@ class VZENClustersAPI(APIClient):
         """
         # Step 1: Fetch the cluster
         cluster, _, error = self.get_vzen_cluster(cluster_id)
-        if error:
-            return (None, None, error)
-
         # Step 2: Build minimal update payload
         payload = {
             "id": cluster.id,
@@ -307,28 +262,16 @@ class VZENClustersAPI(APIClient):
 
         # Step 3: PUT to update the cluster (detach nodes)
         api_url = format_url(f"{self._zia_base_endpoint}/virtualZenClusters/{cluster_id}")
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method="PUT",
             endpoint=api_url,
             body=payload,
         )
-        if error:
-            return (None, None, error)
-
         _, error = self._request_executor.execute(request)
-        if error:
-            return (None, None, error)
-
         # Step 4: DELETE the cluster
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method="DELETE",
             endpoint=api_url,
         )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        response = self._request_executor.execute(request)
+        return None

@@ -46,7 +46,7 @@ def fs():
 #         # Step 1: Create Microtenant Resource directly with known criteria
 #         try:
 #             # Removed criteria_attribute_values as requested and rely only on criteria_attribute
-#             created_microtenant, _, err = client.zpa.microtenants.add_microtenant(
+#             created_microtenant = client.zpa.microtenants.add_microtenant(
 #                 name=microtenant_name,
 #                 description=microtenant_description,
 #                 enabled=True,
@@ -66,7 +66,7 @@ def fs():
 
 #         try:
 #             # Create a new PRA credential
-#             created_credential, _, err = client.zpa.pra_credential.add_credential(
+#             created_credential = client.zpa.pra_credential.add_credential(
 #                 name="John Doe" + generate_random_string(),
 #                 description=credential_description,
 #                 credential_type="USERNAME_PASSWORD",
@@ -85,7 +85,7 @@ def fs():
 #             assert microtenant_id is not None, "microtenant_id is None"
 
 #             # Move credential to microtenant
-#             _, _, err = client.zpa.pra_credential.credential_move(
+#             _ = client.zpa.pra_credential.credential_move(
 #                 credential_id=credential_id,
 #                 query_params={
 #                     "microtenant_id": "0",
@@ -101,7 +101,7 @@ def fs():
 #             assert microtenant_id is not None, "microtenant_id is None"
 
 #             # Move credential back to parent tenant
-#             _, _, err = client.zpa.pra_credential.credential_move(
+#             _ = client.zpa.pra_credential.credential_move(
 #                 credential_id=credential_id,
 #                 query_params={
 #                     "microtenant_id": microtenant_id,

@@ -87,8 +87,7 @@ class TestDevice:
         try:
             # Test case: List devices with a specific OS type
             try:
-                devices, _, err = client.zcc.devices.list_devices(query_params={"os_type": "windows", "page": 1, "page_size": 10})
-                assert err is None, f"Error occurred while listing with OS filter: {err}"
+                devices = client.zcc.devices.list_devices(query_params={"os_type": "windows", "page": 1, "page_size": 10})
                 assert isinstance(devices, list), "Expected a list of devices"
                 assert len(devices) <= 10, "Page size limit exceeded"
             except Exception as exc:
@@ -96,8 +95,7 @@ class TestDevice:
 
             # Test case: List devices without any filters
             try:
-                devices, _, err = client.zcc.devices.list_devices()
-                assert err is None, f"Error occurred while listing all devices: {err}"
+                devices = client.zcc.devices.list_devices()
                 assert isinstance(devices, list), "Expected a list of devices"
             except Exception as exc:
                 errors.append(f"Listing all devices failed: {exc}")

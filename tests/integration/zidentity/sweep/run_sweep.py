@@ -68,10 +68,7 @@ class TestSweepUtility:
     def sweep_groups(self):
         logging.info("Starting to sweep groups")
         try:
-            groups_response, _, error = self.client.zidentity.groups.list_groups()
-            if error:
-                raise Exception(f"Error listing groups: {error}")
-
+            groups_response = self.client.zidentity.groups.list_groups()
             # Access the records field from the response object
             groups = groups_response.records if hasattr(groups_response, 'records') else []
             test_groups = [pra for pra in groups if hasattr(pra, "name") and pra.name.startswith("tests-")]
@@ -79,11 +76,8 @@ class TestSweepUtility:
 
             for group in test_groups:
                 logging.info(f"sweep_groups: Attempting to delete pra portal : Name='{group.name}', ID='{group.id}'")
-                _, _, error = self.client.zidentity.groups.delete_group(portal_id=group.id)
-                if error:
-                    logging.error(f"Failed to delete group ID={group.id} — {error}")
-                else:
-                    logging.info(f"Successfully deleted group ID={group.id}")
+                _ = self.client.zidentity.groups.delete_group(portal_id=group.id)
+                logging.info(f"Successfully deleted group ID={group.id}")
 
         except Exception as e:
             logging.error(f"An error occurred while sweeping groups: {str(e)}")

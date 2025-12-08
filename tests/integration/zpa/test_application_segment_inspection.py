@@ -48,7 +48,7 @@ class TestApplicationSegmentInspection:
                 app_connector_group_name = "tests-apsinsp-" + generate_random_string()
                 app_connector_group_description = "tests-apsinsp-" + generate_random_string()
 
-                created_app_connector_group, resp, err = client.zpa.app_connector_groups.add_connector_group(
+                created_app_connector_group = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
                     enabled=True,
@@ -66,7 +66,6 @@ class TestApplicationSegmentInspection:
                     tcp_quick_ack_assistant=True,
                     tcp_quick_ack_read_assistant=True,
                 )
-                assert err is None, f"App Connector Group creation failed: {err}"
                 assert created_app_connector_group is not None, "No App Connector Group data returned"
 
                 app_connector_group_id = created_app_connector_group.id
@@ -79,8 +78,7 @@ class TestApplicationSegmentInspection:
             #
             try:
                 segment_group_name = "tests-apsinsp-" + generate_random_string()
-                created_segment_group, resp, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
-                assert err is None, f"Error during segment group creation: {err}"
+                created_segment_group = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert created_segment_group is not None, "No segment group data returned"
 
                 segment_group_id = created_segment_group.id
@@ -94,14 +92,13 @@ class TestApplicationSegmentInspection:
                 server_group_name = "tests-apsinsp-" + generate_random_string()
                 server_group_description = "tests-apsinsp-" + generate_random_string()
 
-                created_server_group, _, err = client.zpa.server_groups.add_group(
+                created_server_group = client.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
                     enabled=True,
                     dynamic_discovery=True,
                     app_connector_group_ids=[app_connector_group_id],
                 )
-                assert err is None, f"Creating Server Group failed: {err}"
                 assert created_server_group is not None, "No server group data returned"
 
                 server_group_id = created_server_group.id
@@ -110,8 +107,7 @@ class TestApplicationSegmentInspection:
 
             # List all certificates
             try:
-                certs_list, _, err = client.zpa.certificates.list_issued_certificates()
-                assert err is None, f"Error listing certificates: {err}"
+                certs_list = client.zpa.certificates.list_issued_certificates()
                 assert isinstance(certs_list, list), "Expected a list of certificates"
                 if certs_list:  # If there are any certificates, proceed with further operations
                     first_certificate = certs_list[0]  # Fetch the first certificate in the list
@@ -126,7 +122,7 @@ class TestApplicationSegmentInspection:
                 app_segment_name = domain_name
                 app_segment_description = domain_name
 
-                app_segment, _, err = client.zpa.app_segments_inspection.add_segment_inspection(
+                app_segment = client.zpa.app_segments_inspection.add_segment_inspection(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
@@ -147,7 +143,6 @@ class TestApplicationSegmentInspection:
                         ]
                     },
                 )
-                assert err is None, f"Error creating application segment inspection: {err}"
                 assert app_segment is not None, "No application segment inspection data returned"
                 assert app_segment.name == app_segment_name
 
@@ -162,7 +157,7 @@ class TestApplicationSegmentInspection:
             try:
                 if app_segment_id:
                     updated_description = "Updated " + generate_random_string()
-                    _, _, err = client.zpa.app_segments_inspection.update_segment_inspection(
+                    _ = client.zpa.app_segments_inspection.update_segment_inspection(
                         app_segment_id,
                         name=app_segment_name,
                         description=updated_description,
@@ -183,7 +178,6 @@ class TestApplicationSegmentInspection:
                             ]
                         },
                     )
-                    assert err is None, f"Error updating Application Segment: {err}"
             except Exception as exc:
                 errors.append(f"Updating Application Segment failed: {exc}")
 
@@ -193,27 +187,21 @@ class TestApplicationSegmentInspection:
             time.sleep(5)
             if app_segment_id:
                 try:
-                    _, _, del_err = client.zpa.app_segments_inspection.delete_segment_inspection(
+                    client.zpa.app_segments_inspection.delete_segment_inspection(
                         segment_id=app_segment_id, force_delete=True
                     )
-                    if del_err:
-                        cleanup_errors.append(f"Deleting Application Segment failed: {del_err}")
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Application Segment failed: {exc}")
 
             if server_group_id:
                 try:
-                    _, _, del_err = client.zpa.server_groups.delete_group(group_id=server_group_id)
-                    if del_err:
-                        cleanup_errors.append(f"Deleting Server Group failed: {del_err}")
+                    client.zpa.server_groups.delete_group(group_id=server_group_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Server Group failed: {exc}")
 
             if segment_group_id:
                 try:
-                    _, _, del_err = client.zpa.segment_groups.delete_group(group_id=segment_group_id)
-                    if del_err:
-                        cleanup_errors.append(f"Deleting Segment Group failed: {del_err}")
+                    client.zpa.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Segment Group failed: {exc}")
 

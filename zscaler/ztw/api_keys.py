@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.api_keys import ApiKeys
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ProvisioningAPIKeyAPI(APIClient):
@@ -33,7 +32,7 @@ class ProvisioningAPIKeyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[List[ApiKeys]]:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> List[ApiKeys]:
         """
         List all existing API keys.
 
@@ -66,26 +65,17 @@ class ProvisioningAPIKeyAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response = self._request_executor.execute(request)
 
-        if error:
-            return (None, response, error)
+        result = []
+        for item in response.get_results():
+            result.append(ApiKeys(self.form_response_body(item)))
+        return result
 
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApiKeys(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def regenerate_api_key(self, key_id: str, **kwargs) -> APIResult[dict]:
+    def regenerate_api_key(self, key_id: str, **kwargs) -> ApiKeys:
         """
         Regenerate the specified API key.
 
@@ -112,22 +102,13 @@ class ProvisioningAPIKeyAPI(APIClient):
         body = kwargs
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
         # Execute the request
-        response, error = self._request_executor.execute(request, ApiKeys)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApiKeys(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, ApiKeys)
+        result = ApiKeys(self.form_response_body(response.get_body()))
+        return result

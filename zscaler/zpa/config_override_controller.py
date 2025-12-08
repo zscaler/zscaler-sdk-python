@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.config_override_controller import ConfigOverrideController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ConfigOverrideControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class ConfigOverrideControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_config_overrides(self, query_params: Optional[dict] = None) -> APIResult[List[ConfigOverrideController]]:
+    def list_config_overrides(self, query_params: Optional[dict] = None) -> List[ConfigOverrideController]:
         """
         Returns a list of all config-override details.
 
@@ -51,11 +50,11 @@ class ConfigOverrideControllerAPI(APIClient):
             list: A list of `ConfigOverrideController` instances.
 
         Examples:
-            >>> list_details, _, err = client.zpa.config_override_controller.list_config_overrides(
+            >>> try:
+            ...     list_details = client.zpa.config_override_controller.list_config_overrides(
             ... query_params={'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing config override details: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total config override details found: {len(list_details)}")
             ... for override in list_details:
             ...     print(override.as_dict())
@@ -70,26 +69,17 @@ class ConfigOverrideControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ConfigOverrideController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ConfigOverrideController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ConfigOverrideController)
+        result = []
+        for item in response.get_results():
+            result.append(ConfigOverrideController(self.form_response_body(item)))
+        return result
 
     def get_config_override(
         self,
         config_id: str,
-    ) -> APIResult[dict]:
+    ) -> ConfigOverrideController:
         """
         Returns information on the specified config-override details by ID.
 
@@ -100,10 +90,10 @@ class ConfigOverrideControllerAPI(APIClient):
             dict: The config-override object.
 
         Examples:
-            >>> fetched_config, _, err = client.zpa.config_override_controller.get_config_override('999999')
-            ... if err:
-            ...     print(f"Error fetching config override by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_config = client.zpa.config_override_controller.get_config_override('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched config override by ID: {fetched_config.as_dict()}")
         """
         http_method = "get".upper()
@@ -114,21 +104,12 @@ class ConfigOverrideControllerAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url)
+        response = self._request_executor.execute(request, ConfigOverrideController)
+        result = ConfigOverrideController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ConfigOverrideController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ConfigOverrideController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_config_override(self, **kwargs) -> APIResult[dict]:
+    def add_config_override(self, **kwargs) -> ConfigOverrideController:
         """
         Adds a new config-override.
 
@@ -143,7 +124,8 @@ class ConfigOverrideControllerAPI(APIClient):
         Example:
             Basic example: Add a new config-override
 
-            >>> added_config, _, err = client.zpa.config_override_controller.add_config_override(
+            >>> try:
+            ...     added_config = client.zpa.config_override_controller.add_config_override(
             ... )
         """
         http_method = "post".upper()
@@ -156,21 +138,12 @@ class ConfigOverrideControllerAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body)
+        response = self._request_executor.execute(request, ConfigOverrideController)
+        result = ConfigOverrideController(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ConfigOverrideController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ConfigOverrideController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_config_override(self, config_id: str, **kwargs) -> APIResult[dict]:
+    def update_config_override(self, config_id: str, **kwargs) -> ConfigOverrideController:
         """
         Updates the specified config-override.
 
@@ -199,19 +172,10 @@ class ConfigOverrideControllerAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ConfigOverrideController)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {})
+        response = self._request_executor.execute(request, ConfigOverrideController)
         if response is None:
-            return (ConfigOverrideController({"id": config_id}), None, None)
+            return ConfigOverrideController({"id": config_id})
 
-        try:
-            result = ConfigOverrideController(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = ConfigOverrideController(self.form_response_body(response.get_body()))
+        return result

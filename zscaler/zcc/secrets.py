@@ -20,7 +20,6 @@ from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.api_client import APIClient
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords
-from zscaler.types import APIResult
 
 
 class SecretsAPI(APIClient):
@@ -29,7 +28,7 @@ class SecretsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_otp(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_otp(self, query_params: Optional[dict] = None) -> OtpResponse:
         """
         Returns the OTP code for the specified device id.
 
@@ -39,10 +38,10 @@ class SecretsAPI(APIClient):
                 - udid (str): The actual UDID expected by the API.
 
         Returns:
-            tuple: (list of OtpResponse, response, error)
 
         Examples:
-            >>> otps, _, err = client.zcc.secrets.get_otp(query_params={'device_id': 'd-29-9b-7c-c5-3f-d2-90-3c-d5-'})
+            >>> try:
+            ...     otps = client.zcc.secrets.get_otp(query_params={'device_id': 'd-29-9b-7c-c5-3f-d2-90-3c-d5-'})
             >>> if err:
             ...     print(f"Error retrieving one-time password (OTP): {err}")
             ...     return
@@ -65,25 +64,16 @@ class SecretsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method, api_url, body, headers, params=query_params
         )
 
-        if error:
-            return None, None, error
-
-        response, error = self._request_executor.execute(request, OtpResponse)
-        if error:
-            return None, response, error
-
-        try:
-            result = OtpResponse(self.form_response_body(response.get_body()))
-            return result, response, None
-        except Exception as error:
-            return None, response, error
+        response = self._request_executor.execute(request, OtpResponse)
+        result = OtpResponse(self.form_response_body(response.get_body()))
+        return result, response, None
 
     @zcc_param_mapper
-    def get_passwords(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_passwords(self, query_params: Optional[dict] = None) -> Passwords:
         """
         Return passwords for the specified username and device OS type.
 
@@ -96,10 +86,10 @@ class SecretsAPI(APIClient):
                 ``[query_params.username]`` {str}:  Filter by enrolled username for the device.
 
         Returns:
-            tuple: (Passwords object, response, error)
 
         Example:
-            >>> passwords, _, err = client.zcc.secrets.get_passwords(query_params={
+            >>> try:
+            ...     passwords = client.zcc.secrets.get_passwords(query_params={
             ...     "username": "jdoe@example.com",
             ...     "os_type": "windows"
             ... })
@@ -118,20 +108,10 @@ class SecretsAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             http_method, api_url, params=query_params
         )
 
-        if error:
-            return None, None, error
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None, response, error
-
-        try:
-            result = Passwords(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return None, response, error
-
+        response = self._request_executor.execute(request)
+        result = Passwords(self.form_response_body(response.get_body()))
         return result, response, None

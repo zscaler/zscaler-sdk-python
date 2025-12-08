@@ -19,12 +19,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/urlFilteringRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/urlFilteringRules
   response:
     body:
-      string: '{"id":1571787,"name":"tests-vcr0001","order":1,"protocols":["ANY_RULE"],"urlCategories":["ANY"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["CONNECT","DELETE","GET","HEAD","OPTIONS","OTHER","POST","PUT","TRACE"],"blockOverride":false,"description":"tests-vcr0002","enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE","OTHER"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"capturePCAP":false,"action":"BLOCK","predefined":false}'
+      string: '{"id":1582216,"name":"tests-vcr0001","order":1,"protocols":["ANY_RULE"],"urlCategories":["ANY"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["CONNECT","DELETE","GET","HEAD","OPTIONS","OTHER","POST","PUT","TRACE"],"blockOverride":false,"description":"tests-vcr0002","enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE","OTHER"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"capturePCAP":false,"action":"BLOCK","predefined":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -46,7 +46,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:25 GMT
+      - Sat, 06 Dec 2025 00:18:52 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -58,23 +58,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3191'
+      - '3497'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 700a0b36-91c2-977b-96f3-1c920d5deb47
+      - 44890c71-c4d0-9528-a956-395c4e794a62
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4977'
       x-ratelimit-reset:
-      - '38'
+      - '11'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -96,12 +96,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/urlFilteringRules/1571787
+    uri: https://easm.test.zscaler.com/zia/api/v1/urlFilteringRules/1582216
   response:
     body:
-      string: '{"id":1571787,"accessControl":"READ_WRITE","name":"tests-vcr0001","order":1,"protocols":["ANY_RULE"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["OPTIONS","GET","HEAD","POST","PUT","DELETE","TRACE","CONNECT","OTHER"],"blockOverride":false,"description":"tests-vcr0002","lastModifiedTime":1764201204,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","OTHER","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"cbiProfileId":0,"capturePCAP":false,"sourceIpGroups":[],"browserEunTemplateId":0,"httpHeaderProfiles":[],"httpHeaderActionProfiles":[],"action":"BLOCK","predefined":false}'
+      string: '{"id":1582216,"accessControl":"READ_WRITE","name":"tests-vcr0001","order":1,"protocols":["ANY_RULE"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["OPTIONS","GET","HEAD","POST","PUT","DELETE","TRACE","CONNECT","OTHER"],"blockOverride":false,"description":"tests-vcr0002","lastModifiedTime":1764980331,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","OTHER","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"cbiProfileId":0,"capturePCAP":false,"sourceIpGroups":[],"browserEunTemplateId":0,"httpHeaderProfiles":[],"httpHeaderActionProfiles":[],"action":"BLOCK","predefined":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -123,7 +123,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:27 GMT
+      - Sat, 06 Dec 2025 00:18:54 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -135,23 +135,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1698'
+      - '1512'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 11e732bb-9545-93f8-a663-b1e632255ac7
+      - 0d7c3f33-8b62-923f-90f0-a160b20b191c
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4976'
       x-ratelimit-reset:
-      - '34'
+      - '7'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -173,9 +173,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/urlFilteringRules/1571787
+    uri: https://easm.test.zscaler.com/zia/api/v1/urlFilteringRules/1582216
   response:
     body:
       string: ''
@@ -196,7 +196,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:53:34 GMT
+      - Sat, 06 Dec 2025 00:19:00 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -206,23 +206,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '6327'
+      - '6184'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a8d2207d-d289-9526-82fe-9e0e3d07cbc8
+      - ca06c4f5-cb5c-9395-a0f5-fee7e2d88baa
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4987'
+      - '4975'
       x-ratelimit-reset:
-      - '33'
+      - '6'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

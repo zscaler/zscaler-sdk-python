@@ -40,7 +40,7 @@
 #         try:
 #             # Test: Add Department
 #             try:
-#                 create_dept, _, error = client.zia.user_management.add_department(
+#                 create_dept = client.zia.user_management.add_department(
 #                     name=f"NewDepartment_{random.randint(1000, 10000)}",
 #                     comments=f"NewDepartment_{random.randint(1000, 10000)}",
 #                 )
@@ -53,7 +53,7 @@
 #             # Test: Update Department
 #             try:
 #                 if department_id:
-#                     update_dept, _, error = client.zia.user_management.update_department(
+#                     update_dept = client.zia.user_management.update_department(
 #                         department_id=department_id,
 #                         name=f"UpdateDepartment_{random.randint(1000, 10000)}",
 #                         comments=f"UpdateDepartment_{random.randint(1000, 10000)}",
@@ -66,7 +66,7 @@
 #             # Test: Get Department
 #             try:
 #                 if update_dept:
-#                     dept, _, error = client.zia.user_management.get_department(update_dept.id)
+#                     dept = client.zia.user_management.get_department(update_dept.id)
 #                     assert error is None, f"Get Department Error: {error}"
 #                     assert dept.id == department_id, "Retrieved department ID mismatch."
 #             except Exception as e:
@@ -75,7 +75,7 @@
 #             # Test: List Departments
 #             try:
 #                 if update_dept:
-#                     depts, _, error = client.zia.user_management.list_departments(query_params={"search": update_dept.name})
+#                     depts = client.zia.user_management.list_departments(query_params={"search": update_dept.name})
 #                     assert error is None, f"List Departments Error: {error}"
 #                     assert depts is not None and isinstance(depts, list), "No departments found or invalid format."
 #             except Exception as e:
@@ -85,7 +85,7 @@
 #             # Ensure Department cleanup
 #             try:
 #                 if update_dept:
-#                     _, _, error = client.zia.user_management.delete_department(update_dept.id)
+#                     _ = client.zia.user_management.delete_department(update_dept.id)
 #                     assert error is None, f"Delete Department Error: {error}"
 #             except Exception as e:
 #                 errors.append(f"Exception during delete_department: {str(e)}")

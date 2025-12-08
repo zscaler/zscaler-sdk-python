@@ -41,10 +41,9 @@ class TestEnrolmentCertificate:
         for cert_name in cert_names:
             try:
                 # Perform search with the query_params
-                certs, response, error = client.zpa.enrollment_certificates.list_enrolment(query_params={"search": cert_name})
+                certs = client.zpa.enrollment_certificates.list_enrolment(query_params={"search": cert_name})
 
                 # Validate response
-                assert error is None, f"Error occurred when searching for '{cert_name}': {error}"
                 assert isinstance(certs, list), f"Expected a list when searching for '{cert_name}'"
                 assert any(cert.name == cert_name for cert in certs), f"Certificate '{cert_name}' not found in the list"
 

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.mobile_threat_settings import MobileAdvancedThreatSettings
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class MobileAdvancedSettingsAPI(APIClient):
@@ -33,7 +32,7 @@ class MobileAdvancedSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_mobile_advanced_settings(self) -> APIResult[dict]:
+    def get_mobile_advanced_settings(self) -> Any:
         """
         Retrieves all the rules in the Mobile Malware Protection policy
 
@@ -41,7 +40,6 @@ class MobileAdvancedSettingsAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - MobileAdvancedThreatSettings: The current mobile settings object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -49,7 +47,8 @@ class MobileAdvancedSettingsAPI(APIClient):
         Examples:
             Retrieve and print the current mobile settings:
 
-            >>> settings, _, err = client.zia.mobile_threat_settings.get_mobile_advanced_settings()
+            >>> try:
+            ...     settings = client.zia.mobile_threat_settings.get_mobile_advanced_settings()
             >>> if err:
             ...     print(f"Error fetching mobile settings: {err}")
             ...     return
@@ -64,23 +63,17 @@ class MobileAdvancedSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = MobileAdvancedThreatSettings(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def update_mobile_advanced_settings(self, **kwargs) -> APIResult[dict]:
+    def update_mobile_advanced_settings(self, **kwargs) -> MobileAdvancedThreatSettings:
         """
         Updates mobile settings in the ZIA Admin Portal with the provided configuration.
 
@@ -107,7 +100,8 @@ class MobileAdvancedSettingsAPI(APIClient):
         Examples:
             Update mobile setting options:
 
-            >>> malware_settings, _, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
+            >>> try:
+            ...     malware_settings = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
             ...     block_apps_with_malicious_activity = True,
             ...     block_apps_with_known_vulnerabilities = True,
             ...     block_apps_sending_unencrypted_user_credentials = True,
@@ -134,20 +128,14 @@ class MobileAdvancedSettingsAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, MobileAdvancedThreatSettings)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, MobileAdvancedThreatSettings)
         try:
             if response and hasattr(response, "get_body") and response.get_body():
                 result = MobileAdvancedThreatSettings(self.form_response_body(response.get_body()))
             else:
                 result = MobileAdvancedThreatSettings()
         except Exception as error:
-            return (None, response, error)
+            return MobileAdvancedThreatSettings
 
-        return (result, response, None)
+        return result

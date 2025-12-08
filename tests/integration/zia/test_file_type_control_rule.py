@@ -41,7 +41,7 @@ class TestFileTypeControlRules:
             # Step 3: Create a file type control rule
             try:
                 rule_name = "tests-" + generate_random_string()
-                created_rule, _, error = client.zia.file_type_control_rule.add_rule(
+                created_rule = client.zia.file_type_control_rule.add_rule(
                     name=rule_name,
                     description="Integration test file type control rule",
                     enabled=True,
@@ -54,7 +54,6 @@ class TestFileTypeControlRules:
                     device_trust_levels=["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"],
                     file_types=["FTCATEGORY_ALZ", "FTCATEGORY_P7Z", "FTCATEGORY_B64"],
                 )
-                assert error is None, f"Firewall Rule creation failed: {error}"
                 assert created_rule is not None, "Firewall Rule creation returned None"
                 rule_id = created_rule.id
             except Exception as exc:
@@ -62,8 +61,7 @@ class TestFileTypeControlRules:
 
             # Step 4: Retrieve the Firewall Rule by ID
             try:
-                retrieved_rule, _, error = client.zia.file_type_control_rule.get_rule(rule_id)
-                assert error is None, f"Error retrieving Firewall Rule: {error}"
+                retrieved_rule = client.zia.file_type_control_rule.get_rule(rule_id)
                 assert retrieved_rule is not None, "Retrieved Firewall Rule is None"
                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
@@ -72,7 +70,7 @@ class TestFileTypeControlRules:
             # Step 5: Update the Firewall Rule
             try:
                 updated_description = "Updated integration test File Type Control Rule"
-                updated_rule, _, error = client.zia.file_type_control_rule.update_rule(
+                updated_rule = client.zia.file_type_control_rule.update_rule(
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
@@ -86,7 +84,6 @@ class TestFileTypeControlRules:
                     device_trust_levels=["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"],
                     file_types=["FTCATEGORY_ALZ", "FTCATEGORY_P7Z", "FTCATEGORY_B64"],
                 )
-                assert error is None, f"Error updating File Type Control Rule: {error}"
                 assert updated_rule is not None, "Updated File Type Control Rule is None"
                 assert (
                     updated_rule.description == updated_description
@@ -96,8 +93,7 @@ class TestFileTypeControlRules:
 
             # Step 6: List File Type Control Rules and verify the rule is present
             try:
-                rules, _, error = client.zia.file_type_control_rule.list_rules()
-                assert error is None, f"Error listing File Type Control Rules: {error}"
+                rules = client.zia.file_type_control_rule.list_rules()
                 assert rules is not None, "File Type Control Rules list is None"
                 assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in the list of rules."
             except Exception as exc:
@@ -108,12 +104,11 @@ class TestFileTypeControlRules:
             try:
                 if rule_id:
                     # Delete the file type control rule
-                    _, _, error = client.zia.file_type_control_rule.delete_rule(rule_id)
-                    assert error is None, f"Error deleting client.zia.file_type_control_rule.: {error}"
+                    _ = client.zia.file_type_control_rule.delete_rule(rule_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting File Type Control Rule failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

@@ -16,12 +16,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal
   response:
     body:
-      string: '{"id":"216196257331394589","modifiedTime":"1764191933","creationTime":"1764191933","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"-securitygeek-io.b.zscalerportal.net"}'
+      string: '{"id":"216196257331395930","modifiedTime":"1764977026","creationTime":"1764977026","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"-securitygeek-io.b.zscalerportal.net"}'
     headers:
       cache-control:
       - no-store
@@ -32,7 +32,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -50,23 +50,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '91'
+      - '82'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - bd264860-1ca6-912a-8978-0b9fea7dc23e
+      - 27aca795-cb7f-9d16-9a1a-0cf42af543b6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4846'
+      - '4852'
       x-ratelimit-reset:
-      - '7'
+      - '15'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -86,12 +86,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331394589
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331395930
   response:
     body:
-      string: '{"id":"216196257331394589","modifiedTime":"1764191933","creationTime":"1764191933","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"securitygeek-io.p.zscalerportal.net","microtenantName":"Default"}'
+      string: '{"id":"216196257331395930","modifiedTime":"1764977026","creationTime":"1764977026","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"securitygeek-io.p.zscalerportal.net","microtenantName":"Default"}'
     headers:
       cache-control:
       - no-store
@@ -102,7 +102,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -120,23 +120,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '36'
+      - '34'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 993d8dd7-fd9a-9b30-b8fd-4fdc5f45494c
+      - e205b296-2d10-98aa-b0bc-ff6f7c7e3f36
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4845'
+      - '4851'
       x-ratelimit-reset:
-      - '7'
+      - '14'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -159,9 +159,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331394589
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331395930
   response:
     body:
       string: ''
@@ -171,7 +171,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -187,23 +187,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '73'
+      - '59'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 020b4545-d8fe-91b2-a167-690634e88387
+      - 98f7d175-ffae-9062-b053-8c8a0db80ca8
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4844'
+      - '4850'
       x-ratelimit-reset:
-      - '7'
+      - '14'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -223,12 +223,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331394589
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331395930
   response:
     body:
-      string: '{"id":"216196257331394589","modifiedTime":"1764191933","creationTime":"1764191933","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001
+      string: '{"id":"216196257331395930","modifiedTime":"1764977026","creationTime":"1764977026","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001
         Updated","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"securitygeek-io.p.zscalerportal.net","microtenantName":"Default"}'
     headers:
       cache-control:
@@ -240,7 +240,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -258,23 +258,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '40'
+      - '39'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 91f886d3-f72e-9f94-8b22-b0b9b2cf9f0e
+      - 2dd79d08-6361-92d8-a773-4f664d2a5b32
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4843'
+      - '4849'
       x-ratelimit-reset:
-      - '7'
+      - '14'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -294,12 +294,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331387233","modifiedTime":"1761677728","creationTime":"1761677728","modifiedBy":"216196257331372702","name":"portal01","enabled":true,"description":"portal01","domain":"portal01-securitygeek-io.p.zscalerportal.net","userNotification":"portal01","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"portal01","extDomain":"securitygeek.io","extDomainName":"securitygeek-io.p.zscalerportal.net","microtenantName":"Default"},{"id":"216196257331394589","modifiedTime":"1764191933","creationTime":"1764191933","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"216196257331395930","modifiedTime":"1764977026","creationTime":"1764977026","modifiedBy":"216196257331372705","name":"tests-uport-vcr0001
         Updated","enabled":true,"description":"tests-uport-vcr0002","domain":"tests-uport-vcr0003-securitygeek-io.p.zscalerportal.net","userNotification":"tests-uport-vcr0002","userNotificationEnabled":true,"extDomainTranslation":"securitygeek.io","extLabel":"tests-uport-vcr0003","extDomain":"securitygeek.io","extDomainName":"securitygeek-io.p.zscalerportal.net","microtenantName":"Default"}]}'
     headers:
       cache-control:
@@ -311,7 +311,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -329,23 +329,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '40'
+      - '35'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b5edf70e-4bcd-9ea7-a0d5-eb5980c6f83c
+      - 77778502-5a07-99a3-b56c-b9f61cee769a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4842'
+      - '4848'
       x-ratelimit-reset:
-      - '7'
+      - '14'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -365,9 +365,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331394589
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/userPortal/216196257331395930
   response:
     body:
       string: ''
@@ -377,7 +377,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:54 GMT
+      - Fri, 05 Dec 2025 23:23:46 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -393,23 +393,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '57'
+      - '47'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5fade5ad-2f2d-9c21-b290-81c90c29ad51
+      - 8cb647c8-ced5-93a3-bee7-c4eb16c616ee
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4841'
+      - '4847'
       x-ratelimit-reset:
-      - '6'
+      - '14'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:

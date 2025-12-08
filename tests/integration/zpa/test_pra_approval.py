@@ -50,7 +50,7 @@ class TestPRAApproval:
             try:
                 app_connector_group_name = "tests-praap-" + generate_random_string()
                 app_connector_group_description = "tests-praap-" + generate_random_string()
-                created_app_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
+                created_app_connector_group = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
                     enabled=True,
@@ -68,11 +68,8 @@ class TestPRAApproval:
                     tcp_quick_ack_assistant=True,
                     tcp_quick_ack_read_assistant=True,
                 )
-                if err:
-                    errors.append(f"App Connector Group creation failed: {err}")
-                else:
-                    app_connector_group_id = created_app_connector_group.id
-                    assert app_connector_group_id is not None, "App Connector Group creation failed"
+                app_connector_group_id = created_app_connector_group.id
+                assert app_connector_group_id is not None, "App Connector Group creation failed"
             except Exception as exc:
                 errors.append(f"App Connector Group creation failed: {exc}")
 
@@ -80,8 +77,7 @@ class TestPRAApproval:
             try:
                 time.sleep(2)
                 segment_group_name = "tests-praap-" + generate_random_string()
-                created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
-                assert err is None, f"Error during segment group creation: {err}"
+                created_segment_group = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 segment_group_id = created_segment_group.id
             except Exception as exc:
                 errors.append(f"Error during segment group creation: {exc}")
@@ -91,13 +87,12 @@ class TestPRAApproval:
                 time.sleep(2)
                 server_group_name = "tests-praap-" + generate_random_string()
                 server_group_description = "tests-praap-" + generate_random_string()
-                created_server_group, _, err = client.zpa.server_groups.add_group(
+                created_server_group = client.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
                     dynamic_discovery=True,
                     app_connector_group_ids=[app_connector_group_id],
                 )
-                assert err is None, f"Creating Server Group failed: {err}"
                 server_group_id = created_server_group.id
             except Exception as exc:
                 errors.append(f"Creating Server Group failed: {exc}")
@@ -108,7 +103,7 @@ class TestPRAApproval:
                 app_segment_name = domain_name
                 app_segment_description = domain_name
 
-                app_segment, _, err = client.zpa.application_segment.add_segment(
+                app_segment = client.zpa.application_segment.add_segment(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
@@ -117,7 +112,6 @@ class TestPRAApproval:
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["9000", "9000"],
                 )
-                assert err is None, f"Error creating application segment: {err}"
                 assert app_segment is not None, "No application segment data returned"
                 assert app_segment.name == app_segment_name
 
@@ -144,8 +138,7 @@ class TestPRAApproval:
                     },
                 }
 
-                created_approval, _, err = client.zpa.pra_approval.add_approval(**new_approval_data)
-                assert err is None, f"Error creating PRA approval: {err}"
+                created_approval = client.zpa.pra_approval.add_approval(**new_approval_data)
                 assert created_approval is not None, "No PRA approval data returned"
 
                 approval_id = created_approval.id
@@ -156,16 +149,14 @@ class TestPRAApproval:
 
             try:
                 # Test listing approvals
-                approval_list, _, err = client.zpa.pra_approval.list_approval()
-                assert err is None, f"Error listing PRA approval: {err}"
+                approval_list = client.zpa.pra_approval.list_approval()
                 assert any(approval.id == approval_id for approval in approval_list), "Created approval not found in list"
             except Exception as exc:
                 errors.append(f"Listing PRA approvals failed: {exc}")
 
             try:
                 # Test retrieving the specific PRA Console
-                retrieved_approval, _, err = client.zpa.pra_approval.get_approval(approval_id)
-                assert err is None, f"Error fetching approvals: {err}"
+                retrieved_approval = client.zpa.pra_approval.get_approval(approval_id)
                 assert retrieved_approval.id == approval_id, "Retrieved console ID does not match"
                 assert retrieved_approval.status == "ACTIVE", "Approval status mismatch"
             except Exception as exc:
@@ -176,8 +167,7 @@ class TestPRAApproval:
             if approval_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.pra_approval.delete_approval(approval_id=approval_id)
-                    assert err is None, f"approval deletion failed: {err}"
+                    delete_response = client.zpa.pra_approval.delete_approval(approval_id=approval_id)
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as exc:
                     errors.append(f"Deleting approval failed: {exc}")
@@ -185,10 +175,9 @@ class TestPRAApproval:
             if app_segment_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.application_segment.delete_segment(
+                    delete_response = client.zpa.application_segment.delete_segment(
                         segment_id=app_segment_id, force_delete=True
                     )
-                    assert err is None, f"App Segment deletion failed: {err}"
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as exc:
                     errors.append(f"Deleting Application Segment failed: {exc}")
@@ -196,8 +185,7 @@ class TestPRAApproval:
             if server_group_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.server_groups.delete_group(group_id=server_group_id)
-                    assert err is None, f"Server Group deletion failed: {err}"
+                    delete_response = client.zpa.server_groups.delete_group(group_id=server_group_id)
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as exc:
                     errors.append(f"Deleting Server Group failed: {exc}")
@@ -205,8 +193,7 @@ class TestPRAApproval:
             if segment_group_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.segment_groups.delete_group(group_id=segment_group_id)
-                    assert err is None, f"Segment Group deletion failed: {err}"
+                    delete_response = client.zpa.segment_groups.delete_group(group_id=segment_group_id)
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as exc:
                     errors.append(f"Deleting Segment Group failed: {exc}")
@@ -214,8 +201,7 @@ class TestPRAApproval:
             if app_connector_group_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.app_connector_groups.delete_connector_group(app_connector_group_id)
-                    assert err is None, f"Error deleting group: {err}"
+                    delete_response = client.zpa.app_connector_groups.delete_connector_group(app_connector_group_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

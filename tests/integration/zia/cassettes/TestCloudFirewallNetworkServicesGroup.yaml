@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServices?search=ICMP_ANY
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServices?search=ICMP_ANY
   response:
     body:
       string: '[{"id":773995,"name":"ICMP_ANY","tag":"ICMP_ANY","type":"STANDARD","description":"ICMP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true}]'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:19 GMT
+      - Sat, 06 Dec 2025 00:14:35 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +52,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '811'
+      - '717'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b989f3fa-b606-93e2-b274-ee7c6833cf74
+      - 81762fe2-8c82-92dd-8052-0d5a83d51286
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4992'
       x-ratelimit-reset:
-      - '41'
+      - '26'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -90,9 +90,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServices?search=UDP_ANY
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServices?search=UDP_ANY
   response:
     body:
       string: '[{"id":773997,"name":"UDP_ANY","tag":"UDP_ANY","srcUdpPorts":[],"destUdpPorts":[],"type":"STANDARD","description":"UDP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true}]'
@@ -117,7 +117,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:20 GMT
+      - Sat, 06 Dec 2025 00:14:36 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -129,23 +129,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '524'
+      - '598'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0d6b5624-bd80-9f0c-9050-080592958673
+      - d81d87f9-5f6b-9ef8-9b20-bc4c567b82ca
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4991'
       x-ratelimit-reset:
-      - '41'
+      - '25'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -167,9 +167,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServices?search=TCP_ANY
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServices?search=TCP_ANY
   response:
     body:
       string: '[{"id":773999,"name":"TCP_ANY","tag":"TCP_ANY","srcTcpPorts":[],"destTcpPorts":[],"type":"STANDARD","description":"TCP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true}]'
@@ -194,7 +194,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:21 GMT
+      - Sat, 06 Dec 2025 00:14:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -206,23 +206,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '598'
+      - '694'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - cb3e1100-6c03-9d61-9684-f20f7ef7493d
+      - e7969902-983e-9225-89f7-6db05f7e3c70
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4990'
       x-ratelimit-reset:
-      - '40'
+      - '24'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -244,9 +244,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServices?search=DNS
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServices?search=DNS
   response:
     body:
       string: '[{"id":774003,"name":"DNS","tag":"DNS","srcTcpPorts":[],"destTcpPorts":[{"start":53}],"srcUdpPorts":[],"destUdpPorts":[{"start":53}],"type":"PREDEFINED","description":"DNS_DESC","creatorContext":"ZIA","isNameL10nTag":true}]'
@@ -271,7 +271,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:21 GMT
+      - Sat, 06 Dec 2025 00:14:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -283,23 +283,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '676'
+      - '510'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 89599c2c-6234-9f5e-91c3-856432029347
+      - 3a709cb5-5b61-99ba-82df-090f711b4f0d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4989'
       x-ratelimit-reset:
-      - '39'
+      - '23'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -322,12 +322,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/networkServiceGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServiceGroups
   response:
     body:
-      string: '{"id":10177034,"name":"tests-vcr0001","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002"}'
+      string: '{"id":10226687,"name":"tests-vcr0001","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -349,7 +349,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:24 GMT
+      - Sat, 06 Dec 2025 00:14:40 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -361,23 +361,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2166'
+      - '2196'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - dbc9c6ce-31b1-9d97-aa7c-d6174d824cf9
+      - 6dcd9096-8b8d-9502-89a2-1979982c7371
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4988'
       x-ratelimit-reset:
-      - '38'
+      - '23'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -399,12 +399,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServiceGroups/10177034
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServiceGroups/10226687
   response:
     body:
-      string: '{"id":10177034,"name":"tests-vcr0001","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002","creatorContext":"ZIA"}'
+      string: '{"id":10226687,"name":"tests-vcr0001","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002","creatorContext":"ZIA"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -426,7 +426,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:24 GMT
+      - Sat, 06 Dec 2025 00:14:40 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -438,23 +438,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '378'
+      - '418'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7e121691-2075-9ba2-bc0b-63f8a29139ef
+      - 809d8a8f-61da-9a8d-971c-b08e0f6e019b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4987'
       x-ratelimit-reset:
-      - '36'
+      - '20'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -477,12 +477,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/networkServiceGroups/10177034
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServiceGroups/10226687
   response:
     body:
-      string: '{"id":10177034,"name":"updated-vcr0003","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002
+      string: '{"id":10226687,"name":"updated-vcr0003","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002
         updated","creatorContext":"ZIA"}'
     headers:
       cache-control:
@@ -505,7 +505,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:26 GMT
+      - Sat, 06 Dec 2025 00:14:43 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -517,23 +517,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1984'
+      - '2200'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5907e207-c131-9e42-817e-2269a1646923
+      - c694e338-7acc-97df-b1bd-953581b01d5d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4987'
+      - '4986'
       x-ratelimit-reset:
-      - '36'
+      - '20'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -555,13 +555,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/networkServiceGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServiceGroups
   response:
     body:
-      string: '[{"id":9910411,"name":"ServiceGroup01","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true}],"description":"ServiceGroup01","creatorContext":"EC"},{"id":9977809,"name":"ServiceGroup01_1761584799404","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true}],"description":"ServiceGroup01","creatorContext":"ZIA"},{"id":9977831,"name":"ServiceGroup01_1761586830145","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true}],"description":"ServiceGroup01","creatorContext":"ZIA"},{"id":9991991,"name":"updated-asvvsbyczk","services":[{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true},{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true}],"description":"tests-fspcayubge
-        updated","creatorContext":"ZIA"},{"id":9993033,"name":"IrwIxbi","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true}],"description":"ServiceGroup01","creatorContext":"ZIA"},{"id":10177034,"name":"updated-vcr0003","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002
+      string: '[{"id":9910411,"name":"ServiceGroup01","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true}],"description":"ServiceGroup01","creatorContext":"EC"},{"id":10226687,"name":"updated-vcr0003","services":[{"id":773995,"name":"ICMP_ANY","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","isNameL10nTag":true},{"id":774003,"name":"DNS","isNameL10nTag":true}],"description":"tests-vcr0002
         updated","creatorContext":"ZIA"}]'
     headers:
       cache-control:
@@ -584,7 +583,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:27 GMT
+      - Sat, 06 Dec 2025 00:14:43 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -592,27 +591,27 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - accept-encoding, Accept-Encoding
+      - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '296'
+      - '273'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0e87c25f-5505-9ce8-92a8-bf1b5cbff073
+      - 70b58dd5-c408-9b21-bd49-97fa22f68c98
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4985'
       x-ratelimit-reset:
-      - '34'
+      - '17'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -634,9 +633,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/networkServiceGroups/10177034
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkServiceGroups/10226687
   response:
     body:
       string: ''
@@ -657,7 +656,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:49:28 GMT
+      - Sat, 06 Dec 2025 00:14:44 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -667,23 +666,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1415'
+      - '1132'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a6c616e4-1cd7-99cb-a040-b80ae1957e96
+      - c45b6f9a-046b-9d92-8aa3-60648dd4ce39
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4984'
       x-ratelimit-reset:
-      - '33'
+      - '17'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -41,7 +41,7 @@ class TestUsers:
         try:
             # Test: Add Group
             try:
-                create_group, _, error = client.zidentity.users.add_user(
+                create_group = client.zidentity.users.add_user(
                     login_name="john.doe@securitygeek.io",
                     display_name="John Doe",
                     first_name='John',
@@ -50,7 +50,6 @@ class TestUsers:
                     secondary_email='jdoe@acme.com',
                     status=True,
                 )
-                assert error is None, f"Add User Error: {error}"
                 assert create_group is not None, "User creation failed."
                 user_id = create_group.id
             except Exception as e:
@@ -59,7 +58,7 @@ class TestUsers:
             # Test: Update User
             try:
                 if user_id:
-                    update_user, _, error = client.zidentity.users.update_user(
+                    update_user = client.zidentity.users.update_user(
                         user_id=user_id,
                         login_name="john.doe@securitygeek.io",
                         display_name="John Doe",
@@ -69,7 +68,6 @@ class TestUsers:
                         secondary_email='jdoe1@acme.com',
                         status=True,
                     )
-                    assert error is None, f"Update User Error: {error}"
                     assert update_user is not None, "User update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_user: {str(e)}")
@@ -77,8 +75,7 @@ class TestUsers:
             # Test: Get Group
             try:
                 if update_user:
-                    user, _, error = client.zidentity.users.get_user(update_user.id)
-                    assert error is None, f"Get User Error: {error}"
+                    user = client.zidentity.users.get_user(update_user.id)
                     assert user.id == user_id, "Retrieved User ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_user: {str(e)}")
@@ -86,8 +83,7 @@ class TestUsers:
             # Test: List Users
             try:
                 if update_user:
-                    users_response, _, error = client.zidentity.users.list_users()
-                    assert error is None, f"List Users Error: {error}"
+                    users_response = client.zidentity.users.list_users()
                     assert users_response is not None, "Expected a users response object"
                     assert hasattr(users_response, 'records'), "Expected users_response to have records field"
             except Exception as e:
@@ -97,8 +93,7 @@ class TestUsers:
             # Cleanup: Delete the portal if it was created
             if user_id:
                 try:
-                    delete_response, _, err = client.zidentity.users.delete_user(user_id)
-                    assert err is None, f"Error deleting portal: {err}"
+                    delete_response = client.zidentity.users.delete_user(user_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

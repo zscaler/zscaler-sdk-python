@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.managed_browser_profile import ManagedBrowserProfile
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ManagedBrowserProfileAPI(APIClient):
@@ -33,7 +32,7 @@ class ManagedBrowserProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_managed_browser_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[ManagedBrowserProfile]]:
+    def list_managed_browser_profiles(self, query_params: Optional[dict] = None) -> List[ManagedBrowserProfile]:
         """
         Gets all the managed browser profiles for a customer
 
@@ -49,16 +48,15 @@ class ManagedBrowserProfileAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of ManagedBrowserProfile instances, Response, error)
 
         Examples:
             Retrieve machine groups with pagination parameters:
 
-            >>> profile_list, _, err = client.zpa.managed_browser_profile.list_managed_browser_profiles(
+            >>> try:
+            ...     profile_list = client.zpa.managed_browser_profile.list_managed_browser_profiles(
             ... query_params={'search': 'Profile01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing managed browser profiles: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total managed browser profiles found: {len(profile_list)}")
             ... for profile in profile_list:
             ...     print(profile.as_dict())
@@ -76,18 +74,9 @@ class ManagedBrowserProfileAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ManagedBrowserProfile)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ManagedBrowserProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ManagedBrowserProfile)
+        result = []
+        for item in response.get_results():
+            result.append(ManagedBrowserProfile(self.form_response_body(item)))
+        return result

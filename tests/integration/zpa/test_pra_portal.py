@@ -44,8 +44,7 @@ class TestPRAPortal:
 
         # List all certificates
         try:
-            certs_list, _, err = client.zpa.certificates.list_issued_certificates()
-            assert err is None, f"Error listing certificates: {err}"
+            certs_list = client.zpa.certificates.list_issued_certificates()
             assert isinstance(certs_list, list), "Expected a list of certificates"
             if certs_list:  # If there are any certificates, proceed with further operations
                 first_certificate = certs_list[0]  # Fetch the first certificate in the list
@@ -56,7 +55,7 @@ class TestPRAPortal:
 
         try:
             # Create a new PRA portal
-            created_portal, _, err = client.zpa.pra_portal.add_portal(
+            created_portal = client.zpa.pra_portal.add_portal(
                 name=portal_name,
                 description=portal_description,
                 enabled=True,
@@ -65,7 +64,6 @@ class TestPRAPortal:
                 user_notification_enabled=True,
                 user_notification=f"{SDK_PREFIX} Test PRA Portal",
             )
-            assert err is None, f"Failed to create portal: {err}"
             assert created_portal is not None
             assert created_portal.name == portal_name
             assert created_portal.description == portal_description
@@ -77,16 +75,14 @@ class TestPRAPortal:
 
         try:
             # Test listing Portal
-            portals_list, _, err = client.zpa.pra_portal.list_portals()
-            assert err is None, f"Error listing PRA portals: {err}"
+            portals_list = client.zpa.pra_portal.list_portals()
             assert any(portal.id == portal_id for portal in portals_list)
         except Exception as exc:
             errors.append(f"Listing PRA portal failed: {exc}")
 
         try:
             # Test retrieving the specific portal
-            retrieved_portal, _, err = client.zpa.pra_portal.get_portal(portal_id)
-            assert err is None, f"Error fetching PRA portal: {err}"
+            retrieved_portal = client.zpa.pra_portal.get_portal(portal_id)
             assert retrieved_portal.id == portal_id
             assert retrieved_portal.name == portal_name
         except Exception as exc:
@@ -95,14 +91,13 @@ class TestPRAPortal:
         try:
             if portal_id:
                 # Retrieve the created app pra portal by ID
-                retrieved_portal, _, err = client.zpa.pra_portal.get_portal(portal_id)
-                assert err is None, f"Error fetching group: {err}"
+                retrieved_portal = client.zpa.pra_portal.get_portal(portal_id)
                 assert retrieved_portal.id == portal_id
                 assert retrieved_portal.name == portal_name
 
                 # Update the app pra portal
                 updated_description = portal_name + " Updated"
-                _, _, err = client.zpa.pra_portal.update_portal(
+                _ = client.zpa.pra_portal.update_portal(
                     portal_id,
                     name=portal_name,
                     description=updated_description,
@@ -112,15 +107,12 @@ class TestPRAPortal:
                     user_notification_enabled=True,
                     user_notification=f"{SDK_PREFIX} Test PRA Portal",
                 )
-                assert err is None, f"Error updating pra portal: {err}"
 
-                updated_group, _, err = client.zpa.pra_portal.get_portal(portal_id)
-                assert err is None, f"Error fetching updated pra portal: {err}"
+                updated_group = client.zpa.pra_portal.get_portal(portal_id)
                 assert updated_group.description == updated_description
 
                 # List app pra portal and ensure the updated group is in the list
-                portal_list, _, err = client.zpa.pra_portal.list_portals()
-                assert err is None, f"Error listing pra portals: {err}"
+                portal_list = client.zpa.pra_portal.list_portals()
                 assert any(group.id == portal_id for group in portal_list)
         except Exception as exc:
             errors.append(exc)
@@ -131,8 +123,7 @@ class TestPRAPortal:
             try:
                 # Attempt to delete resources created during the test
                 if portal_id:
-                    delete_response, _, err = client.zpa.pra_portal.delete_portal(portal_id)
-                    assert err is None, f"Portal deletion failed: {err}"
+                    delete_response = client.zpa.pra_portal.delete_portal(portal_id)
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting portal failed: {exc}")

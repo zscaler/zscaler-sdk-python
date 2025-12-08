@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.stepup_auth_level import StepUpAuthLevel
 from zscaler.api_client import APIClient
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class StepUpAuthLevelAPI(APIClient):
@@ -34,7 +33,7 @@ class StepUpAuthLevelAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_step_up_auth_levels(self, query_params: Optional[dict] = None) -> APIResult[List[StepUpAuthLevel]]:
+    def get_step_up_auth_levels(self, query_params: Optional[dict] = None) -> List[StepUpAuthLevel]:
         """
         Get step up authentication levels.
 
@@ -47,27 +46,27 @@ class StepUpAuthLevelAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of StepUpAuthLevel instances, Response, error).
+            :obj:`Tuple`: A tuple containing List[StepUpAuthLevel].
 
         Examples:
             List all step up authentication levels:
 
-            >>> auth_levels, _, err = client.zpa.stepup_auth_level.get_step_up_auth_levels()
-            ... if err:
-            ...     print(f"Error getting step up auth levels: {err}")
-            ...     return
+            >>> try:
+            ...     auth_levels = client.zpa.stepup_auth_level.get_step_up_auth_levels()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total step up auth levels found: {len(auth_levels)}")
             ... for level in auth_levels:
             ...     print(level.as_dict())
 
             List step up authentication levels with microtenant ID:
 
-            >>> auth_levels, _, err = client.zpa.stepup_auth_level.get_step_up_auth_levels(
+            >>> try:
+            ...     auth_levels = client.zpa.stepup_auth_level.get_step_up_auth_levels(
             ...     query_params={'microtenant_id': '1234567890'}
             ... )
-            ... if err:
-            ...     print(f"Error getting step up auth levels: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total step up auth levels found: {len(auth_levels)}")
             ... for level in auth_levels:
             ...     print(f"Name: {level.name}, Delta: {level.delta}, Description: {level.description}")
@@ -85,18 +84,9 @@ class StepUpAuthLevelAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, StepUpAuthLevel)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(StepUpAuthLevel(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, StepUpAuthLevel)
+        result = []
+        for item in response.get_results():
+            result.append(StepUpAuthLevel(self.form_response_body(item)))
+        return result

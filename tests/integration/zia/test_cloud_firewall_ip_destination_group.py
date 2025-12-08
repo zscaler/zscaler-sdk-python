@@ -44,13 +44,12 @@ class TestCloudFirewallIPDestinationGroup:
         try:
             # Step 1: Create IP destination group
             try:
-                created_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+                created_group = client.zia.cloud_firewall.add_ip_destination_group(
                     name=group_name,
                     description=group_description,
                     addresses=group_addresses,
                     type=group_type,
                 )
-                assert error is None, f"Error adding IP destination group: {error}"
                 assert created_group is not None, "Failed to create IP destination group"
                 group_id = created_group.id
                 assert created_group.name == group_name, "Group name mismatch in creation"
@@ -61,8 +60,7 @@ class TestCloudFirewallIPDestinationGroup:
             # Step 2: Retrieve the created group by ID
             try:
                 if group_id:
-                    group, _, error = client.zia.cloud_firewall.get_ip_destination_group(group_id)
-                    assert error is None, f"Error retrieving IP destination group: {error}"
+                    group = client.zia.cloud_firewall.get_ip_destination_group(group_id)
                     assert group is not None, "Retrieved IP destination group is None"
                     assert group.id == group_id, "Incorrect IP destination group retrieved"
             except Exception as exc:
@@ -73,14 +71,13 @@ class TestCloudFirewallIPDestinationGroup:
                 if group_id:
                     updated_name = "updated-" + generate_random_string()
                     updated_description = "updated-" + generate_random_string()
-                    updated_group, _, error = client.zia.cloud_firewall.update_ip_destination_group(
+                    updated_group = client.zia.cloud_firewall.update_ip_destination_group(
                         group_id=group_id,
                         name=updated_name,
                         description=updated_description,
                         addresses=group_addresses,
                         type=group_type,
                     )
-                    assert error is None, f"Error updating IP destination group: {error}"
                     assert updated_group.name == updated_name, "Group name mismatch after update"
                     assert updated_group.description == updated_description, "Group description mismatch after update"
             except Exception as exc:
@@ -88,8 +85,7 @@ class TestCloudFirewallIPDestinationGroup:
 
             # Step 4: List IP destination groups and verify
             try:
-                groups, _, error = client.zia.cloud_firewall.list_ip_destination_groups()
-                assert error is None, f"Error listing IP destination groups: {error}"
+                groups = client.zia.cloud_firewall.list_ip_destination_groups()
                 assert groups is not None, "IP destination group list is None"
                 assert any(g.id == group_id for g in groups), "Updated IP destination group not found in list"
             except Exception as exc:
@@ -99,11 +95,10 @@ class TestCloudFirewallIPDestinationGroup:
             # Step 5: Cleanup
             try:
                 if group_id:
-                    _, _, error = client.zia.cloud_firewall.delete_ip_destination_group(group_id)
-                    assert error is None, f"Error deleting IP destination group: {error}"
+                    _ = client.zia.cloud_firewall.delete_ip_destination_group(group_id)
             except Exception as exc:
                 errors.append(f"Deleting IP destination group failed: {exc}")
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

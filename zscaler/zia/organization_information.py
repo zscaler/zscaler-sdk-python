@@ -21,7 +21,6 @@ from zscaler.zia.models.organization_information import OrganizationInformation
 from zscaler.zia.models.organization_information import OrganizationInformationLite
 from zscaler.zia.models.organization_information import OrganizationSubscription
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class OrganizationInformationAPI(APIClient):
@@ -35,7 +34,7 @@ class OrganizationInformationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_organization_information(self) -> APIResult[dict]:
+    def get_organization_information(self) -> Any:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -43,7 +42,6 @@ class OrganizationInformationAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - OrganizationInformation: The current organization information object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -65,23 +63,17 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = OrganizationInformation(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_org_info_lite(self) -> APIResult[dict]:
+    def get_org_info_lite(self) -> Any:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -89,7 +81,6 @@ class OrganizationInformationAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - OrganizationInformation: The current organization information object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -111,23 +102,17 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = OrganizationInformationLite(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex
 
-    def get_subscriptions(self) -> APIResult[dict]:
+    def get_subscriptions(self) -> Any:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -135,7 +120,6 @@ class OrganizationInformationAPI(APIClient):
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
-            tuple: A tuple containing:
                 - OrganizationInformation: The current organization information object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
@@ -157,18 +141,12 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request = self._request_executor.create_request(http_method, api_url)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request)
 
         try:
             advanced_settings = OrganizationSubscription(response.get_body())
-            return (advanced_settings, response, None)
+            return advanced_settings
         except Exception as ex:
-            return (None, response, ex)
+            raise ex

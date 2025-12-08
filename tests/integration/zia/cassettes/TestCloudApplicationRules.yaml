@@ -18,12 +18,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL
   response:
     body:
-      string: '{"id":1571780,"type":"WEBMAIL","order":1,"description":"Integration
+      string: '{"id":1582153,"type":"WEBMAIL","order":1,"description":"Integration
         test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"name":"tests-vcr0001","cascadingEnabled":false,"eunEnabled":false,"predefined":false}'
     headers:
       cache-control:
@@ -46,7 +46,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:49 GMT
+      - Sat, 06 Dec 2025 00:12:02 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -58,23 +58,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3738'
+      - '3744'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 846d9a45-79e0-9ce3-9450-6ba7a9ce2dfa
+      - f04cf271-8abc-9d6d-9aba-c8528309135c
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4979'
+      - '4978'
       x-ratelimit-reset:
-      - '15'
+      - '2'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -96,9 +96,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL/duplicate/1571780
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL/duplicate/1582153
   response:
     body:
       string: '{"message":"Rule Name is mandatory"}'
@@ -123,7 +123,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:49 GMT
+      - Sat, 06 Dec 2025 00:12:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -131,23 +131,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '79'
+      - '184'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e3a2e8ca-2702-9a51-97c2-8ab176dacdda
+      - 9701ce74-f129-94c4-bdbc-1334d02d7953
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4978'
+      - '4999'
       x-ratelimit-reset:
-      - '11'
+      - '58'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -169,13 +169,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL/1571780
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL/1582153
   response:
     body:
-      string: '{"id":1571780,"type":"WEBMAIL","order":1,"description":"Integration
-        test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"accessControl":"READ_WRITE","name":"tests-vcr0001","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}'
+      string: '{"id":1582153,"type":"WEBMAIL","order":1,"description":"Integration
+        test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764979921,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"accessControl":"READ_WRITE","name":"tests-vcr0001","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -197,7 +197,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:50 GMT
+      - Sat, 06 Dec 2025 00:12:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -209,23 +209,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '796'
+      - '892'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9ad33ed3-9948-9cf0-9902-99f5e9a7934d
+      - 7b9b0ee5-6be6-9a0b-b14a-356de6b000cf
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4977'
+      - '4998'
       x-ratelimit-reset:
-      - '11'
+      - '57'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -247,9 +247,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL/1571780
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL/1582153
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Rule must have a rank specified"}'
@@ -274,7 +274,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:51 GMT
+      - Sat, 06 Dec 2025 00:12:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -282,23 +282,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1056'
+      - '1223'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b46395a2-9627-9f29-b40a-b0f963d08ed9
+      - 447c1f6c-6514-9061-8abf-9fd64861cc3f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4976'
+      - '4997'
       x-ratelimit-reset:
-      - '10'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -320,21 +320,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL
   response:
     body:
-      string: '[{"id":192263,"type":"WEBMAIL","order":4,"description":"Rule for allowed
-        google domains","applications":["GOOGLE_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"DISABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Rule
-        for Allowed Google Domains","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":192883,"type":"WEBMAIL","order":5,"description":"Allow
+      string: '[{"id":192263,"type":"WEBMAIL","order":3,"description":"Rule for allowed
+        google domains","applications":["GOOGLE_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"DISABLED","rank":7,"lastModifiedTime":1764979921,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Rule
+        for Allowed Google Domains","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":192883,"type":"WEBMAIL","order":4,"description":"Allow
         all users to view their personal email accounts, but block them from sending
-        emails from their personal accounts.","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL","WINDOWS_LIVE_HOTMAIL","AOL_MAIL","LYCOS_MAIL_WEBMAIL","REDIFFMAIL","LAPOSTE","ORANGEFR","EMAILFREENETDE","WINMAILRU","MAILYANDEXRU","MAILRAMBLERRU","MAILTONLINEDE","WEBDE","GMXDE","INBOX_WEBMAIL","ZOHO","FASTMAIL","COMCASTMAIL","ROADRUNNER"],"actions":["ALLOW_WEBMAIL_VIEW","BLOCK_WEBMAIL_ATTACHMENT_SEND","BLOCK_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Block
-        Sending Personal Email","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":266651,"type":"WEBMAIL","order":3,"description":"Office
-        365 One Click Rule","applications":["WINDOWS_LIVE_HOTMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Office
-        365 One Click Rule","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":true},{"id":1570178,"type":"WEBMAIL","order":2,"description":"Integration
-        test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"accessControl":"READ_WRITE","name":"tests-ctspilbhyj","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1571780,"type":"WEBMAIL","order":1,"description":"Integration
-        test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764200867,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"accessControl":"READ_WRITE","name":"tests-vcr0001","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}]'
+        emails from their personal accounts.","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL","WINDOWS_LIVE_HOTMAIL","AOL_MAIL","LYCOS_MAIL_WEBMAIL","REDIFFMAIL","LAPOSTE","ORANGEFR","EMAILFREENETDE","WINMAILRU","MAILYANDEXRU","MAILRAMBLERRU","MAILTONLINEDE","WEBDE","GMXDE","INBOX_WEBMAIL","ZOHO","FASTMAIL","COMCASTMAIL","ROADRUNNER"],"actions":["ALLOW_WEBMAIL_VIEW","BLOCK_WEBMAIL_ATTACHMENT_SEND","BLOCK_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764979921,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Block
+        Sending Personal Email","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":266651,"type":"WEBMAIL","order":2,"description":"Office
+        365 One Click Rule","applications":["WINDOWS_LIVE_HOTMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764979921,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"Office
+        365 One Click Rule","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":true},{"id":1582153,"type":"WEBMAIL","order":1,"description":"Integration
+        test Cloud Application Rule","applications":["GOOGLE_WEBMAIL","YAHOO_WEBMAIL"],"actions":["ALLOW_WEBMAIL_VIEW","ALLOW_WEBMAIL_ATTACHMENT_SEND","ALLOW_WEBMAIL_SEND"],"state":"ENABLED","rank":7,"lastModifiedTime":1764979921,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"userAgentTypes":["OPERA","FIREFOX","MSIE","MSEDGE","CHROME","SAFARI","MSCHREDGE"],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"accessControl":"READ_WRITE","name":"tests-vcr0001","cascadingEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -356,7 +355,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:52 GMT
+      - Sat, 06 Dec 2025 00:12:06 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -368,23 +367,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '978'
+      - '965'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 26f99a94-11a1-9df8-aa60-62557b2ba984
+      - 78e5d2ce-05bb-9561-acc0-0b55626eb5e9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4975'
+      - '4996'
       x-ratelimit-reset:
-      - '9'
+      - '55'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -406,9 +405,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/WEBMAIL/1571780
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/WEBMAIL/1582153
   response:
     body:
       string: ''
@@ -429,7 +428,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:47:54 GMT
+      - Sat, 06 Dec 2025 00:12:08 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -439,23 +438,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2129'
+      - '1972'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 067c828a-edf8-9b54-a09a-297d5a082584
+      - 3d0db4c9-6b0c-9902-b926-30f0e091129f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4974'
+      - '4995'
       x-ratelimit-reset:
-      - '8'
+      - '54'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -477,9 +476,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/webApplicationRules/STREAMING_MEDIA/availableActions
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/STREAMING_MEDIA/availableActions
   response:
     body:
       string: '["ALLOW_FILE_SHARE_CREATE","ALLOW_FILE_SHARE_DELETE","ALLOW_FILE_SHARE_DOWNLOAD","ALLOW_FILE_SHARE_EDIT","ALLOW_FILE_SHARE_INVITE","ALLOW_FILE_SHARE_RENAME","ALLOW_FILE_SHARE_SHARE","DENY_FILE_SHARE_CREATE","DENY_FILE_SHARE_DELETE","DENY_FILE_SHARE_DOWNLOAD","DENY_FILE_SHARE_EDIT","DENY_FILE_SHARE_INVITE","DENY_FILE_SHARE_RENAME","DENY_FILE_SHARE_SHARE","FILE_SHARE_CONDITIONAL_ACCESS"]'
@@ -504,7 +503,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:55 GMT
+      - Sat, 06 Dec 2025 00:12:09 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -516,23 +515,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '361'
+      - '390'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8c669549-ed86-9b88-85b6-926f66e4367d
+      - 35d45144-639d-9e12-b0ac-fd0230b31ea1
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4973'
+      - '4994'
       x-ratelimit-reset:
-      - '5'
+      - '52'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

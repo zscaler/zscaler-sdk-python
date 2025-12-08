@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.user_entitlement import Entitlement, Entitlements
 from zscaler.zidentity.models.user_entitlement import Service
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class EntitlementAPI(APIClient):
@@ -34,7 +33,7 @@ class EntitlementAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_admin_entitlement(self, user_id: str) -> APIResult[dict]:
+    def get_admin_entitlement(self, user_id: str) -> Entitlements:
         """
         Retrieves the administrative entitlements for a specific user by their user ID.
 
@@ -42,7 +41,6 @@ class EntitlementAPI(APIClient):
             user_id (str): The user ID of the individual whose admin entitlements are being retrieved.
 
         Returns:
-            tuple: A tuple containing Entitlements collection, Response, error).
 
         Examples:
             Print a specific User
@@ -65,22 +63,13 @@ class EntitlementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, Entitlements)
+        result = Entitlements(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, Entitlements)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Entitlements(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_service_entitlement(self, user_id: str) -> APIResult[dict]:
+    def get_service_entitlement(self, user_id: str) -> Service:
         """
         Retrieves service entitlements for a specified user ID.
 
@@ -88,7 +77,6 @@ class EntitlementAPI(APIClient):
             user_id (str): The user ID of the individual for whom the service entitlements are to be retrieved.
 
         Returns:
-            tuple: A tuple containing Service Entitlement instance, Response, error).
 
         Examples:
             Print a specific User
@@ -111,17 +99,8 @@ class EntitlementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, Service)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = Service(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, Service)
+        result = Service(self.form_response_body(response.get_body()))
+        return result

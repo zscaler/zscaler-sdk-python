@@ -35,8 +35,7 @@ class TestDLPIncidentReceiver:
         errors = []
 
         try:
-            receivers, _, error = client.zia.dlp_resources.list_dlp_incident_receiver()
-            assert error is None, f"List Incident Receivers Error: {error}"
+            receivers = client.zia.dlp_resources.list_dlp_incident_receiver()
             assert isinstance(receivers, list), "Expected a list of receivers"
 
             if receivers:
@@ -44,8 +43,7 @@ class TestDLPIncidentReceiver:
                 receiver_id = first_receiver.id
 
                 try:
-                    fetched_receiver, _, error = client.zia.dlp_resources.get_dlp_incident_receiver(receiver_id)
-                    assert error is None, f"Get Incident Receiver Error: {error}"
+                    fetched_receiver = client.zia.dlp_resources.get_dlp_incident_receiver(receiver_id)
                     assert fetched_receiver is not None
                     assert fetched_receiver.id == receiver_id, "Mismatch in receiver ID"
                 except Exception as exc:
@@ -56,4 +54,4 @@ class TestDLPIncidentReceiver:
 
         # Final assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

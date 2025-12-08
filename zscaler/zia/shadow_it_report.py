@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.shadow_it_report import CloudapplicationsAndTags
 from zscaler.utils import format_url, convert_keys
-from zscaler.types import APIResult
 
 
 class ShadowITAPI(APIClient):
@@ -45,7 +44,7 @@ class ShadowITAPI(APIClient):
         """
         return [{"id": str(id)} for id in id_list]
 
-    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[List[CloudapplicationsAndTags]]:
+    def list_apps(self, query_params: Optional[dict] = None) -> List[CloudapplicationsAndTags]:
         """
         Gets the list of predefined and custom cloud applications
 
@@ -85,26 +84,16 @@ class ShadowITAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudapplicationsAndTags(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudapplicationsAndTags(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def list_custom_tags(self) -> APIResult[List[CloudapplicationsAndTags]]:
+    def list_custom_tags(self) -> List[CloudapplicationsAndTags]:
         """
         List all custom tags by name and id.
 
@@ -133,26 +122,16 @@ class ShadowITAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CloudapplicationsAndTags(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CloudapplicationsAndTags(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def bulk_update(self, sanction_state: str, **kwargs) -> APIResult[dict]:
+    def bulk_update(self, sanction_state: str, **kwargs) -> Any:
         """
         Updates application status and tag information for predefined or custom cloud applications based on the
         IDs specified.
@@ -234,20 +213,14 @@ class ShadowITAPI(APIClient):
         if custom_tag_ids is not None:
             payload["customTags"] = self._convert_ids_to_dict_list(custom_tag_ids)
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
+        request = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        response = self._request_executor.execute(request)
 
         body = response.get_body() if response else None
         result = self.form_response_body(body) if body else {}
-        return (result, response, None)
+        return result
 
-    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> APIResult[dict]:
+    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> Any:
         """
         Export the Shadow IT Report (in CSV format) for the cloud applications recognized by Zscaler
         based on their usage in your organisation.
@@ -457,19 +430,13 @@ class ShadowITAPI(APIClient):
         headers = {"Accept": "text/csv"}  # Explicitly request a CSV response
 
         # Creating the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return (None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
         # Executing the request
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (response.get_body(), error)
+        response = self._request_executor.execute(request)
 
         # Return the CSV content directly
-        return (response.get_body(), None)
+        return response.get_body()
 
     def export_shadow_it_csv(self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs):
         """
@@ -548,14 +515,8 @@ class ShadowITAPI(APIClient):
         headers = {"Accept": "text/csv"}
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
 
-        if error:
-            return (None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (response.get_body(), error)
-
-        return (response.get_body(), None)
+        return response.get_body()

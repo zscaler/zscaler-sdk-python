@@ -42,7 +42,7 @@ class TestAlertSubscription:
 
         try:
             try:
-                create_alert, _, error = client.zia.alert_subscriptions.add_alert_subscription(
+                create_alert = client.zia.alert_subscriptions.add_alert_subscription(
                     description=names.description,
                     email='alert@acme.com',
                     pt0_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
@@ -51,7 +51,6 @@ class TestAlertSubscription:
                     comply_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                     system_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                 )
-                assert error is None, f"Add Alert Subscription Error: {error}"
                 assert create_alert is not None, "Subscription creation failed."
                 subscription_id = create_alert.id
             except Exception as e:
@@ -59,7 +58,7 @@ class TestAlertSubscription:
 
             try:
                 if subscription_id:
-                    update_subscription, _, error = client.zia.alert_subscriptions.update_alert_subscription(
+                    update_subscription = client.zia.alert_subscriptions.update_alert_subscription(
                         subscription_id=subscription_id,
                         description=names.updated_description,
                         email='alert@acme.com',
@@ -69,22 +68,19 @@ class TestAlertSubscription:
                         comply_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                         system_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                     )
-                    assert error is None, f"Update Alert Subscription Error: {error}"
                     assert update_subscription is not None, "Subscription update returned None."
             except Exception as e:
                 errors.append(f"Exception during update_alert_subscription: {str(e)}")
 
             try:
                 if update_subscription:
-                    subscription, _, error = client.zia.alert_subscriptions.get_alert_subscription(update_subscription.id)
-                    assert error is None, f"Get Alert Subscription Error: {error}"
+                    subscription = client.zia.alert_subscriptions.get_alert_subscription(update_subscription.id)
                     assert subscription.id == subscription_id, "Retrieved subscription ID mismatch."
             except Exception as e:
                 errors.append(f"Exception during get_alert_subscription: {str(e)}")
 
             try:
-                subscriptions, _, error = client.zia.alert_subscriptions.list_alert_subscriptions()
-                assert error is None, f"Error listing Alert Subscriptions: {error}"
+                subscriptions = client.zia.alert_subscriptions.list_alert_subscriptions()
                 assert subscriptions is not None, "Alert Subscriptions list is None"
                 assert any(alert.id == subscription_id for alert in subscriptions), "Newly created alert not found in the list of subscriptions."
             except Exception as exc:
@@ -94,10 +90,9 @@ class TestAlertSubscription:
         finally:
             try:
                 if update_subscription:
-                    _, _, error = client.zia.alert_subscriptions.delete_alert_subscription(update_subscription.id)
-                    assert error is None, f"Delete Alert Subscription Error: {error}"
+                    _ = client.zia.alert_subscriptions.delete_alert_subscription(update_subscription.id)
             except Exception as e:
                 errors.append(f"Exception during delete_alert_subscription: {str(e)}")
 
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

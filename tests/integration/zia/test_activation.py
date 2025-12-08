@@ -37,8 +37,7 @@ class TestActivation:
 
         # Step 1: Check current activation status
         try:
-            config_status, _, error = client.zia.activate.status()
-            assert error is None, f"Error retrieving activation status: {error}"
+            config_status = client.zia.activate.status()
             assert hasattr(config_status, "status"), "Missing 'status' attribute in Activation object"
             assert config_status.status in ["ACTIVE", "PENDING"], f"Unexpected activation status: {config_status.status}"
         except Exception as exc:
@@ -46,8 +45,7 @@ class TestActivation:
 
         # Step 2: Activate configuration
         try:
-            config_activation, _, error = client.zia.activate.activate()
-            assert error is None, f"Error during activation: {error}"
+            config_activation = client.zia.activate.activate()
             assert hasattr(config_activation, "status"), "Missing 'status' attribute in Activation object"
             assert config_activation.status in [
                 "ACTIVE",

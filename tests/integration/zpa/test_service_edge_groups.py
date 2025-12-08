@@ -50,7 +50,7 @@ class TestServiceEdgeGroup:
 
         try:
             # Create a new service edge group
-            created_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
+            created_group = client.zpa.service_edge_group.add_service_edge_group(
                 name=group_name,
                 description=group_description,
                 enabled=group_enabled,
@@ -63,7 +63,6 @@ class TestServiceEdgeGroup:
                 version_profile_id=version_profile_id,
                 is_public=is_public,
             )
-            assert err is None, f"Error creating service edge group: {err}"
             assert created_group is not None
             assert created_group.name == group_name
             assert created_group.description == group_description
@@ -76,23 +75,19 @@ class TestServiceEdgeGroup:
         try:
             if group_id:
                 # Retrieve the created service edge group by ID
-                retrieved_group, _, err = client.zpa.service_edge_group.get_service_edge_group(group_id)
-                assert err is None, f"Error fetching group: {err}"
+                retrieved_group = client.zpa.service_edge_group.get_service_edge_group(group_id)
                 assert retrieved_group.id == group_id
                 assert retrieved_group.name == group_name
 
                 # Update the service edge group
                 updated_name = group_name + " Updated"
-                _, _, err = client.zpa.service_edge_group.update_service_edge_group(group_id, name=updated_name)
-                assert err is None, f"Error updating group: {err}"
+                _ = client.zpa.service_edge_group.update_service_edge_group(group_id, name=updated_name)
 
-                updated_group, _, err = client.zpa.service_edge_group.get_service_edge_group(group_id)
-                assert err is None, f"Error fetching updated group: {err}"
+                updated_group = client.zpa.service_edge_group.get_service_edge_group(group_id)
                 assert updated_group.name == updated_name
 
                 # List service edge group and ensure the updated group is in the list
-                groups_list, _, err = client.zpa.service_edge_group.list_service_edge_groups()
-                assert err is None, f"Error listing groups: {err}"
+                groups_list = client.zpa.service_edge_group.list_service_edge_groups()
                 assert any(group.id == group_id for group in groups_list)
         except Exception as exc:
             errors.append(exc)
@@ -101,8 +96,7 @@ class TestServiceEdgeGroup:
             # Cleanup: Delete the service edge group if it was created
             if group_id:
                 try:
-                    delete_response, _, err = client.zpa.service_edge_group.delete_service_edge_group(group_id)
-                    assert err is None, f"Error deleting group: {err}"
+                    delete_response = client.zpa.service_edge_group.delete_service_edge_group(group_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

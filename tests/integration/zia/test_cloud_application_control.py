@@ -42,7 +42,7 @@ class TestCloudApplicationRules:
             try:
                 # Create a Cloud Application Rule
                 rule_name = "tests-" + generate_random_string()
-                created_rule, _, error = client.zia.cloudappcontrol.add_rule(
+                created_rule = client.zia.cloudappcontrol.add_rule(
                     rule_type=rule_type,
                     name=rule_name,
                     description="Integration test Cloud Application Rule",
@@ -54,7 +54,6 @@ class TestCloudApplicationRules:
                     device_trust_levels=["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"],
                     user_agent_types=["OPERA", "FIREFOX", "MSIE", "MSEDGE", "CHROME", "SAFARI", "MSCHREDGE"],
                 )
-                assert error is None, f"Error creating Cloud App Rule: {error}"
                 rule_id = created_rule.id
                 assert rule_id is not None, "Cloud Application Rule creation failed"
             except Exception as exc:
@@ -63,10 +62,9 @@ class TestCloudApplicationRules:
             try:
                 # Duplicate the Cloud Application Rule
                 duplicate_rule_name = "tests-" + generate_random_string()
-                duplicate_rule, _, error = client.zia.cloudappcontrol.add_duplicate_rule(
+                duplicate_rule = client.zia.cloudappcontrol.add_duplicate_rule(
                     rule_type=rule_type, rule_id=rule_id, name=duplicate_rule_name
                 )
-                assert error is None, f"Error duplicating Cloud App Rule: {error}"
                 duplicate_rule_id = duplicate_rule.id
                 assert duplicate_rule_id is not None, "Duplicate Cloud Application Rule creation failed"
             except Exception as exc:
@@ -74,8 +72,7 @@ class TestCloudApplicationRules:
 
             try:
                 # Verify the rule by retrieving it
-                retrieved_rule, _, error = client.zia.cloudappcontrol.get_rule(rule_type, rule_id)
-                assert error is None, f"Error retrieving Cloud App Rule: {error}"
+                retrieved_rule = client.zia.cloudappcontrol.get_rule(rule_type, rule_id)
                 assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Cloud Application Rule failed: {exc}")
@@ -83,18 +80,15 @@ class TestCloudApplicationRules:
             try:
                 # Update the Cloud Application Rule
                 updated_description = "Updated integration test Cloud Application Rule"
-                _, _, error = client.zia.cloudappcontrol.update_rule(rule_type, rule_id, description=updated_description)
-                assert error is None, f"Error updating Cloud App Rule: {error}"
+                _ = client.zia.cloudappcontrol.update_rule(rule_type, rule_id, description=updated_description)
 
-                updated_rule, _, error = client.zia.cloudappcontrol.get_rule(rule_type, rule_id)
-                assert error is None, f"Error retrieving updated Cloud App Rule: {error}"
+                updated_rule = client.zia.cloudappcontrol.get_rule(rule_type, rule_id)
                 assert updated_rule.description == updated_description, "Cloud Application Rule update failed"
             except Exception as exc:
                 errors.append(f"Updating Cloud Application Rule failed: {exc}")
 
             try:
-                rules, _, error = client.zia.cloudappcontrol.list_rules(rule_type)
-                assert error is None, f"Error listing rules: {error}"
+                rules = client.zia.cloudappcontrol.list_rules(rule_type)
                 assert isinstance(rules, list), "Expected a list of rules"
                 assert len(rules) > 0, "No rules found for the specified rule type"
             except Exception as exc:
@@ -126,10 +120,9 @@ class TestCloudApplicationRules:
         errors = []
 
         try:
-            actions, _, error = client.zia.cloudappcontrol.list_available_actions(rule_type, cloud_apps)
+            actions = client.zia.cloudappcontrol.list_available_actions(rule_type, cloud_apps)
 
             # Check for errors
-            assert error is None, f"API returned an error: {error}"
             assert actions is not None, f"Failed to list available actions: {actions}"
             assert isinstance(actions, list), f"Response is not a list: {actions}"
             assert len(actions) > 0, "No actions returned"

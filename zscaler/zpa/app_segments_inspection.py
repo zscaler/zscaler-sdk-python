@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
-from zscaler.types import APIResult
 
 
 class AppSegmentsInspectionAPI(APIClient):
@@ -39,7 +38,7 @@ class AppSegmentsInspectionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segment_inspection(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ApplicationSegments]]:
+    def list_segment_inspection(self, query_params: Optional[dict] = None, **kwargs) -> List[ApplicationSegments]:
         """
         Returns all configured application segment inspection with pagination support.
 
@@ -55,14 +54,13 @@ class AppSegmentsInspectionAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of ApplicationSegments instances, Response, error)
 
         Examples:
-            >>> segment_list, _, err = client.zpa.app_segments_inspection.list_segment_inspection(
+            >>> try:
+            ...     segment_list = client.zpa.app_segments_inspection.list_segment_inspection(
             ... query_params={'search': 'AppSegment01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing inspection application segment: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total application segment inspectiion found: {len(segment_list)}")
             ... for app in segments:
             ...     print(app.as_dict())
@@ -78,23 +76,14 @@ class AppSegmentsInspectionAPI(APIClient):
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = []
+        for item in response.get_results():
+            result.append(ApplicationSegments(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApplicationSegments(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_segment_inspection(self, segment_id: str, query_params: dict = None) -> APIResult[dict]:
+    def get_segment_inspection(self, segment_id: str, query_params: dict = None) -> ApplicationSegments:
         """
         Get information for an AppProtection application segment.
 
@@ -103,13 +92,13 @@ class AppSegmentsInspectionAPI(APIClient):
                 The unique identifier for the AppProtection application segment.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (ApplicationSegment, Response, error)
+            :obj:`Tuple`: A tuple containing ApplicationSegments
 
         Examples:
-            >>> fetched_segment, _, err = client.zpa.app_segments_inspection.get_segment_inspection('999999')
-            ... if err:
-            ...     print(f"Error fetching segment by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_segment = client.zpa.app_segments_inspection.get_segment_inspection('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
         """
         http_method = "get".upper()
@@ -122,21 +111,12 @@ class AppSegmentsInspectionAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_segment_inspection(self, **kwargs) -> APIResult[dict]:
+    def add_segment_inspection(self, **kwargs) -> ApplicationSegments:
         """
         Create an AppProtection application segment.
 
@@ -193,7 +173,8 @@ class AppSegmentsInspectionAPI(APIClient):
 
            Create an application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> added_segment, _, err = client.zpa.app_segments_inspection.add_segment_inspection(
+            >>> try:
+            ...     added_segment = client.zpa.app_segments_inspection.add_segment_inspection(
             ...     name=f"NewInspectionSegment_{random.randint(1000, 10000)}",
             ...     description=f"NewInspectionSegment_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -215,9 +196,8 @@ class AppSegmentsInspectionAPI(APIClient):
             ...         ]
             ...     },
             ... )
-            ... if err:
-            ...     print(f"Error creating segment: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"segment created successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
@@ -269,22 +249,13 @@ class AppSegmentsInspectionAPI(APIClient):
         add_id_groups(self.reformat_params, kwargs, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body=body)
         # Execute the request
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_segment_inspection(self, segment_id: str, **kwargs) -> APIResult[dict]:
+    def update_segment_inspection(self, segment_id: str, **kwargs) -> ApplicationSegments:
         """
         Update an AppProtection application segment.
 
@@ -347,7 +318,8 @@ class AppSegmentsInspectionAPI(APIClient):
 
            Update an app protection segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> updated_segment, _, err = client.zpa.app_segments_inspection.update_segment_inspection(
+            >>> try:
+            ...     updated_segment = client.zpa.app_segments_inspection.update_segment_inspection(
             ...     segment_id='9999999'
             ...     name=f"UpdatedAppSegmentInspection_{random.randint(1000, 10000)}",
             ...     description=f"UpdatedAppSegmentInspection_{random.randint(1000, 10000)}",
@@ -370,9 +342,8 @@ class AppSegmentsInspectionAPI(APIClient):
             ...         ]
             ...     },
             ... )
-            ... if err:
-            ...     print(f"Error updating segment: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"segment updated successfully: {updated_segment.as_dict()}")
 
         """
@@ -408,13 +379,10 @@ class AppSegmentsInspectionAPI(APIClient):
         if common_apps_dto and "apps_config" in common_apps_dto:
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
-            segments_list, _, err = app_segment_api.get_segments_by_type(
+            segments_list = app_segment_api.get_segments_by_type(
                 application_type="INSPECT",
                 query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
             )
-
-            if err:
-                return None, None, f"Error fetching INSPECT segments: {err}"
 
             # Map: domain -> segment
             existing_apps = {s.domain: s for s in segments_list if s.app_id == segment_id}
@@ -458,25 +426,15 @@ class AppSegmentsInspectionAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, ApplicationSegments)
         if response is None:
-            return (ApplicationSegments({"id": segment_id}), None, None)
+            return ApplicationSegments({"id": segment_id})
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def delete_segment_inspection(self, segment_id: str, force_delete: bool = False) -> int:
+    def delete_segment_inspection(self, segment_id: str, force_delete: bool = False) -> None:
         """
         Delete an AppProtection application segment.
 
@@ -490,12 +448,12 @@ class AppSegmentsInspectionAPI(APIClient):
             :obj:`int`: The operation response code.
 
         Examples:
-            >>> _, _, err = client.zpa.app_segments_inspection.delete_segment_inspection(
+            >>> try:
+            ...     _ = client.zpa.app_segments_inspection.delete_segment_inspection(
             ...     segment_id='999999'
             ... )
-            ... if err:
-            ...     print(f"Error deleting application segment: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"application segment with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
@@ -510,12 +468,6 @@ class AppSegmentsInspectionAPI(APIClient):
         if force_delete:
             params["forceDelete"] = "true"
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

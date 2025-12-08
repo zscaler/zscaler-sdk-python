@@ -87,10 +87,9 @@ class TestBACertificates:
 
             # # Create a new certificate
             try:
-                created_cert, _, err = client.zpa.certificates.add_certificate(
+                created_cert = client.zpa.certificates.add_certificate(
                     name=cert_name, cert_blob=cert_blob.decode("utf-8")
                 )
-                assert err is None, f"Certificate creation error: {err}"
                 assert created_cert and created_cert.id, "Failed to create certificate: No ID returned"
                 cert_id = created_cert.id
             except Exception as exc:
@@ -98,8 +97,7 @@ class TestBACertificates:
 
             # Retrieve the specific certificate
             try:
-                retrieved_cert, _, err = client.zpa.certificates.get_certificate(cert_id)
-                assert err is None, f"Certificate retrieval error: {err}"
+                retrieved_cert = client.zpa.certificates.get_certificate(cert_id)
                 assert retrieved_cert, "Failed to retrieve certificate: Response is None"
                 assert retrieved_cert.id == cert_id, "Retrieved certificate ID mismatch"
                 assert retrieved_cert.name == cert_name, "Certificate name mismatch"
@@ -108,8 +106,7 @@ class TestBACertificates:
 
             # List all issued certificates and verify the created certificate is listed
             try:
-                cert_list, _, err = client.zpa.certificates.list_issued_certificates()
-                assert err is None, f"Certificate listing error: {err}"
+                cert_list = client.zpa.certificates.list_issued_certificates()
                 assert any(cert.id == cert_id for cert in cert_list), "Created certificate not found in the list"
             except Exception as exc:
                 errors.append(f"Listing issued certificates failed: {str(exc)}")
@@ -118,8 +115,7 @@ class TestBACertificates:
             # Cleanup: Delete the segment group if it was created
             if cert_id:
                 try:
-                    delete_response, _, err = client.zpa.certificates.delete_certificate(cert_id)
-                    assert err is None, f"Error deleting Certificate: {err}"
+                    delete_response = client.zpa.certificates.delete_certificate(cert_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zeasm.models.lookalike_domains import LookALikeDomains, LookalikeDomainDetails
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class LookALikeDomainsAPI(APIClient):
@@ -37,7 +36,7 @@ class LookALikeDomainsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_lookalike_domains(self, org_id: str) -> APIResult[LookALikeDomains]:
+    def list_lookalike_domains(self, org_id: str) -> LookALikeDomains:
         """
         Retrieves the list of lookalike domains for an organization.
 
@@ -45,7 +44,6 @@ class LookALikeDomainsAPI(APIClient):
             org_id (str): The unique identifier for the organization.
 
         Returns:
-            tuple: A tuple containing:
                 - LookALikeDomains: Object containing results list and total_results count
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -53,7 +51,8 @@ class LookALikeDomainsAPI(APIClient):
         Examples:
             List all lookalike domains for an organization::
 
-                >>> domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(
+                >>> try:
+            ...     domains = client.zeasm.lookalike_domains.list_lookalike_domains(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c"
                 ... )
                 >>> if err:
@@ -73,23 +72,14 @@ class LookALikeDomainsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = LookALikeDomains(response.get_body())
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LookALikeDomains(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_lookalike_domain(self, org_id: str, lookalike_raw: str) -> APIResult[LookalikeDomainDetails]:
+    def get_lookalike_domain(self, org_id: str, lookalike_raw: str) -> LookalikeDomainDetails:
         """
         Retrieves details for a lookalike domain based on the specified domain name.
 
@@ -98,7 +88,6 @@ class LookALikeDomainsAPI(APIClient):
             lookalike_raw (str): The lookalike domain name (e.g., "assuredartners.com").
 
         Returns:
-            tuple: A tuple containing:
                 - LookalikeDomainDetails: Object containing the domain details
                 - Response: The raw API response object
                 - error: Any error that occurred, or None if successful
@@ -106,7 +95,8 @@ class LookALikeDomainsAPI(APIClient):
         Examples:
             Get details for a specific lookalike domain::
 
-                >>> domain, _, err = client.zeasm.lookalike_domains.get_lookalike_domain(
+                >>> try:
+            ...     domain = client.zeasm.lookalike_domains.get_lookalike_domain(
                 ...     org_id="3f61a446-1a0d-11f0-94e8-8a5f4d45e80c",
                 ...     lookalike_raw="assuredartners.com"
                 ... )
@@ -126,17 +116,8 @@ class LookALikeDomainsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, LookalikeDomainDetails)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = LookalikeDomainDetails(response.get_body())
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, LookalikeDomainDetails)
+        result = LookalikeDomainDetails(response.get_body())
+        return result

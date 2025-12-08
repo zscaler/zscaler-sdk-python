@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.system_audit import ConfigAudit
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class SystemAuditReportAPI(APIClient):
@@ -34,7 +33,7 @@ class SystemAuditReportAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
 
     # Returning {"code":"RBA_LIMITED","message":"Functional scope restriction requires Reports"}
-    def get_config_audit(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_config_audit(self, query_params: Optional[dict] = None) -> Any:
         """
         Retrieves the System Audit Report.
 
@@ -47,9 +46,8 @@ class SystemAuditReportAPI(APIClient):
             List Sub Clouds with default settings:
 
             >>> subcloud_list, zscaler_resp, err = client.zia.sub_clouds.list_sub_clouds()
-            ... if err:
-            ...     print(f"Error listing sub clouds: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total sub clouds found: {len(subcloud_list)}")
             ... for cloud in subcloud_list:
             ...     print(cloud.as_dict())
@@ -68,20 +66,11 @@ class SystemAuditReportAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ConfigAudit(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(ConfigAudit(self.form_response_body(item)))
+        return result

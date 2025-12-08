@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_extranet import TrafficExtranet
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class TrafficExtranetAPI(APIClient):
@@ -33,7 +32,7 @@ class TrafficExtranetAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_extranets(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficExtranet]]:
+    def list_extranets(self, query_params: Optional[dict] = None) -> List[TrafficExtranet]:
         """
         Lists extranet in your organization with pagination.
         A subset of extranet  can be returned that match a supported
@@ -47,7 +46,6 @@ class TrafficExtranetAPI(APIClient):
                 ``[query_params.order]`` {str}: The arrangement of the list in ascending or descending order i.e ASC
 
         Returns:
-            tuple: A tuple containing (list of Extranet instances, Response, error)
 
         Examples:
             List  all extranets:
@@ -73,25 +71,16 @@ class TrafficExtranetAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(TrafficExtranet(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(TrafficExtranet(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_extranet(self, extranet_id: int) -> APIResult[dict]:
+    def get_extranet(self, extranet_id: int) -> TrafficExtranet:
         """
         Fetches a specific extranet by ID.
 
@@ -99,7 +88,6 @@ class TrafficExtranetAPI(APIClient):
             extranet_id (int): The unique identifier for the extranet.
 
         Returns:
-            tuple: A tuple containing (Extranet instance, Response, error).
 
         Examples:
             Retrieve a specific extranet:
@@ -121,22 +109,13 @@ class TrafficExtranetAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, TrafficExtranet)
+        result = TrafficExtranet(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficExtranet)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficExtranet(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_extranet(self, **kwargs) -> APIResult[dict]:
+    def add_extranet(self, **kwargs) -> TrafficExtranet:
         """
         Adds a new extranet for the organization.
 
@@ -146,7 +125,6 @@ class TrafficExtranetAPI(APIClient):
             description (str): The description of the extranet
 
         Returns:
-            tuple: A tuple containing the newly added Extranet, response, and error.
 
         Examples:
             Add a new Extranet
@@ -186,27 +164,18 @@ class TrafficExtranetAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, TrafficExtranet)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficExtranet(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        response = self._request_executor.execute(request, TrafficExtranet)
+        result = TrafficExtranet(self.form_response_body(response.get_body()))
+        return result
 
     # Needs to file a bug as method is returning 405 Error
-    def update_extranet(self, extranet_id: int, **kwargs) -> APIResult[dict]:
+    def update_extranet(self, extranet_id: int, **kwargs) -> TrafficExtranet:
         """
         Updates information for the specified ZIA Extranet.
 
@@ -214,7 +183,6 @@ class TrafficExtranetAPI(APIClient):
             extranet_id (int): The unique ID for the Extranet.
 
         Returns:
-            tuple: A tuple containing the updated Extranet, response, and error.
 
         Examples:
             Updated a Extranet
@@ -256,21 +224,12 @@ class TrafficExtranetAPI(APIClient):
         body = kwargs
         body["id"] = extranet_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, TrafficExtranet)
+        result = TrafficExtranet(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, TrafficExtranet)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = TrafficExtranet(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_extranet(self, extranet_id: int) -> APIResult[dict]:
+    def delete_extranet(self, extranet_id: int) -> None:
         """
         Deletes the specified Extranet.
 
@@ -278,7 +237,6 @@ class TrafficExtranetAPI(APIClient):
             extranet_id (str): The unique identifier of the Extranet.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Extranet:
@@ -299,11 +257,6 @@ class TrafficExtranetAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

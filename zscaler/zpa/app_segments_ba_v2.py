@@ -20,7 +20,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
-from zscaler.types import APIResult
 
 
 class AppSegmentsBAV2API(APIClient):
@@ -39,7 +38,7 @@ class AppSegmentsBAV2API(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segments_ba(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ApplicationSegments]]:
+    def list_segments_ba(self, query_params: Optional[dict] = None, **kwargs) -> List[ApplicationSegments]:
         """
         Enumerates application segment browser access in your organization with pagination.
         A subset of application segment browser access can be returned that match a supported
@@ -57,14 +56,13 @@ class AppSegmentsBAV2API(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of ApplicationSegments instances, Response, error)
 
         Examples:
-            >>> segment_list, _, err = client.zpa.app_segments_ba_v2.list_segments_ba(
+            >>> try:
+            ...     segment_list = client.zpa.app_segments_ba_v2.list_segments_ba(
             ... query_params={'search': 'AppSegmentBA01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing application segment browser access: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total application segment browser access found: {len(segment_list)}")
             ... for app in segments:
             ...     print(app.as_dict())
@@ -84,23 +82,14 @@ class AppSegmentsBAV2API(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = []
+        for item in response.get_results():
+            result.append(ApplicationSegments(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ApplicationSegments(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_segment_ba(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_segment_ba(self, segment_id: str, query_params: Optional[dict] = None) -> ApplicationSegments:
         """
         Get details of an application segment by its ID.
 
@@ -108,13 +97,13 @@ class AppSegmentsBAV2API(APIClient):
             segment_id (str): The unique ID for the application segment.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (ApplicationSegment, Response, error)
+            :obj:`Tuple`: A tuple containing ApplicationSegments
 
         Examples:
-            >>> fetched_segment, _, err = client.zpa.app_segments_ba_v2.get_segment_ba('999999')
-            ... if err:
-            ...     print(f"Error fetching segment by ID: {err}")
-            ...     return
+            >>> try:
+            ...     fetched_segment = client.zpa.app_segments_ba_v2.get_segment_ba('999999')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
         """
         http_method = "get".upper()
@@ -131,21 +120,12 @@ class AppSegmentsBAV2API(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_segment_ba(self, **kwargs) -> APIResult[dict]:
+    def add_segment_ba(self, **kwargs) -> ApplicationSegments:
         """
         Create a new Browser Access application segment.
 
@@ -186,7 +166,6 @@ class AppSegmentsBAV2API(APIClient):
                 - **app_types** (list[str]): The types of applications is optional (i.e., BROWSER_ACCESS).
 
         Returns:
-            tuple: A tuple containing:
 
                 - **ApplicationSegment**: The newly created application segment instance.
                 - **Response**: The raw API response object.
@@ -196,7 +175,8 @@ class AppSegmentsBAV2API(APIClient):
 
             Create a new browser access application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> added_segment, _, err = client.zpa.app_segments_ba_v2.add_segment_ba(
+            >>> try:
+            ...     added_segment = client.zpa.app_segments_ba_v2.add_segment_ba(
             ...     name=f"NewBASegment{random.randint(1000, 10000)}",
             ...     description=f"NewBASegment{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -280,21 +260,12 @@ class AppSegmentsBAV2API(APIClient):
         # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        response = self._request_executor.execute(request, ApplicationSegments)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_segment_ba(self, segment_id: str, **kwargs) -> APIResult[dict]:
+    def update_segment_ba(self, segment_id: str, **kwargs) -> ApplicationSegments:
         """
         Update an existing browser access application segment.
 
@@ -305,13 +276,13 @@ class AppSegmentsBAV2API(APIClient):
             microtenant_id (str, optional): ID of the microtenant, if applicable.
 
         Returns:
-            tuple: A tuple containing (ApplicationSegment, Response, error)
 
         Examples:
 
            Create an application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> updated_segment, _, err = client.zpa.app_segments_ba_v2.add_segment_ba(
+            >>> try:
+            ...     updated_segment = client.zpa.app_segments_ba_v2.add_segment_ba(
             ...     segment_id='1455863112',
             ...     name=f"UpdatedBASegment_{random.randint(1000, 10000)}",
             ...     description=f"UpdatedBASegment_{random.randint(1000, 10000)}",
@@ -372,13 +343,10 @@ class AppSegmentsBAV2API(APIClient):
         if common_apps_dto and "apps_config" in common_apps_dto:
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
-            segments_list, _, err = app_segment_api.get_segments_by_type(
+            segments_list = app_segment_api.get_segments_by_type(
                 application_type="BROWSER_ACCESS",
                 query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
             )
-
-            if err:
-                return None, None, f"Error fetching BROWSER_ACCESS segments: {err}"
 
             # Map: domain -> segment
             existing_apps = {s.domain: s for s in segments_list if s.app_id == segment_id}
@@ -422,25 +390,15 @@ class AppSegmentsBAV2API(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ApplicationSegments)
-        if error:
-            return (None, response, error)
-
+        request = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        response = self._request_executor.execute(request, ApplicationSegments)
         if response is None:
-            return (ApplicationSegments({"id": segment_id}), None, None)
+            return ApplicationSegments({"id": segment_id})
 
-        try:
-            result = ApplicationSegments(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
+        result = ApplicationSegments(self.form_response_body(response.get_body()))
+        return result
 
-        return (result, response, None)
-
-    def delete_segment_ba(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> APIResult[dict]:
+    def delete_segment_ba(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> None:
         """
         Delete an Browser Access application segment.
 
@@ -457,7 +415,8 @@ class AppSegmentsBAV2API(APIClient):
         Examples:
             Delete an Browser Access Application Segment with an id of 99999.
 
-            >>> _, _, err = client.zpa.app_segments_ba_v2.delete_segment_ba('99999')
+            >>> try:
+            ...     _ = client.zpa.app_segments_ba_v2.delete_segment_ba('99999')
             >>> if err:
             ...     print(f"Error deleting BA Application Segment: {err}")
             ...     return
@@ -478,13 +437,7 @@ class AppSegmentsBAV2API(APIClient):
             params["forceDelete"] = "true"
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
+        request = self._request_executor.create_request(http_method, api_url, params=params)
         # Execute the request
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        return (None, response, None)
+        response = self._request_executor.execute(request)
+        return None

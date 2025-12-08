@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/advancedSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/advancedSettings
   response:
     body:
-      string: '{"authBypassUrlCategories":["NONE"],"domainFrontingBypassUrlCategories":["NONE"],"authBypassUrls":[".newexample2.com",".newexample1.com"],"authBypassApps":[],"kerberosBypassUrlCategories":["ADULT_THEMES","ADULT_SEX_EDUCATION"],"kerberosBypassUrls":["test1.com"],"kerberosBypassApps":[],"basicBypassUrlCategories":["NONE"],"basicBypassApps":["NONE"],"httpRangeHeaderRemoveUrlCategories":["NONE"],"digestAuthBypassUrlCategories":["NONE"],"digestAuthBypassUrls":[],"digestAuthBypassApps":[],"enableDnsResolutionOnTransparentProxy":true,"enableIPv6DnsResolutionOnTransparentProxy":false,"enableIPv6DnsOptimizationOnAllTransparentProxy":false,"enableEvaluatePolicyOnGlobalSSLBypass":true,"dnsResolutionOnTransparentProxyExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyExemptUrls":[],"dnsResolutionOnTransparentProxyExemptApps":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptApps":["NONE"],"dnsResolutionOnTransparentProxyUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6UrlCategories":["NONE"],"dnsResolutionOnTransparentProxyUrls":["test1.com","test2.com"],"dnsResolutionOnTransparentProxyApps":["CHATGPT_AI"],"dnsResolutionOnTransparentProxyIPv6Apps":["NONE"],"blockDomainFrontingApps":["NONE"],"preferSniOverConnHostApps":["NONE"],"enableOffice365":true,"logInternalIp":true,"enforceSurrogateIpForWindowsApp":true,"trackHttpTunnelOnHttpPorts":true,"blockHttpTunnelOnNonHttpPorts":false,"blockDomainFrontingOnHostHeader":false,"zscalerClientConnector1AndPacRoadWarriorInFirewall":true,"cascadeUrlFiltering":true,"enablePolicyForUnauthenticatedTraffic":true,"blockNonCompliantHttpRequestOnHttpPorts":true,"enableAdminRankAccess":true,"uiSessionTimeout":300,"http2NonbrowserTrafficEnabled":false,"ecsForAllEnabled":false,"dynamicUserRiskEnabled":false,"blockConnectHostSniMismatch":false,"preferSniOverConnHost":false,"sipaXffHeaderEnabled":false,"blockNonHttpOnHttpPortEnabled":true,"sniDnsOptimizationBypassUrlCategories":["NONE"]}'
+      string: '{"authBypassUrlCategories":["NONE"],"domainFrontingBypassUrlCategories":["NONE"],"authBypassUrls":[".newexample2.com","vcr-test-url-1.vcr-test.com",".newexample1.com","vcr-test-url-2.vcr-test.com","vcr-test-url-5.vcr-test.com","vcr-test-url-4.vcr-test.com","vcr-test-url-3.vcr-test.com"],"authBypassApps":[],"kerberosBypassUrlCategories":["ADULT_THEMES","ADULT_SEX_EDUCATION"],"kerberosBypassUrls":["test1.com"],"kerberosBypassApps":[],"basicBypassUrlCategories":["NONE"],"basicBypassApps":["NONE"],"httpRangeHeaderRemoveUrlCategories":["NONE"],"digestAuthBypassUrlCategories":["NONE"],"digestAuthBypassUrls":[],"digestAuthBypassApps":[],"enableDnsResolutionOnTransparentProxy":true,"enableIPv6DnsResolutionOnTransparentProxy":false,"enableIPv6DnsOptimizationOnAllTransparentProxy":false,"enableEvaluatePolicyOnGlobalSSLBypass":true,"dnsResolutionOnTransparentProxyExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyExemptUrls":[],"dnsResolutionOnTransparentProxyExemptApps":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptApps":["NONE"],"dnsResolutionOnTransparentProxyUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6UrlCategories":["NONE"],"dnsResolutionOnTransparentProxyUrls":["test1.com","test2.com"],"dnsResolutionOnTransparentProxyApps":["CHATGPT_AI"],"dnsResolutionOnTransparentProxyIPv6Apps":["NONE"],"blockDomainFrontingApps":["NONE"],"preferSniOverConnHostApps":["NONE"],"enableOffice365":true,"logInternalIp":true,"enforceSurrogateIpForWindowsApp":true,"trackHttpTunnelOnHttpPorts":true,"blockHttpTunnelOnNonHttpPorts":false,"blockDomainFrontingOnHostHeader":false,"zscalerClientConnector1AndPacRoadWarriorInFirewall":true,"cascadeUrlFiltering":true,"enablePolicyForUnauthenticatedTraffic":true,"blockNonCompliantHttpRequestOnHttpPorts":true,"enableAdminRankAccess":true,"uiSessionTimeout":300,"http2NonbrowserTrafficEnabled":false,"ecsForAllEnabled":false,"dynamicUserRiskEnabled":false,"blockConnectHostSniMismatch":false,"preferSniOverConnHost":false,"sipaXffHeaderEnabled":false,"blockNonHttpOnHttpPortEnabled":true,"sniDnsOptimizationBypassUrlCategories":["NONE"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -40,33 +40,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:48 GMT
+      - Sat, 06 Dec 2025 00:10:29 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5660'
+      - '5573'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 037f3e00-9c93-99ae-8bb3-ea5a73f34ece
+      - a0913a6a-0983-9e1a-8aac-f8e645518055
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4990'
       x-ratelimit-reset:
-      - '18'
+      - '37'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -101,9 +103,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/advancedSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/advancedSettings
   response:
     body:
       string: '{"authBypassUrlCategories":["NONE"],"domainFrontingBypassUrlCategories":["NONE"],"authBypassUrls":[".newexample2.com",".newexample1.com"],"authBypassApps":[],"kerberosBypassUrlCategories":["ADULT_THEMES","ADULT_SEX_EDUCATION"],"kerberosBypassUrls":["test1.com"],"kerberosBypassApps":[],"basicBypassUrlCategories":["NONE"],"basicBypassApps":["NONE"],"httpRangeHeaderRemoveUrlCategories":["NONE"],"digestAuthBypassUrlCategories":["NONE"],"digestAuthBypassUrls":[],"digestAuthBypassApps":[],"enableDnsResolutionOnTransparentProxy":true,"enableIPv6DnsResolutionOnTransparentProxy":false,"enableIPv6DnsOptimizationOnAllTransparentProxy":false,"enableEvaluatePolicyOnGlobalSSLBypass":true,"dnsResolutionOnTransparentProxyExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyExemptUrls":[],"dnsResolutionOnTransparentProxyExemptApps":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptApps":["NONE"],"dnsResolutionOnTransparentProxyUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6UrlCategories":["NONE"],"dnsResolutionOnTransparentProxyUrls":["test1.com","test2.com"],"dnsResolutionOnTransparentProxyApps":["CHATGPT_AI"],"dnsResolutionOnTransparentProxyIPv6Apps":["NONE"],"blockDomainFrontingApps":["NONE"],"preferSniOverConnHostApps":["NONE"],"enableOffice365":true,"logInternalIp":true,"enforceSurrogateIpForWindowsApp":true,"trackHttpTunnelOnHttpPorts":true,"blockHttpTunnelOnNonHttpPorts":false,"blockDomainFrontingOnHostHeader":false,"zscalerClientConnector1AndPacRoadWarriorInFirewall":true,"cascadeUrlFiltering":true,"enablePolicyForUnauthenticatedTraffic":true,"blockNonCompliantHttpRequestOnHttpPorts":true,"enableAdminRankAccess":true,"uiSessionTimeout":300,"http2NonbrowserTrafficEnabled":false,"ecsForAllEnabled":false,"dynamicUserRiskEnabled":false,"blockConnectHostSniMismatch":false,"preferSniOverConnHost":false,"sipaXffHeaderEnabled":false,"blockNonHttpOnHttpPortEnabled":true,"sniDnsOptimizationBypassUrlCategories":["NONE"]}'
@@ -128,101 +130,39 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:15 GMT
+      - Sat, 06 Dec 2025 00:10:59 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '27197'
+      - '30128'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6077967f-c104-9629-95df-6700d32dd7af
+      - 4f7aeab6-4755-9d22-a50a-039d500d3108
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4989'
       x-ratelimit-reset:
-      - '12'
+      - '31'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
       - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '147'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Wed, 26 Nov 2025 23:56:03 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
     status:
       code: 200
       message: OK

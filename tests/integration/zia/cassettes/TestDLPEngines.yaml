@@ -14,9 +14,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines
   response:
     body:
       string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
@@ -41,7 +41,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:45 GMT
+      - Sat, 06 Dec 2025 00:15:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3165'
+      - '3182'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 96eef483-25ae-9147-bc44-8528c30ce142
+      - a1eaa86b-a02d-9f18-b836-38ded18c8169
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4974'
+      - '4997'
       x-ratelimit-reset:
-      - '18'
+      - '58'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -91,9 +91,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/10
   response:
     body:
       string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
@@ -118,7 +118,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:46 GMT
+      - Sat, 06 Dec 2025 00:15:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -130,23 +130,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '403'
+      - '449'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 64ddc3a0-4a98-9c5f-b8bd-dc4e3a57530d
+      - 38c19341-a1d1-9d77-9ebb-927e2ca82069
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4973'
+      - '4996'
       x-ratelimit-reset:
-      - '15'
+      - '55'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -169,9 +169,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/10
   response:
     body:
       string: '{"id":10,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
@@ -197,7 +197,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:49 GMT
+      - Sat, 06 Dec 2025 00:15:10 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -209,23 +209,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3696'
+      - '4719'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - dce0d76d-011e-9e83-a553-f605cd5b13f8
+      - 6d66a5f1-8b66-9b94-81d6-11b219c3247d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4972'
+      - '4995'
       x-ratelimit-reset:
-      - '14'
+      - '55'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -247,9 +247,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines
   response:
     body:
       string: '[{"id":1,"name":"Credit Cards_1761585101101","engineExpression":"((D63.S
@@ -293,7 +293,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:50 GMT
+      - Sat, 06 Dec 2025 00:15:11 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -305,23 +305,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '418'
+      - '551'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3d6461b9-1bee-99e4-8602-e7814bff7eaa
+      - 25726cfa-2d44-94e4-add4-09ab3d699812
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4971'
+      - '4994'
       x-ratelimit-reset:
-      - '10'
+      - '50'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -343,9 +343,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/10
   response:
     body:
       string: ''
@@ -366,7 +366,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:49:53 GMT
+      - Sat, 06 Dec 2025 00:15:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -376,23 +376,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2516'
+      - '2530'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7ef63822-ec10-924c-9d68-fb8109cf4a26
+      - f08d7c87-f405-9618-99cf-60289a43db16
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4970'
+      - '4993'
       x-ratelimit-reset:
-      - '10'
+      - '49'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

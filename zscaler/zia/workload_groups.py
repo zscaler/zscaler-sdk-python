@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.workload_groups import WorkloadGroups
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class WorkloadGroupsAPI(APIClient):
@@ -36,7 +35,7 @@ class WorkloadGroupsAPI(APIClient):
     def list_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[WorkloadGroups]]:
+    ) -> List[WorkloadGroups]:
         """
         Returns the list of workload groups configured in the ZIA Admin Portal.
 
@@ -49,16 +48,15 @@ class WorkloadGroupsAPI(APIClient):
                     The default size is 250, but the maximum size is 1000.
 
         Returns:
-            tuple: A tuple containing (list of WorkloadGroups instances, Response, error)
 
 
         Examples:
             List users using default settings:
 
-            >>> group_list, _, err = client.zia.workload_groups.list_groups()
-            ... if err:
-            ...     print(f"Error listing groups: {err}")
-            ...     return
+            >>> try:
+            ...     group_list = client.zia.workload_groups.list_groups()
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -73,25 +71,16 @@ class WorkloadGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(WorkloadGroups(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(WorkloadGroups(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def get_group(self, group_id: int) -> APIResult[dict]:
+    def get_group(self, group_id: int) -> WorkloadGroups:
         """
         Fetches a specific workload group by ID.
 
@@ -99,7 +88,6 @@ class WorkloadGroupsAPI(APIClient):
             group_id (int): The unique identifier for the workload group.
 
         Returns:
-            tuple: A tuple containing (WorkloadGroup instance, Response, error).
 
         Examples:
             Print a specific Workload Group
@@ -122,22 +110,13 @@ class WorkloadGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, WorkloadGroups)
+        result = WorkloadGroups(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, WorkloadGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = WorkloadGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def add_group(self, **kwargs) -> APIResult[dict]:
+    def add_group(self, **kwargs) -> WorkloadGroups:
         """
         Creates a new ZIA Workload Group.
 
@@ -163,7 +142,6 @@ class WorkloadGroupsAPI(APIClient):
                         - operator (str): Logical operator for tags within the container.
 
         Returns:
-            tuple: A tuple containing the newly added Workload Group, response, and error.
 
         Examples:
             Add a new Workload Group with basic information:
@@ -228,26 +206,17 @@ class WorkloadGroupsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, WorkloadGroups)
+        result = WorkloadGroups(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, WorkloadGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = WorkloadGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def update_group(self, group_id: int, **kwargs) -> APIResult[dict]:
+    def update_group(self, group_id: int, **kwargs) -> WorkloadGroups:
         """
         Updates information for the specified ZIA Workload Group.
 
@@ -274,7 +243,6 @@ class WorkloadGroupsAPI(APIClient):
                         - operator (str): Logical operator for tags within the container.
 
         Returns:
-            tuple: A tuple containing the updated Workload Group, response, and error.
 
         Examples:
             Update an existing Workload Group with basic information:
@@ -340,21 +308,12 @@ class WorkloadGroupsAPI(APIClient):
         )
         body = kwargs
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        response = self._request_executor.execute(request, WorkloadGroups)
+        result = WorkloadGroups(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, WorkloadGroups)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = WorkloadGroups(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_group(self, group_id: int) -> APIResult[dict]:
+    def delete_group(self, group_id: int) -> None:
         """
         Deletes the specified Workload Group.
 
@@ -362,7 +321,6 @@ class WorkloadGroupsAPI(APIClient):
             group_id (str): The unique identifier of the Workload Group.
 
         Returns:
-            tuple: A tuple containing the response object and error (if any).
 
         Examples:
             Delete a Workload Group:
@@ -383,11 +341,6 @@ class WorkloadGroupsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

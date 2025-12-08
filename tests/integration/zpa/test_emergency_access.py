@@ -48,7 +48,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #                 first_name = "UserTest" + generate_random_string()
 #                 last_name = "Access" + generate_random_string()
 #                 user_id = "user1" + generate_random_string()
-#                 created_user, _, err = client.zpa.emergency_access.add_user(
+#                 created_user = client.zpa.emergency_access.add_user(
 #                     email_id=email_id,
 #                     first_name=first_name,
 #                     last_name=last_name,
@@ -65,7 +65,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 2: Get User
 #             try:
-#                 got_user, _, err = client.zpa.emergency_access.get_user(user_id)
+#                 got_user = client.zpa.emergency_access.get_user(user_id)
 #                 assert err is None, f"Error retrieving emergency access user: {err}"
 #                 assert got_user is not None, "get_user returned None"
 #                 assert got_user.id == user_id, "Failed to get the correct emergency access user"
@@ -79,7 +79,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Step 3: Update User
 #             try:
 #                 updated_first_name = "UpdatedUser1"
-#                 updated_user, _, err = client.zpa.emergency_access.update_user(
+#                 updated_user = client.zpa.emergency_access.update_user(
 #                     user_id, first_name=updated_first_name
 #                 )
 #                 assert err is None, f"Error updating emergency access user: {err}"
@@ -91,7 +91,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 4: Deactivate User
 #             try:
-#                 _, _, err = client.zpa.emergency_access.deactivate_user(user_id)
+#                 _ = client.zpa.emergency_access.deactivate_user(user_id)
 #                 assert err is None, f"Error deactivating emergency access user: {err}"
 #                 print(f"Deactivated user with ID: {user_id}")
 #             except Exception as exc:
@@ -99,7 +99,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 5: Activate User
 #             try:
-#                 _, _, err = client.zpa.emergency_access.activate_user(user_id, send_email=True)
+#                 _ = client.zpa.emergency_access.activate_user(user_id, send_email=True)
 #                 assert err is None, f"Error activating emergency access user: {err}"
 #                 print(f"Activated user with ID: {user_id}")
 #             except Exception as exc:
@@ -107,7 +107,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #             # Step 6: Deactivate User Again Before Deletion
 #             try:
-#                 _, _, err = client.zpa.emergency_access.deactivate_user(user_id)
+#                 _ = client.zpa.emergency_access.deactivate_user(user_id)
 #                 assert err is None, f"Error during final deactivate user: {err}"
 #                 print(f"Final deactivation of user with ID: {user_id} completed")
 #             except Exception as exc:

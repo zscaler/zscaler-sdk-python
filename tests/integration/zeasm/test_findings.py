@@ -31,9 +31,7 @@ class TestFindings:
 
     def _get_org_id(self, client):
         """Helper to get the first organization ID."""
-        orgs, _, err = client.zeasm.organizations.list_organizations()
-        if err:
-            raise Exception(f"Error listing organizations: {err}")
+        orgs = client.zeasm.organizations.list_organizations()
         if not orgs or not orgs.results:
             raise Exception("No organizations found")
         return orgs.results[0].id
@@ -47,11 +45,8 @@ class TestFindings:
             org_id = self._get_org_id(client)
             print(f"Using org_id: {org_id}")
 
-            findings, _, err = client.zeasm.findings.list_findings(org_id=org_id)
-
-            if err:
-                errors.append(f"Error listing findings: {err}")
-            elif findings:
+            findings = client.zeasm.findings.list_findings(org_id=org_id)
+            if findings:
                 print(f"Total findings found: {findings.total_results}")
                 pprint(findings.as_dict())
             else:
@@ -71,11 +66,7 @@ class TestFindings:
             print(f"Using org_id: {org_id}")
 
             # First get the list of findings to get a finding_id
-            findings, _, err = client.zeasm.findings.list_findings(org_id=org_id)
-
-            if err:
-                errors.append(f"Error listing findings: {err}")
-                return
+            findings = client.zeasm.findings.list_findings(org_id=org_id)
 
             if not findings or not findings.results:
                 print("No findings found to get details for")
@@ -84,14 +75,11 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            finding_details, _, err = client.zeasm.findings.get_finding_details(
+            finding_details = client.zeasm.findings.get_finding_details(
                 org_id=org_id,
                 finding_id=finding_id
             )
-
-            if err:
-                errors.append(f"Error getting finding details: {err}")
-            elif finding_details:
+            if finding_details:
                 print("Finding details retrieved successfully:")
                 pprint(finding_details.as_dict())
             else:
@@ -111,11 +99,7 @@ class TestFindings:
             print(f"Using org_id: {org_id}")
 
             # First get the list of findings to get a finding_id
-            findings, _, err = client.zeasm.findings.list_findings(org_id=org_id)
-
-            if err:
-                errors.append(f"Error listing findings: {err}")
-                return
+            findings = client.zeasm.findings.list_findings(org_id=org_id)
 
             if not findings or not findings.results:
                 print("No findings found to get evidence for")
@@ -124,14 +108,11 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            evidence, _, err = client.zeasm.findings.get_finding_evidence(
+            evidence = client.zeasm.findings.get_finding_evidence(
                 org_id=org_id,
                 finding_id=finding_id
             )
-
-            if err:
-                errors.append(f"Error getting finding evidence: {err}")
-            elif evidence:
+            if evidence:
                 print("Finding evidence retrieved successfully:")
                 pprint(evidence.as_dict())
             else:
@@ -151,11 +132,7 @@ class TestFindings:
             print(f"Using org_id: {org_id}")
 
             # First get the list of findings to get a finding_id
-            findings, _, err = client.zeasm.findings.list_findings(org_id=org_id)
-
-            if err:
-                errors.append(f"Error listing findings: {err}")
-                return
+            findings = client.zeasm.findings.list_findings(org_id=org_id)
 
             if not findings or not findings.results:
                 print("No findings found to get scan output for")
@@ -164,14 +141,11 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            scan_output, _, err = client.zeasm.findings.get_finding_scan_output(
+            scan_output = client.zeasm.findings.get_finding_scan_output(
                 org_id=org_id,
                 finding_id=finding_id
             )
-
-            if err:
-                errors.append(f"Error getting finding scan output: {err}")
-            elif scan_output:
+            if scan_output:
                 print("Finding scan output retrieved successfully:")
                 pprint(scan_output.as_dict())
             else:

@@ -46,13 +46,12 @@ class TestDLPEngines:
         try:
             # Step 1: Create DLP engine
             try:
-                created_engine, _, error = client.zia.dlp_engine.add_dlp_engine(
+                created_engine = client.zia.dlp_engine.add_dlp_engine(
                     name=engine_name,
                     description=engine_description,
                     engine_expression="((D63.S > 1))",
                     custom_dlp_engine=True,
                 )
-                assert error is None, f"Add DLP Engine Error: {error}"
                 assert created_engine is not None, "DLP engine creation failed."
                 assert created_engine.name == engine_name
                 assert created_engine.description == engine_description
@@ -63,8 +62,7 @@ class TestDLPEngines:
             # Step 2: Retrieve the DLP engine
             try:
                 if engine_id:
-                    retrieved_engine, _, error = client.zia.dlp_engine.get_dlp_engines(engine_id)
-                    assert error is None, f"Get DLP Engine Error: {error}"
+                    retrieved_engine = client.zia.dlp_engine.get_dlp_engines(engine_id)
                     assert retrieved_engine is not None
                     assert retrieved_engine.id == engine_id
                     assert retrieved_engine.name == engine_name
@@ -75,22 +73,20 @@ class TestDLPEngines:
             try:
                 if engine_id:
                     updated_name = f"{engine_name}_Updated"
-                    updated_engine, _, error = client.zia.dlp_engine.update_dlp_engine(
+                    updated_engine = client.zia.dlp_engine.update_dlp_engine(
                         engine_id=engine_id,
                         name=updated_name,
                         description=engine_description,
                         engine_expression="((D63.S > 1))",
                         custom_dlp_engine=True,
                     )
-                    assert error is None, f"Update DLP Engine Error: {error}"
                     assert updated_engine.name == updated_name, "Updated name mismatch."
             except Exception as e:
                 errors.append(f"Exception during update_dlp_engine: {str(e)}")
 
             # Step 4: List DLP engines
             try:
-                engines_list, _, error = client.zia.dlp_engine.list_dlp_engines()
-                assert error is None, f"List DLP Engines Error: {error}"
+                engines_list = client.zia.dlp_engine.list_dlp_engines()
                 assert any(engine.id == engine_id for engine in engines_list), "Engine not found in list."
             except Exception as e:
                 errors.append(f"Exception during list_dlp_engines: {str(e)}")
@@ -99,11 +95,10 @@ class TestDLPEngines:
             # Step 6: Cleanup
             try:
                 if engine_id:
-                    _, _, error = client.zia.dlp_engine.delete_dlp_engine(updated_engine.id)
-                    assert error is None, f"Delete Label Error: {error}"
+                    _ = client.zia.dlp_engine.delete_dlp_engine(updated_engine.id)
             except Exception as e:
                 errors.append(f"Exception during delete_dlp_engine: {str(e)}")
 
         # Final Assertion
         if errors:
-            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+            pytest.fail(f"Test failed with errors: {errors}")

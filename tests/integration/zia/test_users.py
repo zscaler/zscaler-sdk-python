@@ -36,8 +36,7 @@ class TestUsers:
         """Test listing users."""
         client = MockZIAClient(fs)
 
-        users, _, error = client.zia.user_management.list_users()
-        assert error is None, f"Error listing users: {error}"
+        users = client.zia.user_management.list_users()
         assert users is not None, "Users list is None"
         assert isinstance(users, list), "Users is not a list"
 
@@ -46,8 +45,7 @@ class TestUsers:
         """Test listing departments."""
         client = MockZIAClient(fs)
 
-        departments, _, error = client.zia.user_management.list_departments()
-        assert error is None, f"Error listing departments: {error}"
+        departments = client.zia.user_management.list_departments()
         assert departments is not None, "Departments list is None"
         assert isinstance(departments, list), "Departments is not a list"
 
@@ -56,7 +54,6 @@ class TestUsers:
         """Test listing user groups."""
         client = MockZIAClient(fs)
 
-        groups, _, error = client.zia.user_management.list_groups()
-        assert error is None, f"Error listing groups: {error}"
+        groups = client.zia.user_management.list_groups()
         assert groups is not None, "Groups list is None"
         assert isinstance(groups, list), "Groups is not a list"

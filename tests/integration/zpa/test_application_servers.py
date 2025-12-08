@@ -42,13 +42,12 @@ class TestApplicationServer:
 
         try:
             # Create a new application server
-            created_server, _, err = client.zpa.servers.add_server(
+            created_server = client.zpa.servers.add_server(
                 name=server_name,
                 description=server_description,
                 enabled=True,
                 address=server_address,
             )
-            assert err is None, f"Error creating application server: {err}"
             assert created_server is not None
             assert created_server.name == server_name
             assert created_server.description == server_description
@@ -62,28 +61,23 @@ class TestApplicationServer:
         try:
             if server_id:
                 # Retrieve the created Application Server by ID
-                retrieved_server, _, err = client.zpa.servers.get_server(server_id)
-                assert err is None, f"Error fetching server: {err}"
+                retrieved_server = client.zpa.servers.get_server(server_id)
                 assert retrieved_server.id == server_id
                 assert retrieved_server.name == server_name
 
                 # Update the Application Server
                 updated_name = server_name + " Updated"
-                _, _, err = client.zpa.servers.update_server(server_id, name=updated_name)
-                assert err is None, f"Error updating server: {err}"
+                _ = client.zpa.servers.update_server(server_id, name=updated_name)
 
-                updated_server, _, err = client.zpa.servers.get_server(server_id)
-                assert err is None, f"Error fetching updated server: {err}"
+                updated_server = client.zpa.servers.get_server(server_id)
                 assert updated_server.name == updated_name
 
                 # List segment servers and ensure the updated server is in the list
-                servers_list, _, err = client.zpa.servers.list_servers()
-                assert err is None, f"Error listing servers: {err}"
+                servers_list = client.zpa.servers.list_servers()
                 assert any(server.id == server_id for server in servers_list)
                 
                 # List segment servers and ensure the updated server is in the list
-                servers_list, _, err = client.zpa.servers.list_servers_summary()
-                assert err is None, f"Error listing servers: {err}"
+                servers_list = client.zpa.servers.list_servers_summary()
                 assert any(server.id == server_id for server in servers_list)
 
         except Exception as exc:
@@ -93,8 +87,7 @@ class TestApplicationServer:
             # Cleanup: Delete the Application Server if it was created
             if server_id:
                 try:
-                    delete_response, _, err = client.zpa.servers.delete_server(server_id)
-                    assert err is None, f"Error deleting server: {err}"
+                    delete_response = client.zpa.servers.delete_server(server_id)
                     # Since a 204 No Content response returns None, we assert that delete_response is None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:

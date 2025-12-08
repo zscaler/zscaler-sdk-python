@@ -36,8 +36,7 @@ class TestAdminRole:
 
         try:
             # List all roles
-            roles, _, error = client.ztw.admin_roles.list_roles()
-            assert error is None, f"Error listing roles: {error}"
+            roles = client.ztw.admin_roles.list_roles()
             assert isinstance(roles, list), "Expected a list of roles"
             if roles:  # If there are any roles
                 # Select the first role for further testing

@@ -39,7 +39,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         try:
 #             # Test listing SCIM groups with pagination
-#             idps, _, err = client.zpa.idp.list_idps()
+#             idps = client.zpa.idp.list_idps()
 #             if err or not isinstance(idps, list):
 #                 raise AssertionError(f"Failed to retrieve IdPs: {err or f'Expected idps to be a list, got {type(idps)}'}")
 
@@ -57,7 +57,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #                 raise AssertionError("The matching IdP does not have an 'id' field.")
 
 #             # List SCIM groups using the exported IdP ID
-#             scim_groups, _, err = client.zpa.scim_groups.list_scim_groups(idp_id=user_idp_id)
+#             scim_groups = client.zpa.scim_groups.list_scim_groups(idp_id=user_idp_id)
 #             if err or not scim_groups:
 #                 raise AssertionError(f"Failed to list SCIM groups: {err}")
 
@@ -79,7 +79,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             # Create a Forwarding Policy Rule
 #             rule_name = "tests-apcr-" + generate_random_string()
 #             rule_description = "updated-" + generate_random_string()
-#             created_rule, _, err = client.zpa.policies.add_capabilities_rule_v2(
+#             created_rule = client.zpa.policies.add_capabilities_rule_v2(
 #                 name=rule_name,
 #                 description=rule_description,
 #                 action="bypass",
@@ -105,7 +105,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         try:
 #             # Test listing Access Policy Capabilities Ruless
-#             all_rules, _, err = client.zpa.policies.list_rules("capabilities")
+#             all_rules = client.zpa.policies.list_rules("capabilities")
 #             assert err is None, f"Error listing Access Policy Capabilities Ruless: {err}"
 #             if not any(rule["id"] == rule_id for rule in all_rules):
 #                 raise AssertionError("Access Policy Capabilities Ruless not found in list")
@@ -114,7 +114,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         try:
 #             # Test retrieving the specific Access Policy Capabilities Rules
-#             retrieved_rule, _, err =  client.zpa.policies.get_rule("capabilities", rule_id)
+#             retrieved_rule = client.zpa.policies.get_rule("capabilities", rule_id)
 #             if retrieved_rule["id"] != rule_id:
 #                 raise AssertionError("Failed to retrieve the correct Access Policy Capabilities Rules")
 #         except Exception as exc:
@@ -123,7 +123,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #         try:
 #             # Update the Capabilities Policy Rule
 #             updated_rule_description = "Updated " + generate_random_string()
-#             _, _, err = client.zpa.policies.update_capabilities_rule_v2(
+#             _ = client.zpa.policies.update_capabilities_rule_v2(
 #                 rule_id=rule_id,
 #                 description=updated_rule_description,
 #                 action="bypass",
@@ -153,7 +153,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             if rule_id:
 #                 try:
 #                     # Cleanup: Delete the Access Policy Capabilities Rules
-#                     delete_status_rule, _, err = client.zpa.policies.delete_rule("capabilities", rule_id)
+#                     delete_status_rule = client.zpa.policies.delete_rule("capabilities", rule_id)
 #                     assert err is None, f"Error deleting Access Policy Capabilities Rules: {err}"
 #                     # Since a 204 No Content response returns None, we assert that delete_response is None
 #                     assert delete_status_rule is None, f"Expected None for 204 No Content, got {delete_status_rule}"

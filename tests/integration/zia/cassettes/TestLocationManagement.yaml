@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"type": "UFQDN", "preSharedKey":"REDACTED", "fqdn": "REDACTED",
+    body: '{"type": "UFQDN", "preSharedKey":"REDACTED", "fqdn": "tests-vcr0001@securitygeek.io",
       "comments": "Integration test UFQDN credential"}'
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/vpnCredentials
+    uri: https://easm.test.zscaler.com/zia/api/v1/vpnCredentials
   response:
     body:
       string: '{"id":158933285,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
@@ -42,7 +42,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:11 GMT
+      - Sat, 06 Dec 2025 00:16:48 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -54,23 +54,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1142'
+      - '1086'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e1cc1b57-592a-9d02-b14f-0d0d95b5a358
+      - f261168f-6fe0-94c7-b5de-2448d71e1f72
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4985'
       x-ratelimit-reset:
-      - '50'
+      - '13'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -94,9 +94,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/locations
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations
   response:
     body:
       string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"vpnCredentials":[{"id":158933285,"type":"UFQDN"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"dynamiclocationGroups":[{"id":24326829,"name":"Server
@@ -122,7 +122,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:17 GMT
+      - Sat, 06 Dec 2025 00:16:53 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -134,23 +134,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5993'
+      - '4964'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 70b9e1f3-8998-969b-9220-5771f433e5fa
+      - 416254de-3bc9-9794-ab24-4face4bf1239
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4984'
       x-ratelimit-reset:
-      - '49'
+      - '11'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -172,9 +172,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/158933286
   response:
     body:
       string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
@@ -201,7 +201,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:18 GMT
+      - Sat, 06 Dec 2025 00:16:55 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -213,23 +213,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '995'
+      - '1043'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 78783247-a41c-9df6-b25f-d55799a1afc7
+      - 3c949b20-55fd-90e1-9dea-677542c05387
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4983'
       x-ratelimit-reset:
-      - '43'
+      - '6'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -255,9 +255,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/158933286
   response:
     body:
       string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"vpnCredentials":[{"id":158933285,"type":"UFQDN"}],"authRequired":true,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":720,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"dynamiclocationGroups":[{"id":24326829,"name":"Server
@@ -284,7 +284,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:25 GMT
+      - Sat, 06 Dec 2025 00:17:00 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -296,23 +296,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '6408'
+      - '5559'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3b00e707-7da4-9d14-8945-5c44750fbeec
+      - 10a90116-3503-9f5d-85fd-93165661257f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4982'
       x-ratelimit-reset:
-      - '41'
+      - '5'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -334,9 +334,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations
   response:
     body:
       string: '[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
@@ -369,7 +369,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:27 GMT
+      - Sat, 06 Dec 2025 00:17:02 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -381,23 +381,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1676'
+      - '1669'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 70747fb6-5bcd-971b-ba06-5ae1846069aa
+      - 74e5d5d3-de82-9e0d-8f2b-d9d8625f4c59
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4999'
       x-ratelimit-reset:
-      - '35'
+      - '59'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -419,9 +419,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/158933286
   response:
     body:
       string: ''
@@ -442,7 +442,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:51:32 GMT
+      - Sat, 06 Dec 2025 00:17:10 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -452,23 +452,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5359'
+      - '7202'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 04a3a5ac-a2fa-9d38-b75e-d9ad0378e8b5
+      - 14e4a673-057c-91e4-a6db-3285ebc9d047
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4987'
+      - '4998'
       x-ratelimit-reset:
-      - '33'
+      - '58'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -490,9 +490,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/vpnCredentials/158933285
+    uri: https://easm.test.zscaler.com/zia/api/v1/vpnCredentials/158933285
   response:
     body:
       string: ''
@@ -513,7 +513,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:51:33 GMT
+      - Sat, 06 Dec 2025 00:17:11 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -523,23 +523,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '991'
+      - '845'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5438389c-2de0-9937-95cc-0c292a5fe249
+      - ae14d3df-dbaf-9ebc-ab91-abfb803caa6e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4997'
       x-ratelimit-reset:
-      - '28'
+      - '50'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 2650278a-e9f6-4ee4-9536-42904cc5ef43
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.zpa_gateway import ZPAGateway
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class ZPAGatewayAPI(APIClient):
@@ -33,7 +32,7 @@ class ZPAGatewayAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[List[ZPAGateway]]:
+    def list_gateways(self, query_params: Optional[dict] = None) -> List[ZPAGateway]:
         """
         Lists ZPA Gateways in your organization with pagination.
         A subset of ZPA Gateways can be returned that match a supported
@@ -45,15 +44,11 @@ class ZPAGatewayAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of ZPA Gateways instances, Response, error)
 
         Examples:
             Get a list of all ZPA Gateways Items
 
             >>> gw_list, _, error = client.zia.zpa_gateway.list_gateways()
-                if error:
-                    print(f"Error listing zpa gateway: {error}")
-                    return
                 print(f"Total gateways found: {len(rulgw_listes_list)}")
                 for rule in gw_list:
                     print(rule.as_dict())
@@ -77,25 +72,15 @@ class ZPAGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(ZPAGateway(self.form_response_body(item)))
+        return result
 
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ZPAGateway(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def get_gateway(self, gateway_id: int) -> APIResult[dict]:
+    def get_gateway(self, gateway_id: int) -> ZPAGateway:
         """
         Returns the zpa gateway details for a given ZPA Gateway.
 
@@ -103,7 +88,6 @@ class ZPAGatewayAPI(APIClient):
             gateway_id (str): The unique identifier for the ZPA Gateway.
 
         Returns:
-            tuple: A tuple containing (ZPA Gateway instance, Response, error).
 
         Examples:
             >>> etched_gateway, _, error = client.zia.zpa_gateway.get_gateway(gateway_id=18423896)
@@ -122,21 +106,12 @@ class ZPAGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request = self._request_executor.create_request(http_method, api_url, body, headers)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, ZPAGateway)
 
-        response, error = self._request_executor.execute(request, ZPAGateway)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZPAGateway(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        result = ZPAGateway(self.form_response_body(response.get_body()))
+        return result
 
     def add_gateway(
         self,
@@ -144,7 +119,7 @@ class ZPAGatewayAPI(APIClient):
         zpa_server_group: dict = None,
         zpa_app_segments: dict = None,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> ZPAGateway:
         """
         Creates a new ZPA Gateway.
 
@@ -190,9 +165,9 @@ class ZPAGatewayAPI(APIClient):
         """
 
         if not zpa_server_group:
-            return (None, None, ValueError("zpa_server_group is required"))
+            raise ValueError("zpa_server_group is required")
         if not zpa_app_segments:
-            return (None, None, ValueError("zpa_app_segments is required"))
+            raise ValueError("zpa_app_segments is required")
 
         http_method = "post".upper()
         api_url = format_url(
@@ -210,24 +185,14 @@ class ZPAGatewayAPI(APIClient):
         }
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, ZPAGateway)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZPAGateway(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request, ZPAGateway)
+        result = ZPAGateway(self.form_response_body(response.get_body()))
+        return result
 
     def update_gateway(
         self,
@@ -235,7 +200,7 @@ class ZPAGatewayAPI(APIClient):
         zpa_server_group: dict = None,
         zpa_app_segments: dict = None,
         **kwargs
-    ) -> APIResult[dict]:
+    ) -> ZPAGateway:
         """
         Updates information for the specified ZPA Gateway.
 
@@ -283,9 +248,9 @@ class ZPAGatewayAPI(APIClient):
         """
 
         if not zpa_server_group:
-            return (None, None, ValueError("zpa_server_group is required"))
+            raise ValueError("zpa_server_group is required")
         if not zpa_app_segments:
-            return (None, None, ValueError("zpa_app_segments is required"))
+            raise ValueError("zpa_app_segments is required")
 
         http_method = "put".upper()
         api_url = format_url(
@@ -303,26 +268,16 @@ class ZPAGatewayAPI(APIClient):
         }
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(
+        request = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request, ZPAGateway)
+        result = ZPAGateway(self.form_response_body(response.get_body()))
+        return result
 
-        response, error = self._request_executor.execute(request, ZPAGateway)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = ZPAGateway(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
-
-    def delete_gateway(self, gateway_id) -> APIResult[dict]:
+    def delete_gateway(self, gateway_id) -> None:
         """
         Deletes the specified ZPA Gateway.
 
@@ -349,11 +304,6 @@ class ZPAGatewayAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-        return (None, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=params)
+        response = self._request_executor.execute(request)
+        return None

@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite
   response:
     body:
       string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:40 GMT
+      - Sat, 06 Dec 2025 00:10:16 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3099'
+      - '260'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 34c8da53-fe89-9972-aa9f-f14773676667
+      - 05fdb24f-0647-971a-ac55-03087bdbb02b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4997'
       x-ratelimit-reset:
-      - '23'
+      - '44'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -93,9 +93,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite
   response:
     body:
       string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
@@ -123,7 +123,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:40 GMT
+      - Sat, 06 Dec 2025 00:10:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -135,23 +135,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '359'
+      - '212'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fee5ed30-f3b2-952c-9f08-81816072ffdb
+      - 6560007b-b382-99c3-9936-99fa2a538a72
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4996'
       x-ratelimit-reset:
-      - '20'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -173,9 +173,86 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includeAuditorRole=True
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeAuditorRole=True
+  response:
+    body:
+      string: '{"message":"Rate Limit (2/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 06 Dec 2025 00:10:17 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '124'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - db0fd4c9-01c7-95f5-adcc-7218070590fb
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '43'
+      x-transaction-id:
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeAuditorRole=True
   response:
     body:
       string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
@@ -203,7 +280,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:41 GMT
+      - Sat, 06 Dec 2025 00:10:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -215,103 +292,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '382'
+      - '279'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c0256f95-375a-9011-83e2-18c2494d2865
+      - a921f5ab-d463-9e90-8be6-8897a082435d
       x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4995'
-      x-ratelimit-reset:
-      - '19'
-      x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includePartnerRole=True
-  response:
-    body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:46:41 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '261'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - da346c9c-5f97-92cf-99be-29cd7158e82c
-      x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4994'
       x-ratelimit-reset:
-      - '19'
+      - '41'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -333,9 +330,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includeApiRole=True
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includePartnerRole=True
   response:
     body:
       string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
@@ -363,7 +360,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:42 GMT
+      - Sat, 06 Dec 2025 00:10:20 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -375,23 +372,180 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '293'
+      - '194'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - be565f09-dc52-9b9c-b5b3-3273c27a24cc
+      - 66a51ce3-c042-9aa8-a23a-960480275d05
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4993'
       x-ratelimit-reset:
-      - '19'
+      - '40'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeApiRole=True
+  response:
+    body:
+      string: '{"message":"Rate Limit (2/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 06 Dec 2025 00:10:20 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '73'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1b424ced-d6ab-93cf-94aa-914436a1b303
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeApiRole=True
+  response:
+    body:
+      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
+        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 06 Dec 2025 00:10:22 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '212'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 01b67856-e2b2-9641-8954-f5eaf1030162
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '38'
+      x-transaction-id:
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

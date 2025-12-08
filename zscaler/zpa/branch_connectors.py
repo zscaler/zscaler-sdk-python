@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.branch_connectors import BranchConnectorController
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class BranchConnectorControllerAPI(APIClient):
@@ -33,7 +32,7 @@ class BranchConnectorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_branch_connectors(self, query_params: Optional[dict] = None) -> APIResult[List[BranchConnectorController]]:
+    def list_branch_connectors(self, query_params: Optional[dict] = None) -> List[BranchConnectorController]:
         """
         Get all BranchConnectors configured for a given customer.
 
@@ -49,14 +48,14 @@ class BranchConnectorControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of Branch Connector instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[BranchConnectorController]
 
         Examples:
-            >>> connector_list, _, err = client.zpa.branch_connectors.list_branch_connectors(
+            >>> try:
+            ...     connector_list = client.zpa.branch_connectors.list_branch_connectors(
             ... query_params={'search': 'BRConnector01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing branch connector: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total branch connector found: {len(connector_list)}")
             ... for connector in connector_list:
             ...     print(connector.as_dict())
@@ -71,18 +70,9 @@ class BranchConnectorControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, BranchConnectorController)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(BranchConnectorController(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, BranchConnectorController)
+        result = []
+        for item in response.get_results():
+            result.append(BranchConnectorController(self.form_response_body(item)))
+        return result

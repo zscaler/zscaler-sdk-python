@@ -42,22 +42,20 @@ class TestTrafficVPNCredential:
         try:
             # Step 1: Create Static IP for IP-based VPN Credential
             try:
-                created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     ip_address=randomIP, comment="tests-" + generate_random_string()
                 )
-                assert error is None, f"Error creating static IP: {error}"
                 static_ip_id = created_static_ip.id
             except Exception as exc:
                 errors.append(f"Failed to add static IP: {exc}")
 
             # Step 2: Create VPN Credential of type IP
             try:
-                vpn_ip_credential, _, error = client.zia.traffic_vpn_credentials.add_vpn_credential(
+                vpn_ip_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                     type="IP",
                     pre_shared_key="testkey-" + generate_random_string(),
                     ip_address=randomIP,
                 )
-                assert error is None, f"Error creating IP VPN Credential: {error}"
                 created_vpn_ids.append(vpn_ip_credential.id)
             except Exception as exc:
                 errors.append(f"Create IP VPN Credential failed: {exc}")
@@ -65,12 +63,11 @@ class TestTrafficVPNCredential:
             # Step 3: Create VPN Credential of type UFQDN
             try:
                 email = "tests-" + generate_random_string() + "@securitygeek.io"
-                vpn_ufqdn_credential, _, error = client.zia.traffic_vpn_credentials.add_vpn_credential(
+                vpn_ufqdn_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                     type="UFQDN",
                     pre_shared_key="testkey-" + generate_random_string(),
                     fqdn=email,
                 )
-                assert error is None, f"Error creating UFQDN VPN Credential: {error}"
                 created_vpn_ids.append(vpn_ufqdn_credential.id)
             except Exception as exc:
                 errors.append(f"Create UFQDN VPN Credential failed: {exc}")
@@ -79,7 +76,7 @@ class TestTrafficVPNCredential:
             # if len(created_vpn_ids) >= 1:
             #     try:
             #         updated_comment = "Updated IP VPN Credential"
-            #         updated_vpn_ip, _, error = client.zia.traffic_vpn_credentials.update_vpn_credential(
+            #         updated_vpn_ip = client.zia.traffic_vpn_credentials.update_vpn_credential(
             #             created_vpn_ids[0],
             #             comments=updated_comment,
             #             # type="IP",
@@ -95,7 +92,7 @@ class TestTrafficVPNCredential:
             # if len(created_vpn_ids) >= 2:
             #     try:
             #         updated_comment = "Updated UFQDN VPN Credential"
-            #         updated_vpn_ufqdn, _, error = client.zia.traffic_vpn_credentials.update_vpn_credential(
+            #         updated_vpn_ufqdn = client.zia.traffic_vpn_credentials.update_vpn_credential(
             #             created_vpn_ids[1],
             #             comments=updated_comment,
             #             # type="UFQDN",
@@ -113,16 +110,14 @@ class TestTrafficVPNCredential:
             # Step 6: Bulk Delete VPN Credentials
             if created_vpn_ids:
                 try:
-                    _, _, error = client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(created_vpn_ids)
-                    assert error is None, f"Error in bulk deleting VPN Credentials: {error}"
+                    _ = client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(created_vpn_ids)
                 except Exception as exc:
                     cleanup_errors.append(f"Bulk deletion of VPN Credentials failed: {exc}")
 
             # Step 7: Delete the Static IP
             if static_ip_id:
                 try:
-                    _, _, error = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
-                    assert error is None, f"Error deleting Static IP: {error}"
+                    _ = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Static IP failed: {exc}")
 

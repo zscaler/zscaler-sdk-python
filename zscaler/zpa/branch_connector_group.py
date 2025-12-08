@@ -19,7 +19,6 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.common import CommonIDName
 from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class BranchConnectorGroupAPI(APIClient):
@@ -33,7 +32,7 @@ class BranchConnectorGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_branch_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
+    def list_branch_connector_groups(self, query_params: Optional[dict] = None) -> List[CommonIDName]:
         """
             Retrieves all configured branch connector groups
 
@@ -49,14 +48,14 @@ class BranchConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of BranchConnectorGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CommonIDName]
 
         Examples:
-            >>> group_list, _, err = client.zpa.branch_connector_group.list_branch_connector_groups(
+            >>> try:
+            ...     group_list = client.zpa.branch_connector_group.list_branch_connector_groups(
             ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing branch connector group: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total branch connector groups found: {len(group_list)}")
             ... for group in groups:
             ...     print(group.as_dict())
@@ -74,23 +73,14 @@ class BranchConnectorGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result
 
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def list_branch_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
+    def list_branch_connector_group_summary(self, query_params: Optional[dict] = None) -> List[CommonIDName]:
         """
         Retrieves all configured branch connector groups Name and IDs
 
@@ -107,14 +97,14 @@ class BranchConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of BranchConnectorGroups instances, Response, error)
+            :obj:`Tuple`: A tuple containing List[CommonIDName]
 
         Examples:
-            >>> group_list, _, err = client.zpa.branch_connector_group.list_connector_groups_summary(
+            >>> try:
+            ...     group_list = client.zpa.branch_connector_group.list_connector_groups_summary(
             ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing branch connector groups: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... print(f"Total branch connector groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
@@ -132,18 +122,9 @@ class BranchConnectorGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, CommonIDName)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CommonIDName(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+        request = self._request_executor.create_request(http_method, api_url, params=query_params)
+        response = self._request_executor.execute(request, CommonIDName)
+        result = []
+        for item in response.get_results():
+            result.append(CommonIDName(self.form_response_body(item)))
+        return result

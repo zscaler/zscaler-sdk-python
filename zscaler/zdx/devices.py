@@ -31,7 +31,6 @@ from zscaler.zdx.models.devices import DeviceActiveApplications
 from zscaler.zdx.models.devices import DeviceHealthMetrics
 from zscaler.zdx.models.devices import DeviceEvents
 from zscaler.utils import format_url, zdx_params
-from zscaler.types import APIResult
 
 
 class DevicesAPI(APIClient):
@@ -42,7 +41,7 @@ class DevicesAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[List[Devices]]:
+    def list_devices(self, query_params: Optional[dict] = None) -> List[Devices]:
         """
         Returns a list of all active devices and its basic details.
         If the time range is not specified, the endpoint defaults to the previous 2 hours.
@@ -76,19 +75,19 @@ class DevicesAPI(APIClient):
         Examples:
             List all devices in ZDX for the past 2 hours for the associated email addresses:
 
-            >>> device_list, _, err = client.zdx.devices.list_devices(query_params={"emails": ['jdoe@acme.com']})
-            ... if err:
-            ...     print(f"Error listing devices: {err}")
-            ...     return
+            >>> try:
+            ...     device_list = client.zdx.devices.list_devices(query_params={"emails": ['jdoe@acme.com']})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for dev in device_list:
             ...     print(dev.as_dict())
 
             List all devices in ZDX for the past 24 hours:
 
-            >>> device_list, _, err = client.zdx.devices.list_devices(query_params={'since': 24})
-            ... if err:
-            ...     print(f"Error listing devices: {err}")
-            ...     return
+            >>> try:
+            ...     device_list = client.zdx.devices.list_devices(query_params={'since': 24})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for dev in device_list:
             ...     print(dev.as_dict())
 
@@ -106,24 +105,14 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [Devices(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [Devices(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_device(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_device(self, device_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a single device in ZDX.
 
@@ -141,19 +130,19 @@ class DevicesAPI(APIClient):
         Examples:
             Get information for the device with an ID of 132559212.
 
-            >>> device, _, err = client.zdx.devices.get_device('132559212')
-            ... if err:
-            ...     print(f"Error listing device details: {err}")
-            ...     return
+            >>> try:
+            ...     device = client.zdx.devices.get_device('132559212')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for dev in device:
             ...     print(dev.as_dict())
 
             Get information for the device with an ID of 123456789 for the last 24 hours.
 
-            >>> device, _, err = client.zdx.devices.get_device('132559212', query_params={'since': 24})
-            ... if err:
-            ...     print(f"Error listing device details: {err}")
-            ...     return
+            >>> try:
+            ...     device = client.zdx.devices.get_device('132559212', query_params={'since': 24})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for dev in device:
             ...     print(dev.as_dict())
         """
@@ -170,24 +159,14 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [DeviceModelInfo(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [DeviceModelInfo(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_device_apps(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_device_apps(self, device_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a list of all active applications for a device.
 
@@ -205,21 +184,21 @@ class DevicesAPI(APIClient):
         Examples:
             Print a list of active applications for a device.
 
-            >>> device_app_list, _, err = client.zdx.devices.get_device_apps(
+            >>> try:
+            ...     device_app_list = client.zdx.devices.get_device_apps(
             ... '132559212', query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing device app: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in device_app_list:
             ...     print(app)
 
             Print a list of active applications for a device for the last 24 hours.
 
-            >>> device_app_list, _, err = client.zdx.devices.get_device_apps(
+            >>> try:
+            ...     device_app_list = client.zdx.devices.get_device_apps(
             ... '132559212', query_params={"since": 24})
-            ... if err:
-            ...     print(f"Error listing device app: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in device_app_list:
             ...     print(app)
         """
@@ -236,21 +215,11 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [DeviceActiveApplications(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = [DeviceActiveApplications(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
     def get_device_app(
@@ -258,7 +227,7 @@ class DevicesAPI(APIClient):
         device_id: str,
         app_id: str,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> Any:
         """
         Returns a single application for a device.
 
@@ -277,10 +246,10 @@ class DevicesAPI(APIClient):
         Examples:
             Print a single application for a device.
 
-            >>> application, _, err = client.zdx.devices.get_device_app(device_id='1', app_id='3')
-            ... if err:
-            ...     print(f"Error listing application: {err}")
-            ...     return
+            >>> try:
+            ...     application = client.zdx.devices.get_device_app(device_id='1', app_id='3')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for app in application:
             ...     print(app.as_dict())
         """
@@ -297,25 +266,15 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = [DeviceAppScoreTrend(self.form_response_body(response.get_body()))]
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = [DeviceAppScoreTrend(self.form_response_body(response.get_body()))]
+        return result
 
     @zdx_params
-    def get_web_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_web_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a list of all active web probes for a specific application being used by a device.
 
@@ -334,20 +293,20 @@ class DevicesAPI(APIClient):
         Examples:
             Print a list of web probes for an application.
 
-            >>> device_probe_list, _, err = client.zdx.devices.get_web_probes('132559212', '1')
-            ... if err:
-            ...     print(f"Error listing device web probes: {err}")
-            ...     return
+            >>> try:
+            ...     device_probe_list = client.zdx.devices.get_web_probes('132559212', '1')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe_list:
             ...     print(probe)
 
             Print a list of web probes for an application for the past 2 hours.
 
-            >>> device_probe_list, _, err = client.zdx.devices.get_web_probes(
+            >>> try:
+            ...     device_probe_list = client.zdx.devices.get_web_probes(
             ... '132559212', '1', query_params={'since':2})
-            ... if err:
-            ...     print(f"Error listing device web probes: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe_list:
             ...     print(probe)
         """
@@ -364,27 +323,17 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceAppWebProbes(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceAppWebProbes(item))
+        return result
 
     @zdx_params
-    def get_web_probe(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_web_probe(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a single web probe for a specific application being used by a device.
 
@@ -404,20 +353,20 @@ class DevicesAPI(APIClient):
         Examples:
             Print a single web probe for an application.
 
-            >>> device_probe, _, err = client.zdx.devices.get_web_probe('132559212', '1', '33111')
-            ... if err:
-            ...     print(f"Error listing probe: {err}")
-            ...     return
+            >>> try:
+            ...     device_probe = client.zdx.devices.get_web_probe('132559212', '1', '33111')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe:
             ...     print(probe)
 
             Print a single web probe for an application foir the past 2 hours.
 
-            >>> device_probe, _, err = client.zdx.devices.get_web_probe(
+            >>> try:
+            ...     device_probe = client.zdx.devices.get_web_probe(
             ... '132559212', '1', '33111', query_params={'since':2})
-            ... if err:
-            ...     print(f"Error listing probe: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe:
             ...     print(probe)
         """
@@ -434,26 +383,16 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceWebProbePageFetch(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceWebProbePageFetch(item))
+        return result
 
     @zdx_params
-    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceAppCloudPathProbes]]:
+    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> List[DeviceAppCloudPathProbes]:
         """
         Returns a list of all active cloudpath probes for a specific application being used by a device.
 
@@ -472,10 +411,10 @@ class DevicesAPI(APIClient):
         Examples:
             Print a list of cloudpath probes for an application.
 
-            >>> device_probe_list, _, err = client.zdx.devices.list_cloudpath_probes('132559212', '1')
-            ... if err:
-            ...     print(f"Error listing probe: {err}")
-            ...     return
+            >>> try:
+            ...     device_probe_list = client.zdx.devices.list_cloudpath_probes('132559212', '1')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe_list:
             ...     print(probe)
         """
@@ -492,24 +431,14 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceAppCloudPathProbes(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceAppCloudPathProbes(item))
+        return result
 
     @zdx_params
     def get_cloudpath_probe(self, device_id: str, app_id: str, probe_id: str, query_params=None):
@@ -532,10 +461,10 @@ class DevicesAPI(APIClient):
         Examples:
             Print a single cloudpath probe for an application.
 
-            >>> device_probe, _, err = client.zdx.devices.get_cloudpath_probe('132559212', '1', '33112')
-            ... if err:
-            ...     print(f"Error listing device probe: {err}")
-            ...     return
+            >>> try:
+            ...     device_probe = client.zdx.devices.get_cloudpath_probe('132559212', '1', '33112')
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe:
             ...     print(probe)
         """
@@ -552,26 +481,16 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceCloudPathProbesMetric(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceCloudPathProbesMetric(item))
+        return result
 
     @zdx_params
-    def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a single cloudpath for a specific application being used by a device.
 
@@ -591,11 +510,11 @@ class DevicesAPI(APIClient):
         Examples:
             Print a single cloudpath for an application for the past 2 hours
 
-            >>> device_probe, _, err = client.zdx.devices.get_cloudpath(
+            >>> try:
+            ...     device_probe = client.zdx.devices.get_cloudpath(
             ... '132559212', '1', '33112', query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing device probe: {err}")
-            ...     return
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for probe in device_probe:
             ...     print(probe)
         """
@@ -612,27 +531,17 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
+        response = self._request_executor.execute(request)
 
-        response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceCloudPathProbesHopData(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceCloudPathProbesHopData(item))
+        return result
 
     @zdx_params
-    def get_call_quality_metrics(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_call_quality_metrics(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a single call quality metrics for a specific application being used by a device.
 
@@ -668,26 +577,16 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(CallQualityMetrics(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(CallQualityMetrics(item))
+        return result
 
     @zdx_params
-    def get_health_metrics(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_health_metrics(self, device_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns health metrics trend for a specific device.
 
@@ -705,10 +604,10 @@ class DevicesAPI(APIClient):
         Examples:
             Print health metrics for an application.
 
-            >>> metric_list, _, err = client.zdx.devices.get_health_metrics('132559212', query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing health metrics: {err}")
-            ...     return
+            >>> try:
+            ...     metric_list = client.zdx.devices.get_health_metrics('132559212', query_params={"since": 2})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for metric in metric_list:
             ...     print(metric)
         """
@@ -725,26 +624,16 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceHealthMetrics(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceHealthMetrics(item))
+        return result
 
     @zdx_params
-    def get_events(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_events(self, device_id: str, query_params: Optional[dict] = None) -> Any:
         """
         Returns a list of all events for a specific device.
 
@@ -762,10 +651,10 @@ class DevicesAPI(APIClient):
         Examples:
             Print a list of events for a device.
 
-            >>> device_event_list, _, err = client.zdx.devices.get_events('132559212', query_params={"since": 2})
-            ... if err:
-            ...     print(f"Error listing events: {err}")
-            ...     return
+            >>> try:
+            ...     device_event_list = client.zdx.devices.get_events('132559212', query_params={"since": 2})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for event in device_event_list:
             ...     print(event)
         """
@@ -782,26 +671,16 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceEvents(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceEvents(item))
+        return result
 
     @zdx_params
-    def list_geolocations(self, query_params: Optional[dict] = None) -> APIResult[List[DeviceActiveGeo]]:
+    def list_geolocations(self, query_params: Optional[dict] = None) -> List[DeviceActiveGeo]:
         """
         Returns a list of all active geolocations configured within the ZDX tenant.
 
@@ -822,10 +701,10 @@ class DevicesAPI(APIClient):
         Examples:
             List all geolocations in ZDX for the past 2 hours:
 
-            >>> location_list, _, err = client.zdx.devices.list_geolocations(query_params={"parent_geo_id": '0.0.ca'})
-            ... if err:
-            ...     print(f"Error listing geolocations: {err}")
-            ...     return
+            >>> try:
+            ...     location_list = client.zdx.devices.list_geolocations(query_params={"parent_geo_id": '0.0.ca'})
+            ... except ZscalerAPIException as e:
+            ...     print(f"Error: {e}")
             ... for location in location_list:
             ...     print(location)
         """
@@ -842,20 +721,10 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return (None, response, error)
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceActiveGeo(item))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
+        response = self._request_executor.execute(request)
+        result = []
+        for item in response.get_results():
+            result.append(DeviceActiveGeo(item))
+        return result

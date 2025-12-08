@@ -1,69 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '147'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Thu, 27 Nov 2025 00:03:27 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{"name": "tests-bdwrule-vcr0001", "webApplications": ["ACADEMICGPT", "AD_CREATIVES"],
       "urls": ["test1.acme.com", "test2.acme.com"], "urlCategories": ["AI_ML_APPS",
       "GENERAL_AI_ML", "PROFESSIONAL_SERVICES"]}'
@@ -79,9 +15,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses
   response:
     body:
       string: '{"id":16,"isNameL10nTag":true,"name":"tests-bdwrule-vcr0001","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML","PROFESSIONAL_SERVICES"]}'
@@ -106,7 +42,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:03:34 GMT
+      - Sat, 06 Dec 2025 00:11:23 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -118,23 +54,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '6439'
+      - '2922'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 97b2c4fd-1a8f-95f6-8171-5afaa88e58e7
+      - 58fa68b2-21ae-98ae-b599-e2b948c0c464
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4985'
       x-ratelimit-reset:
-      - '33'
+      - '40'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -160,13 +96,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthControlRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthControlRules
   response:
     body:
-      string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
-        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
+      string: '{"id":1582152,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
+        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -188,7 +124,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:03:42 GMT
+      - Sat, 06 Dec 2025 00:11:31 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -200,23 +136,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '8228'
+      - '7631'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7af020ef-7536-9a71-b09a-29be1a4a2480
+      - 95856ec9-2102-9339-9d6e-45031e0ccfc0
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4984'
       x-ratelimit-reset:
-      - '26'
+      - '37'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -238,13 +174,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthControlRules/1571789
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthControlRules/1582152
   response:
     body:
-      string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
-        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
+      string: '{"id":1582152,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
+        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -266,7 +202,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:03:45 GMT
+      - Sat, 06 Dec 2025 00:11:34 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -278,23 +214,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3228'
+      - '2965'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0d586308-6c97-9492-8d81-989911c7ae86
+      - 856febe1-bb01-904b-9bf5-9971723b25fd
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4983'
       x-ratelimit-reset:
-      - '18'
+      - '29'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -307,7 +243,7 @@ interactions:
       Bandwidth Rule", "order": 1, "rank": 7, "maxBandwidth": "100", "minBandwidth":
       "20", "protocols": ["WEBSOCKETSSL_RULE", "WEBSOCKET_RULE", "DOHTTPS_RULE", "TUNNELSSL_RULE",
       "HTTP_PROXY", "FOHTTP_RULE", "FTP_RULE", "HTTPS_RULE", "HTTP_RULE", "SSL_RULE",
-      "TUNNEL_RULE"], "id": 1571789, "state": "ENABLED", "bandwidthClasses": [{"id":
+      "TUNNEL_RULE"], "id": 1582152, "state": "ENABLED", "bandwidthClasses": [{"id":
       16}]}'
     headers:
       Accept:
@@ -321,13 +257,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthControlRules/1571789
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthControlRules/1582152
   response:
     body:
-      string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
-        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
+      string: '{"id":1582152,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
+        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764979904,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -349,7 +285,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:03:58 GMT
+      - Sat, 06 Dec 2025 00:11:48 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -361,23 +297,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '12610'
+      - '14231'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 032dcc2c-09d0-91ca-8162-50e2bda014c6
+      - 6c508a9f-c97e-9fda-b42c-2ae16abd83fe
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4982'
       x-ratelimit-reset:
-      - '15'
+      - '26'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -399,30 +335,30 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthControlRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthControlRules
   response:
     body:
       string: '[{"id":184217,"name":"Default Bandwidth Control","order":2147483647,"state":"ENABLED","description":"Default
         Bandwidth Rule","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"rank":7,"lastModifiedTime":1619561362,"accessControl":"READ_WRITE","defaultRule":true},{"id":184219,"name":"Streaming
-        Media Bandwidth","order":7,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"bandwidthClasses":[{"id":5,"name":"BANDWIDTH_CAT_MEDIA","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":184220,"name":"Large
-        File Bandwidth","order":8,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":10,"bandwidthClasses":[{"id":2,"name":"BANDWIDTH_CAT_LARGE_FILE","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192486,"name":"Office
+        Media Bandwidth","order":7,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"bandwidthClasses":[{"id":5,"name":"BANDWIDTH_CAT_MEDIA","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":184220,"name":"Large
+        File Bandwidth","order":8,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":10,"bandwidthClasses":[{"id":2,"name":"BANDWIDTH_CAT_LARGE_FILE","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192486,"name":"Office
         365","order":2,"state":"DISABLED","description":"Ensure business critical
         Office applications always get a minimum of 40% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":40,"bandwidthClasses":[{"id":11,"name":"Office
-        Applications"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192487,"name":"Productivity
+        Applications"}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192487,"name":"Productivity
         Applications","order":3,"state":"DISABLED","description":"Ensure business
-        productivity applications always get a minimum of 25% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":85,"minBandwidth":25,"bandwidthClasses":[{"id":12,"name":"Productivity"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192488,"name":"Streaming
+        productivity applications always get a minimum of 25% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":85,"minBandwidth":25,"bandwidthClasses":[{"id":12,"name":"Productivity"}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192488,"name":"Streaming
         Video - Office Hours","order":4,"state":"DISABLED","timeWindows":[{"id":552,"name":"Work
         hours_test_1761418071930-test-1761429728452-test-1761429889328"}],"description":"Limit
         streaming video traffic to 10% during office hours.","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":10,"minBandwidth":0,"bandwidthClasses":[{"id":14,"name":"Streaming
-        Video"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192489,"name":"Streaming
+        Video"}],"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192489,"name":"Streaming
         Video - After Hours","order":5,"state":"DISABLED","timeWindows":[{"id":554,"name":"Off
         hours"}],"description":"Allow more bandwidth for streaming video outside of
-        office hours","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":40,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192490,"name":"Social
+        office hours","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":40,"minBandwidth":0,"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192490,"name":"Social
         Media","order":6,"state":"DISABLED","description":"Limit social media bandwidth
-        to 5%","protocols":["ANY_RULE"],"maxBandwidth":5,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
-        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}]'
+        to 5%","protocols":["ANY_RULE"],"maxBandwidth":5,"minBandwidth":0,"rank":7,"lastModifiedTime":1764979888,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":1582152,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
+        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764979904,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -444,7 +380,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:04:05 GMT
+      - Sat, 06 Dec 2025 00:11:52 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -456,23 +392,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '6648'
+      - '3088'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 66d052d5-fbb6-972e-b3eb-fdbcd15df610
+      - e724d252-fa74-9532-85a4-2afc0faea750
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4981'
       x-ratelimit-reset:
-      - '2'
+      - '12'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -494,9 +430,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthControlRules/1571789
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthControlRules/1582152
   response:
     body:
       string: ''
@@ -517,7 +453,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Thu, 27 Nov 2025 00:04:09 GMT
+      - Sat, 06 Dec 2025 00:11:56 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -527,23 +463,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '4306'
+      - '4182'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5ed58e94-c7a4-9046-8d6b-f7ac39fbfda3
+      - b1a83a4a-a0dd-9431-b13c-215c5c16b092
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4980'
       x-ratelimit-reset:
-      - '55'
+      - '8'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -565,9 +501,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses/16
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/16
   response:
     body:
       string: ''
@@ -588,7 +524,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Thu, 27 Nov 2025 00:04:12 GMT
+      - Sat, 06 Dec 2025 00:11:58 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -598,23 +534,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2581'
+      - '2376'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b9d17fb5-0964-929d-89e9-03f25f79f4e6
+      - eea6058f-b107-9b9c-9730-83269362aeb4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4979'
       x-ratelimit-reset:
-      - '51'
+      - '4'
       x-transaction-id:
-      - 969ad2bc-78a1-4441-91c4-8ac97b30e3ee
+      - e188405e-ec96-418c-9d0f-878cc4acc7de
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup
   response:
     body:
-      string: '{"id":"216196257331394585","modifiedTime":"1764191929","creationTime":"1764191929","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001","description":"tests-sg-vcr0002","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0"}'
+      string: '{"id":"216196257331395926","modifiedTime":"1764977022","creationTime":"1764977022","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001","description":"tests-sg-vcr0002","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0"}'
     headers:
       cache-control:
       - no-store
@@ -30,7 +30,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
+      - Fri, 05 Dec 2025 23:23:42 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -48,23 +48,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '69'
+      - '61'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d891070e-dd12-9f41-b4bc-f0e6529f2ea4
+      - 6aefd28e-b577-9ef0-98e4-60dce52aa933
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4869'
+      - '4875'
       x-ratelimit-reset:
-      - '11'
+      - '18'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -84,12 +84,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331394585
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331395926
   response:
     body:
-      string: '{"id":"216196257331394585","modifiedTime":"1764191929","creationTime":"1764191929","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001","description":"tests-sg-vcr0002","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"}'
+      string: '{"id":"216196257331395926","modifiedTime":"1764977022","creationTime":"1764977022","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001","description":"tests-sg-vcr0002","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"}'
     headers:
       cache-control:
       - no-store
@@ -100,7 +100,142 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
+      - Fri, 05 Dec 2025 23:23:42 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '36'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0adcde5b-a829-90aa-9198-1594fa39f8d8
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4874'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-sg-vcr0001 Updated"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '36'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331395926
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Fri, 05 Dec 2025 23:23:42 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '38'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0d218ffb-3533-966f-ad06-8f29d56ba485
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4873'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331395926
+  response:
+    body:
+      string: '{"id":"216196257331395926","modifiedTime":"1764977022","creationTime":"1764977022","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001
+        Updated","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 05 Dec 2025 23:23:42 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -124,152 +259,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d480b764-9582-9bc9-bba8-d83d68f008e4
+      - aa1a4569-8b5a-9c25-a6ec-267b79878eb6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4868'
+      - '4872'
       x-ratelimit-reset:
-      - '11'
+      - '18'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"name": "tests-sg-vcr0001 Updated"}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '36'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: PUT
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331394585
-  response:
-    body:
-      string: ''
-    headers:
-      cache-control:
-      - no-store
-      content-security-policy:
-      - default-src 'none'; upgrade-insecure-requests
-      date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
-      expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      pragma:
-      - no-cache
-      referrer-policy:
-      - strict-origin-when-cross-origin
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '45'
-      x-frame-options:
-      - DENY
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 4e0f86ad-9cba-9104-b729-0c629d1db7cc
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4867'
-      x-ratelimit-reset:
-      - '11'
-      x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
-      x-xss-protection:
-      - '0'
-    status:
-      code: 204
-      message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331394585
-  response:
-    body:
-      string: '{"id":"216196257331394585","modifiedTime":"1764191929","creationTime":"1764191929","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001
-        Updated","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"}'
-    headers:
-      cache-control:
-      - no-store
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - default-src 'none'; upgrade-insecure-requests
-      content-type:
-      - application/json;charset=utf-8
-      date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
-      expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      pragma:
-      - no-cache
-      referrer-policy:
-      - strict-origin-when-cross-origin
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '40'
-      x-frame-options:
-      - DENY
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - fe6fa9c6-116d-9250-8021-b4043fa86bef
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4866'
-      x-ratelimit-reset:
-      - '11'
-      x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -289,13 +289,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331370167","modifiedTime":"1747063244","modifiedBy":"216196257331281921","name":"Example100","description":"Example100
-        test","enabled":true,"applications":[{"id":"216196257331370170","modifiedTime":"1759942784","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app09","domainName":"app9.securitygeek.io","domainNames":["app9.securitygeek.io"],"description":"app09.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1009","1009"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1009","to":"1009"}]},{"id":"216196257331370171","modifiedTime":"1759942783","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app04","domainName":"app4.securitygeek.io","domainNames":["app4.securitygeek.io"],"description":"app04.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1004","1004"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"INCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1004","to":"1004"}]},{"id":"216196257331370172","modifiedTime":"1759942783","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app06","domainName":"app6.securitygeek.io","domainNames":["app6.securitygeek.io"],"description":"app06.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1006","1006"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1006","to":"1006"}]},{"id":"216196257331370175","modifiedTime":"1759942785","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app11","domainName":"app11.securitygeek.io","domainNames":["app11.securitygeek.io"],"description":"app11.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1011","1011"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1011","to":"1011"}]},{"id":"216196257331370177","modifiedTime":"1759942785","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app10","domainName":"app10.securitygeek.io","domainNames":["app10.securitygeek.io"],"description":"app10.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1010","1010"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1010","to":"1010"}]},{"id":"216196257331372536","modifiedTime":"1759942783","creationTime":"1706823661","modifiedBy":"216196257331372705","name":"app05","domainName":"app5.securitygeek.io","domainNames":["app5.securitygeek.io"],"description":"app05.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1005","1005"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"INCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1005","to":"1005"}]},{"id":"216196257331372620","modifiedTime":"1759942784","creationTime":"1708009860","modifiedBy":"216196257331372705","name":"app08","domainName":"app8.securitygeek.io","domainNames":["app8.securitygeek.io"],"description":"app08.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1008","1008"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1008","to":"1008"}]},{"id":"216196257331372621","modifiedTime":"1759942784","creationTime":"1708009860","modifiedBy":"216196257331372705","name":"app07","domainName":"app7.securitygeek.io","domainNames":["app7.securitygeek.io"],"description":"app07.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1007","1007"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1007","to":"1007"}]},{"id":"216196257331372693","modifiedTime":"1759942786","creationTime":"1715296892","modifiedBy":"216196257331372705","name":"app12","domainName":"app12.securitygeek.io","domainNames":["app12.securitygeek.io"],"description":"app12.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1012","1012"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1012","to":"1012"}]},{"id":"216196257331372696","modifiedTime":"1759942786","creationTime":"1716562584","modifiedBy":"216196257331372705","name":"app13","domainName":"app13.securitygeek.io","domainNames":["app13.securitygeek.io"],"description":"app13.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1013","1013"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1013","to":"1013"}]},{"id":"216196257331372697","modifiedTime":"1762922578","creationTime":"1717180475","modifiedBy":"216196257331372702","name":"app02","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"description":"test","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["22","22"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":true,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":true,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"22","to":"22"}]},{"id":"216196257331372698","modifiedTime":"1759942782","creationTime":"1717180495","modifiedBy":"216196257331372705","name":"app03","domainName":"app3.securitygeek.io","domainNames":["app3.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1003","1003"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":true,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":true,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":true,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1003","to":"1003"}]},{"id":"216196257331383796","modifiedTime":"1759942786","creationTime":"1754344083","modifiedBy":"216196257331372705","name":"app14","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1014","1014"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1014","to":"1014"}]},{"id":"216196257331383797","modifiedTime":"1759942787","creationTime":"1754344107","modifiedBy":"216196257331372705","name":"app15","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1015","1015"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1015","to":"1015"}]},{"id":"216196257331383798","modifiedTime":"1759942787","creationTime":"1754344134","modifiedBy":"216196257331372705","name":"app16","domainName":"app16.securitygeek.io","domainNames":["app16.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1016","1016"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1016","to":"1016"}]},{"id":"216196257331383799","modifiedTime":"1759942787","creationTime":"1754344157","modifiedBy":"216196257331372705","name":"app17","domainName":"app17.securitygeek.io","domainNames":["app17.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1017","1017"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1017","to":"1017"}]},{"id":"216196257331383800","modifiedTime":"1759942788","creationTime":"1754344179","modifiedBy":"216196257331372705","name":"app18","domainName":"app18.securitygeek.io","domainNames":["app18.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1018","1018"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1018","to":"1018"}]},{"id":"216196257331383801","modifiedTime":"1759942788","creationTime":"1754344202","modifiedBy":"216196257331372705","name":"app19","domainName":"app19.securitygeek.io","domainNames":["app19.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1019","1019"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1019","to":"1019"}]},{"id":"216196257331383802","modifiedTime":"1759942789","creationTime":"1754344226","modifiedBy":"216196257331372705","name":"app20","domainName":"app20.securitygeek.io","domainNames":["app20.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1020","1020"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1020","to":"1020"}]},{"id":"216196257331383803","modifiedTime":"1759942789","creationTime":"1754344249","modifiedBy":"216196257331372705","name":"app21","domainName":"app21.securitygeek.io","domainNames":["app21.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1021","1021"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1021","to":"1021"}]},{"id":"216196257331383804","modifiedTime":"1759942789","creationTime":"1754344272","modifiedBy":"216196257331372705","name":"app22","domainName":"app22.securitygeek.io","domainNames":["app22.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1022","1022"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1022","to":"1022"}]},{"id":"216196257331383805","modifiedTime":"1759942790","creationTime":"1754344295","modifiedBy":"216196257331372705","name":"app23","domainName":"app23.securitygeek.io","domainNames":["app23.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1023","1023"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1023","to":"1023"}]},{"id":"216196257331383806","modifiedTime":"1759942790","creationTime":"1754344320","modifiedBy":"216196257331372705","name":"app24","domainName":"app24.securitygeek.io","domainNames":["app24.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1024","1024"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1024","to":"1024"}]},{"id":"216196257331383807","modifiedTime":"1759942790","creationTime":"1754344342","modifiedBy":"216196257331372705","name":"app25","domainName":"app25.securitygeek.io","domainNames":["app25.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1025","1025"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1025","to":"1025"}]},{"id":"216196257331383808","modifiedTime":"1759942791","creationTime":"1754344364","modifiedBy":"216196257331372705","name":"app26","domainName":"app26.securitygeek.io","domainNames":["app26.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1026","1026"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1026","to":"1026"}]},{"id":"216196257331383809","modifiedTime":"1759942791","creationTime":"1754344383","modifiedBy":"216196257331372705","name":"app27","domainName":"app27.securitygeek.io","domainNames":["app27.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1027","1027"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1027","to":"1027"}]},{"id":"216196257331383810","modifiedTime":"1759942791","creationTime":"1754344403","modifiedBy":"216196257331372705","name":"app28","domainName":"app28.securitygeek.io","domainNames":["app28.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1028","1028"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1028","to":"1028"}]},{"id":"216196257331383811","modifiedTime":"1759942792","creationTime":"1754344425","modifiedBy":"216196257331372705","name":"app29","domainName":"app29.securitygeek.io","domainNames":["app29.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1029","1029"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1029","to":"1029"}]},{"id":"216196257331383812","modifiedTime":"1759942792","creationTime":"1754344447","modifiedBy":"216196257331372705","name":"app30","domainName":"app30.securitygeek.io","domainNames":["app30.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1030","1030"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1030","to":"1030"}]}],"policyMigrated":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"},{"id":"216196257331394585","modifiedTime":"1764191929","creationTime":"1764191929","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001
+      string: '{"totalPages":"1","totalCount":"4","list":[{"id":"216196257331370167","modifiedTime":"1747063244","modifiedBy":"216196257331281921","name":"Example100","description":"Example100
+        test","enabled":true,"applications":[{"id":"216196257331370170","modifiedTime":"1759942784","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app09","domainName":"app9.securitygeek.io","domainNames":["app9.securitygeek.io"],"description":"app09.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1009","1009"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1009","to":"1009"}]},{"id":"216196257331370171","modifiedTime":"1759942783","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app04","domainName":"app4.securitygeek.io","domainNames":["app4.securitygeek.io"],"description":"app04.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1004","1004"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"INCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1004","to":"1004"}]},{"id":"216196257331370172","modifiedTime":"1759942783","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app06","domainName":"app6.securitygeek.io","domainNames":["app6.securitygeek.io"],"description":"app06.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1006","1006"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1006","to":"1006"}]},{"id":"216196257331370175","modifiedTime":"1759942785","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app11","domainName":"app11.securitygeek.io","domainNames":["app11.securitygeek.io"],"description":"app11.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1011","1011"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1011","to":"1011"}]},{"id":"216196257331370177","modifiedTime":"1759942785","creationTime":"1698164996","modifiedBy":"216196257331372705","name":"app10","domainName":"app10.securitygeek.io","domainNames":["app10.securitygeek.io"],"description":"app10.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1010","1010"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1010","to":"1010"}]},{"id":"216196257331372536","modifiedTime":"1759942783","creationTime":"1706823661","modifiedBy":"216196257331372705","name":"app05","domainName":"app5.securitygeek.io","domainNames":["app5.securitygeek.io"],"description":"app05.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1005","1005"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"INCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1005","to":"1005"}]},{"id":"216196257331372620","modifiedTime":"1759942784","creationTime":"1708009860","modifiedBy":"216196257331372705","name":"app08","domainName":"app8.securitygeek.io","domainNames":["app8.securitygeek.io"],"description":"app08.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1008","1008"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1008","to":"1008"}]},{"id":"216196257331372621","modifiedTime":"1759942784","creationTime":"1708009860","modifiedBy":"216196257331372705","name":"app07","domainName":"app7.securitygeek.io","domainNames":["app7.securitygeek.io"],"description":"app07.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1007","1007"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1007","to":"1007"}]},{"id":"216196257331372693","modifiedTime":"1759942786","creationTime":"1715296892","modifiedBy":"216196257331372705","name":"app12","domainName":"app12.securitygeek.io","domainNames":["app12.securitygeek.io"],"description":"app12.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1012","1012"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1012","to":"1012"}]},{"id":"216196257331372696","modifiedTime":"1759942786","creationTime":"1716562584","modifiedBy":"216196257331372705","name":"app13","domainName":"app13.securitygeek.io","domainNames":["app13.securitygeek.io"],"description":"app13.securitygeek.io","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1013","1013"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1013","to":"1013"}]},{"id":"216196257331372697","modifiedTime":"1762922578","creationTime":"1717180475","modifiedBy":"216196257331372702","name":"app02","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"description":"test","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["22","22"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":true,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":true,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"22","to":"22"}]},{"id":"216196257331372698","modifiedTime":"1759942782","creationTime":"1717180495","modifiedBy":"216196257331372705","name":"app03","domainName":"app3.securitygeek.io","domainNames":["app3.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1003","1003"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":true,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":true,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":true,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1003","to":"1003"}]},{"id":"216196257331383796","modifiedTime":"1759942786","creationTime":"1754344083","modifiedBy":"216196257331372705","name":"app14","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1014","1014"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1014","to":"1014"}]},{"id":"216196257331383797","modifiedTime":"1759942787","creationTime":"1754344107","modifiedBy":"216196257331372705","name":"app15","domainName":"app2.securitygeek.io","domainNames":["app2.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1015","1015"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1015","to":"1015"}]},{"id":"216196257331383798","modifiedTime":"1759942787","creationTime":"1754344134","modifiedBy":"216196257331372705","name":"app16","domainName":"app16.securitygeek.io","domainNames":["app16.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1016","1016"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1016","to":"1016"}]},{"id":"216196257331383799","modifiedTime":"1759942787","creationTime":"1754344157","modifiedBy":"216196257331372705","name":"app17","domainName":"app17.securitygeek.io","domainNames":["app17.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1017","1017"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1017","to":"1017"}]},{"id":"216196257331383800","modifiedTime":"1759942788","creationTime":"1754344179","modifiedBy":"216196257331372705","name":"app18","domainName":"app18.securitygeek.io","domainNames":["app18.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1018","1018"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1018","to":"1018"}]},{"id":"216196257331383801","modifiedTime":"1759942788","creationTime":"1754344202","modifiedBy":"216196257331372705","name":"app19","domainName":"app19.securitygeek.io","domainNames":["app19.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1019","1019"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1019","to":"1019"}]},{"id":"216196257331383802","modifiedTime":"1759942789","creationTime":"1754344226","modifiedBy":"216196257331372705","name":"app20","domainName":"app20.securitygeek.io","domainNames":["app20.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1020","1020"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1020","to":"1020"}]},{"id":"216196257331383803","modifiedTime":"1759942789","creationTime":"1754344249","modifiedBy":"216196257331372705","name":"app21","domainName":"app21.securitygeek.io","domainNames":["app21.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1021","1021"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1021","to":"1021"}]},{"id":"216196257331383804","modifiedTime":"1759942789","creationTime":"1754344272","modifiedBy":"216196257331372705","name":"app22","domainName":"app22.securitygeek.io","domainNames":["app22.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1022","1022"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1022","to":"1022"}]},{"id":"216196257331383805","modifiedTime":"1759942790","creationTime":"1754344295","modifiedBy":"216196257331372705","name":"app23","domainName":"app23.securitygeek.io","domainNames":["app23.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1023","1023"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1023","to":"1023"}]},{"id":"216196257331383806","modifiedTime":"1759942790","creationTime":"1754344320","modifiedBy":"216196257331372705","name":"app24","domainName":"app24.securitygeek.io","domainNames":["app24.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1024","1024"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1024","to":"1024"}]},{"id":"216196257331383807","modifiedTime":"1759942790","creationTime":"1754344342","modifiedBy":"216196257331372705","name":"app25","domainName":"app25.securitygeek.io","domainNames":["app25.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1025","1025"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1025","to":"1025"}]},{"id":"216196257331383808","modifiedTime":"1759942791","creationTime":"1754344364","modifiedBy":"216196257331372705","name":"app26","domainName":"app26.securitygeek.io","domainNames":["app26.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1026","1026"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1026","to":"1026"}]},{"id":"216196257331383809","modifiedTime":"1759942791","creationTime":"1754344383","modifiedBy":"216196257331372705","name":"app27","domainName":"app27.securitygeek.io","domainNames":["app27.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1027","1027"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1027","to":"1027"}]},{"id":"216196257331383810","modifiedTime":"1759942791","creationTime":"1754344403","modifiedBy":"216196257331372705","name":"app28","domainName":"app28.securitygeek.io","domainNames":["app28.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1028","1028"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1028","to":"1028"}]},{"id":"216196257331383811","modifiedTime":"1759942792","creationTime":"1754344425","modifiedBy":"216196257331372705","name":"app29","domainName":"app29.securitygeek.io","domainNames":["app29.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1029","1029"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1029","to":"1029"}]},{"id":"216196257331383812","modifiedTime":"1759942792","creationTime":"1754344447","modifiedBy":"216196257331372705","name":"app30","domainName":"app30.securitygeek.io","domainNames":["app30.securitygeek.io"],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["1030","1030"],"doubleEncrypt":false,"healthCheckType":"NONE","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"1030","to":"1030"}]}],"policyMigrated":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"},{"id":"216196257331395863","modifiedTime":"1764973753","creationTime":"1764973753","modifiedBy":"216196257331372705","name":"Test
+        Segment Group","description":"Created via SDK","enabled":true,"policyMigrated":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"},{"id":"216196257331395864","modifiedTime":"1764974295","creationTime":"1764974295","modifiedBy":"216196257331372705","name":"Test
+        Segment Group 1764974294","description":"Created via SDK","enabled":true,"policyMigrated":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"},{"id":"216196257331395926","modifiedTime":"1764977022","creationTime":"1764977022","modifiedBy":"216196257331372705","name":"tests-sg-vcr0001
         Updated","enabled":true,"policyMigrated":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0","readOnly":false,"zscalerManaged":false,"microtenantName":"Default"}]}'
     headers:
       cache-control:
@@ -307,7 +309,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
+      - Fri, 05 Dec 2025 23:23:42 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -325,23 +327,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '39'
+      - '46'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - bf105de8-c7fa-9976-9f53-02de518e79f6
+      - 7c84bb51-5560-9359-a903-4bca2550c436
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4865'
+      - '4871'
       x-ratelimit-reset:
-      - '11'
+      - '18'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
@@ -361,9 +363,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/2.0.0 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331394585
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331395926
   response:
     body:
       string: ''
@@ -373,7 +375,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:49 GMT
+      - Fri, 05 Dec 2025 23:23:42 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -389,23 +391,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '53'
+      - '54'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 1b8073e2-45bd-94c8-9e4e-46b4ed3f8e1a
+      - 7f4627f9-f0fe-965b-9d35-5a8d55bb69bc
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4864'
+      - '4870'
       x-ratelimit-reset:
-      - '11'
+      - '18'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 637a137c-e94b-41e5-823b-19fc15cbf8a0
       x-xss-protection:
       - '0'
     status:
