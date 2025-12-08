@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.7 (December 8, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+* [PR #437](https://github.com/zscaler/zscaler-sdk-python/pull/437) - Fixed 204 No Content responses returning `None` for response object, now returns `ZscalerAPIResponse` with status code accessible via `response.get_status()`.
+* [PR #437](https://github.com/zscaler/zscaler-sdk-python/pull/437) - Fixed ZPA update operations returning objects with `id=None` due to empty response body handling.
+
 ## 1.9.6 (December 2, 2025)
 
 ### Notes

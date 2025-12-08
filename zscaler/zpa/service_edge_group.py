@@ -306,8 +306,8 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (ServiceEdgeGroup({"id": group_id}), None, None)
+        if response is None or not response.get_body():
+            return (ServiceEdgeGroup({"id": group_id}), response, None)
 
         # Parse the response into a ServiceEdgeGroup instance
         try:

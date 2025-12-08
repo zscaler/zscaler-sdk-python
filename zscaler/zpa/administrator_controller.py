@@ -256,8 +256,8 @@ class AdministratorControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (AdministratorController({"id": admin_id}), None, None)
+        if response is None or not response.get_body():
+            return (AdministratorController({"id": admin_id}), response, None)
 
         try:
             result = AdministratorController(self.form_response_body(response.get_body()))

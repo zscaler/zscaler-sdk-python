@@ -259,8 +259,8 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (EmergencyAccessUser({"id": user_id}), None, None)
+        if response is None or not response.get_body():
+            return (EmergencyAccessUser({"id": user_id}), response, None)
 
         try:
             result = EmergencyAccessUser(self.form_response_body(response.get_body()))
@@ -306,8 +306,8 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned
-        if response is None:
-            return (None, None, None)
+        if response is None or not response.get_body():
+            return (None, response, None)
 
         try:
             # Process the response to return an EmergencyAccessUser instance

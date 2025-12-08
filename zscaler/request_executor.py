@@ -448,7 +448,19 @@ class RequestExecutor:
 
         if response.status_code == 204:
             logger.debug(f"Received 204 No Content from {request['url']}")
-            return None, None
+            # Return a response object even for 204 No Content (per Okta SDK pattern)
+            # This allows users to check response.status_code for delete operations
+            return (
+                ZscalerAPIResponse(
+                    request_executor=self,
+                    req=request,
+                    res_details=response,
+                    response_body={},  # Empty body for 204
+                    data_type=response_type,
+                    service_type=request.get("service_type", ""),
+                ),
+                None,
+            )
 
         # If raw response is requested, return it for file download purposes
         if return_raw_response:

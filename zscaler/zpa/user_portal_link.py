@@ -270,8 +270,8 @@ class UserPortalLinkAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (UserPortalLink({"id": portal_link_id}), None, None)
+        if response is None or not response.get_body():
+            return (UserPortalLink({"id": portal_link_id}), response, None)
 
         try:
             result = UserPortalLink(self.form_response_body(response.get_body()))

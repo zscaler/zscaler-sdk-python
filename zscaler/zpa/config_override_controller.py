@@ -207,8 +207,8 @@ class ConfigOverrideControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (ConfigOverrideController({"id": config_id}), None, None)
+        if response is None or not response.get_body():
+            return (ConfigOverrideController({"id": config_id}), response, None)
 
         try:
             result = ConfigOverrideController(self.form_response_body(response.get_body()))

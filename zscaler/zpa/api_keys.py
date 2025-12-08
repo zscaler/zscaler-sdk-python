@@ -259,8 +259,8 @@ class ApiKeysAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (ApiKeys({"id": key_id}), None, None)
+        if response is None or not response.get_body():
+            return (ApiKeys({"id": key_id}), response, None)
 
         try:
             result = ApiKeys(self.form_response_body(response.get_body()))
