@@ -263,8 +263,8 @@ class UserPortalControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (UserPortalController({"id": portal_id}), None, None)
+        if response is None or not response.get_body():
+            return (UserPortalController({"id": portal_id}), response, None)
 
         try:
             result = UserPortalController(self.form_response_body(response.get_body()))

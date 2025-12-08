@@ -701,8 +701,8 @@ class PolicySetControllerAPI(APIClient):
             return (None, response, error)
 
         # If 204 No Content => return an object with only the ID to indicate success
-        if response is None:
-            return (PolicySetControllerV1({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV1({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV1(self.form_response_body(response.get_body()))
@@ -869,8 +869,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV1({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV1({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV1(self.form_response_body(response.get_body()))
@@ -1097,8 +1097,8 @@ class PolicySetControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle cases where no content is returned (204 No Content)
-        if response is None:
-            return (PolicySetControllerV1({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV1({"id": rule_id}), response, None)
 
         # Parse the response into a PolicySetController instance
         try:
@@ -1324,8 +1324,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV1({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV1({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV1(self.form_response_body(response.get_body()))
@@ -1484,8 +1484,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV1({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV1({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV1(self.form_response_body(response.get_body()))
@@ -1819,8 +1819,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -2071,8 +2071,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -2305,8 +2305,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -2565,8 +2565,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -2829,8 +2829,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -3124,8 +3124,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -3437,8 +3437,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -3729,8 +3729,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))
@@ -3983,8 +3983,8 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (PolicySetControllerV2({"id": rule_id}), None, None)
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
 
         try:
             result = PolicySetControllerV2(self.form_response_body(response.get_body()))

@@ -407,9 +407,9 @@ class LSSConfigControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
+        if response is None or not response.get_body():
             # Return a meaningful result to indicate success
-            return (LSSResourceModel({"id": lss_config_id}), None, None)
+            return (LSSResourceModel({"id": lss_config_id}), response, None)
 
         # Parse the response into an LSSConfig instance
         try:
