@@ -424,8 +424,8 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (AppProtectionProfile({"id": profile_id}), None, None)
+        if response is None or not response.get_body():
+            return (AppProtectionProfile({"id": profile_id}), response, None)
 
         try:
             result = AppProtectionProfile(self.form_response_body(response.get_body()))
@@ -517,8 +517,8 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (AppProtectionProfile({"id": profile_id}), None, None)
+        if response is None or not response.get_body():
+            return (AppProtectionProfile({"id": profile_id}), response, None)
 
         # Parse the response into an InspectionProfile instance
         try:
@@ -781,8 +781,8 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (CustomControls({"id": control_id}), None, None)
+        if response is None or not response.get_body():
+            return (CustomControls({"id": control_id}), response, None)
 
         try:
             result = CustomControls(self.form_response_body(response.get_body()))

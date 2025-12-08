@@ -316,8 +316,8 @@ class PRAApprovalAPI(APIClient):
             return (None, response, error)
 
         # Handle case where no content is returned (204 No Content)
-        if response is None:
-            return (PrivilegedRemoteAccessApproval({"id": approval_id}), None, None)
+        if response is None or not response.get_body():
+            return (PrivilegedRemoteAccessApproval({"id": approval_id}), response, None)
 
         try:
             result = PrivilegedRemoteAccessApproval(self.form_response_body(response.get_body()))

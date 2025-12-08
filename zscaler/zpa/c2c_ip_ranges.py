@@ -272,8 +272,8 @@ class IPRangesAPI(APIClient):
         if error:
             return (None, response, error)
 
-        if response is None:
-            return (IpRanges({"id": range_id}), None, None)
+        if response is None or not response.get_body():
+            return (IpRanges({"id": range_id}), response, None)
 
         try:
             result = IpRanges(self.form_response_body(response.get_body()))
