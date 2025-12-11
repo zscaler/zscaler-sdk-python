@@ -254,45 +254,68 @@ class LegacyZPAClientHelper:
         Returns:
             Tuple[requests.Response, dict]: Response object and request details.
         """
-        try:
-            base_url = f"{self.baseurl}{path}"
+        from time import sleep
 
-            headers = self.headers.copy()
-            headers.update(self.request_executor.get_custom_headers())
-            if not headers.get("Authorization"):
-                self.refreshToken()
-                # Re-copy headers after refreshToken() to include x-partner-id if it was added
+        base_url = f"{self.baseurl}{path}"
+        attempts = 0
+        max_retries = 5
+
+        while attempts < max_retries:
+            try:
                 headers = self.headers.copy()
                 headers.update(self.request_executor.get_custom_headers())
-                headers["Authorization"] = f"Bearer {self.access_token}"
+                if not headers.get("Authorization"):
+                    self.refreshToken()
+                    # Re-copy headers after refreshToken() to include x-partner-id if it was added
+                    headers = self.headers.copy()
+                    headers.update(self.request_executor.get_custom_headers())
+                    headers["Authorization"] = f"Bearer {self.access_token}"
 
-            response = requests.request(
-                method=method,
-                url=base_url,
-                headers=headers,
-                json=json,
-                params=params,
-                timeout=self.timeout,
-            )
+                response = requests.request(
+                    method=method,
+                    url=base_url,
+                    headers=headers,
+                    json=json,
+                    params=params,
+                    timeout=self.timeout,
+                )
 
-            _, err = check_response_for_error(base_url, response, response.text)
-            if err:
-                raise err
+                # Handle 429 rate limiting with retry-after header
+                # ZPA API returns lowercase 'retry-after' header
+                if response.status_code == 429:
+                    # Check both header variants (lowercase and uppercase)
+                    retry_after = response.headers.get("retry-after") or response.headers.get("Retry-After")
+                    sleep_time = int(retry_after) if retry_after else 2
+                    logger.warning(f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
+                                   f"(Attempt {attempts + 1}/{max_retries})")
+                    sleep(sleep_time)
+                    attempts += 1
+                    continue
 
-            logger.info("Legacy client request executed successfully. "
-                        "Status: %d, URL: %s", response.status_code, base_url)
+                _, err = check_response_for_error(base_url, response, response.text)
+                if err:
+                    raise err
 
-            return response, {
-                "method": method,
-                "url": base_url,
-                "params": params or {},
-                "headers": headers,
-                "json": json or {},
-            }
+                logger.info("Legacy client request executed successfully. "
+                            "Status: %d, URL: %s", response.status_code, base_url)
 
-        except requests.RequestException as error:
-            logger.error(f"Error sending request: {error}")
-            raise ValueError(f"Request execution failed: {error}")
+                return response, {
+                    "method": method,
+                    "url": base_url,
+                    "params": params or {},
+                    "headers": headers,
+                    "json": json or {},
+                }
+
+            except requests.RequestException as error:
+                logger.error(f"Request to {base_url} failed: {error}")
+                if attempts == max_retries - 1:
+                    raise ValueError(f"Request execution failed: {error}")
+                logger.warning(f"Retrying... ({attempts + 1}/{max_retries})")
+                attempts += 1
+                sleep(5)
+
+        raise ValueError("Request execution failed after maximum retries.")
 
     def set_session(self, session: Any) -> None:
         """Dummy method for compatibility with the request executor."""
