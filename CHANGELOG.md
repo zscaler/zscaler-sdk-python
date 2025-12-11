@@ -1,6 +1,18 @@
 # Zscaler Python SDK Changelog
 
-## 1.9.8(December 10, 2025)
+## 1.9.81 (December 11, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+* [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZPA legacy client `Retry-After` header parsing for non-standard format with 's' suffix (e.g., `"8s"` instead of `"8"`).
+* [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZIA legacy client `Retry-After` header parsing for format with " seconds" suffix (e.g., `"0 seconds"`).
+* [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZTW legacy client `Retry-After` header parsing for format with " seconds" suffix (e.g., `"0 seconds"`).
+
+## 1.9.8 (December 10, 2025)
 
 ### Notes
 
