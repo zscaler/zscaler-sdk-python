@@ -1,6 +1,6 @@
 # Zscaler Python SDK Changelog
 
-## 1.9.81 (December 11, 2025)
+## 1.9.9 (December 11, 2025)
 
 ### Notes
 
