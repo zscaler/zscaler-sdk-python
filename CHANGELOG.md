@@ -8,7 +8,7 @@
 
 ### Bug Fixes:
 
-* [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZPA legacy client `Retry-After` header parsing for non-standard format with 's' suffix (e.g., `"8s"` instead of `"8"`).
+* [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZPA legacy client `retry-after` header parsing for non-standard format with 's' suffix (e.g., `"8s"` instead of `"8"`).
 * [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZIA legacy client `Retry-After` header parsing for format with " seconds" suffix (e.g., `"0 seconds"`).
 * [PR #439](https://github.com/zscaler/zscaler-sdk-python/pull/439) - Fixed ZTW legacy client `Retry-After` header parsing for format with " seconds" suffix (e.g., `"0 seconds"`).
 
