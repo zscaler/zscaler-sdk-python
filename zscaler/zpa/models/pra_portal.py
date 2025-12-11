@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
-
+from zscaler.oneapi_collection import ZscalerCollection
 
 class PrivilegedRemoteAccessPortal(ZscalerObject):
     """
@@ -47,6 +47,9 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
             self.user_notification_enabled = config["userNotificationEnabled"] if "userNotificationEnabled" in config else None
             self.user_portal_gid = config["userPortalGid"] if "userPortalGid" in config else None
             self.user_portal_name = config["userPortalName"] if "userPortalName" in config else None
+            self.approval_reviewers = ZscalerCollection.form_list(
+                config["approvalReviewers"] if "approvalReviewers" in config else [], str
+            )
         else:
             self.id = None
             self.name = None
@@ -70,6 +73,7 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
             self.modified_time = None
             self.user_portal_gid = None
             self.user_portal_name = None
+            self.approval_reviewers = []
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -98,6 +102,7 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
             "userNotificationEnabled": self.user_notification_enabled,
             "userPortalGid": self.user_portal_gid,
             "userPortalName": self.user_portal_name,
+            "approvalReviewers": self.approval_reviewers,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
