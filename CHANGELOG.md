@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.8(December 10, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+* [PR #438](https://github.com/zscaler/zscaler-sdk-python/pull/438) - Fixed ZPA Legacy Client missing 429 rate limiting handling. The `send()` method now properly retries on 429 responses using `retry-after` header with fallback to default 2 seconds.
+* [PR #438](https://github.com/zscaler/zscaler-sdk-python/pull/438) - Added unit tests for legacy client rate limiting across all legacy clients (ZPA, ZIA, ZCC, ZDX, ZTW, ZWA).
+
 ## 1.9.7 (December 8, 2025)
 
 ### Notes
