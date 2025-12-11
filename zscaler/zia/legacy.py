@@ -484,8 +484,16 @@ class LegacyZIAClientHelper:
                     )
 
                 if resp.status_code == 429:
-                    sleep_time = int(resp.headers.get("Retry-After", 2))
-                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
+                    # ZIA returns "Retry-After": "0 seconds" (with " seconds" suffix)
+                    retry_after = resp.headers.get("Retry-After", "2")
+                    # Strip " seconds" suffix if present
+                    if isinstance(retry_after, str):
+                        retry_after = retry_after.replace(" seconds", "").replace("seconds", "").strip()
+                    sleep_time = int(retry_after) if retry_after else 2
+                    # ZIA rate limit is 1/second, so wait at least 1 second
+                    sleep_time = max(sleep_time, 1)
+                    logger.warning(f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
+                                   f"(Attempt {attempts + 1}/5)")
                     sleep(sleep_time)
                     attempts += 1
                     continue

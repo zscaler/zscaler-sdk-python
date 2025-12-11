@@ -281,11 +281,16 @@ class LegacyZPAClientHelper:
                 )
 
                 # Handle 429 rate limiting with retry-after header
-                # ZPA API returns lowercase 'retry-after' header
+                # ZPA API returns lowercase 'retry-after' header with 's' suffix (e.g., '13s')
                 if response.status_code == 429:
                     # Check both header variants (lowercase and uppercase)
                     retry_after = response.headers.get("retry-after") or response.headers.get("Retry-After")
-                    sleep_time = int(retry_after) if retry_after else 2
+                    # ZPA returns non-standard format with 's' suffix (e.g., '8s' instead of '8')
+                    # Strip the 's' suffix before converting to int
+                    if retry_after:
+                        sleep_time = int(retry_after.rstrip('sS'))
+                    else:
+                        sleep_time = 2
                     logger.warning(f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
                                    f"(Attempt {attempts + 1}/{max_retries})")
                     sleep(sleep_time)

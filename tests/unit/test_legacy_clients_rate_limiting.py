@@ -279,6 +279,49 @@ class TestZPALegacyClientRateLimiting:
 class TestZIALegacyClientRateLimiting:
     """Test rate limiting in ZIA Legacy Client."""
 
+    def test_429_with_retry_after_seconds_suffix(self):
+        """Test ZIA legacy client handles 429 with 'Retry-After: 0 seconds' format."""
+        with patch('zscaler.zia.legacy.requests') as mock_requests, \
+             patch('zscaler.zia.legacy.check_response_for_error') as mock_check_error, \
+             patch('zscaler.zia.legacy.obfuscate_api_key') as mock_obfuscate:
+            
+            from zscaler.zia.legacy import LegacyZIAClientHelper
+            
+            mock_auth_response = Mock200Response(json_data={"authType": "ADMIN_LOGIN"})
+            mock_auth_response.headers = {
+                "Content-Type": "application/json",
+                "Set-Cookie": "JSESSIONID=test_session_id; Path=/; Secure; HttpOnly"
+            }
+            mock_requests.post.return_value = mock_auth_response
+            mock_check_error.return_value = ({"authType": "ADMIN_LOGIN"}, None)
+            mock_obfuscate.return_value = {"key": "obfuscated_key", "timestamp": "123456"}
+            
+            client = LegacyZIAClientHelper(
+                username="test_user",
+                password="test_password",
+                api_key="test_api_key",
+                cloud="zscaler"
+            )
+            
+            mock_requests.request.reset_mock()
+            
+            # ZIA returns "Retry-After": "0 seconds" format
+            response_429 = Mock429Response()
+            response_429.headers["Retry-After"] = "0 seconds"
+            
+            mock_requests.request.side_effect = [
+                response_429,
+                Mock200Response()
+            ]
+            
+            with patch.object(client, 'ensure_valid_session'):
+                with patch('zscaler.zia.legacy.sleep') as mock_sleep:
+                    response, request_info = client.send("GET", "/test/endpoint")
+            
+            # Should parse "0 seconds" -> 0, but use minimum of 1 second
+            mock_sleep.assert_called_once_with(1)
+            assert response.status_code == 200
+
     def test_429_with_retry_after_header(self):
         """Test ZIA legacy client handles 429 with Retry-After header."""
         with patch('zscaler.zia.legacy.requests') as mock_requests, \
@@ -363,6 +406,48 @@ class TestZIALegacyClientRateLimiting:
 
 class TestZTWLegacyClientRateLimiting:
     """Test rate limiting in ZTW Legacy Client."""
+
+    def test_429_with_retry_after_seconds_suffix(self):
+        """Test ZTW legacy client handles 429 with 'Retry-After: 0 seconds' format."""
+        with patch('zscaler.ztw.legacy.requests') as mock_requests, \
+             patch('zscaler.ztw.legacy.check_response_for_error') as mock_check_error, \
+             patch('zscaler.ztw.legacy.obfuscate_api_key') as mock_obfuscate:
+            
+            from zscaler.ztw.legacy import LegacyZTWClientHelper
+            
+            mock_auth_response = Mock200Response(json_data={"authType": "ADMIN_LOGIN"})
+            mock_auth_response.headers = {
+                "Content-Type": "application/json",
+                "Set-Cookie": "JSESSIONID=test_session_id; Path=/; Secure; HttpOnly"
+            }
+            mock_requests.post.return_value = mock_auth_response
+            mock_check_error.return_value = ({"authType": "ADMIN_LOGIN"}, None)
+            mock_obfuscate.return_value = {"key": "obfuscated_key", "timestamp": "123456"}
+            
+            client = LegacyZTWClientHelper(
+                username="test_user",
+                password="test_password",
+                api_key="test_api_key",
+                cloud="zscaler"
+            )
+            
+            mock_requests.request.reset_mock()
+            
+            # ZTW returns "Retry-After": "0 seconds" format
+            response_429 = Mock429Response()
+            response_429.headers["Retry-After"] = "0 seconds"
+            
+            mock_requests.request.side_effect = [
+                response_429,
+                Mock200Response()
+            ]
+            
+            with patch('zscaler.ztw.legacy.sleep') as mock_sleep:
+                response, request_info = client.send("GET", "/test/endpoint")
+            
+            # Should parse "0 seconds" -> 0, but use minimum of 1 second
+            mock_sleep.assert_called_once_with(1)
+            assert response.status_code == 200
 
     def test_429_with_retry_after_header(self):
         """Test ZTW legacy client handles 429 with Retry-After header."""
@@ -480,6 +565,43 @@ class TestLegacyClientRateLimitingConsistency:
 
 class TestZPARateLimitingDetails:
     """Detailed tests for ZPA rate limiting implementation."""
+
+    def test_retry_after_with_s_suffix(self):
+        """Test ZPA handles 'retry-after' header with 's' suffix (e.g., '8s')."""
+        with patch('zscaler.zpa.legacy.requests') as mock_requests, \
+             patch('zscaler.zpa.legacy.check_response_for_error') as mock_check_error:
+            
+            from zscaler.zpa.legacy import LegacyZPAClientHelper
+            
+            mock_login_response = Mock200Response(json_data={"access_token": "test_token"})
+            mock_requests.post.return_value = mock_login_response
+            mock_check_error.return_value = ({"access_token": "test_token"}, None)
+            
+            client = LegacyZPAClientHelper(
+                client_id="test_client_id",
+                client_secret="test_client_secret",
+                customer_id="test_customer_id",
+                cloud="PRODUCTION"
+            )
+            
+            mock_requests.request.reset_mock()
+            
+            # ZPA returns non-standard format with 's' suffix (e.g., '8s')
+            response_429 = Mock429Response()
+            response_429.headers["retry-after"] = "8s"
+            
+            mock_requests.request.side_effect = [
+                response_429,
+                Mock200Response()
+            ]
+            
+            with patch.object(client, 'refreshToken'):
+                with patch('time.sleep') as mock_sleep:
+                    response, _ = client.send("GET", "/test/endpoint")
+            
+            # Should strip 's' and use 8 seconds
+            mock_sleep.assert_called_with(8)
+            assert response.status_code == 200
 
     def test_retry_after_parsing_integer(self):
         """Test parsing integer Retry-After value."""
