@@ -145,6 +145,7 @@ class PRAPortalAPI(APIClient):
             certificate_id (str): The unique identifier of the certificate.
             domain (str): The domain of the PRA portal.
             enabled (bool): Whether the PRA portal is enabled (default is True).
+            approval_reviewers (list[str]): List of PRA Portal approval reviewers
 
         Returns:
             :obj:`Tuple`: PrivilegedRemoteAccessPortal: The newly created portal object.
