@@ -156,6 +156,12 @@ class RequestExecutor:
             else:
                 return f"https://{self.vanity_domain}-admin.zslogin.net/admin/api/v1"
 
+        # Special handling for Z-Insights (zins) GraphQL API
+        if "/zins" in endpoint:
+            if self.cloud and self.cloud != "production":
+                return f"https://api.{self.cloud}.zsapi.net"
+            return self.BASE_URL
+
         if self.cloud and self.cloud != "production":
             return f"https://api.{self.cloud}.zsapi.net"
         return self.BASE_URL
@@ -182,6 +188,8 @@ class RequestExecutor:
             return "admin"
         elif "/easm/easm-ui/v1" in url:
             return "zeasm"
+        elif "/zins" in url:
+            return "zins"
         if self.use_legacy_client:
             url = self.remove_oneapi_endpoint_prefix(url)
             # Recheck for service type after removing the prefix
@@ -202,7 +210,7 @@ class RequestExecutor:
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa"]
+        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix) :]

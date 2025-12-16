@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: '{"query": "\n            query ShadowITApps(\n                $startTime:
+      Long!, $endTime: Long!, $limit: Int,\n                $filterBy: shadowITAppsSearchFilterBy,
+      $orderBy: [ShadowITAppsOrderBy]\n            ) {\n                SHADOW_IT
+      {\n                    apps(start_time: $startTime, end_time: $endTime) {\n                        entries(limit:
+      $limit, filter_by: $filterBy, order_by: $orderBy) {\n                            application\n                            application_category\n                            risk_index\n                            computed_risk_index\n                            sanctioned_state\n                            integration\n                            data_consumed\n                            data_uploaded\n                            data_downloaded\n                            authenticated_users\n                            unAuthenticated_location_count\n                            last_access_time\n                            vulnerability\n                            undiscovered\n                            custom_risk_index\n                        }\n                    }\n                }\n            }\n        ",
+      "variables": {"startTime": 1765158719145, "endTime": 1765763519145, "limit":
+      10, "filterBy": null, "orderBy": null}, "operationName": "ShadowITApps"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1339'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.10 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zins/graphql
+  response:
+    body:
+      string: '{"errors":[{"message":"Something went wrong","locations":[{"line":8,"column":25}],"path":["SHADOW_IT","apps","entries"],"extensions":{"classification":"INTERNAL_ERROR"}}],"data":{"SHADOW_IT":{"apps":{"entries":null}}}}'
+    headers:
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Tue, 16 Dec 2025 01:51:59 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-envoy-upstream-service-time:
+      - '17'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e78f9c26-9048-90de-8b6b-0bfca5465a1a
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 1278d80a-edb5-4899-b653-4d650c426caa
+    status:
+      code: 200
+      message: OK
+version: 1
