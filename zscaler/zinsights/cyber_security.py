@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Optional, List
+from typing import Optional, List, Tuple, Any, Dict
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.errors.graphql_error import is_graphql_error_response, GraphQLAPIError
 
 
 class CyberSecurityAPI(APIClient):
@@ -36,6 +37,30 @@ class CyberSecurityAPI(APIClient):
     def __init__(self, request_executor: RequestExecutor) -> None:
         super().__init__()
         self._request_executor = request_executor
+
+    def _extract_graphql_response(
+        self,
+        response,
+        api_url: str,
+        domain: str,
+        field: str,
+    ) -> Tuple[Optional[List[Dict[str, Any]]], Any, Optional[Exception]]:
+        """Extract data from GraphQL response and handle errors."""
+        try:
+            body = response.get_body() if response else {}
+            if is_graphql_error_response(body):
+                error = GraphQLAPIError(
+                    url=api_url,
+                    response_details=response._response,
+                    response_body=body,
+                    service_type="zins"
+                )
+                return (None, response, error)
+            data = body.get("data", {}) if isinstance(body, dict) else {}
+            entries = data.get(domain, {}).get(field, {}).get("entries", [])
+            return (entries, response, None)
+        except Exception as ex:
+            return (None, response, ex)
 
     def get_incidents(
         self,
@@ -124,14 +149,7 @@ class CyberSecurityAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            # GraphQL responses have data wrapped in "data" key
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("CYBER_SECURITY", {}).get("incidents", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "CYBER_SECURITY", "incidents")
 
     def get_incidents_by_location(
         self,
@@ -210,11 +228,4 @@ class CyberSecurityAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            # GraphQL responses have data wrapped in "data" key
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("CYBER_SECURITY", {}).get("cyber_security_location", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "CYBER_SECURITY", "cyber_security_location")

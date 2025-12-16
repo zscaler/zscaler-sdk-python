@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Optional, List
+from typing import Optional, List, Tuple, Any, Dict
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zinsights.models.inputs import IoTDeviceFilterBy, IoTDeviceOrderBy
+from zscaler.errors.graphql_error import is_graphql_error_response, GraphQLAPIError
 
 
 class IotAPI(APIClient):
@@ -127,6 +128,17 @@ class IotAPI(APIClient):
 
         try:
             body = response.get_body() if response else {}
+
+            # Check for GraphQL errors in the response
+            if is_graphql_error_response(body):
+                error = GraphQLAPIError(
+                    url=api_url,
+                    response_details=response._response,
+                    response_body=body,
+                    service_type="zins"
+                )
+                return (None, response, error)
+
             # GraphQL responses have data wrapped in "data" key
             data = body.get("data", {}) if isinstance(body, dict) else {}
             device_stats = data.get("IOT", {}).get("device_stats", {})
