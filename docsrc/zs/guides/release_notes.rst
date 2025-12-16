@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.11 (December 16, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+----------
+
+(`#443 <https://github.com/zscaler/zscaler-sdk-python/pull/443>`_) - Removed extraneous Z-Insights domain modules (data_protection, genai, industry_peer, news_feed, risk_score, sandbox) that were incorrectly created for GraphQL types not exposed in the root Query. Z-Insights now correctly implements only the 6 queryable domains.
+
 1.9.10 (December 16, 2025)
 ---------------------------
 
