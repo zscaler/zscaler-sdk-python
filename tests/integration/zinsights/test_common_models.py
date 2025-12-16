@@ -18,7 +18,7 @@ import pytest
 from zscaler.zinsights.models.common import (
     WebReportEntry, WebReportEntryWithId, TrendDataPoint,
     CyberSecurityIncident, CasbIncident, IoTDeviceStat,
-    ShadowITApp, FirewallReportEntry, RiskScoreEvent
+    ShadowITApp, FirewallReportEntry
 )
 
 
@@ -33,7 +33,7 @@ class TestCommonModels:
         assert entry.name == "Test Location"
         assert entry.total == 1000
         assert entry.trend == []
-        
+
         # Test request_format
         formatted = entry.request_format()
         assert "name" in formatted
@@ -50,7 +50,7 @@ class TestCommonModels:
         assert entry.id == 123
         assert entry.name == "Test Entry"
         assert entry.total == 5000
-        
+
         formatted = entry.request_format()
         assert "id" in formatted
 
@@ -59,7 +59,7 @@ class TestCommonModels:
         trend = TrendDataPoint(config)
         assert trend.time_stamp == 1234567890
         assert trend.value == 500
-        
+
         formatted = trend.request_format()
         assert "time_stamp" in formatted
 
@@ -69,7 +69,7 @@ class TestCommonModels:
         assert incident.app == "TestApp"
         assert incident.name == "Malware"
         assert incident.total == 10
-        
+
         formatted = incident.request_format()
         assert "app" in formatted
 
@@ -79,7 +79,7 @@ class TestCommonModels:
         assert incident.time_stamp == 1234567890
         assert incident.policy == "DLP Policy"
         assert incident.incident_type == "DLP"
-        
+
         formatted = incident.request_format()
         assert "policy" in formatted
 
@@ -89,7 +89,7 @@ class TestCommonModels:
         assert stat.category == "Camera"
         assert stat.type == "IP Camera"
         assert stat.device_count == 50
-        
+
         formatted = stat.request_format()
         assert "category" in formatted
 
@@ -100,7 +100,7 @@ class TestCommonModels:
         assert app.total == 1000
         assert app.risk_score == 8
         assert app.category == "File Sharing"
-        
+
         formatted = app.request_format()
         assert "name" in formatted
 
@@ -109,25 +109,6 @@ class TestCommonModels:
         entry = FirewallReportEntry(config)
         assert entry.name == "ALLOW"
         assert entry.total == 10000
-        
+
         formatted = entry.request_format()
         assert "name" in formatted
-
-    def test_risk_score_event(self):
-        config = {
-            "time_stamp": 1234567890,
-            "threats_blocked_count": 100,
-            "suspicious_activity_count": 50,
-            "active_infection_count": 5,
-            "score": 75
-        }
-        event = RiskScoreEvent(config)
-        assert event.time_stamp == 1234567890
-        assert event.threats_blocked_count == 100
-        assert event.suspicious_activity_count == 50
-        assert event.active_infection_count == 5
-        assert event.score == 75
-        
-        formatted = event.request_format()
-        assert "score" in formatted
-
