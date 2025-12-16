@@ -185,7 +185,7 @@ class Client:
         )
         # self.logger.debug("Request executor initialized.")
 
-        # Lazy load ZIA and ZPA clients
+        # Lazy load service clients
         self._zcc = None
         self._ztw = None
         self._zia = None
@@ -193,7 +193,8 @@ class Client:
         self._zpa = None
         self._zdx = None
         self._zidentity = None
-        self._zeasm= None
+        self._zeasm = None
+        self._zins = None  # Z-Insights (GraphQL Analytics API)
         # self.logger.debug("Client initialized successfully.")
 
     def authenticate(self):
@@ -270,6 +271,44 @@ class Client:
         if self._zeasm is None:
             self._zeasm = ZEASMService(self._request_executor)
         return self._zeasm
+
+    @property
+    def zinsights(self):
+        """
+        Z-Insights Analytics Service (GraphQL API).
+
+        Provides access to Zscaler analytics data including:
+        - WEB_TRAFFIC: Web traffic analytics and reports
+        - CYBER_SECURITY: Security incidents and threat data
+        - ZERO_TRUST_FIREWALL: Firewall traffic and policy data
+        - IOT: IoT device visibility and statistics
+        - SHADOW_IT: Shadow IT discovery and application data
+        - SAAS_SECURITY: CASB and SaaS security data
+
+        Note: Z-Insights only supports OneAPI authentication.
+        Legacy client authentication is not supported.
+
+        Example:
+            with ZscalerClient(config) as client:
+                response, error = client.zinsights.graphql.execute(
+                    query='{ WEB_TRAFFIC { ... } }'
+                )
+        """
+        if self.use_legacy_client:
+            raise RuntimeError(
+                "Z-Insights (zinsights) does not support legacy client authentication. "
+                "Please use OneAPI authentication with clientId and clientSecret."
+            )
+        if self._zins is None:
+            from zscaler.zinsights.zinsights_service import ZInsightsService
+            self._zins = ZInsightsService(self._request_executor)
+        return self._zins
+
+    # Alias for backward compatibility
+    @property
+    def zins(self):
+        """Alias for zinsights property."""
+        return self.zinsights
 
     def __enter__(self):
         """

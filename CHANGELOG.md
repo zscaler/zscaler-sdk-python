@@ -1,5 +1,39 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.10 (December 16, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements:
+
+#### Z-Insights Analytics API Support (GraphQL)
+
+* [PR #442](https://github.com/zscaler/zscaler-sdk-python/pull/442) - Added comprehensive support for Z-Insights Analytics GraphQL API. Z-Insights provides unified real-time visibility into security analytics across web traffic, cyber security incidents, firewall activity, IoT devices, SaaS security, and Shadow IT discovery.
+  - Added `client.zinsights` service with domain-specific API clients:
+    - `web_traffic` - Web traffic analytics (location, protocols, threat categories, trends)
+    - `cyber_security` - Security incidents and threat analysis
+    - `firewall` - Zero Trust Firewall traffic and actions
+    - `saas_security` - Cloud Access Security Broker (CASB) reports
+    - `shadow_it` - Discovered application analytics and risk assessment
+    - `iot` - IoT device visibility and classification statistics
+  - Added GraphQL-specific error handling with `GraphQLAPIError` exception class
+  - Implemented comprehensive input models with DRY architecture:
+    - `StringFilter` - Universal filter supporting eq, ne, in, nin operations
+    - Base classes `BaseNameFilterBy` and `BaseNameTotalOrderBy` for code reuse
+    - Domain-specific filters and ordering options for all API domains
+  - Added 14 enum types for type-safe API interactions (SortOrder, WebTrafficUnits, TrendInterval, etc.)
+  - Included 6 comprehensive example scripts demonstrating real-world usage patterns
+  - Full support for filtering, ordering, pagination, trend data, and nested GraphQL queries
+  - Compatible with OneAPI authentication only (OAuth2.0 via Zidentity) 
+
+## 1.9.9 (December 11, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
 ## 1.9.9 (December 11, 2025)
 
 ### Notes

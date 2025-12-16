@@ -39,6 +39,7 @@ help:
 	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zinsights                Check style with flake8 for zinsights packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
@@ -50,6 +51,7 @@ help:
 	@echo "$(COLOR_OK)  test:integration:zdx          Run only zdx integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zinsights    Run only zinsights integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  build:dist                    Build the distribution for publishing$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)publish$(COLOR_NONE)"
@@ -113,6 +115,10 @@ lint\:zidentity:
 	poetry run flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
 
+lint\:zinsights:
+	poetry run flake8 zscaler/zinsights --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zinsights --count --select=E9,F63,F7,F82 --show-source --statistics
+
 lint\:zwa:
 	poetry run flake8 zscaler/zwa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zwa --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -159,6 +165,10 @@ test\:integration\:zidentity:
 	@echo "$(COLOR_ZSCALER)Running zidentity integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zidentity --disable-warnings
 
+test\:integration\:zinsights:
+	@echo "$(COLOR_ZSCALER)Running zinsights integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zinsights --disable-warnings
+
 test\:integration\:zwa:
 	@echo "$(COLOR_ZSCALER)Running zwa integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zwa --disable-warnings
@@ -190,6 +200,9 @@ coverage\:zpa:
 
 coverage\:zidentity:
 	poetry run pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
+
+coverage\:zinsights:
+	poetry run pytest tests/integration/zinsights --cov=zscaler/zinsights --cov-report xml --cov-report term
 
 coverage\:zeasm:
 	poetry run pytest tests/integration/zeasm --cov=zscaler/zeasm --cov-report xml --cov-report term
@@ -249,6 +262,11 @@ test\:vcr\:record\:zidentity:
 	@echo "$(COLOR_ZSCALER)Recording ZIdentity VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=false poetry run pytest tests/integration/zidentity --record-mode=rewrite -v --disable-warnings
 
+# Record VCR cassettes for ZInsights
+test\:vcr\:record\:zinsights:
+	@echo "$(COLOR_ZSCALER)Recording ZInsights VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zinsights --record-mode=rewrite -v --disable-warnings
+
 # Record VCR cassettes for ZTW
 test\:vcr\:record\:ztw:
 	@echo "$(COLOR_ZSCALER)Recording ZTW VCR cassettes...$(COLOR_NONE)"
@@ -284,6 +302,11 @@ test\:vcr\:playback\:zidentity:
 	@echo "$(COLOR_ZSCALER)Playing back ZIdentity VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=true poetry run pytest tests/integration/zidentity -v --disable-warnings
 
+# Playback VCR cassettes for ZInsights (no credentials needed)
+test\:vcr\:playback\:zinsights:
+	@echo "$(COLOR_ZSCALER)Playing back ZInsights VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zinsights -v --disable-warnings
+
 # Playback VCR cassettes for ZTW (no credentials needed)
 test\:vcr\:playback\:ztw:
 	@echo "$(COLOR_ZSCALER)Playing back ZTW VCR cassettes...$(COLOR_NONE)"
@@ -314,6 +337,10 @@ sweep\:zpa:
 sweep\:zidentity:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZIDENTITY_SDK_TEST_SWEEP=true python tests/integration/zidentity/sweep/run_sweep.py --sweep
+
+sweep\:zinsights:
+	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
+	ZINSIGHTS_SDK_TEST_SWEEP=true python tests/integration/zinsights/sweep/run_sweep.py --sweep
 
 
 build\:dist:
