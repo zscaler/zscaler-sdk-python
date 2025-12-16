@@ -3,11 +3,15 @@ import logging
 import json
 import os
 import requests
-from jose import jwt
 import time
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+
+# JWT handling - using PyJWT instead of python-jose to avoid ecdsa dependency (CVE-2024-23342)
+import jwt as pyjwt
+from jwcrypto.jwk import JWK
+
 from zscaler.user_agent import UserAgent
 from zscaler.oneapi_http_client import HTTPClient
 from zscaler.errors.response_checker import check_response_for_error
@@ -335,9 +339,15 @@ class OAuth:
         private_key_obj: Union[rsa.RSAPrivateKey, Any]
         if private_key.strip().startswith("{"):
             # **JWK JSON Format**
+            # Using jwcrypto instead of python-jose to avoid ecdsa dependency (CVE-2024-23342)
             logging.info("Using JWK JSON format for private key.")
             jwk_key: Dict[str, Any] = json.loads(private_key.strip())  # Convert JWK string to dict
-            private_key_obj = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk_key))
+            # Convert JWK to PEM using jwcrypto, then load with cryptography
+            jwk_obj = JWK.from_json(json.dumps(jwk_key))
+            pem_bytes = jwk_obj.export_to_pem(private_key=True, password=None)
+            private_key_obj = serialization.load_pem_private_key(
+                pem_bytes, password=None, backend=default_backend()
+            )
 
         elif "BEGIN PRIVATE KEY" in private_key:
             # **Raw PEM Private Key**
@@ -365,7 +375,8 @@ class OAuth:
         }
 
         # **Generate the JWT assertion using the private key**
-        assertion: str = jwt.encode(payload, private_key_obj, algorithm="RS256")
+        # Using PyJWT instead of python-jose to avoid ecdsa dependency (CVE-2024-23342)
+        assertion: str = pyjwt.encode(payload, private_key_obj, algorithm="RS256")
 
         # **Step 3: Prepare OAuth Request**
         form_data: Dict[str, str] = {
