@@ -1,0 +1,61 @@
+interactions:
+- request:
+    body: '{"query": "\n            query IoTDeviceStats($limit: Int, $filter_by:
+      IoTDeviceFilterBy, $order_by: [IoTDeviceOrderBy]) {\n                IOT {\n                    device_stats
+      {\n                        devices_count\n                        user_devices_count\n                        iot_devices_count\n                        server_devices_count\n                        un_classified_devices_count\n                        entries(limit:
+      $limit, filter_by: $filter_by, order_by: $order_by) {\n                            classifications\n                            classification_uuid\n                            category\n                            total\n                        }\n                    }\n                }\n            }\n        ",
+      "variables": {"limit": 10, "filterBy": null, "orderBy": null}, "operationName":
+      "IoTDeviceStats"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '861'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.10 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zins/graphql
+  response:
+    body:
+      string: '{"errors":[{"message":"Data fetching Failed: Forbidden to use API","locations":[{"line":4,"column":21}],"path":["IOT","device_stats"],"extensions":{"code":"FORBIDDEN","http_status":403,"classification":"INTERNAL_ERROR"}}],"data":{"IOT":{"device_stats":null}}}'
+    headers:
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Tue, 16 Dec 2025 01:51:59 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-envoy-upstream-service-time:
+      - '3885'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 62c066fa-5f9b-9f94-91f2-f52f5be24161
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 1278d80a-edb5-4899-b653-4d650c426caa
+    status:
+      code: 200
+      message: OK
+version: 1
