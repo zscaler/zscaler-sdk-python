@@ -271,46 +271,6 @@ class FirewallReportEntry(ZscalerObject):
         return parent_req_format
 
 
-class RiskScoreEvent(ZscalerObject):
-    """
-    A risk score event entry.
-
-    Attributes:
-        time_stamp: The timestamp in epoch milliseconds.
-        threats_blocked_count: Number of threats blocked.
-        suspicious_activity_count: Number of suspicious activities.
-        active_infection_count: Number of active infections.
-        score: The calculated risk score.
-    """
-
-    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
-        super().__init__(config)
-        if config:
-            self.time_stamp: Optional[int] = config.get("time_stamp")
-            self.threats_blocked_count: Optional[int] = config.get("threats_blocked_count")
-            self.suspicious_activity_count: Optional[int] = config.get("suspicious_activity_count")
-            self.active_infection_count: Optional[int] = config.get("active_infection_count")
-            self.score: Optional[int] = config.get("score")
-        else:
-            self.time_stamp = None
-            self.threats_blocked_count = None
-            self.suspicious_activity_count = None
-            self.active_infection_count = None
-            self.score = None
-
-    def request_format(self) -> Dict[str, Any]:
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "time_stamp": self.time_stamp,
-            "threats_blocked_count": self.threats_blocked_count,
-            "suspicious_activity_count": self.suspicious_activity_count,
-            "active_infection_count": self.active_infection_count,
-            "score": self.score,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
 # Export all common types
 __all__ = [
     "WebReportEntry",
@@ -321,5 +281,4 @@ __all__ = [
     "IoTDeviceStat",
     "ShadowITApp",
     "FirewallReportEntry",
-    "RiskScoreEvent",
 ]

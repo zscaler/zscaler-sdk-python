@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Optional, List
+from typing import Optional, List, Tuple, Any, Dict
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zinsights.models.inputs import WebEntriesFilterBy, WebOrderBy
+from zscaler.errors.graphql_error import is_graphql_error_response, GraphQLAPIError
 
 
 class WebTrafficAPI(APIClient):
@@ -38,6 +39,45 @@ class WebTrafficAPI(APIClient):
     def __init__(self, request_executor: RequestExecutor) -> None:
         super().__init__()
         self._request_executor = request_executor
+
+    def _extract_graphql_response(
+        self,
+        response,
+        api_url: str,
+        domain: str,
+        field: str,
+    ) -> Tuple[Optional[List[Dict[str, Any]]], Any, Optional[Exception]]:
+        """
+        Extract data from GraphQL response and handle errors.
+
+        Args:
+            response: The HTTP response object
+            api_url: The API URL for error reporting
+            domain: The GraphQL domain (e.g., "WEB_TRAFFIC")
+            field: The field to extract (e.g., "location", "protocols")
+
+        Returns:
+            Tuple of (entries, response, error)
+        """
+        try:
+            body = response.get_body() if response else {}
+
+            # Check for GraphQL errors in the response
+            if is_graphql_error_response(body):
+                error = GraphQLAPIError(
+                    url=api_url,
+                    response_details=response._response,
+                    response_body=body,
+                    service_type="zins"
+                )
+                return (None, response, error)
+
+            # Extract the data
+            data = body.get("data", {}) if isinstance(body, dict) else {}
+            entries = data.get(domain, {}).get(field, {}).get("entries", [])
+            return (entries, response, None)
+        except Exception as ex:
+            return (None, response, ex)
 
     def get_traffic_by_location(
         self,
@@ -140,13 +180,7 @@ class WebTrafficAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("WEB_TRAFFIC", {}).get("location", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "WEB_TRAFFIC", "location")
 
     def get_no_grouping(
         self,
@@ -241,13 +275,7 @@ class WebTrafficAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("WEB_TRAFFIC", {}).get("no_grouping", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "WEB_TRAFFIC", "no_grouping")
 
     def get_protocols(
         self,
@@ -315,13 +343,7 @@ class WebTrafficAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("WEB_TRAFFIC", {}).get("protocols", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "WEB_TRAFFIC", "protocols")
 
     def get_threat_super_categories(
         self,
@@ -391,13 +413,7 @@ class WebTrafficAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("WEB_TRAFFIC", {}).get("threat_super_categories", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "WEB_TRAFFIC", "threat_super_categories")
 
     def get_threat_class(
         self,
@@ -467,10 +483,4 @@ class WebTrafficAPI(APIClient):
         if error:
             return (None, response, error)
 
-        try:
-            body = response.get_body() if response else {}
-            data = body.get("data", {}) if isinstance(body, dict) else {}
-            entries = data.get("WEB_TRAFFIC", {}).get("threat_class", {}).get("entries", [])
-            return (entries, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+        return self._extract_graphql_response(response, api_url, "WEB_TRAFFIC", "threat_class")
