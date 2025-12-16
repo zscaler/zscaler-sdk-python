@@ -4,6 +4,7 @@ import json
 import logging
 from zscaler.errors.http_error import HTTPError
 from zscaler.errors.zscaler_api_error import ZscalerAPIError
+from zscaler.errors.graphql_error import GraphQLAPIError, is_graphql_error_response
 from zscaler.exceptions import HTTPException, ZscalerAPIException
 from zscaler.exceptions import exceptions
 
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 # @staticmethod
-def check_response_for_error(url, response_details, response_body):
+def check_response_for_error(url, response_details, response_body, service_type: str = ""):
     """
     Checks HTTP response for errors in the response body.
 
@@ -19,6 +20,7 @@ def check_response_for_error(url, response_details, response_body):
         url (str): URL of the response
         response_details (requests.Response): Response object with details
         response_body (str): Response body in JSON or plain string
+        service_type (str): The service type (e.g., 'zins' for GraphQL)
 
     Returns:
         Tuple(dict or None, error or None)
@@ -43,6 +45,29 @@ def check_response_for_error(url, response_details, response_body):
     # ✅ Only now we are confident it's safe to access .status_code
     status_code = response_details.status_code
 
+    # Check for GraphQL errors (can return HTTP 200 with errors in body)
+    # GraphQL APIs like Z-Insights return errors in the response body
+    if is_graphql_error_response(formatted_response):
+        try:
+            # Determine service type from URL if not provided
+            if not service_type and "/zins" in url:
+                service_type = "zins"
+
+            error = GraphQLAPIError(url, response_details, formatted_response, service_type)
+            logger.debug(f"GraphQL error detected: {error.message}")
+            if exceptions.raise_exception:
+                raise ZscalerAPIException(error)
+            return None, error
+        except ZscalerAPIException:
+            raise
+        except Exception as e:
+            logger.exception("Failed to construct GraphQLAPIError.")
+            generic_error = HTTPError(url, response_details, formatted_response)
+            if exceptions.raise_exception:
+                raise HTTPException(str(generic_error)) from e
+            return None, generic_error
+
+    # Standard REST API response handling
     if 200 <= status_code < 300:
         return formatted_response, None
 
@@ -52,6 +77,8 @@ def check_response_for_error(url, response_details, response_body):
             raise ZscalerAPIException(error)
         return None, error
 
+    except ZscalerAPIException:
+        raise
     except Exception as e:
         logger.exception("Failed to construct ZscalerAPIError.")
         generic_error = HTTPError(url, response_details, formatted_response)

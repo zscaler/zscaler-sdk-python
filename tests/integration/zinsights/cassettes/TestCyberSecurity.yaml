@@ -1,0 +1,124 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.10 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Tue, 16 Dec 2025 01:51:54 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\n            query CyberSecurityIncidents(\n                $startTime:
+      Long!, $endTime: Long!,\n                $categorizeBy: [IncidentsGroupBy!]!,
+      $limit: Int\n            ) {\n                CYBER_SECURITY {\n                    incidents(\n                        categorize_by:
+      $categorizeBy,\n                        start_time: $startTime,\n                        end_time:
+      $endTime\n                    ) {\n                        obfuscated\n                        entries(limit:
+      $limit) {\n                            name\n                            total\n                            entries(limit:
+      $limit) {\n                                name\n                                total\n                            }\n                        }\n                    }\n                }\n            }\n        ",
+      "variables": {"startTime": 1765158714168, "endTime": 1765763514168, "categorizeBy":
+      ["THREAT_CATEGORY_ID"], "limit": 10}, "operationName": "CyberSecurityIncidents"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1007'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.10 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zins/graphql
+  response:
+    body:
+      string: '{"data":{"CYBER_SECURITY":{"incidents":{"obfuscated":false,"entries":[]}}}}'
+    headers:
+      content-length:
+      - '75'
+      content-type:
+      - application/json
+      date:
+      - Tue, 16 Dec 2025 01:51:54 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '20'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 39fb0132-b5d5-936f-a99e-867653faa62f
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 1278d80a-edb5-4899-b653-4d650c426caa
+    status:
+      code: 200
+      message: OK
+version: 1

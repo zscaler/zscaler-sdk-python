@@ -13,6 +13,7 @@
    zs/zpa/index
    zs/zwa/index
    zs/zidentity/index
+   zs/zinsights/index
    zs/zeasm/index
    zs/guides/index
 
@@ -58,6 +59,7 @@ across multiple products such as:
 - `ZTW API <https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api>`__
 - `ZWA API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
 - `Zidentity API <https://help.zscaler.com/zidentity/understanding-zidentity-apis>`__
+- `Z-Insights API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
 - `EASM API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 
 This SDK is designed to support the new Zscaler API framework
@@ -222,6 +224,8 @@ programmatic interaction with the following products:
    API <https://help.zscaler.com/cloud-branch-connector/zscaler-cloud-branch-connector-api/api-developer-reference-guide/reference-guide>`__
 -  `ZIdentity
    API <https://help.zscaler.com/zidentity/api-clients>`__
+-  `Z-Insights
+   API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
 -  `EASM
    API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 
