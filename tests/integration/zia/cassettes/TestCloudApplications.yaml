@@ -1,0 +1,1496 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Fri, 19 Dec 2025 06:11:29 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy
+  response:
+    body:
+      string: '[{"app":"CHATGPT_AI","appName":"ChatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANDI","appName":"Andi","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARACTER_AI","appName":"Character.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATSONIC","appName":"ChatSonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DALL_E","appName":"Dall-E","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEP_DREAM_GENERATOR","appName":"Deep Dream Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GANPAINT","appName":"GANPaint","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JASPER","appName":"Jasper","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MIDJOURNEY","appName":"Midjourney","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURAL_BLENDER","appName":"Neural Blender","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENAI","appName":"OpenAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"RUNWAY","appName":"Runway","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SYNTHESIA","appName":"Synthesia","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITESONIC","appName":"Writesonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ALPACAML","appName":"Alpacaml","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PRISMA_AI","appName":"Prisma Labs","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MANAGR","appName":"managr","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ROBOMATIC_AI","appName":"RoboMatic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLARIFAI","appName":"Clarifai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_SERVICE_DESK","appName":"AI Service Desk","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SHORTLYAI","appName":"Shortlyai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARTICLE_FORGE","appName":"Article Forge","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DECKTOPUS","appName":"Decktopus","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ASSEMBLYAI","appName":"AssemblyAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CANARY_MAIL","appName":"Canary Mail","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURO_FLASH","appName":"Neuro Flash","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITE_APP","appName":"Write! App","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TOUFEE","appName":"ArticleVideoRobot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_WRITER","appName":"AI Writer","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MYWAVE","appName":"MyWave","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_GEMINI","appName":"Google Gemini","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MICROSOFT_COPILOT","appName":"Microsoft Copilot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PARTYROCK","appName":"PartyRock","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AZURE_GPT","appName":"Azure GPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PLAYGROUND_BY_OPENAI","appName":"Playground by
+        OpenAI","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"AMAZON_BEDROCK","appName":"Amazon
+        Bedrock","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"CLOVANOTE","appName":"Clovanote","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OTTER_AI","appName":"Otter Ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PERPLEXITY","appName":"Perplexity","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"POE_AI","appName":"Poe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"META_AI","appName":"Meta AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEVIN","appName":"Devin","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"QUILLBOT","appName":"QuillBot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CODEIUM","appName":"codeium","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLAUDE_AI","appName":"Claude","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WORDTUNE","appName":"wordtune","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATBOT_APP","appName":"Chatbot App","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BLACKBOX_AI","appName":"Blackbox AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CANDY_AI","appName":"Candy.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATPDF","appName":"ChatPDF","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHUB_AI","appName":"Chub.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CIVITAI","appName":"Civitai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CRUSHON","appName":"CrushOn","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CUTOUT_PRO","appName":"Cutout.pro","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DREAMGF","appName":"DreamGF","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EIGHTIFY","appName":"Eightify","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ELEVENLABS","appName":"ElevenLabs","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GAMMA","appName":"Gamma AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IDEOGRAM","appName":"Ideogram","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JANITORAI","appName":"JanitorAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LEONARDO","appName":"Leonardo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GETLINER","appName":"Liner","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MAXAI","appName":"MaxAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NIGHTCAFE","appName":"Nightcafe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOVELAI","appName":"NovelAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPUSCLIP","appName":"OpusClip","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHIND","appName":"Phind","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHOTOROOM","appName":"Photoroom","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXAI","appName":"Pixai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXELCUT","appName":"Pixelcut","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PLAYGROUNDAI","appName":"Playground","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"REPLICATE","appName":"Replicate","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SPEECHIFY","appName":"Speechify","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"VECTORIZER_AI","appName":"Vectorizer.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"VOCALREMOVER","appName":"VocalRemover","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"YODAYO","appName":"Yodayo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"YOU_COM","appName":"You.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOVAAPP","appName":"NOVA AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXLR","appName":"Pixlr","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GRAMMARLY","appName":"Grammarly","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEPL_LINGUEE","appName":"DeepL","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITER","appName":"WRITER","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEPSEEK","appName":"DeepSeek","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GROK_AI","appName":"Grok AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MICROSOFT_COPILOT_STUDIO","appName":"Microsoft
+        Copilot Studio","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"MICROSOFT_DESIGNER","appName":"Microsoft
+        Designer","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"GOOGLE_NOTEBOOKLM","appName":"Google
+        NotebookLM","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"VECTORART","appName":"VectorArt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"REDS_EXPLOIT_CORNER","appName":"Reds Exploit Corner","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BLOOM_AI","appName":"Bloom AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENAI_SB","appName":"OpenAI-SB","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIPAPERPASS","appName":"AIPaperPass","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PRIMISAI","appName":"PrimisAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LALALS","appName":"Lalals","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TOMBO_AI","appName":"Tombo.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_COPYWRITING_TREASURE","appName":"AI Copywriting
+        treasure","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"SHAKKER","appName":"Shakker","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"HIDREAM_AI","appName":"Hidream.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATAI","appName":"ChatAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATTHREE","appName":"Chatthree","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATLEFT","appName":"Chatleft","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FILEGPT","appName":"FileGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STORY_COM","appName":"Story.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EXTENDMUSIC","appName":"ExtendMusic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGATE_AI","appName":"Chatgate.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEXUSTRADE","appName":"Nexustrade","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BYPASSAI","appName":"BypassAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"THIRUKURAL","appName":"Thirukural","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPT_FREE","appName":"ChatGPT Free","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BART_AI","appName":"Bart AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PROMPTFOLDER","appName":"Promptfolder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENREAD","appName":"OpenRead","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GEMINI_PRO_CHAT","appName":"Gemini Pro Chat","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIIS_AI","appName":"AIIS AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATBOTSPLACE","appName":"chatbotsplace","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IDEA_GENERATOR","appName":"Idea Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATANYTHING","appName":"Chatanything","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NETWRCK","appName":"Netwrck","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ASKCHAT","appName":"askchat","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SAYHI2_AI","appName":"Sayhi2.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_LS","appName":"AI.LS","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"QUEERY","appName":"Queery","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SDXL_TURBO","appName":"SDXL turbo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STABLE_VIDEO_DIFFUSION","appName":"Stable Video
+        Diffusion","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"AI_TEXT_CONVERTER","appName":"AI
+        text converter","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"SEMIHUMAN","appName":"semihuman","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TWINPICS","appName":"TwinPics","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LETTER_GENERATORS_AI","appName":"Letter Generators.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_CHAT_ROBOT","appName":"AI Chat Robot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENROUTER","appName":"OpenRouter","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITEHUMAN","appName":"WriteHuman","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIIMAGEGENERATOR","appName":"AIImageGenerator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PURECODEAI","appName":"PureCodeAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHRASLY_AI","appName":"Phrasly.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ICONMAGE","appName":"IconMage","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SOCRATIC_LAB","appName":"Socratic Lab","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPT_FR","appName":"ChatGPT FR","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TINGO","appName":"Tingo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_X","appName":"Chat GPT-X","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_STOCK_COM","appName":"AI Stock.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GHATGPTSS","appName":"GhatGPTSS","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_GIF_GENERATOR","appName":"AI GIF Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SUDOCODE","appName":"sudocode","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MUSE_AI","appName":"Muse AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PROMPTBOOM","appName":"PromptBoom","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_PICTURES","appName":"Chat GPT Pictures","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATX","appName":"ChatX","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ORT","appName":"ORT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EARNGPT","appName":"EarnGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KAI_GTP","appName":"kai GTP","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"XAIBAIPIAO","appName":"Xaibaipiao","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARCH_AI","appName":"Arch AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SPEECHGPT","appName":"SpeechGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOWGPT","appName":"Nowgpt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KLIMACHAT_AI","appName":"KlimaChat.Ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_ART_GENERATOR","appName":"AI Art Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHINESE_WEBSITE_OPEN_AI","appName":"Chinese Website
+        Open AI","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"ACADEMICGPT","appName":"AcademicGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FRESHBOTS","appName":"Freshbots","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AISTORYGENERATOR","appName":"Aistorygenerator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI7","appName":"AI7","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIMREPLY","appName":"AIMReply","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI2HUMAN","appName":"AI2human","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ROASTEDBY_AI","appName":"Roastedby.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SWDT","appName":"Swdt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PICFINDER","appName":"Picfinder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IPCC_GPT","appName":"IPCC gpt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BYWORD","appName":"byword","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AICHATTING","appName":"Aichatting","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_FOR_SEO","appName":"AI for seo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ZEROGPT","appName":"zerogpt.net","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENDREAM","appName":"opendream","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FINCHATAI","appName":"FinchatAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANONCHATGPT","appName":"AnonchatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LAW_BOT_PRO","appName":"law bot pro","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GPT_CHATBOT","appName":"GPT chatbot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ORA_AI","appName":"Ora AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"POKEIT","appName":"Pokeit","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_PORTAL","appName":"Chat Portal","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIGENPROMPT","appName":"Aigenprompt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GPT_4_PLAYGROUND","appName":"GPT-4 Playground","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATLIPE","appName":"Chatlipe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LYFTA","appName":"Lyfta","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DAPPERGPT","appName":"DapperGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IMAGINE","appName":"Imagine","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPTVIETNAM","appName":"Chatgptvietnam","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_PHOTOS","appName":"Chat GPT Photos","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLEARGPT","appName":"ClearGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LDSBOT","appName":"LDSBOT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLINIWIZ","appName":"CliniWiz","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARTNOTE","appName":"chartnote","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DREAM_BY_WOMBO","appName":"Dream by WOMBO","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CRAIYON","appName":"Craiyon","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GROWTHBAR","appName":"GrowthBar","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EASY_PEASY_AI","appName":"Easy Peasy AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STARRYAI","appName":"Starry AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARTBREEDER","appName":"Artbreeder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ELAI","appName":"Elai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KHROMA","appName":"khroma","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"HEYGEN","appName":"HeyGen","parent":"AI_ML","parentName":"AI
+        & ML Applications"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3524'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - f267b313-a2a6-97a9-b82c-dc044b89a92d
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '31'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy?page=1&pageSize=10
+  response:
+    body:
+      string: '[{"app":"CHATGPT_AI","appName":"ChatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANDI","appName":"Andi","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARACTER_AI","appName":"Character.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATSONIC","appName":"ChatSonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DALL_E","appName":"Dall-E","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEP_DREAM_GENERATOR","appName":"Deep Dream Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GANPAINT","appName":"GANPaint","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JASPER","appName":"Jasper","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MIDJOURNEY","appName":"Midjourney","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURAL_BLENDER","appName":"Neural Blender","parent":"AI_ML","parentName":"AI
+        & ML Applications"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '362'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 87d2cad1-73a2-975c-b449-d1e7e3ea8631
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy?appClass=WEB_MAIL
+  response:
+    body:
+      string: '[{"app":"GOOGLE_WEBMAIL","appName":"Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"YAHOO_WEBMAIL","appName":"Yahoo! Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WINDOWS_LIVE_HOTMAIL","appName":"Outlook (Office 365)","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AOL_MAIL","appName":"AOL Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LYCOS_MAIL_WEBMAIL","appName":"Lycos Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"REDIFFMAIL","appName":"Rediffmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LAPOSTE","appName":"La Poste","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ORANGEFR","appName":"Orange Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAILFREENETDE","appName":"freenet Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WINMAILRU","appName":"Mail.ru","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILYANDEXRU","appName":"Yandex Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILRAMBLERRU","appName":"Rambler Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILTONLINEDE","appName":"t-online.de Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WEBDE","appName":"WEB.DE Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GMXDE","appName":"GMX Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"INBOX_WEBMAIL","appName":"inbox.com Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ZOHO","appName":"Zoho Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FASTMAIL","appName":"FastMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"COMCASTMAIL","appName":"Comcast.net Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ROADRUNNER","appName":"Roadrunner Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HOTMAIL_PERSONAL","appName":"Outlook (Personal)","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"QQ_MAIL","appName":"QQMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"BANANATAG","appName":"Bananatag","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CENTRUM","appName":"centrum","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SAPO","appName":"Sapo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GOO","appName":"Goo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SUBSCRIBERMAIL","appName":"SubscriberMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILJET","appName":"MailJet","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL2WEB","appName":"Mail2web","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HUSHMAIL","appName":"Hushmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PROTONMAIL","appName":"ProtonMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HEY","appName":"Hey","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EASYMAIL7","appName":"EasyMail7","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ATOMPARK_SOFTWARE_ATOMIC_EMAIL_TRACKER","appName":"AtomPark
+        Software - Atomic Email Tracker","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"SOCKETLABS","appName":"SocketLabs","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NCR_COUNTERPOINT","appName":"NCR Counterpoint","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NOTABLIST","appName":"Notablist","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CYBOZU_MAILWISE","appName":"Cybozu Mailwise","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NIFCLOUD_BUSINESS_MAIL","appName":"Nifcloud Business Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LOLLIPOP_WEB_MAILER_BY_GMO","appName":"Lollipop Web Mailer
+        by GMO","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"BIGLOBE_MAIL","appName":"Biglobe
+        Mail","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"OCN_MAIL_SERVICE","appName":"OCN
+        Mail Service","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"DOPPLER_RELAY","appName":"Doppler
+        Relay","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"MAILBOX_RENTAL","appName":"Mailbox
+        rental","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"KINTONE_KMAILER","appName":"kintone
+        - kMailer","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"GMELIUS","appName":"Gmelius","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FLOW_E","appName":"Flow-e","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLOUDMAILIN","appName":"CloudMailin","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLOUDSELL","appName":"cloudSell","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FINDTHATLEAD","appName":"FindThatLead","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EVERYONE_NET","appName":"Everyone.net","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EWE_CLOUD_WEBMAIL","appName":"EWE - Cloud & Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TILIQ","appName":"Tiliq","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILTRACK_FOR_GMAIL","appName":"Mailtrack for Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILIFY","appName":"Mailify","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LEADGNOME","appName":"LeadGnome","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EM_CLIENT","appName":"eM Client","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAIL_LIST_VERIFY","appName":"Email List Verify","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAIL_HIPPO","appName":"Email Hippo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UNROLL","appName":"Unroll","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AGARI_BRAND_PROTECTION","appName":"Agari - Brand Protection","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CIPHER_CRAFT_EMAIL","appName":"Cipher Craft Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HELPSPOT","appName":"HelpSpot","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HENNGE_CUSTOMERS_MAIL_CLOUD","appName":"HENNGE - Customers
+        Mail Cloud","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"KAGOYA_MAIL_SERVER","appName":"Kagoya
+        Mail Server","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"AUTHSMTP","appName":"AuthSMTP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AMPSY","appName":"Ampsy","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HAI2_MAIL","appName":"hai2 mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDEALER","appName":"Maildealer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"BLASTMAIL","appName":"Blastmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KNAK_","appName":"knak.","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDROP","appName":"Maildrop","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"REDIFFMAIL_PRO","appName":"rediffmail Pro","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILSPRING","appName":"Mailspring","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"RAINLOOP","appName":"RainLoop","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILENABLE","appName":"MailEnable","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_IN_A_BOX","appName":"Mail-in-a-box","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EGROUPWARE","appName":"EGroupware","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KINGMAILER","appName":"Kingmailer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLAWS_MAIL","appName":"Claws Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILUP","appName":"MailUp","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"JUNK_EMAIL_FILTER","appName":"Junk Email Filter","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AFTERLOGIC_WEBMAIL","appName":"Afterlogic Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DUOCIRCLE_SPAM_FILTERING","appName":"DuoCircle Spam Filtering","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KIWI_FOR_GMAIL","appName":"Kiwi for Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EEVID","appName":"eEvidence","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SERVERMX","appName":"Servermx","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UNIBOX","appName":"Unibox","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DADA_MAIL","appName":"Dada Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DATAMAIL_LINGUISTIC_EMAIL_APP","appName":"Datamail Linguistic
+        Email App","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"LETTERMELATER_COM","appName":"LetterMeLater.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GAGGLE_MAIL","appName":"Gaggle Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KIRIM_EMAIL","appName":"KIRIM.EMAIL","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TUFFMAIL_COM","appName":"Tuffmail.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PINGLY","appName":"Pingly","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILO","appName":"Mailo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SOVERIN","appName":"Soverin","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SENDWP","appName":"SendWP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GLOBIMAIL","appName":"Globimail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_KING","appName":"Mail-King","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MYSMTP","appName":"MYSMTP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TISCALI_MAIL","appName":"Tiscali Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UOL_MAIL","appName":"UOL Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"VIRGILIO_MAIL","appName":"Virgilio Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDOCKER","appName":"Maildocker","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PREMAILER","appName":"Premailer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ZENDIRECT","appName":"ZenDirect","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_LABS","appName":"Mail Labs","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SIMPRESSIVE","appName":"simpressive","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"POCZTA_O2","appName":"Poczta o2","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NAVER_MAIL","appName":"Naver Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ICLOUD_MAIL","appName":"iCloud Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SOHU_MAIL","appName":"sohu mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SINA_MAIL","appName":"sina mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONE_HUNDRED_AND_SIXTY_THREE_MAIL","appName":"163 Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONLINE_EE","appName":"Online.ee","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TOM_MAIL","appName":"Tom Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONE_HUNDRED_AND_THIRTY_NINE_EMAIL","appName":"139 Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FREEMAIL","appName":"FreeMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TELENET_WEBMAIL","appName":"Telenet Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONETWOSIX","appName":"126.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"STARTMAIL","appName":"StartMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"POCZTA_ONET","appName":"Poczta Onet","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PRIVATEEMAIL","appName":"PrivateEmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '216'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 3ddb03d0-30b1-96b1-a479-a99df73602f4
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy?search=Google
+  response:
+    body:
+      string: '{"message":"Rate Limit (2/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:33 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '137'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - b07ae407-ed9b-93d0-97a7-7b9409679034
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy?search=Google
+  response:
+    body:
+      string: '[{"app":"GOOGLE_GEMINI","appName":"Google Gemini","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_NOTEBOOKLM","appName":"Google NotebookLM","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_COLAB","appName":"Google Colab","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_AI_STUDIO","appName":"Google AI Studio","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_LABS","appName":"Google Labs","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPAL_WITH_GOOGLE","appName":"Opal with Google","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_AI","appName":"Google AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLEANALYTICS","appName":"Google Analytics","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLEBUSINESSAPPS","appName":"Google Apps for Business","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLECLASSROOM","appName":"Google Classroom","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_DATA_STUDIO","appName":"Google Data Studio","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_ANALYTICS_360_SUITE","appName":"Google Analytics
+        360 Suite","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity and
+        CRM Tools"},{"app":"GOOGLE_CONTACTS","appName":"Google Contacts","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_ENTERPRISE_SUPPORT","appName":"Google Enterprise
+        Support","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity and CRM
+        Tools"},{"app":"GOOGLE_FEEDBURNER","appName":"Google Feedburner","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_TRANSLATE","appName":"Google Translate","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_BOOKS","appName":"Google Books","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLEOPENSOURCE","appName":"Googleopensource","parent":"BUSINESS_PRODUCTIVITY","parentName":"Productivity
+        and CRM Tools"},{"app":"GOOGLE_DOODLE_GAMES","appName":"Google Doodle Games","parent":"CONSUMER","parentName":"Consumer"},{"app":"GOOGLE_EARTH","appName":"Google
+        Earth","parent":"CONSUMER","parentName":"Consumer"},{"app":"GOOGLE_DNS","appName":"Google
+        DNS","parent":"DNS_OVER_HTTPS","parentName":"DNS Over HTTPS Services"},{"app":"GOOGLEKEEP","appName":"Google
+        Keep","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration and
+        Online Meetings"},{"app":"GOOGLECALENDAR","appName":"Google Calendar","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLEMEET","appName":"Google Meet","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLESITES","appName":"Google Sites","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLEJAMBOARD","appName":"Google Jamboard","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLE_ALERTS","appName":"Google Alerts","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLE_CLOUD_PRINT","appName":"Google Cloud
+        Print","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration and
+        Online Meetings"},{"app":"GOOGLE_DUO","appName":"Google Duo","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLE_WORKSPACE","appName":"Google Workspace","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration
+        and Online Meetings"},{"app":"GOOGLE_REMOTE_DESKTOP","appName":"Google remote
+        desktop","parent":"ENTERPRISE_COLLABORATION","parentName":"Collaboration and
+        Online Meetings"},{"app":"GDRIVE","appName":"Google Drive","parent":"FILE_SHARE","parentName":"File
+        Sharing"},{"app":"GPHOTOS","appName":"Google Photos","parent":"FILE_SHARE","parentName":"File
+        Sharing"},{"app":"GCLOUDCOMPUTE","appName":"Google Cloud Compute","parent":"HOSTING_PROVIDER","parentName":"Hosting
+        Providers"},{"app":"GAPPENGINE","appName":"Google App Engine","parent":"HOSTING_PROVIDER","parentName":"Hosting
+        Providers"},{"app":"GOOGLE_CLOUD_PLATFORM","appName":"Google Cloud Platform","parent":"HOSTING_PROVIDER","parentName":"Hosting
+        Providers"},{"app":"GTALK","appName":"Google Hangouts","parent":"INSTANT_MESSAGING","parentName":"Instant
+        Messaging"},{"app":"WEB_GOOGLE_CHAT","appName":"Google Chat","parent":"INSTANT_MESSAGING","parentName":"Instant
+        Messaging"},{"app":"GOOGLOGINSERVICE","appName":"Google Login Services","parent":"IT_SERVICES","parentName":"IT
+        Services"},{"app":"GOOGLE_DOMAINS","appName":"Google Domains","parent":"IT_SERVICES","parentName":"IT
+        Services"},{"app":"GOOGLE_APPS_BACKUP","appName":"Google Apps Backup","parent":"IT_SERVICES","parentName":"IT
+        Services"},{"app":"THINK_WITH_GOOGLE","appName":"Think with Google","parent":"SALES_AND_MARKETING","parentName":"Sales
+        & Marketing"},{"app":"GOOGLE_WALLET","appName":"Google Wallet","parent":"SALES_AND_MARKETING","parentName":"Sales
+        & Marketing"},{"app":"GOOGLE_BUSINESS_REVIEW_DIRECT_LINK_GENERATOR","appName":"Google
+        Business Review Direct Link Generator","parent":"SALES_AND_MARKETING","parentName":"Sales
+        & Marketing"},{"app":"GOOGLE_ADS","appName":"Google Ads","parent":"SALES_AND_MARKETING","parentName":"Sales
+        & Marketing"},{"app":"GOOGLE_AD_MANAGER","appName":"Google Ad Manager","parent":"SALES_AND_MARKETING","parentName":"Sales
+        & Marketing"},{"app":"GOOGLE_MARKETING_PLATFORM","appName":"Google Marketing
+        Platform","parent":"SALES_AND_MARKETING","parentName":"Sales & Marketing"},{"app":"GOOGLE_SEARCH_CONSOLE","appName":"Google
+        Search Console","parent":"SALES_AND_MARKETING","parentName":"Sales & Marketing"},{"app":"GOOGLE_GROUPS","appName":"Google
+        Groups","parent":"SOCIAL_NETWORKING","parentName":"Social Networking"},{"app":"GOOGLE_PLUS","appName":"Google+","parent":"SOCIAL_NETWORKING","parentName":"Social
+        Networking"},{"app":"GOOGLE_STREAMING","appName":"Google Video","parent":"STREAMING","parentName":"Streaming
+        Media"},{"app":"GOOGLE_DEVELOPERS","appName":"Google Developers","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System
+        & Development"},{"app":"GOOGLEAPPMAKER","appName":"Google App Maker","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System
+        & Development"},{"app":"GOOGLE_MAPS","appName":"Google Maps","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System
+        & Development"},{"app":"GWT_GOOGLE_WEB_TOOLKIT","appName":"GWT - Google Web
+        Toolkit","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System & Development"},{"app":"GOOGLE_FONTS","appName":"Google
+        Fonts","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System & Development"},{"app":"GOOGLE_DEEPMIND","appName":"Google
+        Deepmind","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System & Development"},{"app":"GOOGLE_DEVELOPER_PROGRAM_FORUMS","appName":"Google
+        Developer Program forums","parent":"SYSTEM_AND_DEVELOPMENT","parentName":"System
+        & Development"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '355'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 7c9c8038-6776-9381-b70c-1057dde1b217
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/policy?groupResults=True
+  response:
+    body:
+      string: '{"[Instant Messaging, INSTANT_MESSAGING]":97,"[Health Care, HEALTH_CARE]":1796,"[Productivity
+        and CRM Tools, BUSINESS_PRODUCTIVITY]":11900,"[Sales & Marketing, SALES_AND_MARKETING]":6454,"[Consumer,
+        CONSUMER]":2302,"[System & Development, SYSTEM_AND_DEVELOPMENT]":2893,"[Finance,
+        FINANCE]":2974,"[File Sharing, FILE_SHARE]":436,"[IT Services, IT_SERVICES]":6026,"[Collaboration
+        and Online Meetings, ENTERPRISE_COLLABORATION]":2021,"[Streaming Media, STREAMING]":315,"[Social
+        Networking, SOCIAL_NETWORKING]":281,"[Hosting Providers, HOSTING_PROVIDER]":698,"[Web
+        Mail, WEB_MAIL]":124,"[AI & ML Applications, AI_ML]":2729,"[DNS Over HTTPS
+        Services, DNS_OVER_HTTPS]":12,"[Legal, LEGAL]":440,"[Human Resources, HUMAN_RESOURCES]":1913}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '311'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - c9d4e6f0-5ce0-9cb8-b221-b3429e694392
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/sslPolicy
+  response:
+    body:
+      string: '[{"app":"CHATGPT_AI","appName":"ChatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANDI","appName":"Andi","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARACTER_AI","appName":"Character.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATSONIC","appName":"ChatSonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DALL_E","appName":"Dall-E","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEP_DREAM_GENERATOR","appName":"Deep Dream Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GANPAINT","appName":"GANPaint","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JASPER","appName":"Jasper","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MIDJOURNEY","appName":"Midjourney","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURAL_BLENDER","appName":"Neural Blender","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENAI","appName":"OpenAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"RUNWAY","appName":"Runway","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SYNTHESIA","appName":"Synthesia","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITESONIC","appName":"Writesonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ALPACAML","appName":"Alpacaml","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PRISMA_AI","appName":"Prisma Labs","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MANAGR","appName":"managr","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ROBOMATIC_AI","appName":"RoboMatic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLARIFAI","appName":"Clarifai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_SERVICE_DESK","appName":"AI Service Desk","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SHORTLYAI","appName":"Shortlyai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARTICLE_FORGE","appName":"Article Forge","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DECKTOPUS","appName":"Decktopus","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ASSEMBLYAI","appName":"AssemblyAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CANARY_MAIL","appName":"Canary Mail","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURO_FLASH","appName":"Neuro Flash","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITE_APP","appName":"Write! App","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TOUFEE","appName":"ArticleVideoRobot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_WRITER","appName":"AI Writer","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MYWAVE","appName":"MyWave","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GOOGLE_GEMINI","appName":"Google Gemini","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MICROSOFT_COPILOT","appName":"Microsoft Copilot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PARTYROCK","appName":"PartyRock","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AZURE_GPT","appName":"Azure GPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PLAYGROUND_BY_OPENAI","appName":"Playground by
+        OpenAI","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"AMAZON_BEDROCK","appName":"Amazon
+        Bedrock","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"CLOVANOTE","appName":"Clovanote","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OTTER_AI","appName":"Otter Ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PERPLEXITY","appName":"Perplexity","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"POE_AI","appName":"Poe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"META_AI","appName":"Meta AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEVIN","appName":"Devin","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"QUILLBOT","appName":"QuillBot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CODEIUM","appName":"codeium","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLAUDE_AI","appName":"Claude","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WORDTUNE","appName":"wordtune","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATBOT_APP","appName":"Chatbot App","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BLACKBOX_AI","appName":"Blackbox AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CANDY_AI","appName":"Candy.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATPDF","appName":"ChatPDF","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHUB_AI","appName":"Chub.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CIVITAI","appName":"Civitai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CRUSHON","appName":"CrushOn","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CUTOUT_PRO","appName":"Cutout.pro","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DREAMGF","appName":"DreamGF","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EIGHTIFY","appName":"Eightify","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ELEVENLABS","appName":"ElevenLabs","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GAMMA","appName":"Gamma AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IDEOGRAM","appName":"Ideogram","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JANITORAI","appName":"JanitorAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LEONARDO","appName":"Leonardo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GETLINER","appName":"Liner","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MAXAI","appName":"MaxAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NIGHTCAFE","appName":"Nightcafe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOVELAI","appName":"NovelAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPUSCLIP","appName":"OpusClip","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHIND","appName":"Phind","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHOTOROOM","appName":"Photoroom","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXAI","appName":"Pixai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXELCUT","appName":"Pixelcut","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PLAYGROUNDAI","appName":"Playground","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"REPLICATE","appName":"Replicate","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SPEECHIFY","appName":"Speechify","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"VECTORIZER_AI","appName":"Vectorizer.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"VOCALREMOVER","appName":"VocalRemover","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"YODAYO","appName":"Yodayo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"YOU_COM","appName":"You.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOVAAPP","appName":"NOVA AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PIXLR","appName":"Pixlr","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GRAMMARLY","appName":"Grammarly","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEPL_LINGUEE","appName":"DeepL","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITER","appName":"WRITER","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEPSEEK","appName":"DeepSeek","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GROK_AI","appName":"Grok AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MICROSOFT_COPILOT_STUDIO","appName":"Microsoft
+        Copilot Studio","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"MICROSOFT_DESIGNER","appName":"Microsoft
+        Designer","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"GOOGLE_NOTEBOOKLM","appName":"Google
+        NotebookLM","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"VECTORART","appName":"VectorArt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"REDS_EXPLOIT_CORNER","appName":"Reds Exploit Corner","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BLOOM_AI","appName":"Bloom AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENAI_SB","appName":"OpenAI-SB","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIPAPERPASS","appName":"AIPaperPass","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PRIMISAI","appName":"PrimisAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LALALS","appName":"Lalals","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TOMBO_AI","appName":"Tombo.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_COPYWRITING_TREASURE","appName":"AI Copywriting
+        treasure","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"SHAKKER","appName":"Shakker","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"HIDREAM_AI","appName":"Hidream.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATAI","appName":"ChatAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATTHREE","appName":"Chatthree","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATLEFT","appName":"Chatleft","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FILEGPT","appName":"FileGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STORY_COM","appName":"Story.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EXTENDMUSIC","appName":"ExtendMusic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGATE_AI","appName":"Chatgate.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEXUSTRADE","appName":"Nexustrade","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BYPASSAI","appName":"BypassAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"THIRUKURAL","appName":"Thirukural","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPT_FREE","appName":"ChatGPT Free","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BART_AI","appName":"Bart AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PROMPTFOLDER","appName":"Promptfolder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENREAD","appName":"OpenRead","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GEMINI_PRO_CHAT","appName":"Gemini Pro Chat","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIIS_AI","appName":"AIIS AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATBOTSPLACE","appName":"chatbotsplace","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IDEA_GENERATOR","appName":"Idea Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATANYTHING","appName":"Chatanything","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NETWRCK","appName":"Netwrck","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ASKCHAT","appName":"askchat","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SAYHI2_AI","appName":"Sayhi2.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_LS","appName":"AI.LS","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"QUEERY","appName":"Queery","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SDXL_TURBO","appName":"SDXL turbo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STABLE_VIDEO_DIFFUSION","appName":"Stable Video
+        Diffusion","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"AI_TEXT_CONVERTER","appName":"AI
+        text converter","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"SEMIHUMAN","appName":"semihuman","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TWINPICS","appName":"TwinPics","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LETTER_GENERATORS_AI","appName":"Letter Generators.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_CHAT_ROBOT","appName":"AI Chat Robot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENROUTER","appName":"OpenRouter","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"WRITEHUMAN","appName":"WriteHuman","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIIMAGEGENERATOR","appName":"AIImageGenerator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PURECODEAI","appName":"PureCodeAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PHRASLY_AI","appName":"Phrasly.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ICONMAGE","appName":"IconMage","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SOCRATIC_LAB","appName":"Socratic Lab","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPT_FR","appName":"ChatGPT FR","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"TINGO","appName":"Tingo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_X","appName":"Chat GPT-X","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_STOCK_COM","appName":"AI Stock.com","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GHATGPTSS","appName":"GhatGPTSS","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_GIF_GENERATOR","appName":"AI GIF Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SUDOCODE","appName":"sudocode","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MUSE_AI","appName":"Muse AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PROMPTBOOM","appName":"PromptBoom","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_PICTURES","appName":"Chat GPT Pictures","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATX","appName":"ChatX","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ORT","appName":"ORT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EARNGPT","appName":"EarnGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KAI_GTP","appName":"kai GTP","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"XAIBAIPIAO","appName":"Xaibaipiao","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARCH_AI","appName":"Arch AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SPEECHGPT","appName":"SpeechGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NOWGPT","appName":"Nowgpt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KLIMACHAT_AI","appName":"KlimaChat.Ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_ART_GENERATOR","appName":"AI Art Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHINESE_WEBSITE_OPEN_AI","appName":"Chinese Website
+        Open AI","parent":"AI_ML","parentName":"AI & ML Applications"},{"app":"ACADEMICGPT","appName":"AcademicGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FRESHBOTS","appName":"Freshbots","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AISTORYGENERATOR","appName":"Aistorygenerator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI7","appName":"AI7","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIMREPLY","appName":"AIMReply","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI2HUMAN","appName":"AI2human","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ROASTEDBY_AI","appName":"Roastedby.ai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"SWDT","appName":"Swdt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"PICFINDER","appName":"Picfinder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IPCC_GPT","appName":"IPCC gpt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"BYWORD","appName":"byword","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AICHATTING","appName":"Aichatting","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AI_FOR_SEO","appName":"AI for seo","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ZEROGPT","appName":"zerogpt.net","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"OPENDREAM","appName":"opendream","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"FINCHATAI","appName":"FinchatAI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANONCHATGPT","appName":"AnonchatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LAW_BOT_PRO","appName":"law bot pro","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GPT_CHATBOT","appName":"GPT chatbot","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ORA_AI","appName":"Ora AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"POKEIT","appName":"Pokeit","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_PORTAL","appName":"Chat Portal","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"AIGENPROMPT","appName":"Aigenprompt","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GPT_4_PLAYGROUND","appName":"GPT-4 Playground","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATLIPE","appName":"Chatlipe","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LYFTA","appName":"Lyfta","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DAPPERGPT","appName":"DapperGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"IMAGINE","appName":"Imagine","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATGPTVIETNAM","appName":"Chatgptvietnam","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHAT_GPT_PHOTOS","appName":"Chat GPT Photos","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLEARGPT","appName":"ClearGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"LDSBOT","appName":"LDSBOT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CLINIWIZ","appName":"CliniWiz","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARTNOTE","appName":"chartnote","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DREAM_BY_WOMBO","appName":"Dream by WOMBO","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CRAIYON","appName":"Craiyon","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GROWTHBAR","appName":"GrowthBar","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"EASY_PEASY_AI","appName":"Easy Peasy AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"STARRYAI","appName":"Starry AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ARTBREEDER","appName":"Artbreeder","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ELAI","appName":"Elai","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"KHROMA","appName":"khroma","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"HEYGEN","appName":"HeyGen","parent":"AI_ML","parentName":"AI
+        & ML Applications"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '566'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 8d786ef2-ec0d-9fe7-81bb-3b0f1313b309
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/sslPolicy?page=1&pageSize=10
+  response:
+    body:
+      string: '[{"app":"CHATGPT_AI","appName":"ChatGPT","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"ANDI","appName":"Andi","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHARACTER_AI","appName":"Character.AI","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"CHATSONIC","appName":"ChatSonic","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DALL_E","appName":"Dall-E","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"DEEP_DREAM_GENERATOR","appName":"Deep Dream Generator","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"GANPAINT","appName":"GANPaint","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"JASPER","appName":"Jasper","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"MIDJOURNEY","appName":"Midjourney","parent":"AI_ML","parentName":"AI
+        & ML Applications"},{"app":"NEURAL_BLENDER","appName":"Neural Blender","parent":"AI_ML","parentName":"AI
+        & ML Applications"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '220'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 062a33d9-32fa-99bc-b783-10cce510472c
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4989'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/sslPolicy?appClass=WEB_MAIL
+  response:
+    body:
+      string: '[{"app":"GOOGLE_WEBMAIL","appName":"Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"YAHOO_WEBMAIL","appName":"Yahoo! Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WINDOWS_LIVE_HOTMAIL","appName":"Outlook (Office 365)","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AOL_MAIL","appName":"AOL Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LYCOS_MAIL_WEBMAIL","appName":"Lycos Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"REDIFFMAIL","appName":"Rediffmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LAPOSTE","appName":"La Poste","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ORANGEFR","appName":"Orange Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAILFREENETDE","appName":"freenet Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WINMAILRU","appName":"Mail.ru","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILYANDEXRU","appName":"Yandex Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILRAMBLERRU","appName":"Rambler Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILTONLINEDE","appName":"t-online.de Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"WEBDE","appName":"WEB.DE Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GMXDE","appName":"GMX Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"INBOX_WEBMAIL","appName":"inbox.com Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ZOHO","appName":"Zoho Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FASTMAIL","appName":"FastMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"COMCASTMAIL","appName":"Comcast.net Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ROADRUNNER","appName":"Roadrunner Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HOTMAIL_PERSONAL","appName":"Outlook (Personal)","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"QQ_MAIL","appName":"QQMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"BANANATAG","appName":"Bananatag","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CENTRUM","appName":"centrum","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SAPO","appName":"Sapo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GOO","appName":"Goo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SUBSCRIBERMAIL","appName":"SubscriberMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILJET","appName":"MailJet","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL2WEB","appName":"Mail2web","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HUSHMAIL","appName":"Hushmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PROTONMAIL","appName":"ProtonMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HEY","appName":"Hey","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EASYMAIL7","appName":"EasyMail7","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ATOMPARK_SOFTWARE_ATOMIC_EMAIL_TRACKER","appName":"AtomPark
+        Software - Atomic Email Tracker","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"SOCKETLABS","appName":"SocketLabs","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NCR_COUNTERPOINT","appName":"NCR Counterpoint","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NOTABLIST","appName":"Notablist","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CYBOZU_MAILWISE","appName":"Cybozu Mailwise","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NIFCLOUD_BUSINESS_MAIL","appName":"Nifcloud Business Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LOLLIPOP_WEB_MAILER_BY_GMO","appName":"Lollipop Web Mailer
+        by GMO","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"BIGLOBE_MAIL","appName":"Biglobe
+        Mail","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"OCN_MAIL_SERVICE","appName":"OCN
+        Mail Service","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"DOPPLER_RELAY","appName":"Doppler
+        Relay","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"MAILBOX_RENTAL","appName":"Mailbox
+        rental","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"KINTONE_KMAILER","appName":"kintone
+        - kMailer","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"GMELIUS","appName":"Gmelius","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FLOW_E","appName":"Flow-e","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLOUDMAILIN","appName":"CloudMailin","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLOUDSELL","appName":"cloudSell","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FINDTHATLEAD","appName":"FindThatLead","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EVERYONE_NET","appName":"Everyone.net","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EWE_CLOUD_WEBMAIL","appName":"EWE - Cloud & Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TILIQ","appName":"Tiliq","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILTRACK_FOR_GMAIL","appName":"Mailtrack for Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILIFY","appName":"Mailify","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"LEADGNOME","appName":"LeadGnome","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EM_CLIENT","appName":"eM Client","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAIL_LIST_VERIFY","appName":"Email List Verify","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EMAIL_HIPPO","appName":"Email Hippo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UNROLL","appName":"Unroll","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AGARI_BRAND_PROTECTION","appName":"Agari - Brand Protection","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CIPHER_CRAFT_EMAIL","appName":"Cipher Craft Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HELPSPOT","appName":"HelpSpot","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HENNGE_CUSTOMERS_MAIL_CLOUD","appName":"HENNGE - Customers
+        Mail Cloud","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"KAGOYA_MAIL_SERVER","appName":"Kagoya
+        Mail Server","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"AUTHSMTP","appName":"AuthSMTP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AMPSY","appName":"Ampsy","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"HAI2_MAIL","appName":"hai2 mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDEALER","appName":"Maildealer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"BLASTMAIL","appName":"Blastmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KNAK_","appName":"knak.","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDROP","appName":"Maildrop","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"REDIFFMAIL_PRO","appName":"rediffmail Pro","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILSPRING","appName":"Mailspring","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"RAINLOOP","appName":"RainLoop","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILENABLE","appName":"MailEnable","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_IN_A_BOX","appName":"Mail-in-a-box","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EGROUPWARE","appName":"EGroupware","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KINGMAILER","appName":"Kingmailer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"CLAWS_MAIL","appName":"Claws Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILUP","appName":"MailUp","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"JUNK_EMAIL_FILTER","appName":"Junk Email Filter","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"AFTERLOGIC_WEBMAIL","appName":"Afterlogic Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DUOCIRCLE_SPAM_FILTERING","appName":"DuoCircle Spam Filtering","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KIWI_FOR_GMAIL","appName":"Kiwi for Gmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"EEVID","appName":"eEvidence","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SERVERMX","appName":"Servermx","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UNIBOX","appName":"Unibox","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DADA_MAIL","appName":"Dada Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"DATAMAIL_LINGUISTIC_EMAIL_APP","appName":"Datamail Linguistic
+        Email App","parent":"WEB_MAIL","parentName":"Web Mail"},{"app":"LETTERMELATER_COM","appName":"LetterMeLater.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GAGGLE_MAIL","appName":"Gaggle Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"KIRIM_EMAIL","appName":"KIRIM.EMAIL","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TUFFMAIL_COM","appName":"Tuffmail.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PINGLY","appName":"Pingly","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILO","appName":"Mailo","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SOVERIN","appName":"Soverin","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SENDWP","appName":"SendWP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"GLOBIMAIL","appName":"Globimail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_KING","appName":"Mail-King","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MYSMTP","appName":"MYSMTP","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TISCALI_MAIL","appName":"Tiscali Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"UOL_MAIL","appName":"UOL Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"VIRGILIO_MAIL","appName":"Virgilio Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAILDOCKER","appName":"Maildocker","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PREMAILER","appName":"Premailer","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ZENDIRECT","appName":"ZenDirect","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"MAIL_LABS","appName":"Mail Labs","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SIMPRESSIVE","appName":"simpressive","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"POCZTA_O2","appName":"Poczta o2","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"NAVER_MAIL","appName":"Naver Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ICLOUD_MAIL","appName":"iCloud Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SOHU_MAIL","appName":"sohu mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"SINA_MAIL","appName":"sina mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONE_HUNDRED_AND_SIXTY_THREE_MAIL","appName":"163 Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONLINE_EE","appName":"Online.ee","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TOM_MAIL","appName":"Tom Mail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONE_HUNDRED_AND_THIRTY_NINE_EMAIL","appName":"139 Email","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"FREEMAIL","appName":"FreeMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"TELENET_WEBMAIL","appName":"Telenet Webmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"ONETWOSIX","appName":"126.com","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"STARTMAIL","appName":"StartMail","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"POCZTA_ONET","appName":"Poczta Onet","parent":"WEB_MAIL","parentName":"Web
+        Mail"},{"app":"PRIVATEEMAIL","appName":"PrivateEmail","parent":"WEB_MAIL","parentName":"Web
+        Mail"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 06:11:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '101'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 573ae035-237f-96d8-b515-0534b81fe861
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

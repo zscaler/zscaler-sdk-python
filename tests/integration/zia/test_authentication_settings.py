@@ -55,6 +55,22 @@ class TestExemptedUrls:
             except Exception as exc:
                 errors.append(f"Failed to retrieve or verify exempt list: {exc}")
 
+            # Step 3: Get authentication settings
+            try:
+                auth_settings, _, error = client.zia.authentication_settings.get_authentication_settings()
+                assert error is None, f"Error getting authentication settings: {error}"
+                assert auth_settings is not None, "Authentication settings should not be None"
+            except Exception as exc:
+                errors.append(f"Failed to get authentication settings: {exc}")
+
+            # Step 4: Get authentication settings lite
+            try:
+                auth_settings_lite, _, error = client.zia.authentication_settings.get_authentication_settings_lite()
+                assert error is None, f"Error getting authentication settings lite: {error}"
+                assert auth_settings_lite is not None, "Authentication settings lite should not be None"
+            except Exception as exc:
+                errors.append(f"Failed to get authentication settings lite: {exc}")
+
         finally:
             # Step 3: Cleanup - delete all URLs
             try:

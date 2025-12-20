@@ -1,0 +1,584 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/listByCompany
+  response:
+    body:
+      string: "[ {\n  \"id\" : \"11925\",\n  \"active\" : \"1\",\n  \"name\" : \"SGIO-Tunnel2.0\",\n
+        \ \"conditionType\" : 1,\n  \"dnsServers\" : \"\",\n  \"dnsSearchDomains\"
+        : \"\",\n  \"enableLWFDriver\" : \"1\",\n  \"hostname\" : \"\",\n  \"resolvedIpsForHostname\"
+        : \"\",\n  \"trustedSubnets\" : \"\",\n  \"trustedGateways\" : \"\",\n  \"trustedDhcpServers\"
+        : \"\",\n  \"trustedEgressIps\" : \"\",\n  \"predefinedTrustedNetworks\" :
+        false,\n  \"predefinedTnAll\" : false,\n  \"forwardingProfileActions\" : [
+        {\n    \"networkType\" : 1,\n    \"actionType\" : 1,\n    \"systemProxy\"
+        : 0,\n    \"customPac\" : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\"
+        : {\n      \"proxyAction\" : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\"
+        : 0,\n      \"pacURL\" : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\"
+        : \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 2,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 1,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 0,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 1,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 3,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  } ],\n  \"forwardingProfileZpaActions\"
+        : [ {\n    \"networkType\" : 1,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 2,\n      \"allowTlsFallback\" : 1,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n    \"lbsZpaThresholdLimit\" :
+        1,\n    \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\"
+        : 2,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 2,\n      \"allowTlsFallback\"
+        : 1,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n
+        \   \"lbsZpaThresholdLimit\" : 1,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  }, {\n    \"networkType\" : 0,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 2,\n      \"allowTlsFallback\" : 1,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n    \"lbsZpaThresholdLimit\" :
+        1,\n    \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\"
+        : 3,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 2,\n      \"allowTlsFallback\"
+        : 1,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n
+        \   \"lbsZpaThresholdLimit\" : 1,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  } ],\n  \"evaluateTrustedNetwork\" : 1,\n  \"enableSplitVpnTN\" : 0,\n
+        \ \"skipTrustedCriteriaMatch\" : 0\n}, {\n  \"id\" : \"0\",\n  \"active\"
+        : \"1\",\n  \"name\" : \"Default\",\n  \"conditionType\" : 1,\n  \"enableLWFDriver\"
+        : \"0\",\n  \"predefinedTrustedNetworks\" : false,\n  \"predefinedTnAll\"
+        : false,\n  \"forwardingProfileActions\" : [ {\n    \"networkType\" : 0,\n
+        \   \"actionType\" : 1,\n    \"systemProxy\" : 2,\n    \"customPac\" : \"\",\n
+        \   \"enablePacketTunnel\" : 0,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 0,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 0,\n    \"DTLSTimeout\" : 0,\n    \"UDPTimeout\"
+        : 0,\n    \"TLSTimeout\" : 0,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 0,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 0,\n    \"zenProbeSampleSize\" : 0,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 2,\n    \"actionType\" : 1,\n    \"systemProxy\" : 2,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 0,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 0,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 0,\n    \"DTLSTimeout\" : 0,\n    \"UDPTimeout\"
+        : 0,\n    \"TLSTimeout\" : 0,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 0,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 0,\n    \"zenProbeSampleSize\" : 0,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 1,\n    \"actionType\" : 3,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 0,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 0,\n    \"DTLSTimeout\" : 0,\n    \"UDPTimeout\"
+        : 0,\n    \"TLSTimeout\" : 0,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 0,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 0,\n    \"zenProbeSampleSize\" : 0,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 3,\n    \"actionType\" : 1,\n    \"systemProxy\" : 2,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 0,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 0,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 0,\n    \"DTLSTimeout\" : 0,\n    \"UDPTimeout\"
+        : 0,\n    \"TLSTimeout\" : 0,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 0,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 0,\n    \"zenProbeSampleSize\" : 0,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  } ],\n  \"forwardingProfileZpaActions\"
+        : [ {\n    \"networkType\" : 0,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 0,\n      \"allowTlsFallback\" : 0,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 0,\n    \"lbsZpaProbeSampleSize\" : 0,\n    \"lbsZpaThresholdLimit\" : 1,\n
+        \   \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\" :
+        2,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 0,\n      \"allowTlsFallback\"
+        : 0,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 0,\n    \"lbsZpaProbeSampleSize\" : 0,\n
+        \   \"lbsZpaThresholdLimit\" : 1,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  }, {\n    \"networkType\" : 1,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 0,\n      \"allowTlsFallback\" : 0,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 0,\n    \"lbsZpaProbeSampleSize\" : 0,\n    \"lbsZpaThresholdLimit\" : 1,\n
+        \   \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\" :
+        3,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 0,\n    \"TLSTimeout\" : 0,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 0,\n      \"allowTlsFallback\"
+        : 0,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 0,\n    \"lbsZpaProbeSampleSize\" : 0,\n
+        \   \"lbsZpaThresholdLimit\" : 0,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  } ],\n  \"evaluateTrustedNetwork\" : 0,\n  \"enableSplitVpnTN\" : 0,\n
+        \ \"skipTrustedCriteriaMatch\" : 0\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:25 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '172'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - cd1e6ecc-7d33-9ec1-88d6-607a3b46196f
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '97'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '85'
+      x-ratelimit-reset:
+      - '1236'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/listByCompany?page=1&pageSize=1
+  response:
+    body:
+      string: "[ {\n  \"id\" : \"11925\",\n  \"active\" : \"1\",\n  \"name\" : \"SGIO-Tunnel2.0\",\n
+        \ \"conditionType\" : 1,\n  \"dnsServers\" : \"\",\n  \"dnsSearchDomains\"
+        : \"\",\n  \"enableLWFDriver\" : \"1\",\n  \"hostname\" : \"\",\n  \"resolvedIpsForHostname\"
+        : \"\",\n  \"trustedSubnets\" : \"\",\n  \"trustedGateways\" : \"\",\n  \"trustedDhcpServers\"
+        : \"\",\n  \"trustedEgressIps\" : \"\",\n  \"predefinedTrustedNetworks\" :
+        false,\n  \"predefinedTnAll\" : false,\n  \"forwardingProfileActions\" : [
+        {\n    \"networkType\" : 1,\n    \"actionType\" : 1,\n    \"systemProxy\"
+        : 0,\n    \"customPac\" : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\"
+        : {\n      \"proxyAction\" : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\"
+        : 0,\n      \"pacURL\" : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\"
+        : \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 2,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 1,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 0,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 1,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  }, {\n    \"networkType\"
+        : 3,\n    \"actionType\" : 1,\n    \"systemProxy\" : 0,\n    \"customPac\"
+        : \"\",\n    \"enablePacketTunnel\" : 1,\n    \"systemProxyData\" : {\n      \"proxyAction\"
+        : 1,\n      \"enableAutoDetect\" : 0,\n      \"enablePAC\" : 0,\n      \"pacURL\"
+        : \"\",\n      \"enableProxyServer\" : 0,\n      \"proxyServerAddress\" :
+        \"\",\n      \"proxyServerPort\" : \"0\",\n      \"bypassProxyForPrivateIP\"
+        : 0,\n      \"performGPUpdate\" : 0,\n      \"pacDataPath\" : \"\"\n    },\n
+        \   \"primaryTransport\" : 1,\n    \"DTLSTimeout\" : 9,\n    \"UDPTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"blockUnreachableDomainsTraffic\"
+        : 0,\n    \"allowTLSFallback\" : 1,\n    \"tunnel2FallbackType\" : 0,\n    \"dropIpv6Traffic\"
+        : 0,\n    \"redirectWebTraffic\" : 0,\n    \"dropIpv6IncludeTrafficInT2\"
+        : 0,\n    \"useTunnel2ForProxiedWebTraffic\" : 0,\n    \"useTunnel2ForUnencryptedWebTraffic\"
+        : 0,\n    \"pathMtuDiscovery\" : 1,\n    \"latencyBasedZenEnablement\" : 0,\n
+        \   \"zenProbeInterval\" : 60,\n    \"zenProbeSampleSize\" : 5,\n    \"zenThresholdLimit\"
+        : 2,\n    \"dropIpv6TrafficInIpv6Network\" : 0\n  } ],\n  \"forwardingProfileZpaActions\"
+        : [ {\n    \"networkType\" : 1,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 2,\n      \"allowTlsFallback\" : 1,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n    \"lbsZpaThresholdLimit\" :
+        1,\n    \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\"
+        : 2,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 2,\n      \"allowTlsFallback\"
+        : 1,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n
+        \   \"lbsZpaThresholdLimit\" : 1,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  }, {\n    \"networkType\" : 0,\n    \"actionType\" : 1,\n    \"primaryTransport\"
+        : 0,\n    \"DTLSTimeout\" : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\"
+        : 0,\n    \"sendTrustedNetworkResultToZpa\" : 0,\n    \"partnerInfo\" : {\n
+        \     \"primaryTransport\" : 2,\n      \"allowTlsFallback\" : 1,\n      \"mtuForZadapter\"
+        : 0\n    },\n    \"latencyBasedZpaServerEnablement\" : 0,\n    \"lbsZpaProbeInterval\"
+        : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n    \"lbsZpaThresholdLimit\" :
+        1,\n    \"latencyBasedServerMTEnablement\" : 0\n  }, {\n    \"networkType\"
+        : 3,\n    \"actionType\" : 1,\n    \"primaryTransport\" : 0,\n    \"DTLSTimeout\"
+        : 9,\n    \"TLSTimeout\" : 5,\n    \"mtuForZadapter\" : 0,\n    \"sendTrustedNetworkResultToZpa\"
+        : 0,\n    \"partnerInfo\" : {\n      \"primaryTransport\" : 2,\n      \"allowTlsFallback\"
+        : 1,\n      \"mtuForZadapter\" : 0\n    },\n    \"latencyBasedZpaServerEnablement\"
+        : 0,\n    \"lbsZpaProbeInterval\" : 30,\n    \"lbsZpaProbeSampleSize\" : 5,\n
+        \   \"lbsZpaThresholdLimit\" : 1,\n    \"latencyBasedServerMTEnablement\"
+        : 0\n  } ],\n  \"evaluateTrustedNetwork\" : 1,\n  \"enableSplitVpnTN\" : 0,\n
+        \ \"skipTrustedCriteriaMatch\" : 0\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:25 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '183'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 24fe1f10-ce6c-9399-9280-07950f82f510
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '96'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '84'
+      x-ratelimit-reset:
+      - '1235'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"active": "1", "conditionType": 1, "dnsSearchDomains": "", "dnsServers":
+      "", "evaluateTrustedNetwork": 1, "forwardingProfileActions": [{"actionType":
+      1, "blockUnreachableDomainsTraffic": 0, "customPac": "", "dropIpv6IncludeTrafficInT2":
+      0, "dropIpv6Traffic": 0, "dropIpv6TrafficInIpv6Network": 0, "enablePacketTunnel":
+      1, "latencyBasedZenEnablement": 0, "mtuForZadapter": 0, "networkType": 1, "pathMtuDiscovery":
+      1, "primaryTransport": 1, "redirectWebTraffic": 0, "systemProxy": 0, "useTunnel2ForProxiedWebTraffic":
+      0, "zenProbeInterval": 60, "zenProbeSampleSize": 5, "zenThresholdLimit": 2,
+      "systemProxyData": {"bypassProxyForPrivateIP": null, "enableAutoDetect": 0,
+      "enablePAC": null, "enableProxyServer": 0, "pacDataPath": "", "pacURL": null,
+      "performGPUpdate": null, "proxyAction": 1, "proxyServerAddress": "", "proxyServerPort":
+      "0"}}, {"actionType": 1, "blockUnreachableDomainsTraffic": 0, "customPac": "",
+      "dropIpv6IncludeTrafficInT2": 0, "dropIpv6Traffic": 0, "dropIpv6TrafficInIpv6Network":
+      0, "enablePacketTunnel": 1, "latencyBasedZenEnablement": 0, "mtuForZadapter":
+      0, "networkType": 2, "pathMtuDiscovery": 1, "primaryTransport": 1, "redirectWebTraffic":
+      0, "systemProxy": 0, "useTunnel2ForProxiedWebTraffic": 1, "zenProbeInterval":
+      60, "zenProbeSampleSize": 5, "zenThresholdLimit": 2, "systemProxyData": {"bypassProxyForPrivateIP":
+      null, "enableAutoDetect": 0, "enablePAC": null, "enableProxyServer": 0, "pacDataPath":
+      "", "pacURL": null, "performGPUpdate": null, "proxyAction": 1, "proxyServerAddress":
+      "", "proxyServerPort": "0"}}, {"actionType": 1, "blockUnreachableDomainsTraffic":
+      0, "customPac": "", "dropIpv6IncludeTrafficInT2": 0, "dropIpv6Traffic": 0, "dropIpv6TrafficInIpv6Network":
+      0, "enablePacketTunnel": 1, "latencyBasedZenEnablement": 0, "mtuForZadapter":
+      0, "networkType": 0, "pathMtuDiscovery": 1, "primaryTransport": 1, "redirectWebTraffic":
+      0, "systemProxy": 0, "useTunnel2ForProxiedWebTraffic": 1, "zenProbeInterval":
+      60, "zenProbeSampleSize": 5, "zenThresholdLimit": 2, "systemProxyData": {"bypassProxyForPrivateIP":
+      null, "enableAutoDetect": 0, "enablePAC": null, "enableProxyServer": 0, "pacDataPath":
+      "", "pacURL": null, "performGPUpdate": null, "proxyAction": 1, "proxyServerAddress":
+      "", "proxyServerPort": "0"}}, {"actionType": 1, "blockUnreachableDomainsTraffic":
+      0, "customPac": "", "dropIpv6IncludeTrafficInT2": 0, "dropIpv6Traffic": 0, "dropIpv6TrafficInIpv6Network":
+      0, "enablePacketTunnel": 1, "latencyBasedZenEnablement": 0, "mtuForZadapter":
+      0, "networkType": 3, "pathMtuDiscovery": 1, "primaryTransport": 1, "redirectWebTraffic":
+      0, "systemProxy": 0, "useTunnel2ForProxiedWebTraffic": 0, "zenProbeInterval":
+      60, "zenProbeSampleSize": 5, "zenThresholdLimit": 2, "systemProxyData": {"bypassProxyForPrivateIP":
+      null, "enableAutoDetect": 0, "enablePAC": null, "enableProxyServer": 0, "pacDataPath":
+      "", "pacURL": null, "performGPUpdate": null, "proxyAction": 1, "proxyServerAddress":
+      "", "proxyServerPort": "0"}}], "forwardingProfileZpaActions": [{"actionType":
+      1, "latencyBasedZpaServerEnablement": 0, "lbsZpaProbeInterval": 30, "lbsZpaProbeSampleSize":
+      5, "lbsZpaThresholdLimit": 1, "mtuForZadapter": 0, "networkType": 1, "partnerInfo":
+      {"allowTlsFallback": 1, "mtuForZadapter": 0, "primaryTransport": 2}, "primaryTransport":
+      0, "sendTrustedNetworkResultToZpa": 0}, {"actionType": 1, "latencyBasedZpaServerEnablement":
+      0, "lbsZpaProbeInterval": 30, "lbsZpaProbeSampleSize": 5, "lbsZpaThresholdLimit":
+      1, "mtuForZadapter": 0, "networkType": 2, "partnerInfo": {"allowTlsFallback":
+      1, "mtuForZadapter": 0, "primaryTransport": 2}, "primaryTransport": 0, "sendTrustedNetworkResultToZpa":
+      0}, {"actionType": 1, "latencyBasedZpaServerEnablement": 0, "lbsZpaProbeInterval":
+      30, "lbsZpaProbeSampleSize": 5, "lbsZpaThresholdLimit": 1, "mtuForZadapter":
+      0, "networkType": 0, "partnerInfo": {"allowTlsFallback": 1, "mtuForZadapter":
+      0, "primaryTransport": 2}, "primaryTransport": 0, "sendTrustedNetworkResultToZpa":
+      0}, {"actionType": 1, "latencyBasedZpaServerEnablement": 0, "lbsZpaProbeInterval":
+      30, "lbsZpaProbeSampleSize": 5, "lbsZpaThresholdLimit": 1, "mtuForZadapter":
+      0, "networkType": 3, "partnerInfo": {"allowTlsFallback": 1, "mtuForZadapter":
+      0, "primaryTransport": 2}, "primaryTransport": 0, "sendTrustedNetworkResultToZpa":
+      0}], "hostname": "", "id": "11925", "name": "SGIO-Tunnel2.0", "predefinedTnAll":
+      false, "predefinedTrustedNetworks": false, "resolvedIpsForHostname": "", "skipTrustedCriteriaMatch":
+      0, "trustedDhcpServers": "", "trustedEgressIps": "", "trustedGateways": "",
+      "trustedNetworkIds": [], "trustedNetworks": [], "trustedSubnets": ""}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4600'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/edit
+  response:
+    body:
+      string: "{\n  \"success\" : \"false\",\n  \"id\" : 0\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:25 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '438'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d247b043-ab8e-910e-a360-d92a7165c56a
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '95'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '83'
+      x-ratelimit-reset:
+      - '1235'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/999999999/delete
+  response:
+    body:
+      string: "{\n  \"success\" : \"false\",\n  \"id\" : 0\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:26 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '346'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 8069d918-3f8a-95f2-94d1-fe6b516e8b10
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '97'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '82'
+      x-ratelimit-reset:
+      - '1234'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

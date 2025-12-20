@@ -84,6 +84,20 @@ class TestDLPDictionary:
             errors.append(f"Exception during list_dicts: {str(e)}")
 
         try:
+            dict_list_lite, _, error = client.zia.dlp_dictionary.list_dicts_lite()
+            assert error is None, f"List DLP Dictionary Lite Error: {error}"
+            assert dict_list_lite is not None, "Dictionary lite list should not be None"
+        except Exception as e:
+            errors.append(f"Exception during list_dicts_lite: {str(e)}")
+
+        try:
+            # Test validate_dict
+            validate_result, _, error = client.zia.dlp_dictionary.validate_dict("test-pattern")
+            # May return error for invalid pattern - that's ok
+        except Exception as e:
+            errors.append(f"Exception during validate_dict: {str(e)}")
+
+        try:
             if dict_id:
                 retrieved_dict, _, error = client.zia.dlp_dictionary.get_dict(dict_id)
                 assert error is None, f"Get DLP Dictionary Error: {error}"

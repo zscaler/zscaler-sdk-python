@@ -1,0 +1,486 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/listByCompany
+  response:
+    body:
+      string: "{\n  \"totalCount\" : 22,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
+        : \"9913\",\n    \"companyId\" : \"4543\",\n    \"createdBy\" : \"247739\",\n
+        \   \"editedBy\" : \"247739\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
+        \   \"networkName\" : \"BDTrustedNetwork01\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
+        : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"active\" : true\n  },
+        {\n    \"id\" : \"9915\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"247739\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"3c3e55e7-cfe1-4abf-974f-276ac586309b\",\n
+        \   \"networkName\" : \"BDTrustedNetwork02\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"\",\n    \"dnsSearchDomains\" : \"server2.bd-hashicorp.com\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13381\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"ca624ef9-703b-45ed-8c6c-6b6217f2b355\",\n    \"networkName\"
+        : \"BD-TrustedNetwork01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13383\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"4133a645-051d-43ae-a700-5da9825eafd9\",\n
+        \   \"networkName\" : \"BD-TrustedNetwork02\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"8.8.4.4\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
+        : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" :
+        \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13385\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"d7d90482-7d0d-4eef-b1c1-e1c5d6eb21db\",\n    \"networkName\"
+        : \"BD-TrustedNetwork03\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"\",\n    \"dnsSearchDomains\" : \"srv01.bd-hashicorp.com\",\n    \"hostnames\"
+        : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" :
+        \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13387\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"7826367a-3014-4509-afcf-498fc91f1be3\",\n    \"networkName\"
+        : \"BD Trusted Network 01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"1.2.3.4\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13389\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"9aee2327-20e8-4b8f-ac06-05e369379982\",\n
+        \   \"networkName\" : \"BD TrustedNetwork 01\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"2.3.4.5\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
+        : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" :
+        \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13391\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"b2f1cfd0-915a-46c1-925c-c3a65ada29e5\",\n    \"networkName\"
+        : \"BD TrustedNetwork01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"5.6.7.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13393\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"f66b91be-0659-4310-b0d2-643415e4da81\",\n
+        \   \"networkName\" : \"BD  TrustedNetwork 01\",\n    \"conditionType\" :
+        1,\n    \"dnsServers\" : \"6.7.8.9\",\n    \"dnsSearchDomains\" : \"\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13395\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"98a68cc0-8796-455a-93cd-7c09b2811a58\",\n    \"networkName\"
+        : \"BD    TrustedNetwork01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"5.6.7.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13397\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"c60e58b0-753f-4a2a-9c1e-c833ae3854a4\",\n
+        \   \"networkName\" : \"BD   TrustedNetwork   01\",\n    \"conditionType\"
+        : 1,\n    \"dnsServers\" : \"3.4.5.6\",\n    \"dnsSearchDomains\" : \"\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13399\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"e09e8ace-bbc9-40a7-bb67-a189f8dba07a\",\n    \"networkName\"
+        : \"BD  TrustedNetwork  01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"2.3.4.5\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13401\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"8c021180-6515-4473-b32b-1273245b0c8d\",\n
+        \   \"networkName\" : \"BD   Trusted   Network 01\",\n    \"conditionType\"
+        : 1,\n    \"dnsServers\" : \"8.9.10.11\",\n    \"dnsSearchDomains\" : \"\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13403\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"d9b758b7-9d94-4379-9ee3-9ccaf9c27a4b\",\n    \"networkName\"
+        : \"BD  Trusted Network   01\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"7.8.9.10\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"13405\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"f13c5571-7f9a-457f-bc96-ca8e907a9fa1\",\n
+        \   \"networkName\" : \"BDTrustedNetwork03\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"\",\n    \"dnsSearchDomains\" : \"server3.bd-hashicorp.com\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"13407\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"01b54e90-39c1-43e1-a484-6d5c33c65195\",\n    \"networkName\"
+        : \"BDTrustedNetwork\",\n    \"conditionType\" : 1,\n    \"dnsServers\" :
+        \"\",\n    \"dnsSearchDomains\" : \"10.11.12.13\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"15819\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"0\",\n    \"editedBy\" : \"0\",\n    \"guid\" : \"f52ad818-3a29-4100-a2aa-a752104ceabe\",\n
+        \   \"networkName\" : \"BDTrustedNetwork_Dev100_Update\",\n    \"conditionType\"
+        : 0,\n    \"dnsServers\" : \"10.11.12.13\",\n    \"dnsSearchDomains\" : \"\",\n
+        \   \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"ssids\"
+        : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\" : \"\",\n
+        \   \"trustedDhcpServers\" : \"\",\n    \"trustedEgressIps\" : \"\",\n    \"active\"
+        : true\n  }, {\n    \"id\" : \"16491\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"453111\",\n    \"editedBy\" : \"453111\",\n    \"guid\" : \"1b102695-7f9c-4d48-a193-b9353303bfd3\",\n
+        \   \"networkName\" : \"OttawaNW2\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n
+        \   \"resolvedIpsForHostname\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"trustedEgressIps\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"16493\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453111\",\n    \"editedBy\" : \"453111\",\n
+        \   \"guid\" : \"652485b4-6b99-4534-8368-6933bf4201cc\",\n    \"networkName\"
+        : \"OttawaNW\",\n    \"conditionType\" : 1,\n    \"dnsServers\" : \"4.4.4.4\",\n
+        \   \"dnsSearchDomains\" : \"\",\n    \"hostnames\" : \"\",\n    \"resolvedIpsForHostname\"
+        : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\" : \"\",\n
+        \   \"trustedDhcpServers\" : \"\",\n    \"trustedEgressIps\" : \"\",\n    \"active\"
+        : true\n  }, {\n    \"id\" : \"16691\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"0\",\n    \"editedBy\" : \"0\",\n    \"guid\" : \"e235a139-aa32-4f4b-904b-7daf0006d1b4\",\n
+        \   \"networkName\" : \"NewTrustedNetwork 7522\",\n    \"conditionType\" :
+        0,\n    \"dnsServers\" : \"10.11.12.13\",\n    \"dnsSearchDomains\" : \"network1.acme.com,
+        network2.acme.com, network3.acme.com\",\n    \"hostnames\" : \"\",\n    \"trustedSubnets\"
+        : \"\",\n    \"trustedGateways\" : \"\",\n    \"trustedDhcpServers\" : \"\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"19625\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"453095\",\n    \"editedBy\" : \"453095\",\n
+        \   \"guid\" : \"32817b53-a0f9-42e6-ba37-d99bb43af376\",\n    \"networkName\"
+        : \"On_Trusted_Network_Mac\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
+        : \"8.8.8.8\",\n    \"active\" : false\n  }, {\n    \"id\" : \"19687\",\n
+        \   \"companyId\" : \"4543\",\n    \"createdBy\" : \"0\",\n    \"editedBy\"
+        : \"0\",\n    \"guid\" : \"142f4831-9721-4bff-82ee-45ae205ec8c6\",\n    \"networkName\"
+        : \"tests-trusted-network-vcr0001\",\n    \"conditionType\" : 0,\n    \"dnsServers\"
+        : \"10.10.10.10, 10.10.10.11\",\n    \"dnsSearchDomains\" : \"test.example.com\",\n
+        \   \"active\" : true\n  } ]\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:27 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '169'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 80f8dfd8-d5f2-9b42-a28a-4c928609bbcb
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '96'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '80'
+      x-ratelimit-reset:
+      - '1233'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"active": true, "networkName": "Test Trusted Network for Coverage", "dnsServers":
+      "10.11.12.13, 10.11.12.14", "dnsSearchDomains": "test.example.com", "hostnames":
+      "", "trustedSubnets": "", "trustedGateways": "", "trustedDhcpServers": ""}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '238'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/create
+  response:
+    body:
+      string: "{\n  \"networkName\" : \"Test Trusted Network for Coverage\",\n  \"conditionType\"
+        : 0,\n  \"dnsServers\" : \"10.11.12.13, 10.11.12.14\",\n  \"dnsSearchDomains\"
+        : \"test.example.com\",\n  \"hostnames\" : \"\",\n  \"trustedSubnets\" : \"\",\n
+        \ \"trustedGateways\" : \"\",\n  \"trustedDhcpServers\" : \"\",\n  \"active\"
+        : true\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:28 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '313'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7d5585a2-1786-973f-b343-f94e0f9510d8
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '98'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '79'
+      x-ratelimit-reset:
+      - '1233'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/listByCompany?page=1&pageSize=1
+  response:
+    body:
+      string: "{\n  \"totalCount\" : 23,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
+        : \"9913\",\n    \"companyId\" : \"4543\",\n    \"createdBy\" : \"247739\",\n
+        \   \"editedBy\" : \"247739\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
+        \   \"networkName\" : \"BDTrustedNetwork01\",\n    \"conditionType\" : 1,\n
+        \   \"dnsServers\" : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
+        : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"active\" : true\n  }
+        ]\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:28 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '174'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 255cc395-609a-9641-861c-59529af46e2d
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '97'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '78'
+      x-ratelimit-reset:
+      - '1232'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"active": true, "companyId": "4543", "conditionType": 1, "createdBy":
+      "247739", "dnsSearchDomains": "", "dnsServers": "8.8.8.8", "editedBy": "247739",
+      "guid": "928c092b-3fe1-49bb-b01f-0618e4f38468", "hostnames": "", "id": "9913",
+      "networkName": "BDTrustedNetwork01", "resolvedIpsForHostname": ""}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '297'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/edit
+  response:
+    body:
+      string: "{\n  \"success\" : \"true\",\n  \"errorCode\" : \"0\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:29 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '424'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c976f5b4-e16f-9ee1-ac9b-20325d55e1b3
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '93'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '77'
+      x-ratelimit-reset:
+      - '1232'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/999999999/delete
+  response:
+    body:
+      string: "{\n  \"success\" : \"false\",\n  \"errorCode\" : \"3005\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:29 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '205'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 31d5f71d-36b4-99d4-a1fa-59ae7d13c3b6
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '94'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '76'
+      x-ratelimit-reset:
+      - '1231'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

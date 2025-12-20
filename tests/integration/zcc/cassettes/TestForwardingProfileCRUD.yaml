@@ -1,0 +1,69 @@
+interactions:
+- request:
+    body: '{"name": "Test Forwarding Profile for Coverage", "hostname": "test-server.example.com",
+      "resolvedIpsForHostname": "192.168.1.1"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '128'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/edit
+  response:
+    body:
+      string: "{\n  \"success\" : \"false\",\n  \"id\" : 0\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:39:26 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '182'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 35cd6b17-0a41-9303-a9d0-4384d3073866
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '94'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '81'
+      x-ratelimit-reset:
+      - '1234'
+      x-transaction-id:
+      - c017c331-e676-4a1b-acf5-f895621efec9
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

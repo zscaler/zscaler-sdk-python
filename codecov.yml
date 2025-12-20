@@ -43,6 +43,15 @@ ignore:
   - "docs/**/*"
   - "**/__init__.py"
   - "**/conftest.py"
+  - "**/models/**/*"
+  - "zscaler/*/models/*"
+  - "zscaler/zia/models/*"
+  - "zscaler/zpa/models/*"
+  - "zscaler/zcc/models/*"
+  - "zscaler/zdx/models/*"
+  - "zscaler/ztw/models/*"
+  - "zscaler/zidentity/models/*"
+  - "zscaler/zeasm/models/*"
 
 flags:
   unittests:

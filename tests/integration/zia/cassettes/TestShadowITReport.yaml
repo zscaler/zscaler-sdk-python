@@ -1,0 +1,418 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/lite
+  response:
+    body:
+      string: '[{"id":2097184,"name":"Recruiter"},{"id":1179666,"name":"Cybozu"},{"id":1245203,"name":"Splunk"},{"id":2228258,"name":"Nexus
+        Clinical"},{"id":2162721,"name":"Avaza"},{"id":2293795,"name":"Saasu"},{"id":655370,"name":"Acrobat
+        Connect"},{"id":262148,"name":"HTTP tunnel"},{"id":393222,"name":"Bing Search"},{"id":65537,"name":"Gmail"},{"id":983055,"name":"Wayfair"},{"id":720907,"name":"SugarCRM"},{"id":851981,"name":"Moo"},{"id":917518,"name":"Pivotaltracker"},{"id":2424869,"name":"OpenAI"},{"id":1245202,"name":"Emailage"},{"id":2097185,"name":"Headhunter"},{"id":2162720,"name":"Anaqua"},{"id":1179667,"name":"Inmotion
+        Hosting"},{"id":2228259,"name":"Harmony Medical"},{"id":2293794,"name":"Zervant"},{"id":655371,"name":"Level
+        3 Communications"},{"id":262149,"name":"Tor Anonymizer"},{"id":327684,"name":"Dailymotion"},{"id":393223,"name":"Yandex
+        Search"},{"id":131075,"name":"Craigslist"},{"id":983054,"name":"Best Buy"},{"id":720906,"name":"Zoho
+        CRM"},{"id":851980,"name":"Eloqua"},{"id":917519,"name":"Swig"},{"id":1245201,"name":"Centrify"},{"id":851983,"name":"BazaarVoice"},{"id":917516,"name":"Weebly"},{"id":327687,"name":"break"},{"id":393220,"name":"Live
+        Search"},{"id":65539,"name":"Outlook (Office 365)"},{"id":2162723,"name":"LegalEdge"},{"id":2097186,"name":"Pole
+        emploi"},{"id":1179664,"name":"Efty"},{"id":2228256,"name":"Liquid EHR"},{"id":2293793,"name":"Zarmoney"},{"id":983053,"name":"ikea"},{"id":1245200,"name":"ParticularAudience"},{"id":2097187,"name":"SEEK"},{"id":2162722,"name":"Logikcull"},{"id":1179665,"name":"GoDaddy"},{"id":2228257,"name":"Clinicient"},{"id":2293792,"name":"Divvy"},{"id":655369,"name":"ActiveCollab"},{"id":393221,"name":"AOL
+        Search"},{"id":131073,"name":"MySpace"},{"id":65538,"name":"Yahoo! Mail"},{"id":327686,"name":"Veoh"},{"id":983052,"name":"TE
+        Connectivity"},{"id":720904,"name":"Twilio"},{"id":851982,"name":"Archway"},{"id":917517,"name":"Usertesting"},{"id":1245207,"name":"Telefonica"},{"id":1179670,"name":"Domain.com"},{"id":2228262,"name":"NextStep
+        Solutions"},{"id":2293799,"name":"InvoiceBerry"},{"id":1310736,"name":"Ziddu"},{"id":2162725,"name":"PCLaw"},{"id":655374,"name":"Radian"},{"id":131078,"name":"Bebo"},{"id":65541,"name":"Lycos
+        Mail"},{"id":327681,"name":"YouTube"},{"id":393218,"name":"Yahoo Search"},{"id":983051,"name":"Flipkart"},{"id":720911,"name":"AdobeEchoSign"},{"id":917514,"name":"Mongohq"},{"id":1245206,"name":"Esri"},{"id":2162724,"name":"BQE
+        Software"},{"id":196614,"name":"MSN Web Messenger"},{"id":131079,"name":"XING"},{"id":65540,"name":"AOL
+        Mail"},{"id":262145,"name":"BitTorrent"},{"id":851976,"name":"Mailchimp"},{"id":393219,"name":"Ask
+        Search"},{"id":917515,"name":"Patternry"},{"id":2097189,"name":"Lever"},{"id":1179671,"name":"Nazwa"},{"id":2228263,"name":"EHR
+        Yourway"},{"id":2293798,"name":"ScratchPay"},{"id":983050,"name":"Zappos"},{"id":2097190,"name":"Avature"},{"id":1179668,"name":"Sedo"},{"id":1245205,"name":"Google
+        Login Services"},{"id":2228260,"name":"CareCloud"},{"id":2162727,"name":"Bill4Time"},{"id":2293797,"name":"ClearBooks"},{"id":655372,"name":"MegaMeeting"},{"id":196613,"name":"Yahoo
+        Web Messenger"},{"id":131076,"name":"Facebook"},{"id":65543,"name":"La Poste"},{"id":262146,"name":"Gizmo"},{"id":327683,"name":"Metacafe"},{"id":983049,"name":"Amazon"},{"id":720909,"name":"SlideShare"},{"id":851979,"name":"Hubspot"},{"id":917512,"name":"Github"},{"id":2424867,"name":"Neural
+        Blender"},{"id":1245204,"name":"CrowdStrike"},{"id":2097191,"name":"Paychex"},{"id":2162726,"name":"ContractSafe"},{"id":1179669,"name":"Network
+        Solutions"},{"id":2228261,"name":"AestheticsPro"},{"id":2293796,"name":"Elorus"},{"id":655373,"name":"HipChat"},{"id":262147,"name":"Pando"},{"id":327682,"name":"Google
+        Video"},{"id":393217,"name":"Google Search"},{"id":131077,"name":"LinkedIn"},{"id":65542,"name":"Rediffmail"},{"id":983048,"name":"Alibaba"},{"id":720908,"name":"Zimbra"},{"id":851978,"name":"Silverpop"},{"id":917513,"name":"Formstack"},{"id":983047,"name":"eBay"},{"id":2097192,"name":"PageUp"},{"id":1179674,"name":"Home"},{"id":1245211,"name":"PageProofer"},{"id":2228266,"name":"ShareNote"},{"id":2162729,"name":"ServeManager"},{"id":2293803,"name":"HostBill"},{"id":655362,"name":"Jive
+        Software"},{"id":589825,"name":"Login"},{"id":327693,"name":"Joost"},{"id":196619,"name":"eBuddy
+        - Web IM"},{"id":131082,"name":"Hi5"},{"id":65545,"name":"freenet Mail"},{"id":720899,"name":"Common
+        Office 365 Applications"},{"id":851973,"name":"Data"},{"id":917510,"name":"Cloudant"},{"id":1179675,"name":"Exceda"},{"id":196618,"name":"Mibbit
+        - Web IRC"},{"id":65544,"name":"Orange Mail"},{"id":327692,"name":"Hulu"},{"id":2097193,"name":"Zenefits"},{"id":2162728,"name":"Rocket
+        Matter"},{"id":1245210,"name":"Swisscom"},{"id":2228267,"name":"Advanced Data
+        Systems Corp"},{"id":2293802,"name":"ChargeOver"},{"id":655363,"name":"GoToMeeting"},{"id":983046,"name":"Groupon"},{"id":917511,"name":"Creately"},{"id":720898,"name":"Google
+        Analytics"},{"id":851972,"name":"Leadlander"},{"id":1179672,"name":"HostEurope"},{"id":196617,"name":"Meebo
+        - Web IM"},{"id":327695,"name":"Blinkx"},{"id":131080,"name":"Friendster"},{"id":65547,"name":"Yandex
+        Mail"},{"id":2097194,"name":"Paycor"},{"id":2162731,"name":"Actionstep"},{"id":1245209,"name":"TinyPNG"},{"id":2228264,"name":"WRS
+        Health"},{"id":2293801,"name":"Plooto"},{"id":983045,"name":"Fatwallet"},{"id":917508,"name":"Bugaware"},{"id":589827,"name":"Acceptable
+        Usage Policy"},{"id":720897,"name":"Salesforce"},{"id":851975,"name":"Marketo"},{"id":1179673,"name":"NodeChef"},{"id":196616,"name":"Google
+        Hangouts"},{"id":65546,"name":"Mail.ru"},{"id":2097195,"name":"Gusto"},{"id":2162730,"name":"eFileCabinet"},{"id":1245208,"name":"Polycom"},{"id":2228265,"name":"iPatientCare"},{"id":2293800,"name":"Happay"},{"id":655361,"name":"Webex"},{"id":983044,"name":"Coursera"},{"id":851974,"name":"Leadlife"},{"id":917509,"name":"Bughost"},{"id":589826,"name":"Configuration
+        Download"},{"id":327694,"name":"Megavideo"},{"id":1245215,"name":"Progress"},{"id":196623,"name":"IM+
+        - Web IM"},{"id":65549,"name":"t-online.de Mail"},{"id":327689,"name":"Revver"},{"id":2097196,"name":"Insperity"},{"id":2162733,"name":"LeanLaw"},{"id":1179678,"name":"Cloudhub"},{"id":2228270,"name":"Net
+        Health"},{"id":2293807,"name":"Invoicera"},{"id":655366,"name":"Netviewer"},{"id":983043,"name":"Coupons"},{"id":851969,"name":"Exacttarget"},{"id":917506,"name":"Browserstack"},{"id":1179679,"name":"Printer
+        Cloud"},{"id":196622,"name":"IMO - Web IM"},{"id":327688,"name":"AOL Video"},{"id":131087,"name":"Blogger"},{"id":65548,"name":"Rambler
+        Mail"},{"id":2097197,"name":"JobDiva"},{"id":2162732,"name":"LegalPRO"},{"id":1245214,"name":"Rapid7"},{"id":2228271,"name":"Psychiatry
+        Cloud"},{"id":2293806,"name":"Slickpie"},{"id":655367,"name":"Viva Engage"},{"id":983042,"name":"Paypal"},{"id":720902,"name":"IBM
+        Connections iNotes"},{"id":917507,"name":"Bugtrack"},{"id":2097198,"name":"HireRight"},{"id":1179676,"name":"LocaWeb"},{"id":1245213,"name":"Panasonic"},{"id":2228268,"name":"Therabill"},{"id":2162735,"name":"Elite"},{"id":2293805,"name":"Stampli"},{"id":655364,"name":"GoToWebinar"},{"id":196621,"name":"Facebook
+        - Web IM"},{"id":393224,"name":"CA Google"},{"id":131084,"name":"Yahoo Groups"},{"id":65551,"name":"GMX
+        Mail"},{"id":983041,"name":"Bit.ly"},{"id":720901,"name":"Evernote"},{"id":851971,"name":"DoubleClick"},{"id":2424875,"name":"Runway"},{"id":851970,"name":"ConstantContact"},{"id":131085,"name":"Google
+        Groups"},{"id":65550,"name":"WEB.DE Mail"},{"id":2162734,"name":"HoudiniEsq"},{"id":1245212,"name":"LiveNetLife"},{"id":917505,"name":"Bitbucket"},{"id":2097199,"name":"Snagajob"},{"id":2228269,"name":"Clockwise.MD"},{"id":2293804,"name":"Procurify"},{"id":720900,"name":"Google
+        Apps for Business"},{"id":393225,"name":"Duckduckgo"},{"id":2097200,"name":"HireVue"},{"id":1179650,"name":"Amazon
+        Web Services"},{"id":1245187,"name":"Sailpoint"},{"id":2228274,"name":"Azalea
+        Health"},{"id":2162737,"name":"Harmony PSA"},{"id":2293811,"name":"FinancialForce"},{"id":655386,"name":"Google
+        Calendar"},{"id":196627,"name":"Text-request"},{"id":327701,"name":"Vimeo"},{"id":131090,"name":"Slashdot"},{"id":65553,"name":"Zoho
+        Mail"},{"id":983071,"name":"Etsy"},{"id":720923,"name":"Adobe Creative Cloud"},{"id":851997,"name":"Outbrain"},{"id":917534,"name":"MIT
+        App Inventor"},{"id":2424885,"name":"Synthesia"},{"id":1179651,"name":"Rackspace
+        Open Cloud"},{"id":196626,"name":"Landbot"},{"id":131091,"name":"Digg"},{"id":65552,"name":"inbox.com
+        Email"},{"id":2097201,"name":"PrismHR"},{"id":2162736,"name":"Docketwise"},{"id":1245186,"name":"OneLogin"},{"id":2228275,"name":"Simplifeye"},{"id":2293810,"name":"Crunch"},{"id":655387,"name":"Google
+        Meet"},{"id":983070,"name":"ResumeCompanion"},{"id":917535,"name":"Jimdo"},{"id":720922,"name":"Adobe
+        Document Cloud"},{"id":851996,"name":"Dianomi"},{"id":1245185,"name":"Okta"},{"id":196625,"name":"Google
+        Chat"},{"id":327703,"name":"BBC iPlayer"},{"id":131088,"name":"LiveJournal"},{"id":65555,"name":"Comcast.net
+        Webmail"},{"id":2097202,"name":"ZingHR"},{"id":2162739,"name":"INSZoom"},{"id":2228272,"name":"TheraOffice"},{"id":2293809,"name":"KashFlow"},{"id":655384,"name":"Zoom"},{"id":983069,"name":"Xologic"},{"id":917532,"name":"Squarespace"},{"id":720921,"name":"Google
+        Classroom"},{"id":851999,"name":"AdRoll"},{"id":1179649,"name":"Google Cloud
+        Compute"},{"id":2097203,"name":"Planday"},{"id":2228273,"name":"Sevocity"},{"id":2162738,"name":"CaseTrackerLaw"},{"id":2293808,"name":"Armatic"},{"id":655385,"name":"Google
+        Keep"},{"id":196624,"name":"QQ - Web IM"},{"id":131089,"name":"WordPress"},{"id":65554,"name":"FastMail"},{"id":2031628,"name":"Rubyfish"},{"id":983068,"name":"Getsquire"},{"id":851998,"name":"RevJet"},{"id":917533,"name":"SourceForge"},{"id":720920,"name":"Microsoft
+        Planner"},{"id":1179654,"name":"RedHat OpenShift"},{"id":2097204,"name":"PeopleStrong"},{"id":2228278,"name":"Cliniko"},{"id":2162741,"name":"CS
+        Disco"},{"id":2293815,"name":"Roger.ai"},{"id":655390,"name":"Trello"},{"id":327697,"name":"bingvideo"},{"id":196631,"name":"Eikon
+        Messenger"},{"id":131094,"name":"2-channel"},{"id":65557,"name":"Outlook (Personal)"},{"id":2031627,"name":"Secure
+        DNS"},{"id":1245191,"name":"Microsoft Azure AD"},{"id":983067,"name":"SurveyAnyplace"},{"id":851993,"name":"Taboola"},{"id":917530,"name":"Canva"},{"id":720927,"name":"Freshsales
+        CRM"},{"id":1179655,"name":"Engine Yard"},{"id":2097205,"name":"Coroflot"},{"id":2228279,"name":"TheraNest"},{"id":2162740,"name":"Everlaw"},{"id":2293814,"name":"Accounting
+        Seed"},{"id":655391,"name":"Asana"},{"id":196630,"name":"WeChat"},{"id":131095,"name":"Google+"},{"id":65556,"name":"Roadrunner
+        Mail"},{"id":2031626,"name":"Blah DNS"},{"id":1245190,"name":"Mobileiron"},{"id":983066,"name":"Teachable"},{"id":851992,"name":"BounceX"},{"id":917531,"name":"WIX"},{"id":720926,"name":"Greyhound"},{"id":983065,"name":"Vionic
+        Shoes"},{"id":2097206,"name":"CoreHR"},{"id":196629,"name":"Trillian"},{"id":327699,"name":"Pandora"},{"id":131092,"name":"X
+        (Formerly Twitter)"},{"id":65559,"name":"QQMail"},{"id":2228276,"name":"OpenDoctor"},{"id":2162743,"name":"Lex
+        Machina"},{"id":2293813,"name":"Invoicebus"},{"id":655388,"name":"Google Sites"},{"id":2031625,"name":"Power
+        DNS"},{"id":1245189,"name":"Airwatch"},{"id":720925,"name":"Vision Critical"},{"id":851995,"name":"Criteo"},{"id":917528,"name":"Adobe
+        Business Catalyst"},{"id":1179653,"name":"IBM Smart Cloud"},{"id":2097207,"name":"Payworks"},{"id":2228277,"name":"NextPatient"},{"id":2162742,"name":"LegalServer"},{"id":2293812,"name":"Pandle"},{"id":655389,"name":"Google
+        Jamboard"},{"id":327698,"name":"SnagFilms"},{"id":196628,"name":"Skyrock"},{"id":131093,"name":"Mixi"},{"id":2031624,"name":"Nextdns"},{"id":1245188,"name":"Ping
+        One"},{"id":983064,"name":"Pantheon"},{"id":851994,"name":"Connatix"},{"id":917529,"name":"Apple
+        Developer"},{"id":720924,"name":"Pipedrive"},{"id":2031623,"name":"Comcast"},{"id":1179658,"name":"AppFog"},{"id":196635,"name":"MessageMedia"},{"id":131098,"name":"VKontakte"},{"id":65561,"name":"centrum"},{"id":2097208,"name":"OutMatch"},{"id":2162745,"name":"LawGeex"},{"id":2228282,"name":"InSync
+        Healthcare Solutions"},{"id":2293819,"name":"Botkeeper"},{"id":1245195,"name":"Microsoft
+        Login Services"},{"id":983063,"name":"Motorlot"},{"id":851989,"name":"SocialBakers"},{"id":917526,"name":"Azure
+        DevOps"},{"id":720915,"name":"Docstoc"},{"id":2031622,"name":"CleanBrowsing"},{"id":1179659,"name":"Caspio"},{"id":196634,"name":"Viber"},{"id":131099,"name":"Reddit"},{"id":65560,"name":"Bananatag"},{"id":2097209,"name":"Adrenalin"},{"id":2162744,"name":"Aderant"},{"id":2228283,"name":"My
+        Clients Plus"},{"id":2293818,"name":"Beanworks"},{"id":1245194,"name":"Microsoft
+        AppSource"},{"id":983062,"name":"Fortuna"},{"id":851988,"name":"Shopwyre"},{"id":917527,"name":"Microsoft
+        PowerApps"},{"id":720914,"name":"SpredFast"},{"id":1179656,"name":"Heroku"},{"id":2097210,"name":"Ascentis"},{"id":2228280,"name":"CentralReach"},{"id":2162747,"name":"Luminance"},{"id":2293817,"name":"Less
+        Accounting"},{"id":655376,"name":"Slack"},{"id":131096,"name":"Pinterest"},{"id":65563,"name":"Goo"},{"id":2031621,"name":"Open
+        DNS"},{"id":1245193,"name":"Microsoft Volume Licensing"},{"id":983061,"name":"Preply"},{"id":851991,"name":"ZoomInfo"},{"id":917524,"name":"Google
+        Developers"},{"id":720913,"name":"SAPAriba"},{"id":1179657,"name":"Google
+        App Engine"},{"id":2228281,"name":"MyMercy"},{"id":2293816,"name":"Kashoo"},{"id":655377,"name":"Sharepoint
+        Online"},{"id":196632,"name":"Zendesk Chat"},{"id":65562,"name":"Sapo"},{"id":2031620,"name":"Quad9"},{"id":1245192,"name":"Microsoft
+        Intune"},{"id":2097211,"name":"RandStad"},{"id":2162746,"name":"ROSS Intelligence"},{"id":983060,"name":"Mileiq"},{"id":851990,"name":"Sprinklr"},{"id":917525,"name":"Voog"},{"id":720912,"name":"Docusign"},{"id":2424894,"name":"Writesonic"},{"id":1179662,"name":"Tencent
+        Cloud"},{"id":2097212,"name":"Softgarden"},{"id":2228286,"name":"TheraPlatform"},{"id":2162749,"name":"Zapproved"},{"id":2293823,"name":"ExpenseWire"},{"id":655382,"name":"Microsoft
+        Forms"},{"id":196639,"name":"PushEngage"},{"id":131102,"name":"Instagram"},{"id":65565,"name":"SubscriberMail"},{"id":2031619,"name":"AdGuard"},{"id":1245199,"name":"Rulai"},{"id":983059,"name":"Book4time"},{"id":851985,"name":"CheetahMail"},{"id":917522,"name":"Microsoft
+        Visual Studio"},{"id":720919,"name":"Microsoft Power BI"},{"id":2031618,"name":"Cloudflare
+        DNS"},{"id":1179663,"name":"OVHcloud"},{"id":196638,"name":"Pinger"},{"id":131103,"name":"Tuenti"},{"id":2097213,"name":"Beamery"},{"id":2162748,"name":"DoeLEGAL"},{"id":2228287,"name":"eClinicalWorks"},{"id":2293822,"name":"Cloudbooks"},{"id":655383,"name":"Microsoft
+        Staffhub"},{"id":1245198,"name":"New Relic"},{"id":720918,"name":"Microsoft
+        Flow"},{"id":851984,"name":"Brainshark"},{"id":917523,"name":"Firebase"},{"id":1179660,"name":"Microsoft
+        Azure"},{"id":2097214,"name":"Harri"},{"id":2228284,"name":"Power Diary"},{"id":2162751,"name":"The
+        Legal Assistant"},{"id":2293821,"name":"M3as"},{"id":655380,"name":"Microsoft
+        Teams"},{"id":196637,"name":"TigerConnect"},{"id":131100,"name":"Foursquare"},{"id":2031617,"name":"Google
+        DNS"},{"id":1245197,"name":"Chocolatey"},{"id":983057,"name":"TradingView"},{"id":851987,"name":"Responsys"},{"id":917520,"name":"AutoHotkey"},{"id":720917,"name":"Microsoft
+        Delve"},{"id":1179661,"name":"Linode"},{"id":196636,"name":"TextNow"},{"id":131101,"name":"Flickr"},{"id":65566,"name":"MailJet"},{"id":2097215,"name":"PaySpace"},{"id":2162750,"name":"Eclipse
+        Legal System"},{"id":1245196,"name":"Autopilot"},{"id":2228285,"name":"ClinicSource"},{"id":2293820,"name":"AppZen"},{"id":655381,"name":"Microsoft
+        Sway"},{"id":983056,"name":"Realtor"},{"id":917521,"name":"Microsoft Codeplex"},{"id":720916,"name":"Microsoft
+        Dynamics 365"},{"id":851986,"name":"Raybec"},{"id":1179698,"name":"bunny.net"},{"id":1245235,"name":"Picasion"},{"id":2162689,"name":"App4legal"},{"id":196643,"name":"Chatroll"},{"id":131106,"name":"Tumblr"},{"id":2228226,"name":"NextGen"},{"id":2293763,"name":"kpi.com"},{"id":655402,"name":"PGI"},{"id":983087,"name":"Ticketmaster"},{"id":917550,"name":"Homestead"},{"id":720939,"name":"SurveyMonkey"},{"id":852013,"name":"Zeeto"},{"id":1179699,"name":"Photobox"},{"id":196642,"name":"Keybase"},{"id":131107,"name":"Meetup"},{"id":2097153,"name":"Bridge
+        by Instructure"},{"id":1245234,"name":"SpeedCurve"},{"id":2228227,"name":"Kareo"},{"id":2293762,"name":"FreshBooks"},{"id":655403,"name":"BlueJeans"},{"id":983086,"name":"J.Crew"},{"id":917551,"name":"Rollbar"},{"id":720938,"name":"Sentry"},{"id":852012,"name":"Constant"},{"id":983085,"name":"Next"},{"id":1245233,"name":"SensorCloud"},{"id":196641,"name":"Chatwork"},{"id":131104,"name":"Florestaald"},{"id":65571,"name":"Hushmail"},{"id":2097154,"name":"Upwork"},{"id":1179696,"name":"Nasuni"},{"id":2293761,"name":"Dun
+        & Bradstreet"},{"id":2162691,"name":"Athennian"},{"id":655400,"name":"ConceptBoard"},{"id":720937,"name":"GumGum"},{"id":852015,"name":"Automizy"},{"id":917548,"name":"PlayerIO"},{"id":983084,"name":"Office
+        Depot OfficeMax"},{"id":1245232,"name":"Plotly"},{"id":196640,"name":"EnterIce"},{"id":131105,"name":"Typepad"},{"id":65570,"name":"Mail2web"},{"id":2097155,"name":"Naukri"},{"id":1179697,"name":"Mongodb"},{"id":2228225,"name":"DrChrono"},{"id":2162690,"name":"Amberlo"},{"id":655401,"name":"Livestorm"},{"id":720936,"name":"Hotjar"},{"id":852014,"name":"AgilityPR"},{"id":917549,"name":"SimpleSite"},{"id":1179702,"name":"Sirv"},{"id":196647,"name":"ChatBeacon"},{"id":131110,"name":"Taringa"},{"id":65573,"name":"Hey"},{"id":2097156,"name":"Zip
+        Recruiter"},{"id":2162693,"name":"Filevine"},{"id":1245239,"name":"LinksAlpha"},{"id":2228230,"name":"Nextech"},{"id":2293767,"name":"Tipalti"},{"id":655406,"name":"Symphony"},{"id":983083,"name":"Trade
+        Me"},{"id":917546,"name":"123FormBuilder"},{"id":720943,"name":"StreamRail"},{"id":852009,"name":"Evidence"},{"id":1179703,"name":"HighWire
+        press"},{"id":196646,"name":"Channel"},{"id":327712,"name":"Tv.com"},{"id":131111,"name":"Badoo"},{"id":65572,"name":"ProtonMail"},{"id":2097157,"name":"iCIMS"},{"id":2162692,"name":"PracticePanther"},{"id":1245238,"name":"Bodis"},{"id":2228231,"name":"Eyefinity"},{"id":2293766,"name":"BlackLine"},{"id":655407,"name":"Kahua"},{"id":983082,"name":"Zulily"},{"id":917547,"name":"hPage"},{"id":720942,"name":"ServiceNow"},{"id":852008,"name":"Unless"},{"id":1179700,"name":"Datrium"},{"id":196645,"name":"Sapling"},{"id":131108,"name":"Tinder"},{"id":65575,"name":"AtomPark
+        Software - Atomic Email Tracker"},{"id":2097158,"name":"Behance Jobs"},{"id":2162695,"name":"MyCase"},{"id":1245237,"name":"Convertio"},{"id":2228228,"name":"WebPT"},{"id":2293765,"name":"Expensify"},{"id":983081,"name":"Zomato"},{"id":852011,"name":"RapidFunnel"},{"id":917544,"name":"JotForm"},{"id":720941,"name":"Freshdesk"},{"id":2424835,"name":"ChatGPT"},{"id":1179701,"name":"Digital
+        Realty"},{"id":196644,"name":"Chatlio"},{"id":131109,"name":"Glassdoor"},{"id":65574,"name":"EasyMail7"},{"id":2097159,"name":"SAP
+        SuccessFactors"},{"id":2162694,"name":"Amicus Attorney"},{"id":1245236,"name":"TrackDuck"},{"id":2228229,"name":"Athena
+        Health"},{"id":2293764,"name":"Western Union Speedpay"},{"id":655405,"name":"Fuze"},{"id":983080,"name":"DHgate"},{"id":917545,"name":"Jira"},{"id":720940,"name":"Xero"},{"id":852010,"name":"Notifia"},{"id":1179706,"name":"Onamae
+        Domain Registration"},{"id":196651,"name":"Instabot"},{"id":65577,"name":"NCR
+        Counterpoint"},{"id":2097160,"name":"Monster"},{"id":2162697,"name":"Smokeball"},{"id":1245243,"name":"360
+        Safe"},{"id":2228234,"name":"Waystar"},{"id":2293771,"name":"Vena Solutions"},{"id":655394,"name":"Wrike"},{"id":983079,"name":"LG"},{"id":917542,"name":"Talkjs"},{"id":720931,"name":"Looyu"},{"id":852005,"name":"Yotpo"},{"id":1179707,"name":"Flywheel"},{"id":196650,"name":"MightyText"},{"id":131115,"name":"Whispark"},{"id":65576,"name":"SocketLabs"},{"id":2097161,"name":"The
+        Muse"},{"id":2162696,"name":"Tabs3"},{"id":1245242,"name":"Canalblog"},{"id":2228235,"name":"Qualifacts"},{"id":2293770,"name":"ZipBooks"},{"id":655395,"name":"Circuit"},{"id":983078,"name":"CarGurus"},{"id":917543,"name":"Glitch"},{"id":720930,"name":"Camcard
+        Business"},{"id":852004,"name":"Celtra"},{"id":2097162,"name":"SmartRecruiters"},{"id":1179704,"name":"ALL
+        INKL"},{"id":1245241,"name":"Taplytics"},{"id":2228232,"name":"CompuGroup
+        Medical"},{"id":2162699,"name":"Trusted"},{"id":2293769,"name":"WePay"},{"id":655392,"name":"Smartsheet"},{"id":196649,"name":"Velaro"},{"id":131112,"name":"Facebook
+        Workplace"},{"id":65579,"name":"Cybozu Mailwise"},{"id":983077,"name":"Sam''s
+        Club"},{"id":720929,"name":"Pega"},{"id":852007,"name":"Comscore"},{"id":917540,"name":"Rapidapi"},{"id":2424847,"name":"Dall-E"},{"id":2097163,"name":"Jobvite"},{"id":1179705,"name":"Ananke
+        Web Hosting"},{"id":1245240,"name":"MobTech"},{"id":2228233,"name":"Quest
+        Diagnostics"},{"id":2162698,"name":"MerusCase"},{"id":2293768,"name":"Chargify"},{"id":655393,"name":"Monday"},{"id":196648,"name":"Maqpie"},{"id":131113,"name":"PeekYou"},{"id":65578,"name":"Notablist"},{"id":983076,"name":"Shopee"},{"id":720928,"name":"Agile
+        CRM"},{"id":852006,"name":"FullStory"},{"id":917541,"name":"Saucelabs"},{"id":2424846,"name":"ChatSonic"},{"id":1179710,"name":"Bitnami
+        Cloud Hosting"},{"id":196655,"name":"Livechatoo"},{"id":131118,"name":"Nextdoor"},{"id":65581,"name":"Lollipop
+        Web Mailer by GMO"},{"id":2097164,"name":"Indeed"},{"id":2162701,"name":"Legal
+        Files"},{"id":1245247,"name":"GetFeedback"},{"id":2228238,"name":"McKesson"},{"id":2293775,"name":"CCH
+        Tagetik"},{"id":655398,"name":"Amazon Chime"},{"id":983075,"name":"Lowe''s"},{"id":917538,"name":"Split"},{"id":720935,"name":"SAP
+        Concur"},{"id":852001,"name":"Permutive"},{"id":2097165,"name":"Workable"},{"id":1179711,"name":"Ename
+        Domain Registration"},{"id":1245246,"name":"Domo"},{"id":2228239,"name":"Allscripts"},{"id":2162700,"name":"Zola
+        Suite"},{"id":2293774,"name":"OneStream Software"},{"id":655399,"name":"WeChat
+        Work"},{"id":196654,"name":"StarLeaf"},{"id":131119,"name":"TikTok"},{"id":65580,"name":"Nifcloud
+        Business Mail"},{"id":983074,"name":"Macy''s"},{"id":720934,"name":"Kustomer"},{"id":852000,"name":"Conviva"},{"id":917539,"name":"Instabug"},{"id":2424840,"name":"Andi"},{"id":2097166,"name":"Dice"},{"id":1179708,"name":"Local
+        by Flywheel"},{"id":1245245,"name":"HTTPS Checker"},{"id":2228236,"name":"Deputy"},{"id":2162703,"name":"ProTempus"},{"id":2293773,"name":"Rydoo"},{"id":655396,"name":"RingCentral"},{"id":196653,"name":"FocalScope"},{"id":131116,"name":"Bigo
+        technology"},{"id":65583,"name":"OCN Mail Service"},{"id":983073,"name":"Costco
+        Wholesale"},{"id":720933,"name":"LiveAgent"},{"id":852003,"name":"Medallia"},{"id":917536,"name":"Google
+        App Maker"},{"id":2424843,"name":"Character.AI"},{"id":1179709,"name":"ArvanCloud"},{"id":196652,"name":"Typetalk"},{"id":65582,"name":"Biglobe
+        Mail"},{"id":2097167,"name":"Totaljobs"},{"id":2162702,"name":"CloudLex"},{"id":1245244,"name":"Dacast"},{"id":2228237,"name":"Solutionreach"},{"id":2293772,"name":"24SevenOffice"},{"id":655397,"name":"GoTo"},{"id":983072,"name":"Bukalapak"},{"id":917537,"name":"Bugsnag"},{"id":720932,"name":"Totango"},{"id":852002,"name":"SundaySky"},{"id":1179682,"name":"Premier
+        Contact Point"},{"id":196659,"name":"WowTalk"},{"id":131122,"name":"Qzone"},{"id":2097168,"name":"BambooHR"},{"id":2162705,"name":"GrowPath"},{"id":1245219,"name":"Capgemini"},{"id":2228242,"name":"RXNT"},{"id":2293779,"name":"GoPlan"},{"id":655418,"name":"Getharvest"},{"id":983103,"name":"SanDisk
+        Memory Zone"},{"id":917566,"name":"Samsare"},{"id":720955,"name":"Granular"},{"id":852029,"name":"PubMatic"},{"id":1179683,"name":"Real
+        Migrator"},{"id":196658,"name":"Karakuri"},{"id":2097169,"name":"Toptal"},{"id":2162704,"name":"TimeSolv"},{"id":1245218,"name":"EdrawSoft"},{"id":2293778,"name":"Corcentric"},{"id":655419,"name":"Mightynetworks"},{"id":983102,"name":"SanDisk"},{"id":917567,"name":"NHP"},{"id":720954,"name":"Lighthouse"},{"id":852028,"name":"Sumo"},{"id":2424852,"name":"GANPaint"},{"id":852031,"name":"Pardot"},{"id":1245217,"name":"TINT"},{"id":196657,"name":"MessageBird"},{"id":131120,"name":"Wikidot"},{"id":2097170,"name":"Appcast"},{"id":1179680,"name":"Mycloud"},{"id":2293777,"name":"Coupa"},{"id":983101,"name":"Glowforge"},{"id":917564,"name":"Pushy"},{"id":720953,"name":"Envoy"},{"id":1245216,"name":"HP"},{"id":2097171,"name":"Ladders"},{"id":2162706,"name":"AbacusNext"},{"id":1179681,"name":"NS1"},{"id":2228241,"name":"AdvancedMD"},{"id":2293776,"name":"InsightSoftware"},{"id":655417,"name":"Zeetings"},{"id":131121,"name":"PeopleFinders"},{"id":983100,"name":"NTT
+        DoCoMo"},{"id":720952,"name":"Talech"},{"id":852030,"name":"Rubicon Project"},{"id":917565,"name":"Workshare"},{"id":1179686,"name":"Mbs
+        Source"},{"id":196663,"name":"RumbleTalk"},{"id":131126,"name":"Tango"},{"id":65589,"name":"Doppler
+        Relay"},{"id":2097172,"name":"Alight"},{"id":2162709,"name":"Litify"},{"id":1245223,"name":"BirdEye"},{"id":2228246,"name":"PrognoCIS"},{"id":2293783,"name":"FreeAgent"},{"id":655422,"name":"Fastviewer"},{"id":983099,"name":"MyMemory"},{"id":917562,"name":"Umeng"},{"id":720959,"name":"Trustpilot
+        Reviews"},{"id":852025,"name":"RocketReach"},{"id":1245222,"name":"Postquare"},{"id":196662,"name":"Kik
+        Messenger"},{"id":131127,"name":"Ninegag"},{"id":2097173,"name":"Kununu"},{"id":2162708,"name":"LEAP
+        US"},{"id":1179687,"name":"Seznam"},{"id":2228247,"name":"Elation Health"},{"id":2293782,"name":"Brightpearl"},{"id":983098,"name":"PriceWaiter"},{"id":720958,"name":"Accelo"},{"id":852024,"name":"Tradedoubler"},{"id":917563,"name":"Think
+        Cell"},{"id":1179684,"name":"Extreme Networks"},{"id":196661,"name":"Rock"},{"id":131124,"name":"Coub"},{"id":2097174,"name":"Mynavi"},{"id":2162711,"name":"CoCounselor"},{"id":1245221,"name":"MIUI"},{"id":2228244,"name":"ChARM
+        Health"},{"id":2293781,"name":"Replicon"},{"id":655420,"name":"Nulab"},{"id":983097,"name":"Missguided"},{"id":917560,"name":"Drcedirect"},{"id":720957,"name":"BrandFolder"},{"id":852027,"name":"UnBounce"},{"id":2097175,"name":"Catho"},{"id":1179685,"name":"Flaticon"},{"id":1245220,"name":"Online
+        Converter"},{"id":2228245,"name":"ChartLogic"},{"id":2162710,"name":"Soluno"},{"id":2293780,"name":"Patriot
+        Software"},{"id":655421,"name":"Anydesk"},{"id":196660,"name":"EmergencyEye"},{"id":131125,"name":"Dashhudson"},{"id":983096,"name":"Zando"},{"id":720956,"name":"Betteryou"},{"id":852026,"name":"Adjust"},{"id":917561,"name":"Nuget"},{"id":2424850,"name":"Deep
+        Dream Generator"},{"id":1245227,"name":"Adobe Spark"},{"id":196667,"name":"Line"},{"id":131130,"name":"Shaadi"},{"id":2097176,"name":"Freelancer"},{"id":2162713,"name":"Bilr"},{"id":1179690,"name":"Virgin
+        Media"},{"id":2228250,"name":"Genesis Chiropractic Software"},{"id":2293787,"name":"Vyaparapp"},{"id":983095,"name":"ULINE"},{"id":720947,"name":"Close"},{"id":852021,"name":"SEMrush"},{"id":917558,"name":"CloudSponge"},{"id":1179691,"name":"Templafy"},{"id":196666,"name":"Rainbow"},{"id":131131,"name":"Zoosk"},{"id":65592,"name":"Mailbox
+        rental"},{"id":2097177,"name":"Workday"},{"id":2162712,"name":"CASEpeer"},{"id":1245226,"name":"Leetchi"},{"id":2228251,"name":"Revele"},{"id":2293786,"name":"MYOB"},{"id":655411,"name":"Playipp"},{"id":983094,"name":"Zalando"},{"id":917559,"name":"Fastly
+        Labs"},{"id":720946,"name":"Glia"},{"id":852020,"name":"GetResponse"},{"id":1179688,"name":"Bit
+        Titan"},{"id":196665,"name":"Whitebox Chat"},{"id":131128,"name":"IMVU"},{"id":65595,"name":"Gmelius"},{"id":2097178,"name":"SimplyHired"},{"id":2162715,"name":"Mitratech"},{"id":1245225,"name":"AIVA"},{"id":2228248,"name":"Modernizing
+        Medicine"},{"id":2293785,"name":"Trintech"},{"id":983093,"name":"Buy Buy Baby"},{"id":852023,"name":"Revcontent"},{"id":917556,"name":"Formsite"},{"id":720945,"name":"Zendesk"},{"id":2424863,"name":"Midjourney"},{"id":1179689,"name":"Fsist"},{"id":196664,"name":"Rocket.Chat"},{"id":131129,"name":"Tagged"},{"id":65594,"name":"kintone
+        - kMailer"},{"id":2097179,"name":"Paycom"},{"id":2162714,"name":"Law Ruler"},{"id":1245224,"name":"Combine
+        PDF"},{"id":2228249,"name":"MDConnection"},{"id":2293784,"name":"Chargebee"},{"id":655409,"name":"Govqa"},{"id":983092,"name":"StackSocial"},{"id":917557,"name":"TrackJS"},{"id":720944,"name":"WalkMe"},{"id":852022,"name":"MailerLite"},{"id":1179694,"name":"Emgsound"},{"id":196671,"name":"Apexchat"},{"id":131134,"name":"Snapchat"},{"id":65597,"name":"CloudMailin"},{"id":2097180,"name":"ADP"},{"id":2162717,"name":"Sage
+        Intacct"},{"id":1245231,"name":"Truecaller"},{"id":2228254,"name":"Euclid
+        RCM"},{"id":2293791,"name":"Reckon"},{"id":655414,"name":"Synology Quickconnect"},{"id":983091,"name":"Belk"},{"id":917554,"name":"OpsGenie"},{"id":720951,"name":"PriorityMatrix"},{"id":852017,"name":"Zurple"},{"id":1179695,"name":"Digital
+        Ocean"},{"id":196670,"name":"Freshchat"},{"id":131135,"name":"Discord"},{"id":65596,"name":"Flow-e"},{"id":2097181,"name":"Paylocity"},{"id":2162716,"name":"Legal
+        Track"},{"id":1245230,"name":"QR Code Generator"},{"id":2228255,"name":"Office
+        Practicum"},{"id":2293790,"name":"Basware"},{"id":655415,"name":"TeamViewer"},{"id":983090,"name":"DigiKey
+        Electronics"},{"id":917555,"name":"Wufoo"},{"id":720950,"name":"Zoovu"},{"id":852016,"name":"Tooltip"},{"id":2097182,"name":"Bullhorn"},{"id":1179692,"name":"Gfycat"},{"id":1245229,"name":"Dotsub"},{"id":2228252,"name":"Lightning
+        MD"},{"id":2162719,"name":"CosmoLex"},{"id":2293789,"name":"Bill.com"},{"id":655412,"name":"ISL
+        Online"},{"id":196669,"name":"ChatPlus"},{"id":131132,"name":"Koo"},{"id":65599,"name":"FindThatLead"},{"id":983089,"name":"Bath
+        & Body Works"},{"id":720949,"name":"Chartio"},{"id":852019,"name":"AWeber"},{"id":917552,"name":"Loggly"},{"id":2424859,"name":"Jasper"},{"id":1179693,"name":"Qnap"},{"id":196668,"name":"Sentiment"},{"id":131133,"name":"Odnoklassniki"},{"id":65598,"name":"cloudSell"},{"id":2097183,"name":"Breezy"},{"id":2162718,"name":"SmartAdvocate"},{"id":1245228,"name":"Synthetix"},{"id":2228253,"name":"Compulink
+        Healthcare Solutions"},{"id":2293788,"name":"Zuora"},{"id":655413,"name":"Ziggeo"},{"id":983088,"name":"TrueCar"},{"id":917553,"name":"Emaze"},{"id":720948,"name":"Genially"},{"id":852018,"name":"MGID"},{"id":1179730,"name":"Virtualmin"},{"id":2097248,"name":"BiznusSoft"},{"id":2228322,"name":"Lumeon"},{"id":2162785,"name":"Lexisnexis"},{"id":2293859,"name":"Finastra"},{"id":1310804,"name":"FileDropper"},{"id":1245267,"name":"Neudesic"},{"id":655434,"name":"Lifesize
+        Video Conferencing"},{"id":196675,"name":"Ez Texting"},{"id":131138,"name":"Kickstarter"},{"id":65601,"name":"EWE
+        - Cloud & Webmail"},{"id":983119,"name":"PosterMyWall"},{"id":852045,"name":"Xactly"},{"id":917582,"name":"Pusherapp"},{"id":720971,"name":"WebEngage"},{"id":1179731,"name":"ServerPilot"},{"id":196674,"name":"Mozeo"},{"id":131139,"name":"Xdevel"},{"id":65600,"name":"Everyone.net"},{"id":2097249,"name":"Pilat"},{"id":2162784,"name":"E-WayBill
+        System"},{"id":1245266,"name":"Marin"},{"id":2228323,"name":"First Insight"},{"id":2293858,"name":"New
+        York Life"},{"id":655435,"name":"ElephantDrive"},{"id":983118,"name":"Global-e"},{"id":917583,"name":"Pdq
+        Tool"},{"id":720970,"name":"Mentimeter"},{"id":852044,"name":"Adtelligent"},{"id":1179728,"name":"Hostpoint
+        Email Hosting"},{"id":196673,"name":"TextAnywhere"},{"id":131136,"name":"Ameba"},{"id":65603,"name":"Mailtrack
+        for Gmail"},{"id":2097250,"name":"EmCentrix"},{"id":2162787,"name":"United
+        States Patent and Trademark"},{"id":1245265,"name":"AFAS"},{"id":2228320,"name":"AZZLY"},{"id":2293857,"name":"NSE"},{"id":655432,"name":"Webex
+        Teams"},{"id":983117,"name":"NuORDER"},{"id":917580,"name":"Controlup"},{"id":720969,"name":"Mixpanel"},{"id":852047,"name":"Quantcast"},{"id":1245264,"name":"Berger-Levrault"},{"id":196672,"name":"Teamer"},{"id":131137,"name":"Wattpad"},{"id":65602,"name":"Tiliq"},{"id":2097251,"name":"Microimage"},{"id":2162786,"name":"European
+        Union Intellectual Property Office"},{"id":1179729,"name":"Australian cPanel
+        Web Hosting"},{"id":2228321,"name":"Medfusion"},{"id":2293856,"name":"Willis
+        Towers Watson"},{"id":983116,"name":"Stylitics"},{"id":720968,"name":"Ontraport"},{"id":852046,"name":"Lockerdome"},{"id":917581,"name":"Vungle"},{"id":1179734,"name":"OnlineNIC
+        Domain Registration"},{"id":196679,"name":"vCreate"},{"id":131142,"name":"InterPals"},{"id":65605,"name":"LeadGnome"},{"id":2097252,"name":"Recruit"},{"id":2162789,"name":"US
+        Department of the Treasury"},{"id":1245271,"name":"Backbase"},{"id":2228326,"name":"Simple
+        Interact"},{"id":2293863,"name":"Linedata"},{"id":655438,"name":"Dokodemo
+        Cabinet"},{"id":983115,"name":"Bolt"},{"id":917578,"name":"Myfxbook"},{"id":720975,"name":"DealerSocket"},{"id":852041,"name":"SendPulse"},{"id":1179735,"name":"DomainFactory"},{"id":2097253,"name":"PayScale"},{"id":2228327,"name":"MedEvolve"},{"id":2162788,"name":"LegalZoom"},{"id":2293862,"name":"Avaloq"},{"id":1310801,"name":"FileSend"},{"id":1245270,"name":"Cherwell"},{"id":655439,"name":"Barracuda"},{"id":327744,"name":"Last.fm"},{"id":196678,"name":"Trumpia"},{"id":131143,"name":"MeWe"},{"id":65604,"name":"Mailify"},{"id":983114,"name":"Yottaa"},{"id":852040,"name":"Wishpond"},{"id":917579,"name":"Visenze"},{"id":720974,"name":"Kayako"},{"id":1179732,"name":"VPSServer"},{"id":2097254,"name":"Kronos"},{"id":2228324,"name":"ZH
+        Healthcare"},{"id":2162791,"name":"Epoq"},{"id":2293861,"name":"Cegedim"},{"id":1310802,"name":"Amazon
+        Cloud Drive"},{"id":1245269,"name":"Abila"},{"id":655436,"name":"Storage Made
+        Easy"},{"id":196677,"name":"ManyContacts"},{"id":131140,"name":"Douban"},{"id":65607,"name":"Email
+        List Verify"},{"id":983113,"name":"Ecwid"},{"id":852043,"name":"ConvertKit"},{"id":917576,"name":"Gonitro"},{"id":720973,"name":"3DCart"},{"id":1179733,"name":"Netregistry"},{"id":2097255,"name":"Ultimate
+        Software"},{"id":2228325,"name":"eMedicalPractice"},{"id":2162790,"name":"Digitalseva"},{"id":2293860,"name":"Envestnet"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:37:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '217'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 58a9a575-68c1-9b1f-911d-46910bf821e9
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '15'
+      x-transaction-id:
+      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudApplications/lite?pageNumber=0&limit=10
+  response:
+    body:
+      string: '[{"id":2097184,"name":"Recruiter"},{"id":1179666,"name":"Cybozu"},{"id":1245203,"name":"Splunk"},{"id":2228258,"name":"Nexus
+        Clinical"},{"id":2162721,"name":"Avaza"},{"id":2293795,"name":"Saasu"},{"id":655370,"name":"Acrobat
+        Connect"},{"id":262148,"name":"HTTP tunnel"},{"id":393222,"name":"Bing Search"},{"id":65537,"name":"Gmail"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:37:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '178'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 7e54ebca-9a4d-9b93-bd18-d1957bb6f7e4
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4989'
+      x-ratelimit-reset:
+      - '15'
+      x-transaction-id:
+      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/customTags
+  response:
+    body:
+      string: '[{"id":1,"name":"TAG012"},{"id":2,"name":"TAG02"},{"id":3,"name":"TAG03"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '74'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:37:46 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '250'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - b0bfcdfd-af1e-92b0-99c9-ef2844ee955c
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '14'
+      x-transaction-id:
+      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

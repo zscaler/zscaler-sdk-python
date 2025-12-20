@@ -141,6 +141,7 @@ class ForwardingControlRulesAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
+            src_workload_groups (list): IDs for source workload groups.
 
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
@@ -170,6 +171,7 @@ class ForwardingControlRulesAPI(APIClient):
             ...    dest_addresses=["192.168.255.1"],
             ...    dest_ip_categories=["ZSPROXY_IPS"],
             ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ...    src_workload_groups_ids=["1234567890", "1234567891"],
             ... )
 
             Add a ZPA forwarding control rule:
@@ -274,6 +276,7 @@ class ForwardingControlRulesAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
+            src_workload_groups (list): IDs for source workload groups.
 
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
@@ -304,6 +307,7 @@ class ForwardingControlRulesAPI(APIClient):
             ...    dest_addresses=["192.168.255.1"],
             ...    dest_ip_categories=["ZSPROXY_IPS"],
             ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ...    src_workload_groups_ids=["1234567890", "1234567891"],
             ... )
 
             Update a ZPA forwarding control rule:
@@ -318,6 +322,7 @@ class ForwardingControlRulesAPI(APIClient):
             ...    dest_addresses=["192.168.255.1"],
             ...    dest_ip_categories=["ZSPROXY_IPS"],
             ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ...    src_workload_groups_ids=["1234567890", "1234567891"],
             ...    zpa_gateway={
             ...     "name": "ZPAGW01",
             ...     "external_id": "2"

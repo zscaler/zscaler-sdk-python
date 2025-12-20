@@ -1,0 +1,1028 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles
+  response:
+    body:
+      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
+        resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
+        private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
+        \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n\t            return
+        \"DIRECT\";\n\t\t\t\n\t\t\t/* test with ZPA*/\n\t\t\tif (isInNet(resolved_ip,
+        \"100.64.0.0\",\"255.255.0.0\"))\n\t\t\t\treturn \"DIRECT\";\n\t\t\t\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n\t            return
+        \"DIRECT\";\n\t\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n            var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n            if
+        (iam.test(host))\n                return \"DIRECT\";\n\n            /* Updates
+        are directly accessible */\n            if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscaler.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerone.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerthree.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalergov.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsfalcon.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxpreview.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zspreview.net\"))  || \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsdevel.net\"))  || \n\t\t    (localHostOrDomainIs(host, \"trust.zsbetagov.net\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxten.net\"))  ||\n\t\t    (localHostOrDomainIs(host, \"trust.zdxdevel.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxgov.net\")) || \n\t\t    (localHostOrDomainIs(host, \"trust.zscaler.us\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zsqa.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalytics.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsprotect.net\")) ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zdxqa.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerrisk.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalermscm.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscascm.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsqatwo.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsca.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.ztwbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwgov.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerfour.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfive.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsdk14.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zscmeleven.mil\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalereleven.mil\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n            (localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6156,"name":"recommended.pac","description":"Recommended
+        PAC","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/recommended.pac","pacContent":"\nfunction
+        FindProxyForURL(url, host) {\n\n//        ****************************************************************************\n//        This
+        is an example PAC file that should be edited prior to being put to use.\n//        ****************************************************************************\n\n//        Consider
+        the following:\n//         - Keep production PAC files small. Delete all comments
+        if possible\n//         - Delete any examples or sections that do not fit
+        your needs\n//         - Consolidate bypass criteria into fewer if() statements
+        if possible\n//         - Be sure you are bypassing only traffic that *must*
+        be bypassed\n//         - Be sure to not perform any DNS resolution in the
+        PAC\n//         - Zscaler recommends sending bypassed internet traffic via
+        on-premise proxy compared\n//           to the internet directly\n\n//        ======
+        Section I ==== Internal/Specific Destinations ==============================
+        \n\n//        Most special use IPv4 addresses (RFC 5735) defined within this
+        regex.\n          var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n          var
+        resolved_ip = dnsResolve(host);\n\n          /* Don''t send non-FQDN or private
+        IP auths to us */\n          if (isInNet(resolved_ip, \"192.0.2.0\",\"255.255.255.0\")
+        || privateIP.test(resolved_ip))\n\t\t          return \"DIRECT\";\n\n//        Specific
+        destinations can be bypassed here. Example lines for host, and\n//        domain
+        provided. Replace with your specific information. Add internal \n//        domains
+        that cannot be publicly resolved here.\n\n          if (isPlainHostName(host)
+        || (host == \"host.example.com\") ||\n                  shExpMatch(host, \"*.example.com\"))\n                  return
+        \"DIRECT\";\n\n//        If you have a website that is hosted both internally
+        and externally,\n//        and you want to bypass proxy for internal version
+        only, use the following\n\n//        if (shExpMatch(host, \"internal.example.com\"))\n//        {\n//                var
+        resolved_ip = dnsResolve(host);\n//                if (privateIP.test(resolved_ip))\n//                        return
+        \"DIRECT\";\n//        }\n\n//        ====== Section II ==== Special Bypasses
+        for SAML============================== \n\n//        if (shExpMatch(host,
+        \"*.okta.com\") || shExpMatch(host, \"*.oktacdn.com\"))\n//                return
+        \"DIRECT\";\n                \n//        if (shExpMatch(host, \"my_iwa_server.my_example_domain.com\"))\n//                return
+        \"DIRECT\";\n\n//        ====== Section III ==== Bypasses for other protocols
+        ============================\n\n//        Send everything other than HTTP
+        and HTTPS direct\n//        Uncomment middle line if FTP over HTTP is enabled\n           \n          if
+        ((url.substring(0,5) != \"http:\") &&\n//                (url.substring(0,4)
+        != \"ftp:\") &&\n                 (url.substring(0,6) != \"https:\"))\n                 return
+        \"DIRECT\";\n\n//        ====== Section IV ==== Bypasses for Zscaler ===================================\n\n//        Go
+        direct for queries about Zscaler infrastructure status\n\n         var trust
+        = /^(trust|ips)\\.(zscaler|zscalerone|zscalertwo|zscalerthree|zsdemo|zscalergov|zscloud|zsfalcon|zdxcloud|zdxpreview|zdxbeta|zspreview|zsdevel|zsbetagov|zscalerten|zdxten|zdxdevel|zdxgov|zsqa|zscaleranalytics|zsprotect|zdxqa|zscalerrisk|zscalergscm|zscalermscm|zscascm|ztwcloud|zsca|zsqatwo|ztwdevel|ztwgov|ztwpreview|ztwbeta|zscalerfour|zscalerfive|zscalerbetatwo|zsdk14|zsdkcloud|zscmeleven|zscalereleven|zdxeleven|fcceleven|zscaleranalyticspreview|zscalerriskpreview|zscaleranalyticsbeta|zscalerriskbeta|zscaleranalyticsgov|zscalerriskgov|zscaleranalyticsten|zscalerriskten|zsst1|zsst2|zsst3|zsst4|zsst5|zsuxp|ztwqa|zsystest|zsenvaa)\\.(com|net)$/;\n         var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n\n         if
+        (trust.test(host) || iam.test(host) || /^trust.zscaler.us$/.test(host))\n             return
+        \"DIRECT\";\n\n//        ====== Section V ==== Bypasses for ZPA ===================================\n\t\t  /*
+        test with ZPA*/\n\t\t  if (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n                 return
+        \"DIRECT\";\n\n//        ====== Section VI ==== DEFAULT FORWARDING ================================
+        \n\n//        If your company has purchased dedicated port, kindly use that
+        in this file.\n//        Port 9400 is the default port followed by 80. If
+        that does not resolve, we send directly:\n        \n          return \"PROXY
+        ${GATEWAY}:9400; PROXY ${SECONDARY_GATEWAY}:9400; PROXY ${GATEWAY}:80; PROXY
+        ${SECONDARY_GATEWAY}:80; DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6157,"name":"mobile_proxy.pac","description":"Service
+        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/mobile_proxy.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n                        var
+        resolved_ip = dnsResolve(host);\n            /* Don''t send non-FQDN or private
+        IP auths to us */\n            if (isPlainHostName(host) || shExpMatch(host,
+        \"192.0.2.*\") || privateIP.test(host))\n                return \"DIRECT\";\n\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n                return
+        \"DIRECT\";\n\n                        /* test with ZPA*/\n                        if
+        (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n                                return
+        \"DIRECT\";\n\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n           var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n           if
+        (iam.test(host))\n               return \"DIRECT\";\n\n            if (dnsDomainIs(host,
+        \"zsa.zscaler.com\"))\n                        return \"PROXY ${GATEWAY}:80;
+        PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\n\n                        if (((localHostOrDomainIs(host,
+        \"trust.zscaler.com\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscaler.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalerone.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalertwo.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalerthree.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalergov.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zsdemo.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscloud.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zsfalcon.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxcloud.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxpreview.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsdevel.net\"))  ||
+        \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsbetagov.net\"))  || \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zspreview.net\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerten.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zdxten.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zdxdevel.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zdxgov.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaler.us\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsqa.net\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalytics.net\"))
+        ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsprotect.net\")) || \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zdxqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerrisk.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalergscm.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalermscm.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscascm.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwcloud.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsqatwo.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsca.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwdevel.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.ztwgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwpreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerfour.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerfive.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsdk14.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zscmeleven.mil\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zscalereleven.mil\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t    \t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t    \t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t    \t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n                return
+        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerbeta.net\"))\n                return
+        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerbeta.net\"))\n                return  \"PROXY
+        ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nreturn \"PROXY ${GATEWAY}:8080;
+        PROXY ${SECONDARY_GATEWAY}:8080; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6158,"name":"proxy.pac","description":"Service
+        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/proxy.pac","pacContent":"\n\tfunction
+        FindProxyForURL(url, host) {\n\n    var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n    var
+        resolved_ip = dnsResolve(host);\n   // var country = \"${COUNTRY}\";\n\n    /*
+        Don''t send non-FQDN or private IP auths to us */\n    if (isPlainHostName(host)
+        || isInNet(resolved_ip, \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n        return
+        \"DIRECT\";\n\n    /* FTP goes directly */\n    if (url.substring(0,4) ==
+        \"ftp:\")\n        return \"DIRECT\";\n\t\t\t\n    /* test with ZPA */\n    if
+        (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n        return \"DIRECT\";\n\t\n    //
+        ========== Bypasses for Zscaler IAM ===================================\n    var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n    if
+        (iam.test(host))\n        return \"DIRECT\";\t\n\n    /* Updates are directly
+        accessible */\n    if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscaler.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zscalerone.net\")) ||\n           (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalerthree.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zscalergov.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscloud.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsfalcon.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zdxpreview.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxbeta.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zsdevel.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zsbetagov.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zspreview.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zdxten.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zdxdevel.net\")) || \n\t    (localHostOrDomainIs(host, \"trust.zdxgov.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zscaler.us\")) || \n\t    (localHostOrDomainIs(host,
+        \"trust.zsqa.net\")) || \n\t    (localHostOrDomainIs(host, \"trust.zscaleranalytics.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zsprotect.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zdxqa.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerrisk.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zscalermscm.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscascm.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zsqatwo.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zsca.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.ztwgov.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwbeta.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfour.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerfive.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zsdk14.net\")) ||\n        (localHostOrDomainIs(host, \"trust.zsdkcloud.net\"))
+        ||\n        (localHostOrDomainIs(host, \"trust.zscmeleven.mil\")) ||\n        (localHostOrDomainIs(host,
+        \"trust.zscalereleven.mil\")) ||\n        (localHostOrDomainIs(host, \"trust.zdxeleven.mil\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.fcceleven.mil\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticspreview.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskpreview.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zscalerriskgov.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskten.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst1.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsst3.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst4.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsuxp.net\")) ||\n        (localHostOrDomainIs(host, \"trust.ztwqa.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsenvaa.net\")) ) &&\n            (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n        return \"DIRECT\";\n\n\t/*
+        for users of Canada if you want to direct traffic to only canada gateways*/\n//\tif
+        (shExpMatch(country, \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80;
+        PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/* for all users
+        if you want to direct traffic to country gateways by default */\n//\treturn
+        \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
+        Default Traffic Forwarding. Forwarding to Zen on port 80, but you can use
+        port 9400 also */\n    return \"PROXY ${GATEWAY_FX}:80; PROXY ${SECONDARY_GATEWAY_FX}:80;
+        DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":18805,"name":"Test_Pac_File_01","description":"Test_Pac_File_01","domain":"securitygeek.io","pacUrl":"https://pac.zscalerbeta.net/securitygeek.io/Test_Pac_File_01","pacContent":"\nfunction
+        FindProxyForURL(url, host) {\n\n//        ****************************************************************************\n//        This
+        is an example PAC file that should be edited prior to being put to use.\n//        ****************************************************************************\n\n//        Consider
+        the following:\n//         - Keep production PAC files small. Delete all comments
+        if possible\n//         - Delete any examples or sections that do not fit
+        your needs\n//         - Consolidate bypass criteria into fewer if() statements
+        if possible\n//         - Be sure you are bypassing only traffic that *must*
+        be bypassed\n//         - Be sure to not perform any DNS resolution in the
+        PAC\n//         - Zscaler recommends sending bypassed internet traffic via
+        on-premise proxy compared\n//           to the internet directly\n\n//        ======
+        Section I ==== Internal/Specific Destinations ==============================
+        \n\n//        Most special use IPv4 addresses (RFC 5735) defined within this
+        regex.\n          var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n          var
+        resolved_ip = dnsResolve(host);\n\n          /* Don''t send non-FQDN or private
+        IP auths to us */\n          if (isInNet(resolved_ip, \"192.0.2.0\",\"255.255.255.0\")
+        || privateIP.test(resolved_ip))\n\t\t          return \"DIRECT\";\n\n//        Specific
+        destinations can be bypassed here. Example lines for host, and\n//        domain
+        provided. Replace with your specific information. Add internal \n//        domains
+        that cannot be publicly resolved here.\n\n          if (isPlainHostName(host)
+        || (host == \"host.example.com\") ||\n                  shExpMatch(host, \"*.example.com\"))\n                  return
+        \"DIRECT\";\n\n//        If you have a website that is hosted both internally
+        and externally,\n//        and you want to bypass proxy for internal version
+        only, use the following\n\n//        if (shExpMatch(host, \"internal.example.com\"))\n//        {\n//                var
+        resolved_ip = dnsResolve(host);\n//                if (privateIP.test(resolved_ip))\n//                        return
+        \"DIRECT\";\n//        }\n\n//        ====== Section II ==== Special Bypasses
+        for SAML============================== \n\n//        if (shExpMatch(host,
+        \"*.okta.com\") || shExpMatch(host, \"*.oktacdn.com\"))\n//                return
+        \"DIRECT\";\n                \n//        if (shExpMatch(host, \"my_iwa_server.my_example_domain.com\"))\n//                return
+        \"DIRECT\";\n\n//        ====== Section III ==== Bypasses for other protocols
+        ============================\n\n//        Send everything other than HTTP
+        and HTTPS direct\n//        Uncomment middle line if FTP over HTTP is enabled\n           \n          if
+        ((url.substring(0,5) != \"http:\") &&\n//                (url.substring(0,4)
+        != \"ftp:\") &&\n                 (url.substring(0,6) != \"https:\"))\n                 return
+        \"DIRECT\";\n\n//        ====== Section IV ==== Bypasses for Zscaler ===================================\n\n//        Go
+        direct for queries about Zscaler infrastructure status\n\n         var trust
+        = /^(trust|ips)\\.(zscaler|zscalerone|zscalertwo|zscalerthree|zsdemo|zscalergov|zscloud|zsfalcon|zdxcloud|zdxpreview|zdxbeta|zspreview|zsdevel|zsbetagov|zscalerten|zdxten|zdxdevel|zdxgov|zsqa|zscaleranalytics|zsprotect|riskanalytics|zdxqa|zscalerrisk|zscalergscm|zscalermscm|zscascm|ztwcloud|zsca|zsqatwo|zscalerfour|zscalerfive|zscalerbetatwo|zsdkcloud|zscmeleven|zscalereleven|zdxeleven|fcceleven)\\.(com|net)$/;\n         var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n\n         if
+        (trust.test(host) || iam.test(host) || /^trust.zscaler.us$/.test(host))\n             return
+        \"DIRECT\";\n\n//        ====== Section V ==== Bypasses for ZPA ===================================\n\t\t  /*
+        test with ZPA*/\n\t\t  if (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n                 return
+        \"DIRECT\";\n\n//        ====== Section VI ==== DEFAULT FORWARDING ================================
+        \n\n//        If your company has purchased dedicated port, kindly use that
+        in this file.\n//        Port 9400 is the default port followed by 80. If
+        that does not resolve, we send directly:\n        \n          return \"PROXY
+        ${GATEWAY}:9400; PROXY ${SECONDARY_GATEWAY}:9400; PROXY ${GATEWAY}:80; PROXY
+        ${SECONDARY_GATEWAY}:80; DIRECT\";\n}\n","editable":true,"pacUrlObfuscated":false,"pacVerificationStatus":"VERIFY_NOERR","pacVersionStatus":"DEPLOYED","pacVersion":5,"pacCommitMessage":"Clone
+        of Test_Pac_File_01","totalHits":0,"lastModificationTime":1741299034,"lastModifiedBy":{"id":8061243,"name":"REDACTED"},"createTime":1741299034}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:42:18 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '519'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 28142d74-6f05-9eba-91dc-4e48d87660cf
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '42'
+      x-transaction-id:
+      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/6155/version
+  response:
+    body:
+      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
+        resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
+        private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
+        \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n\t            return
+        \"DIRECT\";\n\t\t\t\n\t\t\t/* test with ZPA*/\n\t\t\tif (isInNet(resolved_ip,
+        \"100.64.0.0\",\"255.255.0.0\"))\n\t\t\t\treturn \"DIRECT\";\n\t\t\t\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n\t            return
+        \"DIRECT\";\n\t\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n            var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n            if
+        (iam.test(host))\n                return \"DIRECT\";\n\n            /* Updates
+        are directly accessible */\n            if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscaler.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerone.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerthree.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalergov.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsfalcon.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxpreview.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zspreview.net\"))  || \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsdevel.net\"))  || \n\t\t    (localHostOrDomainIs(host, \"trust.zsbetagov.net\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxten.net\"))  ||\n\t\t    (localHostOrDomainIs(host, \"trust.zdxdevel.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxgov.net\")) || \n\t\t    (localHostOrDomainIs(host, \"trust.zscaler.us\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zsqa.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalytics.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsprotect.net\")) ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zdxqa.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerrisk.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalermscm.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscascm.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsqatwo.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsca.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.ztwbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwgov.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerfour.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfive.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsdk14.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zscmeleven.mil\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalereleven.mil\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n            (localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:42:19 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '576'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 72fc1d00-309b-9800-bdc4-b765bffeb381
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Fri, 19 Dec 2025 21:43:08 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/6155/version/1
+  response:
+    body:
+      string: '{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
+        resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
+        private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
+        \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n\t            return
+        \"DIRECT\";\n\t\t\t\n\t\t\t/* test with ZPA*/\n\t\t\tif (isInNet(resolved_ip,
+        \"100.64.0.0\",\"255.255.0.0\"))\n\t\t\t\treturn \"DIRECT\";\n\t\t\t\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n\t            return
+        \"DIRECT\";\n\t\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n            var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n            if
+        (iam.test(host))\n                return \"DIRECT\";\n\n            /* Updates
+        are directly accessible */\n            if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscaler.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerone.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerthree.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalergov.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsfalcon.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxpreview.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zspreview.net\"))  || \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsdevel.net\"))  || \n\t\t    (localHostOrDomainIs(host, \"trust.zsbetagov.net\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxten.net\"))  ||\n\t\t    (localHostOrDomainIs(host, \"trust.zdxdevel.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxgov.net\")) || \n\t\t    (localHostOrDomainIs(host, \"trust.zscaler.us\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zsqa.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalytics.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsprotect.net\")) ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zdxqa.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerrisk.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalermscm.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscascm.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsqatwo.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsca.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.ztwbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwgov.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerfour.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfive.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsdk14.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zscmeleven.mil\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalereleven.mil\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n            (localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 05:24:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '479'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 44918971-bade-9573-918e-74f9f6131689
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4987'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 8b954864-803b-44a0-a08d-d49004055dbd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: "function FindProxyForURL(url, host) {\n    return \"DIRECT\";\n}"
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '60'
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/validate
+  response:
+    body:
+      string: '{"success":true,"message":null,"severity":null,"messages":[],"warningCount":0,"errorCount":0}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '93'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 05:24:38 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '947'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - fd951996-c03c-9e65-a525-1b13f58a42fc
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4986'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - 8b954864-803b-44a0-a08d-d49004055dbd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles?search=default
+  response:
+    body:
+      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
+        resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
+        private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
+        \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n\t            return
+        \"DIRECT\";\n\t\t\t\n\t\t\t/* test with ZPA*/\n\t\t\tif (isInNet(resolved_ip,
+        \"100.64.0.0\",\"255.255.0.0\"))\n\t\t\t\treturn \"DIRECT\";\n\t\t\t\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n\t            return
+        \"DIRECT\";\n\t\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n            var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n            if
+        (iam.test(host))\n                return \"DIRECT\";\n\n            /* Updates
+        are directly accessible */\n            if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscaler.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerone.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalerthree.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscalergov.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zscloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zsfalcon.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxpreview.net\"))
+        ||\n                    (localHostOrDomainIs(host, \"trust.zdxbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zspreview.net\"))  || \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsdevel.net\"))  || \n\t\t    (localHostOrDomainIs(host, \"trust.zsbetagov.net\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxten.net\"))  ||\n\t\t    (localHostOrDomainIs(host, \"trust.zdxdevel.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zdxgov.net\")) || \n\t\t    (localHostOrDomainIs(host, \"trust.zscaler.us\"))
+        ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zsqa.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalytics.net\")) ||  \n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsprotect.net\")) ||  \n\t\t    (localHostOrDomainIs(host, \"trust.zdxqa.net\"))  ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerrisk.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalermscm.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscascm.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsqatwo.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsca.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.ztwbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.ztwgov.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerfour.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfive.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsdk14.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zscmeleven.mil\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalereleven.mil\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n            (localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6157,"name":"mobile_proxy.pac","description":"Service
+        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/mobile_proxy.pac","pacContent":"function
+        FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n                        var
+        resolved_ip = dnsResolve(host);\n            /* Don''t send non-FQDN or private
+        IP auths to us */\n            if (isPlainHostName(host) || shExpMatch(host,
+        \"192.0.2.*\") || privateIP.test(host))\n                return \"DIRECT\";\n\n            /*
+        FTP goes directly */\n            if (url.substring(0,4) == \"ftp:\")\n                return
+        \"DIRECT\";\n\n                        /* test with ZPA*/\n                        if
+        (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n                                return
+        \"DIRECT\";\n\t\t\t\n           // ========== Bypasses for Zscaler IAM ===================================\n           var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n           if
+        (iam.test(host))\n               return \"DIRECT\";\n\n            if (dnsDomainIs(host,
+        \"zsa.zscaler.com\"))\n                        return \"PROXY ${GATEWAY}:80;
+        PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\n\n                        if (((localHostOrDomainIs(host,
+        \"trust.zscaler.com\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscaler.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalerone.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalertwo.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalerthree.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscalergov.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zsdemo.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zscloud.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zsfalcon.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxcloud.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxpreview.net\")) ||\n                                        (localHostOrDomainIs(host,
+        \"trust.zdxbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsdevel.net\"))  ||
+        \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsbetagov.net\"))  || \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zspreview.net\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerten.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zdxten.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zdxdevel.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zdxgov.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaler.us\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsqa.net\")) ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalytics.net\"))
+        ||  \n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsprotect.net\")) || \n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zdxqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerrisk.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalergscm.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalermscm.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscascm.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwcloud.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsqatwo.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsca.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwdevel.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.ztwgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwpreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.ztwbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerfour.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerfive.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsdk14.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zsdkcloud.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zscmeleven.mil\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zscalereleven.mil\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.zdxeleven.mil\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.fcceleven.mil\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticspreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskpreview.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskgov.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zscalerriskten.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsst1.net\")) ||\n\t\t    \t\t(localHostOrDomainIs(host, \"trust.zsst2.net\"))
+        ||\n\t\t    \t\t(localHostOrDomainIs(host, \"trust.zsst3.net\")) ||\n\t\t    \t\t(localHostOrDomainIs(host,
+        \"trust.zsst4.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n                    (localHostOrDomainIs(host,
+        \"trust.ztwqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\"))
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                                (url.substring(0,5)
+        == \"http:\" || url.substring(0,6) == \"https:\"))\n                return
+        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerbeta.net\"))\n                return
+        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerbeta.net\"))\n                return  \"PROXY
+        ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nreturn \"PROXY ${GATEWAY}:8080;
+        PROXY ${SECONDARY_GATEWAY}:8080; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6158,"name":"proxy.pac","description":"Service
+        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/proxy.pac","pacContent":"\n\tfunction
+        FindProxyForURL(url, host) {\n\n    var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n    var
+        resolved_ip = dnsResolve(host);\n   // var country = \"${COUNTRY}\";\n\n    /*
+        Don''t send non-FQDN or private IP auths to us */\n    if (isPlainHostName(host)
+        || isInNet(resolved_ip, \"192.0.2.0\",\"255.255.255.0\") || privateIP.test(resolved_ip))\n        return
+        \"DIRECT\";\n\n    /* FTP goes directly */\n    if (url.substring(0,4) ==
+        \"ftp:\")\n        return \"DIRECT\";\n\t\t\t\n    /* test with ZPA */\n    if
+        (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n        return \"DIRECT\";\n\t\n    //
+        ========== Bypasses for Zscaler IAM ===================================\n    var
+        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n    if
+        (iam.test(host))\n        return \"DIRECT\";\t\n\n    /* Updates are directly
+        accessible */\n    if (((localHostOrDomainIs(host, \"trust.zscaler.com\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscaler.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zscalerone.net\")) ||\n           (localHostOrDomainIs(host, \"trust.zscalertwo.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscalerthree.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zscalergov.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zsdemo.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zscloud.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zsfalcon.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zdxcloud.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zdxpreview.net\")) ||\n            (localHostOrDomainIs(host,
+        \"trust.zdxbeta.net\")) ||\n            (localHostOrDomainIs(host, \"trust.zsdevel.net\"))
+        ||\n            (localHostOrDomainIs(host, \"trust.zsbetagov.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zspreview.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerten.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zdxten.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zdxdevel.net\")) || \n\t    (localHostOrDomainIs(host, \"trust.zdxgov.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zscaler.us\")) || \n\t    (localHostOrDomainIs(host,
+        \"trust.zsqa.net\")) || \n\t    (localHostOrDomainIs(host, \"trust.zscaleranalytics.net\"))
+        || \n\t    (localHostOrDomainIs(host, \"trust.zsprotect.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zdxqa.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerrisk.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.zscalergscm.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zscalermscm.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscascm.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwcloud.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zsqatwo.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zsca.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwdevel.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.ztwgov.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.ztwpreview.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.ztwbeta.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zscalerfour.net\")) ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerfive.net\"))
+        ||\n\t    (localHostOrDomainIs(host, \"trust.zscalerbetatwo.net\")) ||\n\t    (localHostOrDomainIs(host,
+        \"trust.zsdk14.net\")) ||\n        (localHostOrDomainIs(host, \"trust.zsdkcloud.net\"))
+        ||\n        (localHostOrDomainIs(host, \"trust.zscmeleven.mil\")) ||\n        (localHostOrDomainIs(host,
+        \"trust.zscalereleven.mil\")) ||\n        (localHostOrDomainIs(host, \"trust.zdxeleven.mil\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.fcceleven.mil\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticspreview.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskpreview.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsbeta.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zscalerriskbeta.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscaleranalyticsgov.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zscalerriskgov.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zscaleranalyticsten.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zscalerriskten.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst1.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst2.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsst3.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst4.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsuxp.net\")) ||\n        (localHostOrDomainIs(host, \"trust.ztwqa.net\"))
+        ||\n\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\")) ||\n\t\t(localHostOrDomainIs(host,
+        \"trust.zsenvaa.net\")) ) &&\n            (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n        return \"DIRECT\";\n\n\t/*
+        for users of Canada if you want to direct traffic to only canada gateways*/\n//\tif
+        (shExpMatch(country, \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80;
+        PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/* for all users
+        if you want to direct traffic to country gateways by default */\n//\treturn
+        \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
+        Default Traffic Forwarding. Forwarding to Zen on port 80, but you can use
+        port 9400 also */\n    return \"PROXY ${GATEWAY_FX}:80; PROXY ${SECONDARY_GATEWAY_FX}:80;
+        DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
+        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 05:24:39 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '545'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 34c62c7a-b8d1-9878-8b9d-3109ecbd4108
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4985'
+      x-ratelimit-reset:
+      - '22'
+      x-transaction-id:
+      - 8b954864-803b-44a0-a08d-d49004055dbd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

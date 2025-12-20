@@ -1,0 +1,309 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 01:30:06 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/extranet
+  response:
+    body:
+      string: '[{"id":22417761,"name":"NewExtranet 1002","description":"NewExtranet
+        1031 test","extranetDNSList":[{"id":1324194,"name":"NewExtranet 5816","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324195,"name":"NewExtranet
+        4356","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337248,"modifiedAt":1757089560},{"id":22417757,"name":"NewExtranet
+        1930","description":"NewExtranet 8220","extranetDNSList":[{"id":1324190,"name":"NewExtranet
+        5624","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324191,"name":"NewExtranet
+        9589","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746336338,"modifiedAt":1746336338},{"id":22417759,"name":"NewExtranet
+        2669","description":"NewExtranet 7753","extranetDNSList":[{"id":1324192,"name":"NewExtranet
+        6305","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324193,"name":"NewExtranet
+        2846","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337055,"modifiedAt":1746337055},{"id":22417763,"name":"NewExtranet
+        2807","description":"NewExtranet 4904","extranetDNSList":[{"id":1324196,"name":"NewExtranet
+        8289","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324197,"name":"NewExtranet
+        5123","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337570,"modifiedAt":1746337570},{"id":22417755,"name":"NewExtranet
+        7276","description":"NewExtranet 7319","extranetDNSList":[{"id":1324188,"name":"NewExtranet
+        5532","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324189,"name":"NewExtranet
+        4667","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746335621,"modifiedAt":1746335621},{"id":22394092,"name":"NewExtranet
+        8432","description":"NewExtranet 1153","extranetDNSList":[{"id":1322259,"name":"NewExtranet
+        5127","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1322260,"name":"NewExtranet
+        5141","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1745870026,"modifiedAt":1745870027}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 01:30:08 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1577'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - f42de55f-abb3-9330-8f44-60b6fd612893
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '53'
+      x-transaction-id:
+      - 38c8207b-f2e7-4100-a779-124b7cb8369f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/extranet/22417761
+  response:
+    body:
+      string: '{"id":22417761,"name":"NewExtranet 1002","description":"NewExtranet
+        1031 test","extranetDNSList":[{"id":1324194,"name":"NewExtranet 5816","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324195,"name":"NewExtranet
+        4356","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337248,"modifiedAt":1757089560}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 01:30:08 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '196'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 7ed7fb44-68cc-948f-aab4-caf208305b6f
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - 38c8207b-f2e7-4100-a779-124b7cb8369f
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestExtranet_VCR", "cloudName": "TestCloud_VCR", "locationIds":
+      []}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '77'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/extranet
+  response:
+    body:
+      string: '{"message":"Request body is invalid."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '38'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 05:38:21 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '149'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 47d58495-5f1d-9efa-a7d9-1013df8e5f68
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e83b5cf0-8615-46bf-bcdc-9038e0597b42
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+version: 1

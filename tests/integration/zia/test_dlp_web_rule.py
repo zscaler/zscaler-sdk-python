@@ -97,6 +97,14 @@ class TestDLPWebRule:
             except Exception as exc:
                 errors.append(f"Listing DLP Web Rules failed: {exc}")
 
+            # Step 7: List DLP Web Rules Lite
+            try:
+                rules_lite, _, error = client.zia.dlp_web_rules.list_rules_lite()
+                assert error is None, f"Error listing DLP Web Rules Lite: {error}"
+                assert rules_lite is not None, "DLP Web Rules Lite list is None"
+            except Exception as exc:
+                errors.append(f"Listing DLP Web Rules Lite failed: {exc}")
+
         finally:
             cleanup_errors = []
             try:

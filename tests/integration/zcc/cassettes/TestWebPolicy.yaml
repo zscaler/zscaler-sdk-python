@@ -1,0 +1,1293 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany
+  response:
+    body:
+      string: '[ ]'
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:33 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '308'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - ee6cd529-b1ff-9c96-8402-8bed2e286371
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '94'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '59'
+      x-ratelimit-reset:
+      - '2128'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?page=1&pageSize=10
+  response:
+    body:
+      string: '[ ]'
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:33 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '240'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3c509d5f-f81a-938c-899f-5f52c1d8000f
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '90'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '58'
+      x-ratelimit-reset:
+      - '2127'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?deviceType=3
+  response:
+    body:
+      string: "[ {\n  \"logout_password\" : \"Wg210680*\",\n  \"uninstall_password\"
+        : \"passwords\",\n  \"disable_password\" : \"passwords\",\n  \"install_ssl_certs\"
+        : 1.0,\n  \"disableLoopBackRestriction\" : 0.0,\n  \"removeExemptedContainers\"
+        : 0.0,\n  \"overrideWPAD\" : 0.0,\n  \"restartWinHttpSvc\" : 0.0,\n  \"cacheSystemProxy\"
+        : 0.0,\n  \"prioritizeIPv4\" : 1.0,\n  \"pacType\" : 1.0,\n  \"pacDataPath\"
+        : \"\",\n  \"disableParallelIpv4AndIPv6\" : -1.0,\n  \"wfpDriver\" : 1.0,\n
+        \ \"flowLoggerConfig\" : \"\",\n  \"triggerDomainProfleDetection\" : 0.0,\n
+        \ \"installWindowsFirewallInboundRule\" : 1.0,\n  \"captivePortalConfig\"
+        : \"{\\\"automaticCapture\\\":1,\\\"enableCaptivePortalDetection\\\":1,\\\"enableFailOpen\\\":1,\\\"captivePortalWebSecDisableMinutes\\\":\\\"10\\\",\\\"enableEmbeddedCaptivePortal\\\":0}\",\n
+        \ \"enableZscalerFirewall\" : \"0\",\n  \"forceLocationRefreshSccm\" : 0.0,\n
+        \ \"captivePortalUrlId\" : 1.0,\n  \"id\" : 24939.0,\n  \"name\" : \"SGIOLab\",\n
+        \ \"description\" : \"test\",\n  \"pac_url\" : \"\",\n  \"active\" : 1.0,\n
+        \ \"ruleOrder\" : 1.0,\n  \"logMode\" : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\"
+        : 100.0,\n  \"reauth_period\" : \"12\",\n  \"reactivateWebSecurityMinutes\"
+        : \"0\",\n  \"highlightActiveControl\" : 0.0,\n  \"sendDisableServiceReason\"
+        : 0.0,\n  \"enableDeviceGroups\" : 0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\"
+        : [ ],\n  \"onNetPolicy\" : {\n    \"id\" : \"11925\",\n    \"name\" : \"SGIO-Tunnel2.0\",\n
+        \   \"conditionType\" : 0.0,\n    \"enableLWFDriver\" : \"1\",\n    \"predefinedTrustedNetworks\"
+        : false,\n    \"predefinedTnAll\" : false\n  },\n  \"notificationTemplateContract\"
+        : {\n    \"id\" : 0.0,\n    \"templateName\" : \"Legacy Notification Settings\",\n
+        \   \"defaultTemplate\" : \"1\",\n    \"enableClientNotification\" : \"0\",\n
+        \   \"enableZiaNotification\" : \"0\",\n    \"enableAppUpdatesNotification\"
+        : \"0\",\n    \"enableServiceStatusNotification\" : \"0\",\n    \"enableNotificationForZPAReauth\"
+        : \"1\",\n    \"zpaReauthNotificationTime\" : 5.0,\n    \"customTimer\" :
+        5.0,\n    \"ziaNotificationPersistant\" : \"0\",\n    \"enablePersistantNotification\"
+        : \"0\",\n    \"doNotDisturb\" : \"0\",\n    \"showDevicePostureFailureNotification\"
+        : \"0\",\n    \"createdBy\" : \"0\",\n    \"editedBy\" : \"0\"\n  },\n  \"notificationTemplateId\"
+        : 733.0,\n  \"policyToken\" : \"343534333A333A35643863316261332D366362392D343030352D616137332D646233653166623066363363\",\n
+        \ \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"users\" : [ ],\n
+        \ \"policyExtension\" : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n
+        \   \"vpnGateways\" : \"\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"packetTunnelDnsIncludeList\"
+        : \"\",\n    \"packetTunnelDnsExcludeList\" : \"\",\n    \"nonce\" : \"BD-MGR01$$$3|api.private.zscaler.com|11HdBHprTH8IEu/SWsVb4Q34dTw67uyPFoOHLO2IQy3gA3JtoVw6mBN7MRKCEeD+GfRWuWzknIreLyHrYdoc/Q1qFFLALsFJmTL8MIxy+TCOtpRBeilgb2pRHG5L0J1idCv+GBDgJjeFSbiRhVktHOSEAFqAol5wdSDlQtoNYk2WWrGPbUQ5Zg93D3WLu43QQoz67URatNEiHmw+XGgotBIZpIFR16qES9nuL68z15NekSLtyqRtAX165iBMtCmzGePCjr1BAFwFCOD8C0hMEBjd0IN75MBjenl5A1gPke3rwCfOy7nOmOc6O1JlUAOrzDerHQmEzOr2iocj9u4om+SgAFhNOiO9Kp7mbDjYfmp9CxvWGLRTkEM5ysdgO48L\",\n
+        \   \"machineIdpAuth\" : true,\n    \"exitPassword\" : \"passwords\",\n    \"useV8JsEngine\"
+        : \"0\",\n    \"zdxDisablePassword\" : \"passwords\",\n    \"zdDisablePassword\"
+        : \"\",\n    \"zpaDisablePassword\" : \"passwords\",\n    \"zdpDisablePassword\"
+        : \"Wg210680*\",\n    \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\"
+        : \"0\",\n    \"useDefaultAdapterForDNS\" : \"1\",\n    \"useZscalerNotificationFramework\"
+        : \"1\",\n    \"switchFocusToNotification\" : \"0\",\n    \"fallbackToGatewayDomain\"
+        : \"1\",\n    \"enableZCCRevert\" : \"0\",\n    \"zccRevertPassword\" : \"\",\n
+        \   \"zpaAuthExpOnSleep\" : 0.0,\n    \"zpaAuthExpOnSysRestart\" : 0.0,\n
+        \   \"zpaAuthExpOnNetIpChange\" : 0.0,\n    \"zpaAuthExpOnWinLogonSession\"
+        : 0.0,\n    \"zpaAuthExpOnWinSessionLock\" : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\"
+        : 0.0,\n    \"packetTunnelExcludeListForIPv6\" : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n
+        \   \"packetTunnelIncludeListForIPv6\" : \"\",\n    \"enableSetProxyOnVPNAdapters\"
+        : 1.0,\n    \"disableDNSRouteExclusion\" : 0.0,\n    \"advanceZpaReauth\"
+        : false,\n    \"useProxyPortForT1\" : \"0\",\n    \"useProxyPortForT2\" :
+        \"0\",\n    \"interceptZIATrafficAllAdapters\" : \"0\",\n    \"enableAntiTampering\"
+        : \"0\",\n    \"overrideATCmdByPolicy\" : \"0\",\n    \"reactivateAntiTamperingTime\"
+        : 0.0,\n    \"enforceSplitDNS\" : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\"
+        : \"1\",\n    \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\"
+        : 0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : true,\n      \"allowZpaDisableWithoutPassword\" : true,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":{\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0,\\\"businessContinuityActivationDomain\\\":\\\"\\\",\\\"businessContinuityTestModeEnabled\\\":0}\",\n
+        \   \"zccFailCloseSettingsIpBypasses\" : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\"
+        : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\" : 0.0,\n
+        \   \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"1\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"followGlobalForZpaReauth\"
+        : \"1\",\n    \"zpaAutoReauthTimeout\" : 30.0,\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0\n  },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n}, {\n  \"logout_password\" : \"\",\n  \"uninstall_password\"
+        : \"\",\n  \"disable_password\" : \"\",\n  \"install_ssl_certs\" : 0.0,\n
+        \ \"disableLoopBackRestriction\" : 0.0,\n  \"removeExemptedContainers\" :
+        1.0,\n  \"overrideWPAD\" : 0.0,\n  \"restartWinHttpSvc\" : 0.0,\n  \"cacheSystemProxy\"
+        : 0.0,\n  \"prioritizeIPv4\" : 0.0,\n  \"pacType\" : 1.0,\n  \"pacDataPath\"
+        : \"\",\n  \"disableParallelIpv4AndIPv6\" : -1.0,\n  \"wfpDriver\" : 0.0,\n
+        \ \"triggerDomainProfleDetection\" : 0.0,\n  \"installWindowsFirewallInboundRule\"
+        : 1.0,\n  \"captivePortalConfig\" : \"{\\\"enableCaptivePortalDetection\\\":1,\\\"enableFailOpen\\\":1,\\\"captivePortalWebSecDisableMinutes\\\":10,\\\"enableEmbeddedCaptivePortal\\\":0,\\\"automaticCapture\\\":1}\",\n
+        \ \"enableZscalerFirewall\" : \"0\",\n  \"forceLocationRefreshSccm\" : 0.0,\n
+        \ \"id\" : 0.0,\n  \"name\" : \"Default\",\n  \"description\" : \"Default
+        Policy\",\n  \"pac_url\" : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 2.0,\n
+        \ \"logMode\" : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateId\"
+        : 733.0,\n  \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"policyExtension\"
+        : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n    \"packetTunnelExcludeList\"
+        : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"customDNS\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"1\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 0.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0,\n    \"browserAuthType\" : \"-1\",\n    \"useDefaultBrowser\" : \"0\"\n
+        \ },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:33 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '211'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5015d5db-5f98-9b73-a9fa-81138bec82b8
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '89'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '57'
+      x-ratelimit-reset:
+      - '2127'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?deviceType=4
+  response:
+    body:
+      string: "[ {\n  \"logout_password\" : \"\",\n  \"uninstall_password\" : \"\",\n
+        \ \"disable_password\" : \"\",\n  \"install_ssl_certs\" : 1.0,\n  \"addIfscopeRoute\"
+        : \"0\",\n  \"clearArpCache\" : \"0\",\n  \"cacheSystemProxy\" : \"0\",\n
+        \ \"dnsPriorityOrdering\" : \"State:/Network/Service/com.cisco.anyconnect/DNS\",\n
+        \ \"dnsPriorityOrderingForTrustedDnsCriteria\" : \"0\",\n  \"enableZscalerFirewall\"
+        : \"1\",\n  \"persistentZscalerFirewall\" : \"0\",\n  \"enableApplicationBasedBypass\"
+        : \"0\",\n  \"captivePortalConfig\" : \"{\\\"automaticCapture\\\":1,\\\"enableCaptivePortalDetection\\\":1,\\\"enableFailOpen\\\":1,\\\"captivePortalWebSecDisableMinutes\\\":10,\\\"enableEmbeddedCaptivePortal\\\":0}\",\n
+        \ \"browserAuthType\" : \"-1\",\n  \"useDefaultBrowser\" : \"0\",\n  \"id\"
+        : 26707.0,\n  \"name\" : \"ZTunnel2.0\",\n  \"description\" : \"\",\n  \"pac_url\"
+        : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 1.0,\n  \"logMode\" : 3.0,\n
+        \ \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n  \"reauth_period\" : \"12\",\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"onNetPolicy\" :
+        {\n    \"id\" : \"11925\",\n    \"name\" : \"SGIO-Tunnel2.0\",\n    \"conditionType\"
+        : 0.0,\n    \"enableLWFDriver\" : \"1\",\n    \"predefinedTrustedNetworks\"
+        : false,\n    \"predefinedTnAll\" : false\n  },\n  \"notificationTemplateContract\"
+        : {\n    \"id\" : 733.0,\n    \"templateName\" : \"Legacy Notification Settings\",\n
+        \   \"defaultTemplate\" : \"1\",\n    \"enableClientNotification\" : \"1\",\n
+        \   \"enableZiaNotification\" : \"0\",\n    \"enableAppUpdatesNotification\"
+        : \"1\",\n    \"enableServiceStatusNotification\" : \"1\",\n    \"enableNotificationForZPAReauth\"
+        : \"1\",\n    \"zpaReauthNotificationTime\" : 5.0,\n    \"customTimer\" :
+        5.0,\n    \"ziaNotificationPersistant\" : \"0\",\n    \"enablePersistantNotification\"
+        : \"0\",\n    \"doNotDisturb\" : \"0\",\n    \"showDevicePostureFailureNotification\"
+        : \"0\",\n    \"createdBy\" : \"25145\",\n    \"editedBy\" : \"54023\"\n  },\n
+        \ \"notificationTemplateId\" : 733.0,\n  \"policyToken\" : \"343534333A343A32306336366666332D666665372D346439332D626238392D396338326135396632643239\",\n
+        \ \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"users\" : [ {\n
+        \   \"id\" : \"5807211\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-08-26 18:57:35.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ }, {\n    \"id\" : \"35129345\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-11-26 06:24:36.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ } ],\n  \"policyExtension\" : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n
+        \   \"vpnGateways\" : \"\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"packetTunnelDnsIncludeList\"
+        : \"\",\n    \"packetTunnelDnsExcludeList\" : \"\",\n    \"nonce\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"0\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"1\",\n    \"switchFocusToNotification\"
+        : \"1\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"1\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : true,\n      \"allowZpaDisableWithoutPassword\" : true,\n      \"allowZiaDisableWithoutPassword\"
+        : true,\n      \"allowZdxDisableWithoutPassword\" : true,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":{\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0,\\\"businessContinuityActivationDomain\\\":\\\"\\\",\\\"businessContinuityTestModeEnabled\\\":0}\",\n
+        \   \"zccFailCloseSettingsIpBypasses\" : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\"
+        : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\" : 0.0,\n
+        \   \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"1\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"followGlobalForZpaReauth\"
+        : \"1\",\n    \"zpaAutoReauthTimeout\" : 30.0,\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0\n  },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n}, {\n  \"logout_password\" : \"\",\n  \"uninstall_password\"
+        : \"\",\n  \"disable_password\" : \"\",\n  \"install_ssl_certs\" : 0.0,\n
+        \ \"addIfscopeRoute\" : \"0\",\n  \"clearArpCache\" : \"0\",\n  \"cacheSystemProxy\"
+        : \"0\",\n  \"dnsPriorityOrdering\" : \"State:/Network/Service/com.cisco.anyconnect/DNS\",\n
+        \ \"dnsPriorityOrderingForTrustedDnsCriteria\" : \"0\",\n  \"enableZscalerFirewall\"
+        : \"0\",\n  \"persistentZscalerFirewall\" : \"0\",\n  \"enableApplicationBasedBypass\"
+        : \"0\",\n  \"captivePortalConfig\" : \"{\\\"enableCaptivePortalDetection\\\":1,\\\"enableFailOpen\\\":1,\\\"captivePortalWebSecDisableMinutes\\\":10,\\\"enableEmbeddedCaptivePortal\\\":0,\\\"automaticCapture\\\":1}\",\n
+        \ \"browserAuthType\" : \"-1\",\n  \"useDefaultBrowser\" : \"0\",\n  \"id\"
+        : 0.0,\n  \"name\" : \"Default\",\n  \"description\" : \"Default Policy\",\n
+        \ \"pac_url\" : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 2.0,\n  \"logMode\"
+        : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n  \"reactivateWebSecurityMinutes\"
+        : \"0\",\n  \"highlightActiveControl\" : 0.0,\n  \"sendDisableServiceReason\"
+        : 0.0,\n  \"enableDeviceGroups\" : 0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\"
+        : [ ],\n  \"notificationTemplateId\" : 733.0,\n  \"tunnelZappTraffic\" : 0.0,\n
+        \ \"groupAll\" : 1.0,\n  \"policyExtension\" : {\n    \"sourcePortBasedBypasses\"
+        : \"3389:*\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"customDNS\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"1\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 0.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0,\n    \"browserAuthType\" : \"-1\",\n    \"useDefaultBrowser\" : \"0\"\n
+        \ },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:34 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '407'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1591a4de-3bc8-927d-9d40-b6504c30650a
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '95'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '56'
+      x-ratelimit-reset:
+      - '2126'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?deviceType=1
+  response:
+    body:
+      string: "[ {\n  \"passcode\" : \"\",\n  \"logout_password\" : \"\",\n  \"disable_password\"
+        : \"\",\n  \"showVPNTunNotification\" : 0.0,\n  \"useTunnelSDK4_3\" : 0.0,\n
+        \ \"ipv6Mode\" : 4.0,\n  \"id\" : 0.0,\n  \"name\" : \"Default\",\n  \"description\"
+        : \"Default Policy\",\n  \"pac_url\" : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\"
+        : 1.0,\n  \"logMode\" : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateId\"
+        : 733.0,\n  \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"policyExtension\"
+        : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n    \"packetTunnelExcludeList\"
+        : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"customDNS\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"1\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 0.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0,\n    \"browserAuthType\" : \"-1\",\n    \"useDefaultBrowser\" : \"0\"\n
+        \ },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:34 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '173'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b034d03f-bd3f-9324-bdeb-ffee6d7be125
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '93'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '55'
+      x-ratelimit-reset:
+      - '2126'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?deviceType=2
+  response:
+    body:
+      string: "[ {\n  \"logout_password\" : \"\",\n  \"uninstall_password\" : \"\",\n
+        \ \"disable_password\" : \"\",\n  \"wifi_ssid\" : \"\",\n  \"install_ssl_certs\"
+        : 1.0,\n  \"enforced\" : 0.0,\n  \"quota_in_roaming\" : 0.0,\n  \"limit\"
+        : 1.0,\n  \"billing_day\" : 1.0,\n  \"allowed_apps\" : \"\",\n  \"bypass_android_apps\"
+        : \"\",\n  \"bypass_mms_apps\" : 0.0,\n  \"custom_text\" : \"\",\n  \"enableVerboseLog\"
+        : \"0\",\n  \"cacheSystemProxy\" : 0.0,\n  \"disableParallelIpv4AndIPv6\"
+        : -1.0,\n  \"prioritizeIPv4\" : 0.0,\n  \"id\" : 171803.0,\n  \"name\" : \"AndroidPolicy01\",\n
+        \ \"description\" : \"\",\n  \"pac_url\" : \"\",\n  \"active\" : 0.0,\n  \"ruleOrder\"
+        : 1.0,\n  \"logMode\" : -1.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" :
+        100.0,\n  \"reauth_period\" : \"12\",\n  \"reactivateWebSecurityMinutes\"
+        : \"0\",\n  \"highlightActiveControl\" : 0.0,\n  \"sendDisableServiceReason\"
+        : 0.0,\n  \"enableDeviceGroups\" : 0.0,\n  \"groups\" : [ {\n    \"id\" :
+        6.2718389E7,\n    \"name\" : \"A001\",\n    \"authType\" : \"SAFECHANNEL_DIR\",\n
+        \   \"active\" : 1.0,\n    \"lastModification\" : \"1691828147\"\n  }, {\n
+        \   \"id\" : 6.2718414E7,\n    \"name\" : \"A000_test_1761418099964-test-1761429757931-test-1761429917892\",\n
+        \   \"authType\" : \"SAFECHANNEL_DIR\",\n    \"active\" : 1.0,\n    \"lastModification\"
+        : \"1761589274\"\n  } ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateContract\"
+        : {\n    \"id\" : 0.0,\n    \"templateName\" : \"Legacy Notification Settings\",\n
+        \   \"defaultTemplate\" : \"1\",\n    \"enableClientNotification\" : \"0\",\n
+        \   \"enableZiaNotification\" : \"0\",\n    \"enableAppUpdatesNotification\"
+        : \"0\",\n    \"enableServiceStatusNotification\" : \"0\",\n    \"enableNotificationForZPAReauth\"
+        : \"1\",\n    \"zpaReauthNotificationTime\" : 5.0,\n    \"customTimer\" :
+        5.0,\n    \"ziaNotificationPersistant\" : \"0\",\n    \"enablePersistantNotification\"
+        : \"0\",\n    \"doNotDisturb\" : \"0\",\n    \"showDevicePostureFailureNotification\"
+        : \"0\",\n    \"createdBy\" : \"0\",\n    \"editedBy\" : \"0\"\n  },\n  \"notificationTemplateId\"
+        : 733.0,\n  \"policyToken\" : \"343534333A323A39363062393231362D663461372D343262612D613765392D656164356331643839623035\",\n
+        \ \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 0.0,\n  \"users\" : [ {\n
+        \   \"id\" : \"5807211\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-08-26 18:57:35.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ }, {\n    \"id\" : \"35129345\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-11-26 06:24:36.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ } ],\n  \"policyExtension\" : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n
+        \   \"vpnGateways\" : \"\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"packetTunnelDnsIncludeList\"
+        : \"\",\n    \"packetTunnelDnsExcludeList\" : \"\",\n    \"nonce\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"0\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 1.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":1,\\\"offTrusted\\\":1,\\\"vpnTrusted\\\":1,\\\"splitVpnTrusted\\\":1}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : true,\n      \"allowZdxDisableWithoutPassword\" : true,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":{\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 1.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"1\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"followGlobalForZpaReauth\"
+        : \"1\",\n    \"zpaAutoReauthTimeout\" : 30.0,\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0\n  },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n}, {\n  \"logout_password\" : \"\",\n  \"uninstall_password\"
+        : \"\",\n  \"disable_password\" : \"\",\n  \"wifi_ssid\" : \"\",\n  \"install_ssl_certs\"
+        : 0.0,\n  \"enforced\" : 0.0,\n  \"quota_in_roaming\" : 0.0,\n  \"limit\"
+        : 1.0,\n  \"billing_day\" : 1.0,\n  \"allowed_apps\" : \"\",\n  \"bypass_android_apps\"
+        : \"\",\n  \"bypass_mms_apps\" : 0.0,\n  \"custom_text\" : \"\",\n  \"cacheSystemProxy\"
+        : 0.0,\n  \"disableParallelIpv4AndIPv6\" : -1.0,\n  \"prioritizeIPv4\" : 0.0,\n
+        \ \"id\" : 0.0,\n  \"name\" : \"Default\",\n  \"description\" : \"Default
+        Policy\",\n  \"pac_url\" : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 2.0,\n
+        \ \"logMode\" : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateId\"
+        : 733.0,\n  \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"policyExtension\"
+        : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n    \"packetTunnelExcludeList\"
+        : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"customDNS\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"1\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 0.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0,\n    \"browserAuthType\" : \"-1\",\n    \"useDefaultBrowser\" : \"0\"\n
+        \ },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:35 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '325'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c7338004-4f10-9f08-94c0-3a95dbfceca1
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '94'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '54'
+      x-ratelimit-reset:
+      - '2125'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?deviceType=5
+  response:
+    body:
+      string: "[ {\n  \"logout_password\" : \"\",\n  \"uninstall_password\" : \"\",\n
+        \ \"disable_password\" : \"\",\n  \"install_ssl_certs\" : 1.0,\n  \"id\" :
+        26709.0,\n  \"name\" : \"Linux Default\",\n  \"description\" : \"\",\n  \"pac_url\"
+        : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 1.0,\n  \"logMode\" : 3.0,\n
+        \ \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n  \"reauth_period\" : \"12\",\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"onNetPolicy\" :
+        {\n    \"id\" : \"11925\",\n    \"name\" : \"SGIO-Tunnel2.0\",\n    \"conditionType\"
+        : 0.0,\n    \"enableLWFDriver\" : \"1\",\n    \"predefinedTrustedNetworks\"
+        : false,\n    \"predefinedTnAll\" : false\n  },\n  \"notificationTemplateContract\"
+        : {\n    \"id\" : 0.0,\n    \"templateName\" : \"Legacy Notification Settings\",\n
+        \   \"defaultTemplate\" : \"1\",\n    \"enableClientNotification\" : \"0\",\n
+        \   \"enableZiaNotification\" : \"0\",\n    \"enableAppUpdatesNotification\"
+        : \"0\",\n    \"enableServiceStatusNotification\" : \"0\",\n    \"enableNotificationForZPAReauth\"
+        : \"1\",\n    \"zpaReauthNotificationTime\" : 5.0,\n    \"customTimer\" :
+        5.0,\n    \"ziaNotificationPersistant\" : \"0\",\n    \"enablePersistantNotification\"
+        : \"0\",\n    \"doNotDisturb\" : \"0\",\n    \"showDevicePostureFailureNotification\"
+        : \"0\",\n    \"createdBy\" : \"0\",\n    \"editedBy\" : \"0\"\n  },\n  \"notificationTemplateId\"
+        : 733.0,\n  \"policyToken\" : \"343534333A353A35326634323861342D663433622D343236392D623166332D393665396636653664353463\",\n
+        \ \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 0.0,\n  \"users\" : [ ],\n
+        \ \"policyExtension\" : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n
+        \   \"vpnGateways\" : \"\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"packetTunnelDnsIncludeList\"
+        : \"\",\n    \"packetTunnelDnsExcludeList\" : \"\",\n    \"machineIdpAuth\"
+        : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\" : \"0\",\n    \"zdxDisablePassword\"
+        : \"\",\n    \"zdDisablePassword\" : \"\",\n    \"zpaDisablePassword\" : \"\",\n
+        \   \"zdpDisablePassword\" : \"\",\n    \"followRoutingTable\" : \"1\",\n
+        \   \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\" : \"1\",\n
+        \   \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"enableSetProxyOnVPNAdapters\"
+        : 1.0,\n    \"disableDNSRouteExclusion\" : 0.0,\n    \"advanceZpaReauth\"
+        : false,\n    \"useProxyPortForT1\" : \"0\",\n    \"useProxyPortForT2\" :
+        \"0\",\n    \"interceptZIATrafficAllAdapters\" : \"0\",\n    \"enableAntiTampering\"
+        : \"0\",\n    \"overrideATCmdByPolicy\" : \"0\",\n    \"reactivateAntiTamperingTime\"
+        : 0.0,\n    \"enforceSplitDNS\" : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\"
+        : \"0\",\n    \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\"
+        : 0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : true,\n      \"allowZdxDisableWithoutPassword\" : true,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsExitUninstallPassword\"
+        : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\" : 0.0,\n
+        \   \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"followGlobalForZpaReauth\"
+        : \"1\",\n    \"zpaAutoReauthTimeout\" : 30.0,\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0\n  },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n}, {\n  \"logout_password\" : \"\",\n  \"uninstall_password\"
+        : \"\",\n  \"disable_password\" : \"\",\n  \"install_ssl_certs\" : 1.0,\n
+        \ \"id\" : 171799.0,\n  \"name\" : \"LinuxPolicy01\",\n  \"description\" :
+        \"test\",\n  \"pac_url\" : \"\",\n  \"active\" : 0.0,\n  \"ruleOrder\" : 2.0,\n
+        \ \"logMode\" : -1.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n
+        \ \"reauth_period\" : \"12\",\n  \"reactivateWebSecurityMinutes\" : \"0\",\n
+        \ \"highlightActiveControl\" : 0.0,\n  \"sendDisableServiceReason\" : 1.0,\n
+        \ \"enableDeviceGroups\" : 0.0,\n  \"groups\" : [ {\n    \"id\" : 6.2718389E7,\n
+        \   \"name\" : \"A001\",\n    \"authType\" : \"SAFECHANNEL_DIR\",\n    \"active\"
+        : 1.0,\n    \"lastModification\" : \"1691828147\"\n  }, {\n    \"id\" : 6.2718414E7,\n
+        \   \"name\" : \"A000_test_1761418099964-test-1761429757931-test-1761429917892\",\n
+        \   \"authType\" : \"SAFECHANNEL_DIR\",\n    \"active\" : 1.0,\n    \"lastModification\"
+        : \"1761589274\"\n  } ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateContract\"
+        : {\n    \"id\" : 0.0,\n    \"templateName\" : \"Legacy Notification Settings\",\n
+        \   \"defaultTemplate\" : \"1\",\n    \"enableClientNotification\" : \"0\",\n
+        \   \"enableZiaNotification\" : \"0\",\n    \"enableAppUpdatesNotification\"
+        : \"0\",\n    \"enableServiceStatusNotification\" : \"0\",\n    \"enableNotificationForZPAReauth\"
+        : \"1\",\n    \"zpaReauthNotificationTime\" : 5.0,\n    \"customTimer\" :
+        5.0,\n    \"ziaNotificationPersistant\" : \"0\",\n    \"enablePersistantNotification\"
+        : \"0\",\n    \"doNotDisturb\" : \"0\",\n    \"showDevicePostureFailureNotification\"
+        : \"0\",\n    \"createdBy\" : \"0\",\n    \"editedBy\" : \"0\"\n  },\n  \"notificationTemplateId\"
+        : 733.0,\n  \"policyToken\" : \"343534333A353A63623136333033322D386537312D343230382D623364652D343461306637363464356362\",\n
+        \ \"tunnelZappTraffic\" : 1.0,\n  \"groupAll\" : 0.0,\n  \"users\" : [ {\n
+        \   \"id\" : \"5807211\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-08-26 18:57:35.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ }, {\n    \"id\" : \"35129345\",\n    \"loginName\" : \"REDACTED\",\n    \"lastModification\"
+        : \"2025-11-26 06:24:36.0\",\n    \"active\" : 1.0,\n    \"companyId\" : \"4543\"\n
+        \ } ],\n  \"policyExtension\" : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n
+        \   \"vpnGateways\" : \"\",\n    \"packetTunnelExcludeList\" : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"packetTunnelDnsIncludeList\"
+        : \"\",\n    \"packetTunnelDnsExcludeList\" : \"\",\n    \"nonce\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"0\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 1.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":1,\\\"offTrusted\\\":1,\\\"vpnTrusted\\\":1,\\\"splitVpnTrusted\\\":1}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : true,\n      \"allowZdxDisableWithoutPassword\" : true,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":{\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":1}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 1.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"1\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"followGlobalForZpaReauth\"
+        : \"1\",\n    \"zpaAutoReauthTimeout\" : 30.0,\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0\n  },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : true,\n    \"enableZpaDR\"
+        : true,\n    \"ziaDRMethod\" : 2.0,\n    \"ziaCustomDbUrl\" : \"https://test.com\",\n
+        \   \"useZiaGlobalDb\" : true,\n    \"ziaGlobalDbUrl\" : \"https://dll7xpq8c5ev0.cloudfront.net/drdb.txt\",\n
+        \   \"ziaGlobalDbUrlv2\" : \"https://dll7xpq8c5ev0.cloudfront.net/drdb.txt\",\n
+        \   \"ziaDomainName\" : \"https://test.com\",\n    \"ziaRSAPubKeyName\" :
+        \"\",\n    \"ziaRSAPubKey\" : \"\",\n    \"zpaDomainName\" : \"https://test.com\",\n
+        \   \"zpaRSAPubKeyName\" : \"\",\n    \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\"
+        : true,\n    \"allowZpaTest\" : true\n  }\n}, {\n  \"logout_password\" : \"\",\n
+        \ \"uninstall_password\" : \"\",\n  \"disable_password\" : \"\",\n  \"install_ssl_certs\"
+        : 0.0,\n  \"id\" : 0.0,\n  \"name\" : \"Default\",\n  \"description\" : \"Default
+        Policy\",\n  \"pac_url\" : \"\",\n  \"active\" : 1.0,\n  \"ruleOrder\" : 3.0,\n
+        \ \"logMode\" : 3.0,\n  \"logLevel\" : 0.0,\n  \"logFileSize\" : 100.0,\n
+        \ \"reactivateWebSecurityMinutes\" : \"0\",\n  \"highlightActiveControl\"
+        : 0.0,\n  \"sendDisableServiceReason\" : 0.0,\n  \"enableDeviceGroups\" :
+        0.0,\n  \"groups\" : [ ],\n  \"deviceGroups\" : [ ],\n  \"notificationTemplateId\"
+        : 733.0,\n  \"tunnelZappTraffic\" : 0.0,\n  \"groupAll\" : 1.0,\n  \"policyExtension\"
+        : {\n    \"sourcePortBasedBypasses\" : \"3389:*\",\n    \"packetTunnelExcludeList\"
+        : \"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,224.0.0.0/4,255.255.255.255,169.254.0.0/16\",\n
+        \   \"packetTunnelIncludeList\" : \"0.0.0.0/0\",\n    \"customDNS\" : \"\",\n
+        \   \"machineIdpAuth\" : false,\n    \"exitPassword\" : \"\",\n    \"useV8JsEngine\"
+        : \"1\",\n    \"zdxDisablePassword\" : \"\",\n    \"zdDisablePassword\" :
+        \"\",\n    \"zpaDisablePassword\" : \"\",\n    \"zdpDisablePassword\" : \"\",\n
+        \   \"followRoutingTable\" : \"1\",\n    \"useWsaPollForZpa\" : \"0\",\n    \"useDefaultAdapterForDNS\"
+        : \"1\",\n    \"useZscalerNotificationFramework\" : \"0\",\n    \"switchFocusToNotification\"
+        : \"0\",\n    \"fallbackToGatewayDomain\" : \"1\",\n    \"enableZCCRevert\"
+        : \"0\",\n    \"zccRevertPassword\" : \"\",\n    \"zpaAuthExpOnSleep\" : 0.0,\n
+        \   \"zpaAuthExpOnSysRestart\" : 0.0,\n    \"zpaAuthExpOnNetIpChange\" : 0.0,\n
+        \   \"zpaAuthExpOnWinLogonSession\" : 0.0,\n    \"zpaAuthExpOnWinSessionLock\"
+        : 0.0,\n    \"zpaAuthExpSessionLockStateMinTimeInSecond\" : 0.0,\n    \"packetTunnelExcludeListForIPv6\"
+        : \"[FF00::/8],[FE80::/10],[FC00::/7]\",\n    \"packetTunnelIncludeListForIPv6\"
+        : \"\",\n    \"enableSetProxyOnVPNAdapters\" : 1.0,\n    \"disableDNSRouteExclusion\"
+        : 0.0,\n    \"advanceZpaReauth\" : false,\n    \"useProxyPortForT1\" : \"0\",\n
+        \   \"useProxyPortForT2\" : \"0\",\n    \"interceptZIATrafficAllAdapters\"
+        : \"0\",\n    \"enableAntiTampering\" : \"0\",\n    \"overrideATCmdByPolicy\"
+        : \"0\",\n    \"reactivateAntiTamperingTime\" : 0.0,\n    \"enforceSplitDNS\"
+        : 0.0,\n    \"dropQuicTraffic\" : 0.0,\n    \"enableZdpService\" : \"0\",\n
+        \   \"updateDnsSearchOrder\" : 1.0,\n    \"truncateLargeUDPDNSResponse\" :
+        0.0,\n    \"prioritizeDnsExclusions\" : 0.0,\n    \"purgeKerberosPreferredDCCache\"
+        : \"0\",\n    \"deleteDHCPOption121Routes\" : \"{\\\"trusted\\\":\\\"1\\\",\\\"offTrusted\\\":\\\"1\\\",\\\"vpnTrusted\\\":\\\"1\\\",\\\"splitVpnTrusted\\\":\\\"1\\\"}\",\n
+        \   \"enableLocationPolicyOverride\" : 0.0,\n    \"locationRulesetPolicies\"
+        : {\n      \"offTrusted\" : {\n        \"id\" : 0.0,\n        \"name\" : \"\"\n
+        \     },\n      \"trusted\" : {\n        \"id\" : 0.0,\n        \"name\" :
+        \"\"\n      },\n      \"vpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      },\n      \"splitVpnTrusted\" : {\n        \"id\" : 0.0,\n        \"name\"
+        : \"\"\n      }\n    },\n    \"generateCliPasswordContract\" : {\n      \"enableCli\"
+        : false,\n      \"allowZpaDisableWithoutPassword\" : false,\n      \"allowZiaDisableWithoutPassword\"
+        : false,\n      \"allowZdxDisableWithoutPassword\" : false,\n      \"cliPasswordType\"
+        : 0.0\n    },\n    \"zdxLiteConfigObj\" : \"{\\\"localMetrics\\\":1,\\\"endToEndDiagnostics\\\":
+        {\\\"trusted\\\":0,\\\"vpnTrusted\\\":0,\\\"offTrusted\\\":0,\\\"splitVpnTrusted\\\":0}}\",\n
+        \   \"ddilConfig\" : \"{\\\"ddilEnabled\\\":0}\",\n    \"zccFailCloseSettingsIpBypasses\"
+        : \"\",\n    \"zccFailCloseSettingsExitUninstallPassword\" : \"\",\n    \"zccFailCloseSettingsLockdownOnTunnelProcessExit\"
+        : 0.0,\n    \"zccFailCloseSettingsLockdownOnFirewallError\" : 0.0,\n    \"zccFailCloseSettingsLockdownOnDriverError\"
+        : 0.0,\n    \"zccFailCloseSettingsThumbPrint\" : \"8feY7wdD8n4gHFMlChIzTaptWT3YZhAtwchxGbOAwks=\",\n
+        \   \"zccAppFailOpenPolicy\" : 0.0,\n    \"zccTunnelFailPolicy\" : 0.0,\n
+        \   \"followGlobalForPartnerLogin\" : \"1\",\n    \"userAllowedToAddPartner\"
+        : \"0\",\n    \"allowClientCertCachingForWebView2\" : \"0\",\n    \"showConfirmationDialogForCachedCert\"
+        : \"0\",\n    \"enableFlowBasedTunnel\" : 0.0,\n    \"enableNetworkTrafficProcessMapping\"
+        : 0.0,\n    \"enableLocalPacketCapture\" : \"1\",\n    \"oneIdMTDeviceAuthEnabled\"
+        : \"0\",\n    \"enableCustomProxyDetection\" : \"0\",\n    \"preventAutoReauthDuringDeviceLock\"
+        : \"0\",\n    \"useEndPointLocationForDCSelection\" : \"0\",\n    \"enableCrashReporting\"
+        : 0.0,\n    \"recacheSystemProxy\" : \"0\",\n    \"enableAutomaticPacketCapture\"
+        : 0.0,\n    \"enableAPCforCriticalSections\" : 0.0,\n    \"enableAPCforOtherSections\"
+        : 0.0,\n    \"enablePCAdditionalSpace\" : 0.0,\n    \"pcAdditionalSpace\"
+        : 0.0,\n    \"clientConnectorUiLanguage\" : 0.0,\n    \"blockPrivateRelay\"
+        : \"0\",\n    \"bypassDNSTrafficUsingUDPProxy\" : 0.0,\n    \"reconnectTunOnWakeup\"
+        : 0.0,\n    \"browserAuthType\" : \"-1\",\n    \"useDefaultBrowser\" : \"0\"\n
+        \ },\n  \"disasterRecovery\" : {\n    \"enableZiaDR\" : false,\n    \"enableZpaDR\"
+        : false,\n    \"ziaDRMethod\" : 0.0,\n    \"ziaCustomDbUrl\" : \"\",\n    \"useZiaGlobalDb\"
+        : false,\n    \"ziaGlobalDbUrl\" : \"\",\n    \"ziaGlobalDbUrlv2\" : \"\",\n
+        \   \"ziaDomainName\" : \"\",\n    \"ziaRSAPubKeyName\" : \"\",\n    \"ziaRSAPubKey\"
+        : \"\",\n    \"zpaDomainName\" : \"\",\n    \"zpaRSAPubKeyName\" : \"\",\n
+        \   \"zpaRSAPubKey\" : \"\",\n    \"allowZiaTest\" : false,\n    \"allowZpaTest\"
+        : false\n  }\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:35 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '419'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f5e817f1-52ed-93e5-bac3-3e61ed744b8b
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '92'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '53'
+      x-ratelimit-reset:
+      - '2125'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/listByCompany?search=test
+  response:
+    body:
+      string: '[ ]'
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 18:24:36 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '445'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 679bd3cb-e919-9662-b31e-01b1f7769b3f
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '88'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '52'
+      x-ratelimit-reset:
+      - '2124'
+      x-transaction-id:
+      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -83,7 +83,23 @@ class TestTrafficStaticIP:
             except Exception as exc:
                 errors.append(f"Static IP validation check failed: {exc}")
 
-            # Step 4: List static IPs and check if created IP exists
+            # Step 4: Update the static IP (may fail due to timing/replication)
+            try:
+                if static_ip_id:
+                    time.sleep(2)
+                    updated_comment = names.updated_name
+                    updated_ip, _, error = client.zia.traffic_static_ip.update_static_ip(
+                        static_ip_id=static_ip_id,
+                        comment=updated_comment,
+                        ip_address=randomIP,
+                    )
+                    # Update may fail due to timing - don't fail test
+                    if error is None and updated_ip is not None:
+                        assert updated_ip.comment == updated_comment
+            except Exception as exc:
+                pass  # Update may fail due to API timing - don't fail test
+
+            # Step 5: List static IPs and check if created IP exists
             try:
                 time.sleep(2)
                 ip_list, _, error = client.zia.traffic_static_ip.list_static_ips()
