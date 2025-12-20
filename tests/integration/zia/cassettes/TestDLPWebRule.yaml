@@ -18,7 +18,7 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules
   response:
     body:
       string: '{"id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"description":"tests-vcr0002","fileTypes":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH"}'
@@ -48,8 +48,6 @@ interactions:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
@@ -95,7 +93,7 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules/1571783
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules/1571783
   response:
     body:
       string: '{"accessControl":"READ_WRITE","id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"rank":0,"description":"tests-vcr0002","fileTypes":[],"fileTypeCategories":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"lastModifiedTime":1764200999,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"receiver":{},"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH","subRules":[],"sourceIpGroups":[],"eunTemplateId":0,"ucTemplateId":0}'
@@ -125,8 +123,6 @@ interactions:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
@@ -172,7 +168,7 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/webDlpRules/1571783
+    uri: https://easm.test.zscaler.com/zia/api/v1/webDlpRules/1571783
   response:
     body:
       string: ''
@@ -227,4 +223,68 @@ interactions:
     status:
       code: 204
       message: No Content
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 05:12:27 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
 version: 1

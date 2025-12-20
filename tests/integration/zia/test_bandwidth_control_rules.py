@@ -141,6 +141,14 @@ class TestBandwidthRules:
             except Exception as exc:
                 errors.append(f"Listing Bandwidth Rules failed: {exc}")
 
+            # Step 7: List Bandwidth Rules Lite
+            try:
+                rules_lite, _, error = client.zia.bandwidth_control_rules.list_rules_lite()
+                assert error is None, f"Error listing Bandwidth Rules Lite: {error}"
+                assert rules_lite is not None, "Bandwidth Rules Lite list is None"
+            except Exception as exc:
+                errors.append(f"Listing Bandwidth Rules Lite failed: {exc}")
+
         finally:
             cleanup_errors = []
             # Delete the Bandwidth Rule first (it depends on the class)

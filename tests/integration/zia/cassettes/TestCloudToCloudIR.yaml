@@ -1,0 +1,306 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudToCloudIR
+  response:
+    body:
+      string: '[{"id":23136553,"name":"SecurityGeekIO","status":["CASB_TENANT_ACTIVE","CASB_TENANT_VALIDATION_SUCCESS"],"modifiedTime":0,"lastModifiedBy":null,"lastTenantValidationTime":1756265489,"lastValidationMsg":null,"onboardableEntity":{"tenantAuthorizationInfo":{"type":"ZSCALER_CONNECTOR","smirBucketConfig":[{"configName":"zscalerirbucket01","metadataBucketName":"https://zscalerirbucket01.blob.core.windows.net/metadata-json","dataBucketName":"https://zscalerirbucket01.blob.core.windows.net/evidence","id":25627}],"qtnInfoCleared":true},"application":"AZUREBLOB_SMIR","zscalerAppTenantId":{"id":1498649,"name":"d8973ccd-aaff-4983-a0f0-ae3a57297387"},"enterpriseTenantId":"02ddc0c2-02a1-40f0-b91d-f1ae13bd1f63","name":"SecurityGeekIO","id":23136553,"type":"C2CIR","lastValidationTime":0}}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:31 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '291'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 0c143c72-b5df-93c1-bb7f-72bc5dcaec3a
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudToCloudIR/lite
+  response:
+    body:
+      string: '[{"id":23136553,"name":"SecurityGeekIO","status":["CASB_TENANT_ACTIVE","CASB_TENANT_VALIDATION_SUCCESS"],"modifiedTime":0,"lastModifiedBy":null,"lastTenantValidationTime":0,"lastValidationMsg":null,"onboardableEntity":{"application":"AZUREBLOB_SMIR","name":"SecurityGeekIO","id":23136553,"type":"C2CIR","lastValidationTime":0}}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:31 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '188'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - a660da46-814a-9f8e-a457-d5a81ae68850
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '29'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudToCloudIR/count
+  response:
+    body:
+      string: '1'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '1'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:31 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '224'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 85c65e15-2f8c-9a42-916b-7f5bbf84711b
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '29'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/cloudToCloudIR/23136553
+  response:
+    body:
+      string: '{"id":23136553,"name":"SecurityGeekIO","status":["CASB_TENANT_ACTIVE","CASB_TENANT_VALIDATION_SUCCESS"],"modifiedTime":0,"lastModifiedBy":null,"lastTenantValidationTime":1756265489,"lastValidationMsg":null,"onboardableEntity":{"tenantAuthorizationInfo":{"type":"ZSCALER_CONNECTOR","smirBucketConfig":[{"configName":"zscalerirbucket01","metadataBucketName":"https://zscalerirbucket01.blob.core.windows.net/metadata-json","dataBucketName":"https://zscalerirbucket01.blob.core.windows.net/evidence","id":25627}],"qtnInfoCleared":true},"application":"AZUREBLOB_SMIR","zscalerAppTenantId":{"id":1498649,"name":"d8973ccd-aaff-4983-a0f0-ae3a57297387"},"enterpriseTenantId":"02ddc0c2-02a1-40f0-b91d-f1ae13bd1f63","name":"SecurityGeekIO","id":23136553,"type":"C2CIR","lastValidationTime":0}}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '496'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - c731dc7a-6317-9884-ab7f-657a280cbc67
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '29'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

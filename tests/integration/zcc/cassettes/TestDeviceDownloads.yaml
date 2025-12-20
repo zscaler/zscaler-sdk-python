@@ -1,0 +1,348 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Time-Zone:
+      - UTC
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/downloadDisableReasons?osTypes=3&startDate=2024-01-01+00%3A00%3A00+GMT&endDate=2024-12-31+00%3A00%3A00+GMT
+  response:
+    body:
+      string: '"User","UDID","Platform","Service","Disable Time","Disable Reason"
+
+        '
+    headers:
+      cache-control:
+      - no-cache
+      content-disposition:
+      - attachment; filename=export_2025-12-17_20_52.csv
+      content-type:
+      - application/octet-stream;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:52:41 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '618'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f852bc68-dbc7-9c93-823a-9c70170984ab
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '2'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '57'
+      x-ratelimit-reset:
+      - '440'
+      x-transaction-id:
+      - c3df4d19-a5b2-4282-a5a4-9d29deb4769e
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getDevices?page=1&pageSize=5
+  response:
+    body:
+      string: "[ {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
+        \ \"state\" : 1,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED\",\n  \"detail\"
+        : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\" : \"SGIOLab\",\n
+        \ \"last_seen_time\" : \"1759822506\",\n  \"osVersion\" : \"Microsoft Windows
+        10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.88 (64-bit)\",\n  \"registrationState\"
+        : \"Registered\",\n  \"owner\" : \"WilliamGuilherme\",\n  \"machineHostname\"
+        : \"VCD138-WIN10\",\n  \"manufacturer\" : \"VMware, Inc.\",\n  \"download_count\"
+        : 1,\n  \"registration_time\" : \"1759822502\",\n  \"deregistrationTimestamp\"
+        : \"1759796303\",\n  \"config_download_time\" : \"1759822502\",\n  \"keepAliveTime\"
+        : \"1759822506\",\n  \"hardwareFingerprint\" : \"N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==\",\n
+        \ \"tunnelVersion\" : \"20:1\",\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"4.5.0.33
+        (32-bit)\",\n  \"zappArch\" : \"x64\"\n}, {\n  \"companyName\" : \"William
+        Guilherme\",\n  \"type\" : 4,\n  \"state\" : 2,\n  \"udid\" : \"053AF529-6506-5BF4-974E-A78C00AA51BD:501\",\n
+        \ \"macAddress\" : \"06:5F:DD:5A:83:66\",\n  \"user\" : \"REDACTED\",\n  \"detail\"
+        : \"Apple Mac16,7\",\n  \"policyName\" : \"ZTunnel2.0\",\n  \"last_seen_time\"
+        : \"1759852321\",\n  \"osVersion\" : \"Version 15.6.1 (Build 24G90) ;arm\",\n
+        \ \"agentVersion\" : \"4.5.2.73\",\n  \"registrationState\" : \"Unregistered\",\n
+        \ \"owner\" : \"wguilherme\",\n  \"machineHostname\" : \"F99LXTG6YY\",\n  \"manufacturer\"
+        : \"Apple\",\n  \"download_count\" : 8,\n  \"registration_time\" : \"1759793919\",\n
+        \ \"deregistrationTimestamp\" : \"1759854271\",\n  \"config_download_time\"
+        : \"1759831631\",\n  \"keepAliveTime\" : \"1759852321\",\n  \"hardwareFingerprint\"
+        : \"6455319b50424227afe83202e4cf67ce4d633bd5\",\n  \"tunnelVersion\" : \"20:1\",\n
+        \ \"vpnState\" : 0,\n  \"upmVersion\" : \"4.4.1.12\",\n  \"zappArch\" : null\n},
+        {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n  \"state\"
+        : 3,\n  \"udid\" : \"VMware-42-1d-29-9b-7c-c5-3f-d2-90-3c-d5-4e-9c-75-6d-d0:19D0764C0D09DF81361B52530353FD5A52A34D68\",\n
+        \ \"macAddress\" : \"00:50:56:9D:F5:23\",\n  \"user\" : \"REDACTED\",\n  \"detail\"
+        : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\" : \"SGIOLab\",\n
+        \ \"last_seen_time\" : \"1645213834\",\n  \"osVersion\" : \"Microsoft Windows
+        10 Pro;64 bit\",\n  \"agentVersion\" : \"3.6.1.23\",\n  \"registrationState\"
+        : \"Remove pending\",\n  \"owner\" : \"wguilherme\",\n  \"machineHostname\"
+        : \"VCD138-WIN10\",\n  \"manufacturer\" : \"VMware, Inc.\",\n  \"download_count\"
+        : 1,\n  \"registration_time\" : \"1645213834\",\n  \"deregistrationTimestamp\"
+        : \"1642010179\",\n  \"config_download_time\" : \"1645213834\",\n  \"keepAliveTime\"
+        : \"1645214794\",\n  \"hardwareFingerprint\" : \"AVANUFFSVFMFBgMNAQRVUQAAAAAAAAAAAAAAAAAAAAA=\",\n
+        \ \"tunnelVersion\" : null,\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"3.0.0.57
+        (32-bit)\",\n  \"zappArch\" : null\n}, {\n  \"companyName\" : \"William Guilherme\",\n
+        \ \"type\" : 3,\n  \"state\" : 6,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED\",\n  \"detail\"
+        : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\" : \"SGIOLab\",\n
+        \ \"last_seen_time\" : \"1756523021\",\n  \"osVersion\" : \"Microsoft Windows
+        10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.61 (64-bit)\",\n  \"registrationState\"
+        : \"Quarantined\",\n  \"owner\" : \"Administrator\",\n  \"machineHostname\"
+        : \"VCD138-WIN10\",\n  \"manufacturer\" : \"VMware, Inc.\",\n  \"download_count\"
+        : 4,\n  \"registration_time\" : \"1756235803\",\n  \"deregistrationTimestamp\"
+        : \"1758171320\",\n  \"config_download_time\" : \"1756245579\",\n  \"keepAliveTime\"
+        : \"1756523021\",\n  \"hardwareFingerprint\" : \"N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==\",\n
+        \ \"tunnelVersion\" : \"10:0\",\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"4.5.0.16
+        (64-bit)\",\n  \"zappArch\" : \"x64\"\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:52:41 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '434'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 834f0420-6e8c-962d-af8c-febeef0bff60
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '99'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '56'
+      x-ratelimit-reset:
+      - '439'
+      x-transaction-id:
+      - c3df4d19-a5b2-4282-a5a4-9d29deb4769e
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getDevices?page=1&pageSize=1
+  response:
+    body:
+      string: "[ {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
+        \ \"state\" : 1,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED\",\n  \"detail\"
+        : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\" : \"SGIOLab\",\n
+        \ \"last_seen_time\" : \"1759822506\",\n  \"osVersion\" : \"Microsoft Windows
+        10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.88 (64-bit)\",\n  \"registrationState\"
+        : \"Registered\",\n  \"owner\" : \"WilliamGuilherme\",\n  \"machineHostname\"
+        : \"VCD138-WIN10\",\n  \"manufacturer\" : \"VMware, Inc.\",\n  \"download_count\"
+        : 1,\n  \"registration_time\" : \"1759822502\",\n  \"deregistrationTimestamp\"
+        : \"1759796303\",\n  \"config_download_time\" : \"1759822502\",\n  \"keepAliveTime\"
+        : \"1759822506\",\n  \"hardwareFingerprint\" : \"N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==\",\n
+        \ \"tunnelVersion\" : \"20:1\",\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"4.5.0.33
+        (32-bit)\",\n  \"zappArch\" : \"x64\"\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:52:42 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '582'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e0a058bd-b95d-9bf0-a02d-e46c89ad32e4
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '99'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '55'
+      x-ratelimit-reset:
+      - '439'
+      x-transaction-id:
+      - c3df4d19-a5b2-4282-a5a4-9d29deb4769e
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getDeviceDetails?udid=VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90%3A92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8
+  response:
+    body:
+      string: '{"id":"137111309","type":3,"state":1,"user_name":"REDACTED","owner":"WilliamGuilherme","machineHostname":"VCD138-WIN10","manufacturer":"VMware,
+        Inc.","internal_model":"VMware Virtual Platform","external_model":"VMware
+        Virtual Platform","os_version":"Microsoft Windows 10 Pro;64 bit;amd64","unique_id":"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8","carrier":"","mac_address":"00:50:56:82:34:A2","device_locale":"en","agent_version":"4.7.0.88","rooted":0,"config_download_time":"1759822502","registration_time":"1759822502","download_count":1,"deregistration_time":"1759796303","last_seen_time":"1759822506","keep_alive_time":"1759822506","hardwareFingerprint":"N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg\u003d\u003d","devicePolicyName":"SGIOLab","tunnelVersion":"20:1","logFetchInfo":{"logTs":0,"logAckTs":0,"error":0,"logFetchPCAPEnabled":false,"logFetchDBEnabled":false,"logFetchFromNoOfDays":0},"upmVersion":"4.5.0.33
+        (32-bit)","zdpVersion":"25.3.15.9","zappArch":"x64","serialNumber":"VMware-42
+        02 38 a5 5f 9c 86 39-ff 5a d0 60 5c 35 6","ziaEnabled":"true","zpaEnabled":"true","zdxEnabled":"true","zdEnabled":"Not
+        Applicable","zdpEnabled":"true","ziaHealth":"Active","zpaHealth":"Active","zdxHealth":"Inactive","zdHealth":"Not
+        Applicable","zdpHealth":"Inactive","zpaLastSeenTime":"1759822506","zdxLastSeenTime":"1759795462","zdLastSeenTime":"Not
+        Applicable","zdpLastSeenTime":"1759795462","zccLoggedInUserType":"No","externalDeviceId":"","zccForceRevert":"0","deviceOtpArray":["afzawxx3f5","irog3l8n2b","8sus4ooi3l","756hb0ndvq","nmemrvsk9k","fhbwfljveu","w5rkichq4d","zk2huol2n4","yqd7s8gohf","40cygtumje"],"antiTamperingStatus":"0","deviceTrust":0,"zccTunnelVersion":"","vdi":0,"strictEnforcement":"0","expectedZCCVersion":"4.7.0.88","expectedZCCVersionTimestamp":"1759822509","zccUpgradeStatus":"In
+        Progress","lastLocationSourceUsed":"Source IP"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 17 Dec 2025 20:52:43 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '622'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c52f7589-9e5b-9b07-ab2b-79a91360408b
+      x-oneapi-version:
+      - 109.1.92
+      x-rate-limit-remaining:
+      - '98'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '54'
+      x-ratelimit-reset:
+      - '438'
+      x-transaction-id:
+      - c3df4d19-a5b2-4282-a5a4-9d29deb4769e
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,310 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/urlFilteringRules
+  response:
+    body:
+      string: '[{"id":1153400,"accessControl":"READ_WRITE","name":"URL_Filtering_1","order":1,"protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"locations":[{"id":23712563,"name":"Vancouver01"}],"urlCategories":["OTHER_ADULT_MATERIAL","ADULT_THEMES","LINGERIE_BIKINI","NUDITY","PORNOGRAPHY","SEXUALITY","ADULT_SEX_EDUCATION","K_12_SEX_EDUCATION","SOCIAL_ADULT"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["OPTIONS","GET","HEAD","POST","PUT","DELETE","TRACE","CONNECT","OTHER","PROPFIND","PROPPATCH","MOVE","MKCOL","LOCK","COPY","UNLOCK","PATCH"],"blockOverride":false,"lastModifiedTime":1766179195,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"enforceTimeValidity":false,"cbiProfileId":0,"capturePCAP":false,"sourceIpGroups":[],"browserEunTemplateId":0,"httpHeaderProfiles":[],"httpHeaderActionProfiles":[],"usersAndGroupsSet":false,"groupsAndDepartmentsSet":false,"action":"BLOCK","predefined":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:43:10 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1988'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 7fa07ee2-cb82-9309-a189-11688b0332fa
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - 689f9123-efcf-4103-871c-99c8f09deb61
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/urlFilteringRules
+  response:
+    body:
+      string: '[{"id":1153400,"accessControl":"READ_WRITE","name":"URL_Filtering_1","order":1,"protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"locations":[{"id":23712563,"name":"Vancouver01"}],"urlCategories":["OTHER_ADULT_MATERIAL","ADULT_THEMES","LINGERIE_BIKINI","NUDITY","PORNOGRAPHY","SEXUALITY","ADULT_SEX_EDUCATION","K_12_SEX_EDUCATION","SOCIAL_ADULT"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["OPTIONS","GET","HEAD","POST","PUT","DELETE","TRACE","CONNECT","OTHER","PROPFIND","PROPPATCH","MOVE","MKCOL","LOCK","COPY","UNLOCK","PATCH"],"blockOverride":false,"lastModifiedTime":1766179195,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"enforceTimeValidity":false,"cbiProfileId":0,"capturePCAP":false,"sourceIpGroups":[],"browserEunTemplateId":0,"httpHeaderProfiles":[],"httpHeaderActionProfiles":[],"usersAndGroupsSet":false,"groupsAndDepartmentsSet":false,"action":"BLOCK","predefined":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:43:11 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '813'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - f94cc2ef-1437-9b60-a50b-250707a4398e
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '49'
+      x-transaction-id:
+      - 689f9123-efcf-4103-871c-99c8f09deb61
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/urlFilteringRules/1153400
+  response:
+    body:
+      string: '{"id":1153400,"accessControl":"READ_WRITE","name":"URL_Filtering_1","order":1,"protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"locations":[{"id":23712563,"name":"Vancouver01"}],"urlCategories":["OTHER_ADULT_MATERIAL","ADULT_THEMES","LINGERIE_BIKINI","NUDITY","PORNOGRAPHY","SEXUALITY","ADULT_SEX_EDUCATION","K_12_SEX_EDUCATION","SOCIAL_ADULT"],"excludeSrcCountries":false,"state":"ENABLED","rank":7,"requestMethods":["OPTIONS","GET","HEAD","POST","PUT","DELETE","TRACE","CONNECT","OTHER","PROPFIND","PROPPATCH","MOVE","MKCOL","LOCK","COPY","UNLOCK","PATCH"],"blockOverride":false,"lastModifiedTime":1766179195,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"enforceTimeValidity":false,"cbiProfileId":0,"capturePCAP":false,"sourceIpGroups":[],"browserEunTemplateId":0,"httpHeaderProfiles":[],"httpHeaderActionProfiles":[],"usersAndGroupsSet":false,"groupsAndDepartmentsSet":false,"action":"BLOCK","predefined":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:43:12 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '788'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 30b088ed-1b98-9745-9b64-9c560f8bfea6
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '49'
+      x-transaction-id:
+      - 689f9123-efcf-4103-871c-99c8f09deb61
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/advancedUrlFilterAndCloudAppSettings
+  response:
+    body:
+      string: '{"enableDynamicContentCat":false,"considerEmbeddedSites":false,"enforceSafeSearch":false,"safeSearchApps":[],"enableOffice365":true,"enableMsftO365":false,"enableUcaasZoom":false,"enableUcaasLogMeIn":false,"enableUcaasRingCentral":false,"enableUcaasWebex":false,"enableChatGptPrompt":false,"enableMicrosoftCoPilotPrompt":false,"enableGeminiPrompt":false,"enablePOEPrompt":false,"enableMetaPrompt":false,"enablePerPlexityPrompt":false,"enableDeepSeekPrompt":false,"enableWriterPrompt":false,"enableGrokPrompt":false,"enableMistralAIPrompt":false,"enableClaudePrompt":false,"enableNewlyRegisteredDomains":false,"enableBlockOverrideForNonAuthUser":false,"enableCIPACompliance":false,"enableUcaasTalkdesk":false,"zveloDbLookupDisabled":false,"enableCreativeCommonsSearchResults":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:43:13 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '386'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - d53529d7-24f6-9946-b61a-0ae5c0842ad2
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '48'
+      x-transaction-id:
+      - 689f9123-efcf-4103-871c-99c8f09deb61
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1
