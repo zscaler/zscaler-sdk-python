@@ -45,9 +45,19 @@ class TestUserManagement:
             assert users is not None, "Users list should not be None"
             assert isinstance(users, list), "Users should be a list"
 
+            # Test list_users with query params
+            users_search, response, err = client.zia.user_management.list_users(
+                query_params={"search": "admin"}
+            )
+
             # Test list_user_references
             users_ref, response, err = client.zia.user_management.list_user_references()
             assert err is None, f"List user references failed: {err}"
+
+            # Test list_user_references with query params
+            users_ref_search, response, err = client.zia.user_management.list_user_references(
+                query_params={"page": 1, "page_size": 10}
+            )
 
             # Test get_user with first user if available
             if users and len(users) > 0:
@@ -56,11 +66,23 @@ class TestUserManagement:
                 assert err is None, f"Get user failed: {err}"
                 assert fetched_user is not None, "Fetched user should not be None"
 
+            # Test list_auditors
+            try:
+                auditors, response, err = client.zia.user_management.list_auditors()
+                # May fail due to permissions
+            except Exception:
+                pass
+
             # ============ GROUPS (Full CRUD) ============
             # Test list_groups
             groups, response, err = client.zia.user_management.list_groups()
             assert err is None, f"List groups failed: {err}"
             assert groups is not None, "Groups list should not be None"
+
+            # Test list_groups with query params
+            groups_search, response, err = client.zia.user_management.list_groups(
+                query_params={"search": "Default"}
+            )
 
             # Test get_group with first group if available
             if groups and len(groups) > 0:
@@ -68,6 +90,12 @@ class TestUserManagement:
                 fetched_group, response, err = client.zia.user_management.get_group(group_id)
                 assert err is None, f"Get group failed: {err}"
                 assert fetched_group is not None, "Fetched group should not be None"
+
+            # Test get_group_lite
+            try:
+                group_lite, response, err = client.zia.user_management.get_group_lite()
+            except Exception:
+                pass
 
             # Test add_group
             added_group, response, err = client.zia.user_management.add_group(name="TestGroup_VCR_Integration")
@@ -87,12 +115,23 @@ class TestUserManagement:
             assert err is None, f"List departments failed: {err}"
             assert departments is not None, "Departments list should not be None"
 
+            # Test list_departments with query params
+            departments_search, response, err = client.zia.user_management.list_departments(
+                query_params={"search": "Default"}
+            )
+
             # Test get_department with first department if available
             if departments and len(departments) > 0:
                 dept_id = departments[0].id
                 fetched_dept, response, err = client.zia.user_management.get_department(dept_id)
                 assert err is None, f"Get department failed: {err}"
                 assert fetched_dept is not None, "Fetched department should not be None"
+
+                # Test get_department_lite
+                try:
+                    dept_lite, response, err = client.zia.user_management.get_department_lite(dept_id)
+                except Exception:
+                    pass
 
             # Test add_department
             added_dept, response, err = client.zia.user_management.add_department(name="TestDept_VCR_Integration")

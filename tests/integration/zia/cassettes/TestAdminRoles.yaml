@@ -735,4 +735,82 @@ interactions:
     status:
       code: 403
       message: Forbidden
+- request:
+    body: '{"name": "TestAdminRole_VCR", "adminAcctAccess": "READ_ONLY", "dashboardAccess":
+      "READ_ONLY", "reportAccess": "READ_ONLY", "analysisAccess": "READ_ONLY", "usernameAccess":
+      "READ_ONLY", "deviceInfoAccess": "READ_ONLY"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '217'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/adminRoles
+  response:
+    body:
+      string: '{"code":"SCOPE_LIMITED","message":"Role with equal or higher rank is
+        not allowed."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '83'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:17:43 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '493'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e7555407-9f30-9cd1-aed3-a4c04c0d98a1
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '17'
+      x-transaction-id:
+      - 41f5e3a6-0f71-4a4e-b5ed-001d7196ac0e
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 403
+      message: Forbidden
 version: 1

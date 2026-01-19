@@ -49,6 +49,33 @@ class TestSandbox:
             hash_count, response, err = client.zia.sandbox.get_file_hash_count()
             assert err is None, f"Get file hash count failed: {err}"
 
+            # Test get_report with a known hash (may fail if hash not found)
+            try:
+                test_hash = "d41d8cd98f00b204e9800998ecf8427e"  # Example MD5 hash
+                report, response, err = client.zia.sandbox.get_report(md5_hash=test_hash)
+                # Report may fail for non-existent hash, that's ok
+            except Exception:
+                pass
+
+            # Test get_report with details
+            try:
+                test_hash = "d41d8cd98f00b204e9800998ecf8427e"
+                report_full, response, err = client.zia.sandbox.get_report(
+                    md5_hash=test_hash,
+                    report_details="full"
+                )
+            except Exception:
+                pass
+
+            # Test add_hash_to_custom_list (may fail due to permissions)
+            try:
+                result, response, err = client.zia.sandbox.add_hash_to_custom_list(
+                    file_hashes_to_be_blocked=["e99a18c428cb38d5f260853678922e03"]
+                )
+                # May fail due to permissions
+            except Exception:
+                pass
+
         except Exception as e:
             errors.append(f"Exception during sandbox test: {str(e)}")
 
