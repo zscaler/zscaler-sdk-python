@@ -34,6 +34,7 @@ class TestAdminRoles:
         """Test comprehensive CRUD operations for Admin Roles."""
         client = MockZIAClient(fs)
         errors = []
+        role_id = None
 
         try:
             # Test list_roles
@@ -57,21 +58,54 @@ class TestAdminRoles:
 
             # Test get_role - get the first role from the list
             if roles and len(roles) > 0:
-                role_id = roles[0].id
-                fetched_role, response, err = client.zia.admin_roles.get_role(role_id)
+                existing_role_id = roles[0].id
+                fetched_role, response, err = client.zia.admin_roles.get_role(existing_role_id)
                 assert err is None, f"Get role failed: {err}"
                 assert fetched_role is not None, "Fetched role should not be None"
+
+            # Test add_role (may fail due to permissions)
+            try:
+                created_role, response, err = client.zia.admin_roles.add_role(
+                    name="TestAdminRole_VCR",
+                    admin_acct_access="READ_ONLY",
+                    dashboard_access="READ_ONLY",
+                    report_access="READ_ONLY",
+                    analysis_access="READ_ONLY",
+                    username_access="READ_ONLY",
+                    device_info_access="READ_ONLY",
+                )
+                if err is None and created_role is not None:
+                    role_id = created_role.id if hasattr(created_role, 'id') else None
+
+                    # Test update_role
+                    if role_id:
+                        try:
+                            updated_role, response, err = client.zia.admin_roles.update_role(
+                                role_id=role_id,
+                                name="TestAdminRole_VCR_Updated",
+                            )
+                        except Exception:
+                            pass
+            except Exception:
+                pass  # May fail due to permissions
 
             # Test get_password_expiry_settings (may fail due to permissions)
             try:
                 expiry_settings, response, err = client.zia.admin_roles.get_password_expiry_settings()
                 if err is None:
                     assert expiry_settings is not None, "Password expiry settings should not be None"
-                # Don't fail test if this endpoint returns errors - may be permission-restricted
-            except Exception as e:
+            except Exception:
                 pass  # Password expiry settings may require elevated permissions
 
         except Exception as e:
             errors.append(f"Exception during admin roles test: {str(e)}")
+
+        finally:
+            # Cleanup
+            if role_id:
+                try:
+                    client.zia.admin_roles.delete_role(role_id)
+                except Exception:
+                    pass
 
         assert len(errors) == 0, f"Errors occurred: {errors}"

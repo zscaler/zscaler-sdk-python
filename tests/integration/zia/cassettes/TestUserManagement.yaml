@@ -1,5 +1,69 @@
 interactions:
 - request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 06:39:28 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
     body: '{}'
     headers:
       Accept:
@@ -140,33 +204,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:43:17 GMT
+      - Sat, 20 Dec 2025 06:39:30 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '735'
+      - '1699'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 67adf5a6-4bbd-9cc8-970c-dbefce01b516
+      - b892212c-3853-9e31-90d9-232fcef6754b
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4999'
       x-ratelimit-reset:
-      - '44'
+      - '32'
       x-transaction-id:
-      - 689f9123-efcf-4103-871c-99c8f09deb61
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -175,7 +241,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -184,57 +250,245 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '143'
+      - '2'
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/users?search=admin
   response:
     body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+      string: '{"message":"Rate Limit (1/SECOND) exceeded","Retry-After":"1 seconds"}'
     headers:
       cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
       content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       content-type:
-      - application/json;charset=UTF-8
+      - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:03 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
+      - Sat, 20 Dec 2025 06:39:30 GMT
+      retry-after:
+      - '1'
       server:
-      - ingress-gateway
+      - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
       x-content-type-options:
       - nosniff
-      - nosniff
-      - nosniff
+      x-envoy-upstream-service-time:
+      - '176'
       x-frame-options:
-      - DENY
       - SAMEORIGIN
-      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 5add3ab0-dab6-950b-84df-4829bc6587da
+      x-oneapi-version:
+      - 109.1.92
       x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '149'
+      - '4998'
       x-ratelimit-reset:
-      - '1'
+      - '30'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
-      - '0'
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/users?search=admin
+  response:
+    body:
+      string: '[{"id":12008045,"name":"Adam Ashcroft","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":8061243,"name":"DEFAULT
+        ADMIN","email":"REDACTED","groups":[{"id":8061241,"name":"Service Admin"}],"department":{"id":8061242,"name":"Service
+        Admin"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":19474996,"name":"William
+        Guilherme","email":"REDACTED","groups":[],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008008,"name":"Ajith
+        Almond","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007943,"name":"Albert
+        Amin","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008020,"name":"Allison
+        Ashley","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008074,"name":"Amazzal
+        Elhabib","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007815,"name":"Y110"},{"id":12007197,"name":"M321"}],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007984,"name":"Amber
+        Aesop","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008055,"name":"Anantha
+        Amos","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007980,"name":"Andre
+        Austin","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008067,"name":"Angela
+        Ahmed","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008032,"name":"Anne
+        Allison","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008007,"name":"Aravinda
+        Arnold","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007990,"name":"Arjuna
+        Allan","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":22725462,"name":"auditor01","email":"REDACTED","groups":[{"id":8061241,"name":"Service
+        Admin"}],"department":{"id":8061242,"name":"Service Admin"},"comments":"auditor01","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007961,"name":"Ayaka
+        Addison","email":"REDACTED","groups":[{"id":12007253,"name":"Normal_Internet"},{"id":12007198,"name":"Marketing"}],"department":{"id":12007960,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007941,"name":"Azumi
+        Adams","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007956,"name":"Benjamin
+        Brookfield","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008071,"name":"Bobby
+        Brown","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"},{"id":12007815,"name":"Y110"},{"id":12007197,"name":"M321"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007937,"name":"Brahma
+        Bradshaw","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007986,"name":"Brandon
+        Bates","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008023,"name":"Brenda
+        Bowers","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007997,"name":"Brian
+        Boyle","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007944,"name":"Carla
+        Cohen","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008043,"name":"Carol
+        Kirk","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007964,"name":"Catherine
+        Cooke","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007934,"name":"Catherine
+        Kay","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008028,"name":"Charles
+        Keenan","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008047,"name":"Charlie
+        Clifford","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007967,"name":"Cheryl
+        Chester","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008030,"name":"Chloe
+        Chapman","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008061,"name":"Christopher
+        Clements","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007963,"name":"Courtney
+        Kazin","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008034,"name":"Cynthia
+        Calder","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007950,"name":"Cynthia
+        Kendall","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007959,"name":"Daichi
+        Duncan","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008013,"name":"Daniel
+        Dixon","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008018,"name":"Darrell
+        Donnelly","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007947,"name":"Deanna
+        Dexter","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007927,"name":"Deborah
+        Donnelly","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007983,"name":"Deborah
+        Dreyer","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007976,"name":"Denise
+        Drummond","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007953,"name":"Derrick
+        Davies","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"},{"id":12006601,"name":"A000"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007923,"name":"Derrick
+        Deacon","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"},{"id":12006601,"name":"A000"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007973,"name":"Diana
+        Dodd","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007925,"name":"Diana
+        Duff","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008039,"name":"Donna
+        Daniel","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008016,"name":"Douglas
+        Dalby","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007981,"name":"Edward
+        England","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008048,"name":"Elizabeth
+        Eales","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007928,"name":"Ella
+        Evans","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"},{"id":12006601,"name":"A000"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008062,"name":"Emi
+        Edge","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008040,"name":"Emily
+        Easton","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008069,"name":"Emily
+        Edwards","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"},{"id":12007197,"name":"M321"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007985,"name":"Eri
+        Easton","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008027,"name":"Eric
+        Eaton","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008015,"name":"Erica
+        Emmanuel","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008026,"name":"Erika
+        Ellwood","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007979,"name":"Esha
+        England","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007996,"name":"Frank
+        Fox","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":19598435,"name":"+gBJn+o9d75VOz5Ta071FDbXuoIzZ3JSJ3SlxGVOD1KlbmAsXeE/Fi9t8O2RCqYE","email":"REDACTED","groups":[{"id":12006601,"name":"A000"}],"department":{"id":15616629,"name":"A000"},"comments":"tests-oogyzkehrzrtcqopikaxzlhytftozt","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007972,"name":"Gabriel
+        Guest","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008009,"name":"Gary
+        Greig","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008011,"name":"George
+        George","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008068,"name":"Goro
+        Garner","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007935,"name":"Grace
+        Gilbey","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008059,"name":"Grace
+        Gribbin","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008057,"name":"Hisao
+        Hastings","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008033,"name":"Holly
+        Hirst","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007951,"name":"Inderjit
+        Iles","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008044,"name":"Jacob
+        Joyce","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008042,"name":"Jacqueline
+        Jamieson","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008019,"name":"Jaime
+        Jamieson","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008004,"name":"Jamie
+        John","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008010,"name":"Jared
+        James","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":15617067,"name":"Julie
+        Sands","email":"REDACTED","groups":[{"id":12006601,"name":"A000"}],"department":{"id":15616629,"name":"A000"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":19598438,"name":"Mk76Ng/+iGRmxtdcmzUlCSW4sAxxLxc/q8onSltyN0nGU5k9u5DEIt4ysbyowCkc","email":"REDACTED","groups":[{"id":12006601,"name":"A000"}],"department":{"id":15616629,"name":"A000"},"comments":"tests-tkimxhccmquscmorkkufljhvairwsz","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008073,"name":"Jenny
+        Jenkins","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"},{"id":12007815,"name":"Y110"},{"id":12007197,"name":"M321"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007999,"name":"Jeremiah
+        Jones","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008065,"name":"Jessica
+        Jarvis","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007949,"name":"Jessica
+        Joyce","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007971,"name":"Joe
+        Jacques","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007938,"name":"Jon
+        Jordan","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007932,"name":"Jonathan
+        Jackson","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008054,"name":"Jose
+        Johnston","email":"REDACTED","groups":[{"id":12006785,"name":"Executives"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007948,"name":"Executive"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008041,"name":"Joseph
+        Jacob","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008014,"name":"Joshua
+        Joyce","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008060,"name":"Joy
+        Jacques","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":19020572,"name":"Jane
+        Smith1","email":"REDACTED","groups":[{"id":8061241,"name":"Service Admin"}],"department":{"id":8061242,"name":"Service
+        Admin"},"comments":"New admin user","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":19020547,"name":"Jane
+        Smith","email":"REDACTED","groups":[{"id":8061241,"name":"Service Admin"}],"department":{"id":8061242,"name":"Service
+        Admin"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008053,"name":"Juan
+        Jhabvala","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007978,"name":"Julia
+        Jarry","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007939,"name":"Kanta
+        Clifford","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008005,"name":"Katherine
+        Kendall","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007930,"name":"Kathy
+        Kavanagh","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007962,"name":"Kenji
+        Craig","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007970,"name":"Kevin
+        Craven","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007965,"name":"Kichiro
+        Clifford","email":"REDACTED","groups":[{"id":12007505,"name":"Sales"},{"id":12007253,"name":"Normal_Internet"},{"id":12007198,"name":"Marketing"}],"department":{"id":12007924,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12008050,"name":"Kristen
+        Clark","email":"REDACTED","groups":[{"id":12006840,"name":"Finance"},{"id":12007253,"name":"Normal_Internet"},{"id":12007198,"name":"Marketing"}],"department":{"id":12007926,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":12007933,"name":"Kristina
+        Cannon","email":"REDACTED","groups":[{"id":12006786,"name":"Engineering"},{"id":12007253,"name":"Normal_Internet"}],"department":{"id":12007922,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '422'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 332e255f-87f3-9bfa-b5e6-1e15952782e5
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
     status:
       code: 200
       message: OK
@@ -280,7 +534,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:05 GMT
+      - Sat, 20 Dec 2025 06:39:33 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -292,23 +546,100 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1939'
+      - '375'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 83a33544-fad3-9eec-b001-11900db76a2d
+      - 19e7def6-b370-991a-a2dc-c5ef2a5d0a84
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4996'
       x-ratelimit-reset:
-      - '57'
+      - '27'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/users/references?page=1&pageSize=10
+  response:
+    body:
+      string: '[{"id":12008045,"name":"REDACTED"},{"id":19474996,"name":"REDACTED"},{"id":12008008,"name":"REDACTED"},{"id":12007943,"name":"REDACTED"},{"id":12008020,"name":"REDACTED"},{"id":12008074,"name":"REDACTED"},{"id":12007984,"name":"REDACTED"},{"id":12008055,"name":"REDACTED"},{"id":12007980,"name":"REDACTED"},{"id":12008067,"name":"REDACTED"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '194'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - c1f564b5-0b6f-91b3-b85a-9ec22f620e87
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -357,7 +688,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:06 GMT
+      - Sat, 20 Dec 2025 06:39:34 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -369,23 +700,100 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '187'
+      - '242'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 23a627da-4ff1-95e6-9316-60bb386d8d50
+      - bbb1e3d6-323c-9590-9f75-d1a927d5487f
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4994'
       x-ratelimit-reset:
-      - '54'
+      - '26'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/users/auditors
+  response:
+    body:
+      string: '[{"id":22725462,"name":"auditor01","email":"REDACTED","pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '370'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - cb42e924-705a-96c3-a60e-6326719fa186
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '26'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -444,7 +852,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:06 GMT
+      - Sat, 20 Dec 2025 06:39:35 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -456,23 +864,171 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '313'
+      - '251'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 565e1d01-289f-9e58-9d73-ee71ba1e039a
+      - e73ffda3-4d4d-9ee3-9a09-231479a3252b
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4992'
       x-ratelimit-reset:
-      - '54'
+      - '26'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/groups?search=Default
+  response:
+    body:
+      string: '{"message":"Rate Limit (1/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:35 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '148'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 85509efd-c0f0-9d58-ac73-5b5824d09599
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/groups?search=Default
+  response:
+    body:
+      string: '[]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '2'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '320'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e24a71eb-98aa-98f5-b511-55d7e2456933
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -521,7 +1077,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:06 GMT
+      - Sat, 20 Dec 2025 06:39:38 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -529,23 +1085,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '159'
+      - '170'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 58b4fefe-39a3-9d51-8e9e-3495fbdfbc67
+      - d2635e08-5868-911f-b410-2c82106ce3e7
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4989'
       x-ratelimit-reset:
-      - '54'
+      - '23'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -554,7 +1110,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"name": "TestGroup_VCR_1766180766"}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -563,7 +1119,94 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '36'
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/groups/lite
+  response:
+    body:
+      string: '[{"id":12006601,"name":"A000"},{"id":12006580,"name":"A001"},{"id":12006615,"name":"A002"},{"id":12006606,"name":"A003"},{"id":12006590,"name":"A004"},{"id":12006585,"name":"A005"},{"id":12006608,"name":"A006"},{"id":12006583,"name":"A007"},{"id":12006581,"name":"A008"},{"id":12006625,"name":"A009"},{"id":12006603,"name":"A010"},{"id":12006589,"name":"A011"},{"id":12006609,"name":"A012"},{"id":12006623,"name":"A013"},{"id":12006592,"name":"A014"},{"id":12006599,"name":"A015"},{"id":12006584,"name":"A016"},{"id":12006618,"name":"A017"},{"id":12006613,"name":"A018"},{"id":12006578,"name":"A019"},{"id":12006577,"name":"A020"},{"id":12006574,"name":"A021"},{"id":12006616,"name":"A022"},{"id":12006611,"name":"A023"},{"id":12006586,"name":"A024"},{"id":12006576,"name":"A025"},{"id":12006610,"name":"A026"},{"id":12006591,"name":"A027"},{"id":12006595,"name":"A028"},{"id":12006614,"name":"A029"},{"id":12006600,"name":"A030"},{"id":12006622,"name":"A031"},{"id":12006593,"name":"A032"},{"id":12006579,"name":"A033"},{"id":12006619,"name":"A034"},{"id":12006612,"name":"A035"},{"id":12006605,"name":"A036"},{"id":12006597,"name":"A037"},{"id":12006620,"name":"A038"},{"id":12006587,"name":"A039"},{"id":12006596,"name":"A040"},{"id":12006575,"name":"A041"},{"id":12006582,"name":"A042"},{"id":12006604,"name":"A043"},{"id":12006617,"name":"A044"},{"id":12006598,"name":"A045"},{"id":12006621,"name":"A046"},{"id":12006602,"name":"A047"},{"id":12006607,"name":"A048"},{"id":12006588,"name":"A049"},{"id":12006594,"name":"A050"},{"id":12006624,"name":"AAD"},{"id":12006626,"name":"AAD
+        Zscaler External elastic.5005.com TCP 5005"},{"id":12006630,"name":"AAD Zscaler
+        External ideweiiss9075.infoserve.endress.com TCP 60000"},{"id":12006628,"name":"AAD
+        Zscaler External java-buildserver.infoserve.endress.com TCP 8081"},{"id":12006627,"name":"AAD
+        Zscaler External sapqlication.endress.com HTTP/S"},{"id":12006629,"name":"AAD
+        Zscaler External wdxbj.endress.com HTTP/S"},{"id":15794925,"name":"Analytics
+        Settings Managers"},{"id":15794930,"name":"App Engine Admins"},{"id":15794938,"name":"App
+        Engine Studio Users"},{"id":15794968,"name":"App Owner"},{"id":15794931,"name":"App-Sec
+        Manager"},{"id":15794921,"name":"Application Exception Approver - Level 1"},{"id":15794944,"name":"Application
+        Exception Approver - Level 2"},{"id":15794953,"name":"Application False Positive
+        Approver"},{"id":15794967,"name":"Application Security"},{"id":12006681,"name":"B000"},{"id":12006642,"name":"B001"},{"id":12006652,"name":"B002"},{"id":12006660,"name":"B003"},{"id":12006632,"name":"B004"},{"id":12006631,"name":"B005"},{"id":12006654,"name":"B006"},{"id":12006648,"name":"B007"},{"id":12006644,"name":"B008"},{"id":12006669,"name":"B009"},{"id":12006636,"name":"B010"},{"id":12006677,"name":"B011"},{"id":12006661,"name":"B012"},{"id":12006658,"name":"B013"},{"id":12006639,"name":"B014"},{"id":12006671,"name":"B015"},{"id":12006647,"name":"B016"},{"id":12006646,"name":"B017"},{"id":12006665,"name":"B018"},{"id":12006638,"name":"B019"},{"id":12006651,"name":"B020"},{"id":12006673,"name":"B021"},{"id":12006679,"name":"B022"},{"id":12006674,"name":"B023"},{"id":12006635,"name":"B024"},{"id":12006650,"name":"B025"},{"id":12006662,"name":"B026"},{"id":12006656,"name":"B027"},{"id":12006653,"name":"B028"},{"id":12006668,"name":"B029"},{"id":12006645,"name":"B030"},{"id":12006633,"name":"B031"},{"id":12006640,"name":"B032"},{"id":12006637,"name":"B033"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:38 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '278'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - ff215d56-a679-9392-9777-efef02d982e0
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '22'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestGroup_VCR_Integration"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '37'
       Content-Type:
       - application/json
       User-Agent:
@@ -572,14 +1215,14 @@ interactions:
     uri: https://api.beta.zsapi.net/zia/api/v1/groups
   response:
     body:
-      string: '{"id":24464029,"name":"TestGroup_VCR_1766180766"}'
+      string: '{"id":24466208,"name":"TestGroup_VCR_Integration"}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '49'
+      - '50'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -594,7 +1237,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:07 GMT
+      - Sat, 20 Dec 2025 06:39:39 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -602,23 +1245,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '613'
+      - '647'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 952c8440-ca94-9893-b64b-b1cb7cead110
+      - ba5bd074-c755-95e3-a654-859aefb70776
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4987'
       x-ratelimit-reset:
-      - '54'
+      - '22'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -627,7 +1270,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"name": "TestGroup_VCR_1766180766_Updated"}'
+    body: '{"name": "TestGroup_VCR_Integration_Updated"}'
     headers:
       Accept:
       - application/json
@@ -636,23 +1279,23 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '44'
+      - '45'
       Content-Type:
       - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.beta.zsapi.net/zia/api/v1/groups/24464029
+    uri: https://api.beta.zsapi.net/zia/api/v1/groups/24466208
   response:
     body:
-      string: '{"id":24464029,"name":"TestGroup_VCR_1766180766_Updated"}'
+      string: '{"id":24466208,"name":"TestGroup_VCR_Integration_Updated"}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '57'
+      - '58'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -667,7 +1310,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:08 GMT
+      - Sat, 20 Dec 2025 06:39:40 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -675,23 +1318,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1044'
+      - '984'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 4602b20f-9edb-9c5a-b8ae-d2bb1388ef53
+      - 10fa237e-a6dd-95b6-8da3-4eba9a5d1ad6
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4986'
       x-ratelimit-reset:
-      - '53'
+      - '21'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -740,7 +1383,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:09 GMT
+      - Sat, 20 Dec 2025 06:39:40 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -752,23 +1395,96 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '336'
+      - '322'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - dd94f06e-e95e-9ca5-b896-0b1980bdeb8d
+      - 397fedf3-7c23-953b-9c5f-4ae95f12aa1a
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4985'
       x-ratelimit-reset:
-      - '52'
+      - '20'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/departments?search=Default
+  response:
+    body:
+      string: '[]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '2'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:41 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '295'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 7a7139ad-a30e-95d6-9d14-b3002bb8292f
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4984'
+      x-ratelimit-reset:
+      - '20'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -817,7 +1533,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:09 GMT
+      - Sat, 20 Dec 2025 06:39:41 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -825,23 +1541,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '141'
+      - '138'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - e0095120-48bd-9def-8a7d-3f49c616ad41
+      - 429bf8cb-ad9f-9de3-b735-fb43edd5b5ba
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4983'
       x-ratelimit-reset:
-      - '51'
+      - '19'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -850,7 +1566,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"name": "TestDept_VCR_1766180769"}'
+    body: '{}'
     headers:
       Accept:
       - application/json
@@ -859,7 +1575,80 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '35'
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/departments/lite/15616629
+  response:
+    body:
+      string: '{"id":15616629,"name":"A000"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '29'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:39:41 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '155'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 03cee99e-c5e9-9a70-9660-eb1592d20389
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4982'
+      x-ratelimit-reset:
+      - '19'
+      x-transaction-id:
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestDept_VCR_Integration"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '36'
       Content-Type:
       - application/json
       User-Agent:
@@ -868,14 +1657,14 @@ interactions:
     uri: https://api.beta.zsapi.net/zia/api/v1/departments
   response:
     body:
-      string: '{"id":24464030,"name":"TestDept_VCR_1766180769"}'
+      string: '{"id":24466209,"name":"TestDept_VCR_Integration"}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '48'
+      - '49'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -890,7 +1679,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:09 GMT
+      - Sat, 20 Dec 2025 06:39:42 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -898,23 +1687,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '574'
+      - '785'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - dcf8a31e-d519-993c-88c6-46306e506c66
+      - f559810f-b1e5-905f-89f3-9a5490065dab
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4981'
       x-ratelimit-reset:
-      - '51'
+      - '19'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -923,7 +1712,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"name": "TestDept_VCR_1766180769_Updated"}'
+    body: '{"name": "TestDept_VCR_Integration_Updated"}'
     headers:
       Accept:
       - application/json
@@ -932,23 +1721,23 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '43'
+      - '44'
       Content-Type:
       - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.beta.zsapi.net/zia/api/v1/departments/24464030
+    uri: https://api.beta.zsapi.net/zia/api/v1/departments/24466209
   response:
     body:
-      string: '{"id":24464030,"name":"TestDept_VCR_1766180769_Updated"}'
+      string: '{"id":24466209,"name":"TestDept_VCR_Integration_Updated"}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '56'
+      - '57'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -963,7 +1752,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:46:10 GMT
+      - Sat, 20 Dec 2025 06:39:43 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -971,23 +1760,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '868'
+      - '870'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 96cf30a8-0f9e-963a-b4c7-06e01b1f89e4
+      - 56ebfd7a-3dfe-9f0f-9b7c-5ce383546107
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4980'
       x-ratelimit-reset:
-      - '50'
+      - '18'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1011,7 +1800,7 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.beta.zsapi.net/zia/api/v1/groups/24464029
+    uri: https://api.beta.zsapi.net/zia/api/v1/groups/24466208
   response:
     body:
       string: ''
@@ -1032,7 +1821,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Fri, 19 Dec 2025 21:46:12 GMT
+      - Sat, 20 Dec 2025 06:39:44 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1042,23 +1831,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '950'
+      - '698'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - 8d444a70-c7a2-9ead-a31c-b71615d1d11a
+      - a80d49f0-172d-987a-963a-70949bcd3e51
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4979'
       x-ratelimit-reset:
-      - '49'
+      - '17'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1082,7 +1871,7 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.beta.zsapi.net/zia/api/v1/departments/24464030
+    uri: https://api.beta.zsapi.net/zia/api/v1/departments/24466209
   response:
     body:
       string: ''
@@ -1103,7 +1892,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Fri, 19 Dec 2025 21:46:12 GMT
+      - Sat, 20 Dec 2025 06:39:45 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1113,23 +1902,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '591'
+      - '775'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - a05309a6-3831-90c3-9b3a-ad4734c4db4f
+      - 05fb545b-7858-9a42-a49f-841a91ebece2
       x-oneapi-version:
       - 109.1.92
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4978'
       x-ratelimit-reset:
-      - '48'
+      - '16'
       x-transaction-id:
-      - 46f78a99-de80-4cb0-9015-c3c427364106
+      - ecbe218e-89cf-4672-9837-dd7ad29e287d
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
