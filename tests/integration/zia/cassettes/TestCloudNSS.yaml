@@ -1,0 +1,761 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Fri, 19 Dec 2025 21:41:28 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds
+  response:
+    body:
+      string: '[]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '2'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1468'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - cd848c7d-f495-9d90-9e03-ed49fda41e4b
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '31'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds/feedOutputDefaults
+  response:
+    body:
+      string: '{"TAB_SEPARATED":"%s{time}\t%s{login}\t%s{proto}\t%s{eurl}\t%s{action}\t%s{appname}\t%s{app_status}\t%s{appclass}\t%d{reqsize}\t%d{respsize}\t%s{urlclass}\t%s{urlsupercat}\t%s{urlcat}\t%s{malwarecat}\t%s{threatname}\t%d{riskscore}\t%s{threatseverity}\t%s{dlpeng}\t%s{dlpdict}\t%s{location}\t%s{dept}\t%s{cip}\t%s{sip}\t%s{reqmethod}\t%s{respcode}\t%s{ua}\t%s{ereferer}\t%s{ruletype}\t%s{rulelabel}\t%s{contenttype}\t%s{unscannabletype}\t%s{devicehostname}\t%s{deviceowner}\t%s{keyprotectiontype}\n","CSV":"\"%s{time}\",\"%s{login}\",\"%s{proto}\",\"%s{eurl}\",\"%s{action}\",\"%s{appname}\",\"%s{app_status}\",\"%s{appclass}\",\"%d{reqsize}\",\"%d{respsize}\",\"%s{urlclass}\",\"%s{urlsupercat}\",\"%s{urlcat}\",\"%s{malwarecat}\",\"%s{threatname}\",\"%d{riskscore}\",\"%s{threatseverity}\",\"%s{dlpeng}\",\"%s{dlpdict}\",\"%s{location}\",\"%s{dept}\",\"%s{cip}\",\"%s{sip}\",\"%s{reqmethod}\",\"%s{respcode}\",\"%s{ua}\",\"%s{ereferer}\",\"%s{ruletype}\",\"%s{rulelabel}\",\"%s{contenttype}\",\"%s{unscannabletype}\",\"%s{deviceowner}\",\"%s{devicehostname}\",\"%s{keyprotectiontype}\"\n","JSON":"\\{
+        \"sourcetype\" : \"zscalernss-web\", \"event\" : \\{\"datetime\":\"%d{yy}-%02d{mth}-%02d{dd}
+        %02d{hh}:%02d{mm}:%02d{ss}\",\"reason\":\"%s{reason}\",\"event_id\":\"%d{recordid}\",\"protocol\":\"%s{proto}\",\"action\":\"%s{action}\",\"transactionsize\":\"%d{totalsize}\",\"responsesize\":\"%d{respsize}\",\"requestsize\":\"%d{reqsize}\",\"urlcategory\":\"%s{urlcat}\",\"serverip\":\"%s{sip}\",\"requestmethod\":\"%s{reqmethod}\",\"refererURL\":\"%s{ereferer}\",\"useragent\":\"%s{eua}\",\"product\":\"NSS\",\"location\":\"%s{elocation}\",\"ClientIP\":\"%s{cip}\",\"status\":\"%s{respcode}\",\"user\":\"%s{elogin}\",\"url\":\"%s{eurl}\",\"vendor\":\"Zscaler\",\"hostname\":\"%s{ehost}\",\"clientpublicIP\":\"%s{cintip}\",\"threatcategory\":\"%s{malwarecat}\",\"threatname\":\"%s{threatname}\",\"filetype\":\"%s{filetype}\",\"appname\":\"%s{appname}\",\"app_status\":\"%s{app_status}\",\"pagerisk\":\"%d{riskscore}\",\"threatseverity\":\"%s{threatseverity}\",\"department\":\"%s{edepartment}\",\"urlsupercategory\":\"%s{urlsupercat}\",\"appclass\":\"%s{appclass}\",\"dlpengine\":\"%s{dlpeng}\",\"urlclass\":\"%s{urlclass}\",\"threatclass\":\"%s{malwareclass}\",\"dlpdictionaries\":\"%s{dlpdict}\",\"fileclass\":\"%s{fileclass}\",\"bwthrottle\":\"%s{bwthrottle}\",\"contenttype\":\"%s{contenttype}\",\"unscannabletype\":\"%s{unscannabletype}\",\"deviceowner\":\"%s{deviceowner}\",\"devicehostname\":\"%s{devicehostname}\",\"keyprotectiontype\":\"%s{keyprotectiontype}\"\\}\\}\n","MCAS":"%s{mon}
+        %d{dd} %02d{hh}:%02d{mm}:%02d{ss} zscaler-nss: LEEF:1.0|Zscaler|NSS|4.1|%s{reason}|cat=%s{action}\tdevTime=%s{mon}
+        %d{dd} %d{yy} %02d{hh}:%02d{mm}:%02d{ss} %s{tz}\tdevTimeFormat=MMM dd yyyy
+        HH:mm:ss z\tsrc=%s{cip}\tdst=%s{sip}\tsrcPostNAT=%s{cintip}\trealm=%s{location}\tusrName=%s{login}\tsrcBytes=%d{reqsize}\tdstBytes=%d{respsize}\turl=%s{eurl}\trecordid=%d{recordid}\treferer=%s{ereferer}\thostname=%s{ehost}\tappname=%s{appname}\tappid=%d{appnameid}\tcontenttype=%s{contenttype}\tunscannabletype=%s{unscannabletype}\tdeviceowner=%s{deviceowner}\tdevicehostname=%s{devicehostname}\tkeyprotectiontype=%s{keyprotectiontype}\n","ARCSIGHT_CEF":"%s{mon}
+        %02d{dd} %02d{hh}:%02d{mm}:%02d{ss} zscaler-nss CEF:0|Zscaler|NSSWeblog|5.0|%s{action}|%s{reason}|3|act=%s{action}
+        app=%s{proto} cat=%s{urlcat} dhost=%s{ehost} dst=%s{sip} src=%s{cip} in=%d{respsize}
+        outcome=%s{respcode} out=%d{reqsize} request=%s{eurl} rt=%s{mon} %02d{dd}
+        %d{yy} %02d{hh}:%02d{mm}:%02d{ss} sourceTranslatedAddress=%s{cintip} requestClientApplication=%s{ua}
+        requestMethod=%s{reqmethod} suser=%s{login} spriv=%s{location} externalId=%d{recordid}
+        fileType=%s{filetype} reason=%s{reason} destinationServiceName=%s{appname}
+        cn1=%d{riskscore} cn1Label=riskscore cs1=%s{dept} cs1Label=dept cs2=%s{urlsupercat}
+        cs2Label=urlsupercat cs3=%s{appclass} cs3Label=appclass cs4=%s{malwarecat}
+        cs4Label=malwarecat cs5=%s{threatname} cs5Label=threatname cs6=%s{dlpeng}
+        cs6Label=dlpeng ZscalerNSSWeblogURLClass=%s{urlclass} ZscalerNSSWeblogDLPDictionaries=%s{dlpdict}
+        requestContext=%s{ereferer} contenttype=%s{contenttype} unscannabletype=%s{unscannabletype}
+        deviceowner=%s{deviceowner} devicehostname=%s{devicehostname} keyprotectiontype=%s{keyprotectiontype}\n","NAME_VALUE_PAIRS":"%d{yy}-%02d{mth}-%02d{dd}
+        %02d{hh}:%02d{mm}:%02d{ss}\treason=%s{reason}\tevent_id=%d{recordid}\tprotocol=%s{proto}\taction=%s{action}\ttransactionsize=%d{totalsize}\tresponsesize=%d{respsize}\trequestsize=%d{reqsize}\turlcategory=%s{urlcat}\tserverip=%s{sip}\trequestmethod=%s{reqmethod}\trefererURL=%s{ereferer}\tuseragent=%s{ua}\tproduct=NSS\tlocation=%s{location}\tClientIP=%s{cip}\tstatus=%s{respcode}\tuser=%s{login}\turl=%s{eurl}\tvendor=Zscaler\thostname=%s{ehost}\tclientpublicIP=%s{cintip}\tthreatcategory=%s{malwarecat}\tthreatname=%s{threatname}\tfiletype=%s{filetype}\tappname=%s{appname}\tapp_status=%s{app_status}\tpagerisk=%d{riskscore}\tthreatseverity=%s{threatseverity}\tdepartment=%s{dept}\turlsupercategory=%s{urlsupercat}\tappclass=%s{appclass}\tdlpengine=%s{dlpeng}\turlclass=%s{urlclass}\tthreatclass=%s{malwareclass}\tdlpdictionaries=%s{dlpdict}\tfileclass=%s{fileclass}\tbwthrottle=%s{bwthrottle}\tcontenttype=%s{contenttype}\tunscannabletype=%s{unscannabletype}\tdeviceowner=%s{deviceowner}\tdevicehostname=%s{devicehostname}\tkeyprotectiontype=%s{keyprotectiontype}\n","QRADAR":"%s{mon}
+        %02d{dd} %02d{hh}:%02d{mm}:%02d{ss} zscaler-nss: LEEF:1.0|Zscaler|NSS|4.1|%s{reason}|cat=%s{action}\tdevTime=%s{mon}
+        %02d{dd} %d{yy} %02d{hh}:%02d{mm}:%02d{ss} %s{tz}\tdevTimeFormat=MMM dd yyyy
+        HH:mm:ss z\tsrc=%s{cip}\tdst=%s{sip}\tsrcPostNAT=%s{cintip}\trealm=%s{location}\tusrName=%s{login}\tsrcBytes=%d{reqsize}\tdstBytes=%d{respsize}\trole=%s{dept}\tpolicy=%s{reason}\turl=%s{eurl}\trecordid=%d{recordid}\tbwthrottle=%s{bwthrottle}\tuseragent=%s{ua}\treferer=%s{ereferer}\thostname=%s{ehost}\tappproto=%s{proto}\turlcategory=%s{urlcat}\turlsupercategory=%s{urlsupercat}\turlclass=%s{urlclass}\tappclass=%s{appclass}\tappname=%s{appname}\tapp_status=%s{app_status}\tmalwaretype=%s{malwarecat}\tmalwareclass=%s{malwareclass}\tthreatname=%s{threatname}\triskscore=%d{riskscore}\tthreatseverity=%s{threatseverity}\tdlpdict=%s{dlpdict}\tdlpeng=%s{dlpeng}\tfileclass=%s{fileclass}\tfiletype=%s{filetype}\treqmethod=%s{reqmethod}\trespcode=%s{respcode}\tcontenttype=%s{contenttype}\tunscannabletype=%s{unscannabletype}\tdeviceowner=%s{deviceowner}\tdevicehostname=%s{devicehostname}\tkeyprotectiontype=%s{keyprotectiontype}\n","SPLUNK_CIM":"datetime=%s{time}\treason=%s{reason}\tevent_id=%d{recordid}\tprotocol=%s{proto}\taction=%s{action}\ttransactionsize=%d{totalsize}\tresponsesize=%d{respsize}\trequestsize=%d{reqsize}\turlcategory=%s{urlcat}\tserverip=%s{sip}\trequestmethod=%s{reqmethod}\trefererURL=%s{ereferer}\tuseragent=%s{ua}\tproduct=NSS\tlocation=%s{location}\tClientIP=%s{cip}\tstatus=%s{respcode}\tuser=%s{login}\turl=%s{eurl}\tvendor=Zscaler\thostname=%s{ehost}\tclientpublicIP=%s{cintip}\tthreatcategory=%s{malwarecat}\tthreatname=%s{threatname}\tfiletype=%s{filetype}\tappname=%s{appname}\tapp_status=%s{app_status}\tpagerisk=%d{riskscore}\tthreatseverity=%s{threatseverity}\tdepartment=%s{dept}\turlsupercategory=%s{urlsupercat}\tappclass=%s{appclass}\tdlpengine=%s{dlpeng}\turlclass=%s{urlclass}\tthreatclass=%s{malwareclass}\tdlpdictionaries=%s{dlpdict}\tfileclass=%s{fileclass}\tbwthrottle=%s{bwthrottle}\tcontenttype=%s{contenttype}\tunscannabletype=%s{unscannabletype}\tdevicehostname=%s{devicehostname}\tdeviceowner=%s{deviceowner}\tkeyprotectiontype=%s{keyprotectiontype}\n","RSA_SECURITY":"<134>1
+        ZSCALERNSS: time=%s{time}^^timezone=%s{tz}^^action=%s{action}^^reason=%s{reason}^^hostname=%s{ehost}^^protocol=%s{proto}^^serverip=%s{sip}^^url=%s{eurl}^^urlcategory=%s{urlcat}^^urlclass=%s{urlclass}^^dlpdictionaries=%s{dlpdict}^^dlpengine=%s{dlpeng}^^app_status=%s{app_status}^^filetype=%s{filetype}^^threatcategory=%s{malwarecat}^^threatclass=%s{malwareclass}^^pagerisk=%d{riskscore}^^threatseverity=%s{threatseverity}^^threatname=%s{threatname}^^clientpublicIP=%s{cintip}^^ClientIP=%s{cip}^^location=%s{location}^^refererURL=%s{ereferer}^^useragent=%s{ua}^^department=%s{dept}^^user=%s{login}^^event_id=%d{recordid}^^requestmethod=%s{reqmethod}^^requestsize=%d{reqsize}^^requestversion=%s{reqversion}^^status=%s{respcode}^^responsesize=%d{respsize}^^responseversion=%s{respversion}^^transactionsize=%d{totalsize}^^contenttype=%s{contenttype}^^unscannabletype=%s{unscannabletype}^^deviceowner=%s{deviceowner}^^devicehostname=%s{devicehostname}^^keyprotectiontype=%s{keyprotectiontype}\n","SYMANTEC_MSS":"|ZSCALER|DATE|%s{mon}
+        %d{dd} %02d{hh}:%02d{mm}:%02d{ss}|CLIENTINTIP|%s{cintip}|RECORDID|%d{recordid}|LOGINNAME|%s{login}|PROTOCOL|%s{proto}|URL|%s{eurl}|HOST|%s{ehost}|ACTION|%s{action}|REASON|%s{reason}|RISKSCORE|%d{riskscore}|THREATSEVERITY|%s{threatseverity}|APPNAME|%s{appname}|APP_STATUS|%s{app_status}|APPCLASS|%s{appclass}|REQSIZE|%d{reqsize}|RESPSIZE|%d{respsize}|URLCLASS|%s{urlclass}|SUPERCAT|%s{urlsupercat}|URLCAT|%s{urlcat}|MALWARECAT|%s{malwarecat}|MALWARECLASS|%s{malwareclass}|THREATNAME|%s{threatname}|FILETYPE|%s{filetype}|FILECLASS|%s{fileclass}|DLPENGINE|%s{dlpeng}|DLPDICT|%s{dlpdict}|BWTHROTTLE|%s{bwthrottle}|LOCATION|%s{location}|DEPARTMENT|%s{dept}|CLIENTIP|%s{cip}|DESTINATIONIP|%s{sip}|REQMETHOD|%s{reqmethod}|RESPCODE|%s{respcode}|USERAGENT|%s{ua}|CONTENTTYPE|%s{contenttype}|%s{unscannabletype}|%s{deviceowner}|%s{devicehostname}|%s{keyprotectiontype}\n","LOGRHYTHM":"%s{time}
+        recordId=%d{recordid} login=%s{login} dname=%s{ehost} dip=%s{sip} sip=%s{cip}
+        natPublicIp=%s{cintip} url=%s{eurl} ua=%s{ua} module=%s{module} proto=%s{proto}
+        action=%s{action} reason=%s{reason} appName=%s{appname} appClass=%s{appclass}
+        app_status=%s{app_status} fileType=%s{filetype} reqSize=%d{reqsize} responseSize=%d{respsize}
+        totalSize=%d{totalsize} malwareCat=%s{malwarecat} malwareClass=%s{malwareclass}
+        threatName=%s{threatname} riskScore=%d{riskscore} threatseverity=%s{threatseverity}
+        DLPEng=%s{dlpeng} DLPDict=%s{dlpdict} location=%s{location} dept=%s{dept}
+        reqMethod=%s{reqmethod} respCode=%s{respcode} respVersion=%s{respversion}
+        urlClass=%s{urlclass} urlSuperCat=%s{urlsupercat} urlCat=%s{urlcat} referer=%s{ereferer}
+        contenttype=%s{contenttype} unscannabletype=%s{unscannabletype} devicehostname=%s{devicehostname}
+        deviceowner=%s{deviceowner} keyprotectiontype=%s{keyprotectiontype}\n"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 21:41:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '133'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 75a9b472-f094-95d2-9402-e7f282285e89
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 19b0f2dc-5035-4442-985b-15e99077715b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds/validateFeedFormat?type=WEB
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '0'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Sat, 20 Dec 2025 05:24:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '89'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 656db2e1-ff4c-90d6-bdbb-0d5f870a8945
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 8b954864-803b-44a0-a08d-d49004055dbd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds?search=NSS
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:26:59 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 8f89d266-7cb5-9a44-9503-9143d2c35156
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 06:26:59 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds?search=NSS
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:26:59 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - b6f7179b-de3f-9a17-850a-e442d3c9c3cb
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds/feedOutputDefaults?type=WEB
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:27:00 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e932c292-334c-90ae-a9af-47395a6ec43b
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 06:27:00 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds/feedOutputDefaults?type=WEB
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:27:00 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 9455bdc2-8eb7-9e2d-a728-4605198bc69a
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: '{"name": "TestNSSFeed_VCR", "feedType": "WEB", "enabled": false}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '64'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:27:00 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 4e2a61e4-86fb-9637-87ec-8b38509718f7
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Sat, 20 Dec 2025 06:27:01 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestNSSFeed_VCR", "feedType": "WEB", "enabled": false}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '64'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zia/api/v1/nssFeeds
+  response:
+    body:
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Sat, 20 Dec 2025 06:27:01 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 0c743d2b-72db-9b4a-8549-6919fdfd6f25
+      x-oneapi-version:
+      - 109.1.92
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

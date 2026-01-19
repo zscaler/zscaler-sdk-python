@@ -506,6 +506,16 @@ class LegacyZTWClientHelper:
         from zscaler.ztw.discovery_service import DiscoveryServiceAPI
         return DiscoveryServiceAPI(self.request_executor)
 
+    @property
+    def workload_groups(self) -> "WorkloadGroupsAPI":
+        """
+        The interface object for the :ref:`ZTW Workload Groups <ztw-workload_groups>`.
+
+        """
+        from zscaler.ztw.workload_groups import WorkloadGroupsAPI
+
+        return WorkloadGroupsAPI(self.request_executor)
+
     """
     Misc
     """

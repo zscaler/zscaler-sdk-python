@@ -88,6 +88,14 @@ class TestBandwidthClasses:
             except Exception as e:
                 errors.append(f"Exception during list_classes: {str(e)}")
 
+            # Test: List Bandwidth Classes Lite
+            try:
+                classes_lite, _, error = client.zia.bandwidth_classes.list_classes_lite()
+                assert error is None, f"List Classes Lite Error: {error}"
+                assert classes_lite is not None, "Classes lite list should not be None"
+            except Exception as e:
+                errors.append(f"Exception during list_classes_lite: {str(e)}")
+
         finally:
             # Ensure class cleanup
             try:

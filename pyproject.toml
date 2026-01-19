@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "1.9.11"
+version = "1.9.12"
 description = "Official Python SDK for the Zscaler Products"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -87,3 +87,24 @@ max-line-length = 127
 
 [tool.isort]
 profile = "black"
+
+[tool.coverage.run]
+omit = [
+    "*/models/*",
+    "zscaler/*/models/*",
+    "tests/*",
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+omit = [
+    "*/models/*",
+    "zscaler/*/models/*",
+    "tests/*",
+    "*/__init__.py",
+]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+]

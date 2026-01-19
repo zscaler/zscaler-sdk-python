@@ -19,10 +19,12 @@ import mimetypes
 import time
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.api_client import APIClient
 from zscaler.types import APIResult
+from zscaler.zia.models.sandbox import BehavioralAnalysisAdvancedSettings
 
 
-class CloudSandboxAPI:
+class CloudSandboxAPI(APIClient):
     """
     A Client object for the Cloud Sandbox resource.
     """
@@ -31,6 +33,7 @@ class CloudSandboxAPI:
     _zia_base_endpoint = "/zia/api/v1"
 
     def __init__(self, request_executor: "RequestExecutor") -> None:
+        super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def submit_file(self, file_path: str, force: bool = False) -> APIResult[dict]:
@@ -268,10 +271,9 @@ class CloudSandboxAPI:
             return (None, response, error)
 
         try:
-            result = response.get_body()
+            result = BehavioralAnalysisAdvancedSettings(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
     def get_file_hash_count(self) -> APIResult[dict]:
@@ -314,16 +316,37 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> APIResult[dict]:
+    def add_hash_to_custom_list(
+        self,
+        md5_hash_value_list: List[Dict[str, str]],
+    ) -> APIResult[BehavioralAnalysisAdvancedSettings]:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
 
         Args:
-            file_hashes_to_be_blocked (:obj:`list` of :obj:`str`):
-                The list of MD5 Hashes to be added. Pass an empty list to clear the blocklist.
+            md5_hash_value_list (list[dict]): A list of MD5 hash entries to be blocked.
+                Each entry should be a dictionary with the following keys:
+                    - url (str): The MD5 hash value.
+                    - urlComment (str): A comment describing the hash.
+                    - type (str): The type of threat, e.g., "MALWARE".
+                Pass an empty list to clear the blocklist.
 
         Returns:
-            tuple: A tuple containing the result, response, and error.
+            tuple: A tuple containing (BehavioralAnalysisAdvancedSettings, Response, error).
+
+        Examples:
+            Add MD5 hashes to the sandbox blocklist:
+
+            >>> hash_list = [
+            ...     {
+            ...         "url": "42914d6d213a20a2684064be5c80ffa9",
+            ...         "urlComment": "Malicious file detected",
+            ...         "type": "MALWARE"
+            ...     }
+            ... ]
+            >>> result, response, error = client.zia.sandbox.add_hash_to_custom_list(
+            ...     md5_hash_value_list=hash_list
+            ... )
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -333,7 +356,7 @@ class CloudSandboxAPI:
             """
         )
 
-        payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
+        payload = {"md5HashValueList": md5_hash_value_list}
 
         request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
@@ -344,5 +367,10 @@ class CloudSandboxAPI:
 
         if error:
             return (None, response, error)
-        time.sleep(2)
-        return self.get_behavioral_analysis()
+
+        try:
+            result = BehavioralAnalysisAdvancedSettings(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

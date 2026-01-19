@@ -1,5 +1,13 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.12 (January 19, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+* [PR #450](https://github.com/zscaler/zscaler-sdk-python/pull/450) - Added new pagination parameters to ZIA `url_filtering_rule`
+
 ## 1.9.11 (December 16, 2025)
 
 ### Notes

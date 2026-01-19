@@ -1,0 +1,1400 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups
+  response:
+    body:
+      string: '[{"id":18858407,"name":"Group01","type":"DSTN_IP","addresses":["10.0.0.2"],"creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["10.0.0.2"]},{"id":-4,"name":"All
+        IPv4","type":"DSTN_IP","addresses":["0.0.0.0"],"description":"All IPv4 destination
+        traffic pre-defined group","ipCategories":[],"countries":[],"isNonEditable":true,"urlCategories":[],"ipAddresses":["0.0.0.0"]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '140'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e8fe5d9f-a6e9-9221-bc95-323f78256dd4
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4982'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups
+  response:
+    body:
+      string: '[{"id":18858407,"name":"Group01","type":"DSTN_IP","addresses":["10.0.0.2"],"creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["10.0.0.2"]},{"id":-4,"name":"All
+        IPv4","type":"DSTN_IP","addresses":["0.0.0.0"],"description":"All IPv4 destination
+        traffic pre-defined group","ipCategories":[],"countries":[],"isNonEditable":true,"urlCategories":[],"ipAddresses":["0.0.0.0"]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '190'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 40408e85-d7d4-9ef6-b735-70feac94ce24
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4981'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups/ipv6DestinationGroups
+  response:
+    body:
+      string: '[{"id":-5,"name":"All IPv6","type":"DSTN_IP","addresses":["::"],"description":"All
+        IPv6 destination traffic pre-defined group","ipCategories":[],"countries":[],"isNonEditable":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '92'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 0269cc20-1e8e-98cf-8ef3-d3f7480bc0f8
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4980'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups
+  response:
+    body:
+      string: '{"message":"Rate Limit (2/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:37 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '87'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 2b18bfd7-2fb1-972b-b1e8-5bd990e9286b
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4979'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups
+  response:
+    body:
+      string: '[{"id":18858407,"name":"Group01","type":"DSTN_IP","addresses":["10.0.0.2"],"creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["10.0.0.2"]},{"id":-4,"name":"All
+        IPv4","type":"DSTN_IP","addresses":["0.0.0.0"],"description":"All IPv4 destination
+        traffic pre-defined group","ipCategories":[],"countries":[],"isNonEditable":true,"urlCategories":[],"ipAddresses":["0.0.0.0"]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:39 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '205'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 6efad215-cb37-9659-9af5-18644f2dc5f3
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4978'
+      x-ratelimit-reset:
+      - '21'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipDestinationGroups/18858407
+  response:
+    body:
+      string: '{"id":18858407,"name":"Group01","type":"DSTN_IP","addresses":["10.0.0.2"],"creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["10.0.0.2"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:40 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '198'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 5dac492f-5a56-9591-9ecb-6c7be6133131
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4977'
+      x-ratelimit-reset:
+      - '21'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipSourceGroups
+  response:
+    body:
+      string: '[{"id":17802406,"name":"orphan-resource-to-delete-stuck","ipAddresses":["192.168.1.1","192.168.1.3","192.168.1.2"],"description":"this
+        resource is stuck and cannot be deleted.","creatorContext":"ZIA","isNonEditable":false},{"id":18858405,"name":"Group01","ipAddresses":["10.0.0.1"],"creatorContext":"ZIA","isNonEditable":false},{"id":-2,"name":"All
+        IPv4","ipAddresses":["0.0.0.0"],"description":"All IPv4 source traffic pre-defined
+        group","isNonEditable":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:40 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '291'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 0bebfda9-23fb-989a-ab48-30109d8438b2
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '20'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipSourceGroups/lite
+  response:
+    body:
+      string: '[{"id":17802406,"name":"orphan-resource-to-delete-stuck"},{"id":18858405,"name":"Group01"},{"id":-2,"name":"IPV4_ALL_SOURCE_GROUP_NAME","isNameL10nTag":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:40 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '187'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 28fe6edd-b3ce-999d-affd-be42f05ee33d
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '20'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipSourceGroups/ipv6SourceGroups
+  response:
+    body:
+      string: '[{"id":-3,"name":"All IPv6","ipAddresses":["::"],"description":"All
+        IPv6 source traffic pre-defined group","isNonEditable":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:40 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '83'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - b2838959-0753-9138-ba22-23a6886dc0ef
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '20'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipSourceGroups/ipv6SourceGroups/lite
+  response:
+    body:
+      string: '[{"id":-3,"name":"IPV6_ALL_SOURCE_GROUP_NAME","isNameL10nTag":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '68'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:41 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '148'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 47eb69e1-cf7b-9a12-9311-9c4712115291
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4973'
+      x-ratelimit-reset:
+      - '19'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/ipSourceGroups/17802406
+  response:
+    body:
+      string: '{"id":17802406,"name":"orphan-resource-to-delete-stuck","ipAddresses":["192.168.1.1","192.168.1.3","192.168.1.2"],"description":"this
+        resource is stuck and cannot be deleted.","creatorContext":"ZIA","isNonEditable":false,"extranetIpPool":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:41 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '190'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 6769977e-0a76-9281-9bae-3bcb83ab8e10
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4972'
+      x-ratelimit-reset:
+      - '19'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkApplicationGroups
+  response:
+    body:
+      string: '[{"id":462410,"name":"Microsoft Office365","networkApplications":["SKYPE_FOR_BUSINESS","OFFICE365","OUTLOOK","SHAREPOINT","SHAREPOINT_BLOG","SHAREPOINT_CALENDAR","SHAREPOINT_ADMIN","SHAREPOINT_DOCUMENT","SHAREPOINT_ONLINE","ONEDRIVE","YAMMER"],"description":"Microsoft
+        Office365"},{"id":18561427,"name":"test_zia_ansible_b3wxE_V0iku_pSvi6","networkApplications":["APNS","APPSTORE","DICT"],"description":"test_zia_ansible_RVePE_b3wxE_V0iku_pSvi6"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:41 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '205'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - a33bf652-e207-9e75-afc4-fa4bd37644a2
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4971'
+      x-ratelimit-reset:
+      - '19'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkApplicationGroups/462410
+  response:
+    body:
+      string: '{"id":462410,"name":"Microsoft Office365","networkApplications":["YAMMER","OFFICE365","SKYPE_FOR_BUSINESS","OUTLOOK","SHAREPOINT","SHAREPOINT_ADMIN","SHAREPOINT_BLOG","SHAREPOINT_CALENDAR","SHAREPOINT_DOCUMENT","SHAREPOINT_ONLINE","ONEDRIVE"],"description":"Microsoft
+        Office365"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:42 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '248'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 289c2428-bc70-93f6-9040-45dcc78a7298
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4970'
+      x-ratelimit-reset:
+      - '19'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkApplications
+  response:
+    body:
+      string: '[{"id":"APNS","parentCategory":"APP_SERVICE","description":"APNS_DESC","deprecated":false},{"id":"DICT","parentCategory":"APP_SERVICE","description":"DICT_DESC","deprecated":false},{"id":"EPM","parentCategory":"APP_SERVICE","description":"EPM_DESC","deprecated":false},{"id":"GARP","parentCategory":"APP_SERVICE","description":"GARP_DESC","deprecated":false},{"id":"ICLOUD","parentCategory":"APP_SERVICE","description":"ICLOUD_DESC","deprecated":false},{"id":"IOS_OTA_UPDATE","parentCategory":"APP_SERVICE","description":"IOS_OTA_UPDATE_DESC","deprecated":false},{"id":"LDAP","parentCategory":"APP_SERVICE","description":"LDAP_DESC","deprecated":false},{"id":"LDAPS","parentCategory":"APP_SERVICE","description":"LDAPS_DESC","deprecated":false},{"id":"MQ","parentCategory":"APP_SERVICE","description":"MQ_DESC","deprecated":false},{"id":"NSPI","parentCategory":"APP_SERVICE","description":"NSPI_DESC","deprecated":false},{"id":"PERFORCE","parentCategory":"APP_SERVICE","description":"PERFORCE_DESC","deprecated":false},{"id":"PORTMAP","parentCategory":"APP_SERVICE","description":"PORTMAP_DESC","deprecated":false},{"id":"SAMSUNG_APPS","parentCategory":"APP_SERVICE","description":"SAMSUNG_APPS_DESC","deprecated":false},{"id":"SRVLOC","parentCategory":"APP_SERVICE","description":"SRVLOC_DESC","deprecated":false},{"id":"SSDP","parentCategory":"APP_SERVICE","description":"SSDP_DESC","deprecated":false},{"id":"SYSLOG","parentCategory":"APP_SERVICE","description":"SYSLOG_DESC","deprecated":false},{"id":"WINDOWS_MARKETPLACE","parentCategory":"APP_SERVICE","description":"WINDOWS_MARKETPLACE_DESC","deprecated":false},{"id":"XFS","parentCategory":"APP_SERVICE","description":"XFS_DESC","deprecated":false},{"id":"VMWARE_HORIZON_VIEW","parentCategory":"APP_SERVICE","description":"VMWARE_HORIZON_VIEW_DESC","deprecated":false},{"id":"FIX","parentCategory":"APP_SERVICE","description":"FIX_DESC","deprecated":false},{"id":"DOCKER","parentCategory":"APP_SERVICE","description":"DOCKER_DESC","deprecated":false},{"id":"CHAP","parentCategory":"AUTHENTICATION","description":"CHAP_DESC","deprecated":false},{"id":"DIAMETER","parentCategory":"AUTHENTICATION","description":"DIAMETER_DESC","deprecated":false},{"id":"IDENT","parentCategory":"AUTHENTICATION","description":"IDENT_DESC","deprecated":false},{"id":"KRB5","parentCategory":"AUTHENTICATION","description":"KRB5_DESC","deprecated":false},{"id":"PAP","parentCategory":"AUTHENTICATION","description":"PAP_DESC","deprecated":false},{"id":"RADIUS","parentCategory":"AUTHENTICATION","description":"RADIUS_DESC","deprecated":false},{"id":"TACACS_PLUS","parentCategory":"AUTHENTICATION","description":"TACACS_PLUS_DESC","deprecated":false},{"id":"YPPASSWD","parentCategory":"AUTHENTICATION","description":"YPPASSWD_DESC","deprecated":false},{"id":"YPSERV","parentCategory":"AUTHENTICATION","description":"YPSERV_DESC","deprecated":false},{"id":"SALESFORCE","parentCategory":"BUSINESS","description":"SALESFORCE_DESC","deprecated":false},{"id":"GOOGLEANALYTICS","parentCategory":"BUSINESS","description":"GOOGLEANALYTICS_DESC","deprecated":false},{"id":"OFFICE365","parentCategory":"BUSINESS","description":"OFFICE365_DESC","deprecated":false},{"id":"EVERNOTE","parentCategory":"BUSINESS","description":"EVERNOTE_DESC","deprecated":false},{"id":"TUMBLR","parentCategory":"BUSINESS","description":"TUMBLR_DESC","deprecated":false},{"id":"ZOHOCRM","parentCategory":"BUSINESS","description":"ZOHOCRM_DESC","deprecated":false},{"id":"SUGARCRM","parentCategory":"BUSINESS","description":"SUGARCRM_DESC","deprecated":false},{"id":"ADOBE_CREATIVE_CLOUD","parentCategory":"BUSINESS","description":"ADOBE_CREATIVE_CLOUD_DESC","deprecated":false},{"id":"ZOOMINFO","parentCategory":"BUSINESS","description":"ZOOMINFO_DESC","deprecated":false},{"id":"SERVICE_NOW","parentCategory":"BUSINESS","description":"SERVICE_NOW_DESC","deprecated":false},{"id":"DB2","parentCategory":"DATABASE","description":"DB2_DESC","deprecated":false},{"id":"DRDA","parentCategory":"DATABASE","description":"DRDA_DESC","deprecated":false},{"id":"FILEMAKER_PRO","parentCategory":"DATABASE","description":"FILEMAKER_PRO_DESC","deprecated":false},{"id":"INFORMIX","parentCategory":"DATABASE","description":"INFORMIX_DESC","deprecated":false},{"id":"MOBILINK","parentCategory":"DATABASE","description":"MOBILINK_DESC","deprecated":false},{"id":"MYSQL","parentCategory":"DATABASE","description":"MYSQL_DESC","deprecated":false},{"id":"POSTGRES","parentCategory":"DATABASE","description":"POSTGRES_DESC","deprecated":false},{"id":"SQLI","parentCategory":"DATABASE","description":"SQLI_DESC","deprecated":false},{"id":"SYBASE","parentCategory":"DATABASE","description":"SYBASE_DESC","deprecated":false},{"id":"TDS","parentCategory":"DATABASE","description":"TDS_DESC","deprecated":false},{"id":"TNS","parentCategory":"DATABASE","description":"TNS_DESC","deprecated":false},{"id":"MS_SSAS","parentCategory":"DATABASE","description":"MS_SSAS_DESC","deprecated":false},{"id":"GOOGLE_DNS","parentCategory":"DOH","description":"GOOGLE_DNS_DESC","deprecated":false},{"id":"CLOUDFLARE_DNS","parentCategory":"DOH","description":"CLOUDFLARE_DNS_DESC","deprecated":false},{"id":"ADGUARD","parentCategory":"DOH","description":"ADGUARD_DESC","deprecated":false},{"id":"QUAD9","parentCategory":"DOH","description":"QUAD9_DESC","deprecated":false},{"id":"OPENDNS","parentCategory":"DOH","description":"OPENDNS_DESC","deprecated":false},{"id":"CLEANBROWSING","parentCategory":"DOH","description":"CLEANBROWSING_DESC","deprecated":false},{"id":"COMCAST_DNS","parentCategory":"DOH","description":"COMCAST_DNS_DESC","deprecated":false},{"id":"NEXTDNS","parentCategory":"DOH","description":"NEXTDNS_DESC","deprecated":false},{"id":"POWERDNS","parentCategory":"DOH","description":"POWERDNS_DESC","deprecated":false},{"id":"BLAHDNS","parentCategory":"DOH","description":"BLAHDNS_DESC","deprecated":false},{"id":"SECUREDNS","parentCategory":"DOH","description":"SECUREDNS_DESC","deprecated":false},{"id":"RUBYFISH","parentCategory":"DOH","description":"RUBYFISH_DESC","deprecated":false},{"id":"DOH_UNKNOWN","parentCategory":"DOH","description":"DOH_UNKNOWN_DESC","deprecated":false},{"id":"GOTOMEETING","parentCategory":"ENTERPRISE","description":"GOTOMEETING_DESC","deprecated":false},{"id":"MICROSOFTLIVEMEETING","parentCategory":"ENTERPRISE","description":"MICROSOFTLIVEMEETING_DESC","deprecated":false},{"id":"YAMMER","parentCategory":"ENTERPRISE","description":"YAMMER_DESC","deprecated":false},{"id":"NETVIEWER","parentCategory":"ENTERPRISE","description":"NETVIEWER_DESC","deprecated":false},{"id":"AMAZON_CLD_DRIVE","parentCategory":"ENTERPRISE","description":"AMAZON_CLD_DRIVE_DESC","deprecated":false},{"id":"WEBINAR","parentCategory":"ENTERPRISE","description":"WEBINAR_DESC","deprecated":false},{"id":"GOOGLE_KEEP","parentCategory":"ENTERPRISE","description":"GOOGLE_KEEP_DESC","deprecated":false},{"id":"AMAZON_CHIME","parentCategory":"ENTERPRISE","description":"AMAZON_CHIME_DESC","deprecated":false},{"id":"WORKDAY","parentCategory":"ERP","description":"WORKDAY_DESC","deprecated":false},{"id":"AIMINI","parentCategory":"FILE_SERVER_TRANSER","description":"AIMINI_DESC","deprecated":false},{"id":"CFT","parentCategory":"FILE_SERVER_TRANSER","description":"CFT_DESC","deprecated":false},{"id":"FTP","parentCategory":"FILE_SERVER_TRANSER","description":"FTP_DESC","deprecated":false},{"id":"FTP_DATA","parentCategory":"FILE_SERVER_TRANSER","description":"FTP_DATA_DESC","deprecated":false},{"id":"FTPS","parentCategory":"FILE_SERVER_TRANSER","description":"FTPS_DESC","deprecated":false},{"id":"GOOGLE_DRIVE","parentCategory":"FILE_SERVER_TRANSER","description":"GOOGLE_DRIVE_DESC","deprecated":false},{"id":"HOTLINE","parentCategory":"FILE_SERVER_TRANSER","description":"HOTLINE_DESC","deprecated":false},{"id":"IBACKUP","parentCategory":"FILE_SERVER_TRANSER","description":"IBACKUP_DESC","deprecated":false},{"id":"MOUNT","parentCategory":"FILE_SERVER_TRANSER","description":"MOUNT_DESC","deprecated":false},{"id":"NETBIOS","parentCategory":"FILE_SERVER_TRANSER","description":"NETBIOS_DESC","deprecated":false},{"id":"NFS","parentCategory":"FILE_SERVER_TRANSER","description":"NFS_DESC","deprecated":false},{"id":"NLOCKMGR","parentCategory":"FILE_SERVER_TRANSER","description":"NLOCKMGR_DESC","deprecated":false},{"id":"RQUOTA","parentCategory":"FILE_SERVER_TRANSER","description":"RQUOTA_DESC","deprecated":false},{"id":"RSTAT","parentCategory":"FILE_SERVER_TRANSER","description":"RSTAT_DESC","deprecated":false},{"id":"RSYNC","parentCategory":"FILE_SERVER_TRANSER","description":"RSYNC_DESC","deprecated":false},{"id":"RUSERS","parentCategory":"FILE_SERVER_TRANSER","description":"RUSERS_DESC","deprecated":false},{"id":"SMB","parentCategory":"FILE_SERVER_TRANSER","description":"SMB_DESC","deprecated":false},{"id":"SYNC","parentCategory":"FILE_SERVER_TRANSER","description":"SYNC_DESC","deprecated":false},{"id":"TFTP","parentCategory":"FILE_SERVER_TRANSER","description":"TFTP_DESC","deprecated":false},{"id":"YPUPDATE","parentCategory":"FILE_SERVER_TRANSER","description":"YPUPDATE_DESC","deprecated":false},{"id":"AIM_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"AIM_TRANSFER_DESC","deprecated":false},{"id":"IRC_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"IRC_TRANSFER_DESC","deprecated":false},{"id":"JABBER_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"JABBER_TRANSFER_DESC","deprecated":false},{"id":"PALTALK_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"PALTALK_TRANSFER_DESC","deprecated":false},{"id":"QQ_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"QQ_TRANSFER_DESC","deprecated":false},{"id":"YMSG_TRANSFER","parentCategory":"FILE_SERVER_TRANSER","description":"YMSG_TRANSFER_DESC","deprecated":false},{"id":"FTPS_DATA","parentCategory":"FILE_SERVER_TRANSER","description":"FTPS_DATA_DESC","deprecated":false},{"id":"CSTRIKE","parentCategory":"GAMING","description":"CSTRIKE_DESC","deprecated":false},{"id":"EVE_ONLINE","parentCategory":"GAMING","description":"EVE_ONLINE_DESC","deprecated":false},{"id":"EVERQUEST","parentCategory":"GAMING","description":"EVERQUEST_DESC","deprecated":false},{"id":"HALFLIFE","parentCategory":"GAMING","description":"HALFLIFE_DESC","deprecated":false},{"id":"IMVU","parentCategory":"GAMING","description":"IMVU_DESC","deprecated":false},{"id":"LINEAGE2","parentCategory":"GAMING","description":"LINEAGE2_DESC","deprecated":false},{"id":"POKER_STARS","parentCategory":"GAMING","description":"POKER_STARS_DESC","deprecated":false},{"id":"PSN","parentCategory":"GAMING","description":"PSN_DESC","deprecated":false},{"id":"QUAKE","parentCategory":"GAMING","description":"QUAKE_DESC","deprecated":false},{"id":"RUNESCAPE","parentCategory":"GAMING","description":"RUNESCAPE_DESC","deprecated":false},{"id":"STEAM","parentCategory":"GAMING","description":"STEAM_DESC","deprecated":false},{"id":"WFC","parentCategory":"GAMING","description":"WFC_DESC","deprecated":false},{"id":"WIICONNECT24","parentCategory":"GAMING","description":"WIICONNECT24_DESC","deprecated":false},{"id":"WOW","parentCategory":"GAMING","description":"WOW_DESC","deprecated":false},{"id":"XBOXLIVE","parentCategory":"GAMING","description":"XBOXLIVE_DESC","deprecated":false},{"id":"FIFA","parentCategory":"GAMING","description":"FIFA_DESC","deprecated":false},{"id":"ROBLOX","parentCategory":"GAMING","description":"ROBLOX_DESC","deprecated":false},{"id":"FLICKR","parentCategory":"IMAGEHOST","description":"FLICKR_DESC","deprecated":false},{"id":"TELEGRAM","parentCategory":"INSTANT_MESSAGING","description":"TELEGRAM_DESC","deprecated":false},{"id":"ZOOM","parentCategory":"INSTANT_MESSAGING","description":"ZOOM_DESC","deprecated":false},{"id":"MIBBIT","parentCategory":"INSTANT_MESSAGING","description":"MIBBIT_DESC","deprecated":false},{"id":"AIM","parentCategory":"INSTANT_MESSAGING","description":"AIM_DESC","deprecated":false},{"id":"AIM_EXPRESS","parentCategory":"INSTANT_MESSAGING","description":"AIM_EXPRESS_DESC","deprecated":false},{"id":"AIMS","parentCategory":"INSTANT_MESSAGING","description":"AIMS_DESC","deprecated":false},{"id":"AIRAIM","parentCategory":"INSTANT_MESSAGING","description":"AIRAIM_DESC","deprecated":false},{"id":"BADOO","parentCategory":"INSTANT_MESSAGING","description":"BADOO_DESC","deprecated":false},{"id":"EBUDDY","parentCategory":"INSTANT_MESSAGING","description":"EBUDDY_DESC","deprecated":false},{"id":"FRIENDVOX","parentCategory":"INSTANT_MESSAGING","description":"FRIENDVOX_DESC","deprecated":false},{"id":"GTALK","parentCategory":"INSTANT_MESSAGING","description":"GTALK_DESC","deprecated":false},{"id":"GCM","parentCategory":"INSTANT_MESSAGING","description":"GCM_DESC","deprecated":false},{"id":"HOVRS","parentCategory":"INSTANT_MESSAGING","description":"HOVRS_DESC","deprecated":false},{"id":"ICQ2GO","parentCategory":"INSTANT_MESSAGING","description":"ICQ2GO_DESC","deprecated":false},{"id":"ILOVEIM","parentCategory":"INSTANT_MESSAGING","description":"ILOVEIM_DESC","deprecated":false},{"id":"IRC","parentCategory":"INSTANT_MESSAGING","description":"IRC_DESC","deprecated":false},{"id":"JABBER","parentCategory":"INSTANT_MESSAGING","description":"JABBER_DESC","deprecated":false},{"id":"KAIXIN_CHAT","parentCategory":"INSTANT_MESSAGING","description":"KAIXIN_CHAT_DESC","deprecated":false},{"id":"KAKAOTALK","parentCategory":"INSTANT_MESSAGING","description":"KAKAOTALK_DESC","deprecated":false},{"id":"KIK","parentCategory":"INSTANT_MESSAGING","description":"KIK_DESC","deprecated":false},{"id":"KOOLIM","parentCategory":"INSTANT_MESSAGING","description":"KOOLIM_DESC","deprecated":false},{"id":"LINE","parentCategory":"INSTANT_MESSAGING","description":"LINE_DESC","deprecated":false},{"id":"LOTUS_SAMETIME","parentCategory":"INSTANT_MESSAGING","description":"LOTUS_SAMETIME_DESC","deprecated":false},{"id":"MESSENGERFX","parentCategory":"INSTANT_MESSAGING","description":"MESSENGERFX_DESC","deprecated":false},{"id":"MITALK","parentCategory":"INSTANT_MESSAGING","description":"MITALK_DESC","deprecated":false},{"id":"MPLUS_MESSENGER","parentCategory":"INSTANT_MESSAGING","description":"MPLUS_MESSENGER_DESC","deprecated":false},{"id":"MS_COMMUNICATOR","parentCategory":"INSTANT_MESSAGING","description":"MS_COMMUNICATOR_DESC","deprecated":false},{"id":"MSN","parentCategory":"INSTANT_MESSAGING","description":"MSN_DESC","deprecated":false},{"id":"MSNMOBILE","parentCategory":"INSTANT_MESSAGING","description":"MSNMOBILE_DESC","deprecated":false},{"id":"MXIT","parentCategory":"INSTANT_MESSAGING","description":"MXIT_DESC","deprecated":false},{"id":"NETMEETING_ILS","parentCategory":"INSTANT_MESSAGING","description":"NETMEETING_ILS_DESC","deprecated":false},{"id":"OICQ","parentCategory":"INSTANT_MESSAGING","description":"OICQ_DESC","deprecated":false},{"id":"OOVOO","parentCategory":"INSTANT_MESSAGING","description":"OOVOO_DESC","deprecated":false},{"id":"PALTALK","parentCategory":"INSTANT_MESSAGING","description":"PALTALK_DESC","deprecated":false},{"id":"QQ","parentCategory":"INSTANT_MESSAGING","description":"QQ_DESC","deprecated":false},{"id":"RADIUSIM","parentCategory":"INSTANT_MESSAGING","description":"RADIUSIM_DESC","deprecated":false},{"id":"SKYPE","parentCategory":"INSTANT_MESSAGING","description":"SKYPE_DESC","deprecated":false},{"id":"TEAMSPEAK","parentCategory":"INSTANT_MESSAGING","description":"TEAMSPEAK_DESC","deprecated":false},{"id":"TEAMSPEAK_V3","parentCategory":"INSTANT_MESSAGING","description":"TEAMSPEAK_V3_DESC","deprecated":false},{"id":"WECHAT","parentCategory":"INSTANT_MESSAGING","description":"WECHAT_DESC","deprecated":false},{"id":"WHATSAPP","parentCategory":"INSTANT_MESSAGING","description":"WHATSAPP_DESC","deprecated":false},{"id":"YMSG","parentCategory":"INSTANT_MESSAGING","description":"YMSG_DESC","deprecated":false},{"id":"YMSG_CONF","parentCategory":"INSTANT_MESSAGING","description":"YMSG_CONF_DESC","deprecated":false},{"id":"YOUNI","parentCategory":"INSTANT_MESSAGING","description":"YOUNI_DESC","deprecated":false},{"id":"ZOHO","parentCategory":"INSTANT_MESSAGING","description":"ZOHO_DESC","deprecated":false},{"id":"ZOHO_IM","parentCategory":"INSTANT_MESSAGING","description":"ZOHO_IM_DESC","deprecated":false},{"id":"WANGWANG","parentCategory":"INSTANT_MESSAGING","description":"WANGWANG_DESC","deprecated":false},{"id":"SIGNAL","parentCategory":"INSTANT_MESSAGING","description":"SIGNAL_DESC","deprecated":false},{"id":"DISCORD","parentCategory":"INSTANT_MESSAGING","description":"DISCORD_DESC","deprecated":false},{"id":"IOS_APPSTORE","parentCategory":"MAPPSTORE","description":"IOS_APPSTORE_DESC","deprecated":false},{"id":"ANZHI","parentCategory":"MAPPSTORE","description":"ANZHI_DESC","deprecated":false},{"id":"GOOGLE_PLAY","parentCategory":"MAPPSTORE","description":"GOOGLE_PLAY_DESC","deprecated":false},{"id":"ALTIRIS","parentCategory":"NETWORK_MGMT","description":"ALTIRIS_DESC","deprecated":false},{"id":"CDP","parentCategory":"NETWORK_MGMT","description":"CDP_DESC","deprecated":false},{"id":"IPERF","parentCategory":"NETWORK_MGMT","description":"IPERF_DESC","deprecated":false},{"id":"LCP","parentCategory":"NETWORK_MGMT","description":"LCP_DESC","deprecated":false},{"id":"NETFLOW","parentCategory":"NETWORK_MGMT","description":"NETFLOW_DESC","deprecated":false},{"id":"RSVP","parentCategory":"NETWORK_MGMT","description":"RSVP_DESC","deprecated":false},{"id":"SNMP","parentCategory":"NETWORK_MGMT","description":"SNMP_DESC","deprecated":false},{"id":"SONMP","parentCategory":"NETWORK_MGMT","description":"SONMP_DESC","deprecated":false},{"id":"ZABBIX_AGENT","parentCategory":"NETWORK_MGMT","description":"ZABBIX_AGENT_DESC","deprecated":false},{"id":"APOLLO","parentCategory":"NETWORK_MGMT","description":"APOLLO_DESC","deprecated":false},{"id":"BGP","parentCategory":"NETWORK_MGMT","description":"BGP_DESC","deprecated":false},{"id":"EIGRP","parentCategory":"NETWORK_MGMT","description":"EIGRP_DESC","deprecated":false},{"id":"HSRP","parentCategory":"NETWORK_MGMT","description":"HSRP_DESC","deprecated":false},{"id":"IPXRIP","parentCategory":"NETWORK_MGMT","description":"IPXRIP_DESC","deprecated":false},{"id":"LOOP","parentCategory":"NETWORK_MGMT","description":"LOOP_DESC","deprecated":false},{"id":"MPLS","parentCategory":"NETWORK_MGMT","description":"MPLS_DESC","deprecated":false},{"id":"NLSP","parentCategory":"NETWORK_MGMT","description":"NLSP_DESC","deprecated":false},{"id":"OSPF","parentCategory":"NETWORK_MGMT","description":"OSPF_DESC","deprecated":false},{"id":"PWE","parentCategory":"NETWORK_MGMT","description":"PWE_DESC","deprecated":false},{"id":"RIP1","parentCategory":"NETWORK_MGMT","description":"RIP1_DESC","deprecated":false},{"id":"RIP2","parentCategory":"NETWORK_MGMT","description":"RIP2_DESC","deprecated":false},{"id":"RIPNG1","parentCategory":"NETWORK_MGMT","description":"RIPNG1_DESC","deprecated":false},{"id":"STP","parentCategory":"NETWORK_MGMT","description":"STP_DESC","deprecated":false},{"id":"VRRP","parentCategory":"NETWORK_MGMT","description":"VRRP_DESC","deprecated":false},{"id":"S7COMM_PLUS","parentCategory":"NETWORK_MGMT","description":"S7COMM_PLUS_DESC","deprecated":false},{"id":"IP","parentCategory":"NETWORK_SERVICE","description":"IP_DESC","deprecated":false},{"id":"IP6","parentCategory":"NETWORK_SERVICE","description":"IP6_DESC","deprecated":false},{"id":"TCP","parentCategory":"NETWORK_SERVICE","description":"TCP_DESC","deprecated":false},{"id":"UDP","parentCategory":"NETWORK_SERVICE","description":"UDP_DESC","deprecated":false},{"id":"ICMP","parentCategory":"NETWORK_SERVICE","description":"ICMP_DESC","deprecated":false},{"id":"DHCP","parentCategory":"NETWORK_SERVICE","description":"DHCP_DESC","deprecated":false},{"id":"NTP","parentCategory":"NETWORK_SERVICE","description":"NTP_DESC","deprecated":false},{"id":"DNS","parentCategory":"NETWORK_SERVICE","description":"DNS_DESC","deprecated":false},{"id":"TCP_OVER_DNS","parentCategory":"NETWORK_SERVICE","description":"TCP_OVER_DNS_DESC","deprecated":false},{"id":"DOH","parentCategory":"NETWORK_SERVICE","description":"DOH_DESC","deprecated":false},{"id":"AGORA_IO","parentCategory":"NETWORK_SERVICE","description":"AGORA_IO_DESC","deprecated":false},{"id":"MS_DFSR","parentCategory":"NETWORK_SERVICE","description":"MS_DFSR_DESC","deprecated":false},{"id":"WS_DISCOVERY","parentCategory":"NETWORK_SERVICE","description":"WS_DISCOVERY_DESC","deprecated":false},{"id":"STUN","parentCategory":"NETWORK_SERVICE","description":"STUN_DESC","deprecated":false},{"id":"WEBSOCKET","parentCategory":"NETWORK_SERVICE","description":"WEBSOCKET_DESC","deprecated":false},{"id":"SCTP","parentCategory":"NETWORK_SERVICE","description":"SCTP_DESC","deprecated":false},{"id":"SMTP","parentCategory":"NETWORK_SERVICE","description":"SMTP_DESC","deprecated":false},{"id":"POP3","parentCategory":"NETWORK_SERVICE","description":"POP3_DESC","deprecated":false},{"id":"POP3S","parentCategory":"NETWORK_SERVICE","description":"POP3S_DESC","deprecated":false},{"id":"IGMP","parentCategory":"NETWORK_SERVICE","description":"IGMP_DESC","deprecated":false},{"id":"ADC","parentCategory":"P2P","description":"ADC_DESC","deprecated":false},{"id":"APPLEJUICE","parentCategory":"P2P","description":"APPLEJUICE_DESC","deprecated":false},{"id":"ARES","parentCategory":"P2P","description":"ARES_DESC","deprecated":false},{"id":"BITTORRENT","parentCategory":"P2P","description":"BITTORRENT_DESC","deprecated":false},{"id":"BLUBSTER","parentCategory":"P2P","description":"BLUBSTER_DESC","deprecated":false},{"id":"CLIP2NET","parentCategory":"P2P","description":"CLIP2NET_DESC","deprecated":false},{"id":"DIINO","parentCategory":"P2P","description":"DIINO_DESC","deprecated":false},{"id":"DIRECTCONNECT","parentCategory":"P2P","description":"DIRECTCONNECT_DESC","deprecated":false},{"id":"EDONKEY","parentCategory":"P2P","description":"EDONKEY_DESC","deprecated":false},{"id":"FILETOPIA","parentCategory":"P2P","description":"FILETOPIA_DESC","deprecated":false},{"id":"GNUNET","parentCategory":"P2P","description":"GNUNET_DESC","deprecated":false},{"id":"GNUTELLA","parentCategory":"P2P","description":"GNUTELLA_DESC","deprecated":false},{"id":"GOBOOGY","parentCategory":"P2P","description":"GOBOOGY_DESC","deprecated":false},{"id":"IMESH","parentCategory":"P2P","description":"IMESH_DESC","deprecated":false},{"id":"KAZAA","parentCategory":"P2P","description":"KAZAA_DESC","deprecated":false},{"id":"KUGOU","parentCategory":"P2P","description":"KUGOU_DESC","deprecated":false},{"id":"MANOLITO","parentCategory":"P2P","description":"MANOLITO_DESC","deprecated":false},{"id":"MUTE","parentCategory":"P2P","description":"MUTE_DESC","deprecated":false},{"id":"OPENFT","parentCategory":"P2P","description":"OPENFT_DESC","deprecated":false},{"id":"PANDO","parentCategory":"P2P","description":"PANDO_DESC","deprecated":false},{"id":"QQMUSIC","parentCategory":"P2P","description":"QQMUSIC_DESC","deprecated":false},{"id":"QQSTREAM","parentCategory":"P2P","description":"QQSTREAM_DESC","deprecated":false},{"id":"SHARE","parentCategory":"P2P","description":"SHARE_DESC","deprecated":false},{"id":"SLSK","parentCategory":"P2P","description":"SLSK_DESC","deprecated":false},{"id":"SORIBADA","parentCategory":"P2P","description":"SORIBADA_DESC","deprecated":false},{"id":"THUNDER","parentCategory":"P2P","description":"THUNDER_DESC","deprecated":false},{"id":"UTP","parentCategory":"P2P","description":"UTP_DESC","deprecated":false},{"id":"VAKAKA","parentCategory":"P2P","description":"VAKAKA_DESC","deprecated":false},{"id":"WINMX","parentCategory":"P2P","description":"WINMX_DESC","deprecated":false},{"id":"WINNY","parentCategory":"P2P","description":"WINNY_DESC","deprecated":false},{"id":"HTTPTUNNEL","parentCategory":"P2P","description":"HTTPTUNNEL_DESC","deprecated":false},{"id":"LIBP2P","parentCategory":"P2P","description":"LIBP2P_DESC","deprecated":false},{"id":"CLEARCASE","parentCategory":"REMOTE","description":"CLEARCASE_DESC","deprecated":false},{"id":"GOTODEVICE","parentCategory":"REMOTE","description":"GOTODEVICE_DESC","deprecated":false},{"id":"GOTOMYPC","parentCategory":"REMOTE","description":"GOTOMYPC_DESC","deprecated":false},{"id":"ICA","parentCategory":"REMOTE","description":"ICA_DESC","deprecated":false},{"id":"JEDI","parentCategory":"REMOTE","description":"JEDI_DESC","deprecated":false},{"id":"RADMIN","parentCategory":"REMOTE","description":"RADMIN_DESC","deprecated":false},{"id":"RDP","parentCategory":"REMOTE","description":"RDP_DESC","deprecated":false},{"id":"RFB","parentCategory":"REMOTE","description":"RFB_DESC","deprecated":false},{"id":"SHOWMYPC","parentCategory":"REMOTE","description":"SHOWMYPC_DESC","deprecated":false},{"id":"TEAMVIEWER","parentCategory":"REMOTE","description":"TEAMVIEWER_DESC","deprecated":false},{"id":"VMWARE","parentCategory":"REMOTE","description":"VMWARE_DESC","deprecated":false},{"id":"X11","parentCategory":"REMOTE","description":"X11_DESC","deprecated":false},{"id":"XDMCP","parentCategory":"REMOTE","description":"XDMCP_DESC","deprecated":false},{"id":"RLOGIN","parentCategory":"REMOTE","description":"RLOGIN_DESC","deprecated":false},{"id":"RSH","parentCategory":"REMOTE","description":"RSH_DESC","deprecated":false},{"id":"TELNET","parentCategory":"REMOTE","description":"TELNET_DESC","deprecated":false},{"id":"TNVIP","parentCategory":"REMOTE","description":"TNVIP_DESC","deprecated":false},{"id":"DCERPC","parentCategory":"REMOTE","description":"DCERPC_DESC","deprecated":false},{"id":"DIOP","parentCategory":"REMOTE","description":"DIOP_DESC","deprecated":false},{"id":"GIOP","parentCategory":"REMOTE","description":"GIOP_DESC","deprecated":false},{"id":"GIOPS","parentCategory":"REMOTE","description":"GIOPS_DESC","deprecated":false},{"id":"IIOP","parentCategory":"REMOTE","description":"IIOP_DESC","deprecated":false},{"id":"MSRPC","parentCategory":"REMOTE","description":"MSRPC_DESC","deprecated":false},{"id":"RMI_IIOP","parentCategory":"REMOTE","description":"RMI_IIOP_DESC","deprecated":false},{"id":"RPC","parentCategory":"REMOTE","description":"RPC_DESC","deprecated":false},{"id":"SOAP","parentCategory":"REMOTE","description":"SOAP_DESC","deprecated":false},{"id":"FOLDINGATHOME","parentCategory":"REMOTE","description":"FOLDINGATHOME_DESC","deprecated":false},{"id":"GE_PROCIFY","parentCategory":"REMOTE","description":"GE_PROCIFY_DESC","deprecated":false},{"id":"MOXA_ASPP","parentCategory":"REMOTE","description":"MOXA_ASPP_DESC","deprecated":false},{"id":"ANYDESK","parentCategory":"REMOTE","description":"ANYDESK_DESC","deprecated":false},{"id":"PINTEREST","parentCategory":"SOCIAL","description":"PINTEREST_DESC","deprecated":false},{"id":"DIGG","parentCategory":"SOCIAL","description":"DIGG_DESC","deprecated":false},{"id":"WORDPRESS","parentCategory":"SOCIAL","description":"WORDPRESS_DESC","deprecated":false},{"id":"GOOGLE_GROUPS","parentCategory":"SOCIAL","description":"GOOGLE_GROUPS_DESC","deprecated":false},{"id":"IRCS","parentCategory":"SOCIAL","description":"IRCS_DESC","deprecated":false},{"id":"LINKEDIN","parentCategory":"SOCIAL","description":"LINKEDIN_DESC","deprecated":false},{"id":"NNTP","parentCategory":"SOCIAL","description":"NNTP_DESC","deprecated":false},{"id":"NNTPS","parentCategory":"SOCIAL","description":"NNTPS_DESC","deprecated":false},{"id":"ODNOKLASSNIKI","parentCategory":"SOCIAL","description":"ODNOKLASSNIKI_DESC","deprecated":false},{"id":"VKONTAKTE","parentCategory":"SOCIAL","description":"VKONTAKTE_DESC","deprecated":false},{"id":"YAHOO_GROUPS","parentCategory":"SOCIAL","description":"YAHOO_GROUPS_DESC","deprecated":false},{"id":"XING","parentCategory":"SOCIAL","description":"XING_DESC","deprecated":false},{"id":"LIVEJOURNAL","parentCategory":"SOCIAL","description":"LIVEJOURNAL_DESC","deprecated":false},{"id":"REDDIT","parentCategory":"SOCIAL","description":"REDDIT_DESC","deprecated":false},{"id":"GOOGLE_PLUS","parentCategory":"SOCIAL","description":"GOOGLE_PLUS_DESC","deprecated":false},{"id":"MIXI","parentCategory":"SOCIAL","description":"MIXI_DESC","deprecated":false},{"id":"TWITTER","parentCategory":"SOCIAL","description":"TWITTER_DESC","deprecated":false},{"id":"BLOGSPOT","parentCategory":"SOCIAL","description":"BLOGSPOT_DESC","deprecated":false},{"id":"HI5","parentCategory":"SOCIAL","description":"HI5_DESC","deprecated":false},{"id":"FRIENDSTER","parentCategory":"SOCIAL","description":"FRIENDSTER_DESC","deprecated":false},{"id":"BEBO","parentCategory":"SOCIAL","description":"BEBO_DESC","deprecated":false},{"id":"FACEBOOK","parentCategory":"SOCIAL","description":"FACEBOOK_DESC","deprecated":false},{"id":"MYSPACE","parentCategory":"SOCIAL","description":"MYSPACE_DESC","deprecated":false},{"id":"ORKUT","parentCategory":"SOCIAL","description":"ORKUT_DESC","deprecated":false},{"id":"CRAIGSLIST","parentCategory":"SOCIAL","description":"CRAIGSLIST_DESC","deprecated":false},{"id":"APP_CH","parentCategory":"SOCIAL","description":"APP_CH_DESC","deprecated":false},{"id":"GLASSDOOR","parentCategory":"SOCIAL","description":"GLASSDOOR_DESC","deprecated":false},{"id":"TINDER","parentCategory":"SOCIAL","description":"TINDER_DESC","deprecated":false},{"id":"BAIDU_TIEBA","parentCategory":"SOCIAL","description":"BAIDU_TIEBA_DESC","deprecated":false},{"id":"GOOGLE_VIDEO","parentCategory":"STREAMING","description":"GOOGLE_VIDEO_DESC","deprecated":false},{"id":"WEBEX","parentCategory":"STREAMING","description":"WEBEX_DESC","deprecated":false},{"id":"BOXNET","parentCategory":"STREAMING","description":"BOXNET_DESC","deprecated":false},{"id":"APP_050PLUS","parentCategory":"STREAMING","description":"APP_050PLUS_DESC","deprecated":false},{"id":"ADOBE_CONNECT","parentCategory":"STREAMING","description":"ADOBE_CONNECT_DESC","deprecated":false},{"id":"BABELGUM","parentCategory":"STREAMING","description":"BABELGUM_DESC","deprecated":false},{"id":"BAIDU_PLAYER","parentCategory":"STREAMING","description":"BAIDU_PLAYER_DESC","deprecated":false},{"id":"BAOFENG","parentCategory":"STREAMING","description":"BAOFENG_DESC","deprecated":false},{"id":"BBC_PLAYER","parentCategory":"STREAMING","description":"BBC_PLAYER_DESC","deprecated":false},{"id":"BLIP_TV","parentCategory":"STREAMING","description":"BLIP_TV_DESC","deprecated":false},{"id":"BLOCKBUSTER","parentCategory":"STREAMING","description":"BLOCKBUSTER_DESC","deprecated":false},{"id":"CCTV_VOD","parentCategory":"STREAMING","description":"CCTV_VOD_DESC","deprecated":false},{"id":"CNET","parentCategory":"STREAMING","description":"CNET_DESC","deprecated":false},{"id":"CNET_TV","parentCategory":"STREAMING","description":"CNET_TV_DESC","deprecated":false},{"id":"COMM","parentCategory":"STREAMING","description":"COMM_DESC","deprecated":false},{"id":"FACETIME","parentCategory":"STREAMING","description":"FACETIME_DESC","deprecated":false},{"id":"FLASH","parentCategory":"STREAMING","description":"FLASH_DESC","deprecated":false},{"id":"FRING","parentCategory":"STREAMING","description":"FRING_DESC","deprecated":false},{"id":"GROOVESHARK","parentCategory":"STREAMING","description":"GROOVESHARK_DESC","deprecated":false},{"id":"H225","parentCategory":"STREAMING","description":"H225_DESC","deprecated":false},{"id":"H245","parentCategory":"STREAMING","description":"H245_DESC","deprecated":false},{"id":"H248_BINARY","parentCategory":"STREAMING","description":"H248_BINARY_DESC","deprecated":false},{"id":"H248_TEXT","parentCategory":"STREAMING","description":"H248_TEXT_DESC","deprecated":false},{"id":"HBO_GO","parentCategory":"STREAMING","description":"HBO_GO_DESC","deprecated":false},{"id":"HOWCAST","parentCategory":"STREAMING","description":"HOWCAST_DESC","deprecated":false},{"id":"HULU","parentCategory":"STREAMING","description":"HULU_DESC","deprecated":false},{"id":"ICECAST","parentCategory":"STREAMING","description":"ICECAST_DESC","deprecated":false},{"id":"IHEARTRADIO","parentCategory":"STREAMING","description":"IHEARTRADIO_DESC","deprecated":false},{"id":"ITUNES","parentCategory":"STREAMING","description":"ITUNES_DESC","deprecated":false},{"id":"JAJAH","parentCategory":"STREAMING","description":"JAJAH_DESC","deprecated":false},{"id":"MEETINGPLACE","parentCategory":"STREAMING","description":"MEETINGPLACE_DESC","deprecated":false},{"id":"METACAFE","parentCategory":"STREAMING","description":"METACAFE_DESC","deprecated":false},{"id":"MGCP","parentCategory":"STREAMING","description":"MGCP_DESC","deprecated":false},{"id":"MMS","parentCategory":"STREAMING","description":"MMS_DESC","deprecated":false},{"id":"MOG","parentCategory":"STREAMING","description":"MOG_DESC","deprecated":false},{"id":"MOGULUS","parentCategory":"STREAMING","description":"MOGULUS_DESC","deprecated":false},{"id":"MPEGTS","parentCategory":"STREAMING","description":"MPEGTS_DESC","deprecated":false},{"id":"MSN_VIDEO","parentCategory":"STREAMING","description":"MSN_VIDEO_DESC","deprecated":false},{"id":"MSRP","parentCategory":"STREAMING","description":"MSRP_DESC","deprecated":false},{"id":"NETFLIX","parentCategory":"STREAMING","description":"NETFLIX_DESC","deprecated":false},{"id":"NICONICO_DOUGA","parentCategory":"STREAMING","description":"NICONICO_DOUGA_DESC","deprecated":false},{"id":"PALTALK_AUDIO","parentCategory":"STREAMING","description":"PALTALK_AUDIO_DESC","deprecated":false},{"id":"PALTALK_VIDEO","parentCategory":"STREAMING","description":"PALTALK_VIDEO_DESC","deprecated":false},{"id":"PPLIVE","parentCategory":"STREAMING","description":"PPLIVE_DESC","deprecated":false},{"id":"PPSTREAM","parentCategory":"STREAMING","description":"PPSTREAM_DESC","deprecated":false},{"id":"Q931","parentCategory":"STREAMING","description":"Q931_DESC","deprecated":false},{"id":"QIK_VIDEO","parentCategory":"STREAMING","description":"QIK_VIDEO_DESC","deprecated":false},{"id":"QQLIVE","parentCategory":"STREAMING","description":"QQLIVE_DESC","deprecated":false},{"id":"QVOD","parentCategory":"STREAMING","description":"QVOD_DESC","deprecated":false},{"id":"RDT","parentCategory":"STREAMING","description":"RDT_DESC","deprecated":false},{"id":"RHAPSODY","parentCategory":"STREAMING","description":"RHAPSODY_DESC","deprecated":false},{"id":"RTMP","parentCategory":"STREAMING","description":"RTMP_DESC","deprecated":false},{"id":"RTCP","parentCategory":"STREAMING","description":"RTCP_DESC","deprecated":false},{"id":"RTP","parentCategory":"STREAMING","description":"RTP_DESC","deprecated":false},{"id":"RTSP","parentCategory":"STREAMING","description":"RTSP_DESC","deprecated":false},{"id":"SCCP","parentCategory":"STREAMING","description":"SCCP_DESC","deprecated":false},{"id":"SHOUTCAST","parentCategory":"STREAMING","description":"SHOUTCAST_DESC","deprecated":false},{"id":"SILVERLIGHT","parentCategory":"STREAMING","description":"SILVERLIGHT_DESC","deprecated":false},{"id":"SIP","parentCategory":"STREAMING","description":"SIP_DESC","deprecated":false},{"id":"SKY","parentCategory":"STREAMING","description":"SKY_DESC","deprecated":false},{"id":"SKY_PLAYER","parentCategory":"STREAMING","description":"SKY_PLAYER_DESC","deprecated":false},{"id":"SLACKER","parentCategory":"STREAMING","description":"SLACKER_DESC","deprecated":false},{"id":"SLINGBOX","parentCategory":"STREAMING","description":"SLINGBOX_DESC","deprecated":false},{"id":"SOPCAST","parentCategory":"STREAMING","description":"SOPCAST_DESC","deprecated":false},{"id":"SOUNDCLOUD","parentCategory":"STREAMING","description":"SOUNDCLOUD_DESC","deprecated":false},{"id":"SPOTIFY","parentCategory":"STREAMING","description":"SPOTIFY_DESC","deprecated":false},{"id":"TANGO","parentCategory":"STREAMING","description":"TANGO_DESC","deprecated":false},{"id":"TU","parentCategory":"STREAMING","description":"TU_DESC","deprecated":false},{"id":"TUNEIN","parentCategory":"STREAMING","description":"TUNEIN_DESC","deprecated":false},{"id":"TVANTS","parentCategory":"STREAMING","description":"TVANTS_DESC","deprecated":false},{"id":"TVUPLAYER","parentCategory":"STREAMING","description":"TVUPLAYER_DESC","deprecated":false},{"id":"UUSEE","parentCategory":"STREAMING","description":"UUSEE_DESC","deprecated":false},{"id":"VEOHTV","parentCategory":"STREAMING","description":"VEOHTV_DESC","deprecated":false},{"id":"VEVO","parentCategory":"STREAMING","description":"VEVO_DESC","deprecated":false},{"id":"VIBER","parentCategory":"STREAMING","description":"VIBER_DESC","deprecated":false},{"id":"VODDLER","parentCategory":"STREAMING","description":"VODDLER_DESC","deprecated":false},{"id":"YAHOO_SCREEN","parentCategory":"STREAMING","description":"YAHOO_SCREEN_DESC","deprecated":false},{"id":"YMSG_VIDEO","parentCategory":"STREAMING","description":"YMSG_VIDEO_DESC","deprecated":false},{"id":"ZATTOO","parentCategory":"STREAMING","description":"ZATTOO_DESC","deprecated":false},{"id":"DAILYMOTION","parentCategory":"STREAMING","description":"DAILYMOTION_DESC","deprecated":false},{"id":"AOL_VIDEO","parentCategory":"STREAMING","description":"AOL_VIDEO_DESC","deprecated":false},{"id":"ZIDDU","parentCategory":"STREAMING","description":"ZIDDU_DESC","deprecated":false},{"id":"LASTFM","parentCategory":"STREAMING","description":"LASTFM_DESC","deprecated":false},{"id":"DEEZER","parentCategory":"STREAMING","description":"DEEZER_DESC","deprecated":false},{"id":"MYVIDEODE","parentCategory":"STREAMING","description":"MYVIDEODE_DESC","deprecated":false},{"id":"PANDORA","parentCategory":"STREAMING","description":"PANDORA_DESC","deprecated":false},{"id":"YOUTUBE","parentCategory":"STREAMING","description":"YOUTUBE_DESC","deprecated":false},{"id":"VIMEO","parentCategory":"STREAMING","description":"VIMEO_DESC","deprecated":false},{"id":"DROPBOX","parentCategory":"STREAMING","description":"DROPBOX_DESC","deprecated":false},{"id":"HIGHTAIL","parentCategory":"STREAMING","description":"HIGHTAIL_DESC","deprecated":false},{"id":"FILESTUBE","parentCategory":"STREAMING","description":"FILESTUBE_DESC","deprecated":false},{"id":"RINGCENTRAL","parentCategory":"STREAMING","description":"RINGCENTRAL_DESC","deprecated":false},{"id":"SHAREFILE","parentCategory":"STREAMING","description":"SHAREFILE_DESC","deprecated":false},{"id":"MIMEDIA","parentCategory":"STREAMING","description":"MIMEDIA_DESC","deprecated":false},{"id":"FILESANYWHERE","parentCategory":"STREAMING","description":"FILESANYWHERE_DESC","deprecated":false},{"id":"HOUSEPARTY","parentCategory":"STREAMING","description":"HOUSEPARTY_DESC","deprecated":false},{"id":"THREEGPP_LI","parentCategory":"TUNNELING","description":"THREEGPP_LI_DESC","deprecated":false},{"id":"CAPWAP","parentCategory":"TUNNELING","description":"CAPWAP_DESC","deprecated":false},{"id":"ETHERIP","parentCategory":"TUNNELING","description":"ETHERIP_DESC","deprecated":false},{"id":"ETSI_LI","parentCategory":"TUNNELING","description":"ETSI_LI_DESC","deprecated":false},{"id":"GRE","parentCategory":"TUNNELING","description":"GRE_DESC","deprecated":false},{"id":"GTP","parentCategory":"TUNNELING","description":"GTP_DESC","deprecated":false},{"id":"GTPV2","parentCategory":"TUNNELING","description":"GTPV2_DESC","deprecated":false},{"id":"IPV6CP","parentCategory":"TUNNELING","description":"IPV6CP_DESC","deprecated":false},{"id":"L2TP","parentCategory":"TUNNELING","description":"L2TP_DESC","deprecated":false},{"id":"LQR","parentCategory":"TUNNELING","description":"LQR_DESC","deprecated":false},{"id":"MOBILE_IP","parentCategory":"TUNNELING","description":"MOBILE_IP_DESC","deprecated":false},{"id":"OPENVPN","parentCategory":"TUNNELING","description":"OPENVPN_DESC","deprecated":false},{"id":"PPP","parentCategory":"TUNNELING","description":"PPP_DESC","deprecated":false},{"id":"PPPOE","parentCategory":"TUNNELING","description":"PPPOE_DESC","deprecated":false},{"id":"PPTP","parentCategory":"TUNNELING","description":"PPTP_DESC","deprecated":false},{"id":"SOCKS2HTTP","parentCategory":"TUNNELING","description":"SOCKS2HTTP_DESC","deprecated":false},{"id":"SOCKS4","parentCategory":"TUNNELING","description":"SOCKS4_DESC","deprecated":false},{"id":"SOCKS5","parentCategory":"TUNNELING","description":"SOCKS5_DESC","deprecated":false},{"id":"TEREDO","parentCategory":"TUNNELING","description":"TEREDO_DESC","deprecated":false},{"id":"ULTRASURF","parentCategory":"TUNNELING","description":"ULTRASURF_DESC","deprecated":false},{"id":"VJC_COMP","parentCategory":"TUNNELING","description":"VJC_COMP_DESC","deprecated":false},{"id":"VJC_UNCOMP","parentCategory":"TUNNELING","description":"VJC_UNCOMP_DESC","deprecated":false},{"id":"XOT","parentCategory":"TUNNELING","description":"XOT_DESC","deprecated":false},{"id":"IPSEC","parentCategory":"TUNNELING","description":"IPSEC_DESC","deprecated":false},{"id":"ISAKMP","parentCategory":"TUNNELING","description":"ISAKMP_DESC","deprecated":false},{"id":"OCSP","parentCategory":"TUNNELING","description":"OCSP_DESC","deprecated":false},{"id":"SSH","parentCategory":"TUNNELING","description":"SSH_DESC","deprecated":false},{"id":"SSH_OVER_WEBSOCKET","parentCategory":"TUNNELING","description":"SSH_OVER_WEBSOCKET_DESC","deprecated":false},{"id":"HTTP_PROXY","parentCategory":"TUNNELING","description":"HTTP_PROXY_DESC","deprecated":false},{"id":"TOR","parentCategory":"TUNNELING","description":"TOR_DESC","deprecated":false},{"id":"WSTUNNEL","parentCategory":"TUNNELING","description":"WSTUNNEL_DESC","deprecated":false},{"id":"GBRIDGE","parentCategory":"TUNNELING","description":"GBRIDGE_DESC","deprecated":false},{"id":"HAMACHI","parentCategory":"TUNNELING","description":"HAMACHI_DESC","deprecated":false},{"id":"HEXATECH","parentCategory":"TUNNELING","description":"HEXATECH_DESC","deprecated":false},{"id":"HOTSPOT_SHIELD","parentCategory":"TUNNELING","description":"HOTSPOT_SHIELD_DESC","deprecated":false},{"id":"MEGAPROXY","parentCategory":"TUNNELING","description":"MEGAPROXY_DESC","deprecated":false},{"id":"OPERA_VPN","parentCategory":"TUNNELING","description":"OPERA_VPN_DESC","deprecated":false},{"id":"SPOTFLUX","parentCategory":"TUNNELING","description":"SPOTFLUX_DESC","deprecated":false},{"id":"TUNNELBEAR","parentCategory":"TUNNELING","description":"TUNNELBEAR_DESC","deprecated":false},{"id":"ZENMATE","parentCategory":"TUNNELING","description":"ZENMATE_DESC","deprecated":false},{"id":"OPENGW","parentCategory":"TUNNELING","description":"OPENGW_DESC","deprecated":false},{"id":"VPNOVERDNS","parentCategory":"TUNNELING","description":"VPNOVERDNS_DESC","deprecated":false},{"id":"HOXX_VPN","parentCategory":"TUNNELING","description":"HOXX_VPN_DESC","deprecated":false},{"id":"VPN1_COM","parentCategory":"TUNNELING","description":"VPN1_COM_DESC","deprecated":false},{"id":"SPRINGTECH_VPN","parentCategory":"TUNNELING","description":"SPRINGTECH_VPN_DESC","deprecated":false},{"id":"BARRACUDA_VPN","parentCategory":"TUNNELING","description":"BARRACUDA_VPN_DESC","deprecated":false},{"id":"HIDEMAN_VPN","parentCategory":"TUNNELING","description":"HIDEMAN_VPN_DESC","deprecated":false},{"id":"WINDSCRIBE","parentCategory":"TUNNELING","description":"WINDSCRIBE_DESC","deprecated":false},{"id":"STARKVPN","parentCategory":"TUNNELING","description":"STARKVPN_DESC","deprecated":false},{"id":"BROWSEC_VPN","parentCategory":"TUNNELING","description":"BROWSEC_VPN_DESC","deprecated":false},{"id":"EPIC_BROWSER_VPN","parentCategory":"TUNNELING","description":"EPIC_BROWSER_VPN_DESC","deprecated":false},{"id":"SKYVPN","parentCategory":"TUNNELING","description":"SKYVPN_DESC","deprecated":false},{"id":"KPN_TUNNEL","parentCategory":"TUNNELING","description":"KPN_TUNNEL_DESC","deprecated":false},{"id":"ERSPAN","parentCategory":"TUNNELING","description":"ERSPAN_DESC","deprecated":false},{"id":"EVASIVE_PROTOCOL","parentCategory":"TUNNELING","description":"EVASIVE_PROTOCOL_DESC","deprecated":false},{"id":"CYBERGHOST","parentCategory":"TUNNELING","description":"CYBERGHOST_DESC","deprecated":false},{"id":"DOTVPN","parentCategory":"TUNNELING","description":"DOTVPN_DESC","deprecated":false},{"id":"EXPRESSVPN","parentCategory":"TUNNELING","description":"EXPRESSVPN_DESC","deprecated":false},{"id":"HIDEMYASS","parentCategory":"TUNNELING","description":"HIDEMYASS_DESC","deprecated":false},{"id":"IPVANISH_VPN","parentCategory":"TUNNELING","description":"IPVANISH_VPN_DESC","deprecated":false},{"id":"WIREGUARD","parentCategory":"TUNNELING","description":"WIREGUARD_DESC","deprecated":false},{"id":"PROTONVPN","parentCategory":"TUNNELING","description":"PROTONVPN_DESC","deprecated":false},{"id":"FOUREVERPROXY","parentCategory":"TUNNELING","description":"FOUREVERPROXY_DESC","deprecated":false},{"id":"ITOP_VPN","parentCategory":"TUNNELING","description":"ITOP_VPN_DESC","deprecated":false},{"id":"SOFTETHER_VPN","parentCategory":"TUNNELING","description":"SOFTETHER_VPN_DESC","deprecated":false},{"id":"WIREVPN","parentCategory":"TUNNELING","description":"WIREVPN_DESC","deprecated":false},{"id":"SSL","parentCategory":"WEB","description":"SSL_DESC","deprecated":false},{"id":"ABCNEWS","parentCategory":"WEB","description":"ABCNEWS_DESC","deprecated":false},{"id":"DOTDASH","parentCategory":"WEB","description":"DOTDASH_DESC","deprecated":false},{"id":"ACCUWEATHER","parentCategory":"WEB","description":"ACCUWEATHER_DESC","deprecated":false},{"id":"ACER","parentCategory":"WEB","description":"ACER_DESC","deprecated":false},{"id":"ADOBE_DOCUMENT_CLOUD","parentCategory":"WEB","description":"ADOBE_DOCUMENT_CLOUD_DESC","deprecated":false},{"id":"ACTIVESYNC","parentCategory":"WEB","description":"ACTIVESYNC_DESC","deprecated":false},{"id":"ADDICTINGGAMES","parentCategory":"WEB","description":"ADDICTINGGAMES_DESC","deprecated":false},{"id":"ADNSTREAM","parentCategory":"WEB","description":"ADNSTREAM_DESC","deprecated":false},{"id":"ADOBE_MEETING_RC","parentCategory":"WEB","description":"ADOBE_MEETING_RC_DESC","deprecated":false},{"id":"ADOBE_UPDATE","parentCategory":"WEB","description":"ADOBE_UPDATE_DESC","deprecated":false},{"id":"ADRIVE","parentCategory":"WEB","description":"ADRIVE_DESC","deprecated":false},{"id":"ADULTADWORLD","parentCategory":"WEB","description":"ADULTADWORLD_DESC","deprecated":false},{"id":"ADULTFRIENDFINDER","parentCategory":"WEB","description":"ADULTFRIENDFINDER_DESC","deprecated":false},{"id":"ADVOGATO","parentCategory":"WEB","description":"ADVOGATO_DESC","deprecated":false},{"id":"AGAME","parentCategory":"WEB","description":"AGAME_DESC","deprecated":false},{"id":"AIAIGAME","parentCategory":"WEB","description":"AIAIGAME_DESC","deprecated":false},{"id":"AILI","parentCategory":"WEB","description":"AILI_DESC","deprecated":false},{"id":"AIZHAN","parentCategory":"WEB","description":"AIZHAN_DESC","deprecated":false},{"id":"AKAMAI","parentCategory":"WEB","description":"AKAMAI_DESC","deprecated":false},{"id":"ALEXA","parentCategory":"WEB","description":"ALEXA_DESC","deprecated":false},{"id":"ALIBABA","parentCategory":"WEB","description":"ALIBABA_DESC","deprecated":false},{"id":"ALIMAMA","parentCategory":"WEB","description":"ALIMAMA_DESC","deprecated":false},{"id":"ALIPAY","parentCategory":"WEB","description":"ALIPAY_DESC","deprecated":false},{"id":"ALJAZEERA","parentCategory":"WEB","description":"ALJAZEERA_DESC","deprecated":false},{"id":"ALLOCINE","parentCategory":"WEB","description":"ALLOCINE_DESC","deprecated":false},{"id":"AMAZON","parentCategory":"WEB","description":"AMAZON_DESC","deprecated":false},{"id":"AMAZON_AWS","parentCategory":"WEB","description":"AMAZON_AWS_DESC","deprecated":false},{"id":"AMAZON_MP3","parentCategory":"WEB","description":"AMAZON_MP3_DESC","deprecated":false},{"id":"AMAZON_VIDEO","parentCategory":"WEB","description":"AMAZON_VIDEO_DESC","deprecated":false},{"id":"AMEBA","parentCategory":"WEB","description":"AMEBA_DESC","deprecated":false},{"id":"AMERICANEXPRESS","parentCategory":"WEB","description":"AMERICANEXPRESS_DESC","deprecated":false},{"id":"AMIE_STREET","parentCategory":"WEB","description":"AMIE_STREET_DESC","deprecated":false},{"id":"ANOBII","parentCategory":"WEB","description":"ANOBII_DESC","deprecated":false},{"id":"ANSWERS","parentCategory":"WEB","description":"ANSWERS_DESC","deprecated":false},{"id":"ZYNGA","parentCategory":"WEB","description":"ZYNGA_DESC","deprecated":false},{"id":"ZUM","parentCategory":"WEB","description":"ZUM_DESC","deprecated":false},{"id":"APPLE","parentCategory":"WEB","description":"APPLE_DESC","deprecated":false},{"id":"APPLE_AIRPORT","parentCategory":"WEB","description":"APPLE_AIRPORT_DESC","deprecated":false},{"id":"APPLEDAILY","parentCategory":"WEB","description":"APPLEDAILY_DESC","deprecated":false},{"id":"APPLE_MAPS","parentCategory":"WEB","description":"APPLE_MAPS_DESC","deprecated":false},{"id":"APPLE_SIRI","parentCategory":"WEB","description":"APPLE_SIRI_DESC","deprecated":false},{"id":"APPLE_UPDATE","parentCategory":"WEB","description":"APPLE_UPDATE_DESC","deprecated":false},{"id":"APPSHOPPER","parentCategory":"WEB","description":"APPSHOPPER_DESC","deprecated":false},{"id":"ARCHIVE","parentCategory":"WEB","description":"ARCHIVE_DESC","deprecated":false},{"id":"ARMORGAMES","parentCategory":"WEB","description":"ARMORGAMES_DESC","deprecated":false},{"id":"ASIAE","parentCategory":"WEB","description":"ASIAE_DESC","deprecated":false},{"id":"ASMALLWORLD","parentCategory":"WEB","description":"ASMALLWORLD_DESC","deprecated":false},{"id":"ATHLINKS","parentCategory":"WEB","description":"ATHLINKS_DESC","deprecated":false},{"id":"ATT","parentCategory":"WEB","description":"ATT_DESC","deprecated":false},{"id":"ATWIKI","parentCategory":"WEB","description":"ATWIKI_DESC","deprecated":false},{"id":"AUCTION","parentCategory":"WEB","description":"AUCTION_DESC","deprecated":false},{"id":"AUFEMININ","parentCategory":"WEB","description":"AUFEMININ_DESC","deprecated":false},{"id":"AUONE","parentCategory":"WEB","description":"AUONE_DESC","deprecated":false},{"id":"AVATARS_UNITED","parentCategory":"WEB","description":"AVATARS_UNITED_DESC","deprecated":false},{"id":"AVG_UPDATE","parentCategory":"WEB","description":"AVG_UPDATE_DESC","deprecated":false},{"id":"AVIRA_UPDATE","parentCategory":"WEB","description":"AVIRA_UPDATE_DESC","deprecated":false},{"id":"AVOIDR","parentCategory":"WEB","description":"AVOIDR_DESC","deprecated":false},{"id":"BABYCENTER","parentCategory":"WEB","description":"BABYCENTER_DESC","deprecated":false},{"id":"BABYHOME","parentCategory":"WEB","description":"BABYHOME_DESC","deprecated":false},{"id":"BACKPACKERS","parentCategory":"WEB","description":"BACKPACKERS_DESC","deprecated":false},{"id":"BADONGO","parentCategory":"WEB","description":"BADONGO_DESC","deprecated":false},{"id":"ZOO","parentCategory":"WEB","description":"ZOO_DESC","deprecated":false},{"id":"BAIKE","parentCategory":"WEB","description":"BAIKE_DESC","deprecated":false},{"id":"BEANFUN","parentCategory":"WEB","description":"BEANFUN_DESC","deprecated":false},{"id":"BERNIAGA","parentCategory":"WEB","description":"BERNIAGA_DESC","deprecated":false},{"id":"BIGADDA","parentCategory":"WEB","description":"BIGADDA_DESC","deprecated":false},{"id":"BIGLOBE_NE","parentCategory":"WEB","description":"BIGLOBE_NE_DESC","deprecated":false},{"id":"BIGTENT","parentCategory":"WEB","description":"BIGTENT_DESC","deprecated":false},{"id":"BIGUPLOAD","parentCategory":"WEB","description":"BIGUPLOAD_DESC","deprecated":false},{"id":"BIIP","parentCategory":"WEB","description":"BIIP_DESC","deprecated":false},{"id":"ZOL","parentCategory":"WEB","description":"ZOL_DESC","deprecated":false},{"id":"BITDEFENDER_UPDATE","parentCategory":"WEB","description":"BITDEFENDER_UPDATE_DESC","deprecated":false},{"id":"BLACKBERRY","parentCategory":"WEB","description":"BLACKBERRY_DESC","deprecated":false},{"id":"BLACKPLANET","parentCategory":"WEB","description":"BLACKPLANET_DESC","deprecated":false},{"id":"BLOGDETIK","parentCategory":"WEB","description":"BLOGDETIK_DESC","deprecated":false},{"id":"BLOGGER","parentCategory":"WEB","description":"BLOGGER_DESC","deprecated":false},{"id":"BLOGIMG","parentCategory":"WEB","description":"BLOGIMG_DESC","deprecated":false},{"id":"BLOGSTER","parentCategory":"WEB","description":"BLOGSTER_DESC","deprecated":false},{"id":"BLOKUS","parentCategory":"WEB","description":"BLOKUS_DESC","deprecated":false},{"id":"BLOOMBERG","parentCategory":"WEB","description":"BLOOMBERG_DESC","deprecated":false},{"id":"BLUEJAYFILMS","parentCategory":"WEB","description":"BLUEJAYFILMS_DESC","deprecated":false},{"id":"BOLT","parentCategory":"WEB","description":"BOLT_DESC","deprecated":false},{"id":"BONPOO","parentCategory":"WEB","description":"BONPOO_DESC","deprecated":false},{"id":"FLIPKART_BOOKS","parentCategory":"WEB","description":"FLIPKART_BOOKS_DESC","deprecated":false},{"id":"BRIGHTTALK","parentCategory":"WEB","description":"BRIGHTTALK_DESC","deprecated":false},{"id":"BUGS","parentCategory":"WEB","description":"BUGS_DESC","deprecated":false},{"id":"BUSINESSWEEK","parentCategory":"WEB","description":"BUSINESSWEEK_DESC","deprecated":false},{"id":"BUSINESSWEEKLY","parentCategory":"WEB","description":"BUSINESSWEEKLY_DESC","deprecated":false},{"id":"BUZZFEED","parentCategory":"WEB","description":"BUZZFEED_DESC","deprecated":false},{"id":"BUZZNET","parentCategory":"WEB","description":"BUZZNET_DESC","deprecated":false},{"id":"BYPASSTHAT","parentCategory":"WEB","description":"BYPASSTHAT_DESC","deprecated":false},{"id":"CAFEMOM","parentCategory":"WEB","description":"CAFEMOM_DESC","deprecated":false},{"id":"CAM4","parentCategory":"WEB","description":"CAM4_DESC","deprecated":false},{"id":"CAMPFIRE","parentCategory":"WEB","description":"CAMPFIRE_DESC","deprecated":false},{"id":"CAMZAP","parentCategory":"WEB","description":"CAMZAP_DESC","deprecated":false},{"id":"CAPITALONE","parentCategory":"WEB","description":"CAPITALONE_DESC","deprecated":false},{"id":"CARE2","parentCategory":"WEB","description":"CARE2_DESC","deprecated":false},{"id":"CARTOONNETWORK","parentCategory":"WEB","description":"CARTOONNETWORK_DESC","deprecated":false},{"id":"CDISCOUNT","parentCategory":"WEB","description":"CDISCOUNT_DESC","deprecated":false},{"id":"CELLUFUN","parentCategory":"WEB","description":"CELLUFUN_DESC","deprecated":false},{"id":"CHANNEL4","parentCategory":"WEB","description":"CHANNEL4_DESC","deprecated":false},{"id":"CHINA_AIRLINES","parentCategory":"WEB","description":"CHINA_AIRLINES_DESC","deprecated":false},{"id":"CHINACOM","parentCategory":"WEB","description":"CHINACOM_DESC","deprecated":false},{"id":"CHINACOMCN","parentCategory":"WEB","description":"CHINACOMCN_DESC","deprecated":false},{"id":"CHINANEWS","parentCategory":"WEB","description":"CHINANEWS_DESC","deprecated":false},{"id":"CHINATIMES","parentCategory":"WEB","description":"CHINATIMES_DESC","deprecated":false},{"id":"CHINAZ","parentCategory":"WEB","description":"CHINAZ_DESC","deprecated":false},{"id":"CHOSUN","parentCategory":"WEB","description":"CHOSUN_DESC","deprecated":false},{"id":"CHOSUN_DAILY","parentCategory":"WEB","description":"CHOSUN_DAILY_DESC","deprecated":false},{"id":"CHROME_UPDATE","parentCategory":"WEB","description":"CHROME_UPDATE_DESC","deprecated":false},{"id":"CITRIX_ONLINE","parentCategory":"WEB","description":"CITRIX_ONLINE_DESC","deprecated":false},{"id":"CJ_MALL","parentCategory":"WEB","description":"CJ_MALL_DESC","deprecated":false},{"id":"CK101","parentCategory":"WEB","description":"CK101_DESC","deprecated":false},{"id":"CLASSMATES","parentCategory":"WEB","description":"CLASSMATES_DESC","deprecated":false},{"id":"CLOOB","parentCategory":"WEB","description":"CLOOB_DESC","deprecated":false},{"id":"CLOUDFLARE","parentCategory":"WEB","description":"CLOUDFLARE_DESC","deprecated":false},{"id":"CLOUDME","parentCategory":"WEB","description":"CLOUDME_DESC","deprecated":false},{"id":"CLUBIC","parentCategory":"WEB","description":"CLUBIC_DESC","deprecated":false},{"id":"CNN","parentCategory":"WEB","description":"CNN_DESC","deprecated":false},{"id":"CNTV","parentCategory":"WEB","description":"CNTV_DESC","deprecated":false},{"id":"CNYES","parentCategory":"WEB","description":"CNYES_DESC","deprecated":false},{"id":"CNZZ","parentCategory":"WEB","description":"CNZZ_DESC","deprecated":false},{"id":"COCOLOG_NIFTY","parentCategory":"WEB","description":"COCOLOG_NIFTY_DESC","deprecated":false},{"id":"COLLEGE_BLENDER","parentCategory":"WEB","description":"COLLEGE_BLENDER_DESC","deprecated":false},{"id":"COMCAST","parentCategory":"WEB","description":"COMCAST_DESC","deprecated":false},{"id":"CONCUR","parentCategory":"WEB","description":"CONCUR_DESC","deprecated":false},{"id":"CONDUIT","parentCategory":"WEB","description":"CONDUIT_DESC","deprecated":false},{"id":"COUCH_SURFING","parentCategory":"WEB","description":"COUCH_SURFING_DESC","deprecated":false},{"id":"COUPANG","parentCategory":"WEB","description":"COUPANG_DESC","deprecated":false},{"id":"CROCKO","parentCategory":"WEB","description":"CROCKO_DESC","deprecated":false},{"id":"CSDN","parentCategory":"WEB","description":"CSDN_DESC","deprecated":false},{"id":"CTRIP","parentCategory":"WEB","description":"CTRIP_DESC","deprecated":false},{"id":"DAILYMAIL","parentCategory":"WEB","description":"DAILYMAIL_DESC","deprecated":false},{"id":"YUUGUU","parentCategory":"WEB","description":"YUUGUU_DESC","deprecated":false},{"id":"DAILY_STRENGH","parentCategory":"WEB","description":"DAILY_STRENGH_DESC","deprecated":false},{"id":"DANGDANG","parentCategory":"WEB","description":"DANGDANG_DESC","deprecated":false},{"id":"DAUM","parentCategory":"WEB","description":"DAUM_DESC","deprecated":false},{"id":"DAVIDOV","parentCategory":"WEB","description":"DAVIDOV_DESC","deprecated":false},{"id":"DEBIAN_UPDATE","parentCategory":"WEB","description":"DEBIAN_UPDATE_DESC","deprecated":false},{"id":"DECAYENNE","parentCategory":"WEB","description":"DECAYENNE_DESC","deprecated":false},{"id":"DELICIOUS","parentCategory":"WEB","description":"DELICIOUS_DESC","deprecated":false},{"id":"DEPOSITFILES","parentCategory":"WEB","description":"DEPOSITFILES_DESC","deprecated":false},{"id":"DETIK","parentCategory":"WEB","description":"DETIK_DESC","deprecated":false},{"id":"DETIKNEWS","parentCategory":"WEB","description":"DETIKNEWS_DESC","deprecated":false},{"id":"DEVIANT_ART","parentCategory":"WEB","description":"DEVIANT_ART_DESC","deprecated":false},{"id":"DIGITALVERSE","parentCategory":"WEB","description":"DIGITALVERSE_DESC","deprecated":false},{"id":"DIRECTDOWNLOADLINKS","parentCategory":"WEB","description":"DIRECTDOWNLOADLINKS_DESC","deprecated":false},{"id":"DIRECTV","parentCategory":"WEB","description":"DIRECTV_DESC","deprecated":false},{"id":"DISABOOM","parentCategory":"WEB","description":"DISABOOM_DESC","deprecated":false},{"id":"DIVSHARE","parentCategory":"WEB","description":"DIVSHARE_DESC","deprecated":false},{"id":"DMM_CO","parentCategory":"WEB","description":"DMM_CO_DESC","deprecated":false},{"id":"DNSHOP","parentCategory":"WEB","description":"DNSHOP_DESC","deprecated":false},{"id":"DOL2DAY","parentCategory":"WEB","description":"DOL2DAY_DESC","deprecated":false},{"id":"DONGA","parentCategory":"WEB","description":"DONGA_DESC","deprecated":false},{"id":"DONTSTAYIN","parentCategory":"WEB","description":"DONTSTAYIN_DESC","deprecated":false},{"id":"GOOGLE_SAFEBROWSING","parentCategory":"WEB","description":"GOOGLE_SAFEBROWSING_DESC","deprecated":false},{"id":"DOUBAN","parentCategory":"WEB","description":"DOUBAN_DESC","deprecated":false},{"id":"DOUBLECLICK_ADS","parentCategory":"WEB","description":"DOUBLECLICK_ADS_DESC","deprecated":false},{"id":"DRAUGIEM","parentCategory":"WEB","description":"DRAUGIEM_DESC","deprecated":false},{"id":"DREAMWIZ","parentCategory":"WEB","description":"DREAMWIZ_DESC","deprecated":false},{"id":"DRUPAL","parentCategory":"WEB","description":"DRUPAL_DESC","deprecated":false},{"id":"DUOWAN","parentCategory":"WEB","description":"DUOWAN_DESC","deprecated":false},{"id":"DYNAMICINTRANET","parentCategory":"WEB","description":"DYNAMICINTRANET_DESC","deprecated":false},{"id":"EARTHCAM","parentCategory":"WEB","description":"EARTHCAM_DESC","deprecated":false},{"id":"EASTMONEY","parentCategory":"WEB","description":"EASTMONEY_DESC","deprecated":false},{"id":"EASYTRAVEL","parentCategory":"WEB","description":"EASYTRAVEL_DESC","deprecated":false},{"id":"EBAY","parentCategory":"WEB","description":"EBAY_DESC","deprecated":false},{"id":"ELFTOWN","parentCategory":"WEB","description":"ELFTOWN_DESC","deprecated":false},{"id":"ELLE_TW","parentCategory":"WEB","description":"ELLE_TW_DESC","deprecated":false},{"id":"EONS","parentCategory":"WEB","description":"EONS_DESC","deprecated":false},{"id":"EPERNICUS","parentCategory":"WEB","description":"EPERNICUS_DESC","deprecated":false},{"id":"EROOM_NET","parentCategory":"WEB","description":"EROOM_NET_DESC","deprecated":false},{"id":"ESNIPS","parentCategory":"WEB","description":"ESNIPS_DESC","deprecated":false},{"id":"ESPN","parentCategory":"WEB","description":"ESPN_DESC","deprecated":false},{"id":"ETAO","parentCategory":"WEB","description":"ETAO_DESC","deprecated":false},{"id":"ETTODAY","parentCategory":"WEB","description":"ETTODAY_DESC","deprecated":false},{"id":"ZOHO_SHOW","parentCategory":"WEB","description":"ZOHO_SHOW_DESC","deprecated":false},{"id":"EVONY","parentCategory":"WEB","description":"EVONY_DESC","deprecated":false},{"id":"EXBLOG","parentCategory":"WEB","description":"EXBLOG_DESC","deprecated":false},{"id":"EXPEDIA","parentCategory":"WEB","description":"EXPEDIA_DESC","deprecated":false},{"id":"EXPERIENCE_PROJECT","parentCategory":"WEB","description":"EXPERIENCE_PROJECT_DESC","deprecated":false},{"id":"EXPLOROO","parentCategory":"WEB","description":"EXPLOROO_DESC","deprecated":false},{"id":"EYEJOT","parentCategory":"WEB","description":"EYEJOT_DESC","deprecated":false},{"id":"EYNY","parentCategory":"WEB","description":"EYNY_DESC","deprecated":false},{"id":"EZFLY","parentCategory":"WEB","description":"EZFLY_DESC","deprecated":false},{"id":"EZTRAVEL","parentCategory":"WEB","description":"EZTRAVEL_DESC","deprecated":false},{"id":"FACEBOOK_APPS","parentCategory":"WEB","description":"FACEBOOK_APPS_DESC","deprecated":false},{"id":"FACEPARTY","parentCategory":"WEB","description":"FACEPARTY_DESC","deprecated":false},{"id":"FACES","parentCategory":"WEB","description":"FACES_DESC","deprecated":false},{"id":"FASHIONGUIDE","parentCategory":"WEB","description":"FASHIONGUIDE_DESC","deprecated":false},{"id":"FC2","parentCategory":"WEB","description":"FC2_DESC","deprecated":false},{"id":"FETLIFE","parentCategory":"WEB","description":"FETLIFE_DESC","deprecated":false},{"id":"FILE_DROPPER","parentCategory":"WEB","description":"FILE_DROPPER_DESC","deprecated":false},{"id":"FILEFLYER","parentCategory":"WEB","description":"FILEFLYER_DESC","deprecated":false},{"id":"FILE_HOST","parentCategory":"WEB","description":"FILE_HOST_DESC","deprecated":false},{"id":"FILER_CX","parentCategory":"WEB","description":"FILER_CX_DESC","deprecated":false},{"id":"YOUSEEMORE","parentCategory":"WEB","description":"YOUSEEMORE_DESC","deprecated":false},{"id":"FILLOS_DE_GALICIA","parentCategory":"WEB","description":"FILLOS_DE_GALICIA_DESC","deprecated":false},{"id":"FILMAFFINITY","parentCategory":"WEB","description":"FILMAFFINITY_DESC","deprecated":false},{"id":"FIREFOX_UPDATE","parentCategory":"WEB","description":"FIREFOX_UPDATE_DESC","deprecated":false},{"id":"FLASHPLUGIN_UPDATE","parentCategory":"WEB","description":"FLASHPLUGIN_UPDATE_DESC","deprecated":false},{"id":"FLEDGEWING","parentCategory":"WEB","description":"FLEDGEWING_DESC","deprecated":false},{"id":"ZOHO_SHEET","parentCategory":"WEB","description":"ZOHO_SHEET_DESC","deprecated":false},{"id":"FLIXSTER","parentCategory":"WEB","description":"FLIXSTER_DESC","deprecated":false},{"id":"FLUMOTION","parentCategory":"WEB","description":"FLUMOTION_DESC","deprecated":false},{"id":"FLUXIOM","parentCategory":"WEB","description":"FLUXIOM_DESC","deprecated":false},{"id":"FLY_PROXY","parentCategory":"WEB","description":"FLY_PROXY_DESC","deprecated":false},{"id":"FOGBUGZ","parentCategory":"WEB","description":"FOGBUGZ_DESC","deprecated":false},{"id":"FORTUNECHINA","parentCategory":"WEB","description":"FORTUNECHINA_DESC","deprecated":false},{"id":"FOTKI","parentCategory":"WEB","description":"FOTKI_DESC","deprecated":false},{"id":"FOTOLOG","parentCategory":"WEB","description":"FOTOLOG_DESC","deprecated":false},{"id":"FOURSQUARE","parentCategory":"WEB","description":"FOURSQUARE_DESC","deprecated":false},{"id":"FOXMOVIES","parentCategory":"WEB","description":"FOXMOVIES_DESC","deprecated":false},{"id":"FOXNEWS","parentCategory":"WEB","description":"FOXNEWS_DESC","deprecated":false},{"id":"FOXSPORTS","parentCategory":"WEB","description":"FOXSPORTS_DESC","deprecated":false},{"id":"FREEBSD_UPDATE","parentCategory":"WEB","description":"FREEBSD_UPDATE_DESC","deprecated":false},{"id":"FREEETV","parentCategory":"WEB","description":"FREEETV_DESC","deprecated":false},{"id":"FRIENDS_REUNITED","parentCategory":"WEB","description":"FRIENDS_REUNITED_DESC","deprecated":false},{"id":"FRUHSTUCKSTREFF","parentCategory":"WEB","description":"FRUHSTUCKSTREFF_DESC","deprecated":false},{"id":"FSECURE_UPDATE","parentCategory":"WEB","description":"FSECURE_UPDATE_DESC","deprecated":false},{"id":"FUBAR","parentCategory":"WEB","description":"FUBAR_DESC","deprecated":false},{"id":"FUNSHION","parentCategory":"WEB","description":"FUNSHION_DESC","deprecated":false},{"id":"GAIAONLINE","parentCategory":"WEB","description":"GAIAONLINE_DESC","deprecated":false},{"id":"GAMEBASE_TW","parentCategory":"WEB","description":"GAMEBASE_TW_DESC","deprecated":false},{"id":"GAMERDNA","parentCategory":"WEB","description":"GAMERDNA_DESC","deprecated":false},{"id":"GAMER_TW","parentCategory":"WEB","description":"GAMER_TW_DESC","deprecated":false},{"id":"GAMES_CO","parentCategory":"WEB","description":"GAMES_CO_DESC","deprecated":false},{"id":"GAMESMOMO","parentCategory":"WEB","description":"GAMESMOMO_DESC","deprecated":false},{"id":"GANJI","parentCategory":"WEB","description":"GANJI_DESC","deprecated":false},{"id":"GATHER","parentCategory":"WEB","description":"GATHER_DESC","deprecated":false},{"id":"GAYS","parentCategory":"WEB","description":"GAYS_DESC","deprecated":false},{"id":"GENI","parentCategory":"WEB","description":"GENI_DESC","deprecated":false},{"id":"GFAN","parentCategory":"WEB","description":"GFAN_DESC","deprecated":false},{"id":"GIGAUP","parentCategory":"WEB","description":"GIGAUP_DESC","deprecated":false},{"id":"GLIDE","parentCategory":"WEB","description":"GLIDE_DESC","deprecated":false},{"id":"GMARKET","parentCategory":"WEB","description":"GMARKET_DESC","deprecated":false},{"id":"GOGOYOKO","parentCategory":"WEB","description":"GOGOYOKO_DESC","deprecated":false},{"id":"GOHAPPY","parentCategory":"WEB","description":"GOHAPPY_DESC","deprecated":false},{"id":"GOMTV_VOD","parentCategory":"WEB","description":"GOMTV_VOD_DESC","deprecated":false},{"id":"GOODREADS","parentCategory":"WEB","description":"GOODREADS_DESC","deprecated":false},{"id":"ZOHO_SHARE","parentCategory":"WEB","description":"ZOHO_SHARE_DESC","deprecated":false},{"id":"GOOGLE_ADS","parentCategory":"WEB","description":"GOOGLE_ADS_DESC","deprecated":false},{"id":"GOOGLE_APPENGINE","parentCategory":"WEB","description":"GOOGLE_APPENGINE_DESC","deprecated":false},{"id":"GOOGLE_CACHE","parentCategory":"WEB","description":"GOOGLE_CACHE_DESC","deprecated":false},{"id":"GOOGLE_DESKTOP","parentCategory":"WEB","description":"GOOGLE_DESKTOP_DESC","deprecated":false},{"id":"GOOGLE_DOCS","parentCategory":"WEB","description":"GOOGLE_DOCS_DESC","deprecated":false},{"id":"GOOGLE_EARTH","parentCategory":"WEB","description":"GOOGLE_EARTH_DESC","deprecated":false},{"id":"GOOGLE_GEN","parentCategory":"WEB","description":"GOOGLE_GEN_DESC","deprecated":false},{"id":"GOOGLE_MAPS","parentCategory":"WEB","description":"GOOGLE_MAPS_DESC","deprecated":false},{"id":"GOOGLE_PICASA","parentCategory":"WEB","description":"GOOGLE_PICASA_DESC","deprecated":false},{"id":"GOOGLE_SKYMAP","parentCategory":"WEB","description":"GOOGLE_SKYMAP_DESC","deprecated":false},{"id":"GOOGLE_TOOLBAR","parentCategory":"WEB","description":"GOOGLE_TOOLBAR_DESC","deprecated":false},{"id":"GOOGLE_TRANSLATE","parentCategory":"WEB","description":"GOOGLE_TRANSLATE_DESC","deprecated":false},{"id":"GOO_NE","parentCategory":"WEB","description":"GOO_NE_DESC","deprecated":false},{"id":"GOUGOU","parentCategory":"WEB","description":"GOUGOU_DESC","deprecated":false},{"id":"GRATISINDO","parentCategory":"WEB","description":"GRATISINDO_DESC","deprecated":false},{"id":"GREE","parentCategory":"WEB","description":"GREE_DESC","deprecated":false},{"id":"GRONO","parentCategory":"WEB","description":"GRONO_DESC","deprecated":false},{"id":"GROUPON","parentCategory":"WEB","description":"GROUPON_DESC","deprecated":false},{"id":"GROUPWISE","parentCategory":"WEB","description":"GROUPWISE_DESC","deprecated":false},{"id":"GSSHOP","parentCategory":"WEB","description":"GSSHOP_DESC","deprecated":false},{"id":"GSTATIC","parentCategory":"WEB","description":"GSTATIC_DESC","deprecated":false},{"id":"GUDANGLAGU","parentCategory":"WEB","description":"GUDANGLAGU_DESC","deprecated":false},{"id":"GYAO","parentCategory":"WEB","description":"GYAO_DESC","deprecated":false},{"id":"HABBO","parentCategory":"WEB","description":"HABBO_DESC","deprecated":false},{"id":"HANGAME","parentCategory":"WEB","description":"HANGAME_DESC","deprecated":false},{"id":"HANKOOKI","parentCategory":"WEB","description":"HANKOOKI_DESC","deprecated":false},{"id":"HANKYUNG","parentCategory":"WEB","description":"HANKYUNG_DESC","deprecated":false},{"id":"HAO123","parentCategory":"WEB","description":"HAO123_DESC","deprecated":false},{"id":"HARDSEXTUBE","parentCategory":"WEB","description":"HARDSEXTUBE_DESC","deprecated":false},{"id":"HATENA_NE","parentCategory":"WEB","description":"HATENA_NE_DESC","deprecated":false},{"id":"HERALDM","parentCategory":"WEB","description":"HERALDM_DESC","deprecated":false},{"id":"HERE","parentCategory":"WEB","description":"HERE_DESC","deprecated":false},{"id":"HEXUN","parentCategory":"WEB","description":"HEXUN_DESC","deprecated":false},{"id":"HGTV","parentCategory":"WEB","description":"HGTV_DESC","deprecated":false},{"id":"HINET_GAMES","parentCategory":"WEB","description":"HINET_GAMES_DESC","deprecated":false},{"id":"HOSPITALITY_CLUB","parentCategory":"WEB","description":"HOSPITALITY_CLUB_DESC","deprecated":false},{"id":"HOTFILE","parentCategory":"WEB","description":"HOTFILE_DESC","deprecated":false},{"id":"HOWSTUFFWORKS","parentCategory":"WEB","description":"HOWSTUFFWORKS_DESC","deprecated":false},{"id":"HTTP","parentCategory":"WEB","description":"HTTP_DESC","deprecated":false},{"id":"HTTPS","parentCategory":"WEB","description":"HTTPS_DESC","deprecated":false},{"id":"HTTP2","parentCategory":"WEB","description":"HTTP2_DESC","deprecated":false},{"id":"HUDONG","parentCategory":"WEB","description":"HUDONG_DESC","deprecated":false},{"id":"HYVES","parentCategory":"WEB","description":"HYVES_DESC","deprecated":false},{"id":"IAPP","parentCategory":"WEB","description":"IAPP_DESC","deprecated":false},{"id":"IBIBO","parentCategory":"WEB","description":"IBIBO_DESC","deprecated":false},{"id":"ICAP","parentCategory":"WEB","description":"ICAP_DESC","deprecated":false},{"id":"IFENG","parentCategory":"WEB","description":"IFENG_DESC","deprecated":false},{"id":"IFENG_FINANCE","parentCategory":"WEB","description":"IFENG_FINANCE_DESC","deprecated":false},{"id":"IFILE_IT","parentCategory":"WEB","description":"IFILE_IT_DESC","deprecated":false},{"id":"I_GAMER","parentCategory":"WEB","description":"I_GAMER_DESC","deprecated":false},{"id":"IKEA","parentCategory":"WEB","description":"IKEA_DESC","deprecated":false},{"id":"IMAGESHACK","parentCategory":"WEB","description":"IMAGESHACK_DESC","deprecated":false},{"id":"IMDB","parentCategory":"WEB","description":"IMDB_DESC","deprecated":false},{"id":"IMEEM","parentCategory":"WEB","description":"IMEEM_DESC","deprecated":false},{"id":"IMEET","parentCategory":"WEB","description":"IMEET_DESC","deprecated":false},{"id":"IMGUR","parentCategory":"WEB","description":"IMGUR_DESC","deprecated":false},{"id":"IMPRESS","parentCategory":"WEB","description":"IMPRESS_DESC","deprecated":false},{"id":"INDABA_MUSIC","parentCategory":"WEB","description":"INDABA_MUSIC_DESC","deprecated":false},{"id":"INDONETWORK","parentCategory":"WEB","description":"INDONETWORK_DESC","deprecated":false},{"id":"INDOWEBSTER","parentCategory":"WEB","description":"INDOWEBSTER_DESC","deprecated":false},{"id":"INILAH","parentCategory":"WEB","description":"INILAH_DESC","deprecated":false},{"id":"INSTAGRAM","parentCategory":"WEB","description":"INSTAGRAM_DESC","deprecated":false},{"id":"INTALKING","parentCategory":"WEB","description":"INTALKING_DESC","deprecated":false},{"id":"INTERNATIONS","parentCategory":"WEB","description":"INTERNATIONS_DESC","deprecated":false},{"id":"INTERPARK","parentCategory":"WEB","description":"INTERPARK_DESC","deprecated":false},{"id":"INTUIT","parentCategory":"WEB","description":"INTUIT_DESC","deprecated":false},{"id":"I_PART","parentCategory":"WEB","description":"I_PART_DESC","deprecated":false},{"id":"IQIYI","parentCategory":"WEB","description":"IQIYI_DESC","deprecated":false},{"id":"IRC_GALLERIA","parentCategory":"WEB","description":"IRC_GALLERIA_DESC","deprecated":false},{"id":"ITALKI","parentCategory":"WEB","description":"ITALKI_DESC","deprecated":false},{"id":"ITSMY","parentCategory":"WEB","description":"ITSMY_DESC","deprecated":false},{"id":"IWIW","parentCategory":"WEB","description":"IWIW_DESC","deprecated":false},{"id":"JAIKU","parentCategory":"WEB","description":"JAIKU_DESC","deprecated":false},{"id":"JAMMERDIRECT","parentCategory":"WEB","description":"JAMMERDIRECT_DESC","deprecated":false},{"id":"JANGO","parentCategory":"WEB","description":"JANGO_DESC","deprecated":false},{"id":"JAVA_UPDATE","parentCategory":"WEB","description":"JAVA_UPDATE_DESC","deprecated":false},{"id":"JINGDONG","parentCategory":"WEB","description":"JINGDONG_DESC","deprecated":false},{"id":"JNE","parentCategory":"WEB","description":"JNE_DESC","deprecated":false},{"id":"JOBSTREET","parentCategory":"WEB","description":"JOBSTREET_DESC","deprecated":false},{"id":"JOONGANG_DAILY","parentCategory":"WEB","description":"JOONGANG_DAILY_DESC","deprecated":false},{"id":"JUBII","parentCategory":"WEB","description":"JUBII_DESC","deprecated":false},{"id":"JUSTIN_TV","parentCategory":"WEB","description":"JUSTIN_TV_DESC","deprecated":false},{"id":"KAIOO","parentCategory":"WEB","description":"KAIOO_DESC","deprecated":false},{"id":"KAKAKU","parentCategory":"WEB","description":"KAKAKU_DESC","deprecated":false},{"id":"KANKAN","parentCategory":"WEB","description":"KANKAN_DESC","deprecated":false},{"id":"KAPANLAGI","parentCategory":"WEB","description":"KAPANLAGI_DESC","deprecated":false},{"id":"KAROSGAME","parentCategory":"WEB","description":"KAROSGAME_DESC","deprecated":false},{"id":"KASKUS","parentCategory":"WEB","description":"KASKUS_DESC","deprecated":false},{"id":"KASPERSKY","parentCategory":"WEB","description":"KASPERSKY_DESC","deprecated":false},{"id":"KASPERSKY_UPDATE","parentCategory":"WEB","description":"KASPERSKY_UPDATE_DESC","deprecated":false},{"id":"KBS","parentCategory":"WEB","description":"KBS_DESC","deprecated":false},{"id":"KEEZMOVIES","parentCategory":"WEB","description":"KEEZMOVIES_DESC","deprecated":false},{"id":"KEMENKUMHAM","parentCategory":"WEB","description":"KEMENKUMHAM_DESC","deprecated":false},{"id":"KHAN","parentCategory":"WEB","description":"KHAN_DESC","deprecated":false},{"id":"KIWIBOX","parentCategory":"WEB","description":"KIWIBOX_DESC","deprecated":false},{"id":"KOMPAS","parentCategory":"WEB","description":"KOMPAS_DESC","deprecated":false},{"id":"KOMPASIANA","parentCategory":"WEB","description":"KOMPASIANA_DESC","deprecated":false},{"id":"KONAMINET","parentCategory":"WEB","description":"KONAMINET_DESC","deprecated":false},{"id":"KPROXY","parentCategory":"WEB","description":"KPROXY_DESC","deprecated":false},{"id":"KU6","parentCategory":"WEB","description":"KU6_DESC","deprecated":false},{"id":"KUXUN","parentCategory":"WEB","description":"KUXUN_DESC","deprecated":false},{"id":"LADY8844","parentCategory":"WEB","description":"LADY8844_DESC","deprecated":false},{"id":"LAREDOUTE","parentCategory":"WEB","description":"LAREDOUTE_DESC","deprecated":false},{"id":"YUGMA","parentCategory":"WEB","description":"YUGMA_DESC","deprecated":false},{"id":"LATIV","parentCategory":"WEB","description":"LATIV_DESC","deprecated":false},{"id":"LDBLOG","parentCategory":"WEB","description":"LDBLOG_DESC","deprecated":false},{"id":"LEAPFILE","parentCategory":"WEB","description":"LEAPFILE_DESC","deprecated":false},{"id":"LEBONCOIN","parentCategory":"WEB","description":"LEBONCOIN_DESC","deprecated":false},{"id":"LETV","parentCategory":"WEB","description":"LETV_DESC","deprecated":false},{"id":"LEVEL3","parentCategory":"WEB","description":"LEVEL3_DESC","deprecated":false},{"id":"LG_ESHOP","parentCategory":"WEB","description":"LG_ESHOP_DESC","deprecated":false},{"id":"LIBERO_VIDEO","parentCategory":"WEB","description":"LIBERO_VIDEO_DESC","deprecated":false},{"id":"LIBRARYTHING","parentCategory":"WEB","description":"LIBRARYTHING_DESC","deprecated":false},{"id":"LIFEKNOT","parentCategory":"WEB","description":"LIFEKNOT_DESC","deprecated":false},{"id":"LINTASBERITA","parentCategory":"WEB","description":"LINTASBERITA_DESC","deprecated":false},{"id":"LIONAIR","parentCategory":"WEB","description":"LIONAIR_DESC","deprecated":false},{"id":"LIONTRAVEL","parentCategory":"WEB","description":"LIONTRAVEL_DESC","deprecated":false},{"id":"LISTOGRAFY","parentCategory":"WEB","description":"LISTOGRAFY_DESC","deprecated":false},{"id":"LIVEDOOR","parentCategory":"WEB","description":"LIVEDOOR_DESC","deprecated":false},{"id":"LIVEINTERNET","parentCategory":"WEB","description":"LIVEINTERNET_DESC","deprecated":false},{"id":"LIVE_MEETING","parentCategory":"WEB","description":"LIVE_MEETING_DESC","deprecated":false},{"id":"LIVEMOCHA","parentCategory":"WEB","description":"LIVEMOCHA_DESC","deprecated":false},{"id":"LIVINGSOCIAL","parentCategory":"WEB","description":"LIVINGSOCIAL_DESC","deprecated":false},{"id":"LOTOUR","parentCategory":"WEB","description":"LOTOUR_DESC","deprecated":false},{"id":"LOTTE","parentCategory":"WEB","description":"LOTTE_DESC","deprecated":false},{"id":"LOTUS_LIVE","parentCategory":"WEB","description":"LOTUS_LIVE_DESC","deprecated":false},{"id":"LUNARSTORM","parentCategory":"WEB","description":"LUNARSTORM_DESC","deprecated":false},{"id":"LVPING","parentCategory":"WEB","description":"LVPING_DESC","deprecated":false},{"id":"SKYPE_FOR_BUSINESS","parentCategory":"WEB","description":"SKYPE_FOR_BUSINESS_DESC","deprecated":false},{"id":"MANDRIVA_UPDATE","parentCategory":"WEB","description":"MANDRIVA_UPDATE_DESC","deprecated":false},{"id":"MANGOCITY","parentCategory":"WEB","description":"MANGOCITY_DESC","deprecated":false},{"id":"MAPQUEST","parentCategory":"WEB","description":"MAPQUEST_DESC","deprecated":false},{"id":"MASHABLE","parentCategory":"WEB","description":"MASHABLE_DESC","deprecated":false},{"id":"MASHARE","parentCategory":"WEB","description":"MASHARE_DESC","deprecated":false},{"id":"MATCH","parentCategory":"WEB","description":"MATCH_DESC","deprecated":false},{"id":"MBC","parentCategory":"WEB","description":"MBC_DESC","deprecated":false},{"id":"MBN","parentCategory":"WEB","description":"MBN_DESC","deprecated":false},{"id":"MEDIAFIRE","parentCategory":"WEB","description":"MEDIAFIRE_DESC","deprecated":false},{"id":"MEETIN","parentCategory":"WEB","description":"MEETIN_DESC","deprecated":false},{"id":"MEETME","parentCategory":"WEB","description":"MEETME_DESC","deprecated":false},{"id":"MEETTHEBOSS","parentCategory":"WEB","description":"MEETTHEBOSS_DESC","deprecated":false},{"id":"MEETUP","parentCategory":"WEB","description":"MEETUP_DESC","deprecated":false},{"id":"MEGA","parentCategory":"WEB","description":"MEGA_DESC","deprecated":false},{"id":"MK","parentCategory":"WEB","description":"MK_DESC","deprecated":false},{"id":"MOBAGE","parentCategory":"WEB","description":"MOBAGE_DESC","deprecated":false},{"id":"MOBILE01","parentCategory":"WEB","description":"MOBILE01_DESC","deprecated":false},{"id":"MOBILE_ME","parentCategory":"WEB","description":"MOBILE_ME_DESC","deprecated":false},{"id":"MOCOSPACE","parentCategory":"WEB","description":"MOCOSPACE_DESC","deprecated":false},{"id":"MOMOSHOP","parentCategory":"WEB","description":"MOMOSHOP_DESC","deprecated":false},{"id":"MONEX","parentCategory":"WEB","description":"MONEX_DESC","deprecated":false},{"id":"MONEY_163","parentCategory":"WEB","description":"MONEY_163_DESC","deprecated":false},{"id":"MONEYDJ","parentCategory":"WEB","description":"MONEYDJ_DESC","deprecated":false},{"id":"MONSTER","parentCategory":"WEB","description":"MONSTER_DESC","deprecated":false},{"id":"MOP","parentCategory":"WEB","description":"MOP_DESC","deprecated":false},{"id":"MOUTHSHUT","parentCategory":"WEB","description":"MOUTHSHUT_DESC","deprecated":false},{"id":"MOZILLA","parentCategory":"WEB","description":"MOZILLA_DESC","deprecated":false},{"id":"MPQUEST","parentCategory":"WEB","description":"MPQUEST_DESC","deprecated":false},{"id":"MSN_SEARCH","parentCategory":"WEB","description":"MSN_SEARCH_DESC","deprecated":false},{"id":"MT","parentCategory":"WEB","description":"MT_DESC","deprecated":false},{"id":"MTV","parentCategory":"WEB","description":"MTV_DESC","deprecated":false},{"id":"MULTIPLY","parentCategory":"WEB","description":"MULTIPLY_DESC","deprecated":false},{"id":"MULTIUPLOAD","parentCategory":"WEB","description":"MULTIUPLOAD_DESC","deprecated":false},{"id":"MUSICA","parentCategory":"WEB","description":"MUSICA_DESC","deprecated":false},{"id":"MYANIMELIST","parentCategory":"WEB","description":"MYANIMELIST_DESC","deprecated":false},{"id":"MYCHURCH","parentCategory":"WEB","description":"MYCHURCH_DESC","deprecated":false},{"id":"MYHERITAGE","parentCategory":"WEB","description":"MYHERITAGE_DESC","deprecated":false},{"id":"MYLIFE","parentCategory":"WEB","description":"MYLIFE_DESC","deprecated":false},{"id":"MYWEBSEARCH","parentCategory":"WEB","description":"MYWEBSEARCH_DESC","deprecated":false},{"id":"MY_YAHOO","parentCategory":"WEB","description":"MY_YAHOO_DESC","deprecated":false},{"id":"MYYEARBOOK","parentCategory":"WEB","description":"MYYEARBOOK_DESC","deprecated":false},{"id":"NAPSTER","parentCategory":"WEB","description":"NAPSTER_DESC","deprecated":false},{"id":"NASA","parentCategory":"WEB","description":"NASA_DESC","deprecated":false},{"id":"NASZA_KLASA","parentCategory":"WEB","description":"NASZA_KLASA_DESC","deprecated":false},{"id":"NATECYWORLD","parentCategory":"WEB","description":"NATECYWORLD_DESC","deprecated":false},{"id":"NATIONALGEOGRAPHIC","parentCategory":"WEB","description":"NATIONALGEOGRAPHIC_DESC","deprecated":false},{"id":"NATIONALLOTTERY","parentCategory":"WEB","description":"NATIONALLOTTERY_DESC","deprecated":false},{"id":"NAVER","parentCategory":"WEB","description":"NAVER_DESC","deprecated":false},{"id":"NBA","parentCategory":"WEB","description":"NBA_DESC","deprecated":false},{"id":"NBA_CHINA","parentCategory":"WEB","description":"NBA_CHINA_DESC","deprecated":false},{"id":"NDUOA","parentCategory":"WEB","description":"NDUOA_DESC","deprecated":false},{"id":"NEND","parentCategory":"WEB","description":"NEND_DESC","deprecated":false},{"id":"NETBSD_UPDATE","parentCategory":"WEB","description":"NETBSD_UPDATE_DESC","deprecated":false},{"id":"NETLOAD","parentCategory":"WEB","description":"NETLOAD_DESC","deprecated":false},{"id":"NETLOG","parentCategory":"WEB","description":"NETLOG_DESC","deprecated":false},{"id":"NETMARBLE","parentCategory":"WEB","description":"NETMARBLE_DESC","deprecated":false},{"id":"NETTBY","parentCategory":"WEB","description":"NETTBY_DESC","deprecated":false},{"id":"NEXIAN","parentCategory":"WEB","description":"NEXIAN_DESC","deprecated":false},{"id":"NEXON","parentCategory":"WEB","description":"NEXON_DESC","deprecated":false},{"id":"NEXOPIA","parentCategory":"WEB","description":"NEXOPIA_DESC","deprecated":false},{"id":"NFL","parentCategory":"WEB","description":"NFL_DESC","deprecated":false},{"id":"NGO_POST","parentCategory":"WEB","description":"NGO_POST_DESC","deprecated":false},{"id":"NIFTY","parentCategory":"WEB","description":"NIFTY_DESC","deprecated":false},{"id":"NIKE","parentCategory":"WEB","description":"NIKE_DESC","deprecated":false},{"id":"NIKKEI","parentCategory":"WEB","description":"NIKKEI_DESC","deprecated":false},{"id":"NIMBUZZ_WEB","parentCategory":"WEB","description":"NIMBUZZ_WEB_DESC","deprecated":false},{"id":"NING","parentCategory":"WEB","description":"NING_DESC","deprecated":false},{"id":"NOD32_UPDATE","parentCategory":"WEB","description":"NOD32_UPDATE_DESC","deprecated":false},{"id":"NOKIA_OVI","parentCategory":"WEB","description":"NOKIA_OVI_DESC","deprecated":false},{"id":"NORTON_UPDATE","parentCategory":"WEB","description":"NORTON_UPDATE_DESC","deprecated":false},{"id":"NOWNEWS","parentCategory":"WEB","description":"NOWNEWS_DESC","deprecated":false},{"id":"NTV","parentCategory":"WEB","description":"NTV_DESC","deprecated":false},{"id":"NYDAILYNEWS","parentCategory":"WEB","description":"NYDAILYNEWS_DESC","deprecated":false},{"id":"NYTIMES","parentCategory":"WEB","description":"NYTIMES_DESC","deprecated":false},{"id":"ZOHO_PLANNER","parentCategory":"WEB","description":"ZOHO_PLANNER_DESC","deprecated":false},{"id":"OFFICEDEPOT","parentCategory":"WEB","description":"OFFICEDEPOT_DESC","deprecated":false},{"id":"OKEZONE","parentCategory":"WEB","description":"OKEZONE_DESC","deprecated":false},{"id":"OKWAVE","parentCategory":"WEB","description":"OKWAVE_DESC","deprecated":false},{"id":"ONLINEDOWN","parentCategory":"WEB","description":"ONLINEDOWN_DESC","deprecated":false},{"id":"OOYALA","parentCategory":"WEB","description":"OOYALA_DESC","deprecated":false},{"id":"OPENBSD_UPDATE","parentCategory":"WEB","description":"OPENBSD_UPDATE_DESC","deprecated":false},{"id":"OPEN_DIARY","parentCategory":"WEB","description":"OPEN_DIARY_DESC","deprecated":false},{"id":"ORB","parentCategory":"WEB","description":"ORB_DESC","deprecated":false},{"id":"OUTLOOK","parentCategory":"WEB","description":"OUTLOOK_DESC","deprecated":false},{"id":"PAIPAI","parentCategory":"WEB","description":"PAIPAI_DESC","deprecated":false},{"id":"PANDA_UPDATE","parentCategory":"WEB","description":"PANDA_UPDATE_DESC","deprecated":false},{"id":"PANDORA_TV","parentCategory":"WEB","description":"PANDORA_TV_DESC","deprecated":false},{"id":"PARTNERUP","parentCategory":"WEB","description":"PARTNERUP_DESC","deprecated":false},{"id":"PARTY_POKER","parentCategory":"WEB","description":"PARTY_POKER_DESC","deprecated":false},{"id":"PASSPORTSTAMP","parentCategory":"WEB","description":"PASSPORTSTAMP_DESC","deprecated":false},{"id":"PAYEASY","parentCategory":"WEB","description":"PAYEASY_DESC","deprecated":false},{"id":"PCGAMES","parentCategory":"WEB","description":"PCGAMES_DESC","deprecated":false},{"id":"PCHOME","parentCategory":"WEB","description":"PCHOME_DESC","deprecated":false},{"id":"PCLADY","parentCategory":"WEB","description":"PCLADY_DESC","deprecated":false},{"id":"PCONLINE","parentCategory":"WEB","description":"PCONLINE_DESC","deprecated":false},{"id":"PEERCAST","parentCategory":"WEB","description":"PEERCAST_DESC","deprecated":false},{"id":"PENGYOU","parentCategory":"WEB","description":"PENGYOU_DESC","deprecated":false},{"id":"PEOPLE","parentCategory":"WEB","description":"PEOPLE_DESC","deprecated":false},{"id":"PERFSPOT","parentCategory":"WEB","description":"PERFSPOT_DESC","deprecated":false},{"id":"PHOTOBUCKET","parentCategory":"WEB","description":"PHOTOBUCKET_DESC","deprecated":false},{"id":"PIMANG","parentCategory":"WEB","description":"PIMANG_DESC","deprecated":false},{"id":"PINGSTA","parentCategory":"WEB","description":"PINGSTA_DESC","deprecated":false},{"id":"PIXIV","parentCategory":"WEB","description":"PIXIV_DESC","deprecated":false},{"id":"PIXNET","parentCategory":"WEB","description":"PIXNET_DESC","deprecated":false},{"id":"PLAXO","parentCategory":"WEB","description":"PLAXO_DESC","deprecated":false},{"id":"PLAYSTATION","parentCategory":"WEB","description":"PLAYSTATION_DESC","deprecated":false},{"id":"PLURK","parentCategory":"WEB","description":"PLURK_DESC","deprecated":false},{"id":"POCO","parentCategory":"WEB","description":"POCO_DESC","deprecated":false},{"id":"POGO","parentCategory":"WEB","description":"POGO_DESC","deprecated":false},{"id":"PORNHUB","parentCategory":"WEB","description":"PORNHUB_DESC","deprecated":false},{"id":"PPFILM","parentCategory":"WEB","description":"PPFILM_DESC","deprecated":false},{"id":"PPTV","parentCategory":"WEB","description":"PPTV_DESC","deprecated":false},{"id":"PRESENT","parentCategory":"WEB","description":"PRESENT_DESC","deprecated":false},{"id":"PRICEMINISTER","parentCategory":"WEB","description":"PRICEMINISTER_DESC","deprecated":false},{"id":"PRICERUNNER","parentCategory":"WEB","description":"PRICERUNNER_DESC","deprecated":false},{"id":"PRIVAX","parentCategory":"WEB","description":"PRIVAX_DESC","deprecated":false},{"id":"PROXEASY","parentCategory":"WEB","description":"PROXEASY_DESC","deprecated":false},{"id":"PSIPHON","parentCategory":"WEB","description":"PSIPHON_DESC","deprecated":false},{"id":"QQ_BLOG","parentCategory":"WEB","description":"QQ_BLOG_DESC","deprecated":false},{"id":"QQDOWNLOAD","parentCategory":"WEB","description":"QQDOWNLOAD_DESC","deprecated":false},{"id":"QQ_FINANCE","parentCategory":"WEB","description":"QQ_FINANCE_DESC","deprecated":false},{"id":"QQ_GAMES","parentCategory":"WEB","description":"QQ_GAMES_DESC","deprecated":false},{"id":"QQ_LADY","parentCategory":"WEB","description":"QQ_LADY_DESC","deprecated":false},{"id":"QQ_NEWS","parentCategory":"WEB","description":"QQ_NEWS_DESC","deprecated":false},{"id":"QQ_WEB","parentCategory":"WEB","description":"QQ_WEB_DESC","deprecated":false},{"id":"QQ_WEIBO","parentCategory":"WEB","description":"QQ_WEIBO_DESC","deprecated":false},{"id":"QUARTERLIFE","parentCategory":"WEB","description":"QUARTERLIFE_DESC","deprecated":false},{"id":"QUNAR","parentCategory":"WEB","description":"QUNAR_DESC","deprecated":false},{"id":"QZONE","parentCategory":"WEB","description":"QZONE_DESC","deprecated":false},{"id":"RADIKO","parentCategory":"WEB","description":"RADIKO_DESC","deprecated":false},{"id":"RAKUTEN","parentCategory":"WEB","description":"RAKUTEN_DESC","deprecated":false},{"id":"RAMBLER","parentCategory":"WEB","description":"RAMBLER_DESC","deprecated":false},{"id":"RAVELRY","parentCategory":"WEB","description":"RAVELRY_DESC","deprecated":false},{"id":"REALTOR","parentCategory":"WEB","description":"REALTOR_DESC","deprecated":false},{"id":"REDHAT_UPDATE","parentCategory":"WEB","description":"REDHAT_UPDATE_DESC","deprecated":false},{"id":"REDTUBE","parentCategory":"WEB","description":"REDTUBE_DESC","deprecated":false},{"id":"RENREN","parentCategory":"WEB","description":"RENREN_DESC","deprecated":false},{"id":"REPUBLIKA","parentCategory":"WEB","description":"REPUBLIKA_DESC","deprecated":false},{"id":"RESEARCHGATE","parentCategory":"WEB","description":"RESEARCHGATE_DESC","deprecated":false},{"id":"REUTERS","parentCategory":"WEB","description":"REUTERS_DESC","deprecated":false},{"id":"REVERBNATION","parentCategory":"WEB","description":"REVERBNATION_DESC","deprecated":false},{"id":"REVERSO","parentCategory":"WEB","description":"REVERSO_DESC","deprecated":false},{"id":"RSS","parentCategory":"WEB","description":"RSS_DESC","deprecated":false},{"id":"RTL","parentCategory":"WEB","description":"RTL_DESC","deprecated":false},{"id":"RUTEN","parentCategory":"WEB","description":"RUTEN_DESC","deprecated":false},{"id":"RYANAIR","parentCategory":"WEB","description":"RYANAIR_DESC","deprecated":false},{"id":"RYZE","parentCategory":"WEB","description":"RYZE_DESC","deprecated":false},{"id":"SABERINDO","parentCategory":"WEB","description":"SABERINDO_DESC","deprecated":false},{"id":"SAKURA_NE","parentCategory":"WEB","description":"SAKURA_NE_DESC","deprecated":false},{"id":"ZOHO_PEOPLE","parentCategory":"WEB","description":"ZOHO_PEOPLE_DESC","deprecated":false},{"id":"SAYCLUB","parentCategory":"WEB","description":"SAYCLUB_DESC","deprecated":false},{"id":"SBS","parentCategory":"WEB","description":"SBS_DESC","deprecated":false},{"id":"SCIENCESTAGE","parentCategory":"WEB","description":"SCIENCESTAGE_DESC","deprecated":false},{"id":"SCISPACE","parentCategory":"WEB","description":"SCISPACE_DESC","deprecated":false},{"id":"SCRIBD","parentCategory":"WEB","description":"SCRIBD_DESC","deprecated":false},{"id":"SDO","parentCategory":"WEB","description":"SDO_DESC","deprecated":false},{"id":"SECONDLIFE","parentCategory":"WEB","description":"SECONDLIFE_DESC","deprecated":false},{"id":"SEEQPOD","parentCategory":"WEB","description":"SEEQPOD_DESC","deprecated":false},{"id":"SEESAA","parentCategory":"WEB","description":"SEESAA_DESC","deprecated":false},{"id":"SEESMIC","parentCategory":"WEB","description":"SEESMIC_DESC","deprecated":false},{"id":"SEGYE","parentCategory":"WEB","description":"SEGYE_DESC","deprecated":false},{"id":"SENDSPACE","parentCategory":"WEB","description":"SENDSPACE_DESC","deprecated":false},{"id":"SEOUL_NEWS","parentCategory":"WEB","description":"SEOUL_NEWS_DESC","deprecated":false},{"id":"SFR","parentCategory":"WEB","description":"SFR_DESC","deprecated":false},{"id":"SHAREPOINT","parentCategory":"WEB","description":"SHAREPOINT_DESC","deprecated":false},{"id":"SHAREPOINT_ADMIN","parentCategory":"WEB","description":"SHAREPOINT_ADMIN_DESC","deprecated":false},{"id":"SHAREPOINT_BLOG","parentCategory":"WEB","description":"SHAREPOINT_BLOG_DESC","deprecated":false},{"id":"SHAREPOINT_CALENDAR","parentCategory":"WEB","description":"SHAREPOINT_CALENDAR_DESC","deprecated":false},{"id":"SHAREPOINT_DOCUMENT","parentCategory":"WEB","description":"SHAREPOINT_DOCUMENT_DESC","deprecated":false},{"id":"SHAREPOINT_ONLINE","parentCategory":"WEB","description":"SHAREPOINT_ONLINE_DESC","deprecated":false},{"id":"SHELFARI","parentCategory":"WEB","description":"SHELFARI_DESC","deprecated":false},{"id":"SHINHAN","parentCategory":"WEB","description":"SHINHAN_DESC","deprecated":false},{"id":"SHUTTERFLY","parentCategory":"WEB","description":"SHUTTERFLY_DESC","deprecated":false},{"id":"SIEBEL_CRM","parentCategory":"WEB","description":"SIEBEL_CRM_DESC","deprecated":false},{"id":"SINA","parentCategory":"WEB","description":"SINA_DESC","deprecated":false},{"id":"SINA_BLOG","parentCategory":"WEB","description":"SINA_BLOG_DESC","deprecated":false},{"id":"SINA_FINANCE","parentCategory":"WEB","description":"SINA_FINANCE_DESC","deprecated":false},{"id":"SINA_NEWS","parentCategory":"WEB","description":"SINA_NEWS_DESC","deprecated":false},{"id":"SINA_VIDEO","parentCategory":"WEB","description":"SINA_VIDEO_DESC","deprecated":false},{"id":"SINA_WEIBO","parentCategory":"WEB","description":"SINA_WEIBO_DESC","deprecated":false},{"id":"SKYBLOG","parentCategory":"WEB","description":"SKYBLOG_DESC","deprecated":false},{"id":"SKYCN","parentCategory":"WEB","description":"SKYCN_DESC","deprecated":false},{"id":"ONEDRIVE","parentCategory":"WEB","description":"ONEDRIVE_DESC","deprecated":false},{"id":"SLIDESHARE","parentCategory":"WEB","description":"SLIDESHARE_DESC","deprecated":false},{"id":"SOCIALTV","parentCategory":"WEB","description":"SOCIALTV_DESC","deprecated":false},{"id":"SOFT4FUN","parentCategory":"WEB","description":"SOFT4FUN_DESC","deprecated":false},{"id":"SOFTBANK","parentCategory":"WEB","description":"SOFTBANK_DESC","deprecated":false},{"id":"SOGOU","parentCategory":"WEB","description":"SOGOU_DESC","deprecated":false},{"id":"SOHU","parentCategory":"WEB","description":"SOHU_DESC","deprecated":false},{"id":"SOHU_BLOG","parentCategory":"WEB","description":"SOHU_BLOG_DESC","deprecated":false},{"id":"SOKU","parentCategory":"WEB","description":"SOKU_DESC","deprecated":false},{"id":"SONET_NE","parentCategory":"WEB","description":"SONET_NE_DESC","deprecated":false},{"id":"SONICO","parentCategory":"WEB","description":"SONICO_DESC","deprecated":false},{"id":"SOSO","parentCategory":"WEB","description":"SOSO_DESC","deprecated":false},{"id":"SOUFUN","parentCategory":"WEB","description":"SOUFUN_DESC","deprecated":false},{"id":"SOUTHWEST","parentCategory":"WEB","description":"SOUTHWEST_DESC","deprecated":false},{"id":"SPDY","parentCategory":"WEB","description":"SPDY_DESC","deprecated":false},{"id":"SPEEDTEST","parentCategory":"WEB","description":"SPEEDTEST_DESC","deprecated":false},{"id":"SPIEGEL","parentCategory":"WEB","description":"SPIEGEL_DESC","deprecated":false},{"id":"SPORTCHOSUN","parentCategory":"WEB","description":"SPORTCHOSUN_DESC","deprecated":false},{"id":"SPORTSILLUSTRATED","parentCategory":"WEB","description":"SPORTSILLUSTRATED_DESC","deprecated":false},{"id":"SPORTSSEOUL","parentCategory":"WEB","description":"SPORTSSEOUL_DESC","deprecated":false},{"id":"SPRINT","parentCategory":"WEB","description":"SPRINT_DESC","deprecated":false},{"id":"STAFABAND","parentCategory":"WEB","description":"STAFABAND_DESC","deprecated":false},{"id":"STAGEVU","parentCategory":"WEB","description":"STAGEVU_DESC","deprecated":false},{"id":"STAYFRIENDS","parentCategory":"WEB","description":"STAYFRIENDS_DESC","deprecated":false},{"id":"STICKAM","parentCategory":"WEB","description":"STICKAM_DESC","deprecated":false},{"id":"STOCKQ","parentCategory":"WEB","description":"STOCKQ_DESC","deprecated":false},{"id":"STREAMAUDIO","parentCategory":"WEB","description":"STREAMAUDIO_DESC","deprecated":false},{"id":"STUDIVZ","parentCategory":"WEB","description":"STUDIVZ_DESC","deprecated":false},{"id":"STUMBLEUPON","parentCategory":"WEB","description":"STUMBLEUPON_DESC","deprecated":false},{"id":"SUGARSYNC","parentCategory":"WEB","description":"SUGARSYNC_DESC","deprecated":false},{"id":"SUNING","parentCategory":"WEB","description":"SUNING_DESC","deprecated":false},{"id":"SUPPERSOCCER","parentCategory":"WEB","description":"SUPPERSOCCER_DESC","deprecated":false},{"id":"SURROGAFIER","parentCategory":"WEB","description":"SURROGAFIER_DESC","deprecated":false},{"id":"SURVEYMONKEY","parentCategory":"WEB","description":"SURVEYMONKEY_DESC","deprecated":false},{"id":"SVTPLAY","parentCategory":"WEB","description":"SVTPLAY_DESC","deprecated":false},{"id":"TABELOG","parentCategory":"WEB","description":"TABELOG_DESC","deprecated":false},{"id":"TAGGED","parentCategory":"WEB","description":"TAGGED_DESC","deprecated":false},{"id":"TAGOO","parentCategory":"WEB","description":"TAGOO_DESC","deprecated":false},{"id":"TAIWANLOTTERY","parentCategory":"WEB","description":"TAIWANLOTTERY_DESC","deprecated":false},{"id":"TAKU_FILE_BIN","parentCategory":"WEB","description":"TAKU_FILE_BIN_DESC","deprecated":false},{"id":"TALENTTROVE","parentCategory":"WEB","description":"TALENTTROVE_DESC","deprecated":false},{"id":"TALKBIZNOW","parentCategory":"WEB","description":"TALKBIZNOW_DESC","deprecated":false},{"id":"TALTOPIA","parentCategory":"WEB","description":"TALTOPIA_DESC","deprecated":false},{"id":"TAOBAO","parentCategory":"WEB","description":"TAOBAO_DESC","deprecated":false},{"id":"TARINGA","parentCategory":"WEB","description":"TARINGA_DESC","deprecated":false},{"id":"TCHATCHE","parentCategory":"WEB","description":"TCHATCHE_DESC","deprecated":false},{"id":"TEACHERTUBE","parentCategory":"WEB","description":"TEACHERTUBE_DESC","deprecated":false},{"id":"TEACHSTREET","parentCategory":"WEB","description":"TEACHSTREET_DESC","deprecated":false},{"id":"TECHINLINE","parentCategory":"WEB","description":"TECHINLINE_DESC","deprecated":false},{"id":"TEMPOINTERAKTIF","parentCategory":"WEB","description":"TEMPOINTERAKTIF_DESC","deprecated":false},{"id":"TENCENT","parentCategory":"WEB","description":"TENCENT_DESC","deprecated":false},{"id":"TF1","parentCategory":"WEB","description":"TF1_DESC","deprecated":false},{"id":"TGBUS","parentCategory":"WEB","description":"TGBUS_DESC","deprecated":false},{"id":"THEPIRATEBAY","parentCategory":"WEB","description":"THEPIRATEBAY_DESC","deprecated":false},{"id":"THREE","parentCategory":"WEB","description":"THREE_DESC","deprecated":false},{"id":"TIANYA","parentCategory":"WEB","description":"TIANYA_DESC","deprecated":false},{"id":"TICKETMONSTER","parentCategory":"WEB","description":"TICKETMONSTER_DESC","deprecated":false},{"id":"TIDALTV","parentCategory":"WEB","description":"TIDALTV_DESC","deprecated":false},{"id":"TISTORY","parentCategory":"WEB","description":"TISTORY_DESC","deprecated":false},{"id":"TMALL","parentCategory":"WEB","description":"TMALL_DESC","deprecated":false},{"id":"TOKBOX","parentCategory":"WEB","description":"TOKBOX_DESC","deprecated":false},{"id":"TOKOBAGUS","parentCategory":"WEB","description":"TOKOBAGUS_DESC","deprecated":false},{"id":"TORRENTDOWNLOADS","parentCategory":"WEB","description":"TORRENTDOWNLOADS_DESC","deprecated":false},{"id":"TORRENTZ","parentCategory":"WEB","description":"TORRENTZ_DESC","deprecated":false},{"id":"TRAVBUDDY","parentCategory":"WEB","description":"TRAVBUDDY_DESC","deprecated":false},{"id":"TRAVELLERSPOINT","parentCategory":"WEB","description":"TRAVELLERSPOINT_DESC","deprecated":false},{"id":"TRAVELOCITY","parentCategory":"WEB","description":"TRAVELOCITY_DESC","deprecated":false},{"id":"TRAVIAN","parentCategory":"WEB","description":"TRAVIAN_DESC","deprecated":false},{"id":"TRENDMICRO_UPDATE","parentCategory":"WEB","description":"TRENDMICRO_UPDATE_DESC","deprecated":false},{"id":"TRIBE","parentCategory":"WEB","description":"TRIBE_DESC","deprecated":false},{"id":"TRIBUNNEWS","parentCategory":"WEB","description":"TRIBUNNEWS_DESC","deprecated":false},{"id":"TROMBI","parentCategory":"WEB","description":"TROMBI_DESC","deprecated":false},{"id":"TUBE8","parentCategory":"WEB","description":"TUBE8_DESC","deprecated":false},{"id":"TUDOU","parentCategory":"WEB","description":"TUDOU_DESC","deprecated":false},{"id":"TUENTI","parentCategory":"WEB","description":"TUENTI_DESC","deprecated":false},{"id":"ZOHO_NOTEBOOK","parentCategory":"WEB","description":"ZOHO_NOTEBOOK_DESC","deprecated":false},{"id":"TUNEWIKI","parentCategory":"WEB","description":"TUNEWIKI_DESC","deprecated":false},{"id":"TV","parentCategory":"WEB","description":"TV_DESC","deprecated":false},{"id":"TV4PLAY","parentCategory":"WEB","description":"TV4PLAY_DESC","deprecated":false},{"id":"TWITPIC","parentCategory":"WEB","description":"TWITPIC_DESC","deprecated":false},{"id":"UBUNTU_ONE","parentCategory":"WEB","description":"UBUNTU_ONE_DESC","deprecated":false},{"id":"UDN","parentCategory":"WEB","description":"UDN_DESC","deprecated":false},{"id":"UNIVISION","parentCategory":"WEB","description":"UNIVISION_DESC","deprecated":false},{"id":"UPLOADING","parentCategory":"WEB","description":"UPLOADING_DESC","deprecated":false},{"id":"USATODAY","parentCategory":"WEB","description":"USATODAY_DESC","deprecated":false},{"id":"USEJUMP","parentCategory":"WEB","description":"USEJUMP_DESC","deprecated":false},{"id":"USTREAM","parentCategory":"WEB","description":"USTREAM_DESC","deprecated":false},{"id":"VAMPIREFREAKS","parentCategory":"WEB","description":"VAMPIREFREAKS_DESC","deprecated":false},{"id":"VEETLE","parentCategory":"WEB","description":"VEETLE_DESC","deprecated":false},{"id":"VIADEO","parentCategory":"WEB","description":"VIADEO_DESC","deprecated":false},{"id":"VIDEOBASH","parentCategory":"WEB","description":"VIDEOBASH_DESC","deprecated":false},{"id":"VIDEOSURF","parentCategory":"WEB","description":"VIDEOSURF_DESC","deprecated":false},{"id":"VIETBAO","parentCategory":"WEB","description":"VIETBAO_DESC","deprecated":false},{"id":"YOUTUBE_HD","parentCategory":"WEB","description":"YOUTUBE_HD_DESC","deprecated":false},{"id":"VIVANEWS","parentCategory":"WEB","description":"VIVANEWS_DESC","deprecated":false},{"id":"VOX","parentCategory":"WEB","description":"VOX_DESC","deprecated":false},{"id":"VTUNNEL","parentCategory":"WEB","description":"VTUNNEL_DESC","deprecated":false},{"id":"VYEW","parentCategory":"WEB","description":"VYEW_DESC","deprecated":false},{"id":"WAKOOPA","parentCategory":"WEB","description":"WAKOOPA_DESC","deprecated":false},{"id":"WALLSTREETJOURNAL_CHINA","parentCategory":"WEB","description":"WALLSTREETJOURNAL_CHINA_DESC","deprecated":false},{"id":"WANDOUJIA","parentCategory":"WEB","description":"WANDOUJIA_DESC","deprecated":false},{"id":"WASABI","parentCategory":"WEB","description":"WASABI_DESC","deprecated":false},{"id":"WASHINGTONPOST","parentCategory":"WEB","description":"WASHINGTONPOST_DESC","deprecated":false},{"id":"WAT","parentCategory":"WEB","description":"WAT_DESC","deprecated":false},{"id":"WAYN","parentCategory":"WEB","description":"WAYN_DESC","deprecated":false},{"id":"WEATHER","parentCategory":"WEB","description":"WEATHER_DESC","deprecated":false},{"id":"WEB_CRAWLER","parentCategory":"WEB","description":"WEB_CRAWLER_DESC","deprecated":false},{"id":"WEOURFAMILY","parentCategory":"WEB","description":"WEOURFAMILY_DESC","deprecated":false},{"id":"WERKENNTWEN","parentCategory":"WEB","description":"WERKENNTWEN_DESC","deprecated":false},{"id":"WIKIA","parentCategory":"WEB","description":"WIKIA_DESC","deprecated":false},{"id":"WIKIPEDIA","parentCategory":"WEB","description":"WIKIPEDIA_DESC","deprecated":false},{"id":"WINDOWS_AZURE","parentCategory":"WEB","description":"WINDOWS_AZURE_DESC","deprecated":false},{"id":"WINDOWSMEDIA","parentCategory":"WEB","description":"WINDOWSMEDIA_DESC","deprecated":false},{"id":"WINDOWS_UPDATE","parentCategory":"WEB","description":"WINDOWS_UPDATE_DESC","deprecated":false},{"id":"WIXI","parentCategory":"WEB","description":"WIXI_DESC","deprecated":false},{"id":"WOORIBANK","parentCategory":"WEB","description":"WOORIBANK_DESC","deprecated":false},{"id":"WRETCH","parentCategory":"WEB","description":"WRETCH_DESC","deprecated":false},{"id":"XANGA","parentCategory":"WEB","description":"XANGA_DESC","deprecated":false},{"id":"XBOX","parentCategory":"WEB","description":"XBOX_DESC","deprecated":false},{"id":"XHAMSTER","parentCategory":"WEB","description":"XHAMSTER_DESC","deprecated":false},{"id":"XIAMI","parentCategory":"WEB","description":"XIAMI_DESC","deprecated":false},{"id":"XINHUANET","parentCategory":"WEB","description":"XINHUANET_DESC","deprecated":false},{"id":"XLNET","parentCategory":"WEB","description":"XLNET_DESC","deprecated":false},{"id":"XL_WAP","parentCategory":"WEB","description":"XL_WAP_DESC","deprecated":false},{"id":"XL_WEBMAIL","parentCategory":"WEB","description":"XL_WEBMAIL_DESC","deprecated":false},{"id":"XMLRPC","parentCategory":"WEB","description":"XMLRPC_DESC","deprecated":false},{"id":"XM_RADIO","parentCategory":"WEB","description":"XM_RADIO_DESC","deprecated":false},{"id":"XNXX","parentCategory":"WEB","description":"XNXX_DESC","deprecated":false},{"id":"XREA","parentCategory":"WEB","description":"XREA_DESC","deprecated":false},{"id":"XT3","parentCategory":"WEB","description":"XT3_DESC","deprecated":false},{"id":"XUITE","parentCategory":"WEB","description":"XUITE_DESC","deprecated":false},{"id":"XVIDEOS","parentCategory":"WEB","description":"XVIDEOS_DESC","deprecated":false},{"id":"XVIDEOSLIVE","parentCategory":"WEB","description":"XVIDEOSLIVE_DESC","deprecated":false},{"id":"ZOHO_MEETING","parentCategory":"WEB","description":"ZOHO_MEETING_DESC","deprecated":false},{"id":"YAHOO360PLUSVIETNAM","parentCategory":"WEB","description":"YAHOO360PLUSVIETNAM_DESC","deprecated":false},{"id":"YAHOO_ANSWERS","parentCategory":"WEB","description":"YAHOO_ANSWERS_DESC","deprecated":false},{"id":"YAHOO_BIZ","parentCategory":"WEB","description":"YAHOO_BIZ_DESC","deprecated":false},{"id":"YAHOO_BUY","parentCategory":"WEB","description":"YAHOO_BUY_DESC","deprecated":false},{"id":"YAHOO_DOUGA","parentCategory":"WEB","description":"YAHOO_DOUGA_DESC","deprecated":false},{"id":"YAHOO_GAMES","parentCategory":"WEB","description":"YAHOO_GAMES_DESC","deprecated":false},{"id":"YAHOO_GEOCITIES","parentCategory":"WEB","description":"YAHOO_GEOCITIES_DESC","deprecated":false},{"id":"YAHOO_KOREA","parentCategory":"WEB","description":"YAHOO_KOREA_DESC","deprecated":false},{"id":"YAHOO_MAPS","parentCategory":"WEB","description":"YAHOO_MAPS_DESC","deprecated":false},{"id":"YAHOO_REALESTATE","parentCategory":"WEB","description":"YAHOO_REALESTATE_DESC","deprecated":false},{"id":"YAHOO_SEARCH","parentCategory":"WEB","description":"YAHOO_SEARCH_DESC","deprecated":false},{"id":"YAHOO_STOCK_TW","parentCategory":"WEB","description":"YAHOO_STOCK_TW_DESC","deprecated":false},{"id":"YAHOO_TRAVEL","parentCategory":"WEB","description":"YAHOO_TRAVEL_DESC","deprecated":false},{"id":"ZOHO_DB","parentCategory":"WEB","description":"ZOHO_DB_DESC","deprecated":false},{"id":"YELP","parentCategory":"WEB","description":"YELP_DESC","deprecated":false},{"id":"YESKY","parentCategory":"WEB","description":"YESKY_DESC","deprecated":false},{"id":"YIHAODIAN","parentCategory":"WEB","description":"YIHAODIAN_DESC","deprecated":false},{"id":"YOKA","parentCategory":"WEB","description":"YOKA_DESC","deprecated":false},{"id":"YOMIURI","parentCategory":"WEB","description":"YOMIURI_DESC","deprecated":false},{"id":"YOUDAO","parentCategory":"WEB","description":"YOUDAO_DESC","deprecated":false},{"id":"YOUKU","parentCategory":"WEB","description":"YOUKU_DESC","deprecated":false},{"id":"YOUM7","parentCategory":"WEB","description":"YOUM7_DESC","deprecated":false},{"id":"YOUMEO","parentCategory":"WEB","description":"YOUMEO_DESC","deprecated":false},{"id":"YOUPORN","parentCategory":"WEB","description":"YOUPORN_DESC","deprecated":false},{"id":"YOURFILEHOST","parentCategory":"WEB","description":"YOURFILEHOST_DESC","deprecated":false},{"id":"BBC","parentCategory":"WEB","description":"BBC_DESC","deprecated":false},{"id":"INDIATIMES","parentCategory":"WEB","description":"INDIATIMES_DESC","deprecated":false},{"id":"DOCUSIGN","parentCategory":"WEB","description":"DOCUSIGN_DESC","deprecated":false},{"id":"PASTEBIN","parentCategory":"WEB","description":"PASTEBIN_DESC","deprecated":false},{"id":"YANDEXDISK","parentCategory":"WEB","description":"YANDEXDISK_DESC","deprecated":false},{"id":"LASTPASS","parentCategory":"WEB","description":"LASTPASS_DESC","deprecated":false},{"id":"ZENDESK","parentCategory":"WEB","description":"ZENDESK_DESC","deprecated":false},{"id":"SLACK","parentCategory":"WEB","description":"SLACK_DESC","deprecated":false},{"id":"FOURSHARED","parentCategory":"WEB","description":"FOURSHARED_DESC","deprecated":false},{"id":"KICKASSTORRENTS","parentCategory":"WEB","description":"KICKASSTORRENTS_DESC","deprecated":false},{"id":"ADP","parentCategory":"WEB","description":"ADP_DESC","deprecated":false},{"id":"THUGLAK","parentCategory":"WEB","description":"THUGLAK_DESC","deprecated":false},{"id":"REDIFF","parentCategory":"WEB","description":"REDIFF_DESC","deprecated":false},{"id":"MEGAVIDEO","parentCategory":"WEB","description":"MEGAVIDEO_DESC","deprecated":false},{"id":"MOTIONBOX","parentCategory":"WEB","description":"MOTIONBOX_DESC","deprecated":false},{"id":"QUIC","parentCategory":"WEB","description":"QUIC_DESC","deprecated":false},{"id":"REEBOK","parentCategory":"WEB","description":"REEBOK_DESC","deprecated":false},{"id":"ADIDAS","parentCategory":"WEB","description":"ADIDAS_DESC","deprecated":false},{"id":"EGNYTE","parentCategory":"WEB","description":"EGNYTE_DESC","deprecated":false},{"id":"WETRANSFER","parentCategory":"WEB","description":"WETRANSFER_DESC","deprecated":false},{"id":"INFOARMOR","parentCategory":"WEB","description":"INFOARMOR_DESC","deprecated":false},{"id":"EPIC_BROWSER_UPDATE","parentCategory":"WEB","description":"EPIC_BROWSER_UPDATE_DESC","deprecated":false},{"id":"AH_CDN","parentCategory":"WEB","description":"AH_CDN_DESC","deprecated":false},{"id":"CODE42","parentCategory":"WEB","description":"CODE42_DESC","deprecated":false},{"id":"CRASHPLAN","parentCategory":"WEB","description":"CRASHPLAN_DESC","deprecated":false},{"id":"FACEBOOK_GAMES","parentCategory":"WEB","description":"FACEBOOK_GAMES_DESC","deprecated":false},{"id":"LOCATION_IQ","parentCategory":"WEB","description":"LOCATION_IQ_DESC","deprecated":false},{"id":"SHOPIFY","parentCategory":"WEB","description":"SHOPIFY_DESC","deprecated":false},{"id":"STACKPATH","parentCategory":"WEB","description":"STACKPATH_DESC","deprecated":false},{"id":"GOOGLE_STADIA","parentCategory":"WEB","description":"GOOGLE_STADIA_DESC","deprecated":false},{"id":"MOXA","parentCategory":"WEB","description":"MOXA_DESC","deprecated":false},{"id":"TOUTIAO","parentCategory":"WEB","description":"TOUTIAO_DESC","deprecated":false},{"id":"TUCHONG","parentCategory":"WEB","description":"TUCHONG_DESC","deprecated":false},{"id":"HTTP3","parentCategory":"WEB","description":"HTTP3_DESC","deprecated":false},{"id":"NGROK","parentCategory":"WEB","description":"NGROK_DESC","deprecated":false},{"id":"AMMYADMIN","parentCategory":"WEB","description":"AMMYADMIN_DESC","deprecated":false},{"id":"ANCHORFREE","parentCategory":"WEB","description":"ANCHORFREE_DESC","deprecated":false},{"id":"OPENAI","parentCategory":"WEB","description":"OPENAI_DESC","deprecated":false},{"id":"CHATGPT","parentCategory":"WEB","description":"CHATGPT_DESC","deprecated":false},{"id":"FASTMAIL","parentCategory":"WEBMAIL","description":"FASTMAIL_DESC","deprecated":false},{"id":"YANDEX_MAIL","parentCategory":"WEBMAIL","description":"YANDEX_MAIL_DESC","deprecated":false},{"id":"GMAIL","parentCategory":"WEBMAIL","description":"GMAIL_DESC","deprecated":false},{"id":"YAHOOMAIL","parentCategory":"WEBMAIL","description":"YAHOOMAIL_DESC","deprecated":false},{"id":"HOTMAIL","parentCategory":"WEBMAIL","description":"HOTMAIL_DESC","deprecated":false},{"id":"GMAIL_MOBILE","parentCategory":"WEBMAIL","description":"GMAIL_MOBILE_DESC","deprecated":false},{"id":"GMX","parentCategory":"WEBMAIL","description":"GMX_DESC","deprecated":false},{"id":"IMP","parentCategory":"WEBMAIL","description":"IMP_DESC","deprecated":false},{"id":"LIVEMAIL_MOBILE","parentCategory":"WEBMAIL","description":"LIVEMAIL_MOBILE_DESC","deprecated":false},{"id":"MAIL_189","parentCategory":"WEBMAIL","description":"MAIL_189_DESC","deprecated":false},{"id":"MAIL2000","parentCategory":"WEBMAIL","description":"MAIL2000_DESC","deprecated":false},{"id":"MAILRU","parentCategory":"WEBMAIL","description":"MAILRU_DESC","deprecated":false},{"id":"MAKTOOB","parentCategory":"WEBMAIL","description":"MAKTOOB_DESC","deprecated":false},{"id":"MIMP","parentCategory":"WEBMAIL","description":"MIMP_DESC","deprecated":false},{"id":"QQ_MAIL","parentCategory":"WEBMAIL","description":"QQ_MAIL_DESC","deprecated":false},{"id":"RAMBLER_WEBMAIL","parentCategory":"WEBMAIL","description":"RAMBLER_WEBMAIL_DESC","deprecated":false},{"id":"SQUIRRELMAIL","parentCategory":"WEBMAIL","description":"SQUIRRELMAIL_DESC","deprecated":false},{"id":"YMAIL_MOBILE","parentCategory":"WEBMAIL","description":"YMAIL_MOBILE_DESC","deprecated":false},{"id":"ZIMBRA","parentCategory":"WEBMAIL","description":"ZIMBRA_DESC","deprecated":false},{"id":"ZIMBRA_STANDARD","parentCategory":"WEBMAIL","description":"ZIMBRA_STANDARD_DESC","deprecated":false},{"id":"ORANGEMAIL","parentCategory":"WEBMAIL","description":"ORANGEMAIL_DESC","deprecated":false},{"id":"IMAP","parentCategory":"WEBMAIL","description":"IMAP_DESC","deprecated":false},{"id":"IMAPS","parentCategory":"WEBMAIL","description":"IMAPS_DESC","deprecated":false},{"id":"FLIPKART","parentCategory":"WEBSEARCH","description":"FLIPKART_DESC","deprecated":false},{"id":"GOOGLE","parentCategory":"WEBSEARCH","description":"GOOGLE_DESC","deprecated":false},{"id":"YAHOO","parentCategory":"WEBSEARCH","description":"YAHOO_DESC","deprecated":false},{"id":"BAIDU","parentCategory":"WEBSEARCH","description":"BAIDU_DESC","deprecated":false},{"id":"ASK","parentCategory":"WEBSEARCH","description":"ASK_DESC","deprecated":false},{"id":"AOL","parentCategory":"WEBSEARCH","description":"AOL_DESC","deprecated":false},{"id":"BING","parentCategory":"WEBSEARCH","description":"BING_DESC","deprecated":false},{"id":"YANDEX","parentCategory":"WEBSEARCH","description":"YANDEX_DESC","deprecated":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:42 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '216'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - b553c32d-daa7-90f8-a090-da0911420e63
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4969'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkApplications/APNS
+  response:
+    body:
+      string: '{"id":"APNS","parentCategory":"APP_SERVICE","description":"APNS_DESC","deprecated":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '89'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:42 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '191'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 9eb42b5e-5cc2-976c-805c-27811daf4e67
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4968'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkServiceGroups
+  response:
+    body:
+      string: '[{"id":18618980,"name":"test_zia_ansible_EUvdV_H2zbw_zLSPQ_qax7Q","services":[{"id":462276,"name":"ICMP_ANY","isNameL10nTag":true},{"id":462278,"name":"UDP_ANY","isNameL10nTag":true},{"id":462280,"name":"TCP_ANY","isNameL10nTag":true}],"description":"test_zia_ansible_PR72u_EUvdV_H2zbw_zLSPQ_Hr3Vp_qax7Q","creatorContext":"ZIA"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:43 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '210'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 052b4b3a-540f-9132-be0e-104b53fea0ff
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4967'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkServiceGroups/lite
+  response:
+    body:
+      string: '[{"id":18618980,"name":"test_zia_ansible_EUvdV_H2zbw_zLSPQ_qax7Q"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '67'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:43 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '143'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 42dc0c57-1c4f-9ffd-8653-030cd0b4922e
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4966'
+      x-ratelimit-reset:
+      - '17'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zia/api/v1/networkServiceGroups/18618980
+  response:
+    body:
+      string: '{"id":18618980,"name":"test_zia_ansible_EUvdV_H2zbw_zLSPQ_qax7Q","services":[{"id":462276,"name":"ICMP_ANY","isNameL10nTag":true},{"id":462278,"name":"UDP_ANY","isNameL10nTag":true},{"id":462280,"name":"TCP_ANY","isNameL10nTag":true}],"description":"test_zia_ansible_PR72u_EUvdV_H2zbw_zLSPQ_Hr3Vp_qax7Q","creatorContext":"ZIA"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 19 Dec 2025 22:29:43 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '192'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 25dae457-5f9a-94a2-8b8d-d4642b44da3a
+      x-oneapi-version:
+      - 109.1.92
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4965'
+      x-ratelimit-reset:
+      - '17'
+      x-transaction-id:
+      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

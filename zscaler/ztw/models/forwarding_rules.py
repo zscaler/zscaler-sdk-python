@@ -125,6 +125,10 @@ class ForwardingControlRule(ZscalerObject):
                 config["labels"] if "labels" in config else [], common.CommonIDNameExternalID
             )
 
+            self.src_workload_groups = ZscalerCollection.form_list(
+                config["srcWorkloadGroups"] if "srcWorkloadGroups" in config else [], common.CommonIDNameExternalID
+            )
+
             self.devices = ZscalerCollection.form_list(
                 config["devices"] if "devices" in config else [], common.CommonIDNameExternalID
             )
@@ -205,6 +209,7 @@ class ForwardingControlRule(ZscalerObject):
             self.zpa_app_segments = []
             self.zpa_application_segments = []
             self.zpa_application_segment_groups = []
+            self.src_workload_groups = []
             self.proxy_gateway = None
             self.zpa_gateway = None
             self.zpa_broker_rule = None
@@ -252,6 +257,7 @@ class ForwardingControlRule(ZscalerObject):
             "labels": [label.request_format() for label in (self.labels or [])],
             "devices": [device.request_format() for device in (self.devices or [])],
             "deviceGroups": [dg.request_format() for dg in (self.device_groups or [])],
+            "srcWorkloadGroups": [wg.request_format() for wg in (self.src_workload_groups or [])],
             "zpaAppSegments": [zpa.request_format() for zpa in (self.zpa_app_segments or [])],
             "zpaApplicationSegments": [zpa_app.request_format() for zpa_app in (self.zpa_application_segments or [])],
             "zpaApplicationSegmentGroups": [
