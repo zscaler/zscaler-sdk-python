@@ -62,11 +62,18 @@ class URLFilteringAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
+                ``[query_params.page]`` (int): Specifies the page offset.
+
+                ``[query_params.page_size]`` (int): Specifies the page size.
+                    The default size is 100, but the maximum size is 100.
+
         Returns:
             tuple: A tuple containing (list of url filtering rules instances, Response, error)
 
         Examples:
-        >>> rules_list, _, error = client.zia.url_filtering.list_rules()
+        >>> rules_list, _, error = client.zia.url_filtering.list_rules(
+        ... query_params={'page': 1, 'page_size': 10}
+        )
         >>> if error:
         ...     print(f"Error listing url filtering rules: {error}")
         ...     return
@@ -84,31 +91,26 @@ class URLFilteringAPI(APIClient):
 
         query_params = query_params or {}
 
-        local_search = query_params.pop("search", None)
-
         body = {}
         headers = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
         if error:
             return (None, None, error)
 
         response, error = self._request_executor.execute(request)
+
         if error:
             return (None, response, error)
 
         try:
-            results = []
+            result = []
             for item in response.get_results():
-                results.append(URLFilteringRule(self.form_response_body(item)))
-        except Exception as exc:
-            return (None, response, exc)
-
-        if local_search:
-            lower_search = local_search.lower()
-            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
-
-        return (results, response, None)
+                result.append(URLFilteringRule(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def get_rule(
         self,
