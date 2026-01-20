@@ -147,20 +147,38 @@ def before_record_request(request):
             body = re.sub(rb'client_secret=[^&"]*', b'client_secret=REDACTED', body)
             body = re.sub(rb'"client_secret"\s*:\s*"[^"]*"', b'"client_secret":"REDACTED"', body)
             body = re.sub(rb'"password"\s*:\s*"[^"]*"', b'"password":"REDACTED"', body)
+            body = re.sub(rb'"Password"\s*:\s*"[^"]*"', b'"Password":"REDACTED"', body)
             body = re.sub(rb'"apiKey"\s*:\s*"[^"]*"', b'"apiKey":"REDACTED"', body)
             body = re.sub(rb'"api_key"\s*:\s*"[^"]*"', b'"api_key":"REDACTED"', body)
             body = re.sub(rb'"preSharedKey"\s*:\s*"[^"]*"', b'"preSharedKey":"REDACTED"', body)
             body = re.sub(rb'"pre_shared_key"\s*:\s*"[^"]*"', b'"pre_shared_key":"REDACTED"', body)
             body = re.sub(rb'"psk"\s*:\s*"[^"]*"', b'"psk":"REDACTED"', body)
+            # ZCC-specific password fields
+            body = re.sub(rb'"exitPassword"\s*:\s*"[^"]*"', b'"exitPassword":"REDACTED"', body)
+            body = re.sub(rb'"zdxDisablePassword"\s*:\s*"[^"]*"', b'"zdxDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zdDisablePassword"\s*:\s*"[^"]*"', b'"zdDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zpaDisablePassword"\s*:\s*"[^"]*"', b'"zpaDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zdpDisablePassword"\s*:\s*"[^"]*"', b'"zdpDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zccRevertPassword"\s*:\s*"[^"]*"', b'"zccRevertPassword":"REDACTED"', body)
+            body = re.sub(rb'"zccFailCloseSettingsExitUninstallPassword"\s*:\s*"[^"]*"', b'"zccFailCloseSettingsExitUninstallPassword":"REDACTED"', body)
         else:
             body = re.sub(r'client_secret=[^&"]*', 'client_secret=REDACTED', body)
             body = re.sub(r'"client_secret"\s*:\s*"[^"]*"', '"client_secret":"REDACTED"', body)
             body = re.sub(r'"password"\s*:\s*"[^"]*"', '"password":"REDACTED"', body)
+            body = re.sub(r'"Password"\s*:\s*"[^"]*"', '"Password":"REDACTED"', body)
             body = re.sub(r'"apiKey"\s*:\s*"[^"]*"', '"apiKey":"REDACTED"', body)
             body = re.sub(r'"api_key"\s*:\s*"[^"]*"', '"api_key":"REDACTED"', body)
             body = re.sub(r'"preSharedKey"\s*:\s*"[^"]*"', '"preSharedKey":"REDACTED"', body)
             body = re.sub(r'"pre_shared_key"\s*:\s*"[^"]*"', '"pre_shared_key":"REDACTED"', body)
             body = re.sub(r'"psk"\s*:\s*"[^"]*"', '"psk":"REDACTED"', body)
+            # ZCC-specific password fields
+            body = re.sub(r'"exitPassword"\s*:\s*"[^"]*"', '"exitPassword":"REDACTED"', body)
+            body = re.sub(r'"zdxDisablePassword"\s*:\s*"[^"]*"', '"zdxDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zdDisablePassword"\s*:\s*"[^"]*"', '"zdDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zpaDisablePassword"\s*:\s*"[^"]*"', '"zpaDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zdpDisablePassword"\s*:\s*"[^"]*"', '"zdpDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zccRevertPassword"\s*:\s*"[^"]*"', '"zccRevertPassword":"REDACTED"', body)
+            body = re.sub(r'"zccFailCloseSettingsExitUninstallPassword"\s*:\s*"[^"]*"', '"zccFailCloseSettingsExitUninstallPassword":"REDACTED"', body)
         request.body = body
 
     return request
@@ -197,6 +215,7 @@ def before_record_response(response):
             body = re.sub(rb'eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*', b'REDACTED_JWT_TOKEN', body)
             # Redact password and API key fields
             body = re.sub(rb'"password"\s*:\s*"[^"]*"', b'"password":"REDACTED"', body)
+            body = re.sub(rb'"Password"\s*:\s*"[^"]*"', b'"Password":"REDACTED"', body)
             body = re.sub(rb'"apiKey"\s*:\s*"[^"]*"', b'"apiKey":"REDACTED"', body)
             body = re.sub(rb'"api_key"\s*:\s*"[^"]*"', b'"api_key":"REDACTED"', body)
             body = re.sub(rb'"client_secret"\s*:\s*"[^"]*"', b'"client_secret":"REDACTED"', body)
@@ -204,6 +223,42 @@ def before_record_response(response):
             body = re.sub(rb'"preSharedKey"\s*:\s*"[^"]*"', b'"preSharedKey":"REDACTED"', body)
             body = re.sub(rb'"pre_shared_key"\s*:\s*"[^"]*"', b'"pre_shared_key":"REDACTED"', body)
             body = re.sub(rb'"psk"\s*:\s*"[^"]*"', b'"psk":"REDACTED"', body)
+            # ZCC-specific password fields (redact non-empty values only)
+            body = re.sub(rb'"exitPassword"\s*:\s*"[^"]*"', b'"exitPassword":"REDACTED"', body)
+            body = re.sub(rb'"zdxDisablePassword"\s*:\s*"[^"]*"', b'"zdxDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zdDisablePassword"\s*:\s*"[^"]*"', b'"zdDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zpaDisablePassword"\s*:\s*"[^"]*"', b'"zpaDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zdpDisablePassword"\s*:\s*"[^"]*"', b'"zdpDisablePassword":"REDACTED"', body)
+            body = re.sub(rb'"zccRevertPassword"\s*:\s*"[^"]*"', b'"zccRevertPassword":"REDACTED"', body)
+            body = re.sub(rb'"zccFailCloseSettingsExitUninstallPassword"\s*:\s*"[^"]*"', b'"zccFailCloseSettingsExitUninstallPassword":"REDACTED"', body)
+            # Redact password fields - match any characters including newlines
+            # First try regular quotes (for raw response body)
+            body = re.sub(rb'"logout_password"\s*:\s*".*?"', b'"logout_password":"REDACTED"', body, flags=re.DOTALL)
+            body = re.sub(rb'"uninstall_password"\s*:\s*".*?"', b'"uninstall_password":"REDACTED"', body, flags=re.DOTALL)
+            body = re.sub(rb'"disable_password"\s*:\s*".*?"', b'"disable_password":"REDACTED"', body, flags=re.DOTALL)
+            # Also match escaped quotes (for string representation in YAML)
+            body = re.sub(rb'\\"logout_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"logout_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"uninstall_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"uninstall_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"disable_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"disable_password\\\\" : \\\\"REDACTED\\\\"', body)
+            # Handle escaped quotes in YAML cassettes for all password fields
+            body = re.sub(rb'\\"exitPassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"exitPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zdxDisablePassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zdxDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zdDisablePassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zdDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zpaDisablePassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zpaDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zdpDisablePassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zdpDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zccRevertPassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zccRevertPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"zccFailCloseSettingsExitUninstallPassword\\"\s*:\s*\\"[^"]*\\"', b'\\\\"zccFailCloseSettingsExitUninstallPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"logout_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"logout_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"uninstall_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"uninstall_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"disable_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"disable_password\\\\" : \\\\"REDACTED\\\\"', body)
+            # Handle escaped quotes in YAML cassettes
+            body = re.sub(rb'\\"logout_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"logout_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"uninstall_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"uninstall_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(rb'\\"disable_password\\"\s*:\s*\\"[^"]*\\"', b'\\\\"disable_password\\\\" : \\\\"REDACTED\\\\"', body)
+            # Redact policy tokens and nonces (long hex/base64 strings)
+            body = re.sub(rb'"policyToken"\s*:\s*"[a-zA-Z0-9+/=]{20,}"', b'"policyToken":"REDACTED_TOKEN"', body)
+            body = re.sub(rb'\\\"policyToken\\\" : \\\"[a-zA-Z0-9+/=-]{20,}\\\"', b'\\\\"policyToken\\\\" : \\\\"REDACTED_TOKEN\\\\"', body)
+            body = re.sub(rb'"nonce"\s*:\s*"[^"]{50,}"', b'"nonce":"REDACTED_NONCE"', body)
             # Redact private keys (RSA, EC, etc.)
             body = re.sub(rb'-----BEGIN[A-Z ]*PRIVATE KEY-----[^-]+-----END[A-Z ]*PRIVATE KEY-----', b'-----BEGIN PRIVATE KEY-----REDACTED-----END PRIVATE KEY-----', body)
             body = re.sub(rb'"privateKey"\s*:\s*"[^"]*"', b'"privateKey":"REDACTED"', body)
@@ -222,6 +277,7 @@ def before_record_response(response):
             body = re.sub(r'eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*', 'REDACTED_JWT_TOKEN', body)
             # Redact password and API key fields
             body = re.sub(r'"password"\s*:\s*"[^"]*"', '"password":"REDACTED"', body)
+            body = re.sub(r'"Password"\s*:\s*"[^"]*"', '"Password":"REDACTED"', body)
             body = re.sub(r'"apiKey"\s*:\s*"[^"]*"', '"apiKey":"REDACTED"', body)
             body = re.sub(r'"api_key"\s*:\s*"[^"]*"', '"api_key":"REDACTED"', body)
             body = re.sub(r'"client_secret"\s*:\s*"[^"]*"', '"client_secret":"REDACTED"', body)
@@ -229,6 +285,33 @@ def before_record_response(response):
             body = re.sub(r'"preSharedKey"\s*:\s*"[^"]*"', '"preSharedKey":"REDACTED"', body)
             body = re.sub(r'"pre_shared_key"\s*:\s*"[^"]*"', '"pre_shared_key":"REDACTED"', body)
             body = re.sub(r'"psk"\s*:\s*"[^"]*"', '"psk":"REDACTED"', body)
+            # ZCC-specific password fields (redact non-empty values only)
+            body = re.sub(r'"exitPassword"\s*:\s*"[^"]*"', '"exitPassword":"REDACTED"', body)
+            body = re.sub(r'"zdxDisablePassword"\s*:\s*"[^"]*"', '"zdxDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zdDisablePassword"\s*:\s*"[^"]*"', '"zdDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zpaDisablePassword"\s*:\s*"[^"]*"', '"zpaDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zdpDisablePassword"\s*:\s*"[^"]*"', '"zdpDisablePassword":"REDACTED"', body)
+            body = re.sub(r'"zccRevertPassword"\s*:\s*"[^"]*"', '"zccRevertPassword":"REDACTED"', body)
+            body = re.sub(r'"zccFailCloseSettingsExitUninstallPassword"\s*:\s*"[^"]*"', '"zccFailCloseSettingsExitUninstallPassword":"REDACTED"', body)
+            # Redact password fields - use DOTALL to match across newlines
+            body = re.sub(r'"logout_password"\s*:\s*".*?"', '"logout_password":"REDACTED"', body, flags=re.DOTALL)
+            body = re.sub(r'"uninstall_password"\s*:\s*".*?"', '"uninstall_password":"REDACTED"', body, flags=re.DOTALL)
+            body = re.sub(r'"disable_password"\s*:\s*".*?"', '"disable_password":"REDACTED"', body, flags=re.DOTALL)
+            # Handle escaped quotes in YAML cassettes for all password fields
+            body = re.sub(r'\\"exitPassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"exitPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zdxDisablePassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zdxDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zdDisablePassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zdDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zpaDisablePassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zpaDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zdpDisablePassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zdpDisablePassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zccRevertPassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zccRevertPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"zccFailCloseSettingsExitUninstallPassword\\"\s*:\s*\\"[^"]*\\"', '\\\\"zccFailCloseSettingsExitUninstallPassword\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"logout_password\\"\s*:\s*\\"[^"]*\\"', '\\\\"logout_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"uninstall_password\\"\s*:\s*\\"[^"]*\\"', '\\\\"uninstall_password\\\\" : \\\\"REDACTED\\\\"', body)
+            body = re.sub(r'\\"disable_password\\"\s*:\s*\\"[^"]*\\"', '\\\\"disable_password\\\\" : \\\\"REDACTED\\\\"', body)
+            # Redact policy tokens and nonces (long hex/base64 strings)
+            body = re.sub(r'"policyToken"\s*:\s*"[a-zA-Z0-9+/=]{20,}"', '"policyToken":"REDACTED_TOKEN"', body)
+            body = re.sub(r'\\"policyToken\\" : \\"[a-zA-Z0-9+/=-]{20,}\\"', '\\\\"policyToken\\\\" : \\\\"REDACTED_TOKEN\\\\"', body)
+            body = re.sub(r'"nonce"\s*:\s*"[^"]{50,}"', '"nonce":"REDACTED_NONCE"', body)
             # Redact private keys (RSA, EC, etc.)
             body = re.sub(r'-----BEGIN[A-Z ]*PRIVATE KEY-----[^-]+-----END[A-Z ]*PRIVATE KEY-----', '-----BEGIN PRIVATE KEY-----REDACTED-----END PRIVATE KEY-----', body)
             body = re.sub(r'"privateKey"\s*:\s*"[^"]*"', '"privateKey":"REDACTED"', body)
@@ -311,6 +394,16 @@ def vcr_config():
             ("client_secret", "REDACTED"),
             ("apiKey", "REDACTED"),
             ("password", "REDACTED"),
+            ("Password", "REDACTED"),
+            ("preSharedKey", "REDACTED"),
+            ("exitPassword", "REDACTED"),
+            ("zdxDisablePassword", "REDACTED"),
+            ("zdDisablePassword", "REDACTED"),
+            ("zpaDisablePassword", "REDACTED"),
+            ("zdpDisablePassword", "REDACTED"),
+            ("zccRevertPassword", "REDACTED"),
+            ("policyToken", "REDACTED_TOKEN"),
+            ("nonce", "REDACTED_NONCE"),
         ],
         "match_on": ["method", "path", "query"],
         "record_mode": mode,
