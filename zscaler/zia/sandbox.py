@@ -326,9 +326,8 @@ class CloudSandboxAPI(APIClient):
         Args:
             md5_hash_value_list (list[dict]): A list of MD5 hash entries to be blocked.
                 Each entry should be a dictionary with the following keys:
-                    - url (str): The MD5 hash value.
-                    - urlComment (str): A comment describing the hash.
-                    - type (str): The type of threat, e.g., "MALWARE".
+                ``url`` (str): The MD5 hash value.
+                ``type`` (str): The type of hash, e.g., ``CUSTOM_FILEHASH_DENY`` or ``CUSTOM_FILEHASH_ALLOW``.
                 Pass an empty list to clear the blocklist.
 
         Returns:
@@ -338,11 +337,8 @@ class CloudSandboxAPI(APIClient):
             Add MD5 hashes to the sandbox blocklist:
 
             >>> hash_list = [
-            ...     {
-            ...         "url": "42914d6d213a20a2684064be5c80ffa9",
-            ...         "urlComment": "Malicious file detected",
-            ...         "type": "MALWARE"
-            ...     }
+            ...     {"url": "35e38d023b253c0cd9bd3e16afc362a7", "type": "CUSTOM_FILEHASH_DENY"},
+            ...     {"url": "f6c1cf98076457e742937240b29132d2", "type": "CUSTOM_FILEHASH_ALLOW"},
             ... ]
             >>> result, response, error = client.zia.sandbox.add_hash_to_custom_list(
             ...     md5_hash_value_list=hash_list

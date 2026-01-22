@@ -610,11 +610,13 @@ class FirewallResourcesAPI(APIClient):
         """
         )
 
+        query_params = query_params or {}
+
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params=query_params)
         if error:
             return (None, None, error)
 

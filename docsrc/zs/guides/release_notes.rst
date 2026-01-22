@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.13 (January 22, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+(`#450 <https://github.com/zscaler/zscaler-sdk-python/pull/450>`_) - Added new attribute `dest_workload_groups_ids` to ZTW `forwarding_rules` resource 
+(`#450 <https://github.com/zscaler/zscaler-sdk-python/pull/450>`_) - Added new CRUD functioins for ZTW `provisioning_url` resource api.
+(`#450 <https://github.com/zscaler/zscaler-sdk-python/pull/450>`_) - Added new function `get_rule_type_label` to retrieves a list of rule labels based on the specified rule type
+
+
 1.9.12 (January 19, 2025)
 ---------------------------
 

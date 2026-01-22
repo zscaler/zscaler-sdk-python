@@ -92,6 +92,7 @@ reformat_params = [
     ("scope_entity_ids", "adminScopeScopeEntities"),
     ("supported_region_ids", "supportedRegions"),
     ("src_workload_groups_ids", "srcWorkloadGroups"),
+    ("dest_workload_groups_ids", "destWorkloadGroups"),
 ]
 
 
