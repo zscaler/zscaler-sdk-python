@@ -114,7 +114,7 @@ class ForwardingControlRulesAPI(APIClient):
             order (str): The order of the rule, defaults to adding rule to bottom of list.
             rank (str): The admin rank of the rule. Supported values 1-7
             forward_method (str): The type of traffic forwarding method selected from the available options
-            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
+            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`, `LOCAL_SWITCH`
 
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
@@ -141,7 +141,8 @@ class ForwardingControlRulesAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
-            src_workload_groups (list): IDs for source workload groups.
+            src_workload_groups_ids (list): IDs for source workload groups.
+            dest_workload_groups_ids (list): IDs for destination workload groups (Valid for LOCAL_SWITCH forward method).
 
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
@@ -276,7 +277,8 @@ class ForwardingControlRulesAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
-            src_workload_groups (list): IDs for source workload groups.
+            src_workload_groups_ids (list): IDs for source workload groups.
+            dest_workload_groups_ids (list): IDs for destination workload groups (Valid for LOCAL_SWITCH forward method).
 
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.

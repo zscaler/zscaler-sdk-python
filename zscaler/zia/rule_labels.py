@@ -277,3 +277,53 @@ class RuleLabelsAPI(APIClient):
         if error:
             return (None, response, error)
         return (None, response, None)
+
+    def get_rule_type_label(self, rule_type: str) -> APIResult[List[RuleLabels]]:
+        """
+        Retrieves a list of rule labels based on the specified rule type
+
+        Args:
+            rule_type (str): The type of rule to retrieve labels for. Only supported values are: URL_FILTERING, FIREWALL, CASB_DLP, CLOUD_APP_CONTROL, DATA_PROTECTION, GENAI, INDUSTRY_PEER, NEWS_FEED, RISK_SCORE, SANDBOX
+
+        Returns:
+            tuple: A tuple containing (list of Rule Labels instances, Response, error)
+
+        Examples:
+            Get Rule Labels for a specific rule type:
+
+            >>> fetched_labels, _, error = client.zia.rule_labels.get_rule_type_label('URL_FILTERING')
+            >>> if error:
+            ...     print(f"Error listing labels: {error}")
+            ...     return
+            ... print(f"Total labels found: {len(fetched_labels)}")
+            ... for label in fetched_labels:
+            ...     print(label.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /ruleLabels/ruleType/{rule_type}
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(RuleLabels(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

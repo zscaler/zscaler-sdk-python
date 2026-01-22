@@ -289,6 +289,108 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    def update_ip_destination_group(
+        self,
+        group_id: str,
+        query_params: Optional[dict] = None,
+        **kwargs
+    ) -> APIResult[dict]:
+        """
+        Updates the specified IP Destination Group.
+
+        Args:
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.override]`` (bool): Indicates whether the IPs must be overridden.
+                    When set to false, the IPs are appended
+                    Else the existing IPs are overridden. The default value is true.
+
+            group_id (str): The unique ID of the IP Destination Group.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            name (str): The name of the IP Destination Group.
+            description (str): Additional information about the destination IP group.
+            type (str): Destination IP group type. Allowed values are DSTN_IP and DSTN_FQDN, DSTN_DOMAIN, DSTN_OTHER.
+            addresses (list): Destination IP addresses or FQDNs within the group.
+            ip_categories (list): Destination IP address URL categories. Note: Only Custom URL categories allowed.
+            countries (list): Destination IP address counties. i.e COUNTRY_CA, COUNTRY_US.
+
+        Returns:
+            :obj:`Tuple`: The updated IP Destination Group resource record.
+
+        Examples:
+            Update the name of an IP Destination Group:
+
+            >>> updated_group, _, error = client.ztw.ip_destination_groups.update_ip_destination_group(
+            ...     group_id='452125',
+            ...     name=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     description=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     addresses=["192.168.1.1", "192.168.1.2"],
+            ...     type="DSTN_IP"
+            ... )
+            >>> if error:
+            ...     print(f"Error updating group: {error}")
+            ...     return
+            ... print(f"Group updated successfully: {updated_group.as_dict()}")
+
+            Update the description and FQDNs for an IP Destination Group:
+
+            >>> updated_group, _, error = client.ztw.ip_destination_groups.update_ip_destination_group(
+            ...     group_id='452125',
+            ...     name=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     addresses=['arstechnica.com', 'slashdot.org'],
+            ...     type="DSTN_FQDN",
+            ... )
+            >>> if error:
+            ...     print(f"Error updating group: {error}")
+            ...     return
+            ... print(f"Group updated successfully: {updated_group.as_dict()}")
+
+            Update a Destination IP Group with country and url category for the US:
+
+            >>> updated_group, _, error = client.ztw.ip_destination_groups.update_ip_destination_group(
+            ...    group_id='452125',
+            ...    name=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...    description=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...    type='DSTN_OTHER',
+            ...    countries=['COUNTRY_CA']),
+            ...    ip_categories=['CUSTOM_01']),
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._ztw_base_endpoint}
+            /ipDestinationGroups/{group_id}
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+
+        body.update(kwargs)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, IPDestinationGroups)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = IPDestinationGroups(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
     def delete_ip_destination_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes the specified IP Destination Group.
