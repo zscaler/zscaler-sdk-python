@@ -8,7 +8,9 @@ from zscaler.helpers import (
     to_lower_camel_case,
     convert_keys_to_snake_case,
     convert_keys_to_camel_case,
-    convert_keys_to_camel_case_selective
+    convert_keys_to_camel_case_selective,
+    flatten_dict,
+    unflatten_dict
 )
 
 
@@ -370,12 +372,12 @@ def test_helper_functions_roundtrip():
     original_snake = "test_snake_case_string"
     camel = to_lower_camel_case(original_snake)
     back_to_snake = to_snake_case(camel)
-    
+
     # Note: This might not be exactly the same due to field exceptions
     # but should be functionally equivalent
     assert isinstance(camel, str)
     assert isinstance(back_to_snake, str)
-    
+
     # Test with known roundtrip cases
     test_cases = [
         "simple_case",
@@ -383,9 +385,333 @@ def test_helper_functions_roundtrip():
         "with_numbers123",
         "mixed_Case_String"
     ]
-    
+
     for case in test_cases:
         camel_result = to_lower_camel_case(case)
         snake_result = to_snake_case(camel_result)
         assert isinstance(camel_result, str)
         assert isinstance(snake_result, str)
+
+
+def test_flatten_dict_basic():
+    """Test flatten_dict with basic nested dictionaries."""
+    # Simple nested dictionary
+    data = {"a": {"b": 1, "c": 2}}
+    result = flatten_dict(data)
+    expected = {"a_b": 1, "a_c": 2}
+    assert result == expected
+
+    # Single level dictionary (no flattening needed)
+    data = {"a": 1, "b": 2}
+    result = flatten_dict(data)
+    expected = {"a": 1, "b": 2}
+    assert result == expected
+
+    # Empty dictionary
+    data = {}
+    result = flatten_dict(data)
+    expected = {}
+    assert result == expected
+
+
+def test_flatten_dict_nested():
+    """Test flatten_dict with deeply nested dictionaries."""
+    # Deeply nested dictionary
+    data = {
+        "client": {
+            "cache": {
+                "enabled": True,
+                "defaultTtl": 300
+            },
+            "logging": {
+                "enabled": False
+            }
+        }
+    }
+    result = flatten_dict(data)
+    expected = {
+        "client_cache_enabled": True,
+        "client_cache_defaultTtl": 300,
+        "client_logging_enabled": False
+    }
+    assert result == expected
+
+    # Very deep nesting
+    data = {
+        "level1": {
+            "level2": {
+                "level3": {
+                    "level4": {
+                        "value": "deep"
+                    }
+                }
+            }
+        }
+    }
+    result = flatten_dict(data)
+    expected = {"level1_level2_level3_level4_value": "deep"}
+    assert result == expected
+
+
+def test_flatten_dict_custom_delimiter():
+    """Test flatten_dict with custom delimiter."""
+    data = {"a": {"b": {"c": 1}}}
+
+    # Test with dot delimiter
+    result = flatten_dict(data, delimiter=".")
+    expected = {"a.b.c": 1}
+    assert result == expected
+
+    # Test with dash delimiter
+    result = flatten_dict(data, delimiter="-")
+    expected = {"a-b-c": 1}
+    assert result == expected
+
+    # Test with double underscore delimiter
+    result = flatten_dict(data, delimiter="__")
+    expected = {"a__b__c": 1}
+    assert result == expected
+
+
+def test_flatten_dict_mixed_types():
+    """Test flatten_dict with various value types."""
+    data = {
+        "string": "value",
+        "number": 42,
+        "boolean": True,
+        "null": None,
+        "list": [1, 2, 3],
+        "nested": {
+            "mixed": "nested_value"
+        }
+    }
+    result = flatten_dict(data)
+    expected = {
+        "string": "value",
+        "number": 42,
+        "boolean": True,
+        "null": None,
+        "list": [1, 2, 3],
+        "nested_mixed": "nested_value"
+    }
+    assert result == expected
+
+
+def test_unflatten_dict_basic():
+    """Test unflatten_dict with basic flattened dictionaries."""
+    # Simple flattened dictionary
+    data = {"a_b": 1, "a_c": 2}
+    result = unflatten_dict(data)
+    expected = {"a": {"b": 1, "c": 2}}
+    assert result == expected
+
+    # Single level dictionary (no unflattening needed)
+    data = {"a": 1, "b": 2}
+    result = unflatten_dict(data)
+    expected = {"a": 1, "b": 2}
+    assert result == expected
+
+    # Empty dictionary
+    data = {}
+    result = unflatten_dict(data)
+    expected = {}
+    assert result == expected
+
+
+def test_unflatten_dict_nested():
+    """Test unflatten_dict with deeply nested keys."""
+    # Deeply nested keys
+    data = {
+        "client_cache_enabled": True,
+        "client_cache_defaultTtl": 300,
+        "client_logging_enabled": False
+    }
+    result = unflatten_dict(data)
+    expected = {
+        "client": {
+            "cache": {
+                "enabled": True,
+                "defaultTtl": 300
+            },
+            "logging": {
+                "enabled": False
+            }
+        }
+    }
+    assert result == expected
+
+    # Very deep nesting
+    data = {"level1_level2_level3_level4_value": "deep"}
+    result = unflatten_dict(data)
+    expected = {
+        "level1": {
+            "level2": {
+                "level3": {
+                    "level4": {
+                        "value": "deep"
+                    }
+                }
+            }
+        }
+    }
+    assert result == expected
+
+
+def test_unflatten_dict_custom_delimiter():
+    """Test unflatten_dict with custom delimiter."""
+    # Test with dot delimiter
+    data = {"a.b.c": 1}
+    result = unflatten_dict(data, delimiter=".")
+    expected = {"a": {"b": {"c": 1}}}
+    assert result == expected
+
+    # Test with dash delimiter
+    data = {"a-b-c": 1}
+    result = unflatten_dict(data, delimiter="-")
+    expected = {"a": {"b": {"c": 1}}}
+    assert result == expected
+
+    # Test with double underscore delimiter
+    data = {"a__b__c": 1}
+    result = unflatten_dict(data, delimiter="__")
+    expected = {"a": {"b": {"c": 1}}}
+    assert result == expected
+
+
+def test_unflatten_dict_mixed_types():
+    """Test unflatten_dict with various value types."""
+    data = {
+        "string": "value",
+        "number": 42,
+        "boolean": True,
+        "null": None,
+        "list": [1, 2, 3],
+        "nested_mixed": "nested_value"
+    }
+    result = unflatten_dict(data)
+    expected = {
+        "string": "value",
+        "number": 42,
+        "boolean": True,
+        "null": None,
+        "list": [1, 2, 3],
+        "nested": {
+            "mixed": "nested_value"
+        }
+    }
+    assert result == expected
+
+
+def test_flatten_unflatten_roundtrip():
+    """Test that flatten and unflatten are inverse operations."""
+    # Simple nested dictionary
+    original = {
+        "client": {
+            "clientId": "test_client",
+            "cache": {
+                "enabled": True,
+                "defaultTtl": 300
+            }
+        }
+    }
+    flattened = flatten_dict(original)
+    restored = unflatten_dict(flattened)
+    assert restored == original
+
+    # Complex nested structure
+    original = {
+        "level1": {
+            "level2a": {
+                "level3": "value1"
+            },
+            "level2b": {
+                "level3": "value2"
+            }
+        },
+        "toplevel": "value3"
+    }
+    flattened = flatten_dict(original)
+    restored = unflatten_dict(flattened)
+    assert restored == original
+
+    # Single level dictionary
+    original = {"a": 1, "b": 2, "c": 3}
+    flattened = flatten_dict(original)
+    restored = unflatten_dict(flattened)
+    assert restored == original
+
+
+def test_flatten_dict_empty_string_values():
+    """Test flatten_dict with empty string values."""
+    data = {
+        "client": {
+            "clientId": "",
+            "clientSecret": "secret",
+            "cache": {
+                "enabled": False,
+                "defaultTtl": ""
+            }
+        }
+    }
+    result = flatten_dict(data)
+    expected = {
+        "client_clientId": "",
+        "client_clientSecret": "secret",
+        "client_cache_enabled": False,
+        "client_cache_defaultTtl": ""
+    }
+    assert result == expected
+
+
+def test_unflatten_dict_with_shared_prefixes():
+    """Test unflatten_dict with keys that share common prefixes."""
+    # Test keys with shared prefixes (but no conflicts)
+    data = {
+        "client_id": "test",
+        "client_secret": "secret",
+        "client_cache_enabled": True,
+        "other": "data"
+    }
+    result = unflatten_dict(data)
+    expected = {
+        "client": {
+            "id": "test",
+            "secret": "secret",
+            "cache": {
+                "enabled": True
+            }
+        },
+        "other": "data"
+    }
+    assert result == expected
+
+
+def test_flatten_dict_config_setter_use_case():
+    """Test flatten_dict with real config_setter use cases."""
+    # Test the actual config structure from ConfigSetter
+    config = {
+        "client": {
+            "clientId": "test_id",
+            "clientSecret": "test_secret",
+            "cache": {
+                "enabled": False,
+                "defaultTtl": 300,
+                "defaultTti": 300
+            },
+            "logging": {
+                "enabled": False,
+                "verbose": False
+            }
+        }
+    }
+
+    flattened = flatten_dict(config["client"])
+    assert "clientId" in flattened
+    assert "clientSecret" in flattened
+    assert "cache_enabled" in flattened
+    assert "cache_defaultTtl" in flattened
+    assert "logging_enabled" in flattened
+
+    # Verify roundtrip
+    restored = unflatten_dict(flattened)
+    assert restored == config["client"]

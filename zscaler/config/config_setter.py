@@ -3,9 +3,8 @@ import os
 import logging
 import yaml
 from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
-from flatdict import FlatDict
 
-from zscaler.helpers import to_snake_case
+from zscaler.helpers import to_snake_case, flatten_dict, unflatten_dict
 
 
 logger = logging.getLogger(__name__)
@@ -74,12 +73,10 @@ class ConfigSetter:
         with no value
         """
         # logger.debug("Pruning configuration to remove empty fields.")
-        flat_current_config = FlatDict(config, delimiter="_")
-        for key in flat_current_config.keys():
-            if flat_current_config.get(key) == "":
-                del flat_current_config[key]
-
-        return flat_current_config.as_dict()
+        flat_current_config = flatten_dict(config, delimiter="_")
+        # Remove empty values
+        flat_current_config = {k: v for k, v in flat_current_config.items() if v != ""}
+        return unflatten_dict(flat_current_config, delimiter="_")
 
     def _update_config(self):
         """
@@ -151,16 +148,16 @@ class ConfigSetter:
     def _apply_config(self, new_config: dict):
         """Apply a config dictionary to the current config, overwriting values"""
         # logger.debug("Applying new configuration settings.")
-        flat_current_client = FlatDict(self._config["client"], delimiter="_")
-        flat_current_testing = FlatDict(self._config["testing"], delimiter="_")
+        flat_current_client = flatten_dict(self._config["client"], delimiter="_")
+        flat_current_testing = flatten_dict(self._config["testing"], delimiter="_")
 
-        flat_new_client = FlatDict(new_config.get("client", {}), delimiter="_")
-        flat_new_testing = FlatDict(new_config.get("testing", {}), delimiter="_")
+        flat_new_client = flatten_dict(new_config.get("client", {}), delimiter="_")
+        flat_new_testing = flatten_dict(new_config.get("testing", {}), delimiter="_")
 
         flat_current_client.update(flat_new_client)
         flat_current_testing.update(flat_new_testing)
 
-        self._config = {"client": flat_current_client.as_dict(), "testing": flat_current_testing.as_dict()}
+        self._config = {"client": unflatten_dict(flat_current_client, delimiter="_"), "testing": unflatten_dict(flat_current_testing, delimiter="_")}
 
     def _apply_yaml_config(self, path: str):
         """This method applies a YAML configuration to the Zscaler Client Config"""
@@ -181,11 +178,11 @@ class ConfigSetter:
         # logger.debug(f"Applying environment variables for {conf_key} configuration.")
         # Flatten current config and join with underscores
         # (for environment variable format)
-        flattened_config = FlatDict(self._config.get(conf_key, {}), delimiter="_")
+        flattened_config = flatten_dict(self._config.get(conf_key, {}), delimiter="_")
         flattened_keys = flattened_config.keys()
 
         # Create empty result config and populate
-        updated_config = FlatDict({}, delimiter="_")
+        updated_config = {}
 
         # Go through keys and search for it in the environment vars
         # using the format described in the README
@@ -195,4 +192,4 @@ class ConfigSetter:
 
             if env_value is not None:
                 updated_config[key] = env_value
-        self._apply_config({conf_key: updated_config.as_dict()})
+        self._apply_config({conf_key: unflatten_dict(updated_config, delimiter="_")})
