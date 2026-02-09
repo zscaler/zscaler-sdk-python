@@ -1035,3 +1035,72 @@ def dump_response(
     log_lines.append("-" * 68)
     logger.info("\n".join(log_lines))
 
+
+class FlatDict(dict):
+    """
+    A dictionary that flattens nested dicts using a delimiter.
+
+    This is a minimal implementation replacing the external `flatdict` package
+    which is unmaintained (last release Feb 2020) and incompatible with
+    setuptools 82+ due to its use of the deprecated `pkg_resources` module.
+
+    Example:
+        >>> fd = FlatDict({'a': {'b': 1, 'c': 2}}, delimiter='_')
+        >>> dict(fd)
+        {'a_b': 1, 'a_c': 2}
+        >>> fd.as_dict()
+        {'a': {'b': 1, 'c': 2}}
+    """
+
+    def __init__(
+        self,
+        value: dict | None = None,
+        delimiter: str = ":",
+    ) -> None:
+        """
+        Initialize a FlatDict.
+
+        Args:
+            value: Optional nested dictionary to flatten.
+            delimiter: String used to join nested keys. Defaults to ":".
+        """
+        super().__init__()
+        self._delimiter = delimiter
+        if value:
+            self._flatten(value)
+
+    def _flatten(self, d: dict, parent_key: str = "") -> None:
+        """
+        Recursively flatten a nested dictionary.
+
+        Args:
+            d: Dictionary to flatten.
+            parent_key: Prefix for keys (used in recursion).
+        """
+        for key, value in d.items():
+            new_key = f"{parent_key}{self._delimiter}{key}" if parent_key else str(key)
+            if isinstance(value, dict) and value:
+                self._flatten(value, new_key)
+            else:
+                self[new_key] = value
+
+    def as_dict(self) -> dict:
+        """
+        Convert the flattened dictionary back to a nested dictionary.
+
+        Returns:
+            A nested dictionary reconstructed from the flattened keys.
+        """
+        result: dict = {}
+        for flat_key, value in self.items():
+            keys = flat_key.split(self._delimiter)
+            current = result
+            for key in keys[:-1]:
+                current = current.setdefault(key, {})
+            current[keys[-1]] = value
+        return result
+
+    def keys(self):
+        """Return a list of keys (allows modification during iteration)."""
+        return list(super().keys())
+

@@ -3,7 +3,7 @@ import os
 import logging
 import yaml
 from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
-from flatdict import FlatDict
+from zscaler.utils import FlatDict
 
 from zscaler.helpers import to_snake_case
 
