@@ -101,10 +101,7 @@ class LegacyZGuardClientHelper:
                 f"API key is required. Please set 'api_key' or '{self._env_base}_API_KEY' environment variable."
             )
 
-        self.logger.info(f"Initializing {self._product} client")
-        # Log only non-sensitive, high-level configuration detail
-        self.logger.debug(f"Using cloud: {self.env_cloud}")
-        # Do not log any portion of the API key or derived URLs to avoid exposing sensitive information
+        self.logger.info("Initializing %s client", self._product)
         self.logger.debug("API key configured")
 
         # Setup user agent
