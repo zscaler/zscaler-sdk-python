@@ -82,6 +82,11 @@ class ConfigValidator:
         client_id_errors = []
 
         # Ensure client ID is provided
+        if client_id is None:
+            client_id_errors.append(ERROR_MESSAGE_CLIENT_ID_MISSING)
+            logging.warning("Client ID is missing.")
+            return client_id_errors
+
         client_id = client_id.strip().lower()
         if not client_id:
             client_id_errors.append(ERROR_MESSAGE_CLIENT_ID_MISSING)

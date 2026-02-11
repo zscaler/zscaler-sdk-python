@@ -1,0 +1,71 @@
+interactions:
+- request:
+    body: '{"active": true, "networkName": "Test CRUD Trusted Network", "dnsServers":
+      "8.8.8.8, 8.8.4.4", "dnsSearchDomains": "crud-test.example.com", "hostnames":
+      "", "trustedSubnets": "192.168.1.0/24", "trustedGateways": "192.168.1.1", "trustedDhcpServers":
+      ""}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '252'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/create
+  response:
+    body:
+      string: "{\n  \"conditionType\" : 0,\n  \"active\" : false\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:36:20 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '160'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d9070cfc-cc20-9270-8cb8-d883ca070849
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '90'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '33'
+      x-ratelimit-reset:
+      - '1420'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

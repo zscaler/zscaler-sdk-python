@@ -1,0 +1,226 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/updateZdxGroupEntitlement
+  response:
+    body:
+      string: 404 Not Found
+    headers:
+      content-length:
+      - '13'
+      content-type:
+      - application/json
+      date:
+      - Wed, 11 Feb 2026 02:35:57 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '2'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 22becc50-daa4-97ed-a3e4-ac582ced0d8d
+      x-oneapi-version:
+      - 109.1.111
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/updateZpaGroupEntitlement
+  response:
+    body:
+      string: 404 Not Found
+    headers:
+      content-length:
+      - '13'
+      content-type:
+      - application/json
+      date:
+      - Wed, 11 Feb 2026 02:35:57 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '1'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b7ab2b49-9ab2-935f-b332-570a232b4134
+      x-oneapi-version:
+      - 109.1.111
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getZdxGroupEntitlements
+  response:
+    body:
+      string: "{\n  \"totalCount\" : 0,\n  \"upmEnableForAll\" : 1,\n  \"logoutZCCForZDXService\"
+        : 0,\n  \"computeDeviceGroupsForZDX\" : 0,\n  \"upmGroupList\" : [ ],\n  \"upmDeviceGroupList\"
+        : [ ],\n  \"collectZdxLocation\" : 1\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:58 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '211'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9791b915-2b97-92b7-9422-5b6815aa5535
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '93'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '64'
+      x-ratelimit-reset:
+      - '1443'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getZpaGroupEntitlements
+  response:
+    body:
+      string: "{\n  \"totalCount\" : 0,\n  \"zpaEnableForAll\" : 1,\n  \"computeDeviceGroupsForZPA\"
+        : 0,\n  \"machineTunEnabledForAll\" : 1,\n  \"groupList\" : [ ],\n  \"deviceGroupList\"
+        : [ ]\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:58 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '398'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5ed0ecf8-333b-972c-8a04-79623b31c674
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '96'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '63'
+      x-ratelimit-reset:
+      - '1442'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

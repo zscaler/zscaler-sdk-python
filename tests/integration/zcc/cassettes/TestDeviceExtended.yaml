@@ -1,0 +1,343 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/downloadDevices
+  response:
+    body:
+      string: '"User","Device type","Device model","External Device ID","UDID","Mac
+        Address","Company Name","OS Version","Zscaler Client Connector Version","Zscaler
+        Digital Experience Version","Policy Name","Last Seen Connected to ZIA","VPN
+        State","Device State","Owner","Hostname","Manufacturer","Config Download Count","Registration
+        TimeStamp","Last Deregistration TimeStamp","Config Download TimeStamp","Last
+        Seen with Client Connector Active","Device Hardware Fingerprint","Tunnel Version","Log
+        TS","Log Ack TS","Log Url","ZCC Revert Status","Device Trust Level","Zscaler
+        Data Protection Version","Active Tunnel SDK version","Imprivata User","SerialNumber","Installation
+        Type","Last Seen Connected to ZPA"
+
+        "REDACTED","MAC","Apple Mac16,7","","053AF529-6506-5BF4-974E-A78C00AA51BD:501","06:5F:DD:5A:83:66","William
+        Guilherme","Version 15.6.1 (Build 24G90) ;arm","4.5.2.73","4.4.1.12","ZTunnel2.0","2025-10-07
+        15:52:01 GMT","Unknown","Unregistered","wguilherme","F99LXTG6YY","Apple","8","2025-10-06
+        23:38:39 GMT","2025-10-07 16:24:31 GMT","2025-10-07 10:07:11 GMT","2025-10-07
+        15:52:01 GMT","6455319b50424227afe83202e4cf67ce4d633bd5","Tunnel 2.0 with
+        DTLS Protocol","","",,"Not Applicable","Not Applicable","25.3.16.1167","","Not
+        Applicable","F99LXTG6YY","General Deployment","2025-10-07 15:52:01 GMT"
+
+        "REDACTED","WINDOWS","VMware, Inc. VMware Virtual Platform","","VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8","00:50:56:82:34:A2","William
+        Guilherme","Microsoft Windows 10 Pro;64 bit;amd64","4.7.0.88 (64-bit)","4.5.0.33
+        (32-bit)","SGIOLab","2025-10-07 07:35:06 GMT","Unknown","Remove pending","WilliamGuilherme","VCD138-WIN10","VMware,
+        Inc.","1","2025-10-07 07:35:02 GMT","2025-10-07 00:18:23 GMT","2025-10-07
+        07:35:02 GMT","2025-10-07 07:35:06 GMT","N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==","Tunnel
+        2.0 with DTLS Protocol","","",,"Not Applicable","Not Applicable","25.3.15.9","","No","VMware-42
+        02 38 a5 5f 9c 86 39-ff 5a d0 60 5c 35 6","General Deployment","2025-10-07
+        07:35:06 GMT"
+
+        "REDACTED","WINDOWS","VMware, Inc. VMware Virtual Platform",,"VMware-42-1d-29-9b-7c-c5-3f-d2-90-3c-d5-4e-9c-75-6d-d0:19D0764C0D09DF81361B52530353FD5A52A34D68","00:50:56:9D:F5:23","William
+        Guilherme","Microsoft Windows 10 Pro;64 bit","3.6.1.23","3.0.0.57 (32-bit)","SGIOLab","2022-02-18
+        19:50:34 GMT","Unknown","Remove pending","wguilherme","VCD138-WIN10","VMware,
+        Inc.","1","2022-02-18 19:50:34 GMT","2022-01-12 17:56:19 GMT","2022-02-18
+        19:50:34 GMT","2022-02-18 20:06:34 GMT","AVANUFFSVFMFBgMNAQRVUQAAAAAAAAAAAAAAAAAAAAA=","","","",,"Not
+        Applicable","Not Applicable",,"","Not Applicable","Not Applicable","General
+        Deployment","2022-01-12 17:43:59 GMT"
+
+        "REDACTED","WINDOWS","VMware, Inc. VMware Virtual Platform","","VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D","00:50:56:82:34:A2","William
+        Guilherme","Microsoft Windows 10 Pro;64 bit;amd64","4.7.0.61 (64-bit)","4.5.0.16
+        (64-bit)","SGIOLab","2025-08-30 03:03:41 GMT","Unknown","Quarantined","Administrator","VCD138-WIN10","VMware,
+        Inc.","4","2025-08-26 19:16:43 GMT","2025-09-18 04:55:20 GMT","2025-08-26
+        21:59:39 GMT","2025-08-30 03:03:41 GMT","N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==","Tunnel
+        1.0 with Connect Protocol","","",,"Not Applicable","Not Applicable","25.3.15.9","","No","VMware-42
+        02 38 a5 5f 9c 86 39-ff 5a d0 60 5c 35 6","General Deployment","2025-08-26
+        19:17:21 GMT"
+
+        '
+    headers:
+      cache-control:
+      - no-cache
+      content-disposition:
+      - attachment; filename=export_2026-02-11_02_35.csv
+      content-type:
+      - application/octet-stream;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:51 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '394'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5d8066d5-41ae-9ab7-be22-6f239f2104de
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '2'
+      x-ratelimit-limit:
+      - 3, 3;w=86400, 100;w=3600
+      x-ratelimit-remaining:
+      - '2'
+      x-ratelimit-reset:
+      - '77049'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/downloadServiceStatus
+  response:
+    body:
+      string: '"User","UDID","ZIA Enabled","ZIA Health","Last Seen Connected to ZIA","ZPA
+        Enabled","ZPA Health","Last Seen Connected to ZPA","ZDX Enabled","ZDX Health","Last
+        Seen Connected to ZDX","ZDX Version","ZDP Enabled","ZDP Health","Last Seen
+        Connected to ZDP","ZDP Version","Keep Alive Timestamp","Device type","Device
+        Hardware Fingerprint","Zscaler Client Connector Version","Registration State","Hostname","DC
+        Location Method"
+
+        "REDACTED","053AF529-6506-5BF4-974E-A78C00AA51BD:501","true","Active","2025-10-07
+        15:52:01 GMT","true","Active","2025-10-07 15:52:01 GMT","true","Active","2025-10-07
+        15:52:01 GMT","4.4.1.12","true","Active","2025-10-07 15:52:01 GMT","25.3.16.1167","2025-10-07
+        15:52:01 GMT","MAC","6455319b50424227afe83202e4cf67ce4d633bd5","4.5.2.73","Unregistered","F99LXTG6YY"
+
+        "REDACTED","VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8","true","Active","2025-10-07
+        07:35:06 GMT","true","Active","2025-10-07 07:35:06 GMT","true","Inactive","2025-10-07
+        00:04:22 GMT","4.5.0.33","true","Inactive","2025-10-07 00:04:22 GMT","25.3.15.9","2025-10-07
+        07:35:06 GMT","WINDOWS","N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==","4.7.0.88
+        (64 bit)","Remove pending","VCD138-WIN10"
+
+        "REDACTED","VMware-42-1d-29-9b-7c-c5-3f-d2-90-3c-d5-4e-9c-75-6d-d0:19D0764C0D09DF81361B52530353FD5A52A34D68","true","Inactive","2022-02-18
+        19:50:34 GMT","true","Inactive","2022-01-12 17:43:59 GMT","true","Inactive","2022-01-12
+        17:43:59 GMT","3.0.0.57","false","Inactive",,"","2022-02-18 20:06:34 GMT","WINDOWS","AVANUFFSVFMFBgMNAQRVUQAAAAAAAAAAAAAAAAAAAAA=","3.6.1.23","Remove
+        pending","VCD138-WIN10"
+
+        "REDACTED","VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D","true","Active","2025-08-30
+        03:03:41 GMT","true","Inactive","2025-08-26 19:17:21 GMT","true","Active","2025-08-30
+        03:03:41 GMT","4.5.0.16","true","Active","2025-08-30 03:03:41 GMT","25.3.15.9","2025-08-30
+        03:03:41 GMT","WINDOWS","N2U3YzVmZjU3MmVlMThlODQ2ZGYzN2U2ZWE5ODlkZWVjM2IwYmE5MDQ2NTAyNzRjMDA4NmJmOTZkOTcyMzNjYg==","4.7.0.61
+        (64 bit)","Quarantined","VCD138-WIN10"
+
+        '
+    headers:
+      cache-control:
+      - no-cache
+      content-disposition:
+      - attachment; filename=export_2026-02-11_02_35.csv
+      content-type:
+      - application/octet-stream;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:52 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '394'
+      x-frame-options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - dbf2c54b-bb41-9f9e-b145-667c865825f3
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '2'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '78'
+      x-ratelimit-reset:
+      - '1449'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getDeviceCleanupInfo
+  response:
+    body:
+      string: "{\n  \"id\" : \"0\",\n  \"active\" : \"1\",\n  \"forceRemoveType\"
+        : \"0\",\n  \"deviceExceedLimit\" : \"16\",\n  \"autoRemovalDays\" : \"0\",\n
+        \ \"autoPurgeDays\" : \"0\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:52 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '186'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e18045e8-35b6-9246-98e1-66cb5d0d7f53
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '97'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '77'
+      x-ratelimit-reset:
+      - '1448'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"hostNames": ["NON_EXISTENT_HOST"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '36'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/removeMachineTunnel
+  response:
+    body:
+      string: "{\n  \"devicesRemoved\" : 0,\n  \"errorMsg\" : \"No devices to delete\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:52 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '183'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1fc09efd-3574-9845-8c0b-dbcf45381aac
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '98'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '76'
+      x-ratelimit-reset:
+      - '1448'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
