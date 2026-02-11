@@ -50,6 +50,8 @@ class ApplicationSegments(ZscalerObject):
             self.health_reporting = config["healthReporting"] if "healthReporting" in config else None
             self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else None
             self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else None
+            self.policy_style = config["policyStyle"] if "policyStyle" in config else None
+
             self.passive_health_enabled = config["passiveHealthEnabled"] \
                 if "passiveHealthEnabled" in config else None
             self.select_connector_close_to_app = (
@@ -198,6 +200,7 @@ class ApplicationSegments(ZscalerObject):
             self.shared_microtenant_details = None
             self.application_group = None
             self.zpn_er_id = None
+            self.policy_style = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -250,7 +253,8 @@ class ApplicationSegments(ZscalerObject):
             "zscalerManaged": self.zscaler_managed,
             "sharedMicrotenantDetails": self.shared_microtenant_details,
             "applicationGroup": self.application_group,
-            "zpnErId": self.zpn_er_id
+            "zpnErId": self.zpn_er_id,
+            "policyStyle": self.policy_style,
         }
 
 

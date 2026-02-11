@@ -49,6 +49,7 @@ class DLPWebRules(ZscalerObject):
             self.action = config["action"] if "action" in config else None
             self.state = config["state"] if "state" in config else None
             self.match_only = config["matchOnly"] if "matchOnly" in config else False
+            self.eun_template_id = config["eunTemplateId"] if "eunTemplateId" in config else None
             self.without_content_inspection = (
                 config["withoutContentInspection"] if "withoutContentInspection" in config else False
             )
@@ -183,6 +184,7 @@ class DLPWebRules(ZscalerObject):
             self.external_auditor_email = None
             self.dlp_content_locations_scopes = []
             self.dlp_engines = []
+            self.eun_template_id = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -238,6 +240,7 @@ class DLPWebRules(ZscalerObject):
             "externalAuditorEmail": self.external_auditor_email,
             "dlpContentLocationsScopes": self.dlp_content_locations_scopes,
             "dlpEngines": [engine.request_format() for engine in (self.dlp_engines or [])],
+            "eunTemplateId": self.eun_template_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

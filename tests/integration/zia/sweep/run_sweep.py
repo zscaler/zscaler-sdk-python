@@ -16,6 +16,13 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
 import sys
+from pathlib import Path
+
+# Add project root to path so zscaler is importable when run as script
+_project_root = Path(__file__).resolve().parent.parent.parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
 import logging
 from zscaler import ZscalerClient
 
@@ -97,7 +104,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing rule labels: {error}")
 
-            test_labels = [lab for lab in labels if hasattr(lab, "name") and lab.name.startswith("tests-")]
+            test_labels = [lab for lab in labels if hasattr(lab, "name") and lab.name.startswith("Bulk-Test-Label-")]
             logging.info(f"Found {len(test_labels)} rule labels to delete.")
 
             for label in test_labels:

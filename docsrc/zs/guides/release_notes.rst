@@ -6,7 +6,43 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.9.13 (January 22, 2025)
+1.9.14 (February 10, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements:
+-------------
+
+Zscaler AI Guard
+^^^^^^^^^^^^^^^^^^
+
+(`#457 <https://github.com/zscaler/zscaler-sdk-python/pull/457>`_) - Added new Zscaler AI Guard API endpoints:
+
+- ``/detection/execute-policy``
+- ``/detection/resolve-and-execute-policy``
+
+ZIA API
+^^^^^^^
+
+(`#457 <https://github.com/zscaler/zscaler-sdk-python/pull/457>`_) - Added new attributes `url_type`, `regex_patterns`,  and `regex_patterns_retaining_parent_category` to ZIA `url_categories` resource to specify whether the category uses exact URLs or regex patterns. Supported values are `EXACT` and `REGEX`. See `Zscaler Release Notes 2026 <https://help.zscaler.com/zia/release-upgrade-summary-2026>`_ for details. To enable this feature, contact Zscaler Support.
+
+
+ZTW API
+^^^^^^^
+
+(`#457 <https://github.com/zscaler/zscaler-sdk-python/pull/457>`_) - Added ``DELETE`` method for ``forwarding_rules`` resource.
+
+Bug Fixes:
+----------
+
+(`#457 <https://github.com/zscaler/zscaler-sdk-python/pull/457>`_) - Replaced ``flatdict`` dependency with internal ``flatten_dict``/``unflatten_dict`` helpers to fix build failures on ``setuptools 82+``. Thanks `@pankaj28843 <https://github.com/pankaj28843>`_ for reporting `#454 <https://github.com/zscaler/zscaler-sdk-python/issues/454>`_ and `@enza252 <https://github.com/enza252>`_ for the `initial implementation <https://github.com/zscaler/zscaler-sdk-python/pull/455>`_.
+
+
+1.9.13 (January 22, 2026)
 ---------------------------
 
 Notes
@@ -19,7 +55,7 @@ Notes
 (`#450 <https://github.com/zscaler/zscaler-sdk-python/pull/450>`_) - Added new function `get_rule_type_label` to retrieves a list of rule labels based on the specified rule type
 
 
-1.9.12 (January 19, 2025)
+1.9.12 (January 19, 2026)
 ---------------------------
 
 Notes

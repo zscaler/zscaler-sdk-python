@@ -40,6 +40,10 @@ class URLCategory(ZscalerObject):
 
             self.urls = ZscalerCollection.form_list(config["urls"] if "urls" in config else [], str)
 
+            self.regex_patterns_retaining_parent_category = ZscalerCollection.form_list(config["regexPatternsRetainingParentCategory"] if "regexPatternsRetainingParentCategory" in config else [], str)
+
+            self.regex_patterns = ZscalerCollection.form_list(config["regexPatterns"] if "regexPatterns" in config else [], str)
+
             self.db_categorized_urls = ZscalerCollection.form_list(
                 config["dbCategorizedUrls"] if "dbCategorizedUrls" in config else [], str
             )
@@ -68,7 +72,8 @@ class URLCategory(ZscalerObject):
             self.editable = config["editable"] if "editable" in config else False
             self.description = config["description"] if "description" in config else None
             self.type = config["type"] if "type" in config else None
-
+            self.url_type = config["urlType"] if "urlType" in config else None
+            
             # Handle nested dictionary for urlKeywordCounts
             # Handle nested dictionary for urlKeywordCounts
             self.url_keyword_counts = (
@@ -127,6 +132,9 @@ class URLCategory(ZscalerObject):
             self.urls_retaining_parent_category_count = 0
             self.custom_ip_ranges_count = 0
             self.ip_ranges_retaining_parent_category_count = 0
+            self.regex_patterns_retaining_parent_category = []
+            self.url_type = None
+            self.regex_patterns = []
 
     def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
@@ -150,6 +158,9 @@ class URLCategory(ZscalerObject):
             "urlsRetainingParentCategoryCount": self.urls_retaining_parent_category_count,
             "customIpRangesCount": self.custom_ip_ranges_count,
             "ipRangesRetainingParentCategoryCount": self.ip_ranges_retaining_parent_category_count,
+            "regexPatternsRetainingParentCategory": self.regex_patterns_retaining_parent_category,
+            "urlType": self.url_type,
+            "regexPatterns": self.regex_patterns,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

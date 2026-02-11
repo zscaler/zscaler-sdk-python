@@ -14,5 +14,4 @@ python-box>=7.3.2
 pydash>=8.0.5
 aenum>=3.1.11
 arrow>=1.3.0
-flatdict>=4.0.0
 pytz

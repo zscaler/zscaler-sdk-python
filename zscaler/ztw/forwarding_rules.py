@@ -375,3 +375,39 @@ class ForwardingControlRulesAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
+
+    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+        """
+        Deletes the specified forwarding rule.
+
+        Args:
+            rule_id (str): The unique ID of the forwarding rule.
+
+        Returns:
+            :obj:`int`: The status code of the operation.
+
+        Examples:
+            >>> _, response, error = client.client.ztw.forwarding_rules.delete_rule(updated_rule.id)
+            ... if error:
+            ...     print(f"Error deleting rule: {error}")
+            ... return
+
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._ztw_base_endpoint}
+             /ecRules/ecRdr/{rule_id}
+        """
+        )
+
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+        return (None, response, None)

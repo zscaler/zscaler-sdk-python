@@ -40,6 +40,7 @@ help:
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zinsights                Check style with flake8 for zinsights packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with flake8 for zaiguard packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
@@ -52,6 +53,7 @@ help:
 	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zinsights    Run only zinsights integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zaiguard     Run only zaiguard integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  build:dist                    Build the distribution for publishing$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)publish$(COLOR_NONE)"
@@ -126,6 +128,10 @@ lint\:zwa:
 lint\:zeasm:
 	poetry run flake8 zscaler/zeasm --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zeasm --count --select=E9,F63,F7,F82 --show-source --statistics
+
+lint\:zaiguard:
+	poetry run flake8 zscaler/zaiguard --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zaiguard --count --select=E9,F63,F7,F82 --show-source --statistics
 
 format:
 	poetry run black .
@@ -328,19 +334,19 @@ test\:integration\:live:
 
 sweep\:zia:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZIA_SDK_TEST_SWEEP=true python tests/integration/zia/sweep/run_sweep.py --sweep
+	ZIA_SDK_TEST_SWEEP=true poetry run python tests/integration/zia/sweep/run_sweep.py --sweep
 
 sweep\:zpa:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZPA_SDK_TEST_SWEEP=true python tests/integration/zpa/sweep/run_sweep.py --sweep
+	ZPA_SDK_TEST_SWEEP=true poetry run python tests/integration/zpa/sweep/run_sweep.py --sweep
 
 sweep\:zidentity:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZIDENTITY_SDK_TEST_SWEEP=true python tests/integration/zidentity/sweep/run_sweep.py --sweep
+	ZIDENTITY_SDK_TEST_SWEEP=true poetry run python tests/integration/zidentity/sweep/run_sweep.py --sweep
 
 sweep\:zinsights:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZINSIGHTS_SDK_TEST_SWEEP=true python tests/integration/zinsights/sweep/run_sweep.py --sweep
+	ZINSIGHTS_SDK_TEST_SWEEP=true poetry run python tests/integration/zinsights/sweep/run_sweep.py --sweep
 
 
 build\:dist:
