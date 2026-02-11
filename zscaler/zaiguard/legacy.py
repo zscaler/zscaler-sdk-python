@@ -21,6 +21,7 @@ import os
 import time
 import threading
 from typing import Optional, Dict, Any, Type, List, TYPE_CHECKING
+from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
 
 import requests
 from zscaler import __version__
@@ -36,6 +37,35 @@ logger = logging.getLogger("zscaler-sdk-python")
 # Import all AIGuard API classes for type hints only (to avoid circular imports)
 if TYPE_CHECKING:
     from zscaler.zaiguard.policy_detection import PolicyDetectionAPI
+
+
+def _sanitize_url_for_logging(url: str) -> str:
+    """
+    Return a version of the URL safe for logging by removing embedded credentials
+    and masking obvious secret-bearing query parameters.
+    """
+    if not url:
+        return url
+
+    parsed = urlparse(url)
+
+    # Strip any user:pass@ from netloc
+    netloc = parsed.hostname or ""
+    if parsed.port:
+        netloc = f"{netloc}:{parsed.port}"
+
+    # Mask common sensitive query parameters
+    sensitive_keys = {"api_key", "apikey", "access_token", "token", "key", "secret"}
+    query_params = []
+    for k, v in parse_qsl(parsed.query, keep_blank_values=True):
+        if k.lower() in sensitive_keys:
+            query_params.append((k, "***"))
+        else:
+            query_params.append((k, v))
+    sanitized_query = urlencode(query_params)
+
+    sanitized = parsed._replace(netloc=netloc, query=sanitized_query)
+    return urlunparse(sanitized)
 
 
 class LegacyZGuardClientHelper:
@@ -102,10 +132,9 @@ class LegacyZGuardClientHelper:
             )
 
         self.logger.info(f"Initializing {self._product} client")
-        self.logger.debug(f"Base URL: {self.url}")
-        # Mask API key for logging (show first 4 and last 4 characters)
-        masked_key = f"{self.api_key[:4]}...{self.api_key[-4:]}" if len(self.api_key) > 8 else "****"
-        self.logger.debug(f"API Key: {masked_key}")
+        self.logger.debug(f"Base URL: {_sanitize_url_for_logging(self.url)}")
+        # Do not log any portion of the API key to avoid exposing sensitive information
+        self.logger.debug("API key configured")
 
         # Setup user agent
         ua = UserAgent()
