@@ -15,6 +15,7 @@
    zs/zidentity/index
    zs/zinsights/index
    zs/zeasm/index
+   zs/zaiguard/index
    zs/guides/index
 
 Official Python SDK for the Zscaler Products
@@ -61,6 +62,7 @@ across multiple products such as:
 - `Zidentity API <https://help.zscaler.com/zidentity/understanding-zidentity-apis>`__
 - `Z-Insights API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
 - `EASM API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+- `Zscaler AI Guard API <https://help.zscaler.com/zaiguard/getting-started-zaiguard-api>`__
 
 This SDK is designed to support the new Zscaler API framework
 `OneAPI <https://help.zscaler.com/oneapi/understanding-oneapi>`__ via a
@@ -169,6 +171,11 @@ You'll also need
 -  `EASM
    API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 
+-  `Z-Insights
+   API <https://help.zscaler.com/zscaler-analytics>`__
+
+-  `Zscaler AI Guard API <https://help.zscaler.com/zaiguard/getting-started-zaiguard-api>`__
+
 Usage guide
 -----------
 
@@ -228,6 +235,7 @@ programmatic interaction with the following products:
    API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
 -  `EASM
    API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+- `Zscaler AI Guard API <https://help.zscaler.com/zaiguard/getting-started-zaiguard-api>`__
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and
 Zscaler Digital Experience (ZDX) are supported only via the legacy

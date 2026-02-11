@@ -14,7 +14,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/edit
   response:
@@ -28,7 +28,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 20:39:26 GMT
+      - Wed, 11 Feb 2026 02:36:02 GMT
       pragma:
       - no-cache
       server:
@@ -42,25 +42,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '182'
+      - '197'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 35cd6b17-0a41-9303-a9d0-4384d3073866
+      - 55bbfedb-c747-953b-b82c-2ba0764ad98f
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '94'
+      - '89'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '81'
+      - '50'
       x-ratelimit-reset:
-      - '1234'
+      - '1438'
       x-transaction-id:
-      - c017c331-e676-4a1b-acf5-f895621efec9
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

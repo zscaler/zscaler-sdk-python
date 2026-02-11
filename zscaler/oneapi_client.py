@@ -16,14 +16,17 @@ from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zia.zia_service import ZIAService
 from zscaler.zpa.zpa_service import ZPAService
 from zscaler.zwa.zwa_service import ZWAService
+# from zscaler.binsights.binsights_service import BIService
 from zscaler.zidentity.zidentity_service import ZIdentityService
 from zscaler.zeasm.zeasm_service import ZEASMService
+from zscaler.zaiguard.zaiguard_service import ZGuardService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.ztw.legacy import LegacyZTWClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
 TLegacy = TypeVar("TLegacy")
 
@@ -40,6 +43,8 @@ class Client:
         zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
         zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
         zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
+        zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
+        
         use_legacy_client: bool = False,
     ) -> None:
         self.use_legacy_client = use_legacy_client
@@ -49,6 +54,7 @@ class Client:
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
+        self.zguard_legacy_client = zguard_legacy_client
 
         # ZCC Legacy client initialization logic
         if use_legacy_client and zcc_legacy_client:
@@ -98,6 +104,14 @@ class Client:
             self.logger.info("Legacy ZTWService client initialized successfully.")
             return
 
+        # ZGuard Legacy client initialization logic
+        if use_legacy_client and zguard_legacy_client:
+            self._config = {}
+            self._request_executor = zguard_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZGuard client initialized successfully.")
+            return
+
         # Assuming user_config is a dictionary or an object with a 'logging' attribute
         logging_config = (
             user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
@@ -108,6 +122,7 @@ class Client:
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
+        self.zguard_legacy_client = zguard_legacy_client
 
         # Extract enabled and verbose from the logging configuration
         enabled = logging_config.get("enabled", None)
@@ -182,6 +197,7 @@ class Client:
             self.zpa_legacy_client,
             self.zia_legacy_client,
             self.zwa_legacy_client,
+            self.zguard_legacy_client,
         )
         # self.logger.debug("Request executor initialized.")
 
@@ -195,7 +211,9 @@ class Client:
         self._zidentity = None
         self._zeasm = None
         self._zins = None  # Z-Insights (GraphQL Analytics API)
+        # self._bi = None
         # self.logger.debug("Client initialized successfully.")
+        self._zguard = None
 
     def authenticate(self):
         """
@@ -265,12 +283,26 @@ class Client:
         if self._zidentity is None:
             self._zidentity = ZIdentityService(self._request_executor)
         return self._zidentity
-    
+
+    # @property
+    # def bi(self):
+    #     if self._bi is None:
+    #         self._bi = BIService(self._request_executor)
+    #     return self._bi
+
     @property
     def zeasm(self):
         if self._zeasm is None:
             self._zeasm = ZEASMService(self._request_executor)
         return self._zeasm
+
+    @property
+    def zguard(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZGuard", self.zguard_legacy_client)
+        if self._zguard is None:
+            self._zguard = ZGuardService(self._request_executor)
+        return self._zguard
 
     @property
     def zinsights(self):
@@ -553,3 +585,27 @@ class LegacyZWAClient(Client):
             request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zwa_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZGuardClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("AIGUARD_API_KEY"))
+        cloud = config.get("cloud", os.getenv("AIGUARD_CLOUD", "us1"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+        
+        # Initialize the LegacyZGuardClientHelper with the extracted parameters
+        legacy_helper = LegacyZGuardClientHelper(
+            api_key=api_key,
+            cloud=cloud,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zguard_legacy_client=legacy_helper, use_legacy_client=True)

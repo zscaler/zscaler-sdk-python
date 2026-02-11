@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/listByCompany
   response:
@@ -203,7 +203,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:09 GMT
+      - Wed, 11 Feb 2026 02:36:00 GMT
       pragma:
       - no-cache
       server:
@@ -217,25 +217,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '198'
+      - '172'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d90279fc-9bf2-9609-9a0f-1fbd09a6704a
+      - 0a8280e5-6d98-964f-aa5b-815c8cd943a5
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
       - '93'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '76'
+      - '57'
       x-ratelimit-reset:
-      - '2151'
+      - '1440'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -255,7 +255,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/listByCompany?page=1&pageSize=10
   response:
@@ -445,7 +445,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:10 GMT
+      - Wed, 11 Feb 2026 02:36:00 GMT
       pragma:
       - no-cache
       server:
@@ -459,25 +459,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '249'
+      - '158'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3e4dc79c-0822-9c1d-a495-1f2238fdc878
+      - cac6ec46-fbbb-9bae-af2a-9545362a4bd9
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '96'
+      - '95'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '75'
+      - '56'
       x-ratelimit-reset:
-      - '2150'
+      - '1440'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -497,7 +497,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webForwardingProfile/listByCompany?search=test
   response:
@@ -511,7 +511,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:10 GMT
+      - Wed, 11 Feb 2026 02:36:01 GMT
       pragma:
       - no-cache
       server:
@@ -525,25 +525,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '184'
+      - '382'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6795c7de-d290-9072-a65d-5f3addafac6b
+      - 402bedf8-c889-97e8-9542-3a083dccd882
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '97'
+      - '94'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '74'
+      - '55'
       x-ratelimit-reset:
-      - '2150'
+      - '1440'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

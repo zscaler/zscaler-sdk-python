@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webFailOpenPolicy/listByCompany
   response:
@@ -32,7 +32,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:09 GMT
+      - Wed, 11 Feb 2026 02:35:58 GMT
       pragma:
       - no-cache
       server:
@@ -46,25 +46,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '210'
+      - '223'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 11267f20-3e3c-9424-b87e-736b6c7f99c4
+      - c4cfc0fd-00dc-9385-8577-205b6640432e
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '97'
+      - '92'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '78'
+      - '62'
       x-ratelimit-reset:
-      - '2151'
+      - '1442'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -84,7 +84,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webFailOpenPolicy/listByCompany?page=1&pageSize=10
   response:
@@ -103,7 +103,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:09 GMT
+      - Wed, 11 Feb 2026 02:35:59 GMT
       pragma:
       - no-cache
       server:
@@ -117,25 +117,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '191'
+      - '366'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a45bbd0c-6b25-9579-ab63-9f7d02cd1e2d
+      - c12007a0-c41d-9379-8a71-c596a7477121
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '94'
+      - '96'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '77'
+      - '61'
       x-ratelimit-reset:
-      - '2151'
+      - '1442'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

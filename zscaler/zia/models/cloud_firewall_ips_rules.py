@@ -56,6 +56,8 @@ class FirewallIPSrules(ZscalerObject):
             self.state = config["state"] if "state" in config else None
             self.description = config["description"] if "description" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.is_eun_enabled = config["isEunEnabled"] if "isEunEnabled" in config else None
+            self.eun_template_id = config["eunTemplateId"] if "eunTemplateId" in config else None
 
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
@@ -171,6 +173,8 @@ class FirewallIPSrules(ZscalerObject):
             self.enable_full_logging = False
             self.predefined = False
             self.default_rule = False
+            self.is_eun_enabled = False
+            self.eun_template_id = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -215,6 +219,8 @@ class FirewallIPSrules(ZscalerObject):
             "enableFullLogging": self.enable_full_logging,
             "predefined": self.predefined,
             "defaultRule": self.default_rule,
+            "isEunEnabled": self.is_eun_enabled,
+            "eunTemplateId": self.eun_template_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

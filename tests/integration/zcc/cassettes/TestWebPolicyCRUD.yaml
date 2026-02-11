@@ -14,7 +14,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: PUT
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/web/policy/edit
   response:
@@ -28,7 +28,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 20:39:33 GMT
+      - Wed, 11 Feb 2026 02:36:27 GMT
       pragma:
       - no-cache
       server:
@@ -42,25 +42,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '177'
+      - '168'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8767724f-34ea-9b4e-ae52-da1a08a274a9
+      - 6f260256-2bfd-98ac-89a2-d5488e35cff3
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '92'
+      - '84'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '66'
+      - '13'
       x-ratelimit-reset:
-      - '1227'
+      - '1413'
       x-transaction-id:
-      - c017c331-e676-4a1b-acf5-f895621efec9
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

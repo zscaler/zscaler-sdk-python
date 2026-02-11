@@ -349,6 +349,65 @@ def convert_keys_to_camel_case(data):
         return data
 
 
+def flatten_dict(d, parent_key="", delimiter="_"):
+    """
+    Flatten a nested dictionary into a single-level dictionary with concatenated keys.
+
+    Args:
+        d: Dictionary to flatten
+        parent_key: Prefix for keys (used in recursion)
+        delimiter: String to use between key levels
+
+    Returns:
+        Flattened dictionary
+
+    Examples:
+        >>> flatten_dict({"a": {"b": 1, "c": 2}})
+        {'a_b': 1, 'a_c': 2}
+
+        >>> flatten_dict({"client": {"cache": {"enabled": True}}})
+        {'client_cache_enabled': True}
+    """
+    items = []
+    for k, v in d.items():
+        new_key = f"{parent_key}{delimiter}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_dict(v, new_key, delimiter).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)
+
+
+def unflatten_dict(d, delimiter="_"):
+    """
+    Unflatten a dictionary with concatenated keys into a nested dictionary.
+
+    Args:
+        d: Flattened dictionary to unflatten
+        delimiter: String delimiter used between key levels
+
+    Returns:
+        Nested dictionary
+
+    Examples:
+        >>> unflatten_dict({"a_b": 1, "a_c": 2})
+        {'a': {'b': 1, 'c': 2}}
+
+        >>> unflatten_dict({"client_cache_enabled": True})
+        {'client': {'cache': {'enabled': True}}}
+    """
+    result = {}
+    for key, value in d.items():
+        parts = key.split(delimiter)
+        current = result
+        for part in parts[:-1]:
+            if part not in current:
+                current[part] = {}
+            current = current[part]
+        current[parts[-1]] = value
+    return result
+
+
 def convert_keys_to_camel_case_selective(data, preserve_snake_case_keys=None):
     """
     Recursively convert keys to camelCase while preserving specific snake_case keys.

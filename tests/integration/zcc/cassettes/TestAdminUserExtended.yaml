@@ -1,69 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '147'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Wed, 17 Dec 2025 20:40:20 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -77,7 +13,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getAdminUsers
   response:
@@ -91,7 +27,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 20:40:21 GMT
+      - Wed, 11 Feb 2026 02:35:43 GMT
       pragma:
       - no-cache
       server:
@@ -105,25 +41,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '405'
+      - '294'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0a20928f-8f9f-9208-ba93-0e5bb9372973
+      - f20adbd7-b630-9a02-a6c2-e48350434431
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '90'
+      - '97'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '65'
+      - '92'
       x-ratelimit-reset:
-      - '1180'
+      - '1457'
       x-transaction-id:
-      - ec807813-b167-4637-a658-55713001cc53
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -143,7 +79,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/syncZiaZdxAdminUsers
   response:
@@ -155,21 +91,21 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 17 Dec 2025 20:40:21 GMT
+      - Wed, 11 Feb 2026 02:35:43 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
       x-envoy-upstream-service-time:
-      - '1'
+      - '2'
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e8a3da5f-d5be-9f30-ad44-f49afb5a79f2
+      - 6a23ab8c-ebef-923a-8221-a1742e2d3934
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-transaction-id:
-      - ec807813-b167-4637-a658-55713001cc53
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
     status:
       code: 404
       message: Not Found
@@ -187,7 +123,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/syncZpaAdminUsers
   response:
@@ -199,7 +135,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 17 Dec 2025 20:40:21 GMT
+      - Wed, 11 Feb 2026 02:35:43 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -209,11 +145,11 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9f39e508-43ea-9326-8da6-02f32172b55b
+      - e5120f42-2432-96e7-94fa-dfcabbf02142
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-transaction-id:
-      - ec807813-b167-4637-a658-55713001cc53
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
     status:
       code: 404
       message: Not Found
@@ -231,7 +167,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getAdminRoles
   response:
@@ -288,7 +224,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 20:40:21 GMT
+      - Wed, 11 Feb 2026 02:35:44 GMT
       pragma:
       - no-cache
       server:
@@ -302,25 +238,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '399'
+      - '341'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6b9a9819-ea3a-9d47-ba6c-bb515cd6cb06
+      - 8f14a6e4-9df4-9cb7-a6dc-fbc2065e13a3
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '92'
+      - '98'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '64'
+      - '91'
       x-ratelimit-reset:
-      - '1179'
+      - '1456'
       x-transaction-id:
-      - ec807813-b167-4637-a658-55713001cc53
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

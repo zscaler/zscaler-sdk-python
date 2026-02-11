@@ -13,14 +13,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/listByCompany
   response:
     body:
-      string: "{\n  \"totalCount\" : 21,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
+      string: "{\n  \"totalCount\" : 24,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
         : \"9913\",\n    \"companyId\" : \"4543\",\n    \"createdBy\" : \"247739\",\n
-        \   \"editedBy\" : \"247739\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
+        \   \"editedBy\" : \"0\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
         \   \"networkName\" : \"BDTrustedNetwork01\",\n    \"conditionType\" : 1,\n
         \   \"dnsServers\" : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
         : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"active\" : true\n  },
@@ -152,7 +152,25 @@ interactions:
         : \"4543\",\n    \"createdBy\" : \"453095\",\n    \"editedBy\" : \"453095\",\n
         \   \"guid\" : \"32817b53-a0f9-42e6-ba37-d99bb43af376\",\n    \"networkName\"
         : \"On_Trusted_Network_Mac\",\n    \"conditionType\" : 1,\n    \"dnsServers\"
-        : \"8.8.8.8\",\n    \"active\" : false\n  } ]\n}"
+        : \"8.8.8.8\",\n    \"active\" : false\n  }, {\n    \"id\" : \"19687\",\n
+        \   \"companyId\" : \"4543\",\n    \"createdBy\" : \"0\",\n    \"editedBy\"
+        : \"0\",\n    \"guid\" : \"142f4831-9721-4bff-82ee-45ae205ec8c6\",\n    \"networkName\"
+        : \"tests-trusted-network-vcr0001\",\n    \"conditionType\" : 0,\n    \"dnsServers\"
+        : \"10.10.10.10, 10.10.10.11\",\n    \"dnsSearchDomains\" : \"test.example.com\",\n
+        \   \"active\" : true\n  }, {\n    \"id\" : \"19693\",\n    \"companyId\"
+        : \"4543\",\n    \"createdBy\" : \"0\",\n    \"editedBy\" : \"0\",\n    \"guid\"
+        : \"596801cb-e217-4e1d-a1f0-d84c5bca9d3a\",\n    \"networkName\" : \"Test
+        Trusted Network for Coverage\",\n    \"conditionType\" : 0,\n    \"dnsServers\"
+        : \"10.11.12.13, 10.11.12.14\",\n    \"dnsSearchDomains\" : \"test.example.com\",\n
+        \   \"hostnames\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"19695\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"0\",\n    \"editedBy\" : \"0\",\n    \"guid\" : \"fb23fc00-6bed-4771-a281-113f417e93b4\",\n
+        \   \"networkName\" : \"Test CRUD Trusted Network\",\n    \"conditionType\"
+        : 0,\n    \"dnsServers\" : \"8.8.8.8, 8.8.4.4\",\n    \"dnsSearchDomains\"
+        : \"crud-test.example.com\",\n    \"hostnames\" : \"\",\n    \"trustedSubnets\"
+        : \"192.168.1.0/24\",\n    \"trustedGateways\" : \"192.168.1.1\",\n    \"trustedDhcpServers\"
+        : \"\",\n    \"active\" : true\n  } ]\n}"
     headers:
       cache-control:
       - no-cache
@@ -161,7 +179,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:29 GMT
+      - Wed, 11 Feb 2026 02:36:17 GMT
       pragma:
       - no-cache
       server:
@@ -175,25 +193,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '419'
+      - '361'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 88ecfeb9-1629-9658-88c3-c75ad6eaa630
+      - 5d934863-38a3-9ee8-96a2-33414487ae83
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '92'
+      - '90'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '66'
+      - '42'
       x-ratelimit-reset:
-      - '2131'
+      - '1423'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -213,14 +231,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/listByCompany?page=1&pageSize=10
   response:
     body:
-      string: "{\n  \"totalCount\" : 21,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
+      string: "{\n  \"totalCount\" : 24,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
         : \"9913\",\n    \"companyId\" : \"4543\",\n    \"createdBy\" : \"247739\",\n
-        \   \"editedBy\" : \"247739\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
+        \   \"editedBy\" : \"0\",\n    \"guid\" : \"928c092b-3fe1-49bb-b01f-0618e4f38468\",\n
         \   \"networkName\" : \"BDTrustedNetwork01\",\n    \"conditionType\" : 1,\n
         \   \"dnsServers\" : \"8.8.8.8\",\n    \"dnsSearchDomains\" : \"\",\n    \"hostnames\"
         : \"\",\n    \"resolvedIpsForHostname\" : \"\",\n    \"active\" : true\n  },
@@ -291,7 +309,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:29 GMT
+      - Wed, 11 Feb 2026 02:36:17 GMT
       pragma:
       - no-cache
       server:
@@ -305,25 +323,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '399'
+      - '343'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d12c4248-2872-9154-abe9-260869e5a04c
+      - 9d39212d-8d47-93cd-8c7b-e8ccaf198833
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '95'
+      - '92'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '65'
+      - '41'
       x-ratelimit-reset:
-      - '2131'
+      - '1423'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -343,12 +361,30 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/listByCompany?search=test
   response:
     body:
-      string: "{\n  \"totalCount\" : 0,\n  \"trustedNetworkContracts\" : [ ]\n}"
+      string: "{\n  \"totalCount\" : 3,\n  \"trustedNetworkContracts\" : [ {\n    \"id\"
+        : \"19687\",\n    \"companyId\" : \"4543\",\n    \"createdBy\" : \"0\",\n
+        \   \"editedBy\" : \"0\",\n    \"guid\" : \"142f4831-9721-4bff-82ee-45ae205ec8c6\",\n
+        \   \"networkName\" : \"tests-trusted-network-vcr0001\",\n    \"conditionType\"
+        : 0,\n    \"dnsServers\" : \"10.10.10.10, 10.10.10.11\",\n    \"dnsSearchDomains\"
+        : \"test.example.com\",\n    \"active\" : true\n  }, {\n    \"id\" : \"19693\",\n
+        \   \"companyId\" : \"4543\",\n    \"createdBy\" : \"0\",\n    \"editedBy\"
+        : \"0\",\n    \"guid\" : \"596801cb-e217-4e1d-a1f0-d84c5bca9d3a\",\n    \"networkName\"
+        : \"Test Trusted Network for Coverage\",\n    \"conditionType\" : 0,\n    \"dnsServers\"
+        : \"10.11.12.13, 10.11.12.14\",\n    \"dnsSearchDomains\" : \"test.example.com\",\n
+        \   \"hostnames\" : \"\",\n    \"trustedSubnets\" : \"\",\n    \"trustedGateways\"
+        : \"\",\n    \"trustedDhcpServers\" : \"\",\n    \"active\" : true\n  }, {\n
+        \   \"id\" : \"19695\",\n    \"companyId\" : \"4543\",\n    \"createdBy\"
+        : \"0\",\n    \"editedBy\" : \"0\",\n    \"guid\" : \"fb23fc00-6bed-4771-a281-113f417e93b4\",\n
+        \   \"networkName\" : \"Test CRUD Trusted Network\",\n    \"conditionType\"
+        : 0,\n    \"dnsServers\" : \"8.8.8.8, 8.8.4.4\",\n    \"dnsSearchDomains\"
+        : \"crud-test.example.com\",\n    \"hostnames\" : \"\",\n    \"trustedSubnets\"
+        : \"192.168.1.0/24\",\n    \"trustedGateways\" : \"192.168.1.1\",\n    \"trustedDhcpServers\"
+        : \"\",\n    \"active\" : true\n  } ]\n}"
     headers:
       cache-control:
       - no-cache
@@ -357,7 +393,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:30 GMT
+      - Wed, 11 Feb 2026 02:36:18 GMT
       pragma:
       - no-cache
       server:
@@ -371,25 +407,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '305'
+      - '235'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0a92b2ec-bdfa-98df-9dd4-a104b9deed66
+      - db87b9a7-8cfe-9fed-8e21-fb41fc78ecbf
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '96'
+      - '93'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '64'
+      - '40'
       x-ratelimit-reset:
-      - '2130'
+      - '1422'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:
@@ -410,14 +446,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webTrustedNetwork/create
   response:
     body:
-      string: "{\n  \"networkName\" : \"tests-trusted-network-vcr0001\",\n  \"conditionType\"
-        : 0,\n  \"dnsServers\" : \"10.10.10.10, 10.10.10.11\",\n  \"dnsSearchDomains\"
-        : \"test.example.com\",\n  \"active\" : true\n}"
+      string: "{\n  \"conditionType\" : 0,\n  \"active\" : false\n}"
     headers:
       cache-control:
       - no-cache
@@ -426,7 +460,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 17 Dec 2025 18:24:31 GMT
+      - Wed, 11 Feb 2026 02:36:18 GMT
       pragma:
       - no-cache
       server:
@@ -440,25 +474,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '604'
+      - '187'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 49384d60-77e7-9795-a437-a3dace862fb0
+      - e94ffd29-267c-9bda-a75b-5efc2f7ceb3e
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.111
       x-rate-limit-remaining:
-      - '91'
+      - '92'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '63'
+      - '39'
       x-ratelimit-reset:
-      - '2130'
+      - '1422'
       x-transaction-id:
-      - 40721a9f-fa0d-4e0a-9b6e-7aa00800b47b
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
       x-xss-protection:
       - 1; mode=block
     status:

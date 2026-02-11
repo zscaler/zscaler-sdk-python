@@ -1,0 +1,158 @@
+interactions:
+- request:
+    body: '{"content": "What is the capital of France?", "direction": "IN"}'
+    headers:
+      Content-Length:
+      - '64'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.us1.zseclipse.net/v1/detection/resolve-and-execute-policy
+  response:
+    body:
+      string: '{"transactionId":"773031f7-77ec-42ce-92d6-925b7ea04a18","statusCode":404,"errorMsg":"Policy
+        not found","detectorErrorCount":0,"direction":"IN","responseDetectorPolicyIsPresent":false}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-type:
+      - application/json
+      date:
+      - Thu, 29 Jan 2026 06:25:10 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000 ; includeSubDomains
+      - max-age=63072000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"content": "Test content for policy execution", "direction": "IN"}'
+    headers:
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.us1.zseclipse.net/v1/detection/execute-policy
+  response:
+    body:
+      string: '{"transactionId":"0b2f989a-cbd2-4337-bb15-da189941d845","statusCode":404,"errorMsg":"Policy
+        not found","detectorErrorCount":0,"direction":"IN"}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-type:
+      - application/json
+      date:
+      - Thu, 29 Jan 2026 06:25:20 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000 ; includeSubDomains
+      - max-age=63072000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"content": "Second test content", "direction": "IN"}'
+    headers:
+      Content-Length:
+      - '53'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.us1.zseclipse.net/v1/detection/resolve-and-execute-policy
+  response:
+    body:
+      string: '{"transactionId":"4526eeaa-befd-499f-8c6c-0f57acb2cec9","statusCode":404,"errorMsg":"Policy
+        not found","detectorErrorCount":0,"direction":"IN","responseDetectorPolicyIsPresent":false}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-type:
+      - application/json
+      date:
+      - Thu, 29 Jan 2026 06:25:20 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000 ; includeSubDomains
+      - max-age=63072000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"content": "Third distinct test content for zaiguard", "direction": "IN"}'
+    headers:
+      Content-Length:
+      - '74'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.us1.zseclipse.net/v1/detection/resolve-and-execute-policy
+  response:
+    body:
+      string: '{"transactionId":"e9b465fc-c3d4-4365-a555-1742b0872a24","statusCode":404,"errorMsg":"Policy
+        not found","detectorErrorCount":0,"direction":"IN","responseDetectorPolicyIsPresent":false}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-type:
+      - application/json
+      date:
+      - Thu, 29 Jan 2026 06:29:01 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000 ; includeSubDomains
+      - max-age=63072000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

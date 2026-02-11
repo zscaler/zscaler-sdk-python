@@ -19,6 +19,9 @@ import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
 
+# Deterministic search string for VCR - scopes list to avoid recording hundreds of labels
+VCR_LIST_SEARCH = "UpdatedLabel_VCR_Integration"
+
 
 @pytest.fixture
 def fs():
@@ -32,11 +35,13 @@ class TestRuleLabels:
     These tests use VCR to record and replay HTTP interactions.
     - First run with MOCK_TESTS=false records cassettes
     - Subsequent runs use recorded cassettes (no API calls)
+
+    Uses scoped search in list_labels to avoid recording tenant-wide data (hundreds of labels).
     """
 
     @pytest.mark.vcr()
     def test_rule_labels_lifecycle(self, fs):
-        """Test complete rule label CRUD lifecycle."""
+        """Test complete rule label CRUD lifecycle with a single resource."""
         client = MockZIAClient(fs)
         errors = []
         label_id = None
@@ -76,10 +81,12 @@ class TestRuleLabels:
             except Exception as e:
                 errors.append(f"Exception during get_label: {str(e)}")
 
-            # Test: List Rule Labels
+            # Test: List Rule Labels (scoped search - finds our label before delete)
             try:
                 if update_label:
-                    labels, _, error = client.zia.rule_labels.list_labels(query_params={"search": update_label.name})
+                    labels, _, error = client.zia.rule_labels.list_labels(
+                        query_params={"search": update_label.name}
+                    )
                     assert error is None, f"List Labels Error: {error}"
                     assert labels is not None and isinstance(labels, list), "No labels found or invalid format."
             except Exception as e:
@@ -100,10 +107,13 @@ class TestRuleLabels:
 
     @pytest.mark.vcr()
     def test_list_rule_labels(self, fs):
-        """Test listing rule labels."""
+        """Test listing rule labels with scoped search (VCR-friendly, avoids recording hundreds of labels)."""
         client = MockZIAClient(fs)
 
-        labels, _, error = client.zia.rule_labels.list_labels()
+        # Use scoped search to avoid fetching all tenant labels - returns [] or few results
+        labels, _, error = client.zia.rule_labels.list_labels(
+            query_params={"search": VCR_LIST_SEARCH}
+        )
         assert error is None, f"List Labels Error: {error}"
         assert labels is not None, "Labels list is None"
         assert isinstance(labels, list), "Labels is not a list"

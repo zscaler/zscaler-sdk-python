@@ -54,6 +54,9 @@ class FirewallDNSRules(ZscalerObject):
             self.order = config["order"] if "order" in config else None
             self.rank = config["rank"] if "rank" in config else None
             self.description = config["description"] if "description" in config else None
+            self.is_web_eun_enabled = config["isWebEunEnabled"] if "isWebEunEnabled" in config else None
+            self.default_dns_rule_name_used = config["defaultDnsRuleNameUsed"] if "defaultDnsRuleNameUsed" in config else None
+
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
             )
@@ -206,6 +209,8 @@ class FirewallDNSRules(ZscalerObject):
             self.block_response_code = None
             self.predefined = False
             self.default_rule = False
+            self.is_web_eun_enabled = False
+            self.default_dns_rule_name_used = False
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -254,6 +259,8 @@ class FirewallDNSRules(ZscalerObject):
             "blockResponseCode": self.block_response_code,
             "predefined": self.predefined,
             "defaultRule": self.default_rule,
+            "isWebEunEnabled": self.is_web_eun_enabled,
+            "defaultDnsRuleNameUsed": self.default_dns_rule_name_used,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
