@@ -6,6 +6,44 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+
+1.9.15 (February 16, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements:
+-------------
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Added support to the following ZIA Endpoints:
+    - Added `GET /customFileTypes` Retrieves the list of custom file types. Custom file types can be configured as rule conditions in different ZIA policies.
+    - Added `POST /customFileTypes` Adds a new custom file type. 
+    - Added `PUT /customFileTypes` Updates information for a custom file type based on the specified ID
+    - Added `DELETE /customFileTypes/{id}` Deletes a custom file type based on the specified ID
+    - Added `GET /customFileTypes/count` Retrieves the count of custom file types available
+    - Added `GET /fileTypeCategories` Retrieves the list of all file types, including predefined and custom file types
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_)  - Added new attributes `url_type`, `regex_patterns`,  and `regex_patterns_retaining_parent_category` to `zia_url_categories` resource to specify whether the category uses exact URLs or regex patterns. Supported values are `EXACT` and `REGEX`. See [Zscaler Release Notes](https://help.zscaler.com/zia/release-upgrade-summary-2026) for details. To enable this feature, contact Zscaler Support.
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Added new attributes to ZIA:
+  * `ipscontrolpolicies`: `eunEnabled`, and `eunTemplateId`
+  * `firewalldnscontrolpolicies`: `isWebEunEnabled` and `defaultDnsRuleNameUsed` 
+  * `dlp_web_rules`: `eunTemplateId`
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Added new `tags` field to ZPA `applicationsegment`
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Added new attributes to all ZPA Application Segments:
+  * `policyStyle` to enable `FQDN-to-IP Policy Evaluation`
+
+Bug Fixes:
+----------
+
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Fixed URL formatting parameter for ZIA resource `casb_dlp_rules`
+(`#459 <https://github.com/zscaler/zscaler-sdk-python/pull/459>`_) - Fixed URL formatting parameter for ZIA function `update_dc_exclusion`. API requires the ID as JSON attribute and not as a parameter.
+
 1.9.14 (February 10, 2026)
 ---------------------------
 
