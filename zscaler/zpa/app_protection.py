@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_protection_profile import AppProtectionProfile
@@ -818,7 +818,10 @@ class InspectionControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def list_predef_controls(self, query_params: Optional[dict] = None) -> APIResult[List[PredefinedInspectionControlResource]]:
+    def list_predef_controls(
+        self,
+        query_params: Optional[dict] = None
+    ) -> APIResult[List[PredefinedInspectionControlResource]]:
         """
         Returns a list of predefined ZPA Inspection Controls.
 

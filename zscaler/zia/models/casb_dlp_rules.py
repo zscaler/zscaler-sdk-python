@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, Optional, Any
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common
@@ -139,6 +139,16 @@ class CasbdDlpRules(ZscalerObject):
             self.labels = ZscalerCollection.form_list(
                 config["labels"] if "labels" in config else [], labels.RuleLabels
             )
+
+            if "receiver" in config:
+                if isinstance(config["receiver"], CommonIDNameType):
+                    self.receiver = config["receiver"]
+                elif config["receiver"] is not None:
+                    self.receiver = CommonIDNameType(config["receiver"])
+                else:
+                    self.receiver = None
+            else:
+                self.receiver = None
 
             if "zscalerIncidentReceiver" in config:
                 if isinstance(config["zscalerIncidentReceiver"], common.CommonIDName):
@@ -280,6 +290,7 @@ class CasbdDlpRules(ZscalerObject):
             self.without_content_inspection = None
             self.entity_groups = []
             self.include_entity_groups = None
+            self.receiver = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -310,6 +321,7 @@ class CasbdDlpRules(ZscalerObject):
             "buckets": self.buckets,
             "bucketOwner": self.bucket_owner,
             "zscalerIncidentReceiver": self.zscaler_incident_receiver,
+            "receiver": self.receiver,
             "externalAuditorEmail": self.external_auditor_email,
             "auditor": self.auditor,
             "auditorNotification": self.auditor_notification,
@@ -337,5 +349,41 @@ class CasbdDlpRules(ZscalerObject):
             "entityGroups": self.entity_groups,
             "includeEntityGroups": self.include_entity_groups
         }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class CommonIDNameType(ZscalerObject):
+    """
+    A class for CommonIDNameType objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the CommonIDNameType model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else False
+        else:
+            self.id = None
+            self.name = None
+            self.type = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type}
         parent_req_format.update(current_obj_format)
         return parent_req_format

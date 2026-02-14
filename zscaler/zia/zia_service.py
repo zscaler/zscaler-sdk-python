@@ -44,6 +44,7 @@ from zscaler.zia.dlp_resources import DLPResourcesAPI
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.end_user_notification import EndUserNotificationAPI
 from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
+from zscaler.zia.custom_file_types import CustomFileTypesAPI
 from zscaler.zia.cloud_firewall_dns import FirewallDNSRulesAPI
 from zscaler.zia.cloud_firewall_ips import FirewallIPSRulesAPI
 from zscaler.zia.cloud_firewall_rules import FirewallPolicyAPI
@@ -309,6 +310,14 @@ class ZIAService:
 
         """
         return FileTypeControlRuleAPI(self._request_executor)
+
+    @property
+    def custom_file_types(self) -> CustomFileTypesAPI:
+        """
+        The interface object for the :ref:`ZIA Custom File Types interface <zia-custom_file_types>`.
+
+        """
+        return CustomFileTypesAPI(self._request_executor)
 
     @property
     def ipv6_config(self) -> TrafficIPV6ConfigAPI:

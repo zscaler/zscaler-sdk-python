@@ -175,13 +175,14 @@ class TrafficDatacentersAPI(APIClient):
         except Exception as e:
             return (None, None, e)
 
-        body = [
-            {
-                "dcid": dcid,
-                "startTime": start_epoch,
-                "endTime": end_epoch,
-            }
-        ]
+        body_item = {
+            "dcid": dcid,
+            "startTime": start_epoch,
+            "endTime": end_epoch,
+        }
+        if kwargs.get("description") is not None:
+            body_item["description"] = kwargs.get("description")
+        body = [body_item]
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -202,13 +203,14 @@ class TrafficDatacentersAPI(APIClient):
 
         return (result, response, None)
 
-    # Submit JIRA Case - Method is returning 405.
     def update_dc_exclusion(self, dcid: int, **kwargs) -> APIResult[dict]:
         """
         Updates a Zscaler data center DC Exclusion configuration based on the specified ID.
 
+        The API expects PUT to /dcExclusions with dcid in the JSON body (not in the URL path).
+
         Args:
-            dc_id (int): The unique ID for the DC Exclusion.
+            dcid (int): The unique ID for the DC Exclusion.
 
         Returns:
             tuple: A tuple containing the updated DC Exclusion, response, and error.
@@ -217,7 +219,7 @@ class TrafficDatacentersAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /dcExclusions/{dcid}
+            /dcExclusions
         """
         )
 
@@ -232,25 +234,17 @@ class TrafficDatacentersAPI(APIClient):
                 start_epoch = int(start_time)
                 end_epoch = int(end_time)
 
-            dcid = kwargs.get("dcid")
-            if not dcid:
-                dc_list, _, error = self.list_datacenters()
-                if error:
-                    return (None, None, error)
-                if not dc_list:
-                    return (None, None, ValueError("No data centers found to use as default."))
-                dcid = dc_list[0].id
-
         except Exception as e:
             return (None, None, e)
 
-        body = [
-            {
-                "dcid": dcid,
-                "startTime": start_epoch,
-                "endTime": end_epoch,
-            }
-        ]
+        body_item = {
+            "dcid": dcid,
+            "startTime": start_epoch,
+            "endTime": end_epoch,
+        }
+        if kwargs.get("description") is not None:
+            body_item["description"] = kwargs.get("description")
+        body = [body_item]
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
@@ -261,7 +255,10 @@ class TrafficDatacentersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = TrafficDcExclusions(self.form_response_body(response.get_body()))
+            resp_body = response.get_body()
+            # API returns list of exclusions; take first item
+            item = resp_body[0] if isinstance(resp_body, list) and resp_body else resp_body
+            result = TrafficDcExclusions(self.form_response_body(item))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

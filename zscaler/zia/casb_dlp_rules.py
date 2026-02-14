@@ -32,21 +32,23 @@ class CasbdDlpRulesAPI(APIClient):
 
     def list_rules(
         self,
+        rule_type: str,
         query_params: Optional[dict] = None,
     ) -> APIResult[List[CasbdDlpRules]]:
         """
         Returns a list of all Casb DLP Rules for the specified rule type.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
+            rule_type (str): The type of rules to retrieve (e.g., "OFLCASB_DLP_ITSM").
+                Required by the API.
+
+                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
+                    `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
+                    `OFLCASB_DLP_GENAI`
+
+            query_params (dict, optional): Additional query parameters for the request.
 
                 ``[query_params.search]`` {str}: Search string for filtering results.
-
-                ``[query_params.rule_type]`` {str}: The type of rules to retrieve (e.g., "OFLCASB_DLP_ITSM").
-
-                    Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
-                        `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
-                        `OFLCASB_DLP_GENAI`
 
         Returns:
             tuple: The list of Casb DLP Rules.
@@ -55,13 +57,21 @@ class CasbdDlpRulesAPI(APIClient):
             List all rules for a specific type::
 
                 >>> rules_list, _, error = client.zia.casb_dlp_rules.list_rules(
-                ...     query_params={'rule_type': 'OFLCASB_DLP_ITSM'})
+                ...     rule_type='OFLCASB_DLP_ITSM'
+                ... )
                 >>> if error:
-                ...     print(f"Error listing casb dlp rules rules: {error}")
+                ...     print(f"Error listing casb dlp rules: {error}")
                 ...     return
                 ... print(f"Total rules found: {len(rules_list)}")
                 ... for rule in rules_list:
                 ...     print(rule.as_dict())
+
+            List rules with optional search filter::
+
+                >>> rules_list, _, error = client.zia.casb_dlp_rules.list_rules(
+                ...     rule_type='OFLCASB_DLP_ITSM',
+                ...     query_params={'search': 'MyRule'}
+                ... )
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -71,12 +81,15 @@ class CasbdDlpRulesAPI(APIClient):
         """
         )
 
-        query_params = query_params or {}
+        params = {"ruleType": rule_type}
+        if query_params:
+            extra = {k: v for k, v in query_params.items() if k != "rule_type"}
+            params.update(extra)
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
 
         if error:
             return (None, None, error)
@@ -98,15 +111,16 @@ class CasbdDlpRulesAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-        rule_type: str,
+        rule_type: Optional[str] = None,
     ) -> APIResult[dict]:
         """
-        Returns information for the specified Casb DLP Rule under the specified rule type.
+        Returns information for the specified Casb DLP Rule.
 
         Args:
             rule_id (int): The unique identifier for the Casb DLP Rule.
 
-            rule_type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
+            rule_type (str, optional): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
+                Optional for GET by ID; when provided, passed as query parameter.
 
                 Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
                     `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
@@ -116,11 +130,17 @@ class CasbdDlpRulesAPI(APIClient):
             :obj:`Tuple`: The resource record for the Casb DLP Rule.
 
         Examples:
-            Get a specific rule by ID and type::
+            Get a specific rule by ID::
 
                 >>> fetched_rule, _, error = client.zia.casb_dlp_rules.get_rule(
-                ...     rule_type='OFLCASB_DLP_ITSM',
-                ...     rule_id='1070199'
+                ...     rule_id=1070199
+                ... )
+
+            Get a rule by ID with optional rule type::
+
+                >>> fetched_rule, _, error = client.zia.casb_dlp_rules.get_rule(
+                ...     rule_id=1070199,
+                ...     rule_type='OFLCASB_DLP_ITSM'
                 ... )
                 >>> if error:
                 ...     print(f"Error fetching rule by ID: {error}")
@@ -135,7 +155,7 @@ class CasbdDlpRulesAPI(APIClient):
         """
         )
 
-        params = {"ruleType": rule_type}
+        params = {"ruleType": rule_type} if rule_type else {}
 
         body = {}
         headers = {}
@@ -169,9 +189,9 @@ class CasbdDlpRulesAPI(APIClient):
             tuple: The list of all Casb DLP Rules.
 
         Examples:
-            List all rules for a specific type::
+            List all rules::
 
-                >>> rules_list, _, error = client.zia.casb_dlp_rules.list_all_rules(
+                >>> rules_list, _, error = client.zia.casb_dlp_rules.list_all_rules()
                 >>> if error:
                 ...     print(f"Error listing all casb dlp rules rules: {error}")
                 ...     return
@@ -574,10 +594,9 @@ class CasbdDlpRulesAPI(APIClient):
                 ...     },
                 ... )
                 >>> if error:
-                ...     print(f"Error adding rule: {error}")
+                ...     print(f"Error updating rule: {error}")
                 ...     return
-                ... print(f"Rule added successfully: {added_rule.as_dict()}")
-                ... )
+                ... print(f"Rule updated successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -614,14 +633,15 @@ class CasbdDlpRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_type: str, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int, rule_type: Optional[str] = None) -> APIResult[dict]:
         """
         Deletes the specified casb dlp rules.
 
         Args:
             rule_id (int): The unique identifier for the casb dlp rules.
 
-            rule_type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
+            rule_type (str, optional): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
+                Optional for DELETE; when provided, passed as query parameter.
 
                 Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
                     `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
@@ -631,14 +651,22 @@ class CasbdDlpRulesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, _, error = client.zia.casb_dlp_rules.delete_rule(
-            ...     rule_type='OFLCASB_DLP_ITSM',
-            ...     rule_id='1072324'
-            ... )
-            >>> if error:
-            ...     print(f"Error deleting rule: {error}")
-            ...     return
-            ... print(f"Rule with ID 1072324 deleted successfully.")
+            Delete a rule by ID::
+
+                >>> _, _, error = client.zia.casb_dlp_rules.delete_rule(
+                ...     rule_id=1072324
+                ... )
+
+            Delete a rule by ID with optional rule type::
+
+                >>> _, _, error = client.zia.casb_dlp_rules.delete_rule(
+                ...     rule_id=1072324,
+                ...     rule_type='OFLCASB_DLP_ITSM'
+                ... )
+                >>> if error:
+                ...     print(f"Error deleting rule: {error}")
+                ...     return
+                ... print(f"Rule with ID 1072324 deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -647,7 +675,7 @@ class CasbdDlpRulesAPI(APIClient):
             /casbDlpRules/{rule_id}
         """
         )
-        params = {"ruleType": rule_type}
+        params = {"ruleType": rule_type} if rule_type else {}
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:

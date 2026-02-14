@@ -62,7 +62,6 @@ class DLPWebRules(ZscalerObject):
             self.parent_rule = config["parentRule"] if "parentRule" in config else None
             self.sub_rules = config["subRules"] if "subRules" in config else None
             self.order = config["order"] if "order" in config else None
-            self.eun_template_id = config["eunTemplateId"] if "eunTemplateId" in config else None
             self.inspect_http_get_enabled = config["inspectHttpGetEnabled"] if "inspectHttpGetEnabled" in config else None
             self.zscaler_incident_receiver = config["zscalerIncidentReceiver"] if "zscalerIncidentReceiver" in config else None
             self.external_auditor_email = config["externalAuditorEmail"] if "externalAuditorEmail" in config else None
@@ -209,7 +208,6 @@ class DLPWebRules(ZscalerObject):
             "parentRule": self.parent_rule,
             "subRules": self.sub_rules,
             "order": self.order,
-            "eunTemplateId": self.eun_template_id,
             "zscalerIncidentReceiver": self.zscaler_incident_receiver,
             "protocols": self.protocols,
             "fileTypes": self.file_types,

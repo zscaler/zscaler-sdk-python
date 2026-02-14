@@ -19,6 +19,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group as server_group
 from zscaler.zpa.models import segment_group as segment_group
+from zscaler.zpa.models import common as common
 
 
 class ApplicationSegments(ZscalerObject):
@@ -154,6 +155,11 @@ class ApplicationSegments(ZscalerObject):
                     self.application_group = None
             else:
                 self.application_group = None
+
+            self.tags = ZscalerCollection.form_list(
+                config["tags"] if "tags" in config else [], Tags
+            )
+
         else:
             self.id = None
             self.name = None
@@ -545,6 +551,58 @@ class PRAApps(ZscalerObject):
             "hidden": self.hidden,
             "microtenantName": self.microtenant_name,
             "microtenantId": self.microtenant_id,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Tags(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            if "namespace" in config:
+                if isinstance(config["namespace"], common.CommonIDName):
+                    self.namespace = config["namespace"]
+                elif config["namespace"] is not None:
+                    self.namespace = common.CommonIDName(config["namespace"])
+                else:
+                    self.namespace = None
+            else:
+                self.namespace = None
+
+                if "tagKey" in config:
+                    if isinstance(config["tagKey"], common.CommonIDName):
+                        self.tag_key = config["tagKey"]
+                    elif config["tagKey"] is not None:
+                        self.tag_key = common.CommonIDName(config["tagKey"])
+                    else:
+                        self.tag_key = None
+                else:
+                    self.tag_key = None
+
+            if "tagValue" in config:
+                if isinstance(config["tagValue"], common.CommonIDName):
+                    self.tag_value = config["tagValue"]
+                elif config["tagValue"] is not None:
+                    self.tag_value = common.CommonIDName(config["tagValue"])
+                else:
+                    self.tag_value = None
+            else:
+                self.tag_value = None
+        else:
+            self.namespace = None
+            self.tag_key = None
+            self.tag_value = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Formats the AppConfig data into a dictionary suitable for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "namespace": self.namespace,
+            "tagKey": self.tag_key,
+            "tagValue": self.tag_value,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

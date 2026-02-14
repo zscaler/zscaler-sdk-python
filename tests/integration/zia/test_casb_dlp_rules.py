@@ -48,7 +48,7 @@ class TestCasbDlpRules:
             # Step 2: List CASB DLP rules by type - ITSM
             try:
                 typed_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    query_params={'rule_type': rule_type}
+                    rule_type=rule_type
                 )
                 assert error is None, f"Error listing CASB DLP rules by type: {error}"
             except Exception as exc:
@@ -57,7 +57,7 @@ class TestCasbDlpRules:
             # Step 3: List CASB DLP rules by type - FILE
             try:
                 file_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    query_params={'rule_type': 'OFLCASB_DLP_FILE'}
+                    rule_type='OFLCASB_DLP_FILE'
                 )
             except Exception:
                 pass
@@ -65,7 +65,7 @@ class TestCasbDlpRules:
             # Step 4: List CASB DLP rules by type - EMAIL
             try:
                 email_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    query_params={'rule_type': 'OFLCASB_DLP_EMAIL'}
+                    rule_type='OFLCASB_DLP_EMAIL'
                 )
             except Exception:
                 pass
@@ -130,7 +130,7 @@ class TestCasbDlpRules:
         finally:
             if rule_id:
                 try:
-                    client.zia.casb_dlp_rules.delete_rule(rule_type=rule_type, rule_id=rule_id)
+                    client.zia.casb_dlp_rules.delete_rule(rule_id=rule_id, rule_type=rule_type)
                 except Exception:
                     pass
 
