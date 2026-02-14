@@ -122,8 +122,6 @@ class Exclusions(ZscalerObject):
 
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
-            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-
             if "datacenter" in config:
                 if isinstance(config["datacenter"], Datacenter):
                     self.datacenter = config["datacenter"]
@@ -231,21 +229,20 @@ class LastModifiedUser(ZscalerObject):
         if config:
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
-            self.external_id = config["externalId"] if "externalId" in config else None
-            self.triggers = config if isinstance(config, dict) else {}
 
         else:
             self.id = None
             self.name = None
-            self.external_id = None
-            self.extensions = None
 
     def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"id": self.id, "name": self.name, "externalId": self.external_id, "extensions": self.extensions}
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 

@@ -14,22 +14,22 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, Optional, Any
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 
 
-class RuleLabels(ZscalerObject):
+class CustomFileTypes(ZscalerObject):
     """
-    A class for RuleLabels objects.
+    A class for CustomFileTypes objects.
     """
 
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
-        Initialize the RuleLabels model based on API response.
+        Initialize the CustomFileTypes model based on API response.
 
         Args:
-            config (dict): A dictionary representing the Rule Labels configuration.
+            config (dict): A dictionary representing the Custom File Types configuration.
         """
         super().__init__(config)
 
@@ -37,31 +37,16 @@ class RuleLabels(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.description = config["description"] if "description" in config else None
-            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.extension = config["extension"] if "extension" in config else None
+            self.file_type_id = config["fileTypeId"] if "fileTypeId" in config else None
 
-            if "referencedRuleCount" in config:
-                self.referenced_rule_count = config["referencedRuleCount"]
-            else:
-                self.referenced_rule_count = 0
-            if "lastModifiedBy" in config:
-                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
-                    self.last_modified_by = config["lastModifiedBy"]
-                elif config["lastModifiedBy"] is not None:
-                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
-                else:
-                    self.last_modified_by = None
-            else:
-                self.last_modified_by = None
         else:
             # Initialize with default None or 0 values
             self.id = None
             self.name = None
             self.description = None
-            self.last_modified_time = None
-            self.last_modified_by = None
-            self.created_by = None
-            self.referenced_rule_count = 0
+            self.extension = None
+            self.file_type_id = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -72,10 +57,8 @@ class RuleLabels(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "lastModifiedTime": self.last_modified_time,
-            "lastModifiedBy": self.last_modified_by,
-            "createdBy": self.created_by,
-            "referencedRuleCount": self.referenced_rule_count,
+            "extension": self.extension,
+            "fileTypeId": self.file_type_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

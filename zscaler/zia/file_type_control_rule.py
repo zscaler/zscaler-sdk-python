@@ -39,20 +39,13 @@ class FileTypeControlRuleAPI(APIClient):
         A subset of file type control rules rules  can be returned that match a supported
         filter expression or query.
 
-        Args:
-            query_params {dict}: Map of query parameters for the request.
-
-                ``[query_params.search]`` {str}: Search string for filtering results.
-
         Returns:
             tuple: A tuple containing (list of file type control rules rules instances, Response, error).
 
         Example:
             List all file type control rules rules with a specific page size:
 
-            >>> rules_list, response, error = zia.file_type_control_rule.list_rules(
-            ...    query_params={"pagesize": 50}
-            ... )
+            >>> rules_list, response, error = zia.file_type_control_rule.list_rules()
             >>> for rule in rules_list:
             ...    print(rule.as_dict())
         """
@@ -66,17 +59,14 @@ class FileTypeControlRuleAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
@@ -361,3 +351,75 @@ class FileTypeControlRuleAPI(APIClient):
             return (None, response, error)
 
         return (None, response, None)
+
+    def list_file_type_categories(
+        self,
+        query_params: Optional[dict] = None,
+    ) -> APIResult[List[FileTypeControlRules]]:
+        """
+        Retrieves the list of all file types, including predefined and custom file types,
+        available for configuring rule conditions in different ZIA policies.
+        You can retrieve predefined file types for specific file categories of policies
+        by using the enum request parameter and by specifying one of the following values:
+
+        ``ZSCALERDLP``: Web DLP rules with content inspection
+        ``EXTERNALDLP``: Web DLP rules without content inspection
+        ``FILETYPECATEGORYFORFILETYPECONTROL``: File Type Control policy
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.enums]`` {str}: Specifies the file type category for specific policies
+                    to retrieve the corresponding list of predefined file types supported for the policy category
+                    The following values are supported:
+
+                        ``ZSCALERDLP``: Web DLP rules with content inspection
+                        ``EXTERNALDLP``: Web DLP rules without content inspection
+                        ``FILETYPECATEGORYFORFILETYPECONTROL``: File Type Control policy
+
+                ``[query_params.exclude_custom_file_types]`` {bool}:
+                    Whether custom file types must be excluded from the list or not.
+
+        Returns:
+            tuple: A tuple containing (list of file type categories instances, Response, error).
+
+        Example:
+            List all file type categories:
+
+            >>> categories, response, error = zia.file_type_control_rule.list_file_type_categories(
+            ...    query_params={"enums": 'ZSCALERDLP'}
+            )
+            >>> for category in categories:
+            ...    print(category.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /fileTypeCategories
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(FileTypeControlRules(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

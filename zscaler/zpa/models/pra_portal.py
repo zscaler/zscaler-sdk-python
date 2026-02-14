@@ -18,6 +18,7 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class PrivilegedRemoteAccessPortal(ZscalerObject):
     """
     A class representing the Privileged Remote Access Portal.

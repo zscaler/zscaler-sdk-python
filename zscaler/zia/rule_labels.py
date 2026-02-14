@@ -283,7 +283,9 @@ class RuleLabelsAPI(APIClient):
         Retrieves a list of rule labels based on the specified rule type
 
         Args:
-            rule_type (str): The type of rule to retrieve labels for. Only supported values are: URL_FILTERING, FIREWALL, CASB_DLP, CLOUD_APP_CONTROL, DATA_PROTECTION, GENAI, INDUSTRY_PEER, NEWS_FEED, RISK_SCORE, SANDBOX
+            rule_type (str): The type of rule to retrieve labels for.
+                Only supported values are: URL_FILTERING, FIREWALL, CASB_DLP, CLOUD_APP_CONTROL,
+                DATA_PROTECTION, GENAI, INDUSTRY_PEER, NEWS_FEED, RISK_SCORE, SANDBOX
 
         Returns:
             tuple: A tuple containing (list of Rule Labels instances, Response, error)

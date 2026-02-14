@@ -112,6 +112,7 @@ if TYPE_CHECKING:
     from zscaler.zia.saas_security_api import SaaSSecurityAPI
     from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
     from zscaler.zia.traffic_capture import TrafficCaptureAPI
+    from zscaler.zia.custom_file_types import CustomFileTypesAPI
 
 
 class LegacyZIAClientHelper:
@@ -1240,6 +1241,14 @@ class LegacyZIAClientHelper:
         from zscaler.zia.traffic_capture import TrafficCaptureAPI
 
         return TrafficCaptureAPI(self.request_executor)
+
+    @property
+    def custom_file_types(self) -> "CustomFileTypesAPI":
+        """
+        The interface object for the :ref:`ZIA Custom File Types interface <zia-custom_file_types>`.
+
+        """
+        return CustomFileTypesAPI(self.request_executor)
 
     """
     Misc

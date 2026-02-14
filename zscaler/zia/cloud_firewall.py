@@ -68,7 +68,7 @@ class FirewallResourcesAPI(APIClient):
             Gets a list of all IP destination groups by excluding specific type.
 
             >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups(
-                query_params={"exclude_type": 'DSTN_DOMAIN'}):
+                query_params={"name": 'Group01'}):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
