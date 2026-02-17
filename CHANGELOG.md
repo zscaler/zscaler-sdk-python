@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.16 (February 16, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+* [PR #460](https://github.com/zscaler/zscaler-sdk-python/pull/460) - Fixed URLCategory model assigning function reference instead of calling `form_list` for `regex_patterns` and `regex_patterns_retaining_parent_category`
+
 ## 1.9.15 (February 16, 2026)
 
 ### Notes
@@ -111,12 +121,6 @@
   - Included 6 comprehensive example scripts demonstrating real-world usage patterns
   - Full support for filtering, ordering, pagination, trend data, and nested GraphQL queries
   - Compatible with OneAPI authentication only (OAuth2.0 via Zidentity) 
-
-## 1.9.9 (December 11, 2025)
-
-### Notes
-
-- Python Versions: **v3.9, v3.10, v3.11, v3.12**
 
 ## 1.9.9 (December 11, 2025)
 

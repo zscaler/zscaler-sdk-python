@@ -6,8 +6,18 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.16 (February 16, 2026)
+---------------------------
 
-1.9.15 (February 16, 2026)
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+(`#460 <https://github.com/zscaler/zscaler-sdk-python/pull/460>`_) - Fixed URLCategory model assigning function reference instead of calling `form_list` for `regex_patterns` and `regex_patterns_retaining_parent_category`
+
+1.9.15 (February 13, 2026)
 ---------------------------
 
 Notes
