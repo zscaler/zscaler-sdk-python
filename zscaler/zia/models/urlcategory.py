@@ -40,11 +40,13 @@ class URLCategory(ZscalerObject):
 
             self.urls = ZscalerCollection.form_list(config["urls"] if "urls" in config else [], str)
 
-            self.regex_patterns_retaining_parent_category = ZscalerCollection.form_list
-            (config["regexPatternsRetainingParentCategory"] if "regexPatternsRetainingParentCategory" in config else [], str)
+            self.regex_patterns_retaining_parent_category = ZscalerCollection.form_list(
+                config["regexPatternsRetainingParentCategory"] if "regexPatternsRetainingParentCategory" in config else [], str
+            )
 
-            self.regex_patterns = ZscalerCollection.form_list
-            (config["regexPatterns"]if "regexPatterns" in config else [], str)
+            self.regex_patterns = ZscalerCollection.form_list(
+                config["regexPatterns"] if "regexPatterns" in config else [], str
+            )
 
             self.db_categorized_urls = ZscalerCollection.form_list(
                 config["dbCategorizedUrls"] if "dbCategorizedUrls" in config else [], str
