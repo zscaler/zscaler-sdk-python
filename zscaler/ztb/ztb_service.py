@@ -14,22 +14,29 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-"""Official Python SDK for the Zscaler Products
+from __future__ import annotations
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use
-interface for each of the Zscaler product APIs.
+from typing import TYPE_CHECKING
 
-Documentation available at https://zscaler-sdk-python.readthedocs.io
+from zscaler.ztb.alarms import AlarmsAPI
 
-"""
-
-__author__ = "Zscaler Inc"
-__email__ = "devrel@zscaler.com"
-__license__ = "MIT"
-__contributors__ = [
-    "William Guilherme",
-]
-__version__ = "1.9.17"
+if TYPE_CHECKING:
+    from zscaler.oneapi_client import Client
 
 
-from zscaler.oneapi_client import Client as ZscalerClient  # noqa
+class ZTBService:
+    """
+    ZTB Service client, exposing Zero Trust Branch API resources.
+
+    This service is used via the OneAPI authentication path
+    (``ZscalerClient`` / ``Client``).  For standalone / legacy token-based
+    access, use ``LegacyZTBClient`` or ``LegacyZTBClientHelper`` directly.
+    """
+
+    def __init__(self, client: "Client") -> None:
+        self._request_executor = client.get_request_executor()
+
+    @property
+    def alarms(self) -> AlarmsAPI:
+        """Interface for the ZTB Alarms API."""
+        return AlarmsAPI(self._request_executor)

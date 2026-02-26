@@ -10,6 +10,7 @@ from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+from zscaler.ztb.legacy import LegacyZTBClientHelper
 from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 from urllib.parse import urlparse
 
@@ -33,6 +34,7 @@ class HTTPClient:
         zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
         zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
         zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
+        ztb_legacy_client: Optional[LegacyZTBClientHelper] = None,
         zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
     ) -> None:
 
@@ -44,6 +46,7 @@ class HTTPClient:
         self.zpa_legacy_client: Optional[LegacyZPAClientHelper] = zpa_legacy_client
         self.zia_legacy_client: Optional[LegacyZIAClientHelper] = zia_legacy_client
         self.zwa_legacy_client: Optional[LegacyZWAClientHelper] = zwa_legacy_client
+        self.ztb_legacy_client: Optional[LegacyZTBClientHelper] = ztb_legacy_client
         self.zguard_legacy_client: Optional[LegacyZGuardClientHelper] = zguard_legacy_client
         
         # Determine if legacy clients are enabled
@@ -53,6 +56,7 @@ class HTTPClient:
         self.use_zpa_legacy_client: bool = zpa_legacy_client is not None
         self.use_zia_legacy_client: bool = zia_legacy_client is not None
         self.use_zwa_legacy_client: bool = zwa_legacy_client is not None
+        self.use_ztb_legacy_client: bool = ztb_legacy_client is not None
         self.use_zguard_legacy_client: bool = zguard_legacy_client is not None
         
         # Set timeout for all HTTP requests
@@ -220,6 +224,34 @@ class HTTPClient:
 
                 if response is None:
                     error_msg = f"ZWA Legacy client returned None for request {legacy_req_info}"
+                    logger.error(error_msg)
+                    return (None, ValueError(error_msg))
+
+                # Update params with the correct dictionary from the legacy client's response
+                params.update(
+                    {
+                        "url": legacy_req_info["url"],
+                        "params": legacy_req_info["params"],
+                        "headers": legacy_req_info["headers"],
+                    }
+                )
+
+            elif self.use_ztb_legacy_client:
+                parsed_url = urlparse(request["url"])
+                path = parsed_url.path
+                logger.debug(f"Sending request via ZTB legacy client. Path: {path}")
+
+                response, legacy_req_info = self.ztb_legacy_client.send(
+                    method=request["method"],
+                    path=path,
+                    params=request["params"],
+                    json=request.get("json") or request.get("data"),
+                )
+
+                logger.debug(f"ZTB Legacy Client Response: {response}, Legacy Request Info: {legacy_req_info}")
+
+                if response is None:
+                    error_msg = f"ZTB Legacy client returned None for request {legacy_req_info}"
                     logger.error(error_msg)
                     return (None, ValueError(error_msg))
 

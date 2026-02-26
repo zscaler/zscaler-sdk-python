@@ -30,12 +30,12 @@
 The Zscaler SDK for Python includes functionality to accelerate development via [Python](https://www.python.org/). This SDK can be
 used in your server-side code to interact with the Zscaler API platform across multiple products such as:
 
-* [ZPA API](https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide)
-* [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
-* [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
-* [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
-* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
-* [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
+* [ZPA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zpa)
+* [ZIA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia)
+* [ZDX API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx)
+* [ZCC API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc)
+* [ZIdentity](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
+* [ZTW API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
 
@@ -55,8 +55,8 @@ This library uses semantic versioning and updates are posted in ([release notes]
 
 The latest release can always be found on the ([releases page](github-releases))
 
-> Requires Python version 3.8.0 or higher.
-Zscaler SDK for Python is compatible with Python 3.8 _(until [June 2023](https://devguide.python.org/versions/))_, 3.9, 3.10, 3.11, and 3.12
+> Requires Python version 3.9.2 or higher.
+Zscaler SDK for Python is compatible with Python 3.9, 3.10, 3.11, and 3.12.
 
 ## Need help?
 
@@ -1481,6 +1481,62 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+### Zero Trust Branch (ZTB) API
+
+The ZTB API uses JWT token-based authorization via the `Authorization` header. Unlike ZIA/ZTW, it does **not** use JSESSIONID session cookies.
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|---|---|---|
+| `ZTB_TOKEN` | Yes (or pass `token`) | JWT token for ZTB API access |
+| `ZTB_OVERRIDE_URL` | Yes (or pass `override_url`) | Base URL for the ZTB API (e.g. `https://zscalerbd-api.goairgap.com`). The subdomain is tenant-specific — there is no default. |
+| `ZTB_CLOUD` | No | Cloud identifier (informational only; not used for URL construction yet) |
+| `ZSCALER_PARTNER_ID` | No | Partner ID for `x-partner-id` header |
+
+**Configuration Options:**
+
+| Option | Default | Description |
+|---|---|---|
+| `override_url` | _(required)_ | Full base URL including tenant-specific subdomain |
+| `auth_scheme` | `"raw"` | `"raw"`: sends `Authorization: <token>`. `"bearer"`: sends `Authorization: Bearer <token>` |
+| `max_retries` | `5` | Max retry attempts for 429/5xx/network errors |
+| `token_provider` | `None` | Optional callable returning a fresh token string |
+| `timeout` | `240` | Request timeout in seconds |
+
+**Usage Example (Legacy Client):**
+
+```py
+from zscaler.oneapi_client import LegacyZTBClient
+
+config = {
+    "token": "{yourJWTToken}",
+    "override_url": "https://{yourSubdomain}.goairgap.com",
+    "auth_scheme": "raw",  # or "bearer"
+}
+
+def main():
+    with LegacyZTBClient(config) as client:
+        alarms, response, error = client.ztb.alarms.list_alarms()
+        if error:
+            print(f"Error listing alarms: {error}")
+            return
+        print(f"Alarms: {alarms}")
+
+if __name__ == "__main__":
+    main()
+```
+
+You can also use a dynamic token provider:
+
+```py
+config = {
+    "override_url": "https://{yourSubdomain}.goairgap.com",
+    "token_provider": lambda: get_token_from_vault(),
+    "auth_scheme": "bearer",
+}
 ```
 
 ## Zscaler Legacy API Rate Limiting

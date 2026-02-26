@@ -19,6 +19,7 @@ from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+from zscaler.ztb.legacy import LegacyZTBClientHelper
 from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
 logger = logging.getLogger('zscaler-sdk-python')
@@ -42,6 +43,7 @@ class RequestExecutor:
         zpa_legacy_client: LegacyZPAClientHelper = None,
         zia_legacy_client: LegacyZIAClientHelper = None,
         zwa_legacy_client: LegacyZWAClientHelper = None,
+        ztb_legacy_client: LegacyZTBClientHelper = None,
         zguard_legacy_client: LegacyZGuardClientHelper = None,
     ):
         """
@@ -58,6 +60,7 @@ class RequestExecutor:
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
+        self.ztb_legacy_client = ztb_legacy_client
         self.zguard_legacy_client = zguard_legacy_client
 
         self.use_legacy_client = (
@@ -67,6 +70,7 @@ class RequestExecutor:
             or zcc_legacy_client is not None
             or ztw_legacy_client is not None
             or zdx_legacy_client is not None
+            or ztb_legacy_client is not None
             or zguard_legacy_client is not None
         )
 
@@ -127,6 +131,7 @@ class RequestExecutor:
             zpa_legacy_client=self.zpa_legacy_client,
             zia_legacy_client=self.zia_legacy_client,
             zwa_legacy_client=self.zwa_legacy_client,
+            ztb_legacy_client=self.ztb_legacy_client,
             zguard_legacy_client=self.zguard_legacy_client,
         )
 
@@ -187,6 +192,8 @@ class RequestExecutor:
         #     return "bi"
         elif "/zwa" in url:
             return "zwa"
+        elif "/ztb" in url:
+            return "ztb"
         elif "/zpa" in url or "/mgmtconfig" in url:
             return "zpa"
         elif "/admin/api/v1" in url:
@@ -212,6 +219,8 @@ class RequestExecutor:
                 return "zdx"
             elif "/zwa" in url:
                 return "zwa"
+            elif "/ztb" in url:
+                return "ztb"
             elif "/zpa" in url or "/mgmtconfig" in url:
                 return "zpa"
             elif "/admin/api/v1" in url:
@@ -219,7 +228,7 @@ class RequestExecutor:
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins"]
+        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins", "/ztb"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix) :]
@@ -261,6 +270,8 @@ class RequestExecutor:
                 base_url = self.zdx_legacy_client.get_base_url(endpoint)
             elif service_type == "zwa":
                 base_url = self.zwa_legacy_client.get_base_url(endpoint)
+            elif service_type == "ztb":
+                base_url = self.ztb_legacy_client.get_base_url(endpoint)
             elif service_type == "zguard":
                 base_url = self.zguard_legacy_client.get_base_url(endpoint)
             else:
