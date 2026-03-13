@@ -83,6 +83,10 @@ ENV/
 docs/_diagrams
 local_dev
 
+.vscode
+.claude
+.cursor
+
 # vim swap files
 *.swp
 .DS_Store

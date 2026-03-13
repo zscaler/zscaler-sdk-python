@@ -1177,7 +1177,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = (self.form_response_body(response.get_body()))
+            result = self.form_response_body(response.get_body())
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

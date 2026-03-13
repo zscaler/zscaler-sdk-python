@@ -45,9 +45,7 @@ class TestTrafficDatacenters:
             assert isinstance(datacenters, list), "Datacenters should be a list"
 
             # Test list_datacenters with query params
-            datacenters_search, response, err = client.zia.traffic_datacenters.list_datacenters(
-                query_params={"search": "US"}
-            )
+            datacenters_search, response, err = client.zia.traffic_datacenters.list_datacenters(query_params={"search": "US"})
 
             # Test list_dc_exclusions
             exclusions, response, err = client.zia.traffic_datacenters.list_dc_exclusions()
@@ -56,7 +54,7 @@ class TestTrafficDatacenters:
             # Test add_dc_exclusion (may fail due to permissions)
             if datacenters and len(datacenters) > 0:
                 try:
-                    dc_id = datacenters[0].id if hasattr(datacenters[0], 'id') else None
+                    dc_id = datacenters[0].id if hasattr(datacenters[0], "id") else None
                     if dc_id:
                         start_time = int((datetime.now() + timedelta(hours=1)).timestamp() * 1000)
                         end_time = int((datetime.now() + timedelta(hours=2)).timestamp() * 1000)
@@ -66,7 +64,11 @@ class TestTrafficDatacenters:
                             end_time=end_time,
                         )
                         if err is None and created_exclusion is not None:
-                            exclusion_id = created_exclusion.get("id") if isinstance(created_exclusion, dict) else getattr(created_exclusion, "id", None)
+                            exclusion_id = (
+                                created_exclusion.get("id")
+                                if isinstance(created_exclusion, dict)
+                                else getattr(created_exclusion, "id", None)
+                            )
 
                             # Test update_dc_exclusion
                             if exclusion_id:

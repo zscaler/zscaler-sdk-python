@@ -13,6 +13,7 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
@@ -32,44 +33,25 @@ class ApiKeys(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.client_id = config["clientId"] \
-                if "clientId" in config else None
-            self.client_secret = config["clientSecret"] \
-                if "clientSecret" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.iam_client_id = config["iamClientId"] \
-                if "iamClientId" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.is_locked = config["isLocked"] \
-                if "isLocked" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.pin_session_enabled = config["pinSessionEnabled"] \
-                if "pinSessionEnabled" in config else None
-            self.read_only = config["readOnly"] \
-                if "readOnly" in config else None
-            self.restriction_type = config["restrictionType"] \
-                if "restrictionType" in config else None
-            self.role_id = config["roleId"] \
-                if "roleId" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.sync_version = config["syncVersion"] \
-                if "syncVersion" in config else None
-            self.token_expiry_time_in_sec = config["tokenExpiryTimeInSec"] \
-                if "tokenExpiryTimeInSec" in config else None
-            self.zscaler_managed = config["zscalerManaged"] \
-                if "zscalerManaged" in config else None
+            self.client_id = config["clientId"] if "clientId" in config else None
+            self.client_secret = config["clientSecret"] if "clientSecret" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.iam_client_id = config["iamClientId"] if "iamClientId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.is_locked = config["isLocked"] if "isLocked" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.pin_session_enabled = config["pinSessionEnabled"] if "pinSessionEnabled" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.role_id = config["roleId"] if "roleId" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.sync_version = config["syncVersion"] if "syncVersion" in config else None
+            self.token_expiry_time_in_sec = config["tokenExpiryTimeInSec"] if "tokenExpiryTimeInSec" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
         else:
             self.client_id = None
             self.client_secret = None
@@ -115,7 +97,7 @@ class ApiKeys(ZscalerObject):
             "microtenantName": self.microtenant_name,
             "syncVersion": self.sync_version,
             "tokenExpiryTimeInSec": self.token_expiry_time_in_sec,
-            "zscalerManaged": self.zscaler_managed
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

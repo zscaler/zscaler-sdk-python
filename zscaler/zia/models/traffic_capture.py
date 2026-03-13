@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import device_groups as device_groups
@@ -49,20 +48,13 @@ class TrafficCapture(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.action = config["action"] \
-                if "action" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.description = config["description"] if "description" in config else None
 
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
@@ -82,8 +74,7 @@ class TrafficCapture(ZscalerObject):
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
 
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):
@@ -95,9 +86,7 @@ class TrafficCapture(ZscalerObject):
             else:
                 self.last_modified_by = None
 
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str
-            )
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
             self.src_ip_groups = ZscalerCollection.form_list(
                 config["srcIpGroups"] if config and "srcIpGroups" in config else [], source_groups.IPSourceGroup
             )
@@ -113,8 +102,7 @@ class TrafficCapture(ZscalerObject):
             self.source_countries = ZscalerCollection.form_list(
                 config["sourceCountries"] if "sourceCountries" in config else [], str
             )
-            self.exclude_src_countries = config["excludeSrcCountries"] \
-                if "excludeSrcCountries" in config else None
+            self.exclude_src_countries = config["excludeSrcCountries"] if "excludeSrcCountries" in config else None
 
             self.dest_ip_groups = ZscalerCollection.form_list(
                 config["destIpGroups"] if "destIpGroups" in config else [], destination_groups.IPDestinationGroups
@@ -122,9 +110,7 @@ class TrafficCapture(ZscalerObject):
             self.dest_ipv6_groups = ZscalerCollection.form_list(
                 config["destIpv6Groups"] if "destIpv6Groups" in config else [], destination_groups.IPDestinationGroups
             )
-            self.nw_services = ZscalerCollection.form_list(
-                config["nwServices"] if "nwServices" in config else [], str
-            )
+            self.nw_services = ZscalerCollection.form_list(config["nwServices"] if "nwServices" in config else [], str)
             self.nw_service_groups = ZscalerCollection.form_list(
                 config["nwServiceGroups"] if "nwServiceGroups" in config else [], nw_service_groups.NetworkServiceGroups
             )
@@ -147,17 +133,11 @@ class TrafficCapture(ZscalerObject):
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
-            self.txn_size_limit = config["txnSizeLimit"] \
-                if "txnSizeLimit" in config else None
-            self.txn_sampling = config["txnSampling"] \
-                if "txnSampling" in config else None
-            self.predefined = config["predefined"] \
-                if "predefined" in config else None
-            self.default_rule = config["defaultRule"] \
-                if "defaultRule" in config else None
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
+            self.txn_size_limit = config["txnSizeLimit"] if "txnSizeLimit" in config else None
+            self.txn_sampling = config["txnSampling"] if "txnSampling" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else None
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else None
         else:
             self.id = None
             self.name = None
@@ -239,7 +219,7 @@ class TrafficCapture(ZscalerObject):
             "txnSizeLimit": self.txn_size_limit,
             "txnSampling": self.txn_sampling,
             "predefined": self.predefined,
-            "defaultRule": self.default_rule
+            "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

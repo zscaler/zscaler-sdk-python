@@ -107,7 +107,11 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_pac_file(self, pac_id: int, query_params: Optional[dict] = None,) -> APIResult[dict]:
+    def get_pac_file(
+        self,
+        pac_id: int,
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Retrieves all versions of a PAC file based on the specified ID
 

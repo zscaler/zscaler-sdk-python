@@ -128,9 +128,7 @@ class FirewallRule(ZscalerObject):
 
             self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
 
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
 
             self.nw_services = ZscalerCollection.form_list(
                 config["nwServices"] if "nwServices" in config else [], nw_service.NetworkServices

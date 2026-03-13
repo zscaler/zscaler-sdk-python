@@ -27,32 +27,56 @@ class WebPolicy(ZscalerObject):
     # Define keys that should remain in snake_case format for API compatibility
     SNAKE_CASE_KEYS = {
         # Main WebPolicy attributes
-        'device_type', 'pac_url', 'reauth_period', 'install_ssl_certs',
-        'bypass_mms_apps', 'quota_in_roaming', 'wifi_ssid', 'limit', 'billing_day',
-        'allowed_apps', 'custom_text', 'bypass_android_apps',
-
+        "device_type",
+        "pac_url",
+        "reauth_period",
+        "install_ssl_certs",
+        "bypass_mms_apps",
+        "quota_in_roaming",
+        "wifi_ssid",
+        "limit",
+        "billing_day",
+        "allowed_apps",
+        "custom_text",
+        "bypass_android_apps",
         # Windows Policy attributes
-        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
-
+        "disable_password",
+        "install_ssl_certs",
+        "logout_password",
+        "uninstall_password",
         # Linux Policy attributes
-        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
-
+        "disable_password",
+        "install_ssl_certs",
+        "logout_password",
+        "uninstall_password",
         # iOS Policy attributes
-        'disable_password', 'logout_password', 'uninstall_password',
-
+        "disable_password",
+        "logout_password",
+        "uninstall_password",
         # Android Policy attributes
-        'disable_password', 'logout_password', 'uninstall_password', 'allowed_apps', 'billing_day',
-        'bypass_android_apps', 'bypass_mms_apps', 'custom_text', 'enforced', 'install_ssl_certs',
-        'limit', 'quota_in_roaming', 'wifi_ssid',
-
+        "disable_password",
+        "logout_password",
+        "uninstall_password",
+        "allowed_apps",
+        "billing_day",
+        "bypass_android_apps",
+        "bypass_mms_apps",
+        "custom_text",
+        "enforced",
+        "install_ssl_certs",
+        "limit",
+        "quota_in_roaming",
+        "wifi_ssid",
         # macOS Policy attributes
-        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
-
+        "disable_password",
+        "install_ssl_certs",
+        "logout_password",
+        "uninstall_password",
         # Policy Extension attributes that should remain snake_case
-        'truncate_large_udpdns_response', 'purge_kerberos_preferred_dc_cache',
-
+        "truncate_large_udpdns_response",
+        "purge_kerberos_preferred_dc_cache",
         # Disaster Recovery attributes
-        'enable_zia_dr'
+        "enable_zia_dr",
     }
 
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
@@ -310,134 +334,138 @@ class PolicyExtension(ZscalerObject):
 
         if config:
             self.id = config["id"] if "id" in config else None
-            self.source_port_based_bypasses = config["sourcePortBasedBypasses"] \
-                if "sourcePortBasedBypasses" in config else None
-            self.vpn_gateways = config["vpnGateways"] \
-                if "vpnGateways" in config else None
-            self.packet_tunnel_exclude_list = config["packetTunnelExcludeList"] \
-                if "packetTunnelExcludeList" in config else None
-            self.packet_tunnel_include_list = config["packetTunnelIncludeList"] \
-                if "packetTunnelIncludeList" in config else None
-            self.packet_tunnel_dns_include_list = config["packetTunnelDnsIncludeList"] \
-                if "packetTunnelDnsIncludeList" in config else None
-            self.packet_tunnel_dns_exclude_list = config["packetTunnelDnsExcludeList"] \
-                if "packetTunnelDnsExcludeList" in config else None
-            self.nonce = config["nonce"] \
-                if "nonce" in config else None
-            self.machine_idp_auth = config["machineIdpAuth"] \
-                if "machineIdpAuth" in config else None
-            self.exit_password = config["exitPassword"] \
-                if "exitPassword" in config else None
-            self.use_v8_js_engine = config["useV8JsEngine"] \
-                if "useV8JsEngine" in config else None
-            self.zdx_disable_password = config["zdxDisablePassword"] \
-                if "zdxDisablePassword" in config else None
-            self.zd_disable_password = config["zdDisablePassword"] \
-                if "zdDisablePassword" in config else None
-            self.zpa_disable_password = config["zpaDisablePassword"] \
-                if "zpaDisablePassword" in config else None
-            self.zdp_disable_password = config["zdpDisablePassword"] \
-                if "zdpDisablePassword" in config else None
-            self.follow_routing_table = config["followRoutingTable"] \
-                if "followRoutingTable" in config else None
-            self.use_wsa_poll_for_zpa = config["useWsaPollForZpa"] \
-                if "useWsaPollForZpa" in config else None
-            self.use_default_adapter_for_dns = config["useDefaultAdapterForDNS"] \
-                if "useDefaultAdapterForDNS" in config else None
-            self.use_zscaler_notification_framework = config["useZscalerNotificationFramework"] \
-                if "useZscalerNotificationFramework" in config else None
-            self.switch_focus_to_notification = config["switchFocusToNotification"] \
-                if "switchFocusToNotification" in config else None
-            self.fallback_to_gateway_domain = config["fallbackToGatewayDomain"] \
-                if "fallbackToGatewayDomain" in config else None
-            self.enable_zcc_revert = config["enableZCCRevert"] \
-                if "enableZCCRevert" in config else None
-            self.zcc_revert_password = config["zccRevertPassword"] \
-                if "zccRevertPassword" in config else None
-            self.zpa_auth_exp_on_sleep = config["zpaAuthExpOnSleep"] \
-                if "zpaAuthExpOnSleep" in config else None
-            self.zpa_auth_exp_on_sys_restart = config["zpaAuthExpOnSysRestart"] \
-                if "zpaAuthExpOnSysRestart" in config else None
-            self.zpa_auth_exp_on_net_ip_change = config["zpaAuthExpOnNetIpChange"] \
-                if "zpaAuthExpOnNetIpChange" in config else None
-            self.zpa_auth_exp_on_win_logon_session = config["zpaAuthExpOnWinLogonSession"] \
-                if "zpaAuthExpOnWinLogonSession" in config else None
-            self.zpa_auth_exp_on_win_session_lock = config["zpaAuthExpOnWinSessionLock"] \
-                if "zpaAuthExpOnWinSessionLock" in config else None
-            self.zpa_auth_exp_session_lock_state_min_time_in_second = config["zpaAuthExpSessionLockStateMinTimeInSecond"] \
-                if "zpaAuthExpSessionLockStateMinTimeInSecond" in config else None
-            self.packet_tunnel_exclude_list_for_ipv6 = config["packetTunnelExcludeListForIPv6"] \
-                if "packetTunnelExcludeListForIPv6" in config else None
-            self.packet_tunnel_include_list_for_ipv6 = config["packetTunnelIncludeListForIPv6"] \
-                if "packetTunnelIncludeListForIPv6" in config else None
-            self.enable_set_proxy_on_vpn_adapters = config["enableSetProxyOnVPNAdapters"] \
-                if "enableSetProxyOnVPNAdapters" in config else None
-            self.disable_dns_route_exclusion = config["disableDNSRouteExclusion"] \
-                if "disableDNSRouteExclusion" in config else None
-            self.advance_zpa_reauth = config["advanceZpaReauth"] \
-                if "advanceZpaReauth" in config else None
-            self.use_proxy_port_for_t1 = config["useProxyPortForT1"] \
-                if "useProxyPortForT1" in config else None
-            self.use_proxy_port_for_t2 = config["useProxyPortForT2"] \
-                if "useProxyPortForT2" in config else None
-            self.intercept_zia_traffic_all_adapters = config["interceptZIATrafficAllAdapters"] \
-                if "interceptZIATrafficAllAdapters" in config else None
-            self.enable_anti_tampering = config["enableAntiTampering"] \
-                if "enableAntiTampering" in config else None
-            self.override_at_cmd_by_policy = config["overrideATCmdByPolicy"] \
-                if "overrideATCmdByPolicy" in config else None
-            self.reactivate_anti_tampering_time = config["reactivateAntiTamperingTime"] \
-                if "reactivateAntiTamperingTime" in config else None
-            self.enforce_split_dns = config["enforceSplitDNS"] \
-                if "enforceSplitDNS" in config else None
-            self.drop_quic_traffic = config["dropQuicTraffic"] \
-                if "dropQuicTraffic" in config else None
-            self.enable_zdp_service = config["enableZdpService"] \
-                if "enableZdpService" in config else None
-            self.update_dns_search_order = config["updateDnsSearchOrder"] \
-                if "updateDnsSearchOrder" in config else None
-            self.truncate_large_udpdns_response = config["truncateLargeUDPDNSResponse"] \
-                if "truncateLargeUDPDNSResponse" in config else None
-            self.prioritize_dns_exclusions = config["prioritizeDnsExclusions"] \
-                if "prioritizeDnsExclusions" in config else None
-            self.purge_kerberos_preferred_dc_cache = config["purgeKerberosPreferredDCCache"] \
-                if "purgeKerberosPreferredDCCache" in config else None
-            self.delete_dhcp_option121_routes = config["deleteDHCPOption121Routes"] \
-                if "deleteDHCPOption121Routes" in config else None
-            self.generate_cli_password_contract = config["generateCliPasswordContract"] \
-                if "generateCliPasswordContract" in config else None
-            self.zdx_lite_config_obj = config["zdxLiteConfigObj"] \
-                if "zdxLiteConfigObj" in config else None
-            self.ddil_config = config["ddilConfig"] \
-                if "ddilConfig" in config else None
+            self.source_port_based_bypasses = (
+                config["sourcePortBasedBypasses"] if "sourcePortBasedBypasses" in config else None
+            )
+            self.vpn_gateways = config["vpnGateways"] if "vpnGateways" in config else None
+            self.packet_tunnel_exclude_list = (
+                config["packetTunnelExcludeList"] if "packetTunnelExcludeList" in config else None
+            )
+            self.packet_tunnel_include_list = (
+                config["packetTunnelIncludeList"] if "packetTunnelIncludeList" in config else None
+            )
+            self.packet_tunnel_dns_include_list = (
+                config["packetTunnelDnsIncludeList"] if "packetTunnelDnsIncludeList" in config else None
+            )
+            self.packet_tunnel_dns_exclude_list = (
+                config["packetTunnelDnsExcludeList"] if "packetTunnelDnsExcludeList" in config else None
+            )
+            self.nonce = config["nonce"] if "nonce" in config else None
+            self.machine_idp_auth = config["machineIdpAuth"] if "machineIdpAuth" in config else None
+            self.exit_password = config["exitPassword"] if "exitPassword" in config else None
+            self.use_v8_js_engine = config["useV8JsEngine"] if "useV8JsEngine" in config else None
+            self.zdx_disable_password = config["zdxDisablePassword"] if "zdxDisablePassword" in config else None
+            self.zd_disable_password = config["zdDisablePassword"] if "zdDisablePassword" in config else None
+            self.zpa_disable_password = config["zpaDisablePassword"] if "zpaDisablePassword" in config else None
+            self.zdp_disable_password = config["zdpDisablePassword"] if "zdpDisablePassword" in config else None
+            self.follow_routing_table = config["followRoutingTable"] if "followRoutingTable" in config else None
+            self.use_wsa_poll_for_zpa = config["useWsaPollForZpa"] if "useWsaPollForZpa" in config else None
+            self.use_default_adapter_for_dns = (
+                config["useDefaultAdapterForDNS"] if "useDefaultAdapterForDNS" in config else None
+            )
+            self.use_zscaler_notification_framework = (
+                config["useZscalerNotificationFramework"] if "useZscalerNotificationFramework" in config else None
+            )
+            self.switch_focus_to_notification = (
+                config["switchFocusToNotification"] if "switchFocusToNotification" in config else None
+            )
+            self.fallback_to_gateway_domain = (
+                config["fallbackToGatewayDomain"] if "fallbackToGatewayDomain" in config else None
+            )
+            self.enable_zcc_revert = config["enableZCCRevert"] if "enableZCCRevert" in config else None
+            self.zcc_revert_password = config["zccRevertPassword"] if "zccRevertPassword" in config else None
+            self.zpa_auth_exp_on_sleep = config["zpaAuthExpOnSleep"] if "zpaAuthExpOnSleep" in config else None
+            self.zpa_auth_exp_on_sys_restart = config["zpaAuthExpOnSysRestart"] if "zpaAuthExpOnSysRestart" in config else None
+            self.zpa_auth_exp_on_net_ip_change = (
+                config["zpaAuthExpOnNetIpChange"] if "zpaAuthExpOnNetIpChange" in config else None
+            )
+            self.zpa_auth_exp_on_win_logon_session = (
+                config["zpaAuthExpOnWinLogonSession"] if "zpaAuthExpOnWinLogonSession" in config else None
+            )
+            self.zpa_auth_exp_on_win_session_lock = (
+                config["zpaAuthExpOnWinSessionLock"] if "zpaAuthExpOnWinSessionLock" in config else None
+            )
+            self.zpa_auth_exp_session_lock_state_min_time_in_second = (
+                config["zpaAuthExpSessionLockStateMinTimeInSecond"]
+                if "zpaAuthExpSessionLockStateMinTimeInSecond" in config
+                else None
+            )
+            self.packet_tunnel_exclude_list_for_ipv6 = (
+                config["packetTunnelExcludeListForIPv6"] if "packetTunnelExcludeListForIPv6" in config else None
+            )
+            self.packet_tunnel_include_list_for_ipv6 = (
+                config["packetTunnelIncludeListForIPv6"] if "packetTunnelIncludeListForIPv6" in config else None
+            )
+            self.enable_set_proxy_on_vpn_adapters = (
+                config["enableSetProxyOnVPNAdapters"] if "enableSetProxyOnVPNAdapters" in config else None
+            )
+            self.disable_dns_route_exclusion = (
+                config["disableDNSRouteExclusion"] if "disableDNSRouteExclusion" in config else None
+            )
+            self.advance_zpa_reauth = config["advanceZpaReauth"] if "advanceZpaReauth" in config else None
+            self.use_proxy_port_for_t1 = config["useProxyPortForT1"] if "useProxyPortForT1" in config else None
+            self.use_proxy_port_for_t2 = config["useProxyPortForT2"] if "useProxyPortForT2" in config else None
+            self.intercept_zia_traffic_all_adapters = (
+                config["interceptZIATrafficAllAdapters"] if "interceptZIATrafficAllAdapters" in config else None
+            )
+            self.enable_anti_tampering = config["enableAntiTampering"] if "enableAntiTampering" in config else None
+            self.override_at_cmd_by_policy = config["overrideATCmdByPolicy"] if "overrideATCmdByPolicy" in config else None
+            self.reactivate_anti_tampering_time = (
+                config["reactivateAntiTamperingTime"] if "reactivateAntiTamperingTime" in config else None
+            )
+            self.enforce_split_dns = config["enforceSplitDNS"] if "enforceSplitDNS" in config else None
+            self.drop_quic_traffic = config["dropQuicTraffic"] if "dropQuicTraffic" in config else None
+            self.enable_zdp_service = config["enableZdpService"] if "enableZdpService" in config else None
+            self.update_dns_search_order = config["updateDnsSearchOrder"] if "updateDnsSearchOrder" in config else None
+            self.truncate_large_udpdns_response = (
+                config["truncateLargeUDPDNSResponse"] if "truncateLargeUDPDNSResponse" in config else None
+            )
+            self.prioritize_dns_exclusions = config["prioritizeDnsExclusions"] if "prioritizeDnsExclusions" in config else None
+            self.purge_kerberos_preferred_dc_cache = (
+                config["purgeKerberosPreferredDCCache"] if "purgeKerberosPreferredDCCache" in config else None
+            )
+            self.delete_dhcp_option121_routes = (
+                config["deleteDHCPOption121Routes"] if "deleteDHCPOption121Routes" in config else None
+            )
+            self.generate_cli_password_contract = (
+                config["generateCliPasswordContract"] if "generateCliPasswordContract" in config else None
+            )
+            self.zdx_lite_config_obj = config["zdxLiteConfigObj"] if "zdxLiteConfigObj" in config else None
+            self.ddil_config = config["ddilConfig"] if "ddilConfig" in config else None
             self.zcc_fail_close_settings_exit_uninstall_password = config
-            ["zccFailCloseSettingsExitUninstallPassword"] \
-                if "zccFailCloseSettingsExitUninstallPassword" in config else None
+            ["zccFailCloseSettingsExitUninstallPassword"] if "zccFailCloseSettingsExitUninstallPassword" in config else None
             self.zcc_fail_close_settings_lockdown_on_tunnel_process_exit = config
-            ["zccFailCloseSettingsLockdownOnTunnelProcessExit"] \
-                if "zccFailCloseSettingsLockdownOnTunnelProcessExit" in config else None
+            (
+                ["zccFailCloseSettingsLockdownOnTunnelProcessExit"]
+                if "zccFailCloseSettingsLockdownOnTunnelProcessExit" in config
+                else None
+            )
             self.zcc_fail_close_settings_lockdown_on_firewall_error = config
-            ["zccFailCloseSettingsLockdownOnFirewallError"] \
-                if "zccFailCloseSettingsLockdownOnFirewallError" in config else None
+            (
+                ["zccFailCloseSettingsLockdownOnFirewallError"]
+                if "zccFailCloseSettingsLockdownOnFirewallError" in config
+                else None
+            )
             self.zcc_fail_close_settings_lockdown_on_driver_error = config
-            ["zccFailCloseSettingsLockdownOnDriverError"] \
-                if "zccFailCloseSettingsLockdownOnDriverError" in config else None
-            self.zcc_fail_close_settings_thumb_print = config["zccFailCloseSettingsThumbPrint"] \
-                if "zccFailCloseSettingsThumbPrint" in config else None
-            self.zcc_app_fail_open_policy = config["zccAppFailOpenPolicy"] \
-                if "zccAppFailOpenPolicy" in config else None
-            self.zcc_tunnel_fail_policy = config["zccTunnelFailPolicy"] \
-                if "zccTunnelFailPolicy" in config else None
-            self.follow_global_for_partner_login = config["followGlobalForPartnerLogin"] \
-                if "followGlobalForPartnerLogin" in config else None
-            self.user_allowed_to_add_partner = config["userAllowedToAddPartner"] \
-                if "userAllowedToAddPartner" in config else None
-            self.allow_client_cert_caching_for_web_view2 = config["allowClientCertCachingForWebView2"] \
-                if "allowClientCertCachingForWebView2" in config else None
-            self.show_confirmation_dialog_for_cached_cert = config["showConfirmationDialogForCachedCert"] \
-                if "showConfirmationDialogForCachedCert" in config else None
-            self.enable_flow_based_tunnel = config["enableFlowBasedTunnel"] \
-                if "enableFlowBasedTunnel" in config else None
+            ["zccFailCloseSettingsLockdownOnDriverError"] if "zccFailCloseSettingsLockdownOnDriverError" in config else None
+            self.zcc_fail_close_settings_thumb_print = (
+                config["zccFailCloseSettingsThumbPrint"] if "zccFailCloseSettingsThumbPrint" in config else None
+            )
+            self.zcc_app_fail_open_policy = config["zccAppFailOpenPolicy"] if "zccAppFailOpenPolicy" in config else None
+            self.zcc_tunnel_fail_policy = config["zccTunnelFailPolicy"] if "zccTunnelFailPolicy" in config else None
+            self.follow_global_for_partner_login = (
+                config["followGlobalForPartnerLogin"] if "followGlobalForPartnerLogin" in config else None
+            )
+            self.user_allowed_to_add_partner = (
+                config["userAllowedToAddPartner"] if "userAllowedToAddPartner" in config else None
+            )
+            self.allow_client_cert_caching_for_web_view2 = (
+                config["allowClientCertCachingForWebView2"] if "allowClientCertCachingForWebView2" in config else None
+            )
+            self.show_confirmation_dialog_for_cached_cert = (
+                config["showConfirmationDialogForCachedCert"] if "showConfirmationDialogForCachedCert" in config else None
+            )
+            self.enable_flow_based_tunnel = config["enableFlowBasedTunnel"] if "enableFlowBasedTunnel" in config else None
 
         else:
             self.id = None
@@ -593,36 +621,21 @@ class DisasterRecovery(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.enable_zia_dr = config["enableZiaDR"] \
-                if "enableZiaDR" in config else None
-            self.enable_zpa_dr = config["enableZpaDR"] \
-                if "enableZpaDR" in config else None
-            self.zia_dr_method = config["ziaDRMethod"] \
-                if "ziaDRMethod" in config else None
-            self.zia_custom_db_url = config["ziaCustomDbUrl"] \
-                if "ziaCustomDbUrl" in config else None
-            self.use_zia_global_db = config["useZiaGlobalDb"] \
-                if "useZiaGlobalDb" in config else None
-            self.zia_global_db_url = config["ziaGlobalDbUrl"] \
-                if "ziaGlobalDbUrl" in config else None
-            self.zia_global_db_urlv2 = config["ziaGlobalDbUrlv2"] \
-                if "ziaGlobalDbUrlv2" in config else None
-            self.zia_domain_name = config["ziaDomainName"] \
-                if "ziaDomainName" in config else None
-            self.zia_rsa_pub_key_name = config["ziaRSAPubKeyName"] \
-                if "ziaRSAPubKeyName" in config else None
-            self.zia_rsa_pub_key = config["ziaRSAPubKey"] \
-                if "ziaRSAPubKey" in config else None
-            self.zpa_domain_name = config["zpaDomainName"] \
-                if "zpaDomainName" in config else None
-            self.zpa_rsa_pub_key_name = config["zpaRSAPubKeyName"] \
-                if "zpaRSAPubKeyName" in config else None
-            self.zpa_rsa_pub_key = config["zpaRSAPubKey"] \
-                if "zpaRSAPubKey" in config else None
-            self.allow_zia_test = config["allowZiaTest"] \
-                if "allowZiaTest" in config else None
-            self.allow_zpa_test = config["allowZpaTest"] \
-                if "allowZpaTest" in config else None
+            self.enable_zia_dr = config["enableZiaDR"] if "enableZiaDR" in config else None
+            self.enable_zpa_dr = config["enableZpaDR"] if "enableZpaDR" in config else None
+            self.zia_dr_method = config["ziaDRMethod"] if "ziaDRMethod" in config else None
+            self.zia_custom_db_url = config["ziaCustomDbUrl"] if "ziaCustomDbUrl" in config else None
+            self.use_zia_global_db = config["useZiaGlobalDb"] if "useZiaGlobalDb" in config else None
+            self.zia_global_db_url = config["ziaGlobalDbUrl"] if "ziaGlobalDbUrl" in config else None
+            self.zia_global_db_urlv2 = config["ziaGlobalDbUrlv2"] if "ziaGlobalDbUrlv2" in config else None
+            self.zia_domain_name = config["ziaDomainName"] if "ziaDomainName" in config else None
+            self.zia_rsa_pub_key_name = config["ziaRSAPubKeyName"] if "ziaRSAPubKeyName" in config else None
+            self.zia_rsa_pub_key = config["ziaRSAPubKey"] if "ziaRSAPubKey" in config else None
+            self.zpa_domain_name = config["zpaDomainName"] if "zpaDomainName" in config else None
+            self.zpa_rsa_pub_key_name = config["zpaRSAPubKeyName"] if "zpaRSAPubKeyName" in config else None
+            self.zpa_rsa_pub_key = config["zpaRSAPubKey"] if "zpaRSAPubKey" in config else None
+            self.allow_zia_test = config["allowZiaTest"] if "allowZiaTest" in config else None
+            self.allow_zpa_test = config["allowZpaTest"] if "allowZpaTest" in config else None
         else:
             self.enable_zia_dr = None
             self.enable_zpa_dr = None
@@ -660,7 +673,7 @@ class DisasterRecovery(ZscalerObject):
             "zpaRSAPubKeyName": self.zpa_rsa_pub_key_name,
             "zpaRSAPubKey": self.zpa_rsa_pub_key,
             "allowZiaTest": self.allow_zia_test,
-            "allowZpaTest": self.allow_zpa_test
+            "allowZpaTest": self.allow_zpa_test,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -681,16 +694,13 @@ class OnNetPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.condition_type = config["conditionType"] \
-                if "conditionType" in config else None
-            self.predefined_trusted_networks = config["predefinedTrustedNetworks"] \
-                if "predefinedTrustedNetworks" in config else None
-            self.predefined_tn_all = config["predefinedTnAll"] \
-                if "predefinedTnAll" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.condition_type = config["conditionType"] if "conditionType" in config else None
+            self.predefined_trusted_networks = (
+                config["predefinedTrustedNetworks"] if "predefinedTrustedNetworks" in config else None
+            )
+            self.predefined_tn_all = config["predefinedTnAll"] if "predefinedTnAll" in config else None
         else:
             self.id = None
             self.name = None
@@ -708,7 +718,7 @@ class OnNetPolicy(ZscalerObject):
             "name": self.name,
             "conditionType": self.condition_type,
             "predefinedTrustedNetworks": self.predefined_trusted_networks,
-            "predefinedTnAll": self.predefined_tn_all
+            "predefinedTnAll": self.predefined_tn_all,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -729,16 +739,11 @@ class Users(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.login_name = config["loginName"] \
-                if "loginName" in config else None
-            self.last_modification = config["lastModification"] \
-                if "lastModification" in config else None
-            self.active = config["active"] \
-                if "active" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.login_name = config["loginName"] if "loginName" in config else None
+            self.last_modification = config["lastModification"] if "lastModification" in config else None
+            self.active = config["active"] if "active" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
         else:
             self.id = None
             self.login_name = None
@@ -756,7 +761,7 @@ class Users(ZscalerObject):
             "loginName": self.login_name,
             "lastModification": self.last_modification,
             "active": self.active,
-            "companyId": self.company_id
+            "companyId": self.company_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -777,8 +782,7 @@ class Groups(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
         else:
             self.id = None
 
@@ -809,50 +813,44 @@ class WindowsPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cache_system_proxy = config["cacheSystemProxy"] \
-                if "cacheSystemProxy" in config else None
-            self.disable_password = config["disable_password"] \
-                if "disable_password" in config else None
-            self.disable_loop_back_restriction = config["disableLoopBackRestriction"] \
-                if "disableLoopBackRestriction" in config else None
-            self.remove_exempted_containers = config["removeExemptedContainers"] \
-                if "removeExemptedContainers" in config else None
-            self.disable_parallel_ipv4and_ipv6 = config["disableParallelIpv4andIpv6"] \
-                if "disableParallelIpv4andIpv6" in config else None
-            self.flow_logger_config = config["flowLoggerConfig"] \
-                if "flowLoggerConfig" in config else None
-            self.domain_profile_detection_config = config["domainProfileDetectionConfig"] \
-                if "domainProfileDetectionConfig" in config else None
-            self.all_inbound_traffic_config = config["allInboundTrafficConfig"] \
-                if "allInboundTrafficConfig" in config else None
-            self.install_ssl_certs = config["install_ssl_certs"] \
-                if "install_ssl_certs" in config else None
-            self.trigger_domain_profle_detection = config["triggerDomainProfleDetection"] \
-                if "triggerDomainProfleDetection" in config else None
-            self.logout_password = config["logout_password"] \
-                if "logout_password" in config else None
-            self.override_wpad = config["overrideWPAD"] \
-                if "overrideWPAD" in config else None
-            self.pac_data_path = config["pacDataPath"] \
-                if "pacDataPath" in config else None
-            self.pac_type = config["pacType"] \
-                if "pacType" in config else None
-            self.prioritize_i_pv4 = config["prioritizeIPv4"] \
-                if "prioritizeIPv4" in config else None
-            self.restart_win_http_svc = config["restartWinHttpSvc"] \
-                if "restartWinHttpSvc" in config else None
-            self.sccm_config = config["sccmConfig"] \
-                if "sccmConfig" in config else None
-            self.uninstall_password = config["uninstall_password"] \
-                if "uninstall_password" in config else None
-            self.wfp_driver = config["wfpDriver"] \
-                if "wfpDriver" in config else None
-            self.captive_portal_config = config["captivePortalConfig"] \
-                if "captivePortalConfig" in config else None
-            self.install_windows_firewall_inbound_rule = config["installWindowsFirewallInboundRule"] \
-                if "installWindowsFirewallInboundRule" in config else None
-            self.force_location_refresh_sccm = config["forceLocationRefreshSccm"] \
-                if "forceLocationRefreshSccm" in config else None
+            self.cache_system_proxy = config["cacheSystemProxy"] if "cacheSystemProxy" in config else None
+            self.disable_password = config["disable_password"] if "disable_password" in config else None
+            self.disable_loop_back_restriction = (
+                config["disableLoopBackRestriction"] if "disableLoopBackRestriction" in config else None
+            )
+            self.remove_exempted_containers = (
+                config["removeExemptedContainers"] if "removeExemptedContainers" in config else None
+            )
+            self.disable_parallel_ipv4and_ipv6 = (
+                config["disableParallelIpv4andIpv6"] if "disableParallelIpv4andIpv6" in config else None
+            )
+            self.flow_logger_config = config["flowLoggerConfig"] if "flowLoggerConfig" in config else None
+            self.domain_profile_detection_config = (
+                config["domainProfileDetectionConfig"] if "domainProfileDetectionConfig" in config else None
+            )
+            self.all_inbound_traffic_config = (
+                config["allInboundTrafficConfig"] if "allInboundTrafficConfig" in config else None
+            )
+            self.install_ssl_certs = config["install_ssl_certs"] if "install_ssl_certs" in config else None
+            self.trigger_domain_profle_detection = (
+                config["triggerDomainProfleDetection"] if "triggerDomainProfleDetection" in config else None
+            )
+            self.logout_password = config["logout_password"] if "logout_password" in config else None
+            self.override_wpad = config["overrideWPAD"] if "overrideWPAD" in config else None
+            self.pac_data_path = config["pacDataPath"] if "pacDataPath" in config else None
+            self.pac_type = config["pacType"] if "pacType" in config else None
+            self.prioritize_i_pv4 = config["prioritizeIPv4"] if "prioritizeIPv4" in config else None
+            self.restart_win_http_svc = config["restartWinHttpSvc"] if "restartWinHttpSvc" in config else None
+            self.sccm_config = config["sccmConfig"] if "sccmConfig" in config else None
+            self.uninstall_password = config["uninstall_password"] if "uninstall_password" in config else None
+            self.wfp_driver = config["wfpDriver"] if "wfpDriver" in config else None
+            self.captive_portal_config = config["captivePortalConfig"] if "captivePortalConfig" in config else None
+            self.install_windows_firewall_inbound_rule = (
+                config["installWindowsFirewallInboundRule"] if "installWindowsFirewallInboundRule" in config else None
+            )
+            self.force_location_refresh_sccm = (
+                config["forceLocationRefreshSccm"] if "forceLocationRefreshSccm" in config else None
+            )
         else:
             self.cache_system_proxy = None
             self.disable_password = None
@@ -904,7 +902,7 @@ class WindowsPolicy(ZscalerObject):
             "wfpDriver": self.wfp_driver,
             "captivePortalConfig": self.captive_portal_config,
             "installWindowsFirewallInboundRule": self.install_windows_firewall_inbound_rule,
-            "forceLocationRefreshSccm": self.force_location_refresh_sccm
+            "forceLocationRefreshSccm": self.force_location_refresh_sccm,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -925,14 +923,10 @@ class LinuxPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.disable_password = config["disablePassword"] \
-                if "disablePassword" in config else None
-            self.install_ssl_certs = config["installCerts"] \
-                if "installCerts" in config else None
-            self.logout_password = config["logoutPassword"] \
-                if "logoutPassword" in config else None
-            self.uninstall_password = config["uninstallPassword"] \
-                if "uninstallPassword" in config else None
+            self.disable_password = config["disablePassword"] if "disablePassword" in config else None
+            self.install_ssl_certs = config["installCerts"] if "installCerts" in config else None
+            self.logout_password = config["logoutPassword"] if "logoutPassword" in config else None
+            self.uninstall_password = config["uninstallPassword"] if "uninstallPassword" in config else None
         else:
             self.disable_password = None
             self.install_ssl_certs = None
@@ -948,7 +942,7 @@ class LinuxPolicy(ZscalerObject):
             "disablePassword": self.disable_password,
             "installCerts": self.install_ssl_certs,
             "logoutPassword": self.logout_password,
-            "uninstallPassword": self.uninstall_password
+            "uninstallPassword": self.uninstall_password,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -969,19 +963,13 @@ class IOSPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.disable_password = config["disablePassword"] \
-                if "disablePassword" in config else None
-            self.logout_password = config["logoutPassword"] \
-                if "logoutPassword" in config else None
-            self.uninstall_password = config["uninstallPassword"] \
-                if "uninstallPassword" in config else None
-            self.ipv6_mode = config["ipv6Mode"] \
-                if "ipv6Mode" in config else None
-            self.passcode = config["passcode"] \
-                if "passcode" in config else None
+            self.disable_password = config["disablePassword"] if "disablePassword" in config else None
+            self.logout_password = config["logoutPassword"] if "logoutPassword" in config else None
+            self.uninstall_password = config["uninstallPassword"] if "uninstallPassword" in config else None
+            self.ipv6_mode = config["ipv6Mode"] if "ipv6Mode" in config else None
+            self.passcode = config["passcode"] if "passcode" in config else None
 
-            self.show_vpn_tun_notification = config["showVPNTunNotification"] \
-                if "showVPNTunNotification" in config else None
+            self.show_vpn_tun_notification = config["showVPNTunNotification"] if "showVPNTunNotification" in config else None
 
         else:
             self.disable_password = None
@@ -1023,34 +1011,20 @@ class AndroidPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.allowed_apps = config["allowedApps"] \
-                if "allowedApps" in config else None
-            self.billing_day = config["billingDay"] \
-                if "billingDay" in config else None
-            self.bypass_android_apps = config["bypassAndroidApps"] \
-                if "bypassAndroidApps" in config else None
-            self.bypass_mms_apps = config["bypassMmsApps"] \
-                if "bypassMmsApps" in config else None
-            self.custom_text = config["customText"] \
-                if "customText" in config else None
-            self.disable_password = config["disablePassword"] \
-                if "disablePassword" in config else None
-            self.enable_verbose_log = config["enableVerboseLog"] \
-                if "enableVerboseLog" in config else None
-            self.enforced = config["enforced"] \
-                if "enforced" in config else None
-            self.install_certs = config["installCerts"] \
-                if "installCerts" in config else None
-            self.limit = config["limit"] \
-                if "limit" in config else None
-            self.logout_password = config["logoutPassword"] \
-                if "logoutPassword" in config else None
-            self.quota_roaming = config["quotaRoaming"] \
-                if "quotaRoaming" in config else None
-            self.uninstall_password = config["uninstallPassword"] \
-                if "uninstallPassword" in config else None
-            self.wifissid = config["wifissid"] \
-                if "wifissid" in config else None
+            self.allowed_apps = config["allowedApps"] if "allowedApps" in config else None
+            self.billing_day = config["billingDay"] if "billingDay" in config else None
+            self.bypass_android_apps = config["bypassAndroidApps"] if "bypassAndroidApps" in config else None
+            self.bypass_mms_apps = config["bypassMmsApps"] if "bypassMmsApps" in config else None
+            self.custom_text = config["customText"] if "customText" in config else None
+            self.disable_password = config["disablePassword"] if "disablePassword" in config else None
+            self.enable_verbose_log = config["enableVerboseLog"] if "enableVerboseLog" in config else None
+            self.enforced = config["enforced"] if "enforced" in config else None
+            self.install_certs = config["installCerts"] if "installCerts" in config else None
+            self.limit = config["limit"] if "limit" in config else None
+            self.logout_password = config["logoutPassword"] if "logoutPassword" in config else None
+            self.quota_roaming = config["quotaRoaming"] if "quotaRoaming" in config else None
+            self.uninstall_password = config["uninstallPassword"] if "uninstallPassword" in config else None
+            self.wifissid = config["wifissid"] if "wifissid" in config else None
         else:
             self.allowed_apps = None
             self.billing_day = None
@@ -1086,7 +1060,7 @@ class AndroidPolicy(ZscalerObject):
             "logoutPassword": self.logout_password,
             "quotaRoaming": self.quota_roaming,
             "uninstallPassword": self.uninstall_password,
-            "wifissid": self.wifissid
+            "wifissid": self.wifissid,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -1107,30 +1081,26 @@ class MacOSPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.add_ifscope_route = config["addIfscopeRoute"] \
-                if "addIfscopeRoute" in config else None
-            self.cache_system_proxy = config["cacheSystemProxy"] \
-                if "cacheSystemProxy" in config else None
-            self.clear_arp_cache = config["clearArpCache"] \
-                if "clearArpCache" in config else None
-            self.disable_password = config["disablePassword"] \
-                if "disablePassword" in config else None
-            self.dns_priority_ordering = config["dnsPriorityOrdering"] \
-                if "dnsPriorityOrdering" in config else None
-            self.dns_priority_ordering_for_trusted_dns_criteria = config["dnsPriorityOrderingForTrustedDnsCriteria"] \
-                if "dnsPriorityOrderingForTrustedDnsCriteria" in config else None
-            self.enable_application_based_bypass = config["enableApplicationBasedBypass"] \
-                if "enableApplicationBasedBypass" in config else None
-            self.enable_zscaler_firewall = config["enableZscalerFirewall"] \
-                if "enableZscalerFirewall" in config else None
-            self.install_certs = config["installCerts"] \
-                if "installCerts" in config else None
-            self.logout_password = config["logoutPassword"] \
-                if "logoutPassword" in config else None
-            self.persistent_zscaler_firewall = config["persistentZscalerFirewall"] \
-                if "persistentZscalerFirewall" in config else None
-            self.uninstall_password = config["uninstallPassword"] \
-                if "uninstallPassword" in config else None
+            self.add_ifscope_route = config["addIfscopeRoute"] if "addIfscopeRoute" in config else None
+            self.cache_system_proxy = config["cacheSystemProxy"] if "cacheSystemProxy" in config else None
+            self.clear_arp_cache = config["clearArpCache"] if "clearArpCache" in config else None
+            self.disable_password = config["disablePassword"] if "disablePassword" in config else None
+            self.dns_priority_ordering = config["dnsPriorityOrdering"] if "dnsPriorityOrdering" in config else None
+            self.dns_priority_ordering_for_trusted_dns_criteria = (
+                config["dnsPriorityOrderingForTrustedDnsCriteria"]
+                if "dnsPriorityOrderingForTrustedDnsCriteria" in config
+                else None
+            )
+            self.enable_application_based_bypass = (
+                config["enableApplicationBasedBypass"] if "enableApplicationBasedBypass" in config else None
+            )
+            self.enable_zscaler_firewall = config["enableZscalerFirewall"] if "enableZscalerFirewall" in config else None
+            self.install_certs = config["installCerts"] if "installCerts" in config else None
+            self.logout_password = config["logoutPassword"] if "logoutPassword" in config else None
+            self.persistent_zscaler_firewall = (
+                config["persistentZscalerFirewall"] if "persistentZscalerFirewall" in config else None
+            )
+            self.uninstall_password = config["uninstallPassword"] if "uninstallPassword" in config else None
         else:
             self.add_ifscope_route = None
             self.cache_system_proxy = None
@@ -1162,7 +1132,7 @@ class MacOSPolicy(ZscalerObject):
             "installCerts": self.install_certs,
             "logoutPassword": self.logout_password,
             "persistentZscalerFirewall": self.persistent_zscaler_firewall,
-            "uninstallPassword": self.uninstall_password
+            "uninstallPassword": self.uninstall_password,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

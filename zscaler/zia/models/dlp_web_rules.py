@@ -117,9 +117,7 @@ class DLPWebRules(ZscalerObject):
             self.dlp_engines = ZscalerCollection.form_list(
                 config["dlpEngines"] if "dlpEngines" in config else [], dlp_engine.DLPEngine
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
             self.excluded_groups = ZscalerCollection.form_list(
                 config["excludedGroups"] if "excludedGroups" in config else [], user_management.Groups
             )

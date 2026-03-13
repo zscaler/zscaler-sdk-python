@@ -223,8 +223,7 @@ class ExecuteDetectionsPolicyResponse(ZscalerObject):
 
             # Handle throttlingDetails as a list
             self.throttling_details = ZscalerCollection.form_list(
-                config["throttlingDetails"] if "throttlingDetails" in config else [],
-                RateLimitThrottlingDetail
+                config["throttlingDetails"] if "throttlingDetails" in config else [], RateLimitThrottlingDetail
             )
         else:
             self.transaction_id = None
@@ -261,10 +260,14 @@ class ExecuteDetectionsPolicyResponse(ZscalerObject):
             "severity": self.severity,
             "direction": self.direction,
             "detectorResponses": detector_responses_dict,
-            "throttlingDetails": [
-                item.request_format() if isinstance(item, RateLimitThrottlingDetail) else item
-                for item in self.throttling_details
-            ] if self.throttling_details else [],
+            "throttlingDetails": (
+                [
+                    item.request_format() if isinstance(item, RateLimitThrottlingDetail) else item
+                    for item in self.throttling_details
+                ]
+                if self.throttling_details
+                else []
+            ),
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -342,8 +345,7 @@ class ResolveAndExecuteDetectionsPolicyResponse(ZscalerObject):
 
             # Handle throttlingDetails as a list
             self.throttling_details = ZscalerCollection.form_list(
-                config["throttlingDetails"] if "throttlingDetails" in config else [],
-                RateLimitThrottlingDetail
+                config["throttlingDetails"] if "throttlingDetails" in config else [], RateLimitThrottlingDetail
             )
         else:
             self.transaction_id = None
@@ -386,10 +388,14 @@ class ResolveAndExecuteDetectionsPolicyResponse(ZscalerObject):
             "policyName": self.policy_name,
             "policyVersion": self.policy_version,
             "detectorResponses": detector_responses_dict,
-            "throttlingDetails": [
-                item.request_format() if isinstance(item, RateLimitThrottlingDetail) else item
-                for item in self.throttling_details
-            ] if self.throttling_details else [],
+            "throttlingDetails": (
+                [
+                    item.request_format() if isinstance(item, RateLimitThrottlingDetail) else item
+                    for item in self.throttling_details
+                ]
+                if self.throttling_details
+                else []
+            ),
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

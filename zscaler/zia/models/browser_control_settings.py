@@ -36,23 +36,21 @@ class BrowserControlSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.plugin_check_frequency = config["pluginCheckFrequency"] \
-                if "pluginCheckFrequency" in config else None
+            self.plugin_check_frequency = config["pluginCheckFrequency"] if "pluginCheckFrequency" in config else None
 
-            self.bypass_all_browsers = config["bypassAllBrowsers"] \
-                if "bypassAllBrowsers" in config else None
+            self.bypass_all_browsers = config["bypassAllBrowsers"] if "bypassAllBrowsers" in config else None
 
-            self.allow_all_browsers = config["allowAllBrowsers"] \
-                if "allowAllBrowsers" in config else None
+            self.allow_all_browsers = config["allowAllBrowsers"] if "allowAllBrowsers" in config else None
 
-            self.enable_warnings = config["enableWarnings"] \
-                if "enableWarnings" in config else None
+            self.enable_warnings = config["enableWarnings"] if "enableWarnings" in config else None
 
-            self.enable_smart_browser_isolation = config["enableSmartBrowserIsolation"] \
-                if "enableSmartBrowserIsolation" in config else None
+            self.enable_smart_browser_isolation = (
+                config["enableSmartBrowserIsolation"] if "enableSmartBrowserIsolation" in config else None
+            )
 
-            self.smart_isolation_profile_id = config["smartIsolationProfileId"] \
-                if "smartIsolationProfileId" in config else None
+            self.smart_isolation_profile_id = (
+                config["smartIsolationProfileId"] if "smartIsolationProfileId" in config else None
+            )
 
             self.bypass_plugins = ZscalerCollection.form_list(
                 config["bypassPlugins"] if "bypassPlugins" in config else [], str
@@ -133,7 +131,7 @@ class BrowserControlSettings(ZscalerObject):
             "smartIsolationUsers": self.smart_isolation_users,
             "smartIsolationGroups": self.smart_isolation_groups,
             "smartIsolationProfile": self.smart_isolation_profile,
-            "smartIsolationProfileId": self.smart_isolation_profile_id
+            "smartIsolationProfileId": self.smart_isolation_profile_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

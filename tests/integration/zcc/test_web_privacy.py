@@ -52,7 +52,7 @@ class TestWebPrivacy:
         try:
             # First, get current privacy settings
             current_privacy = client.zcc.web_privacy.get_web_privacy()
-            
+
             if current_privacy:
                 # Update with the same values to test the API call
                 privacy_info, response, err = client.zcc.web_privacy.set_web_privacy_info(
@@ -60,12 +60,11 @@ class TestWebPrivacy:
                     collect_user_info="1",
                     collect_machine_hostname="1",
                 )
-                
+
                 if err is None:
                     assert privacy_info is not None, "Updated privacy info should not be None"
-                    assert hasattr(privacy_info, 'as_dict'), "Privacy info should have as_dict method"
+                    assert hasattr(privacy_info, "as_dict"), "Privacy info should have as_dict method"
         except Exception as exc:
             errors.append(f"Setting web privacy info failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the set web privacy test:\n{chr(10).join(errors)}"
-

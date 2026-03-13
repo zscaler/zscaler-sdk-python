@@ -241,11 +241,7 @@ class PrivateCloudControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def restart_private_controller(
-        self,
-        controller_id: str,
-        microtenant_id: str = None
-    ) -> APIResult[dict]:
+    def restart_private_controller(self, controller_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Triggers restart of the Private Cloud Controller
 

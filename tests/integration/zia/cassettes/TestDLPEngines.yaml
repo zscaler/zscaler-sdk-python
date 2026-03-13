@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines
   response:
     body:
-      string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
+      string: '{"id":15,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -41,7 +41,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:45 GMT
+      - Fri, 13 Mar 2026 03:18:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3165'
+      - '3820'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 96eef483-25ae-9147-bc44-8528c30ce142
+      - b2272312-0789-9b5f-b7f2-4f572d5ea07f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4974'
+      - '4999'
       x-ratelimit-reset:
-      - '18'
+      - '60'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -91,12 +91,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/15
   response:
     body:
-      string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
+      string: '{"id":15,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -118,7 +118,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:46 GMT
+      - Fri, 13 Mar 2026 03:18:04 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -130,23 +130,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '403'
+      - '416'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 64ddc3a0-4a98-9c5f-b8bd-dc4e3a57530d
+      - 2c7eee5d-790f-9163-a242-afea2ca21af0
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4973'
+      - '4998'
       x-ratelimit-reset:
-      - '15'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -169,12 +169,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/15
   response:
     body:
-      string: '{"id":10,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
+      string: '{"id":15,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
         > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
     headers:
       cache-control:
@@ -197,7 +197,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:49 GMT
+      - Fri, 13 Mar 2026 03:18:08 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -209,23 +209,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3696'
+      - '4304'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - dce0d76d-011e-9e83-a553-f605cd5b13f8
+      - e539acdc-f23c-98b6-93f8-534cef8f8fd6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4972'
+      - '4997'
       x-ratelimit-reset:
-      - '14'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -247,9 +247,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines
   response:
     body:
       string: '[{"id":1,"name":"Credit Cards_1761585101101","engineExpression":"((D63.S
@@ -264,7 +264,12 @@ interactions:
         to check for a file with 5 Names and 5 US Social Security Numbers"},{"id":7,"name":"SSN-With-Dashes","engineExpression":"((D62.S
         > 3))","customDlpEngine":true},{"id":8,"name":"Credit Cards_1761585101101_1761587103205","engineExpression":"((D63.S
         > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":9,"name":"kgRZw","engineExpression":"((D63.S
-        > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":10,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":10,"name":"test_engine_d80efa4f","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"updated description"},{"id":11,"name":"test_engine_4dc41dfd","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"updated description"},{"id":12,"name":"test_engine_58c5003c","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"updated description"},{"id":13,"name":"test_engine_fe12a4ae","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"updated description"},{"id":14,"name":"test_engine_675edd28","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"updated description"},{"id":15,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
         > 1))","customDlpEngine":true,"description":"tests-vcr0002"},{"id":64,"predefinedEngineName":"CYBER_BULLY_ENG","engineExpression":"(D119.S
         > 0)","customDlpEngine":false,"description":"Detect self-harm & cyberbullying
         violations"},{"id":63,"predefinedEngineName":"HIPAA","engineExpression":"(D60.S
@@ -293,7 +298,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:50 GMT
+      - Fri, 13 Mar 2026 03:18:09 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -305,23 +310,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '418'
+      - '363'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3d6461b9-1bee-99e4-8602-e7814bff7eaa
+      - 38d7038a-4b2e-939e-8db3-54549adfe9ee
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4971'
+      - '4996'
       x-ratelimit-reset:
-      - '10'
+      - '51'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -343,9 +348,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+    uri: https://easm.test.zscaler.com/zia/api/v1/dlpEngines/15
   response:
     body:
       string: ''
@@ -366,7 +371,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:49:53 GMT
+      - Fri, 13 Mar 2026 03:18:12 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -376,23 +381,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2516'
+      - '2688'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7ef63822-ec10-924c-9d68-fb8109cf4a26
+      - 1fc3009b-d933-9e09-98f9-d4964c2dcdc2
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4970'
+      - '4995'
       x-ratelimit-reset:
-      - '10'
+      - '51'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -35,22 +35,14 @@ class VZENClusters(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.ip_address = config["ipAddress"] \
-                if "ipAddress" in config else None
-            self.subnet_mask = config["subnetMask"] \
-                if "subnetMask" in config else None
-            self.default_gateway = config["defaultGateway"] \
-                if "defaultGateway" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.ip_sec_enabled = config["ipSecEnabled"] \
-                if "ipSecEnabled" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.subnet_mask = config["subnetMask"] if "subnetMask" in config else None
+            self.default_gateway = config["defaultGateway"] if "defaultGateway" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.ip_sec_enabled = config["ipSecEnabled"] if "ipSecEnabled" in config else None
 
             self.virtual_zen_nodes = ZscalerCollection.form_list(
                 config["virtualZenNodes"] if "virtualZenNodes" in config else [], common_reference.ResourceReference
@@ -81,7 +73,7 @@ class VZENClusters(ZscalerObject):
             "defaultGateway": self.default_gateway,
             "type": self.type,
             "ipSecEnabled": self.ip_sec_enabled,
-            "virtualZenNodes": self.virtual_zen_nodes
+            "virtualZenNodes": self.virtual_zen_nodes,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

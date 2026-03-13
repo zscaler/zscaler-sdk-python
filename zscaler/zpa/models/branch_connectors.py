@@ -33,35 +33,23 @@ class BranchConnectorController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.branch_connector_group_id = config["branchConnectorGroupId"] \
-                if "branchConnectorGroupId" in config else None
-            self.branch_connector_group_name = config["branchConnectorGroupName"] \
-                if "branchConnectorGroupName" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.edge_connector_group_id = config["edgeConnectorGroupId"] \
-                if "edgeConnectorGroupId" in config else None
-            self.edge_connector_group_name = config["edgeConnectorGroupName"] \
-                if "edgeConnectorGroupName" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.fingerprint = config["fingerprint"] \
-                if "fingerprint" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
+            self.branch_connector_group_id = config["branchConnectorGroupId"] if "branchConnectorGroupId" in config else None
+            self.branch_connector_group_name = (
+                config["branchConnectorGroupName"] if "branchConnectorGroupName" in config else None
+            )
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.edge_connector_group_id = config["edgeConnectorGroupId"] if "edgeConnectorGroupId" in config else None
+            self.edge_connector_group_name = config["edgeConnectorGroupName"] if "edgeConnectorGroupName" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.fingerprint = config["fingerprint"] if "fingerprint" in config else None
+            self.id = config["id"] if "id" in config else None
             self.ip_acl = config["ipAcl"] if "ipAcl" in config else []
-            self.issued_cert_id = config["issuedCertId"] \
-                if "issuedCertId" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.enrollment_cert = config["enrollmentCert"] \
-                if "enrollmentCert" in config else None
+            self.issued_cert_id = config["issuedCertId"] if "issuedCertId" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.enrollment_cert = config["enrollmentCert"] if "enrollmentCert" in config else None
         else:
             self.branch_connector_group_id = None
             self.branch_connector_group_name = None
@@ -99,7 +87,7 @@ class BranchConnectorController(ZscalerObject):
             "modifiedBy": self.modified_by,
             "modifiedTime": self.modified_time,
             "name": self.name,
-            "enrollmentCert": self.enrollment_cert
+            "enrollmentCert": self.enrollment_cert,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -65,16 +65,16 @@ def get_config():
         sys.exit(1)
 
     return {
-        'clientId': client_id,
-        'clientSecret': client_secret,
-        'vanityDomain': vanity_domain,
-        'cloud': cloud,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "vanityDomain": vanity_domain,
+        "cloud": cloud,
     }
 
 
 def get_time_range(days: int):
     """Get start and end time in epoch milliseconds.
-    
+
     Note: Z-Insights API requires end_time to be at least 1 day before current time.
     """
     # End time is 1 day ago (API requirement)
@@ -92,21 +92,9 @@ def print_header(title: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Query cybersecurity incident data from Z-Insights"
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=10,
-        help="Maximum number of entries to return (default: 10)"
-    )
-    parser.add_argument(
-        "--days",
-        type=int,
-        default=7,
-        help="Number of days to query (default: 7)"
-    )
+    parser = argparse.ArgumentParser(description="Query cybersecurity incident data from Z-Insights")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum number of entries to return (default: 10)")
+    parser.add_argument("--days", type=int, default=7, help="Number of days to query (default: 7)")
     args = parser.parse_args()
 
     config = get_config()
@@ -118,10 +106,7 @@ def main():
         # Query incidents by threat category
         print_header("Cybersecurity Incidents by Threat Category")
         entries, response, error = client.zinsights.cyber_security.get_incidents(
-            start_time=start_time,
-            end_time=end_time,
-            categorize_by=["THREAT_CATEGORY_ID"],
-            limit=args.limit
+            start_time=start_time, end_time=end_time, categorize_by=["THREAT_CATEGORY_ID"], limit=args.limit
         )
 
         if error:
@@ -135,18 +120,15 @@ def main():
         # Query incidents by location
         print_header("Incidents by Location")
         entries, response, error = client.zinsights.cyber_security.get_incidents_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            categorize_by="LOCATION_ID",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, categorize_by="LOCATION_ID", limit=args.limit
         )
 
         if error:
             print(f"Error: {error}")
         elif entries:
             for entry in entries:
-                name = entry.get('name', 'Unknown')
-                total = entry.get('total', 0)
+                name = entry.get("name", "Unknown")
+                total = entry.get("total", 0)
                 print(f"  {name}: {total:,} incidents")
         else:
             print("  No location data available.")
@@ -158,4 +140,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

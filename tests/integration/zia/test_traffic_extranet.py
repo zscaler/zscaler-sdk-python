@@ -51,7 +51,11 @@ class TestTrafficExtranet:
                     location_ids=[],
                 )
                 if err is None and created_extranet is not None:
-                    extranet_id = created_extranet.get("id") if isinstance(created_extranet, dict) else getattr(created_extranet, "id", None)
+                    extranet_id = (
+                        created_extranet.get("id")
+                        if isinstance(created_extranet, dict)
+                        else getattr(created_extranet, "id", None)
+                    )
 
                     # Test get_extranet
                     if extranet_id:

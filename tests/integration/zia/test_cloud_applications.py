@@ -46,7 +46,7 @@ class TestCloudApplications:
         # Step 2: List cloud application policies with pagination
         try:
             paginated_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(
-                query_params={'page': 1, 'page_size': 10}
+                query_params={"page": 1, "page_size": 10}
             )
             assert error is None, f"Error listing cloud applications with pagination: {error}"
         except Exception as exc:
@@ -55,7 +55,7 @@ class TestCloudApplications:
         # Step 3: List cloud application policies filtered by app_class
         try:
             filtered_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(
-                query_params={'app_class': 'WEB_MAIL'}
+                query_params={"app_class": "WEB_MAIL"}
             )
             assert error is None, f"Error listing cloud applications by app_class: {error}"
         except Exception as exc:
@@ -63,18 +63,14 @@ class TestCloudApplications:
 
         # Step 4: List cloud application policies with search
         try:
-            searched_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(
-                query_params={'search': 'Google'}
-            )
+            searched_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(query_params={"search": "Google"})
             assert error is None, f"Error searching cloud applications: {error}"
         except Exception as exc:
             errors.append(f"Failed to search cloud applications: {exc}")
 
         # Step 5: List cloud application policies with group_results
         try:
-            grouped_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(
-                query_params={'group_results': True}
-            )
+            grouped_apps, _, error = client.zia.cloud_applications.list_cloud_app_policy(query_params={"group_results": True})
             assert error is None, f"Error listing cloud applications with group_results: {error}"
         except Exception as exc:
             errors.append(f"Failed to list cloud applications with group_results: {exc}")
@@ -90,7 +86,7 @@ class TestCloudApplications:
         # Step 7: List cloud application SSL policies with pagination
         try:
             paginated_ssl_apps, _, error = client.zia.cloud_applications.list_cloud_app_ssl_policy(
-                query_params={'page': 1, 'page_size': 10}
+                query_params={"page": 1, "page_size": 10}
             )
             assert error is None, f"Error listing cloud applications SSL policy with pagination: {error}"
         except Exception as exc:
@@ -99,7 +95,7 @@ class TestCloudApplications:
         # Step 8: List cloud application SSL policies filtered by app_class
         try:
             filtered_ssl_apps, _, error = client.zia.cloud_applications.list_cloud_app_ssl_policy(
-                query_params={'app_class': 'WEB_MAIL'}
+                query_params={"app_class": "WEB_MAIL"}
             )
             assert error is None, f"Error listing cloud applications SSL policy by app_class: {error}"
         except Exception as exc:
@@ -108,4 +104,3 @@ class TestCloudApplications:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-

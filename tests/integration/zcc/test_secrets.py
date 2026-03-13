@@ -36,21 +36,17 @@ class TestSecrets:
 
         try:
             # First, get a device to use its UDID
-            devices, _, dev_err = client.zcc.devices.list_devices(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            devices, _, dev_err = client.zcc.devices.list_devices(query_params={"page": 1, "page_size": 1})
+
             if dev_err is None and devices and len(devices) > 0:
                 device = devices[0]
-                udid = device.udid if hasattr(device, 'udid') else device.get('udid')
-                
+                udid = device.udid if hasattr(device, "udid") else device.get("udid")
+
                 if udid:
-                    otp, response, err = client.zcc.secrets.get_otp(
-                        query_params={"device_id": udid}
-                    )
+                    otp, response, err = client.zcc.secrets.get_otp(query_params={"device_id": udid})
                     assert err is None, f"Error getting OTP: {err}"
                     assert otp is not None, "OTP response should not be None"
-                    assert hasattr(otp, 'as_dict'), "OTP response should have as_dict method"
+                    assert hasattr(otp, "as_dict"), "OTP response should have as_dict method"
         except Exception as exc:
             errors.append(f"Getting OTP with device_id failed: {exc}")
 
@@ -64,18 +60,14 @@ class TestSecrets:
 
         try:
             # First, get a device to use its UDID
-            devices, _, dev_err = client.zcc.devices.list_devices(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            devices, _, dev_err = client.zcc.devices.list_devices(query_params={"page": 1, "page_size": 1})
+
             if dev_err is None and devices and len(devices) > 0:
                 device = devices[0]
-                udid = device.udid if hasattr(device, 'udid') else device.get('udid')
-                
+                udid = device.udid if hasattr(device, "udid") else device.get("udid")
+
                 if udid:
-                    otp, response, err = client.zcc.secrets.get_otp(
-                        query_params={"udid": udid}
-                    )
+                    otp, response, err = client.zcc.secrets.get_otp(query_params={"udid": udid})
                     assert err is None, f"Error getting OTP: {err}"
                     assert otp is not None, "OTP response should not be None"
         except Exception as exc:
@@ -91,14 +83,12 @@ class TestSecrets:
 
         try:
             # First, get a device to use its username
-            devices, _, dev_err = client.zcc.devices.list_devices(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            devices, _, dev_err = client.zcc.devices.list_devices(query_params={"page": 1, "page_size": 1})
+
             if dev_err is None and devices and len(devices) > 0:
                 device = devices[0]
-                username = device.user if hasattr(device, 'user') else device.get('user')
-                
+                username = device.user if hasattr(device, "user") else device.get("user")
+
                 if username:
                     passwords, response, err = client.zcc.secrets.get_passwords(
                         query_params={"username": username, "os_type": "windows"}
@@ -107,7 +97,7 @@ class TestSecrets:
                     # The test validates the API call mechanics
                     if err is None:
                         assert passwords is not None, "Passwords response should not be None"
-                        assert hasattr(passwords, 'as_dict'), "Passwords response should have as_dict method"
+                        assert hasattr(passwords, "as_dict"), "Passwords response should have as_dict method"
         except Exception as exc:
             errors.append(f"Getting passwords failed: {exc}")
 
@@ -120,17 +110,15 @@ class TestSecrets:
         errors = []
 
         os_types = ["windows", "macos", "linux", "ios", "android"]
-        
+
         try:
             # First, get a device to use its username
-            devices, _, dev_err = client.zcc.devices.list_devices(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            devices, _, dev_err = client.zcc.devices.list_devices(query_params={"page": 1, "page_size": 1})
+
             if dev_err is None and devices and len(devices) > 0:
                 device = devices[0]
-                username = device.user if hasattr(device, 'user') else device.get('user')
-                
+                username = device.user if hasattr(device, "user") else device.get("user")
+
                 if username:
                     for os_type in os_types:
                         try:
@@ -145,4 +133,3 @@ class TestSecrets:
             errors.append(f"Getting passwords with different OS types failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the passwords OS types test:\n{chr(10).join(errors)}"
-

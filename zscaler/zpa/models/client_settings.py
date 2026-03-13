@@ -35,26 +35,18 @@ class ClientSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.enrollment_cert_id = config["enrollmentCertId"] \
-                if "enrollmentCertId" in config else None
-            self.client_certificate_type = config["clientCertificateType"] \
-                if "clientCertificateType" in config else None
-            self.enrollment_cert_name = config["enrollmentCertName"] \
-                if "enrollmentCertName" in config else None
-            self.singning_cert_expiry_in_epoch_sec = config["singningCertExpiryInEpochSec"] \
-                if "singningCertExpiryInEpochSec" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.enrollment_cert_id = config["enrollmentCertId"] if "enrollmentCertId" in config else None
+            self.client_certificate_type = config["clientCertificateType"] if "clientCertificateType" in config else None
+            self.enrollment_cert_name = config["enrollmentCertName"] if "enrollmentCertName" in config else None
+            self.singning_cert_expiry_in_epoch_sec = (
+                config["singningCertExpiryInEpochSec"] if "singningCertExpiryInEpochSec" in config else None
+            )
+            self.name = config["name"] if "name" in config else None
         else:
             self.id = None
             self.modified_time = None
@@ -82,7 +74,7 @@ class ClientSettings(ZscalerObject):
             "clientCertificateType": self.client_certificate_type,
             "enrollmentCertName": self.enrollment_cert_name,
             "singningCertExpiryInEpochSec": self.singning_cert_expiry_in_epoch_sec,
-            "name": self.name
+            "name": self.name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

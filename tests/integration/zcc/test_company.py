@@ -39,13 +39,12 @@ class TestCompanyInfo:
             assert err is None, f"Error getting company info: {err}"
             assert company_info is not None, "Company info should not be None"
             assert isinstance(company_info, list), "Expected a list of company info"
-            
+
             # Verify response structure if we have company info
             if company_info:
                 info = company_info[0]
-                assert hasattr(info, 'as_dict'), "Company info should have as_dict method"
+                assert hasattr(info, "as_dict"), "Company info should have as_dict method"
         except Exception as exc:
             errors.append(f"Getting company info failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the company info test:\n{chr(10).join(errors)}"
-

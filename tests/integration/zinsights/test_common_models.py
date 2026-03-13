@@ -16,9 +16,14 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
 from zscaler.zinsights.models.common import (
-    WebReportEntry, WebReportEntryWithId, TrendDataPoint,
-    CyberSecurityIncident, CasbIncident, IoTDeviceStat,
-    ShadowITApp, FirewallReportEntry
+    WebReportEntry,
+    WebReportEntryWithId,
+    TrendDataPoint,
+    CyberSecurityIncident,
+    CasbIncident,
+    IoTDeviceStat,
+    ShadowITApp,
+    FirewallReportEntry,
 )
 
 

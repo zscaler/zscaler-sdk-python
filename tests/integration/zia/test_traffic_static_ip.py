@@ -35,13 +35,13 @@ class TestTrafficStaticIP:
     def test_traffic_static_ip(self, fs):
         # Reset counters for deterministic values
         reset_vcr_counters()
-        
+
         client = MockZIAClient(fs)
         errors = []
 
         # Use deterministic test name generator
         names = NameGenerator("static-ip")
-        
+
         randomIP = generate_random_ip("104.239.237.0/24")
         checkIP = generate_random_ip("104.239.237.0/24")  # Different IP for validation
         comment = names.name

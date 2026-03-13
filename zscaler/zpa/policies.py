@@ -68,7 +68,7 @@ class PolicySetControllerAPI(APIClient):
         "redirection": "REDIRECTION_POLICY",
         "siem": "SIEM_POLICY",
         "timeout": "TIMEOUT_POLICY",
-        "user_portal": "USER_PORTAL"
+        "user_portal": "USER_PORTAL",
     }
 
     reformat_params = [
@@ -110,7 +110,7 @@ class PolicySetControllerAPI(APIClient):
             "RISK_FACTOR_TYPE": [],
             "CHROME_ENTERPRISE": [],
             "CHROME_POSTURE_PROFILE": [],
-            "USER_PORTAL": []
+            "USER_PORTAL": [],
         }
 
         operators_for_types = {}
@@ -181,9 +181,9 @@ class PolicySetControllerAPI(APIClient):
     def _create_conditions_v2(self, conditions: list) -> list:
         # Groups for different condition types
         app_and_app_group_conditions = []  # Only APP and APP_GROUP go here
-        chrome_conditions = []            # CHROME_ENTERPRISE, CHROME_POSTURE_PROFILE
-        individual_conditions = []        # CONSOLE, LOCATION, MACHINE_GRP, CLIENT_TYPE etc.
-        criteria_conditions = {}          # All other condition types
+        chrome_conditions = []  # CHROME_ENTERPRISE, CHROME_POSTURE_PROFILE
+        individual_conditions = []  # CONSOLE, LOCATION, MACHINE_GRP, CLIENT_TYPE etc.
+        criteria_conditions = {}  # All other condition types
 
         for condition in conditions:
             operator = "OR"  # Default operator
@@ -204,45 +204,67 @@ class PolicySetControllerAPI(APIClient):
                 if object_type in ["chrome_enterprise", "chrome_posture_profile"]:
                     if object_type == "chrome_enterprise":
                         # Expected format: ("chrome_enterprise", attribute, value)
-                        chrome_conditions.append({
-                            "objectType": "CHROME_ENTERPRISE",
-                            "entryValues": [{"lhs": values[0], "rhs": values[1]}]
-                        })
+                        chrome_conditions.append(
+                            {"objectType": "CHROME_ENTERPRISE", "entryValues": [{"lhs": values[0], "rhs": values[1]}]}
+                        )
                     else:
                         # Expected format: ("chrome_posture_profile", [id1, id2])
-                        chrome_conditions.append({
-                            "objectType": "CHROME_POSTURE_PROFILE",
-                            "values": values[0] if isinstance(values[0], list) else list(values)
-                        })
+                        chrome_conditions.append(
+                            {
+                                "objectType": "CHROME_POSTURE_PROFILE",
+                                "values": values[0] if isinstance(values[0], list) else list(values),
+                            }
+                        )
 
                 # Handle app and app_group conditions (grouped together)
                 elif object_type in ["app", "app_group"]:
-                    app_and_app_group_conditions.append({
-                        "objectType": object_type.upper(),
-                        "values": values[0] if isinstance(values[0], list) else list(values)
-                    })
+                    app_and_app_group_conditions.append(
+                        {
+                            "objectType": object_type.upper(),
+                            "values": values[0] if isinstance(values[0], list) else list(values),
+                        }
+                    )
 
                 # Handle individual conditions (each in their own block)
                 elif object_type in ["console", "location", "machine_grp", "client_type", "user_portal"]:
-                    individual_conditions.append({
-                        "operator": operator,
-                        "operands": [{
-                            "objectType": object_type.upper(),
-                            "values": values[0] if isinstance(values[0], list) else list(values)
-                        }]
-                    })
+                    individual_conditions.append(
+                        {
+                            "operator": operator,
+                            "operands": [
+                                {
+                                    "objectType": object_type.upper(),
+                                    "values": values[0] if isinstance(values[0], list) else list(values),
+                                }
+                            ],
+                        }
+                    )
 
                 # Handle all other condition types
                 else:
                     key = (operator, object_type.upper())
                     if object_type in [
-                        "posture", "trusted_network", "country_code",
-                        "platform", "risk_factor_type", "saml", "scim", "scim_group"
+                        "posture",
+                        "trusted_network",
+                        "country_code",
+                        "platform",
+                        "risk_factor_type",
+                        "saml",
+                        "scim",
+                        "scim_group",
                     ]:
                         # Special handling for conditions with list of tuples
                         if (
-                            object_type in ["scim_group", "saml", "scim", "posture", "platform",
-                                            "trusted_network", "risk_factor_type", "country_code"]
+                            object_type
+                            in [
+                                "scim_group",
+                                "saml",
+                                "scim",
+                                "posture",
+                                "platform",
+                                "trusted_network",
+                                "risk_factor_type",
+                                "country_code",
+                            ]
                             and len(values) == 1
                             and isinstance(values[0], list)
                         ):
@@ -256,9 +278,7 @@ class PolicySetControllerAPI(APIClient):
                             criteria_conditions.setdefault(key, []).append(entry)
                     else:
                         # For simple value conditions
-                        criteria_conditions.setdefault(key, []).extend(
-                            values[0] if isinstance(values[0], list) else values
-                        )
+                        criteria_conditions.setdefault(key, []).extend(values[0] if isinstance(values[0], list) else values)
 
         # Build the final conditions list
         result = []
@@ -278,26 +298,23 @@ class PolicySetControllerAPI(APIClient):
         for (operator, object_type), values in criteria_conditions.items():
             # Determine if this condition uses entryValues or simple values
             if object_type.lower() in [
-                "posture", "trusted_network", "country_code",
-                "platform", "risk_factor_type", "saml", "scim", "scim_group"
+                "posture",
+                "trusted_network",
+                "country_code",
+                "platform",
+                "risk_factor_type",
+                "saml",
+                "scim",
+                "scim_group",
             ]:
                 operand = {
                     "objectType": object_type,
-                    "entryValues": [
-                        v if isinstance(v, dict) else {"lhs": v[0], "rhs": v[1]}
-                        for v in values
-                    ]
+                    "entryValues": [v if isinstance(v, dict) else {"lhs": v[0], "rhs": v[1]} for v in values],
                 }
             else:
-                operand = {
-                    "objectType": object_type,
-                    "values": values
-                }
+                operand = {"objectType": object_type, "values": values}
 
-            result.append({
-                "operator": operator,
-                "operands": [operand]
-            })
+            result.append({"operator": operator, "operands": [operand]})
 
         return result
 
@@ -1657,7 +1674,7 @@ class PolicySetControllerAPI(APIClient):
         action: str = None,
         app_connector_group_ids: list = None,
         app_server_group_ids: list = None,
-        **kwargs
+        **kwargs,
     ) -> APIResult[dict]:
         """
         Update an existing policy rule.
@@ -2315,13 +2332,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_isolation_rule_v2(
-        self,
-        name: str,
-        action: str,
-        zpn_isolation_profile_id: str = None,
-        **kwargs
-    ) -> APIResult[dict]:
+    def add_isolation_rule_v2(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Add a new Isolation Policy rule.
 
@@ -2700,12 +2711,7 @@ class PolicySetControllerAPI(APIClient):
 
     @synchronized(global_rule_lock)
     def update_app_protection_rule_v2(
-        self,
-        rule_id: str,
-        name: str,
-        action: str,
-        zpn_inspection_profile_id: str = None,
-        **kwargs
+        self, rule_id: str, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
     ) -> APIResult[dict]:
         """
         Add a new App Protection Policy rule.
@@ -2839,12 +2845,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_privileged_credential_rule_v2(
-        self,
-        name: str,
-        credential_id: str = None,
-        **kwargs
-    ) -> APIResult[dict]:
+    def add_privileged_credential_rule_v2(self, name: str, credential_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Add a new Privileged Remote Access Credential Policy rule.
 
@@ -2985,11 +2986,7 @@ class PolicySetControllerAPI(APIClient):
 
     @synchronized(global_rule_lock)
     def update_privileged_credential_rule_v2(
-        self,
-        rule_id: str,
-        credential_id: str = None,
-        name: str = None,
-        **kwargs
+        self, rule_id: str, credential_id: str = None, name: str = None, **kwargs
     ) -> APIResult[dict]:
         """
         Update an existing privileged credential policy rule.
@@ -3562,10 +3559,7 @@ class PolicySetControllerAPI(APIClient):
                 for operand in condition.get("operands", []):
                     if operand.get("objectType") == "CLIENT_TYPE":
                         for val in operand.get("values", []):
-                            if val in (
-                                "zpn_client_type_branch_connector",
-                                "zpn_client_type_edge_connector"
-                            ):
+                            if val in ("zpn_client_type_branch_connector", "zpn_client_type_edge_connector"):
                                 raise ValueError(
                                     "CLIENT_TYPE cannot include 'zpn_client_type_branch_connector' or "
                                     "'zpn_client_type_edge_connector' when action is 'REDIRECT_ALWAYS'."
@@ -3711,10 +3705,7 @@ class PolicySetControllerAPI(APIClient):
                 for operand in condition.get("operands", []):
                     if operand.get("objectType") == "CLIENT_TYPE":
                         for val in operand.get("values", []):
-                            if val in (
-                                "zpn_client_type_branch_connector",
-                                "zpn_client_type_edge_connector"
-                            ):
+                            if val in ("zpn_client_type_branch_connector", "zpn_client_type_edge_connector"):
                                 raise ValueError(
                                     "CLIENT_TYPE cannot include 'zpn_client_type_branch_connector' or "
                                     "'zpn_client_type_edge_connector' when action is 'REDIRECT_ALWAYS'."
@@ -3740,12 +3731,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_browser_protection_rule_v2(
-        self,
-        name: str,
-        action: str,
-        **kwargs
-    ) -> APIResult[dict]:
+    def add_browser_protection_rule_v2(self, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Add browser protection rule.
 
@@ -3809,9 +3795,7 @@ class PolicySetControllerAPI(APIClient):
             ... print(f"Browser Protection Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
-            "clientless", query_params={
-                "microtenantId": kwargs.get("microtenantId")
-            }
+            "clientless", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
             return (None, None, "Error retrieving policy for 'browser protection': {err}")
@@ -3864,13 +3848,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_browser_protection_rule_v2(
-        self,
-        rule_id: str,
-        name: str,
-        action: str,
-        **kwargs
-    ) -> APIResult[dict]:
+    def update_browser_protection_rule_v2(self, rule_id: str, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -3935,9 +3913,7 @@ class PolicySetControllerAPI(APIClient):
             ... print(f"Browser Protection Rule added successfully: {updated_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
-            "clientless", query_params={
-                "microtenantId": kwargs.get("microtenantId")
-            }
+            "clientless", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
             return (None, None, "Error retrieving policy for 'Browser Protection': {err}")

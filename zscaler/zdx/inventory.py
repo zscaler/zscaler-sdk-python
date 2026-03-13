@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.software_inventory import SoftwareList
@@ -91,7 +91,7 @@ class InventoryAPI(APIClient):
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
-    
+
         try:
             # Parse the wrapper response and extract the individual software items
             # Use response.get_body() directly to avoid camelCase conversion for ZDX
@@ -102,7 +102,9 @@ class InventoryAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceSoftwareInventory]]:
+    def list_software_keys(
+        self, software_key: str, query_params: Optional[dict] = None
+    ) -> APIResult[List[DeviceSoftwareInventory]]:
         """
         Returns a list of all users and devices for the given software name and version.
 

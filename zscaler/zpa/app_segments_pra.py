@@ -369,7 +369,7 @@ class AppSegmentsPRAAPI(APIClient):
 
             segments_list, _, err = app_segment_api.get_segments_by_type(
                 application_type="SECURE_REMOTE_ACCESS",
-                query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
+                query_params={"microtenant_id": microtenant_id} if microtenant_id else {},
             )
 
             if err:

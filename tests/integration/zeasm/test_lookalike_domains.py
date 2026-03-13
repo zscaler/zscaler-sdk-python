@@ -47,9 +47,7 @@ class TestLookALikeDomains:
             org_id = self._get_org_id(client)
             print(f"Using org_id: {org_id}")
 
-            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(
-                org_id=org_id
-            )
+            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(org_id=org_id)
 
             if err:
                 errors.append(f"Error listing lookalike domains: {err}")
@@ -73,9 +71,7 @@ class TestLookALikeDomains:
             print(f"Using org_id: {org_id}")
 
             # First get the list of lookalike domains to get a lookalike_raw
-            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(
-                org_id=org_id
-            )
+            domains, _, err = client.zeasm.lookalike_domains.list_lookalike_domains(org_id=org_id)
 
             if err:
                 errors.append(f"Error listing lookalike domains: {err}")
@@ -89,8 +85,7 @@ class TestLookALikeDomains:
             print(f"Using lookalike_raw: {lookalike_raw}")
 
             domain_details, _, err = client.zeasm.lookalike_domains.get_lookalike_domain(
-                org_id=org_id,
-                lookalike_raw=lookalike_raw
+                org_id=org_id, lookalike_raw=lookalike_raw
             )
 
             if err:

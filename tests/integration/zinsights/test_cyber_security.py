@@ -34,10 +34,7 @@ class TestCyberSecurity:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.cyber_security.get_incidents(
-            start_time=start_time,
-            end_time=end_time,
-            categorize_by=["THREAT_CATEGORY_ID"],
-            limit=10
+            start_time=start_time, end_time=end_time, categorize_by=["THREAT_CATEGORY_ID"], limit=10
         )
 
         # Verify SDK handles response correctly
@@ -51,10 +48,7 @@ class TestCyberSecurity:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.cyber_security.get_incidents_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            categorize_by="LOCATION_ID",
-            limit=10
+            start_time=start_time, end_time=end_time, categorize_by="LOCATION_ID", limit=10
         )
 
         # Verify SDK handles response correctly

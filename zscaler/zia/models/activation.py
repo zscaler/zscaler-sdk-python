@@ -65,8 +65,7 @@ class EusaStatus(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
 
             if "version" in config:
                 if isinstance(config["version"], common.CommonBlocks):
@@ -78,8 +77,7 @@ class EusaStatus(ZscalerObject):
             else:
                 self.version = None
 
-            self.accepted_status = config["acceptedStatus"] \
-                if "acceptedStatus" in config else None
+            self.accepted_status = config["acceptedStatus"] if "acceptedStatus" in config else None
         else:
             self.id = None
             self.version = None
@@ -90,10 +88,6 @@ class EusaStatus(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "version": self.version,
-            "acceptedStatus": self.accepted_status
-        }
+        current_obj_format = {"id": self.id, "version": self.version, "acceptedStatus": self.accepted_status}
         parent_req_format.update(current_obj_format)
         return parent_req_format

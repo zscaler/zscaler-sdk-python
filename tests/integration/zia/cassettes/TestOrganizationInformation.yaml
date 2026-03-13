@@ -13,15 +13,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/orgInformation
+    uri: https://easm.test.zscaler.com/zia/api/v1/orgInformation
   response:
     body:
-      string: '{"orgId":8061240,"name":"William Guilherme - Internal","hqLocation":"United
-        States","domains":["securitygeek.io","securitygeekio.ca","securitygeekio.zsloginbeta.net"],"geoLocation":"NORTH_AMERICA","industryVertical":"SERVICES","addrLine1":"Your
-        company HQ location address","city":"City","state":"State","zipcode":"100100","country":"UNITED_STATES","employeeCount":"RANGE_1_2000","language":"EN","timezone":"GMT","alertTimer":"MINUTES_30","pdomain":"8061240.zscalerbeta.net","internalCompany":false,"primaryBusinessContactName":"William
-        Guilherme","primaryBusinessContactEmail":"REDACTED","legacyInsightsReportWasEnabled":false,"cloudName":"zscalerbeta.net","externalEmailPortal":false,"zpaTenantId":72058304855015424,"zpaTenantCloud":"ZPABETA_NET","customerContactInherit":false}'
+      string: '{"orgId":24326813,"name":"William Guilherme","hqLocation":"USA","domains":["securitygeek.io","sgiodeveloper.ca","securitygeekio.zslogin.net"],"geoLocation":"NORTH_AMERICA","industryVertical":"SERVICES","addrLine1":"Your
+        company HQ location address","city":"Vancouver","state":"British Columbia","zipcode":"V2Y
+        0B1","country":"CANADA","employeeCount":"RANGE_2001_5000","language":"EN","timezone":"CANADA_AMERICA_VANCOUVER","alertTimer":"MINUTES_30","pdomain":"24326813.zscalerthree.net","internalCompany":false,"primaryBusinessContactName":"William
+        Guilherme","primaryBusinessContactEmail":"REDACTED","legacyInsightsReportWasEnabled":false,"logoBase64Data":"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","logoMimeType":"image/png","cloudName":"zscalerthree.net","externalEmailPortal":false,"zpaTenantId":216196257331281920,"zpaTenantCloud":"PROD_ZPATH_NET","customerContactInherit":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -45,210 +45,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:37:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '552'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - a63bf75a-cd21-9d93-9060-b947f3cf43b7
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4994'
-      x-ratelimit-reset:
-      - '17'
-      x-transaction-id:
-      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/orgInformation/lite
-  response:
-    body:
-      string: '{"orgId":8061240,"name":"William Guilherme - Internal","cloudName":"zscalerbeta.net","domains":["securitygeek.io","securitygeekio.ca","securitygeekio.zsloginbeta.net"],"language":"EN","timezone":"GMT","orgDisabled":false}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 21:37:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '560'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 75cc4ced-5877-90c7-b1d3-0c495c76f3f3
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4993'
-      x-ratelimit-reset:
-      - '16'
-      x-transaction-id:
-      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/subscriptions
-  response:
-    body:
-      string: '[{"id":"AV_AS","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Anti
-        Virus and Anti Spam","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_ATP","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Advanced
-        Threat Protection","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"URL_FILTER","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"URL
-        Filter","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZMAN_WEB_2_0","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Cloud
-        App Controls","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZDLP_WEB","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Data
-        Leak Protection (DLP)","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_REPORTING","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Basic
-        Reporting","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_BW_CTRL","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Bandwidth
-        Controls","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_VPN_S2S","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Z_VPN_S2S","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_MOBILE_SEC","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Mobile
-        Security","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZSCALER_CLIENT_CONNECTOR","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZSCALER
-        CLIENT CONNECTOR","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZSSL_PVT_CERT","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Custom
-        Root Certificate","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZSC_PRIV_ZABSW","status":"TRIAL","licenses":2,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Zscaler
-        Auth Bridge","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZSEC_WEB_ABA","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Cloud
-        Sandbox","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_FIREWALL_BASIC","status":"TRIAL","licenses":4000,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Firewall
-        Basic","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZFW_NG_WITH_LOG","status":"TRIAL","licenses":4000,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Advanced
-        Cloud Firewall","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZFW_STD_LOG","status":"TRIAL","licenses":4000,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Standard
-        FW Full Logging","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_ICAP","status":"TRIAL","licenses":20,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ICAP","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_CLOUD_ID_BROKER","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Cloud
-        Identity Broker","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_LOGFEED_LIVE","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"NSS
-        Live for Web","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_DLP_EDM","status":"TRIAL","startDate":1683615600,"strStartDate":"05/09/2023","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Exact
-        Data Match","cellCount":"COUNT_100M","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_API","status":"TRIAL","licenses":1,"startDate":1660028400,"strStartDate":"08/09/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Z-API","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_FIREWALL_IPS","status":"TRIAL","licenses":4000,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Z_FIREWALL_IPS","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_LOGFEED_FW_LIVE","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"NSS
-        Live for Firewall","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_CASB","status":"TRIAL","licenses":100,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Casb
-        SKU","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZDX_ADVANCED","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZDX_ADVANCED","updatedAtTimestamp":1724197487,"subscribed":true},{"id":"ZS_SIPA","status":"TRIAL","startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"SIPA
-        SKU","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"V_SVC_EDGE","status":"TRIAL","licenses":2,"startDate":1749193200,"strStartDate":"06/06/2025","strEndDate":"04/23/2026","endDate":1777013999,"sku":"Virtual
-        Service Edge","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZS_APP_FINGERPRINTING","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZS
-        App Fingerprinting","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_DLP_IDM","status":"TRIAL","licenses":2,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Index
-        Document Match","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_ISO_5","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Cloud
-        Browser Isolation","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_SERVER_GB","status":"TRIAL","licenses":100,"startDate":1707206400,"strStartDate":"02/06/2024","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZIA_SERVER_GB","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_CASB_ADD_DATA","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZIA_CASB_ADD_DATA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZDX_ADV_PROBES","status":"TRIAL","licenses":30,"startDate":1703404800,"strStartDate":"12/24/2023","strEndDate":"04/24/2026","endDate":1777100399,"sku":"ZDX-ADV-PROBES","updatedAtTimestamp":1724197487,"subscribed":true},{"id":"WORKLOAD_ZIA","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Workload
-        ZIA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"WORKLOAD_ZPA","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Workload
-        ZPA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"WORKLOAD_CONNECTOR_VM","status":"TRIAL","licenses":20,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Workload
-        Connector VM","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"WORKLOAD_ADVANCED_LOG","status":"TRIAL","startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Workload
-        Advanced Log","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"WORKLOAD_TUNNEL_ENCRYPT","status":"TRIAL","startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Workload
-        Tunnel Encryption","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"BC_DEVICE_CONNECTOR_VM","status":"TRIAL","licenses":125,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"BC
-        Device Connector VM","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"BC_DEVICE_ZIA","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"BC
-        Device ZIA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"BC_DEVICE_ZPA","status":"TRIAL","licenses":100,"startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"BC
-        Device ZPA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"BC_DEVICE_ADV_LOG","status":"TRIAL","startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"BC
-        Device advanced logging","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"BC_DEVICE_TUNNEL_ENCRYPT","status":"TRIAL","startDate":1660978800,"strStartDate":"08/20/2022","strEndDate":"04/24/2026","endDate":1777100399,"sku":"BC
-        Device tunnel encryption","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_DNS_ESS","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"DNS
-        Essential","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_DNS_ADVANCED","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"DNS
-        Advanced","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"IPV6_BASIC","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"IPv6
-        Basic SKU","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"IPV6_ADVANCED","status":"TRIAL","licenses":1,"startDate":1619506800,"strStartDate":"04/27/2021","strEndDate":"04/24/2026","endDate":1777100399,"sku":"IPv6
-        Advanced SKU","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"Z_WORKFLOW_AUTOMATION","status":"TRIAL","licenses":1,"startDate":1695020400,"strStartDate":"09/18/2023","strEndDate":"04/24/2026","endDate":1777100399,"sku":"Z
-        Workflow Automation For ZIA","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZS_DP_SAAS_3PA","status":"TRIAL","licenses":100,"startDate":1694847600,"strStartDate":"09/16/2023","strEndDate":"04/24/2026","endDate":1777100399,"sku":"AppTotal
-        Third Party","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_TRAFFIC_CAP_ESS","status":"SUBSCRIBED","licenses":1,"startDate":1763539200,"strStartDate":"11/19/2025","strEndDate":"12/19/2025","endDate":1766217599,"sku":"PCAP
-        SKU","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"LARGE_CFW_RULE_SET","status":"TRIAL","licenses":1,"startDate":1761289200,"strStartDate":"10/24/2025","strEndDate":"04/23/2026","endDate":1777013999,"sku":"Additional
-        Firewall Rules - 4K","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZIA_TRAFFIC_CAPTURE_ADV","status":"SUBSCRIBED","licenses":1,"startDate":1763539200,"strStartDate":"11/19/2025","strEndDate":"12/19/2025","endDate":1766217599,"sku":"ZIA
-        Traffic Capture","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZS_EXT_LOCATIONS","status":"TRIAL","licenses":100,"startDate":1736409600,"strStartDate":"01/09/2025","strEndDate":"04/23/2026","endDate":1777013999,"sku":"Zscaler
-        Extranet Locations","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZS_EXT_PARTNERS","status":"TRIAL","licenses":100,"startDate":1736409600,"strStartDate":"01/09/2025","strEndDate":"04/23/2026","endDate":1777013999,"sku":"Zscaler
-        Extranet Partners","updatedAtTimestamp":1763597239,"subscribed":true},{"id":"ZS_DDCTD_IP","status":"TRIAL","state":"EXPIRED","licenses":10,"startDate":1745823600,"strStartDate":"04/28/2025","strEndDate":"05/28/2025","endDate":1748501999,"sku":"Dedicated
-        IP SKU","updatedAtTimestamp":1763597239}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 21:37:45 GMT
+      - Fri, 13 Mar 2026 03:20:44 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -260,23 +57,237 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '286'
+      - '1353'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d1b22733-7fac-9394-9ec1-e9eacf6ba658
+      - 3d00ac30-a697-9bce-8230-4456caee60ea
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4969'
+      x-ratelimit-reset:
+      - '17'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/orgInformation/lite
+  response:
+    body:
+      string: '{"orgId":24326813,"name":"William Guilherme","cloudName":"zscalerthree.net","domains":["securitygeek.io","sgiodeveloper.ca","securitygeekio.zslogin.net"],"language":"EN","timezone":"CANADA_AMERICA_VANCOUVER","orgDisabled":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '693'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 667b8caa-590c-97f2-b74c-230902bf1438
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4968'
       x-ratelimit-reset:
       - '16'
       x-transaction-id:
-      - b9e02ea1-aacd-4b80-b5b7-abb2917af981
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/subscriptions
+  response:
+    body:
+      string: '[{"id":"AV_AS","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Anti
+        Virus and Anti Spam","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_ATP","status":"TRIAL","licenses":300,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Advanced
+        Threat Protection","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"URL_FILTER","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"URL
+        Filter","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZMAN_WEB_2_0","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        App Controls","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZDLP_WEB","status":"TRIAL","licenses":600,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Data
+        Leak Protection (DLP)","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_REPORTING","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Basic
+        Reporting","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_BW_CTRL","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Bandwidth
+        Controls","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_VPN_S2S","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Z_VPN_S2S","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_LOGFEED","status":"TRIAL","licenses":2,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"NSS
+        Log Feed for Web","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_PROXYPORT","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Dedicated
+        Proxy Port","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_MOBILE_SEC","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Mobile
+        Security","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZSCALER_CLIENT_CONNECTOR","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZSCALER
+        CLIENT CONNECTOR","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZSSL_PVT_CERT","status":"TRIAL","licenses":101,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Custom
+        Root Certificate","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZSC_PRIV_ZABSW","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Zscaler
+        Auth Bridge","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZSEC_WEB_ABA","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        Sandbox","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_FIREWALL_BASIC","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Firewall
+        Basic","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZFW_NG_WITH_LOG","status":"TRIAL","licenses":300,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Advanced
+        Cloud Firewall","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZFW_STD_LOG","status":"TRIAL","licenses":300,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Standard
+        FW Full Logging","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_LOGFEED_FW","status":"TRIAL","licenses":3,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"NSS
+        Log Feed for Firewall","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_ICAP","status":"TRIAL","licenses":3,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ICAP","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_CLOUD_ID_BROKER","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        Identity Broker","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_LOGFEED_LIVE","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"NSS
+        Live for Web","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_DLP_EDM","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Exact
+        Data Match","cellCount":"COUNT_100M","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_API","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Z-API","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_FIREWALL_IPS","status":"TRIAL","licenses":300,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Z_FIREWALL_IPS","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_LOGFEED_FW_LIVE","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"NSS
+        Live for Firewall","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_ENC_VPN","status":"TRIAL","licenses":250,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Encrypted
+        VPN","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_CASB","status":"TRIAL","licenses":600,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Casb
+        SKU","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZDX_ADVANCED","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZDX_ADVANCED","updatedAtTimestamp":1718126575,"subscribed":true},{"id":"ZS_SIPA","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"SIPA
+        SKU","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"V_SVC_EDGE","status":"TRIAL","licenses":16,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Virtual
+        Service Edge","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZS_DP_SAAS_3PA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"AppTotal
+        Third Party","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_TRAFFIC_CAP_ESS","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"PCAP
+        SKU","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"WORKLOAD_VDI","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        Connector VDI","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_VDI","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Branch
+        Connector VDI","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_DLP_IDM","status":"TRIAL","licenses":3,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Index
+        Document Match","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_ZDX_STD","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Zscaler
+        Digital Experience Standard","updatedAtTimestamp":1718126575,"subscribed":true},{"id":"ZIA_ISO_5","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        Browser Isolation","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_CLOUD_NSS_FW","status":"TRIAL","licenses":2,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        to Cloud Streaming FW","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_CLOUD_NSS_WEB","status":"TRIAL","licenses":2,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        to Cloud Streaming Web","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_SERVER_GB","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZIA_SERVER_GB","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZEXT_BW_PREM","status":"TRIAL","licenses":150,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZEXT_BW_PREM","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_GWIFI_GB","status":"TRIAL","licenses":15,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZIA_GWIFI_GB","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_SSL","status":"TRIAL","licenses":250,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZIA-SSL","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZIA_CASB_ADD_DATA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZIA_CASB_ADD_DATA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_BI","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Business
+        Intelligence SKU","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZS_ZSS","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"SKU
+        for Threat Insights","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZDX_ADV_PROBES","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZDX-ADV-PROBES","updatedAtTimestamp":1718126575,"subscribed":true},{"id":"WORKLOAD_ZIA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Workload
+        ZIA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"WORKLOAD_ZPA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Workload
+        ZPA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"WORKLOAD_CONNECTOR_VM","status":"TRIAL","licenses":20,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Workload
+        Connector VM","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"WORKLOAD_ADVANCED_LOG","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Workload
+        Advanced Log","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"WORKLOAD_TUNNEL_ENCRYPT","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Workload
+        Tunnel Encryption","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZDX_ADV_PLUS","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"ZDX_ADV_PLUS
+        SKU","updatedAtTimestamp":1718126575,"subscribed":true},{"id":"ZIA_ISO_100","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Cloud
+        Browser Isolation 100","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_CONNECTOR_VM","status":"TRIAL","licenses":125,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device Connector VM","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_ZIA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device ZIA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_ZPA","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device ZPA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_ADV_LOG","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device advanced logging","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_TUNNEL_ENCRYPT","status":"TRIAL","startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device tunnel encryption","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_DNS_ESS","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"DNS
+        Essential","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_DNS_ADVANCED","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"DNS
+        Advanced","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_WORKFLOW_AUTOMATION","status":"TRIAL","licenses":1,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Z
+        Workflow Automation For ZIA","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"Z_DLP_ENDPOINT","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"DLP
+        Endpoint","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_CONNECTOR_400","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device Connector 400","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_CONNECTOR_600","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device Connector 600","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"BC_DEVICE_CONNECTOR_800","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"BC
+        Device Connector 800","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZS_EXT_LOCATIONS","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Zscaler
+        Extranet Locations","updatedAtTimestamp":1769671668,"subscribed":true},{"id":"ZS_EXT_PARTNERS","status":"TRIAL","licenses":100,"startDate":1718089200,"strStartDate":"06/11/2024","strEndDate":"07/10/2029","endDate":1878447599,"sku":"Zscaler
+        Extranet Partners","updatedAtTimestamp":1769671668,"subscribed":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:46 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '418'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 77385f48-f4a9-9a7f-aea7-6705cef2e3ce
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4967'
+      x-ratelimit-reset:
+      - '15'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

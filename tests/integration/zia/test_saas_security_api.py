@@ -69,4 +69,3 @@ class TestSaaSSecurityAPI:
             errors.append(f"Exception during SaaS security API test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

@@ -35,41 +35,41 @@ class TrafficCaptureAPI(APIClient):
         query_params: Optional[dict] = None,
     ) -> APIResult[List[TrafficCapture]]:
         """
-       Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
+        Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
 
-        See the
-        `Traffic Capture Policy API reference (list rules):
-        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules-get>`_
-        for further detail on optional keyword parameter structures.
+         See the
+         `Traffic Capture Policy API reference (list rules):
+         <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules-get>`_
+         for further detail on optional keyword parameter structures.
 
-        Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.rule_name]`` {str}: Filters rules based on rule names using the specified keywords
-                ``[query_params.rule_label]`` {str}: Filters rules based on rule labels using the specified keywords
-                ``[query_params.rule_id]`` {str}: Filter based on the rule label ID
-                ``[query_params.rule_order]`` {str}: Filters rules based on rule order using the specified keywords
-                ``[query_params.rule_description]`` {str}: Filters rules based on descriptions using the specified keywords
-                ``[query_params.rule_action]`` {str}: Filters rules based on rule actions using the specified keywords
-                ``[query_params.location]`` {str}: Filters rules based on locations using the specified keywords
-                ``[query_params.department]`` {str}: Filters rules based on user departments using the specified keywords
-                ``[query_params.group]`` {str}: Filters rules based on user groups using the specified keywords
-                ``[query_params.user]`` {str}: Filters rules based on users using the specified keywords
-                ``[query_params.device]`` {str}: Filters rules based on devices using the specified keywords
-                ``[query_params.device_group]`` {str}: Filters rules based on device groups using the specified keywords
-                ``[query_params.device_trust_level]`` {str}: Filters rules based on device trust levels using keywords
-                ``[query_params.page]`` {str}: Specifies the page offset
-                ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
+         Args:
+             query_params {dict}: Map of query parameters for the request.
+                 ``[query_params.rule_name]`` {str}: Filters rules based on rule names using the specified keywords
+                 ``[query_params.rule_label]`` {str}: Filters rules based on rule labels using the specified keywords
+                 ``[query_params.rule_id]`` {str}: Filter based on the rule label ID
+                 ``[query_params.rule_order]`` {str}: Filters rules based on rule order using the specified keywords
+                 ``[query_params.rule_description]`` {str}: Filters rules based on descriptions using the specified keywords
+                 ``[query_params.rule_action]`` {str}: Filters rules based on rule actions using the specified keywords
+                 ``[query_params.location]`` {str}: Filters rules based on locations using the specified keywords
+                 ``[query_params.department]`` {str}: Filters rules based on user departments using the specified keywords
+                 ``[query_params.group]`` {str}: Filters rules based on user groups using the specified keywords
+                 ``[query_params.user]`` {str}: Filters rules based on users using the specified keywords
+                 ``[query_params.device]`` {str}: Filters rules based on devices using the specified keywords
+                 ``[query_params.device_group]`` {str}: Filters rules based on device groups using the specified keywords
+                 ``[query_params.device_trust_level]`` {str}: Filters rules based on device trust levels using keywords
+                 ``[query_params.page]`` {str}: Specifies the page offset
+                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
 
-        Returns:
-            tuple: A tuple containing (list of traffic capture rules instances, Response, error)
+         Returns:
+             tuple: A tuple containing (list of traffic capture rules instances, Response, error)
 
-        Examples:
-        >>> rules, response, error = zia.traffic_capture.list_rules()
-        ...    pprint(rule)
+         Examples:
+         >>> rules, response, error = zia.traffic_capture.list_rules()
+         ...    pprint(rule)
 
-        >>> rules, response, error = zia.traffic_capture.list_rules(
-            query_params={"group": "Engineering"})
-        ...    pprint(rule)
+         >>> rules, response, error = zia.traffic_capture.list_rules(
+             query_params={"group": "Engineering"})
+         ...    pprint(rule)
 
         """
         http_method = "get".upper()
@@ -524,33 +524,33 @@ class TrafficCaptureAPI(APIClient):
         query_params: Optional[dict] = None,
     ) -> APIResult[List[TrafficCapture]]:
         """
-       Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
+        Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
 
-        See the
-        `Traffic Capture Policy API reference (rule labels):
-        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/ruleLabels-get>`_
-        for further detail on optional keyword parameter structures.
+         See the
+         `Traffic Capture Policy API reference (rule labels):
+         <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/ruleLabels-get>`_
+         for further detail on optional keyword parameter structures.
 
-        Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search_by_field]`` (str, optional): Search option based on specific rule fields
-                    Supported values: `RULE_NAME`, `RULE_LABEL`, `RULE_ORDER`, `RULE_DESCRIPTION`, `RULE_ACTION`,
-                        `LOCATION`, `DEPARTMENT`, `GROUP`, `USER`, `DEVICE`
+         Args:
+             query_params {dict}: Map of query parameters for the request.
+                 ``[query_params.search_by_field]`` (str, optional): Search option based on specific rule fields
+                     Supported values: `RULE_NAME`, `RULE_LABEL`, `RULE_ORDER`, `RULE_DESCRIPTION`, `RULE_ACTION`,
+                         `LOCATION`, `DEPARTMENT`, `GROUP`, `USER`, `DEVICE`
 
-                ``[query_params.search_by_value]`` {str}: Search option based on specified values for rule fields
-                ``[query_params.page]`` {str}: Specifies the page offset
-                ``[query_params.page_size]`` {str}: Specifies the page size. Default size is 1024
+                 ``[query_params.search_by_value]`` {str}: Search option based on specified values for rule fields
+                 ``[query_params.page]`` {str}: Specifies the page offset
+                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is 1024
 
-        Returns:
-            tuple: A tuple containing (list of traffic capture rule labels instances, Response, error)
+         Returns:
+             tuple: A tuple containing (list of traffic capture rule labels instances, Response, error)
 
-        Examples:
-        >>> rules, response, error = zia.traffic_capture.list_rule_labels()
-        ...    pprint(rule)
+         Examples:
+         >>> rules, response, error = zia.traffic_capture.list_rule_labels()
+         ...    pprint(rule)
 
-        >>> rules, response, error = zia.traffic_capture.list_rule_labels(
-            query_params={"search_by_field": "RULE_NAME"})
-        ...    pprint(rule)
+         >>> rules, response, error = zia.traffic_capture.list_rule_labels(
+             query_params={"search_by_field": "RULE_NAME"})
+         ...    pprint(rule)
 
         """
         http_method = "get".upper()

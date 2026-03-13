@@ -13,117 +13,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zia/api/v1/users
   response:
     body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Thu, 27 Nov 2025 01:14:57 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - f79c65db-dab5-9b74-8e45-f49f07b78268
-      x-oneapi-version:
-      - 109.1.85
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '147'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Thu, 27 Nov 2025 01:14:58 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://easm.test.zscaler.com/zia/api/v1/users
-  response:
-    body:
-      string: '[{"id":29309057,"name":"adam.ashcroft","email":"REDACTED","groups":[{"id":25684250,"name":"Engineering"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":24326816,"name":"DEFAULT
+      string: '[{"id":165214882,"name":"20260209142140_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":165215336,"name":"20260209143211_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260209143211_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":165215387,"name":"20260209143342_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260209143342_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":165215551,"name":"20260209143657_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260209143657_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":165218309,"name":"20260209153504_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260209153504_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":165218439,"name":"20260209153715_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260209153715_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":166908682,"name":"20260228150618_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":167681139,"name":"20260309083440_created","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"20260309083440_updated","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":24326816,"name":"DEFAULT
         ADMIN","email":"REDACTED","groups":[{"id":24326814,"name":"Service Admin"}],"department":{"id":24326815,"name":"Service
         Admin"},"comments":"Default Administrator","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":117781255,"name":"William
         Guilherme","email":"REDACTED","groups":[],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":123234156,"name":"Admin
@@ -131,8 +34,8 @@ interactions:
         Almond","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309058,"name":"Albert
         Amin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309064,"name":"Alison
         Abbas","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309111,"name":"Allison
-        Ashley","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":32458848,"name":"Amazzal
-        Habib","email":"REDACTED","groups":[{"id":24326814,"name":"Service Admin"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309083,"name":"Amber
+        Ashley","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":32458848,"name":"tumultus_TWnKYoSS","email":"REDACTED","groups":[{"id":24326814,"name":"Service
+        Admin"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309083,"name":"Amber
         Aesop","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309154,"name":"Anantha
         Amos","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485535,"name":"Andre
         Austin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309142,"name":"Angela
@@ -216,14 +119,7 @@ interactions:
         James","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236558,"name":"jcxjjknzil
         Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":140662622,"name":"John
         Doe","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309134,"name":"Jenny
-        Jenkins","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309132,"name":"Jeremiah
-        Jones","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309128,"name":"Jessica
-        Jarvis","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485510,"name":"Jessica
-        Joyce","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119530337,"name":"jihawjwtde
-        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119483522,"name":"jmcipijino
-        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309155,"name":"Joe
-        Jacques","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":83108434,"name":"sP8FEJ/XBS/wokdNyupWCA==","email":"REDACTED","groups":[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"},{"id":62718389,"name":"A001"}],"department":{"id":68759308,"name":"A000_test_1761418096949-test-1761429754606-test-1761429914836"},"comments":"guest
-        wi-fi user","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
+        Jenkins","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -245,33 +141,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 01:15:02 GMT
+      - Fri, 13 Mar 2026 03:29:13 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3812'
+      - '667'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a49b9ad3-8fa3-9a4e-92c3-36dead8a1edc
+      - 8f49aab0-dc4d-9043-b1c3-7a4275576771
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4990'
       x-ratelimit-reset:
-      - '2'
+      - '48'
       x-transaction-id:
-      - 14aeae1c-3609-4931-8c10-376c8d788d31
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -293,7 +191,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zia/api/v1/departments
   response:
@@ -320,7 +218,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 01:15:05 GMT
+      - Fri, 13 Mar 2026 03:29:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -332,23 +230,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2795'
+      - '349'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 599d8e3e-3169-9691-a474-f1794b270329
+      - 4a536ee8-27df-98ae-90f8-5dedb3ab2e93
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4989'
       x-ratelimit-reset:
-      - '58'
+      - '47'
       x-transaction-id:
-      - 14aeae1c-3609-4931-8c10-376c8d788d31
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -370,12 +268,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zia/api/v1/groups
   response:
     body:
-      string: '[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892","comments":"deporto_A7dxNtrV"},{"id":62718389,"name":"A001"},{"id":62718428,"name":"A002"},{"id":62718420,"name":"A003"},{"id":62718400,"name":"A004"},{"id":62718395,"name":"A005"},{"id":62718419,"name":"A006"},{"id":62718391,"name":"A007"},{"id":62718393,"name":"A008"},{"id":62718437,"name":"A009"},{"id":62718415,"name":"A010"},{"id":62718398,"name":"A011"},{"id":62718421,"name":"A012"},{"id":62718436,"name":"A013"},{"id":62718404,"name":"A014"},{"id":62718411,"name":"A015"},{"id":62718392,"name":"A016"},{"id":62718429,"name":"A017"},{"id":62718426,"name":"A018"},{"id":62718390,"name":"A019"},{"id":62718387,"name":"A020"},{"id":62718382,"name":"A021"},{"id":62718427,"name":"A022"},{"id":62718422,"name":"A023"},{"id":62718397,"name":"A024"},{"id":62718383,"name":"A025"},{"id":62718423,"name":"A026"},{"id":62718403,"name":"A027"},{"id":62718409,"name":"A028"},{"id":62718424,"name":"A029"},{"id":62718412,"name":"A030"},{"id":62718432,"name":"A031"},{"id":62718407,"name":"A032"},{"id":62718386,"name":"A033"},{"id":62718431,"name":"A034"},{"id":62718425,"name":"A035"},{"id":62718417,"name":"A036"},{"id":62718405,"name":"A037"},{"id":62718434,"name":"A038"},{"id":62718396,"name":"A039"},{"id":62718408,"name":"A040"},{"id":62718388,"name":"A041"},{"id":62718394,"name":"A042"},{"id":62718416,"name":"A043"},{"id":62718430,"name":"A044"},{"id":62718410,"name":"A045"},{"id":62718433,"name":"A046"},{"id":62718413,"name":"A047"},{"id":62718418,"name":"A048"},{"id":62718399,"name":"A049"},{"id":62718402,"name":"A050"},{"id":62718438,"name":"AAD"},{"id":62718439,"name":"AAD
+      string: '[{"id":165437858,"name":"20260211140950_created","comments":"haisxss4239308"},{"id":165437991,"name":"20260211141030_created","comments":"20260211141030_updated"},{"id":165438137,"name":"20260211141307_created","comments":"20260211141307_updated"},{"id":165438187,"name":"20260211141341_created","comments":"20260211141341_updated"},{"id":165438337,"name":"20260211141659_created","comments":"20260211141659_updated"},{"id":165917933,"name":"20260217124151_created","comments":"20260217124151_updated"},{"id":165920929,"name":"20260217131122_created","comments":"20260217131122_updated"},{"id":166415293,"name":"20260223144230_created","comments":"20260223144230_updated"},{"id":166872478,"name":"20260227164822_created","comments":"haisxss4239308"},{"id":166977693,"name":"20260301223200_created","comments":"20260301223200_updated"},{"id":166978280,"name":"20260301223747_created","comments":"20260301223747_updated"},{"id":167080541,"name":"20260302161309_created","comments":"haisxss4239308"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892","comments":"deporto_A7dxNtrV"},{"id":62718389,"name":"A001"},{"id":62718428,"name":"A002"},{"id":62718420,"name":"A003"},{"id":62718400,"name":"A004"},{"id":62718395,"name":"A005"},{"id":62718419,"name":"A006"},{"id":62718391,"name":"A007"},{"id":62718393,"name":"A008"},{"id":62718437,"name":"A009"},{"id":62718415,"name":"A010"},{"id":62718398,"name":"A011"},{"id":62718421,"name":"A012"},{"id":62718436,"name":"A013"},{"id":62718404,"name":"A014"},{"id":62718411,"name":"A015"},{"id":62718392,"name":"A016"},{"id":62718429,"name":"A017"},{"id":62718426,"name":"A018"},{"id":62718390,"name":"A019"},{"id":62718387,"name":"A020"},{"id":62718382,"name":"A021"},{"id":62718427,"name":"A022"},{"id":62718422,"name":"A023"},{"id":62718397,"name":"A024"},{"id":62718383,"name":"A025"},{"id":62718423,"name":"A026"},{"id":62718403,"name":"A027"},{"id":62718409,"name":"A028"},{"id":62718424,"name":"A029"},{"id":62718412,"name":"A030"},{"id":62718432,"name":"A031"},{"id":62718407,"name":"A032"},{"id":62718386,"name":"A033"},{"id":62718431,"name":"A034"},{"id":62718425,"name":"A035"},{"id":62718417,"name":"A036"},{"id":62718405,"name":"A037"},{"id":62718434,"name":"A038"},{"id":62718396,"name":"A039"},{"id":62718408,"name":"A040"},{"id":62718388,"name":"A041"},{"id":62718394,"name":"A042"},{"id":62718416,"name":"A043"},{"id":62718430,"name":"A044"},{"id":62718410,"name":"A045"},{"id":62718433,"name":"A046"},{"id":62718413,"name":"A047"},{"id":62718418,"name":"A048"},{"id":62718399,"name":"A049"},{"id":62718402,"name":"A050"},{"id":62718438,"name":"AAD"},{"id":62718439,"name":"AAD
         Zscaler External elastic.5005.com TCP 5005"},{"id":62808820,"name":"AAD Zscaler
         External ideweiiss9075.infoserve.endress.com TCP 60000"},{"id":62808786,"name":"AAD
         Zscaler External java-buildserver.infoserve.endress.com TCP 8081"},{"id":62808755,"name":"AAD
@@ -385,7 +283,7 @@ interactions:
         Engine Studio Users"},{"id":70420860,"name":"App Owner"},{"id":70420806,"name":"App-Sec
         Manager"},{"id":70420792,"name":"Application Exception Approver - Level 1"},{"id":70420826,"name":"Application
         Exception Approver - Level 2"},{"id":70420838,"name":"Application False Positive
-        Approver"},{"id":70420858,"name":"Application Security"},{"id":62718497,"name":"B000"},{"id":62718453,"name":"B001"},{"id":62718463,"name":"B002"},{"id":62718472,"name":"B003"},{"id":62718442,"name":"B004"},{"id":62718441,"name":"B005"},{"id":62718465,"name":"B006"},{"id":62718461,"name":"B007"},{"id":62718454,"name":"B008"},{"id":62718484,"name":"B009"},{"id":62718447,"name":"B010"},{"id":62718490,"name":"B011"},{"id":62718474,"name":"B012"},{"id":62718470,"name":"B013"},{"id":62718450,"name":"B014"},{"id":62718485,"name":"B015"},{"id":62718458,"name":"B016"},{"id":62718457,"name":"B017"},{"id":62718478,"name":"B018"},{"id":62718446,"name":"B019"},{"id":62718462,"name":"B020"},{"id":62718487,"name":"B021"},{"id":62718492,"name":"B022"},{"id":62718488,"name":"B023"},{"id":62718444,"name":"B024"},{"id":62718460,"name":"B025"},{"id":62718473,"name":"B026"},{"id":62718464,"name":"B027"},{"id":62718466,"name":"B028"},{"id":62718482,"name":"B029"},{"id":62718456,"name":"B030"},{"id":62718443,"name":"B031"},{"id":62718451,"name":"B032"},{"id":62718449,"name":"B033"}]'
+        Approver"},{"id":70420858,"name":"Application Security"},{"id":62718497,"name":"B000"},{"id":62718453,"name":"B001"},{"id":62718463,"name":"B002"},{"id":62718472,"name":"B003"},{"id":62718442,"name":"B004"},{"id":62718441,"name":"B005"},{"id":62718465,"name":"B006"},{"id":62718461,"name":"B007"},{"id":62718454,"name":"B008"},{"id":62718484,"name":"B009"},{"id":62718447,"name":"B010"},{"id":62718490,"name":"B011"},{"id":62718474,"name":"B012"},{"id":62718470,"name":"B013"},{"id":62718450,"name":"B014"},{"id":62718485,"name":"B015"},{"id":62718458,"name":"B016"},{"id":62718457,"name":"B017"},{"id":62718478,"name":"B018"},{"id":62718446,"name":"B019"},{"id":62718462,"name":"B020"},{"id":62718487,"name":"B021"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -407,7 +305,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 01:15:05 GMT
+      - Fri, 13 Mar 2026 03:29:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -419,91 +317,27 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '340'
+      - '406'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 4c24614c-434a-96ce-8a8a-8d6a6e082f5a
+      - 9a572965-5333-9095-bd38-d020e0685709
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4988'
       x-ratelimit-reset:
-      - '55'
+      - '46'
       x-transaction-id:
-      - 14aeae1c-3609-4931-8c10-376c8d788d31
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
       - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 06:35:42 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
     status:
       code: 200
       message: OK

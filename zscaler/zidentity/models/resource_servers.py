@@ -35,19 +35,12 @@ class ResourceServers(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.results_total = config["results_total"] \
-                if "results_total" in config else None
-            self.page_offset = config["pageOffset"] \
-                if "pageOffset" in config else None
-            self.page_size = config["pageSize"] \
-                if "pageSize" in config else None
-            self.next_link = config["next_link"] \
-                if "next_link" in config else None
-            self.prev_link = config["prev_link"] \
-                if "prev_link" in config else None
-            self.records = ZscalerCollection.form_list(
-                config["records"] if "records" in config else [], ResourceServersRecord
-            )
+            self.results_total = config["results_total"] if "results_total" in config else None
+            self.page_offset = config["pageOffset"] if "pageOffset" in config else None
+            self.page_size = config["pageSize"] if "pageSize" in config else None
+            self.next_link = config["next_link"] if "next_link" in config else None
+            self.prev_link = config["prev_link"] if "prev_link" in config else None
+            self.records = ZscalerCollection.form_list(config["records"] if "records" in config else [], ResourceServersRecord)
         else:
             self.results_total = None
             self.page_offset = None
@@ -67,7 +60,7 @@ class ResourceServers(ZscalerObject):
             "pageSize": self.page_size,
             "next_link": self.next_link,
             "prev_link": self.prev_link,
-            "records": self.records
+            "records": self.records,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -88,18 +81,12 @@ class ResourceServersRecord(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.display_name = config["displayName"] \
-                if "displayName" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.primary_aud = config["primaryAud"] \
-                if "primaryAud" in config else None
-            self.default_api = config["defaultApi"] \
-                if "defaultApi" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.display_name = config["displayName"] if "displayName" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.primary_aud = config["primaryAud"] if "primaryAud" in config else None
+            self.default_api = config["defaultApi"] if "defaultApi" in config else None
             self.service_scopes = ZscalerCollection.form_list(
                 config["serviceScopes"] if "serviceScopes" in config else [], ServiceScopes
             )
@@ -124,7 +111,7 @@ class ResourceServersRecord(ZscalerObject):
             "description": self.description,
             "primaryAud": self.primary_aud,
             "defaultApi": self.default_api,
-            "serviceScopes": self.service_scopes
+            "serviceScopes": self.service_scopes,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -145,9 +132,7 @@ class ServiceScopes(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.scopes = ZscalerCollection.form_list(
-                config["scopes"] if "scopes" in config else [], common.CommonIDName
-            )
+            self.scopes = ZscalerCollection.form_list(config["scopes"] if "scopes" in config else [], common.CommonIDName)
             if "service" in config:
                 if isinstance(config["service"], Service):
                     self.service = config["service"]
@@ -187,16 +172,11 @@ class Service(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.display_name = config["displayName"] \
-                if "displayName" in config else None
-            self.cloud_name = config["cloudName"] \
-                if "cloudName" in config else None
-            self.org_name = config["orgName"] \
-                if "orgName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.display_name = config["displayName"] if "displayName" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.org_name = config["orgName"] if "orgName" in config else None
         else:
             self.id = None
             self.name = None

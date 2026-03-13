@@ -62,8 +62,7 @@ class RemoteAssistance(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.access_type = config["accessType"] \
-                if "accessType" in config else None
+            self.access_type = config["accessType"] if "accessType" in config else None
             self.access_mappings = ZscalerCollection.form_list(
                 config["accessMappings"] if "accessMappings" in config else [], AccessMappings
             )
@@ -76,10 +75,7 @@ class RemoteAssistance(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "accessType": self.access_type,
-            "accessMappings": self.access_mappings
-        }
+        current_obj_format = {"accessType": self.access_type, "accessMappings": self.access_mappings}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -99,20 +95,15 @@ class AccessMappings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.remote_assistance_customer_id = config["remoteAssistanceCustomerId"] \
-                if "remoteAssistanceCustomerId" in config else None
-            self.role_id = config["roleId"] \
-                if "roleId" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.remote_assistance_customer_id = (
+                config["remoteAssistanceCustomerId"] if "remoteAssistanceCustomerId" in config else None
+            )
+            self.role_id = config["roleId"] if "roleId" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
         else:
             self.id = None
             self.modified_time = None

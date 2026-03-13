@@ -38,11 +38,11 @@ class TestEntitlements:
             entitlements, response, err = client.zcc.entitlements.get_zdx_group_entitlements()
             assert err is None, f"Error getting ZDX group entitlements: {err}"
             assert isinstance(entitlements, list), "Expected a list of entitlements"
-            
+
             # Verify response structure if we have entitlements
             if entitlements:
                 entitlement = entitlements[0]
-                assert hasattr(entitlement, 'as_dict'), "Entitlement should have as_dict method"
+                assert hasattr(entitlement, "as_dict"), "Entitlement should have as_dict method"
         except Exception as exc:
             errors.append(f"Getting ZDX group entitlements failed: {exc}")
 
@@ -75,11 +75,11 @@ class TestEntitlements:
             entitlements, response, err = client.zcc.entitlements.get_zpa_group_entitlements()
             assert err is None, f"Error getting ZPA group entitlements: {err}"
             assert isinstance(entitlements, list), "Expected a list of entitlements"
-            
+
             # Verify response structure if we have entitlements
             if entitlements:
                 entitlement = entitlements[0]
-                assert hasattr(entitlement, 'as_dict'), "Entitlement should have as_dict method"
+                assert hasattr(entitlement, "as_dict"), "Entitlement should have as_dict method"
         except Exception as exc:
             errors.append(f"Getting ZPA group entitlements failed: {exc}")
 
@@ -109,13 +109,10 @@ class TestEntitlements:
         errors = []
 
         try:
-            entitlements, response, err = client.zcc.entitlements.get_zpa_group_entitlements(
-                query_params={"search": "test"}
-            )
+            entitlements, response, err = client.zcc.entitlements.get_zpa_group_entitlements(query_params={"search": "test"})
             assert err is None, f"Error getting ZPA group entitlements with search: {err}"
             assert isinstance(entitlements, list), "Expected a list of entitlements"
         except Exception as exc:
             errors.append(f"Getting ZPA group entitlements with search failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the search ZPA entitlements test:\n{chr(10).join(errors)}"
-

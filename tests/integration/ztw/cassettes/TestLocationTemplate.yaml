@@ -46,7 +46,7 @@ interactions:
       code: 401
       message: Unauthorized
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
     headers:
       Accept:
       - application/json

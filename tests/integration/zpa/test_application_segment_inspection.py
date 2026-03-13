@@ -155,9 +155,6 @@ class TestApplicationSegmentInspection:
             except Exception as exc:
                 errors.append(f"Creating Inspection Application Segment failed: {exc}")
 
-            except Exception as exc:
-                errors.append(f"Failed to retrieve Application Segment by type: {exc}")
-
             # Test updating the Application Segment
             try:
                 if app_segment_id:
@@ -216,6 +213,14 @@ class TestApplicationSegmentInspection:
                         cleanup_errors.append(f"Deleting Segment Group failed: {del_err}")
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Segment Group failed: {exc}")
+
+            if app_connector_group_id:
+                try:
+                    _, _, del_err = client.zpa.app_connector_groups.delete_connector_group(app_connector_group_id)
+                    if del_err:
+                        cleanup_errors.append(f"Deleting App Connector Group failed: {del_err}")
+                except Exception as exc:
+                    cleanup_errors.append(f"Deleting App Connector Group failed: {exc}")
 
             if cleanup_errors:
                 errors.extend(cleanup_errors)

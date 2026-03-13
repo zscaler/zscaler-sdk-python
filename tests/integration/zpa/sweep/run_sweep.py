@@ -532,9 +532,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_portals)} user portals to delete.")
 
             for portal in test_portals:
-                logging.info(
-                    f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'"
-                )
+                logging.info(f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'")
                 _, _, error = self.client.zpa.user_portal_controller.delete_user_portal(portal_id=portal.id)
                 if error:
                     logging.error(f"Failed to delete user portal ID={portal.id} — {error}")
@@ -557,9 +555,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_portals)} user portals to delete.")
 
             for portal in test_portals:
-                logging.info(
-                    f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'"
-                )
+                logging.info(f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'")
                 _, _, error = self.client.zpa.user_portal_link.delete_portal_link(portal_link_id=portal.id)
                 if error:
                     logging.error(f"Failed to delete user portal ID={portal.id} — {error}")
@@ -594,6 +590,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping private cloud groups: {str(e)}")
             raise
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

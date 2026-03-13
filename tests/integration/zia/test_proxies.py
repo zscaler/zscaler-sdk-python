@@ -66,7 +66,9 @@ class TestProxies:
                     port=8080,
                 )
                 if err is None and created_proxy is not None:
-                    proxy_id = created_proxy.get("id") if isinstance(created_proxy, dict) else getattr(created_proxy, "id", None)
+                    proxy_id = (
+                        created_proxy.get("id") if isinstance(created_proxy, dict) else getattr(created_proxy, "id", None)
+                    )
 
                     # Test get_proxy
                     if proxy_id:

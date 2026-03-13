@@ -85,30 +85,18 @@ class AdminUserSyncInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.zia_initial_sync_done = config["ziaInitialSyncDone"] \
-                if "ziaInitialSyncDone" in config else None
-            self.zpa_initial_sync_done = config["zpaInitialSyncDone"] \
-                if "zpaInitialSyncDone" in config else None
-            self.zia_sync_error_code = config["ziaSyncErrorCode"] \
-                if "ziaSyncErrorCode" in config else None
-            self.zpa_sync_error_code = config["zpaSyncErrorCode"] \
-                if "zpaSyncErrorCode" in config else None
-            self.zia_sync_status = config["ziaSyncStatus"] \
-                if "ziaSyncStatus" in config else None
-            self.zpa_sync_status = config["zpaSyncStatus"] \
-                if "zpaSyncStatus" in config else None
-            self.zia_last_sync_time = config["ziaLastSyncTime"] \
-                if "ziaLastSyncTime" in config else None
-            self.zpa_last_sync_time = config["zpaLastSyncTime"] \
-                if "zpaLastSyncTime" in config else None
-            self.zia_start_sync_time = config["ziaStartSyncTime"] \
-                if "ziaStartSyncTime" in config else None
-            self.zpa_start_sync_time = config["zpaStartSyncTime"] \
-                if "zpaStartSyncTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.zia_initial_sync_done = config["ziaInitialSyncDone"] if "ziaInitialSyncDone" in config else None
+            self.zpa_initial_sync_done = config["zpaInitialSyncDone"] if "zpaInitialSyncDone" in config else None
+            self.zia_sync_error_code = config["ziaSyncErrorCode"] if "ziaSyncErrorCode" in config else None
+            self.zpa_sync_error_code = config["zpaSyncErrorCode"] if "zpaSyncErrorCode" in config else None
+            self.zia_sync_status = config["ziaSyncStatus"] if "ziaSyncStatus" in config else None
+            self.zpa_sync_status = config["zpaSyncStatus"] if "zpaSyncStatus" in config else None
+            self.zia_last_sync_time = config["ziaLastSyncTime"] if "ziaLastSyncTime" in config else None
+            self.zpa_last_sync_time = config["zpaLastSyncTime"] if "zpaLastSyncTime" in config else None
+            self.zia_start_sync_time = config["ziaStartSyncTime"] if "ziaStartSyncTime" in config else None
+            self.zpa_start_sync_time = config["zpaStartSyncTime"] if "zpaStartSyncTime" in config else None
         else:
             self.id = None
             self.company_id = None
@@ -140,7 +128,7 @@ class AdminUserSyncInfo(ZscalerObject):
             "ziaLastSyncTime": self.zia_last_sync_time,
             "zpaLastSyncTime": self.zpa_last_sync_time,
             "ziaStartSyncTime": self.zia_start_sync_time,
-            "zpaStartSyncTime": self.zpa_start_sync_time
+            "zpaStartSyncTime": self.zpa_start_sync_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

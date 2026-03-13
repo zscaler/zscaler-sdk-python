@@ -44,9 +44,7 @@ class TestURLCategories:
             assert isinstance(categories, list), "Categories should be a list"
 
             # Test list_categories with custom_only parameter
-            custom_categories, response, err = client.zia.url_categories.list_categories(
-                query_params={"custom_only": True}
-            )
+            custom_categories, response, err = client.zia.url_categories.list_categories(query_params={"custom_only": True})
             assert err is None, f"List custom categories failed: {err}"
 
             # Test get_quota

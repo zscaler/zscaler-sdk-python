@@ -33,22 +33,14 @@ class BrowserProtectionProfile(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.criteria_flags_mask = config["criteriaFlagsMask"] \
-                if "criteriaFlagsMask" in config else None
-            self.default_csp = config["defaultCSP"] \
-                if "defaultCSP" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.criteria_flags_mask = config["criteriaFlagsMask"] if "criteriaFlagsMask" in config else None
+            self.default_csp = config["defaultCSP"] if "defaultCSP" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
 
             if "criteria" in config:
                 if isinstance(config["criteria"], Criteria):
@@ -86,7 +78,7 @@ class BrowserProtectionProfile(ZscalerObject):
             "id": self.id,
             "modifiedBy": self.modified_by,
             "modifiedTime": self.modified_time,
-            "name": self.name
+            "name": self.name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -133,10 +125,8 @@ class FingerPrintCriteria(ZscalerObject):
             else:
                 self.browser = None
 
-            self.collect_location = config["collect_location"] \
-                if "collect_location" in config else None
-            self.fingerprint_timeout = config["fingerprint_timeout"] \
-                if "fingerprint_timeout" in config else None
+            self.collect_location = config["collect_location"] if "collect_location" in config else None
+            self.fingerprint_timeout = config["fingerprint_timeout"] if "fingerprint_timeout" in config else None
 
             if "location" in config:
                 if isinstance(config["location"], Location):
@@ -182,34 +172,20 @@ class Browser(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.browser_eng = config["browser_eng"] \
-                if "browser_eng" in config else None
-            self.browser_eng_ver = config["browser_eng_ver"] \
-                if "browser_eng_ver" in config else None
-            self.browser_name = config["browser_name"] \
-                if "browser_name" in config else None
-            self.browser_version = config["browser_version"] \
-                if "browser_version" in config else None
-            self.canvas = config["canvas"] \
-                if "canvas" in config else None
-            self.flash_ver = config["flash_ver"] \
-                if "flash_ver" in config else None
-            self.fp_usr_agent_str = config["fp_usr_agent_str"] \
-                if "fp_usr_agent_str" in config else None
-            self.is_cookie = config["is_cookie"] \
-                if "is_cookie" in config else None
-            self.is_local_storage = config["is_local_storage"] \
-                if "is_local_storage" in config else None
-            self.is_sess_storage = config["is_sess_storage"] \
-                if "is_sess_storage" in config else None
-            self.ja3 = config["ja3"] \
-                if "ja3" in config else None
-            self.mime = config["mime"] \
-                if "mime" in config else None
-            self.plugin = config["plugin"] \
-                if "plugin" in config else None
-            self.silverlight_ver = config["silverlight_ver"] \
-                if "silverlight_ver" in config else None
+            self.browser_eng = config["browser_eng"] if "browser_eng" in config else None
+            self.browser_eng_ver = config["browser_eng_ver"] if "browser_eng_ver" in config else None
+            self.browser_name = config["browser_name"] if "browser_name" in config else None
+            self.browser_version = config["browser_version"] if "browser_version" in config else None
+            self.canvas = config["canvas"] if "canvas" in config else None
+            self.flash_ver = config["flash_ver"] if "flash_ver" in config else None
+            self.fp_usr_agent_str = config["fp_usr_agent_str"] if "fp_usr_agent_str" in config else None
+            self.is_cookie = config["is_cookie"] if "is_cookie" in config else None
+            self.is_local_storage = config["is_local_storage"] if "is_local_storage" in config else None
+            self.is_sess_storage = config["is_sess_storage"] if "is_sess_storage" in config else None
+            self.ja3 = config["ja3"] if "ja3" in config else None
+            self.mime = config["mime"] if "mime" in config else None
+            self.plugin = config["plugin"] if "plugin" in config else None
+            self.silverlight_ver = config["silverlight_ver"] if "silverlight_ver" in config else None
         else:
             self.browser_eng = None
             self.browser_eng_ver = None
@@ -253,10 +229,8 @@ class Location(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.lat = config["lat"] \
-                if "lat" in config else None
-            self.lon = config["lon"] \
-                if "lon" in config else None
+            self.lat = config["lat"] if "lat" in config else None
+            self.lon = config["lon"] if "lon" in config else None
         else:
             self.lat = None
             self.lon = None
@@ -276,30 +250,18 @@ class System(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.avail_screen_resolution = config["avail_screen_resolution"] \
-                if "avail_screen_resolution" in config else None
-            self.cpu_arch = config["cpu_arch"] \
-                if "cpu_arch" in config else None
-            self.curr_screen_resolution = config["curr_screen_resolution"] \
-                if "curr_screen_resolution" in config else None
-            self.font = config["font"] \
-                if "font" in config else None
-            self.java_ver = config["java_ver"] \
-                if "java_ver" in config else None
-            self.mobile_dev_type = config["mobile_dev_type"] \
-                if "mobile_dev_type" in config else None
-            self.monitor_mobile = config["monitor_mobile"] \
-                if "monitor_mobile" in config else None
-            self.os_name = config["os_name"] \
-                if "os_name" in config else None
-            self.os_version = config["os_version"] \
-                if "os_version" in config else None
-            self.sys_lang = config["sys_lang"] \
-                if "sys_lang" in config else None
-            self.tz = config["tz"] \
-                if "tz" in config else None
-            self.usr_lang = config["usr_lang"] \
-                if "usr_lang" in config else None
+            self.avail_screen_resolution = config["avail_screen_resolution"] if "avail_screen_resolution" in config else None
+            self.cpu_arch = config["cpu_arch"] if "cpu_arch" in config else None
+            self.curr_screen_resolution = config["curr_screen_resolution"] if "curr_screen_resolution" in config else None
+            self.font = config["font"] if "font" in config else None
+            self.java_ver = config["java_ver"] if "java_ver" in config else None
+            self.mobile_dev_type = config["mobile_dev_type"] if "mobile_dev_type" in config else None
+            self.monitor_mobile = config["monitor_mobile"] if "monitor_mobile" in config else None
+            self.os_name = config["os_name"] if "os_name" in config else None
+            self.os_version = config["os_version"] if "os_version" in config else None
+            self.sys_lang = config["sys_lang"] if "sys_lang" in config else None
+            self.tz = config["tz"] if "tz" in config else None
+            self.usr_lang = config["usr_lang"] if "usr_lang" in config else None
         else:
             self.avail_screen_resolution = None
             self.cpu_arch = None

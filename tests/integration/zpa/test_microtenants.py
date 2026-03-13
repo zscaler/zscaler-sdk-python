@@ -112,7 +112,9 @@ class TestMicrotenants:
 
         try:
             if update_microtenant:
-                microtenants, _, error = client.zpa.microtenants.list_microtenants(query_params={"search": update_microtenant.name})
+                microtenants, _, error = client.zpa.microtenants.list_microtenants(
+                    query_params={"search": update_microtenant.name}
+                )
                 assert error is None, f"List Microtenants Error: {error}"
                 assert microtenants is not None and isinstance(microtenants, list), "No Microtenants found or invalid format."
         except Exception as e:

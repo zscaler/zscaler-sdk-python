@@ -23,4 +23,3 @@ __all__ = [
     "GraphQLErrorLocation",
     "is_graphql_error_response",
 ]
-

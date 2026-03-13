@@ -47,7 +47,11 @@ class TestEndUserNotification:
             try:
                 # Just re-apply current settings to test the update endpoint
                 updated_settings, response, err = client.zia.end_user_notification.update_eun_settings(
-                    aup_enabled=original_settings.get("aup_enabled", False) if isinstance(original_settings, dict) else getattr(original_settings, "aup_enabled", False),
+                    aup_enabled=(
+                        original_settings.get("aup_enabled", False)
+                        if isinstance(original_settings, dict)
+                        else getattr(original_settings, "aup_enabled", False)
+                    ),
                 )
                 # Update may fail due to permissions - that's ok
             except Exception:

@@ -84,10 +84,7 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            finding_details, _, err = client.zeasm.findings.get_finding_details(
-                org_id=org_id,
-                finding_id=finding_id
-            )
+            finding_details, _, err = client.zeasm.findings.get_finding_details(org_id=org_id, finding_id=finding_id)
 
             if err:
                 errors.append(f"Error getting finding details: {err}")
@@ -124,10 +121,7 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            evidence, _, err = client.zeasm.findings.get_finding_evidence(
-                org_id=org_id,
-                finding_id=finding_id
-            )
+            evidence, _, err = client.zeasm.findings.get_finding_evidence(org_id=org_id, finding_id=finding_id)
 
             if err:
                 errors.append(f"Error getting finding evidence: {err}")
@@ -164,10 +158,7 @@ class TestFindings:
             finding_id = findings.results[0].id
             print(f"Using finding_id: {finding_id}")
 
-            scan_output, _, err = client.zeasm.findings.get_finding_scan_output(
-                org_id=org_id,
-                finding_id=finding_id
-            )
+            scan_output, _, err = client.zeasm.findings.get_finding_scan_output(org_id=org_id, finding_id=finding_id)
 
             if err:
                 errors.append(f"Error getting finding scan output: {err}")

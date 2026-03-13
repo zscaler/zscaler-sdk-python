@@ -87,7 +87,9 @@ class TestDevice:
         try:
             # Test case: List devices with a specific OS type
             try:
-                devices, _, err = client.zcc.devices.list_devices(query_params={"os_type": "windows", "page": 1, "page_size": 10})
+                devices, _, err = client.zcc.devices.list_devices(
+                    query_params={"os_type": "windows", "page": 1, "page_size": 10}
+                )
                 assert err is None, f"Error occurred while listing with OS filter: {err}"
                 assert isinstance(devices, list), "Expected a list of devices"
                 assert len(devices) <= 10, "Page size limit exceeded"
@@ -115,7 +117,7 @@ class TestDevice:
             # Use a test username - this should be a valid username in the test environment
             # The VCR cassette will record the actual response
             test_username = "adam.ashcroft@securitygeek.io"
-            
+
             devices, _, err = client.zcc.devices.list_devices(
                 query_params={"username": test_username, "page": 1, "page_size": 10}
             )
@@ -136,9 +138,7 @@ class TestDevice:
 
         for os_type in os_types:
             try:
-                devices, _, err = client.zcc.devices.list_devices(
-                    query_params={"os_type": os_type, "page": 1, "page_size": 5}
-                )
+                devices, _, err = client.zcc.devices.list_devices(query_params={"os_type": os_type, "page": 1, "page_size": 5})
                 assert err is None, f"Error occurred while listing devices for {os_type}: {err}"
                 assert isinstance(devices, list), f"Expected a list of devices for {os_type}"
             except Exception as exc:
@@ -157,21 +157,17 @@ class TestDevice:
             devices, _, err = client.zcc.devices.list_devices(query_params={"page": 1, "page_size": 1})
             if err is None and devices and len(devices) > 0:
                 device = devices[0]
-                username = device.user if hasattr(device, 'user') else device.get('user')
-                udid = device.udid if hasattr(device, 'udid') else device.get('udid')
-                
+                username = device.user if hasattr(device, "user") else device.get("user")
+                udid = device.udid if hasattr(device, "udid") else device.get("udid")
+
                 if username:
-                    details, _, err = client.zcc.devices.get_device_details(
-                        query_params={"username": username}
-                    )
+                    details, _, err = client.zcc.devices.get_device_details(query_params={"username": username})
                     if err is None:
                         assert details is not None, "Device details should not be None"
-                        assert hasattr(details, 'as_dict'), "Device details should have as_dict method"
-                
+                        assert hasattr(details, "as_dict"), "Device details should have as_dict method"
+
                 if udid:
-                    details, _, err = client.zcc.devices.get_device_details(
-                        query_params={"udid": udid}
-                    )
+                    details, _, err = client.zcc.devices.get_device_details(query_params={"udid": udid})
                     if err is None:
                         assert details is not None, "Device details should not be None"
         except Exception as exc:

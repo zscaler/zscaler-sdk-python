@@ -324,15 +324,9 @@ class Devices(ZscalerObject):
 
         if config:
 
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], CommonIDName
-            )
-            self.zs_loc = ZscalerCollection.form_list(
-                config["zs_loc"] if "zs_loc" in config else [], CommonIDName
-            )
-            self.geo_loc = ZscalerCollection.form_list(
-                config["geo_loc"] if "geo_loc" in config else [], MostImpactedGeos
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], CommonIDName)
+            self.zs_loc = ZscalerCollection.form_list(config["zs_loc"] if "zs_loc" in config else [], CommonIDName)
+            self.geo_loc = ZscalerCollection.form_list(config["geo_loc"] if "geo_loc" in config else [], MostImpactedGeos)
         else:
             self.devices = []
             self.zs_loc = []
@@ -369,9 +363,7 @@ class CommonMetrics(ZscalerObject):
         if config:
             self.metric = config["metric"] if "metric" in config else None
             self.unit = config["unit"] if "unit" in config else None
-            self.datapoints = ZscalerCollection.form_list(
-                config["datapoints"] if "datapoints" in config else [], DataPoints
-            )
+            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], DataPoints)
 
         else:
             self.metric = None
