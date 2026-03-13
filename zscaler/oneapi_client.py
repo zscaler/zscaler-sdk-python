@@ -16,6 +16,8 @@ from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zia.zia_service import ZIAService
 from zscaler.zpa.zpa_service import ZPAService
 from zscaler.zwa.zwa_service import ZWAService
+from zscaler.ztb.ztb_service import ZTBService
+
 # from zscaler.binsights.binsights_service import BIService
 from zscaler.zidentity.zidentity_service import ZIdentityService
 from zscaler.zeasm.zeasm_service import ZEASMService
@@ -26,6 +28,7 @@ from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+from zscaler.ztb.legacy import LegacyZTBClientHelper
 from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
 TLegacy = TypeVar("TLegacy")
@@ -43,8 +46,8 @@ class Client:
         zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
         zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
         zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
+        ztb_legacy_client: Optional[LegacyZTBClientHelper] = None,
         zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
-        
         use_legacy_client: bool = False,
     ) -> None:
         self.use_legacy_client = use_legacy_client
@@ -54,6 +57,7 @@ class Client:
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
+        self.ztb_legacy_client = ztb_legacy_client
         self.zguard_legacy_client = zguard_legacy_client
 
         # ZCC Legacy client initialization logic
@@ -104,6 +108,14 @@ class Client:
             self.logger.info("Legacy ZTWService client initialized successfully.")
             return
 
+        # ZTB Legacy client initialization logic
+        if use_legacy_client and ztb_legacy_client:
+            self._config = {}
+            self._request_executor = ztb_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZTB client initialized successfully.")
+            return
+
         # ZGuard Legacy client initialization logic
         if use_legacy_client and zguard_legacy_client:
             self._config = {}
@@ -122,6 +134,7 @@ class Client:
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
+        self.ztb_legacy_client = ztb_legacy_client
         self.zguard_legacy_client = zguard_legacy_client
 
         # Extract enabled and verbose from the logging configuration
@@ -197,6 +210,7 @@ class Client:
             self.zpa_legacy_client,
             self.zia_legacy_client,
             self.zwa_legacy_client,
+            self.ztb_legacy_client,
             self.zguard_legacy_client,
         )
         # self.logger.debug("Request executor initialized.")
@@ -206,6 +220,7 @@ class Client:
         self._ztw = None
         self._zia = None
         self._zwa = None
+        self._ztb = None
         self._zpa = None
         self._zdx = None
         self._zidentity = None
@@ -260,6 +275,14 @@ class Client:
         if self._zwa is None:
             self._zwa = ZWAService(self)
         return self._zwa
+
+    @property
+    def ztb(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZTB", self.ztb_legacy_client)
+        if self._ztb is None:
+            self._ztb = ZTBService(self)
+        return self._ztb
 
     @property
     def ztw(self):
@@ -333,6 +356,7 @@ class Client:
             )
         if self._zins is None:
             from zscaler.zinsights.zinsights_service import ZInsightsService
+
             self._zins = ZInsightsService(self._request_executor)
         return self._zins
 
@@ -360,17 +384,17 @@ class Client:
             self.logger.debug("Session closed.")
 
         # Clean up Zscaler authentication session
-        if hasattr(self, '_request_executor'):
+        if hasattr(self, "_request_executor"):
             # For legacy clients, use their deauthenticate method
-            if self.use_legacy_client and hasattr(self._request_executor, 'deauthenticate'):
+            if self.use_legacy_client and hasattr(self._request_executor, "deauthenticate"):
                 self.logger.debug("Deauthenticating Zscaler session via legacy client.")
                 self._request_executor.deauthenticate()
                 self.logger.debug("Zscaler session deauthenticated.")
             # For OneAPI clients, use the request executor's deauthenticate method for ZIA/ZTW
-            elif not self.use_legacy_client and hasattr(self._request_executor, 'deauthenticate'):
+            elif not self.use_legacy_client and hasattr(self._request_executor, "deauthenticate"):
                 # Get the service type from the request executor's last known service type
                 # or fall back to config if no requests were made
-                service_type = getattr(self._request_executor, '_last_service_type', None)
+                service_type = getattr(self._request_executor, "_last_service_type", None)
                 if not service_type:
                     service_type = self._config.get("client", {}).get("service", "zia")
 
@@ -587,6 +611,34 @@ class LegacyZWAClient(Client):
         super().__init__(config, zwa_legacy_client=legacy_helper, use_legacy_client=True)
 
 
+class LegacyZTBClient(Client):
+
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("ZTB_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZTB_CLOUD"))
+        override_url = config.get("override_url", os.getenv("ZTB_OVERRIDE_URL"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        legacy_helper = LegacyZTBClientHelper(
+            api_key=api_key,
+            cloud=cloud,
+            override_url=override_url,
+            partner_id=partner_id,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, ztb_legacy_client=legacy_helper, use_legacy_client=True)
+
+
 class LegacyZGuardClient(Client):
     def __init__(
         self,
@@ -598,7 +650,7 @@ class LegacyZGuardClient(Client):
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
         request_executor_impl = config.get("requestExecutor", None)
-        
+
         # Initialize the LegacyZGuardClientHelper with the extracted parameters
         legacy_helper = LegacyZGuardClientHelper(
             api_key=api_key,

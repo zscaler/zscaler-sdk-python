@@ -59,4 +59,3 @@ class TestCloudAppControl:
             errors.append(f"Exception during cloud app control test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

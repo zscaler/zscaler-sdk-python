@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/networkApplicationGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkApplicationGroups
   response:
     body:
-      string: '{"id":10177033,"name":"tests-vcr0001","networkApplications":["APNS","APPSTORE","DICT"],"description":"tests-vcr0002"}'
+      string: '{"id":10596679,"name":"tests-vcr0001","networkApplications":["APNS","APPSTORE","DICT"],"description":"tests-vcr0002"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -41,7 +41,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:17 GMT
+      - Fri, 13 Mar 2026 03:17:08 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1371'
+      - '1538'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5a7d82f2-e06f-91c8-8378-e525cdc9fbd2
+      - 4624eef0-1ede-9ebc-a616-f6e2b06acd85
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4997'
       x-ratelimit-reset:
-      - '44'
+      - '54'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -91,9 +91,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/networkApplicationGroups/10177033
+    uri: https://easm.test.zscaler.com/zia/api/v1/networkApplicationGroups/10596679
   response:
     body:
       string: ''
@@ -114,7 +114,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:49:18 GMT
+      - Fri, 13 Mar 2026 03:17:10 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -124,23 +124,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1282'
+      - '1527'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2f64f4e3-8ab2-9f27-85ef-71e940e5ce79
+      - f2610fe2-da3b-99c1-8b28-bcda15851f55
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4996'
       x-ratelimit-reset:
-      - '43'
+      - '52'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

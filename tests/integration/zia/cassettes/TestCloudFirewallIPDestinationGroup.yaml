@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups
   response:
     body:
-      string: '{"id":10177021,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["1.1.1.1","8.8.8.8"],"description":"tests-vcr0002","ipCategories":[],"countries":[]}'
+      string: '{"id":10596668,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["1.1.1.1","8.8.8.8"],"description":"tests-vcr0002","ipCategories":[],"countries":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:48:20 GMT
+      - Fri, 13 Mar 2026 03:16:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2902'
+      - '2350'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 831a7a9e-da76-9e97-8b83-d0bff57d4972
+      - b2467508-9c28-9c4b-a3a7-912ca4a42d8b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4997'
       x-ratelimit-reset:
-      - '43'
+      - '45'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -93,12 +93,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups/10177021
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups/10596668
   response:
     body:
-      string: '{"id":10177021,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"tests-vcr0002","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["8.8.8.8","1.1.1.1"]}'
+      string: '{"id":10596668,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"tests-vcr0002","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["8.8.8.8","1.1.1.1"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -122,7 +122,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:48:20 GMT
+      - Fri, 13 Mar 2026 03:16:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -134,23 +134,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '342'
+      - '302'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f63438a3-b7e5-9a9e-b64a-4d5f2317e204
+      - 7c2fb821-c90a-91dd-be0d-33d7f7390f49
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4996'
       x-ratelimit-reset:
-      - '40'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -173,12 +173,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups/10177021
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups/10596668
   response:
     body:
-      string: '{"id":10177021,"name":"updated-vcr0003","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"updated-vcr0004","creatorContext":"ZIA","ipCategories":[],"countries":[]}'
+      string: '{"id":10596668,"name":"updated-vcr0003","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"updated-vcr0004","creatorContext":"ZIA","ipCategories":[],"countries":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -202,7 +202,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:48:23 GMT
+      - Fri, 13 Mar 2026 03:16:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -214,23 +214,144 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2679'
+      - '1770'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 99f2c827-5131-9b58-87ce-b03dd69a1ef8
+      - 8a6fe13e-c5a5-9549-a562-00da61b20a83
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4995'
+      x-ratelimit-reset:
+      - '42'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups
+  response:
+    body:
+      string: '[{"id":10250311,"name":"yq","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10252757,"name":"qpshkozmqk","type":"DSTN_FQDN","addresses":["test1.acme.com","test2.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test2.acme.com","test3.acme.com"]},{"id":10272762,"name":"tests-jrmkucejmp","type":"DSTN_IP","addresses":["3.217.228.0-3.217.231.255"],"description":"tests-jrmkucejmp","creatorContext":"EC","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["3.217.228.0-3.217.231.255"]},{"id":10273040,"name":"ssceoqcgjs","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10282866,"name":"negeomjekz","type":"DSTN_FQDN","addresses":["test3.acme.com","test2.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test2.acme.com","test1.acme.com"]},{"id":10283566,"name":"QBFB","type":"DSTN_FQDN","addresses":["test1.acme.com","test2.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test2.acme.com","test3.acme.com"]},{"id":10293833,"name":"wpngwwcmnj","type":"DSTN_FQDN","addresses":["test3.acme.com","test2.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test2.acme.com","test1.acme.com"]},{"id":10297890,"name":"rxohavigrg","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10321236,"name":"gimqajmncw","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10328862,"name":"uegjxnffcp","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10332449,"name":"geanivznee","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10344044,"name":"xgyeFsH","type":"DSTN_FQDN","addresses":["test1.acme.com","test2.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test2.acme.com","test3.acme.com"]},{"id":10347021,"name":"xdmpvmfxxo","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10350230,"name":"pzzvigahrk","type":"DSTN_FQDN","addresses":["test2.acme.com","test3.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test3.acme.com","test1.acme.com"]},{"id":10350376,"name":"fmmaxtkecr","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10364025,"name":"sxegxmqxsc","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10369408,"name":"bprrntnuew","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10373833,"name":"hiavpairwm","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10390890,"name":"tf-acc-test-nbwrzclyez","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"EC","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10409220,"name":"rnwzmwmeqr","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10413952,"name":"qkzzpgfipb","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10414424,"name":"sobvmfftoc","type":"DSTN_FQDN","addresses":["test3.acme.com","test2.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test2.acme.com","test1.acme.com"]},{"id":10423661,"name":"aznohsyqve","type":"DSTN_FQDN","addresses":["test1.acme.com","test2.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test2.acme.com","test3.acme.com"]},{"id":10456344,"name":"viohcnlkex","type":"DSTN_FQDN","addresses":["test2.acme.com","test3.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test3.acme.com","test1.acme.com"]},{"id":10471131,"name":"iwvjyzdrkw","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10471232,"name":"cmtjpyyzuu","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10471883,"name":"wohtobvdjw","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10475773,"name":"jnpnqwcphn","type":"DSTN_FQDN","addresses":["test3.acme.com","test2.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test2.acme.com","test1.acme.com"]},{"id":10478645,"name":"lleqjbczne","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10479420,"name":"upfmnvahcq","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10479492,"name":"nebdmhjlak","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10487678,"name":"UpdateGroup
+        9506","type":"DSTN_IP","addresses":["192.168.1.1","192.168.1.4","192.168.1.3","192.168.1.2"],"description":"UpdateGroup
+        6218","creatorContext":"EC","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["192.168.1.1","192.168.1.4","192.168.1.3","192.168.1.2"]},{"id":10498988,"name":"20260219040739_created","type":"DSTN_IP","addresses":["108.148.103.15/28"],"description":"20260219040739_updated","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["108.148.103.15/28"]},{"id":10499591,"name":"dreteiyfhq","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10526949,"name":"beagdtzehw","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10527110,"name":"pbjcgarqtb","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10538587,"name":"20260225121150_created","type":"DSTN_IP","addresses":["108.148.103.15/28"],"description":"20260225121150_updated","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["108.148.103.15/28"]},{"id":10565422,"name":"dswwvqlgrp","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10571922,"name":"xrwomvziyt","type":"DSTN_FQDN","addresses":["test1.acme.com","test2.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test2.acme.com","test3.acme.com"]},{"id":10577935,"name":"votfahmmwh","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10578215,"name":"caxuvprqan","type":"DSTN_FQDN","addresses":["test3.acme.com","test1.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test1.acme.com","test2.acme.com"]},{"id":10579038,"name":"cxxktsbeza","type":"DSTN_FQDN","addresses":["test1.acme.com","test3.acme.com","test2.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test1.acme.com","test3.acme.com","test2.acme.com"]},{"id":10579847,"name":"clskyofxwh","type":"DSTN_FQDN","addresses":["test2.acme.com","test1.acme.com","test3.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test2.acme.com","test1.acme.com","test3.acme.com"]},{"id":10587321,"name":"rtkvicoqpd","type":"DSTN_FQDN","addresses":["test3.acme.com","test2.acme.com","test1.acme.com"],"description":"this
+        is an acceptance test","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["test3.acme.com","test2.acme.com","test1.acme.com"]},{"id":10596668,"name":"updated-vcr0003","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"updated-vcr0004","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["8.8.8.8","1.1.1.1"]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:16:20 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '271'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - af7753a0-a3af-9a56-a91d-da640f406f35
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
       x-ratelimit-reset:
       - '40'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -252,88 +373,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups
-  response:
-    body:
-      string: '[{"id":10177021,"name":"updated-vcr0003","type":"DSTN_IP","addresses":["8.8.8.8","1.1.1.1"],"description":"updated-vcr0004","creatorContext":"ZIA","ipCategories":[],"countries":[],"urlCategories":[],"ipAddresses":["8.8.8.8","1.1.1.1"]}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:48:23 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '236'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - a989b0b8-4aa6-98b5-9845-ede114bce084
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4992'
-      x-ratelimit-reset:
-      - '37'
-      x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups/10177021
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups/10596668
   response:
     body:
       string: ''
@@ -356,7 +398,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:48:26 GMT
+      - Fri, 13 Mar 2026 03:16:22 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -366,23 +408,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2399'
+      - '2308'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ec10c06a-a203-9561-b47c-c9925fb0a7b8
+      - 162fff66-914b-9907-be9b-0589415a5818
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4993'
       x-ratelimit-reset:
-      - '36'
+      - '40'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

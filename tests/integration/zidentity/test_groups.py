@@ -44,7 +44,7 @@ class TestGroups:
                 create_group, _, error = client.zidentity.groups.add_group(
                     name=f"ZidentityGroup_{random.randint(1000, 10000)}",
                     description=f"ZidentityGroup_{random.randint(1000, 10000)}",
-                    source='SCIM',
+                    source="SCIM",
                     admin_entitlement_enabled=True,
                     service_entitlement_enabled=True,
                     dynamic_group=False,
@@ -62,7 +62,7 @@ class TestGroups:
                         group_id=group_id,
                         name=f"ZidentityGroupUpdate_{random.randint(1000, 10000)}",
                         description=f"ZidentityGroupUpdate_{random.randint(1000, 10000)}",
-                        source='SCIM',
+                        source="SCIM",
                         admin_entitlement_enabled=True,
                         service_entitlement_enabled=True,
                         dynamic_group=False,
@@ -87,7 +87,7 @@ class TestGroups:
                     groups_response, _, error = client.zidentity.groups.list_groups(query_params={"search": update_group.name})
                     assert error is None, f"List Groups Error: {error}"
                     assert groups_response is not None, "Expected a groups response object"
-                    assert hasattr(groups_response, 'records'), "Expected groups_response to have records field"
+                    assert hasattr(groups_response, "records"), "Expected groups_response to have records field"
             except Exception as e:
                 errors.append(f"Exception during list_groups: {str(e)}")
 

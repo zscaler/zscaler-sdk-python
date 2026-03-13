@@ -43,7 +43,7 @@ class TestLocations:
                 assert isinstance(locations, list), "Expected a list of locations"
                 # Note: Some tenants may not have locations configured
                 if len(locations) > 0:
-                    location_id = locations[0].id if hasattr(locations[0], 'id') else locations[0].get("id")
+                    location_id = locations[0].id if hasattr(locations[0], "id") else locations[0].get("id")
                     assert location_id is not None, "Expected the first location to have an ID"
             except Exception as exc:
                 errors.append(f"Listing locations failed: {exc}")
@@ -54,7 +54,7 @@ class TestLocations:
                     location_details, _, error = client.ztw.location_management.get_location(location_id)
                     assert error is None, f"Error getting location: {error}"
                     assert location_details is not None, "Expected valid location details"
-                    detail_id = location_details.id if hasattr(location_details, 'id') else location_details.get("id")
+                    detail_id = location_details.id if hasattr(location_details, "id") else location_details.get("id")
                     assert detail_id == location_id, "Mismatch in location ID"
                 except Exception as exc:
                     errors.append(f"Fetching location by ID failed: {exc}")
@@ -66,7 +66,9 @@ class TestLocations:
                 assert isinstance(locations_lite, list), "Expected a list of lite locations"
                 # Note: Some tenants may not have locations configured
                 if len(locations_lite) > 0:
-                    first_lite_location_id = locations_lite[0].id if hasattr(locations_lite[0], 'id') else locations_lite[0].get("id")
+                    first_lite_location_id = (
+                        locations_lite[0].id if hasattr(locations_lite[0], "id") else locations_lite[0].get("id")
+                    )
                     assert first_lite_location_id is not None, "Expected the first lite location to have an ID"
             except Exception as exc:
                 errors.append(f"Listing lite locations failed: {exc}")

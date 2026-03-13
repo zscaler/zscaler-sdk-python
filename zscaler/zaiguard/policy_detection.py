@@ -108,9 +108,9 @@ class PolicyDetectionAPI(APIClient):
             # Handle rate limiting from response body (AIGuard-specific)
             if result.throttling_details and len(result.throttling_details) > 0:
                 # Check if we're using a legacy client with rate limiting
-                if hasattr(self._request_executor, 'zguard_legacy_client'):
+                if hasattr(self._request_executor, "zguard_legacy_client"):
                     legacy_client = self._request_executor.zguard_legacy_client
-                    if legacy_client and hasattr(legacy_client, '_handle_throttling_details'):
+                    if legacy_client and hasattr(legacy_client, "_handle_throttling_details"):
                         # Let the client handle throttling
                         legacy_client._handle_throttling_details(result.throttling_details)
 
@@ -185,9 +185,9 @@ class PolicyDetectionAPI(APIClient):
             # Handle rate limiting from response body (AIGuard-specific)
             if result.throttling_details and len(result.throttling_details) > 0:
                 # Check if we're using a legacy client with rate limiting
-                if hasattr(self._request_executor, 'zguard_legacy_client'):
+                if hasattr(self._request_executor, "zguard_legacy_client"):
                     legacy_client = self._request_executor.zguard_legacy_client
-                    if legacy_client and hasattr(legacy_client, '_handle_throttling_details'):
+                    if legacy_client and hasattr(legacy_client, "_handle_throttling_details"):
                         # Let the client handle throttling
                         legacy_client._handle_throttling_details(result.throttling_details)
 

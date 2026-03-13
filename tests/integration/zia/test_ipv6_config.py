@@ -57,4 +57,3 @@ class TestIPv6Config:
             errors.append(f"Exception during IPv6 config test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

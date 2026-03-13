@@ -45,9 +45,7 @@ class TestURLFiltering:
 
             # Test list_rules with search (optional - may not be in cassette)
             try:
-                search_rules, response, err = client.zia.url_filtering.list_rules(
-                    query_params={"search": "Default"}
-                )
+                search_rules, response, err = client.zia.url_filtering.list_rules(query_params={"search": "Default"})
                 # Don't fail test if search not in cassette
             except Exception:
                 pass

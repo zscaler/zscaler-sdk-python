@@ -39,65 +39,48 @@ class CasbdDlpRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.type = config["type"] \
-                if "type" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.action = config["action"] \
-                if "action" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.include_criteria_domain_profile = config["includeCriteriaDomainProfile"] \
-                if "includeCriteriaDomainProfile" in config else None
-            self.include_email_recipient_profile = config["includeEmailRecipientProfile"] \
-                if "includeEmailRecipientProfile" in config else None
-            self.bucket_owner = config["bucketOwner"] \
-                if "bucketOwner" in config else None
-            self.content_location = config["contentLocation"] \
-                if "contentLocation" in config else None
-            self.watermark_delete_old_version = config["watermarkDeleteOldVersion"] \
-                if "watermarkDeleteOldVersion" in config else None
-            self.number_of_internal_collaborators = config["numberOfInternalCollaborators"] \
-                if "numberOfInternalCollaborators" in config else None
-            self.number_of_external_collaborators = config["numberOfExternalCollaborators"] \
-                if "numberOfExternalCollaborators" in config else None
-            self.external_auditor_email = config["externalAuditorEmail"] \
-                if "externalAuditorEmail" in config else None
-            self.recipient = config["recipient"] \
-                if "recipient" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.without_content_inspection = config["withoutContentInspection"] \
-                if "withoutContentInspection" in config else None
-            self.quarantine_location = config["quarantineLocation"] \
-                if "quarantineLocation" in config else None
-            self.include_entity_groups = config["includeEntityGroups"] \
-                if "includeEntityGroups" in config else None
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-
-            self.file_types = ZscalerCollection.form_list(
-                config["fileTypes"] if "fileTypes" in config else [], str
+            self.type = config["type"] if "type" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.include_criteria_domain_profile = (
+                config["includeCriteriaDomainProfile"] if "includeCriteriaDomainProfile" in config else None
             )
+            self.include_email_recipient_profile = (
+                config["includeEmailRecipientProfile"] if "includeEmailRecipientProfile" in config else None
+            )
+            self.bucket_owner = config["bucketOwner"] if "bucketOwner" in config else None
+            self.content_location = config["contentLocation"] if "contentLocation" in config else None
+            self.watermark_delete_old_version = (
+                config["watermarkDeleteOldVersion"] if "watermarkDeleteOldVersion" in config else None
+            )
+            self.number_of_internal_collaborators = (
+                config["numberOfInternalCollaborators"] if "numberOfInternalCollaborators" in config else None
+            )
+            self.number_of_external_collaborators = (
+                config["numberOfExternalCollaborators"] if "numberOfExternalCollaborators" in config else None
+            )
+            self.external_auditor_email = config["externalAuditorEmail"] if "externalAuditorEmail" in config else None
+            self.recipient = config["recipient"] if "recipient" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.without_content_inspection = (
+                config["withoutContentInspection"] if "withoutContentInspection" in config else None
+            )
+            self.quarantine_location = config["quarantineLocation"] if "quarantineLocation" in config else None
+            self.include_entity_groups = config["includeEntityGroups"] if "includeEntityGroups" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+
+            self.file_types = ZscalerCollection.form_list(config["fileTypes"] if "fileTypes" in config else [], str)
             self.collaboration_scope = ZscalerCollection.form_list(
                 config["collaborationScope"] if "collaborationScope" in config else [], str
             )
-            self.domains = ZscalerCollection.form_list(
-                config["domains"] if "domains" in config else [], str
-            )
-            self.components = ZscalerCollection.form_list(
-                config["components"] if "components" in config else [], str
-            )
+            self.domains = ZscalerCollection.form_list(config["domains"] if "domains" in config else [], str)
+            self.components = ZscalerCollection.form_list(config["components"] if "components" in config else [], str)
 
             self.cloud_app_tenants = ZscalerCollection.form_list(
                 config["cloudAppTenants"] if "cloudAppTenants" in config else [], saas_security_api.CasbTenant
@@ -127,8 +110,7 @@ class CasbdDlpRules(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups)
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
 
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
@@ -136,9 +118,7 @@ class CasbdDlpRules(ZscalerObject):
             self.dlp_engines = ZscalerCollection.form_list(
                 config["dlpEngines"] if "dlpEngines" in config else [], dlp_engine.DLPEngine
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
 
             if "receiver" in config:
                 if isinstance(config["receiver"], CommonIDNameType):
@@ -347,7 +327,7 @@ class CasbdDlpRules(ZscalerObject):
             "includeEmailRecipientProfile": self.include_email_recipient_profile,
             "withoutContentInspection": self.without_content_inspection,
             "entityGroups": self.entity_groups,
-            "includeEntityGroups": self.include_entity_groups
+            "includeEntityGroups": self.include_entity_groups,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -381,9 +361,6 @@ class CommonIDNameType(ZscalerObject):
         Returns the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "type": self.type}
+        current_obj_format = {"id": self.id, "name": self.name, "type": self.type}
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -22,7 +22,7 @@ from typing import Dict, Any, Optional
 
 class MockRateLimitResponse:
     """Mock response for rate limiting scenarios."""
-    
+
     def __init__(self, status_code: int = 200, headers: Optional[Dict[str, str]] = None):
         self.status_code = status_code
         self.headers = headers or {}
@@ -33,14 +33,14 @@ class MockRateLimitResponse:
 
 class MockHTTP429Response:
     """Mock 429 Too Many Requests response."""
-    
+
     def __init__(self, retry_after: Optional[str] = None, x_rate_limit_reset: Optional[str] = None):
         self.status_code = 429
         self.headers = {}
         self.text = '{"error": "Rate limit exceeded"}'
         self.json = lambda: {"error": "Rate limit exceeded"}
         self.raise_for_status = Mock(side_effect=Exception("429 Too Many Requests"))
-        
+
         if retry_after:
             self.headers["Retry-After"] = retry_after
         if x_rate_limit_reset:
@@ -49,7 +49,7 @@ class MockHTTP429Response:
 
 class MockHTTP429WithRetryAfter:
     """Mock 429 response with Retry-After header."""
-    
+
     def __init__(self, retry_after_seconds: int = 60):
         self.status_code = 429
         self.headers = {"Retry-After": str(retry_after_seconds)}
@@ -60,11 +60,11 @@ class MockHTTP429WithRetryAfter:
 
 class MockHTTP429WithXRateLimitReset:
     """Mock 429 response with X-RateLimit-Reset header."""
-    
+
     def __init__(self, reset_timestamp: Optional[float] = None):
         if reset_timestamp is None:
             reset_timestamp = time.time() + 60  # 60 seconds from now
-        
+
         self.status_code = 429
         self.headers = {"X-RateLimit-Reset": str(int(reset_timestamp))}
         self.text = '{"error": "Rate limit exceeded"}'
@@ -74,14 +74,10 @@ class MockHTTP429WithXRateLimitReset:
 
 class MockHTTP429ConcurrentLimit:
     """Mock 429 response indicating concurrent rate limit (ZCC specific)."""
-    
+
     def __init__(self):
         self.status_code = 429
-        self.headers = {
-            "X-Rate-Limit-Limit": "0",
-            "X-Rate-Limit-Remaining": "0",
-            "X-Rate-Limit-Retry-After-Seconds": "60"
-        }
+        self.headers = {"X-Rate-Limit-Limit": "0", "X-Rate-Limit-Remaining": "0", "X-Rate-Limit-Retry-After-Seconds": "60"}
         self.text = '{"error": "Concurrent rate limit exceeded"}'
         self.json = lambda: {"error": "Concurrent rate limit exceeded"}
         self.raise_for_status = Mock(side_effect=Exception("429 Too Many Requests"))
@@ -89,7 +85,7 @@ class MockHTTP429ConcurrentLimit:
 
 class MockHTTP429MissingHeaders:
     """Mock 429 response with missing rate limit headers."""
-    
+
     def __init__(self):
         self.status_code = 429
         self.headers = {"Content-Type": "application/json"}
@@ -100,13 +96,13 @@ class MockHTTP429MissingHeaders:
 
 class MockHTTP429MultipleXReset:
     """Mock 429 response with multiple X-RateLimit-Reset headers."""
-    
+
     def __init__(self):
         now = time.time()
         self.status_code = 429
         self.headers = {
             "X-RateLimit-Reset": f"{int(now + 1)},{int(now + 2)}",  # Multiple values
-            "Date": datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
+            "Date": datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT"),
         }
         self.text = '{"error": "Rate limit exceeded"}'
         self.json = lambda: {"error": "Rate limit exceeded"}
@@ -115,13 +111,10 @@ class MockHTTP429MultipleXReset:
 
 class MockHTTP429InvalidHeaders:
     """Mock 429 response with invalid header values."""
-    
+
     def __init__(self):
         self.status_code = 429
-        self.headers = {
-            "Retry-After": "invalid",
-            "X-RateLimit-Reset": "not_a_number"
-        }
+        self.headers = {"Retry-After": "invalid", "X-RateLimit-Reset": "not_a_number"}
         self.text = '{"error": "Rate limit exceeded"}'
         self.json = lambda: {"error": "Rate limit exceeded"}
         self.raise_for_status = Mock(side_effect=Exception("429 Too Many Requests"))
@@ -129,7 +122,7 @@ class MockHTTP429InvalidHeaders:
 
 class MockHTTP200Response:
     """Mock successful 200 response."""
-    
+
     def __init__(self, headers: Optional[Dict[str, str]] = None):
         self.status_code = 200
         self.headers = headers or {"Content-Type": "application/json"}
@@ -140,7 +133,7 @@ class MockHTTP200Response:
 
 class MockHTTP500Response:
     """Mock 500 Internal Server Error response."""
-    
+
     def __init__(self):
         self.status_code = 500
         self.headers = {"Content-Type": "application/json"}
@@ -151,7 +144,7 @@ class MockHTTP500Response:
 
 class MockHTTP503Response:
     """Mock 503 Service Unavailable response."""
-    
+
     def __init__(self):
         self.status_code = 503
         self.headers = {"Content-Type": "application/json"}
@@ -162,13 +155,13 @@ class MockHTTP503Response:
 
 class MockRateLimitApproachingResponse:
     """Mock response indicating rate limit is approaching (proactive backoff)."""
-    
+
     def __init__(self, remaining: int = 1, limit: int = 100):
         self.status_code = 200
         self.headers = {
             "X-Ratelimit-Remaining-Second": str(remaining),
             "X-Ratelimit-Limit-Second": str(limit),
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
         self.text = '{"data": "success"}'
         self.json = lambda: {"data": "success"}
@@ -177,21 +170,21 @@ class MockRateLimitApproachingResponse:
 
 class MockRequestExecutor:
     """Mock RequestExecutor for testing."""
-    
+
     def __init__(self, config: Dict[str, Any]):
         self._config = config
         self._max_retries = config.get("client", {}).get("rateLimit", {}).get("maxRetries", 3)
         self._remaining_threshold = config.get("client", {}).get("rateLimit", {}).get("remainingThreshold", 2)
         self._max_retry_seconds = config.get("client", {}).get("rateLimit", {}).get("maxRetrySeconds", 300)
-    
+
     def get_retry_after(self, headers: Dict[str, str], logger: Mock) -> Optional[int]:
         """Mock implementation of get_retry_after method."""
         retry_limit_reset_header = (
-            headers.get("x-ratelimit-reset") or 
-            headers.get("X-RateLimit-Reset") or
-            headers.get("RateLimit-Reset") or
-            headers.get("X-Rate-Limit-Retry-After-Seconds") or
-            headers.get("X-Rate-Limit-Remaining")
+            headers.get("x-ratelimit-reset")
+            or headers.get("X-RateLimit-Reset")
+            or headers.get("RateLimit-Reset")
+            or headers.get("X-Rate-Limit-Retry-After-Seconds")
+            or headers.get("X-Rate-Limit-Remaining")
         )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
@@ -229,19 +222,12 @@ TEST_ORG_URL = "https://test.zscaler.com"
 TEST_CLOUD = "zscaler"
 
 # Default test configuration
-DEFAULT_TEST_CONFIG = {
-    "client": {
-        "rateLimit": {
-            "maxRetries": 3,
-            "remainingThreshold": 2,
-            "maxRetrySeconds": 300
-        }
-    }
-}
+DEFAULT_TEST_CONFIG = {"client": {"rateLimit": {"maxRetries": 3, "remainingThreshold": 2, "maxRetrySeconds": 300}}}
+
 
 class MockHTTP400Response:
     """Mock 400 Bad Request response."""
-    
+
     def __init__(self):
         self.status_code = 400
         self.headers = {"Content-Type": "application/json"}
@@ -252,7 +238,7 @@ class MockHTTP400Response:
 
 class MockHTTP401Response:
     """Mock 401 Unauthorized response."""
-    
+
     def __init__(self):
         self.status_code = 401
         self.headers = {"Content-Type": "application/json"}
@@ -263,7 +249,7 @@ class MockHTTP401Response:
 
 class MockHTTP403Response:
     """Mock 403 Forbidden response."""
-    
+
     def __init__(self):
         self.status_code = 403
         self.headers = {"Content-Type": "application/json"}
@@ -274,7 +260,7 @@ class MockHTTP403Response:
 
 class MockHTTP404Response:
     """Mock 404 Not Found response."""
-    
+
     def __init__(self):
         self.status_code = 404
         self.headers = {"Content-Type": "application/json"}
@@ -291,9 +277,5 @@ RATE_LIMIT_SCENARIOS = {
     "missing_headers": {},
     "invalid_headers": {"Retry-After": "invalid", "X-RateLimit-Reset": "not_a_number"},
     "multiple_x_reset": {"X-RateLimit-Reset": f"{int(time.time() + 1)},{int(time.time() + 2)}"},
-    "concurrent_limit": {
-        "X-Rate-Limit-Limit": "0",
-        "X-Rate-Limit-Remaining": "0",
-        "X-Rate-Limit-Retry-After-Seconds": "60"
-    }
+    "concurrent_limit": {"X-Rate-Limit-Limit": "0", "X-Rate-Limit-Remaining": "0", "X-Rate-Limit-Retry-After-Seconds": "60"},
 }

@@ -1,69 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 22:29:26 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -77,19 +13,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/dedicatedIPGateways/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/dedicatedIPGateways/lite
   response:
     body:
-      string: '[{"id":22394146,"name":"Default","createTime":0,"lastModifiedTime":0,"default":true},{"id":22394221,"name":"GW01","createTime":0,"lastModifiedTime":0,"default":false}]'
+      string: '[]'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
-      content-encoding:
-      - gzip
+      content-length:
+      - '2'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -104,35 +40,31 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:29:27 GMT
+      - Fri, 13 Mar 2026 03:17:49 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1455'
+      - '208'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8b2cc7a5-ecdd-9cd4-84f0-c75aef93dea9
+      - aea11552-e8df-98d2-8561-db0ab0ce0104
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4961'
       x-ratelimit-reset:
-      - '34'
+      - '11'
       x-transaction-id:
-      - 2391e11e-9091-4cb1-9cc7-abebcab3606b
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

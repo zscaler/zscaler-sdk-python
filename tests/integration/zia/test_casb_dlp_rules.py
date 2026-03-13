@@ -47,26 +47,20 @@ class TestCasbDlpRules:
 
             # Step 2: List CASB DLP rules by type - ITSM
             try:
-                typed_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    rule_type=rule_type
-                )
+                typed_rules, _, error = client.zia.casb_dlp_rules.list_rules(rule_type=rule_type)
                 assert error is None, f"Error listing CASB DLP rules by type: {error}"
             except Exception as exc:
                 pass
 
             # Step 3: List CASB DLP rules by type - FILE
             try:
-                file_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    rule_type='OFLCASB_DLP_FILE'
-                )
+                file_rules, _, error = client.zia.casb_dlp_rules.list_rules(rule_type="OFLCASB_DLP_FILE")
             except Exception:
                 pass
 
             # Step 4: List CASB DLP rules by type - EMAIL
             try:
-                email_rules, _, error = client.zia.casb_dlp_rules.list_rules(
-                    rule_type='OFLCASB_DLP_EMAIL'
-                )
+                email_rules, _, error = client.zia.casb_dlp_rules.list_rules(rule_type="OFLCASB_DLP_EMAIL")
             except Exception:
                 pass
 
@@ -87,10 +81,7 @@ class TestCasbDlpRules:
                     # Step 6: Get CASB DLP rule
                     if rule_id:
                         try:
-                            fetched_rule, _, error = client.zia.casb_dlp_rules.get_rule(
-                                rule_id=rule_id,
-                                rule_type=rule_type
-                            )
+                            fetched_rule, _, error = client.zia.casb_dlp_rules.get_rule(rule_id=rule_id, rule_type=rule_type)
                         except Exception:
                             pass
 
@@ -115,11 +106,10 @@ class TestCasbDlpRules:
             if rule_id is None and all_rules and len(all_rules) > 0:
                 first_rule = all_rules[0]
                 first_rule_id = first_rule.id
-                first_rule_type = first_rule.type if hasattr(first_rule, 'type') else rule_type
+                first_rule_type = first_rule.type if hasattr(first_rule, "type") else rule_type
                 try:
                     fetched_rule, _, error = client.zia.casb_dlp_rules.get_rule(
-                        rule_id=first_rule_id,
-                        rule_type=first_rule_type
+                        rule_id=first_rule_id, rule_type=first_rule_type
                     )
                 except Exception:
                     pass

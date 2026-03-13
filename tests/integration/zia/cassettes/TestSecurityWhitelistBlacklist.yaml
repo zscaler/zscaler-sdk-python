@@ -13,19 +13,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
-      string: '{}'
+      string: '{"whitelistUrls":[".example.com",".test.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '2'
+      - '46'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:14 GMT
+      - Fri, 13 Mar 2026 03:22:36 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -48,23 +48,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '266'
+      - '220'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - cb8fc937-c43c-93b6-bcfc-5d854df7b5c4
+      - 8b58f7d5-7c6e-92ff-999f-602f9941824c
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4995'
       x-ratelimit-reset:
-      - '46'
+      - '24'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -73,7 +73,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"whitelistUrls": ["example.com", "testsite.com"]}'
+    body: '{"whitelistUrls": [".example.com", ".test.com", "example.com", "testsite.com"]}'
     headers:
       Accept:
       - application/json
@@ -82,23 +82,23 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '50'
+      - '79'
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
-      string: '{"whitelistUrls":["testsite.com","example.com"]}'
+      string: '{"code":"EDIT_LOCK_NOT_AVAILABLE"}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '48'
+      - '34'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -113,7 +113,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:15 GMT
+      - Fri, 13 Mar 2026 03:23:06 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -121,23 +121,96 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1535'
+      - '30259'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8c9ce05f-ad36-9e6f-bfe9-fce982b37151
+      - e6aa4647-28ea-95e3-bcfb-8701675ffb83
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4994'
       x-ratelimit-reset:
-      - '46'
+      - '24'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 409
+      message: Conflict
+- request:
+    body: '{"whitelistUrls": [".example.com", ".test.com", "example.com", "testsite.com"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '79'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
+  response:
+    body:
+      string: '{"whitelistUrls":[".example.com",".test.com","testsite.com","example.com"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '75'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:23:13 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1336'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e1c89c7f-3d97-9353-8fcf-565483847f70
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '48'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -159,19 +232,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
-      string: '{"whitelistUrls":["testsite.com","example.com"]}'
+      string: '{"whitelistUrls":[".example.com",".test.com","testsite.com","example.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '48'
+      - '75'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -186,7 +259,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:16 GMT
+      - Fri, 13 Mar 2026 03:23:13 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -194,23 +267,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '290'
+      - '217'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - adc8caf1-f432-9bc3-a496-eee71ffffe8d
+      - 9b205b5a-3cb0-99b8-847b-2a671fc16fab
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4998'
       x-ratelimit-reset:
-      - '44'
+      - '47'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -232,19 +305,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
-      string: '{"whitelistUrls":["testsite.com","example.com"]}'
+      string: '{"whitelistUrls":[".example.com",".test.com","testsite.com","example.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '48'
+      - '75'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -259,7 +332,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:16 GMT
+      - Fri, 13 Mar 2026 03:23:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -267,23 +340,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '231'
+      - '262'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - cf08ec3c-62b8-9313-a1b5-2cf21cb202fe
+      - df9bd49c-1daa-9f63-8d13-d81259fc8825
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4997'
       x-ratelimit-reset:
-      - '44'
+      - '47'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -305,9 +378,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
       string: '{"whitelistUrls":["newsite.com"]}'
@@ -332,7 +405,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:18 GMT
+      - Fri, 13 Mar 2026 03:23:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -340,169 +413,169 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1566'
+      - '1497'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 54a009fa-fac5-997d-a50d-df98da275f22
+      - a8317eb3-1f5d-99ce-87ba-de7070c6f06a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4996'
+      x-ratelimit-reset:
+      - '46'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
+  response:
+    body:
+      string: '{"whitelistUrls":["newsite.com"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '33'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:23:16 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '271'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f06811a8-d5ca-9c52-80a9-33956a841882
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '45'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
+  response:
+    body:
+      string: '{"whitelistUrls":["newsite.com"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '33'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:23:16 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '267'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0ae08d45-c789-9202-86ee-4865a3acea2e
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
       x-ratelimit-reset:
       - '44'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
-  response:
-    body:
-      string: '{"whitelistUrls":["newsite.com"]}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '33'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:52:18 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '209'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 4bd3292a-1096-9c7e-9d85-4985f6903233
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4988'
-      x-ratelimit-reset:
-      - '42'
-      x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
-  response:
-    body:
-      string: '{"whitelistUrls":["newsite.com"]}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '33'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:52:19 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '223'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - ae7c24bd-392b-9ad5-920d-f2dbbfd84e3e
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4987'
-      x-ratelimit-reset:
-      - '42'
-      x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -524,9 +597,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
       string: '{"whitelistUrls":[]}'
@@ -551,7 +624,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:20 GMT
+      - Fri, 13 Mar 2026 03:23:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -559,23 +632,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1047'
+      - '1103'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9927382c-50a0-9653-876d-b931adb873c0
+      - 45c3fcbb-d66d-908f-9ba2-abaaedc5950f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4993'
       x-ratelimit-reset:
-      - '41'
+      - '44'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -597,9 +670,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
       string: '{}'
@@ -624,7 +697,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:20 GMT
+      - Fri, 13 Mar 2026 03:23:18 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -632,23 +705,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '277'
+      - '239'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ec37b6a6-2708-9da2-a8a8-80d0dc8eac36
+      - 6c9e9ca3-1397-9bb1-96d5-a4cd34397904
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4992'
       x-ratelimit-reset:
-      - '40'
+      - '43'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -670,9 +743,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced/blacklistUrls?action=ADD_TO_LIST
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced/blacklistUrls?action=ADD_TO_LIST
   response:
     body:
       string: '{"blacklistUrls":["malicious.com","badexample.com"]}'
@@ -697,7 +770,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:21 GMT
+      - Fri, 13 Mar 2026 03:23:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -705,23 +778,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '844'
+      - '965'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d0e53f9b-7871-9c14-870d-4aa96233d411
+      - cfebd8d5-96fb-9940-9e44-b3718627bcdb
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4984'
+      - '4991'
       x-ratelimit-reset:
-      - '40'
+      - '42'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -743,19 +816,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
-      string: '{"blacklistUrls":["malicious.com","badexample.com"]}'
+      string: '{"blacklistUrls":[".newexample.com","malicious.com","badexample.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '52'
+      - '70'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -770,7 +843,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:22 GMT
+      - Fri, 13 Mar 2026 03:23:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -778,23 +851,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '240'
+      - '214'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fb151887-e935-9f73-a4bb-c3f77103c19c
+      - 040ba415-8441-92b2-acfc-577aaf6a5235
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4983'
+      - '4990'
       x-ratelimit-reset:
-      - '39'
+      - '41'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -816,9 +889,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
       string: '{"message":"Rate Limit (1/SECOND) exceeded","Retry-After":"1 seconds"}'
@@ -843,7 +916,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:22 GMT
+      - Fri, 13 Mar 2026 03:23:19 GMT
       retry-after:
       - '1'
       server:
@@ -853,23 +926,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '72'
+      - '179'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 36a883bb-a2f3-91c8-9c07-3b9e5b7ec4bd
+      - 558ce6e7-05e2-9d0e-9513-90286eb13e72
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4982'
+      - '4989'
       x-ratelimit-reset:
-      - '38'
+      - '41'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -891,19 +964,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
-      string: '{"blacklistUrls":["malicious.com","badexample.com"]}'
+      string: '{"blacklistUrls":[".newexample.com","malicious.com","badexample.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '52'
+      - '70'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -918,7 +991,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:24 GMT
+      - Fri, 13 Mar 2026 03:23:22 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -926,23 +999,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '249'
+      - '283'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 068f253b-8c66-94c5-882f-d45a3d66078f
+      - 11409d18-85f5-96be-b300-c0cea3289658
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4981'
+      - '4988'
       x-ratelimit-reset:
-      - '36'
+      - '39'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -964,9 +1037,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
       string: '{"blacklistUrls":["newbadexample.com"]}'
@@ -991,7 +1064,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:26 GMT
+      - Fri, 13 Mar 2026 03:23:23 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -999,23 +1072,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1460'
+      - '1008'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5aeb7dd7-d1c7-9dc1-bd8b-6fb0719fc6e9
+      - 78ce6f89-dc7b-943a-8e06-72c9acd1d5dd
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4980'
+      - '4987'
       x-ratelimit-reset:
-      - '36'
+      - '38'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1037,9 +1110,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
       string: '{"blacklistUrls":["newbadexample.com"]}'
@@ -1064,7 +1137,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:26 GMT
+      - Fri, 13 Mar 2026 03:23:23 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1072,23 +1145,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '265'
+      - '170'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 530d32a2-f27d-9ff4-8c10-cb405d2718ba
+      - 4ba4694d-45ec-9d2e-a8dd-b246949078cf
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4979'
+      - '4986'
       x-ratelimit-reset:
-      - '34'
+      - '37'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1110,9 +1183,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
       string: '{"whitelistUrls":[]}'
@@ -1137,7 +1210,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:27 GMT
+      - Fri, 13 Mar 2026 03:23:25 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1145,23 +1218,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1212'
+      - '1929'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 311c2d4d-e825-91fe-a020-e62a72b21704
+      - 6fbff06d-bb32-9cd3-b7e8-59da806986d0
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4978'
+      - '4985'
       x-ratelimit-reset:
-      - '34'
+      - '37'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1183,9 +1256,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security
+    uri: https://easm.test.zscaler.com/zia/api/v1/security
   response:
     body:
       string: '{}'
@@ -1210,7 +1283,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:28 GMT
+      - Fri, 13 Mar 2026 03:23:25 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1218,23 +1291,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '292'
+      - '168'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8bd8b287-f2b8-97cc-86d5-41b1119abce6
+      - e1a9163e-a10b-98be-9263-53e386c791a3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4977'
+      - '4984'
       x-ratelimit-reset:
-      - '32'
+      - '35'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1256,9 +1329,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
       string: '{"blacklistUrls":[]}'
@@ -1283,7 +1356,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:29 GMT
+      - Fri, 13 Mar 2026 03:23:26 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1291,23 +1364,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1201'
+      - '951'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9021de39-dd54-9075-9350-17a2bd936909
+      - 4c45ce2b-39c7-9c09-9272-810bbab48c7a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4976'
+      - '4983'
       x-ratelimit-reset:
-      - '32'
+      - '34'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1329,9 +1402,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/security/advanced
+    uri: https://easm.test.zscaler.com/zia/api/v1/security/advanced
   response:
     body:
       string: '{"blacklistUrls":[]}'
@@ -1356,7 +1429,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:30 GMT
+      - Fri, 13 Mar 2026 03:23:27 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1370,17 +1443,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0184e83d-3391-9239-8318-05ed04d2aedd
+      - 54a3b2e9-d51a-9931-b587-141bb5e3873b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4975'
+      - '4982'
       x-ratelimit-reset:
-      - '31'
+      - '33'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

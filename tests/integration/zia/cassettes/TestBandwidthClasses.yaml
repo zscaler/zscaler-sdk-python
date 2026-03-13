@@ -15,12 +15,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses
   response:
     body:
-      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]}'
+      string: '{"id":18,"isNameL10nTag":true,"name":"tests-bandwidth-class","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -42,33 +42,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:28 GMT
+      - Fri, 13 Mar 2026 03:14:25 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2386'
+      - '2531'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a75ab1d4-02dd-97d5-9141-75adef2d68ac
+      - aaf040a3-4d9d-98ce-a642-d75221447691
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4968'
       x-ratelimit-reset:
-      - '34'
+      - '37'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -92,12 +94,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/17
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/18
   response:
     body:
-      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML","PROFESSIONAL_SERVICES"]}'
+      string: '{"id":18,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML","PROFESSIONAL_SERVICES"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -119,33 +121,112 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:32 GMT
+      - Fri, 13 Mar 2026 03:14:28 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3986'
+      - '2480'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 341d403e-ed7b-90d5-b8e2-711a71d94c14
+      - 3150efde-c44c-90a5-b271-c1b80f9384a1
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4967'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/18
+  response:
+    body:
+      string: '{"id":18,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test3.acme.com","test2.acme.com","test1.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:28 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '398'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - da193369-3f85-95d5-9615-17e38e18450b
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4966'
       x-ratelimit-reset:
       - '32'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -167,91 +248,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/17
-  response:
-    body:
-      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test2.acme.com","test3.acme.com","test1.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:47:33 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '619'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 0aff10ba-71b6-9e37-939c-88a784cf053d
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4987'
-      x-ratelimit-reset:
-      - '28'
-      x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
     uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses
   response:
     body:
       string: '[{"id":2,"isNameL10nTag":true,"name":"LARGE_FILE","type":"BANDWIDTH_CAT_LARGE_FILE","fileSize":"FILE_1GB"},{"id":6,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_WEBCONF","type":"BANDWIDTH_CAT_WEBCONF","applications":["CONNECT","INTERCALL"]},{"id":11,"isNameL10nTag":true,"name":"Office
-        Applications","webApplications":["WINDOWS_LIVE_HOTMAIL","YAMMER","SHAREPOINTONLINE","OTHER_OFFICE365","ONEDRIVE","ONEDRIVE_PERSONAL"]},{"id":12,"isNameL10nTag":true,"name":"Productivity","webApplications":["GOTOMEETING","GOTOWEBINAR","SALESFORCE","GOOGLEANALYTICS","GOOGLEBUSINESSAPPS","EVERNOTE","TWILIO","ZOHOCRM","SUGARCRM","SLIDESHARE","ECHOSIGN","DOCUSIGN","ARIBA","DOCSTOC","GITHUB"],"urlCategories":["OTHER_BUSINESS_AND_ECONOMY","CORPORATE_MARKETING","FINANCE","PROFESSIONAL_SERVICES","WEB_SEARCH","INTERNET_SERVICES"]},{"id":13,"isNameL10nTag":true,"name":"Social
-        Media","webApplications":["MYSPACE","CRAIGSLIST","FACEBOOK","LINKEDIN","BEBO","XING","FRIENDSTER","HI5","YAHOO_GROUPS","GOOGLE_GROUPS","BLOGSPOT","LIVEJOURNAL","WORDPRESS","SLASHDOT","DIGG","TWITTER","MIXI","CHANNELTWO","GOOGLE_PLUS","PINTEREST","VKONTAKTE","REDDIT","FOURSQUARE","FLICKR","INSTAGRAM","TUENTI","FLORESTAALD","TYPEPAD","TUMBLR"]},{"id":14,"isNameL10nTag":true,"name":"Streaming
-        Video","webApplications":["YOUTUBE","GOOGLE_STREAMING","METACAFE","DAILYMOTION","VEOH","AOL_VIDEO","REVVER","HULU","MEGAVIDEO","SNAGFILMS","PANDORA_RADIO","VIMEO","IPLAYER","TVCOM","LASTFM","NETFLIX","SPOTIFY","YOUKU","BBCIPLAYER","DEEZER","TWITCHTV","SLINGTV","RADIONOMY","MUSICME","MYVIDEODE","CLIPFISHDE","VIDEOMAILRU","VISIONRAMBLERRU","SMOTRICOM","VIDEOYANDEXRU","ZIDDU","ONEDRIVE","SYNCPLICITY","YANDEXDISK","OPENDRIVE","WETRANSFER","SHAREFILE","ONEHUB","SCREENCAST","RUSFOLDER","SUGARSYNC","WIKISEND","SENDTHISFILE","MYFILES","UPLOADED","GPHOTOS","ONEDRIVE_PERSONAL"]},{"id":15,"isNameL10nTag":true,"name":"Business
-        and Economy","urlCategories":["OTHER_BUSINESS_AND_ECONOMY"]},{"id":16,"isNameL10nTag":true,"name":"tests-vcr0001","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":7,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_VOIP","type":"BANDWIDTH_CAT_VOIP","applications":["SKYPE"]},{"id":1,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_GENERAL_SURFING","type":"BANDWIDTH_CAT_GENERAL_SURFING"},{"id":3,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_SALES","type":"BANDWIDTH_CAT_SALES"},{"id":4,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FINANCE","urls":[".netsuite.com"],"type":"BANDWIDTH_CAT_FINANCE"},{"id":5,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_MEDIA","urls":[".metacafe.com",".hulu.com",".dailymotion.com",".shoutcast.com",".youtube.com"],"type":"BANDWIDTH_CAT_MEDIA"},{"id":8,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FSHARE","urls":[".dropbox.com",".box.net"],"type":"BANDWIDTH_CAT_FSHARE"}]'
+        Applications","webApplications":["WINDOWS_LIVE_HOTMAIL","YAMMER","SHAREPOINTONLINE","OTHER_OFFICE365","ONEDRIVE","ONEDRIVE_PERSONAL"]},{"id":12,"isNameL10nTag":true,"name":"Productivity","webApplications":["GOTOMEETING","GOTOWEBINAR","SALESFORCE","GOOGLEANALYTICS","GOOGLEBUSINESSAPPS","EVERNOTE","TWILIO","ZOHOCRM","SUGARCRM","SLIDESHARE","ECHOSIGN","DOCUSIGN","ARIBA","DOCSTOC","GITHUB"],"urlCategories":["OTHER_BUSINESS_AND_ECONOMY","CORPORATE_MARKETING","FINANCE","PROFESSIONAL_SERVICES","WEB_SEARCH","INTERNET_SERVICES"]},{"id":13,"isNameL10nTag":true,"name":"20260227182430_created","urls":["correct1.example.com"],"urlCategories":["GAMBLING"]},{"id":14,"isNameL10nTag":true,"name":"Streaming
+        Video","webApplications":["YOUTUBE","GOOGLE_STREAMING","METACAFE","DAILYMOTION","VEOH","AOL_VIDEO","REVVER","HULU","MEGAVIDEO","SNAGFILMS","PANDORA_RADIO","VIMEO","IPLAYER","TVCOM","LASTFM","NETFLIX","SPOTIFY","YOUKU","BBCIPLAYER","DEEZER","TWITCHTV","SLINGTV","RADIONOMY","MUSICME","MYVIDEODE","CLIPFISHDE","VIDEOMAILRU","VISIONRAMBLERRU","SMOTRICOM","VIDEOYANDEXRU","ZIDDU","ONEDRIVE","SYNCPLICITY","YANDEXDISK","OPENDRIVE","WETRANSFER","SHAREFILE","ONEHUB","SCREENCAST","RUSFOLDER","SUGARSYNC","WIKISEND","SENDTHISFILE","MYFILES","UPLOADED","GPHOTOS","ONEDRIVE_PERSONAL"]},{"id":15,"isNameL10nTag":true,"name":"20260227182627_created","urls":["correct1.example.com"],"urlCategories":["GAMBLING"]},{"id":16,"isNameL10nTag":true,"name":"20260227182821_created","urlCategories":["GAMBLING"]},{"id":17,"isNameL10nTag":true,"name":"20260309103008_created","urlCategories":["GAMBLING"]},{"id":18,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":7,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_VOIP","type":"BANDWIDTH_CAT_VOIP","applications":["SKYPE"]},{"id":1,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_GENERAL_SURFING","type":"BANDWIDTH_CAT_GENERAL_SURFING"},{"id":3,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_SALES","type":"BANDWIDTH_CAT_SALES"},{"id":4,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FINANCE","urls":[".netsuite.com"],"type":"BANDWIDTH_CAT_FINANCE"},{"id":5,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_MEDIA","urls":[".metacafe.com",".hulu.com",".dailymotion.com",".shoutcast.com",".youtube.com"],"type":"BANDWIDTH_CAT_MEDIA"},{"id":8,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FSHARE","urls":[".dropbox.com",".box.net"],"type":"BANDWIDTH_CAT_FSHARE"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -273,33 +277,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:34 GMT
+      - Fri, 13 Mar 2026 03:14:30 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1048'
+      - '1209'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d02b6eba-9c77-955a-99fa-5a207442c8d4
+      - bbd22747-5591-91a3-9d50-c758f829dffd
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4965'
       x-ratelimit-reset:
-      - '27'
+      - '31'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -321,9 +327,88 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/lite
+  response:
+    body:
+      string: '[{"id":2,"isNameL10nTag":true,"name":"LARGE_FILE","type":"BANDWIDTH_CAT_LARGE_FILE"},{"id":6,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_WEBCONF","type":"BANDWIDTH_CAT_WEBCONF"},{"id":11,"isNameL10nTag":true,"name":"Office
+        Applications","webApplications":["WINDOWS_LIVE_HOTMAIL","YAMMER","SHAREPOINTONLINE","OTHER_OFFICE365","ONEDRIVE","ONEDRIVE_PERSONAL"]},{"id":12,"isNameL10nTag":true,"name":"Productivity","webApplications":["GOTOMEETING","GOTOWEBINAR","SALESFORCE","GOOGLEANALYTICS","GOOGLEBUSINESSAPPS","EVERNOTE","TWILIO","ZOHOCRM","SUGARCRM","SLIDESHARE","ECHOSIGN","DOCUSIGN","ARIBA","DOCSTOC","GITHUB"],"urlCategories":["OTHER_BUSINESS_AND_ECONOMY","CORPORATE_MARKETING","FINANCE","PROFESSIONAL_SERVICES","WEB_SEARCH","INTERNET_SERVICES"]},{"id":13,"isNameL10nTag":true,"name":"20260227182430_created","urlCategories":["GAMBLING"]},{"id":14,"isNameL10nTag":true,"name":"Streaming
+        Video","webApplications":["YOUTUBE","GOOGLE_STREAMING","METACAFE","DAILYMOTION","VEOH","AOL_VIDEO","REVVER","HULU","MEGAVIDEO","SNAGFILMS","PANDORA_RADIO","VIMEO","IPLAYER","TVCOM","LASTFM","NETFLIX","SPOTIFY","YOUKU","BBCIPLAYER","DEEZER","TWITCHTV","SLINGTV","RADIONOMY","MUSICME","MYVIDEODE","CLIPFISHDE","VIDEOMAILRU","VISIONRAMBLERRU","SMOTRICOM","VIDEOYANDEXRU","ZIDDU","ONEDRIVE","SYNCPLICITY","YANDEXDISK","OPENDRIVE","WETRANSFER","SHAREFILE","ONEHUB","SCREENCAST","RUSFOLDER","SUGARSYNC","WIKISEND","SENDTHISFILE","MYFILES","UPLOADED","GPHOTOS","ONEDRIVE_PERSONAL"]},{"id":15,"isNameL10nTag":true,"name":"20260227182627_created","urlCategories":["GAMBLING"]},{"id":16,"isNameL10nTag":true,"name":"20260227182821_created","urlCategories":["GAMBLING"]},{"id":17,"isNameL10nTag":true,"name":"20260309103008_created","urlCategories":["GAMBLING"]},{"id":18,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":7,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_VOIP","type":"BANDWIDTH_CAT_VOIP","applications":["SKYPE"]},{"id":1,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_GENERAL_SURFING","type":"BANDWIDTH_CAT_GENERAL_SURFING"},{"id":3,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_SALES","type":"BANDWIDTH_CAT_SALES"},{"id":4,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FINANCE","urls":[".netsuite.com"],"type":"BANDWIDTH_CAT_FINANCE"},{"id":5,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_MEDIA","urls":[".metacafe.com",".hulu.com",".dailymotion.com",".shoutcast.com",".youtube.com"],"type":"BANDWIDTH_CAT_MEDIA"},{"id":8,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FSHARE","urls":[".dropbox.com",".box.net"],"type":"BANDWIDTH_CAT_FSHARE"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1915'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 537f944d-8afa-9d8b-be39-d0d4458036dc
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4964'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/17
+    uri: https://easm.test.zscaler.com/zia/api/v1/bandwidthClasses/18
   response:
     body:
       string: ''
@@ -344,7 +429,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:47:36 GMT
+      - Fri, 13 Mar 2026 03:14:34 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -354,23 +439,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2060'
+      - '1768'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e403fac8-caa9-93c5-8965-17a6c0babf64
+      - ae20ed77-3cd9-9386-8a49-b03636406e57
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4963'
       x-ratelimit-reset:
-      - '26'
+      - '28'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -378,81 +463,4 @@ interactions:
     status:
       code: 204
       message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/bandwidthClasses/lite
-  response:
-    body:
-      string: '[{"id":2,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_LARGE_FILE","type":"BANDWIDTH_CAT_LARGE_FILE"},{"id":6,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_WEBCONF","type":"BANDWIDTH_CAT_WEBCONF"},{"id":7,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_VOIP","type":"BANDWIDTH_CAT_VOIP"},{"id":11,"isNameL10nTag":true,"name":"WEBCONF","webApplications":["AI_COPYWRITING_TREASURE","AI_CHAT_ROBOT","AI_ART_GENERATOR","ACADEMICGPT","AI_FOR_SEO","AD_CREATIVES","AGENTGPT","ONE_MIN_AI"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]},{"id":12,"isNameL10nTag":true,"name":"LARGE_FILE","urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]},{"id":13,"isNameL10nTag":true,"name":"NewBDW_7045","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]},{"id":14,"isNameL10nTag":true,"name":"NewBDW_7203","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]},{"id":1,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_GENERAL_SURFING","type":"BANDWIDTH_CAT_GENERAL_SURFING"},{"id":3,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_SALES","type":"BANDWIDTH_CAT_SALES"},{"id":4,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FINANCE","urls":[".netsuite.com"],"type":"BANDWIDTH_CAT_FINANCE"},{"id":5,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_MEDIA","urls":[".metacafe.com",".hulu.com",".dailymotion.com",".shoutcast.com",".youtube.com"],"type":"BANDWIDTH_CAT_MEDIA"},{"id":8,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FSHARE","urls":[".dropbox.com",".box.net"],"type":"BANDWIDTH_CAT_FSHARE"}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 01:33:45 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - accept-encoding, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '1975'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - cb5bce8e-b7ad-90f8-b4ff-7f34a23424f6
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4997'
-      x-ratelimit-reset:
-      - '17'
-      x-transaction-id:
-      - 1a1a542f-0b32-4050-b2dc-add18c86a84c
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
 version: 1

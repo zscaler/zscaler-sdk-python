@@ -47,7 +47,11 @@ class TestFTPControlPolicy:
             try:
                 # Just re-apply current settings to test the update endpoint
                 updated_settings, response, err = client.zia.ftp_control_policy.update_ftp_settings(
-                    ftp_over_http_enabled=original_settings.get("ftp_over_http_enabled", False) if isinstance(original_settings, dict) else getattr(original_settings, "ftp_over_http_enabled", False),
+                    ftp_over_http_enabled=(
+                        original_settings.get("ftp_over_http_enabled", False)
+                        if isinstance(original_settings, dict)
+                        else getattr(original_settings, "ftp_over_http_enabled", False)
+                    ),
                 )
                 # Update may fail due to permissions - that's ok
             except Exception:

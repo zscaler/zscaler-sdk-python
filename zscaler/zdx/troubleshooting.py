@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.troubleshooting import DeviceDeepTraces
@@ -240,10 +240,11 @@ class TroubleshootingAPI(APIClient):
         trace_id: str,
     ) -> APIResult[List[DeviceTopProcesses]]:
         """
-        Returns a list of all deep traces for a specific device.
+        Get top processes from the deep tracing session
 
         Args:
             device_id (str): The unique ID for the device.
+            trace_id (str): The unique ID for the deeptrace.
 
         Returns:
             :obj:`Tuple`:: The list of deep traces for the device.
@@ -287,7 +288,7 @@ class TroubleshootingAPI(APIClient):
 
     def get_deeptrace_webprobe_metrics(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
-        Returns web probe metrics for a specific deeptrace.
+        Get webprobe metrics from deeptrace session
 
         Args:
             device_id (str): The unique ID for the device.
@@ -336,7 +337,7 @@ class TroubleshootingAPI(APIClient):
 
     def get_deeptrace_cloudpath_metrics(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
-        Returns cloudpath metrics for a specific deeptrace.
+        Get cloudpath metrics (latency, packet drops, etc.) from deeptrace session
 
         Args:
             device_id (str): The unique ID for the device.
@@ -385,7 +386,7 @@ class TroubleshootingAPI(APIClient):
 
     def get_deeptrace_cloudpath(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
-        Returns cloudpath for a specific deeptrace.
+        Get list of cloudpaths from the deeptrace session
 
         Args:
             device_id (str): The unique ID for the device.
@@ -482,7 +483,8 @@ class TroubleshootingAPI(APIClient):
 
     def get_deeptrace_events(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
-        Returns events for a specific deeptrace.
+        Gets the Events metrics trend for a device.
+        The event metrics include Zscaler, Hardware, Software and Network event changes.
 
         Args:
             device_id (str): The unique ID for the device.
@@ -588,6 +590,7 @@ class TroubleshootingAPI(APIClient):
     ) -> APIResult[dict]:
         """
         Returns status of the score analysis (e.g., progress or results).
+
         Args:
             device_id (str): The unique ID for the device.
             trace_id (str): The unique ID for the deeptrace.

@@ -48,7 +48,7 @@ class TestCloudAppInstances:
             # Step 2: List cloud application instances with query params
             try:
                 filtered_instances, _, error = client.zia.cloud_app_instances.list_cloud_app_instances(
-                    query_params={'instance_type': instance_type}
+                    query_params={"instance_type": instance_type}
                 )
             except Exception:
                 pass
@@ -60,7 +60,11 @@ class TestCloudAppInstances:
                     instance_type=instance_type,
                 )
                 if error is None and created_instance is not None:
-                    instance_id = created_instance.get("id") if isinstance(created_instance, dict) else getattr(created_instance, "id", None)
+                    instance_id = (
+                        created_instance.get("id")
+                        if isinstance(created_instance, dict)
+                        else getattr(created_instance, "id", None)
+                    )
 
                     # Step 4: Get cloud app instance
                     if instance_id:
@@ -86,7 +90,7 @@ class TestCloudAppInstances:
             # If we didn't create an instance, test with existing one
             if instance_id is None and all_instances and len(all_instances) > 0:
                 first_instance = all_instances[0]
-                for attr in ['id', 'instance_id', 'instanceId']:
+                for attr in ["id", "instance_id", "instanceId"]:
                     if hasattr(first_instance, attr):
                         existing_id = getattr(first_instance, attr)
                         try:

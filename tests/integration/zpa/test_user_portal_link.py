@@ -51,10 +51,10 @@ class TestUserPortalLink:
                 user_notification=portal_description,
                 user_notification_enabled=True,
                 managed_by_zs=True,
-                domain='securitygeek.io',
+                domain="securitygeek.io",
                 ext_label=ext_label,
-                ext_domain_name='-securitygeek-io.b.zscalerportal.net',
-                ext_domain="securitygeek.io"
+                ext_domain_name="-securitygeek-io.b.zscalerportal.net",
+                ext_domain="securitygeek.io",
             )
             assert err is None, f"Error creating user portal: {err}"
             assert created_portal is not None
@@ -62,12 +62,8 @@ class TestUserPortalLink:
             assert created_portal.description == portal_description
 
             # Debugging: Check if the `enabled` field exists
-            assert (
-                "enabled" in created_portal.__dict__
-            ), f"'enabled' field missing in response: {created_portal.__dict__}"
-            assert (
-                created_portal.enabled is True
-            ), f"Expected 'enabled' to be True, got: {created_portal.enabled}"
+            assert "enabled" in created_portal.__dict__, f"'enabled' field missing in response: {created_portal.__dict__}"
+            assert created_portal.enabled is True, f"Expected 'enabled' to be True, got: {created_portal.enabled}"
 
             portal_id = created_portal.id  # Capture the portal_id for later use
         except Exception as exc:
@@ -81,8 +77,8 @@ class TestUserPortalLink:
                 enabled=True,
                 link="server1.example.com",
                 user_notification_enabled=True,
-                icon_text='',
-                protocol='https://',
+                icon_text="",
+                protocol="https://",
                 user_portal_ids=[portal_id],
             )
             assert err is None, f"Error creating user portal link: {err}"
@@ -111,13 +107,13 @@ class TestUserPortalLink:
                 # Update the user portal link
                 updated_name = portal_name + " Updated"
                 _, _, err = client.zpa.user_portal_link.update_portal_link(
-                    portal_link_id, 
+                    portal_link_id,
                     name=updated_name,
                     enabled=True,
                     link="server1.example.com",
                     user_notification_enabled=True,
-                    icon_text='',
-                    protocol='https://',
+                    icon_text="",
+                    protocol="https://",
                     user_portal_ids=[portal_id],
                 )
                 assert err is None, f"Error updating user portal link: {err}"

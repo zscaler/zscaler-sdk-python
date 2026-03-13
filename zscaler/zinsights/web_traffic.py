@@ -65,10 +65,7 @@ class WebTrafficAPI(APIClient):
             # Check for GraphQL errors in the response
             if is_graphql_error_response(body):
                 error = GraphQLAPIError(
-                    url=api_url,
-                    response_details=response._response,
-                    response_body=body,
-                    service_type="zins"
+                    url=api_url, response_details=response._response, response_body=body, service_type="zins"
                 )
                 return (None, response, error)
 

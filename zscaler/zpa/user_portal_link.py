@@ -279,11 +279,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_portal_link(
-        self,
-        portal_link_id: str,
-        microtenant_id: str = None
-    ) -> APIResult[dict]:
+    def delete_portal_link(self, portal_link_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified user portal link.
 
@@ -321,12 +317,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (None, response, error)
 
-    def add_bulk_portal_links(
-        self,
-        portal_links: list,
-        user_portal_link_ids: list = None,
-        **kwargs
-    ) -> APIResult[dict]:
+    def add_bulk_portal_links(self, portal_links: list, user_portal_link_ids: list = None, **kwargs) -> APIResult[dict]:
         """
         Adds multiple user portal links in bulk.
 
@@ -403,16 +394,13 @@ class UserPortalLinkAPI(APIClient):
                     "iconText": portal_link_data.get("icon_text", ""),
                     "link": portal_link_data.get("link", ""),
                     "linkPath": portal_link_data.get("link_path", ""),
-                    "protocol": portal_link_data.get("protocol", "")
+                    "protocol": portal_link_data.get("protocol", ""),
                 }
             )
 
         user_portals = [{"id": pid} for pid in user_portal_link_ids] if user_portal_link_ids else []
 
-        body = {
-            "userPortalLinks": user_portal_links,
-            "userPortals": user_portals
-        }
+        body = {"userPortalLinks": user_portal_links, "userPortals": user_portals}
 
         microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -431,10 +419,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [
-                UserPortalLinks(self.form_response_body(item))
-                for item in response.get_body()
-            ]
+            result = [UserPortalLinks(self.form_response_body(item)) for item in response.get_body()]
         except Exception as error:
             return (None, response, error)
 

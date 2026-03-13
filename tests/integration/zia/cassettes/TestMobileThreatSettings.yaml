@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/mobileAdvanceThreatSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/mobileAdvanceThreatSettings
   response:
     body:
       string: '{"blockAppsWithMaliciousActivity":true,"blockAppsWithKnownVulnerabilities":true,"blockAppsSendingUnencryptedUserCredentials":true,"blockAppsSendingLocationInfo":true,"blockAppsSendingPersonallyIdentifiableInfo":true,"blockAppsSendingDeviceIdentifier":true,"blockAppsCommunicatingWithAdWebsites":true,"blockAppsCommunicatingWithRemoteUnknownServers":true}'
@@ -40,33 +40,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:01:11 GMT
+      - Fri, 13 Mar 2026 03:20:29 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '293'
+      - '784'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 95854b06-2f30-924c-b031-7a30db239b55
+      - 1745068f-7ac7-9d5d-9535-64c31d2cc48a
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4979'
       x-ratelimit-reset:
-      - '49'
+      - '31'
       x-transaction-id:
-      - 32e5eb9d-8b47-4a8f-af72-83c82c7325eb
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -88,9 +90,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.beta.zsapi.net/zia/api/v1/mobileAdvanceThreatSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/mobileAdvanceThreatSettings
   response:
     body:
       string: '{"message":"Request body is invalid."}'
@@ -115,7 +117,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:39:16 GMT
+      - Fri, 13 Mar 2026 03:20:30 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -123,23 +125,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '229'
+      - '83'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8082ded3-cf86-9cb1-ab50-fd40e6c8326e
+      - 2271a78e-6e56-9af1-8027-80cdba5fe879
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4978'
       x-ratelimit-reset:
-      - '44'
+      - '31'
       x-transaction-id:
-      - 302dd0ba-18ce-4ef5-9adc-567234a905be
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

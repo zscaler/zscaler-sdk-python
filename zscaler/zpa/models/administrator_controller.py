@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
@@ -36,73 +35,39 @@ class AdministratorController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.username = config["username"] \
-                if "username" in config else None
-            self.display_name = config["displayName"] \
-                if "displayName" in config else None
-            self.email = config["email"] \
-                if "email" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
-            self.timezone = config["timezone"] \
-                if "timezone" in config else None
-            self.is_deleted = config["isDeleted"] \
-                if "isDeleted" in config else None
-            self.password = config["password"] \
-                if "password" in config else None
-            self.tmp_password = config["tmpPassword"] \
-                if "tmpPassword" in config else None
-            self.tmp_email = config["tmpEmail"] \
-                if "tmpEmail" in config else None
-            self.role = config["role"] \
-                if "role" in config else None
-            self.comments = config["comments"] \
-                if "comments" in config else None
-            self.language_code = config["languageCode"] \
-                if "languageCode" in config else None
-            self.eula = config["eula"] \
-                if "eula" in config else None
-            self.department = config["department"] \
-                if "department" in config else None
-            self.is_enabled = config["isEnabled"] \
-                if "isEnabled" in config else None
-            self.two_factor_auth_enabled = config["twoFactorAuthEnabled"] \
-                if "twoFactorAuthEnabled" in config else None
-            self.phone_number = config["phoneNumber"] \
-                if "phoneNumber" in config else None
-            self.force_pwd_change = config["forcePwdChange"] \
-                if "forcePwdChange" in config else None
-            self.two_factor_auth_type = config["twoFactorAuthType"] \
-                if "twoFactorAuthType" in config else None
-            self.pin_session = config["pinSession"] \
-                if "pinSession" in config else None
-            self.local_login_disabled = config["localLoginDisabled"] \
-                if "localLoginDisabled" in config else None
-            self.is_locked = config["isLocked"] \
-                if "isLocked" in config else None
-            self.delivery_tag = config["deliveryTag"] \
-                if "deliveryTag" in config else None
-            self.operation_type = config["operationType"] \
-                if "operationType" in config else None
-            self.sync_version = config["syncVersion"] \
-                if "syncVersion" in config else None
-            self.token_id = config["tokenId"] \
-                if "tokenId" in config else None
-            self.group_id = ZscalerCollection.form_list(
-                config["groupIds"] if "groupIds" in config else [], str
-            )
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.username = config["username"] if "username" in config else None
+            self.display_name = config["displayName"] if "displayName" in config else None
+            self.email = config["email"] if "email" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.timezone = config["timezone"] if "timezone" in config else None
+            self.is_deleted = config["isDeleted"] if "isDeleted" in config else None
+            self.password = config["password"] if "password" in config else None
+            self.tmp_password = config["tmpPassword"] if "tmpPassword" in config else None
+            self.tmp_email = config["tmpEmail"] if "tmpEmail" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.comments = config["comments"] if "comments" in config else None
+            self.language_code = config["languageCode"] if "languageCode" in config else None
+            self.eula = config["eula"] if "eula" in config else None
+            self.department = config["department"] if "department" in config else None
+            self.is_enabled = config["isEnabled"] if "isEnabled" in config else None
+            self.two_factor_auth_enabled = config["twoFactorAuthEnabled"] if "twoFactorAuthEnabled" in config else None
+            self.phone_number = config["phoneNumber"] if "phoneNumber" in config else None
+            self.force_pwd_change = config["forcePwdChange"] if "forcePwdChange" in config else None
+            self.two_factor_auth_type = config["twoFactorAuthType"] if "twoFactorAuthType" in config else None
+            self.pin_session = config["pinSession"] if "pinSession" in config else None
+            self.local_login_disabled = config["localLoginDisabled"] if "localLoginDisabled" in config else None
+            self.is_locked = config["isLocked"] if "isLocked" in config else None
+            self.delivery_tag = config["deliveryTag"] if "deliveryTag" in config else None
+            self.operation_type = config["operationType"] if "operationType" in config else None
+            self.sync_version = config["syncVersion"] if "syncVersion" in config else None
+            self.token_id = config["tokenId"] if "tokenId" in config else None
+            self.group_id = ZscalerCollection.form_list(config["groupIds"] if "groupIds" in config else [], str)
         else:
             self.modified_time = None
             self.creation_time = None

@@ -44,18 +44,14 @@ class TestCloudNSS:
             assert isinstance(feeds, list), "Feeds should be a list"
 
             # Test list_nss_feed with query params
-            feeds_search, response, err = client.zia.cloud_nss.list_nss_feed(
-                query_params={"search": "NSS"}
-            )
+            feeds_search, response, err = client.zia.cloud_nss.list_nss_feed(query_params={"search": "NSS"})
 
             # Test list_feed_output
             outputs, response, err = client.zia.cloud_nss.list_feed_output()
             assert err is None, f"List feed outputs failed: {err}"
 
             # Test list_feed_output with query params
-            outputs_search, response, err = client.zia.cloud_nss.list_feed_output(
-                query_params={"type": "WEB"}
-            )
+            outputs_search, response, err = client.zia.cloud_nss.list_feed_output(query_params={"type": "WEB"})
 
             # Test add_nss_feed (may fail due to subscription)
             try:

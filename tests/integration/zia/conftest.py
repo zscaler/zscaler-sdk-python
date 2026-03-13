@@ -28,7 +28,7 @@ PYTEST_MOCK_CLIENT = "pytest_mock_client"
 def reset_counters_per_test():
     """
     Reset VCR counters before each test function.
-    
+
     This ensures that generate_random_string() and generate_random_ip()
     return the same deterministic values during both recording and playback.
     Each test starts with counter at 0, so the same sequence is generated.
@@ -40,78 +40,78 @@ def reset_counters_per_test():
 class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
-    
+
     Instead of using random names (which break VCR playback), this class
     provides consistent, predictable names that work with recorded cassettes.
-    
+
     Usage:
         names = NameGenerator("rule_labels")
         name = names.name       # "tests-rule-labels"
         desc = names.description  # "Test Rule Labels"
         updated_name = names.updated_name  # "tests-rule-labels-updated"
     """
-    
+
     def __init__(self, resource_type: str, suffix: str = ""):
         """
         Initialize with a resource type identifier.
-        
+
         Args:
             resource_type: A descriptive string for the resource (e.g., "firewall_rule", "static_ip")
             suffix: Optional suffix for uniqueness (e.g., "1", "alt")
         """
         self.resource_type = resource_type.lower().replace("_", "-")
         self.suffix = f"-{suffix}" if suffix else ""
-        
+
     @property
     def name(self) -> str:
         """Returns the base test name."""
         return f"tests-{self.resource_type}{self.suffix}"
-    
+
     @property
     def description(self) -> str:
         """Returns a human-readable description."""
         readable = self.resource_type.replace("-", " ").title()
         return f"Test {readable}{self.suffix}"
-    
+
     @property
     def updated_name(self) -> str:
         """Returns the name for update operations."""
         return f"tests-{self.resource_type}{self.suffix}-updated"
-    
+
     @property
     def updated_description(self) -> str:
         """Returns the description for update operations."""
         readable = self.resource_type.replace("-", " ").title()
         return f"Updated Test {readable}{self.suffix}"
-    
+
     def with_suffix(self, suffix: str) -> "NameGenerator":
         """Returns a new generator with an additional suffix."""
         new_suffix = f"{self.suffix.lstrip('-')}-{suffix}" if self.suffix else suffix
         return NameGenerator(self.resource_type, new_suffix)
-    
+
     @staticmethod
     def generate_urls(count: int = 5, domain: str = "vcr-test.com") -> list:
         """
         Generate deterministic test URLs for VCR testing.
-        
+
         Args:
             count: Number of URLs to generate
             domain: Domain suffix for the URLs
-            
+
         Returns:
             List of deterministic test URLs
         """
         return [f"vcr-test-url-{i}.{domain}" for i in range(1, count + 1)]
-    
+
     @staticmethod
     def generate_ips(count: int = 5, base: str = "192.168.100") -> list:
         """
         Generate deterministic test IP addresses for VCR testing.
-        
+
         Args:
             count: Number of IPs to generate
             base: First three octets of the IP
-            
+
         Returns:
             List of deterministic test IPs
         """

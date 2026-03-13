@@ -184,9 +184,7 @@ class EnrollmentCertificateAPI(APIClient):
         if "valid_from" in kwargs and "valid_to" in kwargs and "time_zone" in kwargs:
             try:
                 from_epoch, to_epoch = validate_and_convert_times(
-                    kwargs["valid_from"],
-                    kwargs["valid_to"],
-                    kwargs["time_zone"]
+                    kwargs["valid_from"], kwargs["valid_to"], kwargs["time_zone"]
                 )
                 kwargs["valid_from_in_epoch_sec"] = str(from_epoch)
                 kwargs["valid_to_in_epoch_sec"] = str(to_epoch)
@@ -252,9 +250,7 @@ class EnrollmentCertificateAPI(APIClient):
         if "valid_from" in kwargs and "valid_to" in kwargs and "time_zone" in kwargs:
             try:
                 from_epoch, to_epoch = validate_and_convert_times(
-                    kwargs["valid_from"],
-                    kwargs["valid_to"],
-                    kwargs["time_zone"]
+                    kwargs["valid_from"], kwargs["valid_to"], kwargs["time_zone"]
                 )
                 kwargs["valid_from_in_epoch_sec"] = str(from_epoch)
                 kwargs["valid_to_in_epoch_sec"] = str(to_epoch)
@@ -432,9 +428,7 @@ class EnrollmentCertificateAPI(APIClient):
         if "valid_from" in kwargs and "valid_to" in kwargs and "time_zone" in kwargs:
             try:
                 from_epoch, to_epoch = validate_and_convert_times(
-                    kwargs["valid_from"],
-                    kwargs["valid_to"],
-                    kwargs["time_zone"]
+                    kwargs["valid_from"], kwargs["valid_to"], kwargs["time_zone"]
                 )
                 kwargs["valid_from_in_epoch_sec"] = str(from_epoch)
                 kwargs["valid_to_in_epoch_sec"] = str(to_epoch)

@@ -38,9 +38,7 @@ class Alerts(ZscalerObject):
         if config:
             self.next_offset = config["next_offset"] if "next_offset" in config else None
 
-            self.alerts = ZscalerCollection.form_list(
-                config["alerts"] if "alerts" in config else [], AlertDetails
-            )
+            self.alerts = ZscalerCollection.form_list(config["alerts"] if "alerts" in config else [], AlertDetails)
         else:
             self.next_offset = None
             self.alerts = []
@@ -92,7 +90,6 @@ class AlertDetails(ZscalerObject):
                 self.application = None
 
             self.geolocations = ZscalerCollection.form_list(
-
                 config["geolocations"] if "geolocations" in config else [], common.GeoLocations
             )
             self.departments = ZscalerCollection.form_list(
@@ -154,9 +151,7 @@ class AffectedDevices(ZscalerObject):
         if config:
             self.next_offset = config["next_offset"] if "next_offset" in config else None
 
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], DeviceDetails
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], DeviceDetails)
         else:
             self.next_offset = None
             self.devices = []

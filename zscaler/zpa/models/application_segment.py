@@ -53,8 +53,7 @@ class ApplicationSegments(ZscalerObject):
             self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else None
             self.policy_style = config["policyStyle"] if "policyStyle" in config else None
 
-            self.passive_health_enabled = config["passiveHealthEnabled"] \
-                if "passiveHealthEnabled" in config else None
+            self.passive_health_enabled = config["passiveHealthEnabled"] if "passiveHealthEnabled" in config else None
             self.select_connector_close_to_app = (
                 config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else None
             )
@@ -66,16 +65,13 @@ class ApplicationSegments(ZscalerObject):
             self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else None
             self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else None
             self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.read_only = config["readOnly"] if "readOnly" in config else None
             self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
-            self.domain_names = ZscalerCollection.form_list(
-                config["domainNames"] if "domainNames" in config else [], str
-            )
+            self.domain_names = ZscalerCollection.form_list(config["domainNames"] if "domainNames" in config else [], str)
 
             self.server_groups = []
             if "serverGroups" in config:
@@ -85,9 +81,7 @@ class ApplicationSegments(ZscalerObject):
                     else:
                         self.server_groups.append(server_group.ServerGroup(group))
 
-            self.pra_apps = ZscalerCollection.form_list(
-                config["praApps"] if "praApps" in config else [], PRAApps
-            )
+            self.pra_apps = ZscalerCollection.form_list(config["praApps"] if "praApps" in config else [], PRAApps)
 
             self.inspection_apps = ZscalerCollection.form_list(
                 config["inspectionApps"] if "inspectionApps" in config else [], InspectionApps
@@ -156,9 +150,7 @@ class ApplicationSegments(ZscalerObject):
             else:
                 self.application_group = None
 
-            self.tags = ZscalerCollection.form_list(
-                config["tags"] if "tags" in config else [], Tags
-            )
+            self.tags = ZscalerCollection.form_list(config["tags"] if "tags" in config else [], Tags)
 
         else:
             self.id = None
@@ -277,9 +269,7 @@ class CommonAppsDto(ZscalerObject):
             self.deleted_inspect_apps = ZscalerCollection.form_list(
                 config["deletedInspectApps"] if "deletedInspectApps" in config else [], str
             )
-            self.apps_config = ZscalerCollection.form_list(
-                config["appsConfig"] if "appsConfig" in config else [], AppsConfig
-            )
+            self.apps_config = ZscalerCollection.form_list(config["appsConfig"] if "appsConfig" in config else [], AppsConfig)
         else:
             self.apps_config = []
             self.deleted_ba_apps = []
@@ -316,60 +306,32 @@ class AppsConfig(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.adp_enabled = config["adpEnabled"] \
-                if "adpEnabled" in config else None
-            self.allow_options = config["allowOptions"] \
-                if "allowOptions" in config else None
-            self.app_id = config["appId"] \
-                if "appId" in config else None
-            self.app_types = ZscalerCollection.form_list(
-                config["appTypes"] if "appTypes" in config else [], str
-            )
-            self.application_port = config["applicationPort"] \
-                if "applicationPort" in config else None
-            self.application_protocol = config["applicationProtocol"] \
-                if "applicationProtocol" in config else None
-            self.ba_app_id = config["baAppId"] \
-                if "baAppId" in config else None
-            self.certificate_id = config["certificateId"] \
-                if "certificateId" in config else None
-            self.certificate_name = config["certificateName"] \
-                if "certificateName" in config else None
-            self.cname = config["cname"] \
-                if "cname" in config else None
-            self.connection_security = config["connectionSecurity"] \
-                if "connectionSecurity" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.domain = config["domain"] \
-                if "domain" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.ext_domain = config["extDomain"] \
-                if "extDomain" in config else None
-            self.ext_id = config["extId"] \
-                if "extId" in config else None
-            self.ext_label = config["extLabel"] \
-                if "extLabel" in config else None
-            self.hidden = config["hidden"] \
-                if "hidden" in config else None
-            self.inspect_app_id = config["inspectAppId"] \
-                if "inspectAppId" in config else None
-            self.local_domain = config["localDomain"] \
-                if "localDomain" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.path = config["path"] \
-                if "path" in config else None
-            self.portal = config["portal"] \
-                if "portal" in config else None
-            self.pra_app_id = config["praAppId"] \
-                if "praAppId" in config else None
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
-            self.trust_untrusted_cert = config["trustUntrustedCert"] \
-                if "trustUntrustedCert" in config else None
+            self.adp_enabled = config["adpEnabled"] if "adpEnabled" in config else None
+            self.allow_options = config["allowOptions"] if "allowOptions" in config else None
+            self.app_id = config["appId"] if "appId" in config else None
+            self.app_types = ZscalerCollection.form_list(config["appTypes"] if "appTypes" in config else [], str)
+            self.application_port = config["applicationPort"] if "applicationPort" in config else None
+            self.application_protocol = config["applicationProtocol"] if "applicationProtocol" in config else None
+            self.ba_app_id = config["baAppId"] if "baAppId" in config else None
+            self.certificate_id = config["certificateId"] if "certificateId" in config else None
+            self.certificate_name = config["certificateName"] if "certificateName" in config else None
+            self.cname = config["cname"] if "cname" in config else None
+            self.connection_security = config["connectionSecurity"] if "connectionSecurity" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.ext_domain = config["extDomain"] if "extDomain" in config else None
+            self.ext_id = config["extId"] if "extId" in config else None
+            self.ext_label = config["extLabel"] if "extLabel" in config else None
+            self.hidden = config["hidden"] if "hidden" in config else None
+            self.inspect_app_id = config["inspectAppId"] if "inspectAppId" in config else None
+            self.local_domain = config["localDomain"] if "localDomain" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.path = config["path"] if "path" in config else None
+            self.portal = config["portal"] if "portal" in config else None
+            self.pra_app_id = config["praAppId"] if "praAppId" in config else None
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
+            self.trust_untrusted_cert = config["trustUntrustedCert"] if "trustUntrustedCert" in config else None
         else:
             self.adp_enabled = None
             self.allow_options = None
@@ -429,7 +391,7 @@ class AppsConfig(ZscalerObject):
             "portal": self.portal,
             "praAppId": self.pra_app_id,
             "protocols": self.protocols,
-            "trustUntrustedCert": self.trust_untrusted_cert
+            "trustUntrustedCert": self.trust_untrusted_cert,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -451,8 +413,7 @@ class InspectionApps(ZscalerObject):
             self.certificate_id = config["certificateId"] if "certificateId" in config else None
             self.certificate_name = config["certificateName"] if "certificateName" in config else None
             self.trust_untrusted_cert = config["trustUntrustedCert	"] if "trustUntrustedCert	" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
         else:
@@ -511,8 +472,7 @@ class PRAApps(ZscalerObject):
             self.certificate_id = config["certificateId"] if "certificateId" in config else None
             self.certificate_name = config["certificateName"] if "certificateName" in config else None
             self.hidden = config["hidden"] if "hidden" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
         else:
@@ -897,57 +857,33 @@ class AppResource(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.app_recommendation_id = config["appRecommendationId"] \
-                if "appRecommendationId" in config else None
-            self.segment_group_id = config["segmentGroupId"] \
-                if "segmentGroupId" in config else None
-            self.segment_group_name = config["segmentGroupName"] \
-                if "segmentGroupName" in config else None
-            self.bypass_type = config["bypassType"] \
-                if "bypassType" in config else None
-            self.config_space = config["configSpace"] \
-                if "configSpace" in config else None
-            self.default_idle_timeout = config["defaultIdleTimeout"] \
-                if "defaultIdleTimeout" in config else None
-            self.default_max_age = config["defaultMaxAge"] \
-                if "defaultMaxAge" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.domain_names = ZscalerCollection.form_list(
-                config["domainNames"] if "domainNames" in config else [], str
+            self.app_recommendation_id = config["appRecommendationId"] if "appRecommendationId" in config else None
+            self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
+            self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
+            self.bypass_type = config["bypassType"] if "bypassType" in config else None
+            self.config_space = config["configSpace"] if "configSpace" in config else None
+            self.default_idle_timeout = config["defaultIdleTimeout"] if "defaultIdleTimeout" in config else None
+            self.default_max_age = config["defaultMaxAge"] if "defaultMaxAge" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.domain_names = ZscalerCollection.form_list(config["domainNames"] if "domainNames" in config else [], str)
+            self.double_encrypt = config["doubleEncrypt"] if "doubleEncrypt" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else None
+            self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else None
+            self.health_reporting = config["healthReporting"] if "healthReporting" in config else None
+            self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else None
+            self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else None
+            self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.passive_health_enabled = config["passiveHealthEnabled"] if "passiveHealthEnabled" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.select_connector_close_to_app = (
+                config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else None
             )
-            self.double_encrypt = config["doubleEncrypt"] \
-                if "doubleEncrypt" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.fqdn_dns_check = config["fqdnDnsCheck"] \
-                if "fqdnDnsCheck" in config else None
-            self.health_check_type = config["healthCheckType"] \
-                if "healthCheckType" in config else None
-            self.health_reporting = config["healthReporting"] \
-                if "healthReporting" in config else None
-            self.icmp_access_type = config["icmpAccessType"] \
-                if "icmpAccessType" in config else None
-            self.ip_anchored = config["ipAnchored"] \
-                if "ipAnchored" in config else None
-            self.is_cname_enabled = config["isCnameEnabled"] \
-                if "isCnameEnabled" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.passive_health_enabled = config["passiveHealthEnabled"] \
-                if "passiveHealthEnabled" in config else None
-            self.read_only = config["readOnly"] \
-                if "readOnly" in config else None
-            self.restriction_type = config["restrictionType"] \
-                if "restrictionType" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.select_connector_close_to_app = config["selectConnectorCloseToApp"] \
-                if "selectConnectorCloseToApp" in config else None
-            self.zscaler_managed = config["zscalerManaged"] \
-                if "zscalerManaged" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             self.server_groups = []
             if "serverGroups" in config:
@@ -957,8 +893,7 @@ class AppResource(ZscalerObject):
                     else:
                         self.server_groups.append(server_group.ServerGroup(group))
 
-            self.tcp_keep_alive = config["tcpKeepAlive"] \
-                if "tcpKeepAlive" in config else None
+            self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else None
 
             self.tcp_port_range = []
             if "tcpPortRange" in config:
@@ -1061,7 +996,7 @@ class AppResource(ZscalerObject):
             "udpPortRanges": self.udp_port_ranges,
             "tcpPortRange": [{"from": pr["from"], "to": pr["to"]} for pr in self.tcp_port_range],
             "udpPortRange": [{"from": pr["from"], "to": pr["to"]} for pr in self.udp_port_range],
-            "zscalerManaged": self.zscaler_managed
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -1159,16 +1094,12 @@ class MultiMatchUnsupportedReferences(ZscalerObject):
                 config["applicationIds"] if "applicationIds" in config else [], str
             )
 
-            self.domains = ZscalerCollection.form_list(
-                config["domains"] if "domains" in config else [], str
-            )
+            self.domains = ZscalerCollection.form_list(config["domains"] if "domains" in config else [], str)
             self.unsupported_features = ZscalerCollection.form_list(
                 config["unsupportedFeatures"] if "unsupportedFeatures" in config else [], str
             )
 
-            self.tcp_ports = ZscalerCollection.form_list(
-                config["tcpPorts"] if "tcpPorts" in config else [], str
-            )
+            self.tcp_ports = ZscalerCollection.form_list(config["tcpPorts"] if "tcpPorts" in config else [], str)
         else:
             self.id = None
             self.app_segment_name = None

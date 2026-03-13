@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/webApplicationRules/ruleTypeMapping
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/ruleTypeMapping
   response:
     body:
       string: '{"Webmail":"WEBMAIL","Social Networking":"SOCIAL_NETWORKING","Finance":"FINANCE","Legal":"LEGAL","AI
@@ -47,7 +47,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:39:58 GMT
+      - Fri, 13 Mar 2026 03:17:47 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -59,23 +59,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '104'
+      - '80'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 62d1cc8c-35c5-9b03-8fe4-c59a1f61ea76
+      - 16710f93-6633-9899-9cdd-5bbcd62e17d3
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4964'
       x-ratelimit-reset:
-      - '2'
+      - '13'
       x-transaction-id:
-      - 5508ba3c-37fb-4b29-b973-280af2af5bd7
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -97,19 +97,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/webApplicationRules/STREAMING_MEDIA
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/STREAMING_MEDIA
   response:
     body:
-      string: '[]'
+      string: '[{"id":1657455,"type":"STREAMING_MEDIA","order":50,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"tests-uubieammna","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1672661,"type":"STREAMING_MEDIA","order":22,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_cd935d62","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1672666,"type":"STREAMING_MEDIA","order":23,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_56f5c657","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1675512,"type":"STREAMING_MEDIA","order":21,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_56d091a9","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1675513,"type":"STREAMING_MEDIA","order":24,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_a71b9c7c","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1675514,"type":"STREAMING_MEDIA","order":20,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_e3aa3e90","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1675517,"type":"STREAMING_MEDIA","order":25,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_00b18ff8","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1675648,"type":"STREAMING_MEDIA","order":26,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_3408503b","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676000,"type":"STREAMING_MEDIA","order":19,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_9386ad8f","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676004,"type":"STREAMING_MEDIA","order":18,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_facc99f3","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676005,"type":"STREAMING_MEDIA","order":17,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_b2cc9f4d","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676006,"type":"STREAMING_MEDIA","order":16,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_54473d2d","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676007,"type":"STREAMING_MEDIA","order":15,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_a5a460b9","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676009,"type":"STREAMING_MEDIA","order":14,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_38d29f55","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676010,"type":"STREAMING_MEDIA","order":13,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_7ced5e84","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676011,"type":"STREAMING_MEDIA","order":12,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_6a5c2f44","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676012,"type":"STREAMING_MEDIA","order":11,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_ba5dbd63","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676013,"type":"STREAMING_MEDIA","order":10,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_6ff2b952","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676306,"type":"STREAMING_MEDIA","order":27,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_a2e3fed2","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676329,"type":"STREAMING_MEDIA","order":28,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_f1a656fc","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676405,"type":"STREAMING_MEDIA","order":29,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_3b34d9d2","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1676571,"type":"STREAMING_MEDIA","order":9,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_a5c7faf8","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677674,"type":"STREAMING_MEDIA","order":8,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_fca2fc97","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677676,"type":"STREAMING_MEDIA","order":30,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_c764e748","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677704,"type":"STREAMING_MEDIA","order":7,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_1874e0a6","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677705,"type":"STREAMING_MEDIA","order":31,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_bee16740","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677747,"type":"STREAMING_MEDIA","order":32,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_d41fcd36","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677749,"type":"STREAMING_MEDIA","order":33,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_9eb63830","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1677896,"type":"STREAMING_MEDIA","order":6,"description":"tests-xkeqviiisa","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"tests-kwogcvbeyk","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1679393,"type":"STREAMING_MEDIA","order":34,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_7246c435","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680071,"type":"STREAMING_MEDIA","order":5,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_373f1700","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680072,"type":"STREAMING_MEDIA","order":35,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_a5ea3f91","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680075,"type":"STREAMING_MEDIA","order":36,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_95a179b7","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680260,"type":"STREAMING_MEDIA","order":4,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_3bf62276","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680261,"type":"STREAMING_MEDIA","order":37,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_6e6183ff","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680264,"type":"STREAMING_MEDIA","order":38,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_0801f7ca","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680317,"type":"STREAMING_MEDIA","order":39,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_211bc582","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1680400,"type":"STREAMING_MEDIA","order":40,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_80a3d271","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1681943,"type":"STREAMING_MEDIA","order":41,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_f04bfd0b","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1681951,"type":"STREAMING_MEDIA","order":42,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_74cf45da","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1682279,"type":"STREAMING_MEDIA","order":43,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_7b335cd0","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683299,"type":"STREAMING_MEDIA","order":44,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_156cc425","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683548,"type":"STREAMING_MEDIA","order":3,"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_f3edda5c","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683550,"type":"STREAMING_MEDIA","order":45,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_fd29be2b","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683670,"type":"STREAMING_MEDIA","order":46,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_d3858067","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683688,"type":"STREAMING_MEDIA","order":2,"description":"Integration
+        test rule (updated)","actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_7df61828","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1683689,"type":"STREAMING_MEDIA","order":47,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_d996501e","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1685362,"type":"STREAMING_MEDIA","order":48,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_4a89e85c","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1685432,"type":"STREAMING_MEDIA","order":1,"description":"Integration
+        test rule (updated)","actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"DISABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_web_app_rule_d45548b5","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false},{"id":1685433,"type":"STREAMING_MEDIA","order":49,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"test_dup_a6ed8778","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}]'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
-      content-length:
-      - '2'
+      content-encoding:
+      - gzip
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -124,31 +126,112 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:39:58 GMT
+      - Fri, 13 Mar 2026 03:17:48 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '311'
+      - '836'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ba3ee3e6-f995-92e2-9e12-9d2ee78442ec
+      - e6982ebe-76b6-947e-88c4-0624ed7deb73
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4963'
       x-ratelimit-reset:
-      - '2'
+      - '13'
       x-transaction-id:
-      - 5508ba3c-37fb-4b29-b973-280af2af5bd7
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/webApplicationRules/STREAMING_MEDIA/1657455
+  response:
+    body:
+      string: '{"id":1657455,"type":"STREAMING_MEDIA","order":50,"description":"tests-uubieammna","applications":["YOUTUBE","GOOGLE_STREAMING"],"actions":["ALLOW_STREAMING_VIEW_LISTEN","ALLOW_STREAMING_UPLOAD"],"state":"ENABLED","rank":7,"lastModifiedTime":1773269139,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"enforceTimeValidity":false,"accessControl":"READ_WRITE","name":"tests-uubieammna","cascadingEnabled":false,"promptCaptureEnabled":false,"eunEnabled":false,"eunTemplateId":0,"browserEunTemplateId":0,"predefined":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:49 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '629'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e6090f0d-b618-922a-8f88-21ab3c56ee94
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4962'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

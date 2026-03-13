@@ -93,7 +93,7 @@ jobs:
   # Real API Tests - Runs weekly or on manual trigger
   # Requires credentials, tests actual API compatibility
   # ===========================================
-  zidentity-beta-tenants:
+  zidentity-zs3-tenants:
     runs-on: ubuntu-latest
     # Run on schedule (weekly), or manual trigger with live selected
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'live')
@@ -102,7 +102,7 @@ jobs:
       matrix:
         python-version: ["3.10"]
         environment:
-          - ZPA_BETA_TENANT01
+          - ZIDENTITY_ZS3
     environment: ${{ matrix.environment }}
     steps:
       - name: Checkout code

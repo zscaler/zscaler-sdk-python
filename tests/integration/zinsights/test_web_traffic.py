@@ -34,10 +34,7 @@ class TestWebTraffic:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.web_traffic.get_traffic_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=10
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=10
         )
 
         # Verify SDK handles response correctly (data, error, or empty)
@@ -56,7 +53,7 @@ class TestWebTraffic:
             traffic_unit="TRANSACTIONS",
             include_trend=True,
             trend_interval="DAY",
-            limit=5
+            limit=5,
         )
 
         # Verify SDK handles response correctly
@@ -69,10 +66,7 @@ class TestWebTraffic:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.web_traffic.get_no_grouping(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=10
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=10
         )
 
         # Verify SDK handles response correctly
@@ -85,10 +79,7 @@ class TestWebTraffic:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.web_traffic.get_protocols(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=10
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=10
         )
 
         # Verify SDK handles response correctly
@@ -101,10 +92,7 @@ class TestWebTraffic:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.web_traffic.get_threat_super_categories(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=10
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=10
         )
 
         # Verify SDK handles response correctly
@@ -117,10 +105,7 @@ class TestWebTraffic:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.web_traffic.get_threat_class(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=10
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=10
         )
 
         # Verify SDK handles response correctly

@@ -13,13 +13,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
   response:
     body:
-      string: '{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338892,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1773372301,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-static-ip"}'
     headers:
       cache-control:
@@ -42,33 +42,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:55 GMT
+      - Fri, 13 Mar 2026 03:25:02 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '4157'
+      - '3864'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 07499bc5-d6e8-9b43-a9a4-b044c570fe91
+      - cd68882f-f57c-9485-9a8f-def01693d316
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4963'
+      - '4978'
       x-ratelimit-reset:
-      - '9'
+      - '2'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -90,13 +92,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/3339426
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/4338892
   response:
     body:
-      string: '{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338892,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1773372301,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-static-ip"}'
     headers:
       cache-control:
@@ -119,33 +121,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:00 GMT
+      - Fri, 13 Mar 2026 03:25:05 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2200'
+      - '508'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5eaef683-4956-9512-844e-35ba85458270
+      - 13bf5a44-cfb1-9497-93a5-fa6cd0f6052e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4962'
+      - '4999'
       x-ratelimit-reset:
-      - '3'
+      - '56'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -167,7 +171,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/validate
   response:
@@ -194,7 +198,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:03 GMT
+      - Fri, 13 Mar 2026 03:25:07 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -202,23 +206,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '528'
+      - '475'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 19fa182b-d7cd-9cc6-9251-bdc2e6c7f1ef
+      - e9a3e498-8078-95cc-9773-badcec966834
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4998'
       x-ratelimit-reset:
-      - '58'
+      - '53'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -240,16 +244,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/4338892
   response:
     body:
-      string: '[{"id":3339426,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764201174,"lastModifiedBy":{"id":117810311,"name":"API
-        Client Secret Authentication"},"comment":"tests-static-ip"},{"id":2881702,"ipAddress":"96.53.93.170","geoOverride":false,"latitude":49.2838,"longitude":-122.7762,"city":{"id":5927690,"name":"Coquitlam,
-        British Columbia, Canada"},"routableIP":true,"lastModificationTime":1759796937,"lastModifiedBy":{"id":117781255,"name":"William
-        Guilherme"}}]'
+      string: '{"id":4338892,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1773372301,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"tests-static-ip"}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -271,33 +273,302 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:05 GMT
+      - Fri, 13 Mar 2026 03:25:10 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '420'
+      - '409'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e846990b-d825-9910-bb88-f6206f4d7bed
+      - 018adfa0-0b5b-9bf6-b9cb-41c70f7972dd
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4997'
       x-ratelimit-reset:
-      - '55'
+      - '51'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"comment": "tests-static-ip-updated", "ipAddress": "104.239.237.2"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '68'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/4338892
+  response:
+    body:
+      string: '{"code":"DUPLICATE_ITEM","message":"Invalid IP inetAddress : - This
+        IP 104.239.237.2 is already associated with current organization."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:25:12 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '825'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d1d17401-863a-9871-a58c-1d4db84eb497
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '49'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 409
+      message: Conflict
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
+  response:
+    body:
+      string: "[{\"id\":4338892,\"ipAddress\":\"104.239.237.2\",\"geoOverride\":false,\"latitude\":37.6325999,\"longitude\":-97.7724999,\"city\":{\"id\":4269447,\"name\":\"Cheney,
+        Kansas, United States\"},\"routableIP\":true,\"lastModificationTime\":1773372301,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"tests-static-ip\"},{\"id\":4332704,\"ipAddress\":\"121.234.54.67\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1773238150,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"enalacocbk\"},{\"id\":4318486,\"ipAddress\":\"24.224.96.16\",\"geoOverride\":false,\"latitude\":35.5837999,\"longitude\":-80.864,\"city\":{\"id\":4480125,\"name\":\"Mooresville,
+        North Carolina, United States\"},\"routableIP\":true,\"lastModificationTime\":1773079301,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"20260309110129_updated\"},{\"id\":4318468,\"ipAddress\":\"121.234.54.74\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1773077706,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"awkthvwxpu\"},{\"id\":4300126,\"ipAddress\":\"184.104.180.61\",\"geoOverride\":false,\"latitude\":37.6325999,\"longitude\":-97.7724999,\"city\":{\"id\":4269447,\"name\":\"Cheney,
+        Kansas, United States\"},\"routableIP\":true,\"lastModificationTime\":1772841931,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260306160528\"},{\"id\":4298204,\"ipAddress\":\"121.234.54.75\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772817402,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"xjurmhtmty\"},{\"id\":4297149,\"ipAddress\":\"121.234.54.121\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772805640,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"lilrsitxku\"},{\"id\":4284253,\"ipAddress\":\"121.234.54.44\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772644376,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"fuvvikupbx\"},{\"id\":4283969,\"ipAddress\":\"121.234.54.65\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772639682,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"rbnbgadnol\"},{\"id\":4277729,\"ipAddress\":\"121.234.54.43\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772552231,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"icdylogyxk\"},{\"id\":4277249,\"ipAddress\":\"121.234.54.103\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772547715,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"ospqiowosx\"},{\"id\":4266016,\"ipAddress\":\"177.6.213.35\",\"geoOverride\":false,\"latitude\":-15.7792,\"longitude\":-47.9341,\"city\":{\"id\":3469058,\"name\":\"Bras\xEDlia,
+        Federal District, Brazil\"},\"routableIP\":true,\"lastModificationTime\":1772482345,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302121223\"},{\"id\":4265191,\"ipAddress\":\"13.219.192.148\",\"geoOverride\":false,\"latitude\":39.0019,\"longitude\":-77.4556,\"city\":{\"id\":4744870,\"name\":\"Ashburn,
+        Virginia, United States\"},\"routableIP\":true,\"lastModificationTime\":1772480102,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302113453\"},{\"id\":4263053,\"ipAddress\":\"209.6.3.198\",\"geoOverride\":false,\"latitude\":42.3608,\"longitude\":-71.2954,\"city\":{\"id\":4955259,\"name\":\"Weston,
+        Massachusetts, United States\"},\"routableIP\":true,\"lastModificationTime\":1772473781,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302094939\"},{\"id\":4263052,\"ipAddress\":\"219.249.111.51\",\"geoOverride\":false,\"latitude\":35.1784,\"longitude\":128.5754,\"city\":{\"id\":1846326,\"name\":\"Changwon,
+        Gyeongsangnam-do, South Korea\"},\"routableIP\":true,\"lastModificationTime\":1772473756,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302094914\"},{\"id\":4263045,\"ipAddress\":\"177.235.230.81\",\"geoOverride\":false,\"latitude\":-15.7792,\"longitude\":-47.9341,\"city\":{\"id\":3469058,\"name\":\"Bras\xEDlia,
+        Federal District, Brazil\"},\"routableIP\":true,\"lastModificationTime\":1772473731,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302094849\"},{\"id\":4263044,\"ipAddress\":\"209.239.108.5\",\"geoOverride\":false,\"latitude\":38.1176,\"longitude\":-86.9245,\"city\":{\"id\":4264457,\"name\":\"Santa
+        Claus, Indiana, United States\"},\"routableIP\":true,\"lastModificationTime\":1772473638,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302094716\"},{\"id\":4263003,\"ipAddress\":\"4.183.251.126\",\"geoOverride\":false,\"latitude\":37.5658,\"longitude\":126.978,\"city\":{\"id\":1835848,\"name\":\"Seoul,
+        Seoul, South Korea\"},\"routableIP\":true,\"lastModificationTime\":1772473614,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302094652\"},{\"id\":4262117,\"ipAddress\":\"133.162.16.94\",\"geoOverride\":false,\"latitude\":35.6654,\"longitude\":139.6977,\"city\":{\"id\":1850147,\"name\":\"Tokyo,
+        Tokyo, Japan\"},\"routableIP\":true,\"lastModificationTime\":1772472106,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302092144\"},{\"id\":4262116,\"ipAddress\":\"148.18.248.179\",\"geoOverride\":false,\"latitude\":37.6325999,\"longitude\":-97.7724999,\"city\":{\"id\":4269447,\"name\":\"Cheney,
+        Kansas, United States\"},\"routableIP\":true,\"lastModificationTime\":1772472071,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302092109\"},{\"id\":4262115,\"ipAddress\":\"1.243.225.65\",\"geoOverride\":false,\"latitude\":37.4795,\"longitude\":126.7852,\"city\":{\"id\":1838716,\"name\":\"Bucheon-si,
+        Gyeonggi-do, South Korea\"},\"routableIP\":true,\"lastModificationTime\":1772472063,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302092101\"},{\"id\":4262114,\"ipAddress\":\"155.136.229.247\",\"geoOverride\":false,\"latitude\":51.4957,\"longitude\":-0.1772,\"city\":{\"id\":2634341,\"name\":\"City
+        of Westminster, England, United Kingdom\"},\"routableIP\":true,\"lastModificationTime\":1772472032,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302092030\"},{\"id\":4262104,\"ipAddress\":\"180.107.83.231\",\"geoOverride\":false,\"latitude\":34.7599,\"longitude\":113.6459,\"city\":{\"id\":1784658,\"name\":\"Zhengzhou,
+        Henan, China\"},\"routableIP\":true,\"lastModificationTime\":1772471852,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302091729\"},{\"id\":4262045,\"ipAddress\":\"22.196.150.118\",\"geoOverride\":false,\"latitude\":37.6325999,\"longitude\":-97.7724999,\"city\":{\"id\":4269447,\"name\":\"Cheney,
+        Kansas, United States\"},\"routableIP\":true,\"lastModificationTime\":1772471818,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302091655\"},{\"id\":4261729,\"ipAddress\":\"175.53.66.217\",\"geoOverride\":false,\"latitude\":34.7599,\"longitude\":113.6459,\"city\":{\"id\":1784658,\"name\":\"Zhengzhou,
+        Henan, China\"},\"routableIP\":true,\"lastModificationTime\":1772470564,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Comment for StaticIp 20260302085555\"},{\"id\":4240853,\"ipAddress\":\"167.118.162.103\",\"geoOverride\":true,\"latitude\":17.0,\"longitude\":18.0,\"city\":{\"id\":2432678,\"name\":\"Faya-Largeau,
+        Borkou Region, Chad\"},\"routableIP\":true,\"lastModificationTime\":1772317814,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"create new ip 167.118.162.103_updated\"},{\"id\":4240826,\"ipAddress\":\"172.99.190.25\",\"geoOverride\":true,\"latitude\":11.0,\"longitude\":126.0,\"city\":{\"id\":1712206,\"name\":\"Guiuan,
+        Eastern Visayas, Philippines\"},\"routableIP\":true,\"lastModificationTime\":1772316344,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"create new ip 172.99.190.25\"},{\"id\":4240779,\"ipAddress\":\"37.138.95.167\",\"geoOverride\":true,\"latitude\":35.0,\"longitude\":-105.0,\"city\":{\"id\":5476395,\"name\":\"Llano
+        Del Medio, New Mexico, United States\"},\"routableIP\":true,\"lastModificationTime\":1772313959,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"create new ip 37.138.95.167\"},{\"id\":4218534,\"ipAddress\":\"121.234.54.13\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1772135094,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"New Description\"},{\"id\":4217836,\"ipAddress\":\"96.53.93.160\",\"geoOverride\":true,\"latitude\":49.1888,\"longitude\":-122.8439,\"city\":{\"id\":6159905,\"name\":\"Surrey,
+        British Columbia, Canada\"},\"routableIP\":true,\"lastModificationTime\":1772131324,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Your Description\"},{\"id\":4186357,\"ipAddress\":\"121.234.54.16\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771953933,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"hzbzeterxl\"},{\"id\":4176001,\"ipAddress\":\"121.234.54.84\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771860486,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"tzkvkcgyda\"},{\"id\":4174608,\"ipAddress\":\"121.234.54.38\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771855852,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"kedtbhvjnn\"},{\"id\":4161129,\"ipAddress\":\"121.234.54.30\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771640771,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"fqrgjrdbau\"},{\"id\":4160811,\"ipAddress\":\"121.234.54.50\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771638051,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"ihckmacrvg\"},{\"id\":4146472,\"ipAddress\":\"121.234.54.112\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771453148,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"gzhexxyoxx\"},{\"id\":4143802,\"ipAddress\":\"121.234.54.48\",\"geoOverride\":false,\"latitude\":33.364,\"longitude\":120.1592,\"city\":{\"id\":1787746,\"name\":\"Yancheng,
+        Jiangsu, China\"},\"routableIP\":true,\"lastModificationTime\":1771422875,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"xmmiqkyvsx\"},{\"id\":4118531,\"ipAddress\":\"33.16.76.55\",\"geoOverride\":false,\"latitude\":37.6325999,\"longitude\":-97.7724999,\"city\":{\"id\":4269447,\"name\":\"Cheney,
+        Kansas, United States\"},\"routableIP\":true,\"lastModificationTime\":1770996433,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"integration test static ip 512fe2f9\"},{\"id\":4118529,\"ipAddress\":\"45.45.58.77\",\"geoOverride\":false,\"latitude\":45.5375,\"longitude\":-73.6848,\"city\":{\"id\":6077243,\"name\":\"Montreal,
+        Quebec, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770996378,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"integration test static ip fcbcac66\"},{\"id\":4118528,\"ipAddress\":\"45.45.58.81\",\"geoOverride\":false,\"latitude\":45.5375,\"longitude\":-73.6848,\"city\":{\"id\":6077243,\"name\":\"Montreal,
+        Quebec, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770996334,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"integration test static ip f7aa7b0a\"},{\"id\":4118523,\"ipAddress\":\"45.45.58.80\",\"geoOverride\":false,\"latitude\":45.5375,\"longitude\":-73.6848,\"city\":{\"id\":6077243,\"name\":\"Montreal,
+        Quebec, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770996300,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"integration test static ip 5a8525c4\"},{\"id\":4118515,\"ipAddress\":\"33.15.99.156\",\"geoOverride\":false,\"latitude\":26.455,\"longitude\":-80.1076,\"city\":{\"id\":4153132,\"name\":\"Delray
+        Beach, Florida, United States\"},\"routableIP\":true,\"lastModificationTime\":1770996159,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"integration test static ip c2083db4\"},{\"id\":4116019,\"ipAddress\":\"121.234.54.102\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770948798,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"pwqfulltyi\"},{\"id\":4115786,\"ipAddress\":\"121.234.54.56\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770944269,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"cfppobprui\"},{\"id\":4115450,\"ipAddress\":\"121.234.54.34\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770937125,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"trfwmeumwb\"},{\"id\":4113639,\"ipAddress\":\"121.234.54.126\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770905506,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"sbzmaigxlz\"},{\"id\":4107411,\"ipAddress\":\"121.234.54.10\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770847113,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"yzlmikazyn\"},{\"id\":4106311,\"ipAddress\":\"104.238.235.59\",\"geoOverride\":true,\"latitude\":43.7063,\"longitude\":-79.4202,\"city\":{\"id\":6167865,\"name\":\"Toronto,
+        Ontario, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770831022,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"GRE Tunnel Created with Terraform\"},{\"id\":4105958,\"ipAddress\":\"121.234.54.2\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770827512,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"jqzcwddhnc\"},{\"id\":4105841,\"ipAddress\":\"121.234.54.64\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770826406,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"pgwtpyensi\"},{\"id\":4105713,\"ipAddress\":\"104.238.235.24\",\"geoOverride\":true,\"latitude\":43.7063,\"longitude\":-79.4202,\"city\":{\"id\":6167865,\"name\":\"Toronto,
+        Ontario, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770823693,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"GRE Tunnel Created with Terraform\"},{\"id\":4078467,\"ipAddress\":\"104.238.235.110\",\"geoOverride\":true,\"latitude\":43.7063,\"longitude\":-79.4202,\"city\":{\"id\":6167865,\"name\":\"Toronto,
+        Ontario, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770392036,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"GRE Tunnel Created with Terraform\"},{\"id\":4078425,\"ipAddress\":\"121.234.54.85\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770390734,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"evebvgbqdx\"},{\"id\":4068262,\"ipAddress\":\"121.234.54.58\",\"geoOverride\":false,\"latitude\":31.1629,\"longitude\":121.4154,\"city\":{\"id\":1796236,\"name\":\"Shanghai,
+        Shanghai, China\"},\"routableIP\":true,\"lastModificationTime\":1770307781,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"vyadaccyhn\"},{\"id\":4051011,\"ipAddress\":\"104.238.235.236\",\"geoOverride\":false,\"latitude\":43.7773,\"longitude\":-79.4443,\"city\":{\"id\":6167865,\"name\":\"Toronto,
+        Ontario, Canada\"},\"routableIP\":true,\"lastModificationTime\":1770180886,\"lastModifiedBy\":{\"id\":117810311,\"name\":\"API
+        Client Secret Authentication\"},\"comment\":\"Test\"},{\"id\":2881702,\"ipAddress\":\"96.53.93.170\",\"geoOverride\":false,\"latitude\":49.2838,\"longitude\":-122.7762,\"city\":{\"id\":5927690,\"name\":\"Coquitlam,
+        British Columbia, Canada\"},\"routableIP\":true,\"lastModificationTime\":1759796937,\"lastModifiedBy\":{\"id\":117781255,\"name\":\"William
+        Guilherme\"}}]"
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:25:14 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '427'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4154d41a-ba85-93e4-ad60-fa3c3b64ce0b
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '46'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -319,9 +590,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/3339426
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/4338892
   response:
     body:
       string: ''
@@ -342,7 +613,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:53:09 GMT
+      - Fri, 13 Mar 2026 03:25:18 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -352,23 +623,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2215'
+      - '1917'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a0d6fe02-a86f-9a84-bc8c-024041ce7bc3
+      - b787f306-e238-965c-9589-5e222a35cf69
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4994'
       x-ratelimit-reset:
-      - '53'
+      - '44'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -376,141 +647,4 @@ interactions:
     status:
       code: 204
       message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/staticIP/3339426
-  response:
-    body:
-      string: '{"code":"RESOURCE_NOT_FOUND","message":"RESOURCE_NOT_FOUND"}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '60'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 05:12:33 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '1440'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - ec55d1a7-96d5-9c77-93dd-7ad97316ddb1
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4999'
-      x-ratelimit-reset:
-      - '28'
-      x-transaction-id:
-      - 2cc00be5-6b78-40de-927a-5b5d42bb7b95
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 404
-      message: Not Found
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 05:13:29 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
 version: 1

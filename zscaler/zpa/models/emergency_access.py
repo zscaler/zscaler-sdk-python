@@ -25,6 +25,7 @@ class EmergencyAccessUser(ZscalerObject):
     Args:
         config (dict): A dictionary representing the emergency access user configuration.
     """
+
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:

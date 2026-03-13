@@ -146,12 +146,12 @@ class TestZIAModels:
         }
         # Create model from dict
         location1 = location_management.LocationManagement(config)
-        
+
         # Create another model from the first model's attributes
         location2 = location_management.LocationManagement(
             {"id": location1.id, "name": location1.name, "description": location1.description}
         )
-        
+
         assert location1.id == location2.id
         assert location1.name == location2.name
 
@@ -204,7 +204,7 @@ class TestZPAModels:
                 {"id": "app2", "name": "App 2"},
             ],
         }
-        
+
         segment_group_obj = segment_group.SegmentGroup(config)
         assert segment_group_obj is not None
         assert segment_group_obj.id == "123456"
@@ -222,7 +222,7 @@ class TestZDXModels:
             "os_type": "Windows",
             "os_version": "10",
         }
-        
+
         device = zdx_devices.DeviceDetail(config)
         assert device is not None
         assert isinstance(device, ZscalerObject)
@@ -236,7 +236,7 @@ class TestZDXModels:
                 {"id": "device2", "name": "Device 2"},
             ],
         }
-        
+
         devices_obj = zdx_devices.Devices(config)
         assert devices_obj is not None
         assert devices_obj.next_offset == "100"
@@ -253,7 +253,7 @@ class TestZCCModels:
             "osVersion": "Windows 10",
             "platform": "windows",
         }
-        
+
         device = zcc_devices.Device(config)
         assert device is not None
         assert isinstance(device, ZscalerObject)
@@ -269,7 +269,7 @@ class TestZTWModels:
             "name": "Test ZTW Location",
             "description": "Test Description",
         }
-        
+
         location = ztw_location_management.LocationManagement(config)
         assert location is not None
         assert isinstance(location, ZscalerObject)
@@ -287,7 +287,7 @@ class TestZIdentityModels:
             "username": "testuser",
             "email": "test@example.com",
         }
-        
+
         user = zidentity_users.UserRecord(config)
         assert user is not None
         assert isinstance(user, ZscalerObject)
@@ -299,7 +299,7 @@ class TestZIdentityModels:
             "name": "Test Group",
             "description": "Test Description",
         }
-        
+
         group = zidentity_groups.GroupRecord(config)
         assert group is not None
         assert isinstance(group, ZscalerObject)
@@ -313,7 +313,7 @@ class TestZWAModels:
         config = {
             "cursor": "next_page_cursor",
         }
-        
+
         pagination = zwa_common.Pagination(config)
         assert pagination is not None
         assert isinstance(pagination, ZscalerObject)
@@ -352,4 +352,3 @@ class TestModelEdgeCases:
         assert location is not None
         assert location.non_editable is True
         assert location.parent_id == "456"
-

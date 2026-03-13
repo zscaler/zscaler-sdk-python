@@ -51,7 +51,11 @@ class TestDNSGateways:
                     secondary_dns="8.8.4.4",
                 )
                 if err is None and created_gateway is not None:
-                    gateway_id = created_gateway.get("id") if isinstance(created_gateway, dict) else getattr(created_gateway, "id", None)
+                    gateway_id = (
+                        created_gateway.get("id")
+                        if isinstance(created_gateway, dict)
+                        else getattr(created_gateway, "id", None)
+                    )
 
                     # Test get_dns_gateways
                     if gateway_id:

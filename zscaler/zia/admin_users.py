@@ -154,14 +154,7 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def add_admin_user(
-        self,
-        name: str,
-        login_name: str,
-        email: str,
-        password: str,
-        **kwargs
-    ) -> APIResult[AdminUser]:
+    def add_admin_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> APIResult[AdminUser]:
         """
         Adds a new admin user to ZIA.
 
@@ -267,7 +260,7 @@ class AdminUsersAPI(APIClient):
             method=http_method,
             endpoint=api_url,
             body=body,
-            )
+        )
 
         if error:
             return (None, None, error)

@@ -34,15 +34,11 @@ class AccountGroups(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
 
-            self.cloud_type = config["cloudType"] \
-                if "cloudType" in config else None
+            self.cloud_type = config["cloudType"] if "cloudType" in config else None
 
             self.cloud_connector_groups = ZscalerCollection.form_list(
                 config["cloudConnectorGroups"] if "cloudConnectorGroups" in config else [], common.CommonIDNameExternalID
@@ -71,7 +67,7 @@ class AccountGroups(ZscalerObject):
             "description": self.description,
             "cloudConnectorGroups": self.cloud_connector_groups,
             "cloudType": self.cloud_type,
-            "publicCloudAccounts": self.public_cloud_accounts
+            "publicCloudAccounts": self.public_cloud_accounts,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

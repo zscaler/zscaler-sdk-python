@@ -43,20 +43,17 @@ class TestSubClouds:
             assert isinstance(sub_clouds, list), "Sub clouds should be a list"
 
             # Test list_sub_clouds with pagination
-            paginated_clouds, response, err = client.zia.sub_clouds.list_sub_clouds(
-                query_params={"page": 1, "page_size": 10}
-            )
+            paginated_clouds, response, err = client.zia.sub_clouds.list_sub_clouds(query_params={"page": 1, "page_size": 10})
             assert err is None, f"List sub clouds with pagination failed: {err}"
 
             # Test operations with existing sub cloud if available
             if sub_clouds and len(sub_clouds) > 0:
-                cloud_id = sub_clouds[0].id if hasattr(sub_clouds[0], 'id') else None
+                cloud_id = sub_clouds[0].id if hasattr(sub_clouds[0], "id") else None
                 if cloud_id:
                     # Test get_sub_cloud_last_dc_in_country
                     try:
                         last_dc, response, err = client.zia.sub_clouds.get_sub_cloud_last_dc_in_country(
-                            cloud_id=cloud_id,
-                            query_params={"country": "US"}
+                            cloud_id=cloud_id, query_params={"country": "US"}
                         )
                         # May fail depending on cloud configuration
                     except Exception:

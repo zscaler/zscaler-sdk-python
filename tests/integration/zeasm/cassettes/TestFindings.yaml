@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=102q7dt7r3807p4&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
     headers:
       Accept:
       - application/json

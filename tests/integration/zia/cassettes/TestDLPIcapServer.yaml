@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/icapServers
+    uri: https://easm.test.zscaler.com/zia/api/v1/icapServers
   response:
     body:
       string: '[{"id":1663,"name":"SGIO-ICAP01","url":"icaps://192.168.100.1:1344/","status":"ENABLED"},{"id":1808,"name":"ZS_BD_ICAP_01","url":"icaps://192.168.100.2:1344/","status":"ENABLED"}]'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:53 GMT
+      - Fri, 13 Mar 2026 03:18:12 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +52,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '254'
+      - '348'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5a57abcd-73c6-98e5-9f86-32e347b61b43
+      - d598c3a3-0bb0-9913-b833-36dabd755915
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4969'
+      - '4994'
       x-ratelimit-reset:
-      - '7'
+      - '48'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -90,9 +90,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/icapServers/1663
+    uri: https://easm.test.zscaler.com/zia/api/v1/icapServers/1663
   response:
     body:
       string: '{"id":1663,"name":"SGIO-ICAP01","url":"icaps://192.168.100.1:1344/","status":"ENABLED"}'
@@ -117,7 +117,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:53 GMT
+      - Fri, 13 Mar 2026 03:18:13 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -125,23 +125,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '276'
+      - '246'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7b0b9f2c-7264-9f7a-8642-117445d10c63
+      - ccbc2d14-7a05-98ae-96d2-e79e84380260
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4968'
+      - '4993'
       x-ratelimit-reset:
-      - '7'
+      - '48'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

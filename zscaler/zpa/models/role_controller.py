@@ -34,39 +34,25 @@ class RoleController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.bypass_remote_assistance_check = config["bypassRemoteAssistanceCheck"] \
-                if "bypassRemoteAssistanceCheck" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.bypass_remote_assistance_check = (
+                config["bypassRemoteAssistanceCheck"] if "bypassRemoteAssistanceCheck" in config else None
+            )
 
-            self.custom_role = config["customRole"] \
-                if "customRole" in config else None
-            self.system_role = config["systemRole"] \
-                if "systemRole" in config else None
-            self.restricted_role = config["restrictedRole"] \
-                if "restrictedRole" in config else None
-            self.users = config["users"] \
-                if "users" in config else None
-            self.api_keys = config["apiKeys"] \
-                if "apiKeys" in config else None
-            self.new_audit_message = config["newAuditMessage"] \
-                if "newAuditMessage" in config else None
-            self.old_audit_message = config["oldAuditMessage"] \
-                if "oldAuditMessage" in config else None
+            self.custom_role = config["customRole"] if "customRole" in config else None
+            self.system_role = config["systemRole"] if "systemRole" in config else None
+            self.restricted_role = config["restrictedRole"] if "restrictedRole" in config else None
+            self.users = config["users"] if "users" in config else None
+            self.api_keys = config["apiKeys"] if "apiKeys" in config else None
+            self.new_audit_message = config["newAuditMessage"] if "newAuditMessage" in config else None
+            self.old_audit_message = config["oldAuditMessage"] if "oldAuditMessage" in config else None
 
             self.permissions = ZscalerCollection.form_list(
                 config["permissions"] if "permissions" in config else [], Permissions
@@ -118,7 +104,7 @@ class RoleController(ZscalerObject):
             "users": self.users,
             "apiKeys": self.api_keys,
             "newAuditMessage": self.new_audit_message,
-            "oldAuditMessage": self.old_audit_message
+            "oldAuditMessage": self.old_audit_message,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -139,20 +125,13 @@ class Permissions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.permission_mask = config["permissionMask"] \
-                if "permissionMask" in config else None
-            self.role = config["role"] \
-                if "role" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.permission_mask = config["permissionMask"] if "permissionMask" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
 
             if "classType" in config:
                 if isinstance(config["classType"], ClassType):
@@ -186,7 +165,7 @@ class Permissions(ZscalerObject):
             "permissionMask": self.permission_mask,
             "classType": self.class_type,
             "role": self.role,
-            "customerId": self.customer_id
+            "customerId": self.customer_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -207,22 +186,14 @@ class ClassType(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.acl_class = config["aclClass"] \
-                if "aclClass" in config else None
-            self.friendly_name = config["friendlyName"] \
-                if "friendlyName" in config else None
-            self.local_scope_mask = config["localScopeMask"] \
-                if "localScopeMask" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.acl_class = config["aclClass"] if "aclClass" in config else None
+            self.friendly_name = config["friendlyName"] if "friendlyName" in config else None
+            self.local_scope_mask = config["localScopeMask"] if "localScopeMask" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
         else:
             self.id = None
             self.modified_time = None
@@ -246,7 +217,7 @@ class ClassType(ZscalerObject):
             "aclClass": self.acl_class,
             "friendlyName": self.friendly_name,
             "localScopeMask": self.local_scope_mask,
-            "customerId": self.customer_id
+            "customerId": self.customer_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -267,22 +238,16 @@ class ClassPermissionGroups(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.hidden = config["hidden"] \
-                if "hidden" in config else None
-            self.internal = config["internal"] \
-                if "internal" in config else None
-            self.local_scope_permission_group = config["localScopePermissionGroup"] \
-                if "localScopePermissionGroup" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.hidden = config["hidden"] if "hidden" in config else None
+            self.internal = config["internal"] if "internal" in config else None
+            self.local_scope_permission_group = (
+                config["localScopePermissionGroup"] if "localScopePermissionGroup" in config else None
+            )
 
             self.class_permissions = ZscalerCollection.form_list(
                 config["classPermissions"] if "classPermissions" in config else [], ClassPermissions
@@ -313,7 +278,7 @@ class ClassPermissionGroups(ZscalerObject):
             "hidden": self.hidden,
             "internal": self.internal,
             "localScopePermissionGroup": self.local_scope_permission_group,
-            "classPermissions": self.class_permissions
+            "classPermissions": self.class_permissions,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -334,14 +299,10 @@ class ClassPermissions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
 
             if "permission" in config:
                 if isinstance(config["permission"], Permission):
@@ -403,12 +364,9 @@ class Permission(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.mask = config["mask"] \
-                if "mask" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.max_mask = config["maxMask"] \
-                if "maxMask" in config else None
+            self.mask = config["mask"] if "mask" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.max_mask = config["maxMask"] if "maxMask" in config else None
 
         else:
             self.mask = None

@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"description": "Test Alert Subscription", "email": "REDACTED", "pt0Severities":
+    body: '{"description": "Test Alert Subscription", "email": "alert@acme.com", "pt0Severities":
       ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities": ["CRITICAL",
       "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL", "MAJOR",
       "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR", "INFO",
@@ -18,12 +18,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions
   response:
     body:
-      string: '{"id":4428,"description":"Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+      string: '{"id":5223,"description":"Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -45,7 +45,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:16 GMT
+      - Fri, 13 Mar 2026 03:14:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -57,23 +57,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1008'
+      - '739'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 40254d52-d240-9ebd-98d0-d0cacaba2d8a
+      - 0720fe82-05e5-901b-91f9-51381c5d5d23
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4999'
       x-ratelimit-reset:
-      - '45'
+      - '58'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -82,12 +82,12 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"description": "Updated Test Alert Subscription", "email": "REDACTED",
+    body: '{"description": "Updated Test Alert Subscription", "email": "alert@acme.com",
       "pt0Severities": ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities":
       ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL",
       "MAJOR", "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR",
       "INFO", "MINOR", "DEBUG"], "systemSeverities": ["CRITICAL", "MAJOR", "INFO",
-      "MINOR", "DEBUG"], "id": 4428}'
+      "MINOR", "DEBUG"], "id": 5223}'
     headers:
       Accept:
       - application/json
@@ -100,12 +100,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions/4428
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
   response:
     body:
-      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+      string: '{"id":5223,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -127,7 +127,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:17 GMT
+      - Fri, 13 Mar 2026 03:14:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -139,23 +139,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '955'
+      - '625'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ee16bdb2-a11d-94f5-93e7-2cbc59980c74
+      - 8484aa1d-8ab6-96ac-a72f-357bf22c3897
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4998'
       x-ratelimit-reset:
-      - '44'
+      - '57'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -177,12 +177,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions/4428
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
   response:
     body:
-      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}'
+      string: '{"id":5223,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -204,7 +204,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:18 GMT
+      - Fri, 13 Mar 2026 03:14:04 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -216,23 +216,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '318'
+      - '240'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - aa3ee64e-a7fc-91bb-a2da-8382a4a2c1cc
+      - 46c56978-33ec-9fb4-a9c5-43cc486e771a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4997'
       x-ratelimit-reset:
-      - '43'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -254,12 +254,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions
   response:
     body:
-      string: '[{"id":4206,"description":"testAcc_Alert_Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]},{"id":4428,"description":"Updated
+      string: '[{"id":4950,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["MINOR"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5104,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5105,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5108,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5109,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5159,"description":"testAcc_Alert_Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]},{"id":5194,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["MINOR"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5223,"description":"Updated
         Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}]'
     headers:
       cache-control:
@@ -282,7 +282,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:47:18 GMT
+      - Fri, 13 Mar 2026 03:14:04 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -290,27 +290,27 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '322'
+      - '193'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f5e0e914-ec02-9bac-a638-0561a7b2614d
+      - cd65133e-cbc7-9f0b-a07e-065c1f77f986
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4996'
       x-ratelimit-reset:
-      - '42'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -332,9 +332,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions/4428
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
   response:
     body:
       string: ''
@@ -355,7 +355,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:47:19 GMT
+      - Fri, 13 Mar 2026 03:14:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -365,23 +365,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '991'
+      - '785'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 148eb164-9b22-9d4d-a5e9-5bc529b59d89
+      - f5f24fa4-5b27-9150-b5c6-fae0450f1e3a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4995'
       x-ratelimit-reset:
-      - '42'
+      - '56'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

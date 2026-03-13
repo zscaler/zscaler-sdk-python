@@ -440,31 +440,31 @@ class APIClientAPI(APIClient):
 
     def add_api_client_secret(self, client_id: str, **kwargs) -> APIResult[dict]:
         """
-       Creates and associates a new secret with a specified API client ID.
-       This secret can be used for authentication with ZIdentity.
+        Creates and associates a new secret with a specified API client ID.
+        This secret can be used for authentication with ZIdentity.
 
-        This API is applicable only when the authentication type is SECRET.
+         This API is applicable only when the authentication type is SECRET.
 
-        Args:
-            client_id (str): Unique identifier of the API client to which the secret is added.
+         Args:
+             client_id (str): Unique identifier of the API client to which the secret is added.
 
-        Keyword Args:
-            description (str): Additional notes or information
+         Keyword Args:
+             description (str): Additional notes or information
 
-        Returns:
-            tuple: A tuple containing the newly added API Client Secret, response, and error.
+         Returns:
+             tuple: A tuple containing the newly added API Client Secret, response, and error.
 
-        Examples:
-            Add a new API client secret:
+         Examples:
+             Add a new API client secret:
 
-            >>> added_client_secret, _, error = client.zidentity.api_client.add_api_client_secret(
-            ...     client_id='iq3bd7e90066i',,
-            ...     expires_at='1785643102',
-            ... )
-            >>> if error:
-            ...     print(f"Error adding client secret: {error}")
-            ...     return
-            ... print(f"Client secret added successfully: {added_client_secret.as_dict()}")
+             >>> added_client_secret, _, error = client.zidentity.api_client.add_api_client_secret(
+             ...     client_id='your_client_id',
+             ...     expires_at='1785643102',
+             ... )
+             >>> if error:
+             ...     print(f"Error adding client secret: {error}")
+             ...     return
+             ... print(f"Client secret added successfully: {added_client_secret.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -511,13 +511,13 @@ class APIClientAPI(APIClient):
             Delete a API Client secret:
 
             >>> _, _, error = client.zidentity.api_client.delete_api_client_secret(
-            ...     client_id='iq3bejj1g06bq',
-            ...     secret_id='g000000009pk0'
+            ...     client_id='your_client_id',
+            ...     secret_id='your_secret_id'
             ... )
             >>> if error:
             ...     print(f"Error deleting API Client secret: {error}")
             ...     return
-            ... print(f"API Client secret with ID {'73459' deleted successfully.")
+            ... print("API client secret deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

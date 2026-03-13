@@ -207,6 +207,28 @@ class ZscalerAPIResponse:
             else:
                 # If it's already a list, use it as is
                 self._list = self._body if isinstance(self._body, list) else []
+        elif self._service_type == "ztb":
+            # ZTB wraps most responses in {"result": {...}}
+            # For list endpoints the items live inside result (e.g. result.alarms)
+            # Some endpoints (e.g. api-key-auth/list) return {"count": N, "rows": [...]} directly
+            result = self._body.get("result", {})
+            if isinstance(result, dict) and result:
+                items = []
+                for key, val in result.items():
+                    if isinstance(val, list):
+                        items = val
+                        break
+                self._list = items
+            elif isinstance(result, list):
+                self._list = result
+            else:
+                # Fallback: look for any list field directly in the body (e.g. "rows")
+                items = []
+                for key, val in self._body.items():
+                    if isinstance(val, list):
+                        items = val
+                        break
+                self._list = items
         else:
             # ZPA and possibly other services use a dict with "list" field
             self._list = self._body.get("list", [])
@@ -293,6 +315,7 @@ class ZscalerAPIResponse:
             if self._next_link:
                 # Parse the next_link URL to extract parameters
                 from urllib.parse import urlparse, parse_qs
+
                 parsed_url = urlparse(self._next_link)
                 query_params = parse_qs(parsed_url.query)
                 # Update params with the next page parameters
@@ -365,8 +388,13 @@ class ZscalerAPIResponse:
                     # This may result in one extra empty API call, but respects API defaults
                     has_next = bool(self._list)
 
-            logger.debug("Has next page for ZIA/ZCC: %s (page %d, items fetched: %d, limit: %s)",
-                        has_next, self._page, len(self._list), self._limit)
+            logger.debug(
+                "Has next page for ZIA/ZCC: %s (page %d, items fetched: %d, limit: %s)",
+                has_next,
+                self._page,
+                len(self._list),
+                self._limit,
+            )
             return has_next
 
     def __str__(self) -> str:

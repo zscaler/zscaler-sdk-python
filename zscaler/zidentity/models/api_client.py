@@ -35,20 +35,13 @@ class APIClients(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.results_total = config["results_total"] \
-                if "results_total" in config else None
-            self.page_offset = config["pageOffset"] \
-                if "pageOffset" in config else None
-            self.page_size = config["pageSize"] \
-                if "pageSize" in config else None
-            self.next_link = config["next_link"] \
-                if "next_link" in config else None
-            self.prev_link = config["prev_link"] \
-                if "prev_link" in config else None
+            self.results_total = config["results_total"] if "results_total" in config else None
+            self.page_offset = config["pageOffset"] if "pageOffset" in config else None
+            self.page_size = config["pageSize"] if "pageSize" in config else None
+            self.next_link = config["next_link"] if "next_link" in config else None
+            self.prev_link = config["prev_link"] if "prev_link" in config else None
 
-            self.records = ZscalerCollection.form_list(
-                config["records"] if "records" in config else [], APIClientRecords
-            )
+            self.records = ZscalerCollection.form_list(config["records"] if "records" in config else [], APIClientRecords)
 
         else:
             self.results_total = None
@@ -69,7 +62,7 @@ class APIClients(ZscalerObject):
             "pageSize": self.page_size,
             "next_link": self.next_link,
             "prev_link": self.prev_link,
-            "records": self.records
+            "records": self.records,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -90,18 +83,12 @@ class APIClientRecords(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.access_token_life_time = config["accessTokenLifeTime"] \
-                if "accessTokenLifeTime" in config else None
-            self.client_authentication = config["clientAuthentication"] \
-                if "clientAuthentication" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.access_token_life_time = config["accessTokenLifeTime"] if "accessTokenLifeTime" in config else None
+            self.client_authentication = config["clientAuthentication"] if "clientAuthentication" in config else None
+            self.id = config["id"] if "id" in config else None
 
             self.client_resources = ZscalerCollection.form_list(
                 config["clientResources"] if "clientResources" in config else [], ClientResources
@@ -137,7 +124,7 @@ class APIClientRecords(ZscalerObject):
             "accessTokenLifeTime": self.access_token_life_time,
             "clientAuthentication": self.client_authentication,
             "clientResources": self.client_resources,
-            "id": self.id
+            "id": self.id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -158,15 +145,11 @@ class ClientAuthentication(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.client_jw_ks_url = config["clientJWKsUrl"] \
-                if "clientJWKsUrl" in config else None
+            self.client_jw_ks_url = config["clientJWKsUrl"] if "clientJWKsUrl" in config else None
 
-            self.auth_type = config["authType"] \
-                if "authType" in config else None
+            self.auth_type = config["authType"] if "authType" in config else None
 
-            self.public_keys = ZscalerCollection.form_list(
-                config["publicKeys"] if "publicKeys" in config else [], PublicKeys
-            )
+            self.public_keys = ZscalerCollection.form_list(config["publicKeys"] if "publicKeys" in config else [], PublicKeys)
 
             self.client_certificates = ZscalerCollection.form_list(
                 config["clientCertificates"] if "clientCertificates" in config else [], ClientCertificates
@@ -207,8 +190,7 @@ class ClientCertificates(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cert_content = config["certContent"] \
-                if "certContent" in config else None
+            self.cert_content = config["certContent"] if "certContent" in config else None
         else:
             self.cert_content = None
 
@@ -239,12 +221,9 @@ class ClientResources(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.default_api = config["defaultApi"] \
-                if "defaultApi" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.default_api = config["defaultApi"] if "defaultApi" in config else None
 
             self.selected_scopes = ZscalerCollection.form_list(
                 config["selectedScopes"] if "selectedScopes" in config else [], common.CommonIDName
@@ -285,10 +264,8 @@ class PublicKeys(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.key_name = config["keyName"] \
-                if "keyName" in config else None
-            self.key_value = config["keyValue"] \
-                if "keyValue" in config else None
+            self.key_name = config["keyName"] if "keyName" in config else None
+            self.key_value = config["keyValue"] if "keyValue" in config else None
         else:
             self.key_name = None
             self.key_value = None
@@ -321,14 +298,10 @@ class APIClientSecrets(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.expires_at = config["expiresAt"] \
-                if "expiresAt" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.created_at = config["createdAt"] \
-                if "createdAt" in config else None
-            self.value = config["value"] \
-                if "value" in config else None
+            self.expires_at = config["expiresAt"] if "expiresAt" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.created_at = config["createdAt"] if "createdAt" in config else None
+            self.value = config["value"] if "value" in config else None
         else:
             self.expires_at = None
             self.id = None
@@ -340,11 +313,6 @@ class APIClientSecrets(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "expiresAt": self.expires_at,
-            "id": self.id,
-            "createdAt": self.created_at,
-            "value": self.value
-        }
+        current_obj_format = {"expiresAt": self.expires_at, "id": self.id, "createdAt": self.created_at, "value": self.value}
         parent_req_format.update(current_obj_format)
         return parent_req_format

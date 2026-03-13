@@ -84,9 +84,7 @@ class TestRuleLabels:
             # Test: List Rule Labels (scoped search - finds our label before delete)
             try:
                 if update_label:
-                    labels, _, error = client.zia.rule_labels.list_labels(
-                        query_params={"search": update_label.name}
-                    )
+                    labels, _, error = client.zia.rule_labels.list_labels(query_params={"search": update_label.name})
                     assert error is None, f"List Labels Error: {error}"
                     assert labels is not None and isinstance(labels, list), "No labels found or invalid format."
             except Exception as e:
@@ -111,9 +109,7 @@ class TestRuleLabels:
         client = MockZIAClient(fs)
 
         # Use scoped search to avoid fetching all tenant labels - returns [] or few results
-        labels, _, error = client.zia.rule_labels.list_labels(
-            query_params={"search": VCR_LIST_SEARCH}
-        )
+        labels, _, error = client.zia.rule_labels.list_labels(query_params={"search": VCR_LIST_SEARCH})
         assert error is None, f"List Labels Error: {error}"
         assert labels is not None, "Labels list is None"
         assert isinstance(labels, list), "Labels is not a list"

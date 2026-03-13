@@ -1,67 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 22:39:55 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -75,85 +13,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/greTunnels
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels
   response:
     body:
-      string: '[]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '2'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 22:39:57 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '1582'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 2b0d1a40-79c2-95cc-8b1b-d297e268e421
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4999'
-      x-ratelimit-reset:
-      - '4'
-      x-transaction-id:
-      - 5508ba3c-37fb-4b29-b973-280af2af5bd7
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/greTunnels/availableInternalIpRanges
-  response:
-    body:
-      string: '[{"startIPAddress":"172.17.21.24","endIPAddress":"172.17.21.31"},{"startIPAddress":"172.17.27.32","endIPAddress":"172.17.27.39"},{"startIPAddress":"172.17.40.0","endIPAddress":"172.17.40.7"},{"startIPAddress":"172.17.49.72","endIPAddress":"172.17.49.79"},{"startIPAddress":"172.17.151.56","endIPAddress":"172.17.151.63"},{"startIPAddress":"172.17.151.80","endIPAddress":"172.17.151.87"},{"startIPAddress":"172.17.151.96","endIPAddress":"172.17.151.103"},{"startIPAddress":"172.17.151.192","endIPAddress":"172.17.151.199"},{"startIPAddress":"172.17.151.232","endIPAddress":"172.17.151.239"},{"startIPAddress":"172.17.151.240","endIPAddress":"172.17.151.247"}]'
+      string: '[{"id":4105713,"sourceIp":"104.238.235.24","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.19.196.208","lastModificationTime":1770823693,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false},{"id":4106311,"sourceIp":"104.238.235.59","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.17.144.232","lastModificationTime":1770831022,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -175,33 +42,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:39:58 GMT
+      - Fri, 13 Mar 2026 03:19:43 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '406'
+      - '548'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d9041c04-bfd9-9e9c-b615-6c7620f4bd69
+      - 85e8a435-7f0c-998e-a935-b830a1038faf
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4987'
       x-ratelimit-reset:
-      - '3'
+      - '17'
       x-transaction-id:
-      - 5508ba3c-37fb-4b29-b973-280af2af5bd7
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -223,13 +92,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/vips/recommendedList
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/4105713
   response:
     body:
-      string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Please provide valid source
-        IP address to get the GRE vips."}'
+      string: '{"id":4105713,"sourceIp":"104.238.235.24","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.19.196.208","lastModificationTime":1770823693,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -251,7 +120,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:39:58 GMT
+      - Fri, 13 Mar 2026 03:19:44 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -263,133 +132,28 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '79'
+      - '581'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5ae9bc94-fa23-95d2-bf68-ddde292045ab
+      - d9061632-5491-96ea-8f68-ad58b0eeefa6
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4986'
       x-ratelimit-reset:
-      - '2'
+      - '16'
       x-transaction-id:
-      - 5508ba3c-37fb-4b29-b973-280af2af5bd7
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
       - read-write
     status:
-      code: 400
-      message: Bad Request
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/vips/recommendedList?sourceIp=8.8.8.8
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 22:42:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - fcaf74b9-7bcc-9027-a223-b35b1596c1c8
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 22:42:44 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
       code: 200
       message: OK
 - request:
@@ -406,181 +170,67 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/vips/recommendedList?sourceIp=8.8.8.8
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/availableInternalIpRanges
   response:
     body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 22:42:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 078b80c2-251f-988a-ab4f-d803b65b76bb
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/vips/groupByDatacenter
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 22:42:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 81dbe6cd-3506-9b97-930f-a5639e10c9d6
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+      string: '[{"startIPAddress":"172.17.150.88","endIPAddress":"172.17.150.95"},{"startIPAddress":"172.21.43.168","endIPAddress":"172.21.43.175"},{"startIPAddress":"172.21.43.184","endIPAddress":"172.21.43.191"},{"startIPAddress":"172.21.43.192","endIPAddress":"172.21.43.199"},{"startIPAddress":"172.21.43.208","endIPAddress":"172.21.43.215"},{"startIPAddress":"172.21.43.216","endIPAddress":"172.21.43.223"},{"startIPAddress":"172.21.43.224","endIPAddress":"172.21.43.231"},{"startIPAddress":"172.21.43.232","endIPAddress":"172.21.43.239"},{"startIPAddress":"172.21.43.240","endIPAddress":"172.21.43.247"},{"startIPAddress":"172.21.43.248","endIPAddress":"172.21.43.255"}]'
     headers:
       cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
       content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       content-type:
-      - application/json;charset=UTF-8
+      - application/json
       date:
-      - Fri, 19 Dec 2025 22:42:45 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
+      - Fri, 13 Mar 2026 03:19:45 GMT
       server:
-      - ingress-gateway
+      - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
       x-content-type-options:
       - nosniff
-      - nosniff
-      - nosniff
+      x-envoy-upstream-service-time:
+      - '668'
       x-frame-options:
-      - DENY
       - SAMEORIGIN
-      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 987cc418-4461-93d2-86ea-6924dfd9d015
+      x-oneapi-version:
+      - 109.1.146
       x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '149'
+      - '4985'
       x-ratelimit-reset:
-      - '1'
+      - '16'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
-      - '0'
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
     status:
       code: 200
       message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/vips/groupByDatacenter
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 22:42:45 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 841a3e9c-e2c1-9da4-93e1-32a89d3a2703
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
 version: 1

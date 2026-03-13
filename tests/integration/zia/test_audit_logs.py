@@ -48,10 +48,7 @@ class TestAuditLogs:
 
         # Step 2: Create an audit log report request
         try:
-            result = client.zia.audit_logs.create(
-                start_time=str(one_day_ago_ms),
-                end_time=str(current_time_ms)
-            )
+            result = client.zia.audit_logs.create(start_time=str(one_day_ago_ms), end_time=str(current_time_ms))
             # Result can be None or status code
         except Exception as exc:
             errors.append(f"Failed to create audit log report: {exc}")
@@ -80,4 +77,3 @@ class TestAuditLogs:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-
