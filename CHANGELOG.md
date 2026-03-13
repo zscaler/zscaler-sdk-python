@@ -22,9 +22,10 @@
   * `alarms` - Alarms: list_alarms, get_alarm, create_alarm, update_alarm_patch, update_alarm_put, delete_alarm, bulk_acknowledge, bulk_acknowledge_all, bulk_ignore, bulk_ignore_all
   * `api_keys` - API Key Auth: list_api_keys, create_api_key, revoke_api_key
   * `app_connector_config` - App Connector Config: get_app_connector_config, create_app_connector_config, delete_app_connector
+  * `devices` - Devices: list_active_devices, list_devices_by_category, get_device_tags, get_group_by_list, list_operating_systems, get_dhcp_history, get_device_details_v2, get_device_details_v3, get_filter_values, list_devices_group_by
   * `groups_router` - Groups Router: list_groups, get_group, create_group, update_group_patch, update_group_put, delete_group
   * `template_router` - Template Router: list_templates, get_template, create_template, update_template_put, delete_template, list_template_interfaces, list_template_names
-  * Access via `client.ztb.alarms`, `client.ztb.api_keys`, `client.ztb.app_connector_config`, `client.ztb.groups_router`, `client.ztb.template_router`, or via `LegacyZTBClient` for API key authentication
+  * Access via `client.ztb.alarms`, `client.ztb.api_keys`, `client.ztb.app_connector_config`, `client.ztb.devices`, `client.ztb.groups_router`, `client.ztb.template_router`, or via `LegacyZTBClient` for API key authentication
 
 ## 1.9.16 (February 16, 2025)
 
