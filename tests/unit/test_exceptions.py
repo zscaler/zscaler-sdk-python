@@ -41,14 +41,14 @@ class TestRaiseExceptionFlag:
     def test_raise_exception_flag_can_be_modified(self):
         """Test raise_exception flag can be set."""
         original_value = exceptions.raise_exception
-        
+
         # Toggle the flag
         exceptions.raise_exception = True
         assert exceptions.raise_exception is True
-        
+
         exceptions.raise_exception = False
         assert exceptions.raise_exception is False
-        
+
         # Restore original value
         exceptions.raise_exception = original_value
 
@@ -60,11 +60,11 @@ class TestZscalerBaseException:
         """Test ZscalerBaseException can be instantiated."""
         mock_response = Mock()
         mock_response.status_code = 400
-        
+
         response_body = {"error": "test"}
-        
+
         exc = ZscalerBaseException("https://api.example.com/test", mock_response, response_body)
-        
+
         assert exc is not None
         assert isinstance(exc, Exception)
 
@@ -72,12 +72,12 @@ class TestZscalerBaseException:
         """Test ZscalerBaseException stores required attributes."""
         mock_response = Mock()
         mock_response.status_code = 404
-        
+
         url = "https://api.example.com/test"
         response_body = {"message": "Not found"}
-        
+
         exc = ZscalerBaseException(url, mock_response, response_body)
-        
+
         assert exc.status_code == 404
         assert exc.url == url
         # response_body is JSON serialized as string
@@ -88,9 +88,9 @@ class TestZscalerBaseException:
         """Test ZscalerBaseException __str__ method."""
         mock_response = Mock()
         mock_response.status_code = 500
-        
+
         exc = ZscalerBaseException("https://api.example.com/test", mock_response, {"error": "test"})
-        
+
         exc_str = str(exc)
         assert "ZSCALER HTTP" in exc_str
         assert "500" in exc_str
@@ -99,9 +99,9 @@ class TestZscalerBaseException:
         """Test ZscalerBaseException __repr__ method."""
         mock_response = Mock()
         mock_response.status_code = 400
-        
+
         exc = ZscalerBaseException("https://api.example.com/test", mock_response, {"error": "test"})
-        
+
         repr_str = repr(exc)
         assert "message" in repr_str
 
@@ -113,9 +113,9 @@ class TestHTTPException:
         """Test HTTPException inherits from ZscalerBaseException."""
         mock_response = Mock()
         mock_response.status_code = 400
-        
+
         exc = HTTPException("https://api.example.com/test", mock_response, {"error": "test"})
-        
+
         assert isinstance(exc, ZscalerBaseException)
         assert isinstance(exc, Exception)
 
@@ -123,9 +123,9 @@ class TestHTTPException:
         """Test HTTPException can be raised and caught."""
         mock_response = Mock()
         mock_response.status_code = 500
-        
+
         exc = HTTPException("https://api.example.com/test", mock_response, {"error": "test"})
-        
+
         with pytest.raises(HTTPException):
             raise exc
 
@@ -136,19 +136,17 @@ class TestZscalerAPIException:
     def test_api_exception_initialization(self):
         """Test ZscalerAPIException with ZscalerAPIError."""
         from zscaler.errors.zscaler_api_error import ZscalerAPIError
-        
+
         mock_response = Mock()
         mock_response.status_code = 409
         mock_response.headers = {}
-        
+
         api_error = ZscalerAPIError(
-            "https://api.example.com/test",
-            mock_response,
-            {"code": "DUPLICATE", "message": "Duplicate item"}
+            "https://api.example.com/test", mock_response, {"code": "DUPLICATE", "message": "Duplicate item"}
         )
-        
+
         exc = ZscalerAPIException(api_error)
-        
+
         assert isinstance(exc, ZscalerBaseException)
         assert exc.status_code == 409
 
@@ -160,7 +158,7 @@ class TestSpecificExceptions:
         """Test ZpaBaseException."""
         exc = ZpaBaseException("ZPA error")
         assert isinstance(exc, Exception)
-        
+
         with pytest.raises(ZpaBaseException):
             raise exc
 
@@ -173,7 +171,7 @@ class TestSpecificExceptions:
         """Test RateLimitExceededError."""
         exc = RateLimitExceededError("Rate limit exceeded")
         assert isinstance(exc, Exception)
-        
+
         with pytest.raises(RateLimitExceededError):
             raise exc
 
@@ -239,14 +237,14 @@ class TestInvalidCloudEnvironmentError:
     def test_invalid_cloud_error_initialization(self):
         """Test InvalidCloudEnvironmentError stores cloud name."""
         exc = InvalidCloudEnvironmentError("invalid_cloud")
-        
+
         assert exc.cloud == "invalid_cloud"
         assert "invalid_cloud" in str(exc)
 
     def test_invalid_cloud_error_message(self):
         """Test InvalidCloudEnvironmentError has descriptive message."""
         exc = InvalidCloudEnvironmentError("unknown_env")
-        
+
         exc_str = str(exc)
         assert "Unrecognized cloud environment" in exc_str
         assert "unknown_env" in exc_str
@@ -255,7 +253,7 @@ class TestInvalidCloudEnvironmentError:
         """Test InvalidCloudEnvironmentError can be raised."""
         with pytest.raises(InvalidCloudEnvironmentError) as exc_info:
             raise InvalidCloudEnvironmentError("test_cloud")
-        
+
         assert exc_info.value.cloud == "test_cloud"
 
 
@@ -267,7 +265,7 @@ class TestExceptionUsagePatterns:
         exc1 = BadRequestError("Error 1")
         exc2 = UnauthorizedError("Error 2")
         exc3 = NotFoundError("Error 3")
-        
+
         assert str(exc1) == "Error 1"
         assert str(exc2) == "Error 2"
         assert str(exc3) == "Error 3"
@@ -290,11 +288,11 @@ class TestExceptionUsagePatterns:
     def test_nested_exception_catching(self):
         """Test catching base exception catches derived ones."""
         exc = ZpaAPIException("Test error")
-        
+
         # Should be catchable as ZpaBaseException
         with pytest.raises(ZpaBaseException):
             raise exc
-        
+
         # Should also be catchable as generic Exception
         with pytest.raises(Exception):
             raise exc
@@ -307,11 +305,11 @@ class TestExceptionMessageFormatting:
         """Test ZscalerBaseException creates proper message."""
         mock_response = Mock()
         mock_response.status_code = 404
-        
+
         response_body = {"id": "123", "name": "test"}
-        
+
         exc = ZscalerBaseException("https://api.example.com/resource", mock_response, response_body)
-        
+
         message = exc.message
         assert "ZSCALER HTTP" in message
         assert "https://api.example.com/resource" in message
@@ -321,13 +319,12 @@ class TestExceptionMessageFormatting:
         """Test exception properly serializes response body."""
         mock_response = Mock()
         mock_response.status_code = 400
-        
+
         response_body = {"nested": {"field": "value"}}
-        
+
         exc = ZscalerBaseException("https://api.example.com/test", mock_response, response_body)
-        
+
         # Should be JSON serialized
         assert isinstance(exc.response_body, str)
         parsed = json.loads(exc.response_body)
         assert parsed["nested"]["field"] == "value"
-

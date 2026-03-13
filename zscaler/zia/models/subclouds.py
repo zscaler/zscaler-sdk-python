@@ -239,10 +239,7 @@ class LastModifiedUser(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name
-        }
+        current_obj_format = {"id": self.id, "name": self.name}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 

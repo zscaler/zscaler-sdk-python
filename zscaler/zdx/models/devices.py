@@ -37,9 +37,7 @@ class Devices(ZscalerObject):
         if config:
             self.next_offset = config["next_offset"] if "next_offset" in config else None
 
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], DeviceDetail
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], DeviceDetail)
         else:
             self.next_offset = None
             self.devices = []
@@ -113,9 +111,7 @@ class DeviceModelInfo(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
 
-            self.network = ZscalerCollection.form_list(
-                config["network"] if "network" in config else [], Network
-            )
+            self.network = ZscalerCollection.form_list(config["network"] if "network" in config else [], Network)
 
             if "hardware" in config:
                 if isinstance(config["hardware"], Hardware):
@@ -174,34 +170,20 @@ class Hardware(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.hw_model = config["hw_model"] \
-                if "hw_model" in config else None
-            self.hw_mfg = config["hw_mfg"] \
-                if "hw_mfg" in config else None
-            self.hw_type = config["hw_type"] \
-                if "hw_type" in config else None
-            self.hw_serial = config["hw_serial"] \
-                if "hw_serial" in config else None
-            self.tot_mem = config["tot_mem"] \
-                if "tot_mem" in config else None
-            self.gpu = config["gpu"] \
-                if "gpu" in config else None
-            self.disk_size = config["disk_size"] \
-                if "disk_size" in config else None
-            self.disk_model = config["disk_model"] \
-                if "disk_model" in config else None
-            self.disk_type = config["disk_type"] \
-                if "disk_type" in config else None
-            self.cpu_mfg = config["cpu_mfg"] \
-                if "cpu_mfg" in config else None
-            self.cpu_model = config["cpu_model"] \
-                if "cpu_model" in config else None
-            self.speed_ghz = config["speed_ghz"] \
-                if "speed_ghz" in config else None
-            self.logical_proc = config["logical_proc"] \
-                if "logical_proc" in config else None
-            self.num_cores = config["num_cores"] \
-                if "num_cores" in config else None
+            self.hw_model = config["hw_model"] if "hw_model" in config else None
+            self.hw_mfg = config["hw_mfg"] if "hw_mfg" in config else None
+            self.hw_type = config["hw_type"] if "hw_type" in config else None
+            self.hw_serial = config["hw_serial"] if "hw_serial" in config else None
+            self.tot_mem = config["tot_mem"] if "tot_mem" in config else None
+            self.gpu = config["gpu"] if "gpu" in config else None
+            self.disk_size = config["disk_size"] if "disk_size" in config else None
+            self.disk_model = config["disk_model"] if "disk_model" in config else None
+            self.disk_type = config["disk_type"] if "disk_type" in config else None
+            self.cpu_mfg = config["cpu_mfg"] if "cpu_mfg" in config else None
+            self.cpu_model = config["cpu_model"] if "cpu_model" in config else None
+            self.speed_ghz = config["speed_ghz"] if "speed_ghz" in config else None
+            self.logical_proc = config["logical_proc"] if "logical_proc" in config else None
+            self.num_cores = config["num_cores"] if "num_cores" in config else None
         else:
             self.hw_model = None
             self.hw_mfg = None
@@ -237,7 +219,7 @@ class Hardware(ZscalerObject):
             "cpu_model": self.cpu_model,
             "speed_ghz": self.speed_ghz,
             "logical_proc": self.logical_proc,
-            "num_cores": self.num_cores
+            "num_cores": self.num_cores,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -258,24 +240,15 @@ class Network(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.net_type = config["net_type"] \
-                if "net_type" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.ipv4 = config["ipv4"] \
-                if "ipv4" in config else None
-            self.ipv6 = config["ipv6"] \
-                if "ipv6" in config else None
-            self.dns_srvs = config["dns_srvs"] \
-                if "dns_srvs" in config else None
-            self.dns_suffix = config["dns_suffix"] \
-                if "dns_suffix" in config else None
-            self.gateway = config["gateway"] \
-                if "gateway" in config else None
-            self.mac = config["mac"] \
-                if "mac" in config else None
-            self.guid = config["guid"] \
-                if "guid" in config else None
+            self.net_type = config["net_type"] if "net_type" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.ipv4 = config["ipv4"] if "ipv4" in config else None
+            self.ipv6 = config["ipv6"] if "ipv6" in config else None
+            self.dns_srvs = config["dns_srvs"] if "dns_srvs" in config else None
+            self.dns_suffix = config["dns_suffix"] if "dns_suffix" in config else None
+            self.gateway = config["gateway"] if "gateway" in config else None
+            self.mac = config["mac"] if "mac" in config else None
+            self.guid = config["guid"] if "guid" in config else None
         else:
             self.net_type = None
             self.status = None
@@ -301,7 +274,7 @@ class Network(ZscalerObject):
             "dns_suffix": self.dns_suffix,
             "gateway": self.gateway,
             "mac": self.mac,
-            "guid": self.guid
+            "guid": self.guid,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -322,22 +295,14 @@ class Software(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.os_name = config["os_name"] \
-                if "os_name" in config else None
-            self.os_ver = config["os_ver"] \
-                if "os_ver" in config else None
-            self.os_build = config["os_build"] \
-                if "os_build" in config else None
-            self.hostname = config["hostname"] \
-                if "hostname" in config else None
-            self.netbios = config["netbios"] \
-                if "netbios" in config else None
-            self.user = config["user"] \
-                if "user" in config else None
-            self.client_conn_ver = config["client_conn_ver"] \
-                if "client_conn_ver" in config else None
-            self.zdx_ver = config["zdx_ver"] \
-                if "zdx_ver" in config else None
+            self.os_name = config["os_name"] if "os_name" in config else None
+            self.os_ver = config["os_ver"] if "os_ver" in config else None
+            self.os_build = config["os_build"] if "os_build" in config else None
+            self.hostname = config["hostname"] if "hostname" in config else None
+            self.netbios = config["netbios"] if "netbios" in config else None
+            self.user = config["user"] if "user" in config else None
+            self.client_conn_ver = config["client_conn_ver"] if "client_conn_ver" in config else None
+            self.zdx_ver = config["zdx_ver"] if "zdx_ver" in config else None
         else:
             self.os_name = None
             self.os_ver = None
@@ -361,7 +326,7 @@ class Software(ZscalerObject):
             "netbios": self.netbios,
             "user": self.user,
             "client_conn_ver": self.client_conn_ver,
-            "zdx_ver": self.zdx_ver
+            "zdx_ver": self.zdx_ver,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -453,9 +418,7 @@ class DeviceHealthMetrics(ZscalerObject):
         if config:
             self.category = config["category"] if "category" in config else None
 
-            self.instances = ZscalerCollection.form_list(
-                config["instances"] if "instances" in config else [], Instances
-            )
+            self.instances = ZscalerCollection.form_list(config["instances"] if "instances" in config else [], Instances)
 
         else:
             self.category = None
@@ -490,9 +453,7 @@ class Instances(ZscalerObject):
 
         if config:
 
-            self.metrics = ZscalerCollection.form_list(
-                config["metrics"] if "metrics" in config else [], common.CommonMetrics
-            )
+            self.metrics = ZscalerCollection.form_list(config["metrics"] if "metrics" in config else [], common.CommonMetrics)
 
         else:
             self.category = None
@@ -649,9 +610,7 @@ class DeviceCloudPathProbesMetric(ZscalerObject):
         if config:
             self.leg_src = config["leg_src"] if "leg_src" in config else None
             self.leg_dst = config["leg_dst"] if "leg_dst" in config else None
-            self.stats = ZscalerCollection.form_list(
-                config["stats"] if "stats" in config else [], common.CommonMetrics
-            )
+            self.stats = ZscalerCollection.form_list(config["stats"] if "stats" in config else [], common.CommonMetrics)
         else:
             self.leg_src = None
             self.leg_dst = None
@@ -687,9 +646,7 @@ class DeviceEvents(ZscalerObject):
 
         if config:
             self.timestamp = config["timestamp"] if "timestamp" in config else None
-            self.events = ZscalerCollection.form_list(
-                    config["events"] if "events" in config else [], Events
-                )
+            self.events = ZscalerCollection.form_list(config["events"] if "events" in config else [], Events)
         else:
             self.timestamp = None
             self.events = []
@@ -767,9 +724,7 @@ class DeviceCloudPathProbesHopData(ZscalerObject):
         if config:
             self.timestamp = config["timestamp"] if "timestamp" in config else None
 
-            self.cloudpath = ZscalerCollection.form_list(
-                config["cloudpath"] if "cloudpath" in config else [], CloudPath
-            )
+            self.cloudpath = ZscalerCollection.form_list(config["cloudpath"] if "cloudpath" in config else [], CloudPath)
 
         else:
             self.timestamp = None
@@ -811,9 +766,7 @@ class CloudPath(ZscalerObject):
             self.num_unresp_hops = config["num_unresp_hops"] if "num_unresp_hops" in config else None
             self.tunnel_type = config["tunnel_type"] if "tunnel_type" in config else None
 
-            self.hops = ZscalerCollection.form_list(
-                config["hops"] if "hops" in config else [], Hops
-            )
+            self.hops = ZscalerCollection.form_list(config["hops"] if "hops" in config else [], Hops)
         else:
             self.src = None
             self.dst = None
@@ -916,9 +869,7 @@ class DeviceActiveGeo(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.geo_type = config["geo_type"] if "geo_type" in config else None
-            self.children = ZscalerCollection.form_list(
-                config["children"] if "children" in config else [], Children
-            )
+            self.children = ZscalerCollection.form_list(config["children"] if "children" in config else [], Children)
         else:
             self.id = None
             self.name = None
@@ -930,12 +881,7 @@ class DeviceActiveGeo(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "geo_type": self.geo_type,
-            "children": self.children
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "geo_type": self.geo_type, "children": self.children}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -968,10 +914,6 @@ class Children(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "description": self.description,
-            "geo_type": self.geo_type
-        }
+        current_obj_format = {"id": self.id, "description": self.description, "geo_type": self.geo_type}
         parent_req_format.update(current_obj_format)
         return parent_req_format

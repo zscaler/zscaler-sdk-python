@@ -36,7 +36,7 @@ class TestAlertSubscription:
         errors = []
         subscription_id = None
         update_subscription = None
-        
+
         # Use deterministic names for VCR
         names = NameGenerator("alert-subscription")
 
@@ -44,7 +44,7 @@ class TestAlertSubscription:
             try:
                 create_alert, _, error = client.zia.alert_subscriptions.add_alert_subscription(
                     description=names.description,
-                    email='alert@acme.com',
+                    email="alert@acme.com",
                     pt0_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                     secure_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                     manage_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
@@ -62,7 +62,7 @@ class TestAlertSubscription:
                     update_subscription, _, error = client.zia.alert_subscriptions.update_alert_subscription(
                         subscription_id=subscription_id,
                         description=names.updated_description,
-                        email='alert@acme.com',
+                        email="alert@acme.com",
                         pt0_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                         secure_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                         manage_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
@@ -86,10 +86,11 @@ class TestAlertSubscription:
                 subscriptions, _, error = client.zia.alert_subscriptions.list_alert_subscriptions()
                 assert error is None, f"Error listing Alert Subscriptions: {error}"
                 assert subscriptions is not None, "Alert Subscriptions list is None"
-                assert any(alert.id == subscription_id for alert in subscriptions), "Newly created alert not found in the list of subscriptions."
+                assert any(
+                    alert.id == subscription_id for alert in subscriptions
+                ), "Newly created alert not found in the list of subscriptions."
             except Exception as exc:
                 errors.append(f"Listing Alert Subscriptions failed: {exc}")
-
 
         finally:
             try:

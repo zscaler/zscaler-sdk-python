@@ -27,7 +27,7 @@ def fs():
 class TestAdminUsers:
     """
     Integration Tests for the Admin Users.
-    
+
     Note: For Zidentity-enabled tenants, admin user endpoints may return empty lists.
     """
 

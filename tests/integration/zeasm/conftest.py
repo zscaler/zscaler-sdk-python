@@ -35,19 +35,19 @@ class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
     """
-    
+
     def __init__(self, resource_type: str, suffix: str = ""):
         self.resource_type = resource_type.lower().replace("_", "-")
         self.suffix = f"-{suffix}" if suffix else ""
-        
+
     @property
     def name(self) -> str:
         return f"tests-{self.resource_type}{self.suffix}"
-    
+
     @property
     def updated_name(self) -> str:
         return f"tests-{self.resource_type}{self.suffix}-updated"
-    
+
     @property
     def description(self) -> str:
         words = self.resource_type.replace("-", " ").title()

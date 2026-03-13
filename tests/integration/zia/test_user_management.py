@@ -46,9 +46,7 @@ class TestUserManagement:
             assert isinstance(users, list), "Users should be a list"
 
             # Test list_users with query params
-            users_search, response, err = client.zia.user_management.list_users(
-                query_params={"search": "admin"}
-            )
+            users_search, response, err = client.zia.user_management.list_users(query_params={"search": "admin"})
 
             # Test list_user_references
             users_ref, response, err = client.zia.user_management.list_user_references()
@@ -80,9 +78,7 @@ class TestUserManagement:
             assert groups is not None, "Groups list should not be None"
 
             # Test list_groups with query params
-            groups_search, response, err = client.zia.user_management.list_groups(
-                query_params={"search": "Default"}
-            )
+            groups_search, response, err = client.zia.user_management.list_groups(query_params={"search": "Default"})
 
             # Test get_group with first group if available
             if groups and len(groups) > 0:
@@ -116,9 +112,7 @@ class TestUserManagement:
             assert departments is not None, "Departments list should not be None"
 
             # Test list_departments with query params
-            departments_search, response, err = client.zia.user_management.list_departments(
-                query_params={"search": "Default"}
-            )
+            departments_search, response, err = client.zia.user_management.list_departments(query_params={"search": "Default"})
 
             # Test get_department with first department if available
             if departments and len(departments) > 0:

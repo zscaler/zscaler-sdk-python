@@ -41,7 +41,7 @@ class SoftwareList(ZscalerObject):
             )
         else:
             self.next_offset = None
-            self.devices = []
+            self.software = []
 
     def request_format(self) -> Dict[str, Any]:
         """

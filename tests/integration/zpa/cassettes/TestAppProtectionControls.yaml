@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/actionTypes
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/actionTypes
   response:
     body:
       string: '["PASS","BLOCK","REDIRECT","ALLOW"]'
@@ -29,7 +29,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 13 Mar 2026 02:44:32 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -53,17 +53,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2faa471e-1846-9e79-9a1e-870bca54fc96
+      - 408ee0cf-786d-9c03-9f88-ddcd225110b8
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4841'
+      - '4860'
       x-ratelimit-reset:
-      - '11'
+      - '28'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -83,9 +83,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/severityTypes
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/severityTypes
   response:
     body:
       string: '["CRITICAL","ERROR","WARNING","INFO"]'
@@ -99,7 +99,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 13 Mar 2026 02:44:33 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -117,23 +117,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '31'
+      - '32'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0ea9c494-8f0c-9ff7-a02b-1c78346e1009
+      - 809fb452-1a05-9ca5-a20b-e05a8f029867
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4840'
+      - '4859'
       x-ratelimit-reset:
-      - '11'
+      - '27'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -153,9 +153,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/controlTypes
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/controlTypes
   response:
     body:
       string: '["WEBSOCKET_PREDEFINED","WEBSOCKET_CUSTOM","THREATLABZ","CUSTOM","PREDEFINED","API_PREDEFINED","ADP_PREDEFINED"]'
@@ -169,7 +169,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 13 Mar 2026 02:44:33 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -193,17 +193,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 784ad2a1-120a-9cbd-998e-74ee43992b9e
+      - 477cbe44-7e86-939a-97a8-fa4443f355bd
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4839'
+      - '4858'
       x-ratelimit-reset:
-      - '11'
+      - '27'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -223,9 +223,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/httpMethods
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/httpMethods
   response:
     body:
       string: '["GET","HEAD","POST","OPTIONS","PUT","PATCH","DELETE","CHECKOUT","COPY","LOCK","MERGE","MKACTIVITY","MKCOL","MOVE","PROPFIND","PROPPATCH","UNLOCK","TRACE","CONNECT"]'
@@ -239,7 +239,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:49 GMT
+      - Fri, 13 Mar 2026 02:44:33 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -257,23 +257,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '42'
+      - '43'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - dad6720c-736b-9e88-9f8c-235b0a603712
+      - b223f9db-2088-9503-afbc-6953503a0229
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4838'
+      - '4857'
       x-ratelimit-reset:
-      - '11'
+      - '27'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -293,12 +293,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined/versions
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined/versions
   response:
     body:
-      string: '["OWASP_CRS/4.8.0","OWASP_CRS/3.3.5","OWASP_CRS/3.3.0"]'
+      string: '["OWASP_CRS/4.8.0","OWASP_CRS/3.3.5"]'
     headers:
       cache-control:
       - no-store
@@ -309,7 +309,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:17:50 GMT
+      - Fri, 13 Mar 2026 02:44:33 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -327,23 +327,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '36'
+      - '33'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8ceb45bc-f88c-982b-8ec8-ee2e0d84bafa
+      - 3e3bbb13-4d99-95da-9ce8-e1781d1205d6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4837'
+      - '4856'
       x-ratelimit-reset:
-      - '10'
+      - '27'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:

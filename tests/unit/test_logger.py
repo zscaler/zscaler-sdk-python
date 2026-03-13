@@ -8,12 +8,12 @@ import logging
 import os
 import pytest
 from zscaler.logger import (
-    setup_logging, 
-    LOG_FORMAT, 
-    _sanitize_for_logging, 
+    setup_logging,
+    LOG_FORMAT,
+    _sanitize_for_logging,
     _sanitize_plaintext_for_logging,
-    SENSITIVE_FIELDS, 
-    SENSITIVE_HEADERS
+    SENSITIVE_FIELDS,
+    SENSITIVE_HEADERS,
 )
 
 
@@ -26,7 +26,7 @@ class TestLoggerSetup:
         logger = logging.getLogger("zscaler-sdk-python")
         for handler in logger.handlers[:]:
             logger.removeHandler(handler)
-        
+
         # Reset environment variables
         if "ZSCALER_SDK_LOG" in os.environ:
             del os.environ["ZSCALER_SDK_LOG"]
@@ -47,7 +47,7 @@ class TestLoggerSetup:
     def test_logger_level_set_correctly_with_verbose_param(self, log_level, verbose):
         """Test logger is set to correct level based on verbose parameter."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=verbose)
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         if verbose:
             assert logger.level == logging.DEBUG
@@ -57,7 +57,7 @@ class TestLoggerSetup:
     def test_logger_disabled_by_default(self):
         """Test logger is disabled when enabled=False."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=False)
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         # When disabled, should have NullHandler
         assert any(isinstance(h, logging.NullHandler) for h in logger.handlers)
@@ -66,7 +66,7 @@ class TestLoggerSetup:
         """Test logger can be enabled via environment variable."""
         os.environ["ZSCALER_SDK_LOG"] = "true"
         setup_logging(logger_name="zscaler-sdk-python")
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         assert logger.level in [logging.INFO, logging.DEBUG]
 
@@ -75,7 +75,7 @@ class TestLoggerSetup:
         os.environ["ZSCALER_SDK_LOG"] = "true"
         os.environ["ZSCALER_SDK_VERBOSE"] = "true"
         setup_logging(logger_name="zscaler-sdk-python")
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         assert logger.level == logging.DEBUG
 
@@ -84,24 +84,24 @@ class TestLoggerSetup:
         os.environ["ZSCALER_SDK_LOG"] = "true"
         os.environ["ZSCALER_SDK_VERBOSE"] = "false"
         setup_logging(logger_name="zscaler-sdk-python")
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         assert logger.level == logging.INFO
 
     def test_logger_has_stream_handler_when_enabled(self):
         """Test logger has StreamHandler when enabled."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=True)
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         assert any(isinstance(h, logging.StreamHandler) for h in logger.handlers)
 
     def test_logger_handler_has_correct_formatter(self):
         """Test logger handler uses correct format."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=True)
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         stream_handlers = [h for h in logger.handlers if isinstance(h, logging.StreamHandler)]
-        
+
         assert len(stream_handlers) > 0
         handler = stream_handlers[0]
         if handler.formatter:
@@ -111,7 +111,7 @@ class TestLoggerSetup:
         """Test logger can be created with custom name."""
         custom_name = "custom-zscaler-logger"
         setup_logging(logger_name=custom_name, enabled=True)
-        
+
         logger = logging.getLogger(custom_name)
         assert logger is not None
         assert logger.level in [logging.INFO, logging.DEBUG]
@@ -122,11 +122,11 @@ class TestLoggerSetup:
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=False)
         logger = logging.getLogger("zscaler-sdk-python")
         initial_handler_count = len(logger.handlers)
-        
+
         # Setup logger second time
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=True)
         final_handler_count = len(logger.handlers)
-        
+
         # Should not have duplicate handlers
         assert final_handler_count <= initial_handler_count + 1
 
@@ -135,17 +135,17 @@ class TestLoggerSetup:
         os.environ["ZSCALER_SDK_LOG"] = "true"
         os.environ["LOG_TO_FILE"] = "true"
         os.environ["LOG_FILE_PATH"] = "/tmp/test_zscaler_sdk.log"
-        
+
         setup_logging(logger_name="zscaler-sdk-python")
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         file_handlers = [h for h in logger.handlers if isinstance(h, logging.FileHandler)]
-        
+
         # Clean up
         for handler in file_handlers:
             handler.close()
             logger.removeHandler(handler)
-        
+
         # FileHandler should be present
         assert len(file_handlers) > 0
 
@@ -158,7 +158,7 @@ class TestLoggerEdgeCases:
         logger = logging.getLogger("zscaler-sdk-python")
         for handler in logger.handlers[:]:
             logger.removeHandler(handler)
-        
+
         if "ZSCALER_SDK_LOG" in os.environ:
             del os.environ["ZSCALER_SDK_LOG"]
         if "ZSCALER_SDK_VERBOSE" in os.environ:
@@ -181,7 +181,7 @@ class TestLoggerEdgeCases:
         """Test logger handles invalid environment variable values."""
         os.environ["ZSCALER_SDK_LOG"] = "invalid_value"
         setup_logging(logger_name="zscaler-sdk-python")
-        
+
         # Should default to disabled
         logger = logging.getLogger("zscaler-sdk-python")
         assert any(isinstance(h, logging.NullHandler) for h in logger.handlers)
@@ -210,7 +210,7 @@ class TestLoggerIntegration:
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=False)
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=True)
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=False)
-        
+
         logger = logging.getLogger("zscaler-sdk-python")
         assert logger.level == logging.INFO
 
@@ -218,23 +218,23 @@ class TestLoggerIntegration:
         """Test logger can actually log messages."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=True, verbose=True)
         logger = logging.getLogger("zscaler-sdk-python")
-        
+
         # This should not raise any exceptions
         logger.debug("Debug message")
         logger.info("Info message")
         logger.warning("Warning message")
         logger.error("Error message")
-        
+
         assert True  # If we get here, logging worked
 
     def test_logger_disabled_does_not_log(self):
         """Test disabled logger does not produce output."""
         setup_logging(logger_name="zscaler-sdk-python", enabled=False)
         logger = logging.getLogger("zscaler-sdk-python")
-        
+
         # With NullHandler, this should not produce output
         logger.info("This should not appear")
-        
+
         # Verify NullHandler is present
         assert any(isinstance(h, logging.NullHandler) for h in logger.handlers)
 
@@ -246,7 +246,7 @@ class TestSensitiveDataSanitization:
         """Test _sanitize_for_logging masks password in dict."""
         data = {"username": "admin", "password": "secret123"}
         sanitized = _sanitize_for_logging(data)
-        
+
         assert sanitized["username"] == "admin"
         assert sanitized["password"] == "***REDACTED***"
 
@@ -254,7 +254,7 @@ class TestSensitiveDataSanitization:
         """Test _sanitize_for_logging masks API keys."""
         data = {"api_key": "key123", "apiKey": "key456", "name": "test"}
         sanitized = _sanitize_for_logging(data)
-        
+
         assert sanitized["api_key"] == "***REDACTED***"
         assert sanitized["apiKey"] == "***REDACTED***"
         assert sanitized["name"] == "test"
@@ -263,36 +263,25 @@ class TestSensitiveDataSanitization:
         """Test _sanitize_for_logging masks client secrets."""
         data = {"clientId": "id123", "clientSecret": "secret456", "client_secret": "secret789"}
         sanitized = _sanitize_for_logging(data)
-        
+
         assert sanitized["clientId"] == "id123"
         assert sanitized["clientSecret"] == "***REDACTED***"
         assert sanitized["client_secret"] == "***REDACTED***"
 
     def test_sanitize_nested_dict(self):
         """Test _sanitize_for_logging handles nested dicts."""
-        data = {
-            "user": {
-                "name": "admin",
-                "password": "secret123"
-            },
-            "config": {
-                "api_key": "key456"
-            }
-        }
+        data = {"user": {"name": "admin", "password": "secret123"}, "config": {"api_key": "key456"}}
         sanitized = _sanitize_for_logging(data)
-        
+
         assert sanitized["user"]["name"] == "admin"
         assert sanitized["user"]["password"] == "***REDACTED***"
         assert sanitized["config"]["api_key"] == "***REDACTED***"
 
     def test_sanitize_list_of_dicts(self):
         """Test _sanitize_for_logging handles lists of dicts."""
-        data = [
-            {"name": "user1", "password": "pass1"},
-            {"name": "user2", "token": "token2"}
-        ]
+        data = [{"name": "user1", "password": "pass1"}, {"name": "user2", "token": "token2"}]
         sanitized = _sanitize_for_logging(data)
-        
+
         assert sanitized[0]["name"] == "user1"
         assert sanitized[0]["password"] == "***REDACTED***"
         assert sanitized[1]["name"] == "user2"
@@ -300,14 +289,9 @@ class TestSensitiveDataSanitization:
 
     def test_sanitize_case_insensitive(self):
         """Test _sanitize_for_logging is case-insensitive."""
-        data = {
-            "Password": "secret1",
-            "PASSWORD": "secret2",
-            "ApiKey": "key1",
-            "APIKEY": "key2"
-        }
+        data = {"Password": "secret1", "PASSWORD": "secret2", "ApiKey": "key1", "APIKEY": "key2"}
         sanitized = _sanitize_for_logging(data)
-        
+
         # All variations should be redacted
         assert sanitized["Password"] == "***REDACTED***"
         assert sanitized["PASSWORD"] == "***REDACTED***"
@@ -322,10 +306,10 @@ class TestSensitiveDataSanitization:
             "email": "test@example.com",
             "created_at": "2025-10-01",
             "enabled": True,
-            "count": 42
+            "count": 42,
         }
         sanitized = _sanitize_for_logging(data)
-        
+
         # All non-sensitive fields should be preserved
         assert sanitized == data
 
@@ -339,7 +323,7 @@ class TestSensitiveDataSanitization:
         """Test _sanitize_for_logging handles None values."""
         data = {"password": None, "name": "test"}
         sanitized = _sanitize_for_logging(data)
-        
+
         # None password should still be redacted
         assert sanitized["password"] == "***REDACTED***"
         assert sanitized["name"] == "test"
@@ -374,7 +358,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging masks passwords in text."""
         text = '{"username":"admin","password":"secret123"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         assert "admin" in sanitized
         assert "secret123" not in sanitized
         assert "***REDACTED***" in sanitized
@@ -383,7 +367,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging masks API keys."""
         text = '{"api_key":"key123","name":"test"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         assert "key123" not in sanitized
         assert "***REDACTED***" in sanitized
         assert "test" in sanitized
@@ -392,7 +376,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging masks client secrets."""
         text = '{"clientId":"id123","clientSecret":"secret456"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         assert "id123" in sanitized
         assert "secret456" not in sanitized
         assert "***REDACTED***" in sanitized
@@ -401,7 +385,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging masks access tokens."""
         text = '{"access_token":"token123"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         assert "token123" not in sanitized
         assert "***REDACTED***" in sanitized
 
@@ -409,7 +393,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging is case-insensitive."""
         text = '{"Password":"pass1","PASSWORD":"pass2","ApiKey":"key1"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         assert "pass1" not in sanitized
         assert "pass2" not in sanitized
         assert "key1" not in sanitized
@@ -419,7 +403,7 @@ class TestPlaintextSanitization:
         """Test _sanitize_plaintext_for_logging preserves non-sensitive data."""
         text = '{"id":"123","name":"TestUser","email":"test@example.com"}'
         sanitized = _sanitize_plaintext_for_logging(text)
-        
+
         # Non-sensitive fields should be preserved
         assert "123" in sanitized
         assert "TestUser" in sanitized
@@ -436,4 +420,3 @@ class TestPlaintextSanitization:
         text = "SUCCESS"
         sanitized = _sanitize_plaintext_for_logging(text)
         assert sanitized == "SUCCESS"
-

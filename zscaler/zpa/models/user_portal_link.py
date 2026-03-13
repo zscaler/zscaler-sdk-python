@@ -73,36 +73,21 @@ class UserPortalLink(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.application_id = config["applicationId"] \
-                if "applicationId" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.icon_text = config["iconText"] \
-                if "iconText" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.link = config["link"] \
-                if "link" in config else None
-            self.link_path = config["linkPath"] \
-                if "linkPath" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.protocol = config["protocol"] \
-                if "protocol" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.user_portal_id = config["userPortalId"] \
-                if "userPortalId" in config else None
+            self.application_id = config["applicationId"] if "applicationId" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.icon_text = config["iconText"] if "iconText" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.link = config["link"] if "link" in config else None
+            self.link_path = config["linkPath"] if "linkPath" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.protocol = config["protocol"] if "protocol" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.user_portal_id = config["userPortalId"] if "userPortalId" in config else None
 
             self.user_portals = ZscalerCollection.form_list(
                 config["userPortals"] if "userPortals" in config else [], user_portal_controller.UserPortalController
@@ -146,7 +131,7 @@ class UserPortalLink(ZscalerObject):
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
             "userPortalId": self.user_portal_id,
-            "userPortals": self.user_portals
+            "userPortals": self.user_portals,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

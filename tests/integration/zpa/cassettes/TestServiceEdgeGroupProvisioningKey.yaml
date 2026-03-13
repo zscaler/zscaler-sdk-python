@@ -17,14 +17,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serviceEdgeGroup
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serviceEdgeGroup
   response:
     body:
-      string: '{"id":"216196257331394584","modifiedTime":"1764191925","creationTime":"1764191925","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0001","enabled":true,"description":"tests-pkseg-vcr0002","versionProfileId":"0","overrideVersionProfile":true,"versionProfileName":"Default","upgradeTimeInSecs":"66600","upgradeDay":"SUNDAY","isPublic":"TRUE","location":"San
+      string: '{"id":"216196257331404677","modifiedTime":"1773369926","creationTime":"1773369926","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0001","enabled":true,"description":"tests-pkseg-vcr0002","versionProfileId":"0","overrideVersionProfile":true,"versionProfileName":"Default","upgradeTimeInSecs":"66600","upgradeDay":"SUNDAY","isPublic":"TRUE","location":"San
         Jose, CA, USA","latitude":"37.33874","longitude":"-121.8852525","cityCountry":"San
-        Jose, US","countryCode":"US","useInDrMode":false,"exclusiveForBusinessContinuity":false,"graceDistanceEnabled":false}'
+        Jose, US","countryCode":"US","useInDrMode":false,"exclusiveForBusinessContinuity":false,"graceDistanceEnabled":false,"readOnly":false,"zscalerManaged":false}'
     headers:
       cache-control:
       - no-store
@@ -35,7 +35,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:45 GMT
+      - Fri, 13 Mar 2026 02:45:26 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '123'
+      - '140'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f0efaf25-8d17-96b9-8f2d-b3db4f7e0191
+      - d08c10cf-bb62-9098-adc7-15585bc7aa3f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4888'
+      - '4948'
       x-ratelimit-reset:
-      - '15'
+      - '34'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -89,9 +89,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BService+Edge
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BService+Edge
   response:
     body:
       string: '{"totalPages":"1","totalCount":"1","list":[{"id":"6574","modifiedTime":"1648917421","creationTime":"1619672239","modifiedBy":"72057594037929181","cName":"216196257331281920.zpa-customer.com/Service
@@ -101,7 +101,7 @@ interactions:
         Edge","issuedBy":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Root","serialNo":"242719793220324318684705481635571337583","name":"Service
         Edge","allowSigning":true,"parentCertId":"6571","parentCertName":"Root","privateKeyPresent":true,"clientCertType":"NONE","csr":"-----BEGIN
         CERTIFICATE REQUEST-----\nMIIC3TCCAcUCAQAwZjEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0\nZSBBY2Nlc3MxOTA3BgNVBAMTMDIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9t\nZXIuY29tL1NlcnZpY2UgRWRnZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAI7lXTVxxcDdtRymJZUbTM5Gnu9t+xmroXLIva/0U122wmccGZ++EG0QfpfA\nz/f+kaYsOlOf+6iTQoo+995iwGikXUAjF9hJerxtRz/OXGTEwO9LwU2RNolbtC02\nPZmCkaXU9E2RluXMiHEfsHuNMMZvX7W+j9StS4tTgZBw2h8fhg4QgBOE/vLYX+ma\ndNuFrnXZIk4XG4QAWSfaSzHQUpb0LBsGpI7qWH7NCmxUTnX0U1Ah2mPJxoKsxi1t\nf+1aF2Wqj6dw0kMIHnmcJ9rPNs8JxSnzbVFkDz7/aEIIA6o+BlIQw2v5HgZGsAC3\nqyT68xz/9lqfXXAM1scMzYKn/f8CAwEAAaAyMDAGCSqGSIb3DQEJDjEjMCEwDwYD\nVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwDQYJKoZIhvcNAQELBQADggEB\nAGuvhRmZPtDt/ryEE3YTcXcysfpkcUUIL6rhGufa7/Bewy/UDmDUK7MWX22fSPGt\nsInZo74ZvbiW/SGaivr5HAs5HZlslvv3STb5KgVBsmu/FS3OCIAMgBIFFQ6jONzu\nYJswGeQjz8988W8L8hBS3V+DBn1Sdc2b7O+/F4zYTEYLZZyOx7ko6MDAus3RRehk\njnIrNa2Jl3p1feBQFxMUTN7eLNaCIl9apCNtZ3Es7wEzxo7b/rHj42+G2yIDmi1N\nO8heJJWhxnD1aJSDYtG7cg2auz4PzHohq5nSJgaFi4dQBFUNDBJC4mGKKZhhDguG\nr3KcehMSfpQPbVqWaeY5jCw=\n-----END
-        CERTIFICATE REQUEST-----\n","storeInHsm":false}]}'
+        CERTIFICATE REQUEST-----\n","storeInHsm":false,"readOnly":false,"zscalerManaged":false}]}'
     headers:
       cache-control:
       - no-store
@@ -112,7 +112,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:45 GMT
+      - Fri, 13 Mar 2026 02:45:26 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -130,31 +130,31 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '50'
+      - '46'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 1b505558-89a6-9387-90a0-7cdb9a7d0f48
+      - 7d53f0ed-8ad5-91db-86cc-60e1fea08305
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4887'
+      - '4947'
       x-ratelimit-reset:
-      - '15'
+      - '34'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
       code: 200
       message: OK
 - request:
-    body: '{"enrollmentCertId": "6574", "componentId": "216196257331394584", "name":
-      "tests-pkseg-vcr0003", "maxUsage": 2, "zcomponentId": "216196257331394584"}'
+    body: '{"enrollmentCertId": "6574", "componentId": "216196257331404677", "name":
+      "tests-pkseg-vcr0003", "maxUsage": 2, "zcomponentId": "216196257331404677"}'
     headers:
       Accept:
       - application/json
@@ -167,12 +167,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey
   response:
     body:
-      string: '{"id":"50668","modifiedTime":"1764191925","creationTime":"1764191925","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331394584","enabled":true,"exportable":true,"enrollmentCertId":"6574","provisioningKey":"3|api.private.zscaler.com|l/IF9vjqrcfyhkjIMBpFbZOGXu6mXs6Q1enmZ/lgn2VEqs7FBeZCclSFr0GekUqk1OS9nOJnecnmn0rVZvDf0WQgT3mBKX+Eelii0DFXkIMHP14TSyk53b7S80SknyyM6h5Jd94IpsIa+xVuIYHsdLhZrY7lNpXEDmVuL7tDRZbclLgJDkTWtgvcad58rEhJG1HbGVYj6bVRPGvoz8k39zq4H17xs6YIUAWMQr1z1v0BVIzkuouUjXFRg0PQpqxC21/tCvXdJwZ+kxvtSvj5t++DcAmffng0IIFsbyd8VlydM3VBBbRnN2Q30iwP+s2Vbby9W9dTMFZPKV9n3sRI18dYK2m4pHXnko7J3yeqkXqYVTDvPpJUMmdq0bJw6jax-216196257331299413"}'
+      string: '{"id":"58857","modifiedTime":"1773369927","creationTime":"1773369927","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331404677","enabled":true,"exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","provisioningKey":"3|api.private.zscaler.com|3BZ1DUz/tWqSYFYJzUozfVr2oWGeJrzMb2cxtuH25M4nU8UN7INx1Ir6jnXbltUsBFJ9MqqI2XlIVdrOoaySSE4QU8aQqVdQlkzjuiFb/Y8HuqWr13eR3Mw80rnuk6GfglSV2QsAfRfzgGMw/iq9K6GMomhV9NgUrWNAVV3CX2ZhqDGMqtJr1YNUhOaGdQG87Jq4vj8t5N1Rd+NW8KGS63uxan7VA3UBRr4R+snnmChhf9HnpvVbs84l+v5jXY2Ac5A1SgPU0ml903jpIpOX3Oq2DU5aXlOTYHjuVt6P0rwMfoSAFY6gbWhrYX0XgB79/seA0HSOJRfX3DqkAWze1JLWCitw7qLKOgWKfumzLXhRECmutjsjY+gCxhGBhLvF-216196257331311370"}'
     headers:
       cache-control:
       - no-store
@@ -183,7 +183,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:46 GMT
+      - Fri, 13 Mar 2026 02:45:27 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -201,23 +201,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '374'
+      - '363'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 479a2d29-8d34-9920-bc27-e61facffd650
+      - 266722f0-33af-9657-bdd1-fffbb79a981a
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4886'
+      - '4946'
       x-ratelimit-reset:
-      - '15'
+      - '34'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -237,14 +237,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey
   response:
     body:
       string: '{"totalPages":"1","totalCount":"2","list":[{"id":"46174","modifiedTime":"1745887255","creationTime":"1745887239","modifiedBy":"3","name":"docker-prov-key-zsdemo-zpa","usageCount":"4","maxUsage":"10","zcomponentId":"216196257331382979","enabled":true,"zcomponentName":"Service-Edge-Group-1","exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","enrollmentCertName":"Service
-        Edge","provisioningKey":"3|api.private.zscaler.com|IrDrj/FDnNjVFvuNqfZa4fDZuaCA6EaFzo90fzH++Gdkl43YG9unBgZwGgglA517B70bBGkoDk0EH+WtkA0CMwXljt8asdj1w7ZZmrQlJEJqshQqj1Sa1zLeAemBCDuWTLZAn+X3gKb+ga0NGHxo2L2Qix89TbDqAtTGkN0xrtEKH70WcOCltjNDE5gPGqiLCubmmrSe7WedMPhR3w730azIsyf/xdXN1bPvqIR/gS8ofCQ1ZLEg/PsuVzRqaM5AxV8kgsuDgKcMmxKYXGys4vYO9BGiRRWaqM5F2EKlH44KSIMVSawlr8jXJSQFAn9D2OoEXM2hoJaIFiMQsdaSOI/2FlasYDqy2uyXql5QN/bgOqWgALNjOL+LV/r1wWU3-216196257331286908"},{"id":"50668","modifiedTime":"1764191925","creationTime":"1764191925","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331394584","enabled":true,"zcomponentName":"tests-pkseg-vcr0001","exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","enrollmentCertName":"Service
-        Edge","provisioningKey":"3|api.private.zscaler.com|l/IF9vjqrcfyhkjIMBpFbZOGXu6mXs6Q1enmZ/lgn2VEqs7FBeZCclSFr0GekUqk1OS9nOJnecnmn0rVZvDf0WQgT3mBKX+Eelii0DFXkIMHP14TSyk53b7S80SknyyM6h5Jd94IpsIa+xVuIYHsdLhZrY7lNpXEDmVuL7tDRZbclLgJDkTWtgvcad58rEhJG1HbGVYj6bVRPGvoz8k39zq4H17xs6YIUAWMQr1z1v0BVIzkuouUjXFRg0PQpqxC21/tCvXdJwZ+kxvtSvj5t++DcAmffng0IIFsbyd8VlydM3VBBbRnN2Q30iwP+s2Vbby9W9dTMFZPKV9n3sRI18dYK2m4pHXnko7J3yeqkXqYVTDvPpJUMmdq0bJw6jax-216196257331299413"}]}'
+        Edge","provisioningKey":"3|api.private.zscaler.com|IrDrj/FDnNjVFvuNqfZa4fDZuaCA6EaFzo90fzH++Gdkl43YG9unBgZwGgglA517B70bBGkoDk0EH+WtkA0CMwXljt8asdj1w7ZZmrQlJEJqshQqj1Sa1zLeAemBCDuWTLZAn+X3gKb+ga0NGHxo2L2Qix89TbDqAtTGkN0xrtEKH70WcOCltjNDE5gPGqiLCubmmrSe7WedMPhR3w730azIsyf/xdXN1bPvqIR/gS8ofCQ1ZLEg/PsuVzRqaM5AxV8kgsuDgKcMmxKYXGys4vYO9BGiRRWaqM5F2EKlH44KSIMVSawlr8jXJSQFAn9D2OoEXM2hoJaIFiMQsdaSOI/2FlasYDqy2uyXql5QN/bgOqWgALNjOL+LV/r1wWU3-216196257331286908"},{"id":"58857","modifiedTime":"1773369927","creationTime":"1773369927","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331404677","enabled":true,"zcomponentName":"tests-pkseg-vcr0001","exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","enrollmentCertName":"Service
+        Edge","provisioningKey":"3|api.private.zscaler.com|3BZ1DUz/tWqSYFYJzUozfVr2oWGeJrzMb2cxtuH25M4nU8UN7INx1Ir6jnXbltUsBFJ9MqqI2XlIVdrOoaySSE4QU8aQqVdQlkzjuiFb/Y8HuqWr13eR3Mw80rnuk6GfglSV2QsAfRfzgGMw/iq9K6GMomhV9NgUrWNAVV3CX2ZhqDGMqtJr1YNUhOaGdQG87Jq4vj8t5N1Rd+NW8KGS63uxan7VA3UBRr4R+snnmChhf9HnpvVbs84l+v5jXY2Ac5A1SgPU0ml903jpIpOX3Oq2DU5aXlOTYHjuVt6P0rwMfoSAFY6gbWhrYX0XgB79/seA0HSOJRfX3DqkAWze1JLWCitw7qLKOgWKfumzLXhRECmutjsjY+gCxhGBhLvF-216196257331311370"}]}'
     headers:
       cache-control:
       - no-store
@@ -255,7 +255,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:46 GMT
+      - Fri, 13 Mar 2026 02:45:27 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -273,23 +273,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '111'
+      - '80'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a42ef269-d7fe-96ec-9332-9de10f298440
+      - 29d30a7e-9fc4-995c-b90f-7030e7995ec9
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4885'
+      - '4945'
       x-ratelimit-reset:
-      - '14'
+      - '33'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -309,13 +309,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/50668
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/58857
   response:
     body:
-      string: '{"id":"50668","modifiedTime":"1764191925","creationTime":"1764191925","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331394584","enabled":true,"zcomponentName":"tests-pkseg-vcr0001","exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","enrollmentCertName":"Service
-        Edge","provisioningKey":"3|api.private.zscaler.com|l/IF9vjqrcfyhkjIMBpFbZOGXu6mXs6Q1enmZ/lgn2VEqs7FBeZCclSFr0GekUqk1OS9nOJnecnmn0rVZvDf0WQgT3mBKX+Eelii0DFXkIMHP14TSyk53b7S80SknyyM6h5Jd94IpsIa+xVuIYHsdLhZrY7lNpXEDmVuL7tDRZbclLgJDkTWtgvcad58rEhJG1HbGVYj6bVRPGvoz8k39zq4H17xs6YIUAWMQr1z1v0BVIzkuouUjXFRg0PQpqxC21/tCvXdJwZ+kxvtSvj5t++DcAmffng0IIFsbyd8VlydM3VBBbRnN2Q30iwP+s2Vbby9W9dTMFZPKV9n3sRI18dYK2m4pHXnko7J3yeqkXqYVTDvPpJUMmdq0bJw6jax-216196257331299413"}'
+      string: '{"id":"58857","modifiedTime":"1773369927","creationTime":"1773369927","modifiedBy":"216196257331372705","name":"tests-pkseg-vcr0003","usageCount":"0","maxUsage":"2","zcomponentId":"216196257331404677","enabled":true,"zcomponentName":"tests-pkseg-vcr0001","exportable":true,"readOnly":false,"zscalerManaged":false,"enrollmentCertId":"6574","enrollmentCertName":"Service
+        Edge","provisioningKey":"3|api.private.zscaler.com|3BZ1DUz/tWqSYFYJzUozfVr2oWGeJrzMb2cxtuH25M4nU8UN7INx1Ir6jnXbltUsBFJ9MqqI2XlIVdrOoaySSE4QU8aQqVdQlkzjuiFb/Y8HuqWr13eR3Mw80rnuk6GfglSV2QsAfRfzgGMw/iq9K6GMomhV9NgUrWNAVV3CX2ZhqDGMqtJr1YNUhOaGdQG87Jq4vj8t5N1Rd+NW8KGS63uxan7VA3UBRr4R+snnmChhf9HnpvVbs84l+v5jXY2Ac5A1SgPU0ml903jpIpOX3Oq2DU5aXlOTYHjuVt6P0rwMfoSAFY6gbWhrYX0XgB79/seA0HSOJRfX3DqkAWze1JLWCitw7qLKOgWKfumzLXhRECmutjsjY+gCxhGBhLvF-216196257331311370"}'
     headers:
       cache-control:
       - no-store
@@ -326,7 +326,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:46 GMT
+      - Fri, 13 Mar 2026 02:45:27 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -344,23 +344,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '72'
+      - '67'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8b60cedc-bd1e-93fc-a5e0-a34e870cc24c
+      - d6b132ce-72d7-9655-980c-25236d54e4cb
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4884'
+      - '4944'
       x-ratelimit-reset:
-      - '14'
+      - '33'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -380,9 +380,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/50668
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/58857
   response:
     body:
       string: ''
@@ -392,71 +392,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:46 GMT
-      expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      pragma:
-      - no-cache
-      referrer-policy:
-      - strict-origin-when-cross-origin
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '41'
-      x-frame-options:
-      - DENY
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - a36bec18-9c16-951c-a67e-16b32885109e
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4883'
-      x-ratelimit-reset:
-      - '14'
-      x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
-      x-xss-protection:
-      - '0'
-    status:
-      code: 204
-      message: No Content
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/50668
-  response:
-    body:
-      string: ''
-    headers:
-      cache-control:
-      - no-store
-      content-security-policy:
-      - default-src 'none'; upgrade-insecure-requests
-      date:
-      - Wed, 26 Nov 2025 21:18:46 GMT
+      - Fri, 13 Mar 2026 02:45:28 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -478,17 +414,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 349457b5-91e2-9073-af7f-0cd4c89ee9f2
+      - 1e62aa69-b51e-9e4f-b592-54b86f25be2d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4882'
+      - '4943'
       x-ratelimit-reset:
-      - '14'
+      - '33'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -508,9 +444,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serviceEdgeGroup/216196257331394584
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/associationType/SERVICE_EDGE_GRP/provisioningKey/58857
   response:
     body:
       string: ''
@@ -520,7 +456,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:47 GMT
+      - Fri, 13 Mar 2026 02:45:28 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -536,23 +472,87 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '51'
+      - '40'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c2600adb-7772-9f81-a7b4-a997ff32e3a4
+      - 353d2c5d-90e1-9e4e-9bdc-0f39a3676792
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4881'
+      - '4942'
       x-ratelimit-reset:
-      - '14'
+      - '32'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serviceEdgeGroup/216196257331404677
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Fri, 13 Mar 2026 02:45:28 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '50'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0c9348f8-c9c1-9977-804e-34fb48f704fe
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4941'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:

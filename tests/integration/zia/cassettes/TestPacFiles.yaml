@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles
+    uri: https://easm.test.zscaler.com/zia/api/v1/pacFiles
   response:
     body:
-      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+      string: '[{"id":17392,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/kerberos.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
         resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
         private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
@@ -74,11 +74,12 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
-        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
         \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6156,"name":"recommended.pac","description":"Recommended
-        PAC","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/recommended.pac","pacContent":"\nfunction
+        version","totalHits":0,"lastModificationTime":1666399173,"createTime":1666399173},{"id":17393,"name":"recommended.pac","description":"Recommended
+        PAC","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/recommended.pac","pacContent":"\nfunction
         FindProxyForURL(url, host) {\n\n//        ****************************************************************************\n//        This
         is an example PAC file that should be edited prior to being put to use.\n//        ****************************************************************************\n\n//        Consider
         the following:\n//         - Keep production PAC files small. Delete all comments
@@ -113,7 +114,7 @@ interactions:
         != \"ftp:\") &&\n                 (url.substring(0,6) != \"https:\"))\n                 return
         \"DIRECT\";\n\n//        ====== Section IV ==== Bypasses for Zscaler ===================================\n\n//        Go
         direct for queries about Zscaler infrastructure status\n\n         var trust
-        = /^(trust|ips)\\.(zscaler|zscalerone|zscalertwo|zscalerthree|zsdemo|zscalergov|zscloud|zsfalcon|zdxcloud|zdxpreview|zdxbeta|zspreview|zsdevel|zsbetagov|zscalerten|zdxten|zdxdevel|zdxgov|zsqa|zscaleranalytics|zsprotect|zdxqa|zscalerrisk|zscalergscm|zscalermscm|zscascm|ztwcloud|zsca|zsqatwo|ztwdevel|ztwgov|ztwpreview|ztwbeta|zscalerfour|zscalerfive|zscalerbetatwo|zsdk14|zsdkcloud|zscmeleven|zscalereleven|zdxeleven|fcceleven|zscaleranalyticspreview|zscalerriskpreview|zscaleranalyticsbeta|zscalerriskbeta|zscaleranalyticsgov|zscalerriskgov|zscaleranalyticsten|zscalerriskten|zsst1|zsst2|zsst3|zsst4|zsst5|zsuxp|ztwqa|zsystest|zsenvaa)\\.(com|net)$/;\n         var
+        = /^(trust|ips)\\.(zscaler|zscalerone|zscalertwo|zscalerthree|zsdemo|zscalergov|zscloud|zsfalcon|zdxcloud|zdxpreview|zdxbeta|zspreview|zsdevel|zsbetagov|zscalerten|zdxten|zdxdevel|zdxgov|zsqa|zscaleranalytics|zsprotect|zdxqa|zscalerrisk|zscalergscm|zscalermscm|zscascm|ztwcloud|zsca|zsqatwo|ztwdevel|ztwgov|ztwpreview|ztwbeta|zscalerfour|zscalerfive|zscalerbetatwo|zsdk14|zsdkcloud|zscmeleven|zscalereleven|zdxeleven|fcceleven|zscaleranalyticspreview|zscalerriskpreview|zscaleranalyticsbeta|zscalerriskbeta|zscaleranalyticsgov|zscalerriskgov|zscaleranalyticsten|zscalerriskten|zsst1|zsst2|zsst3|zsst4|zsst5|zsuxp|ztwqa|zsystest|zsenvaa|zsafety)\\.(com|net)$/;\n         var
         iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n\n         if
         (trust.test(host) || iam.test(host) || /^trust.zscaler.us$/.test(host))\n             return
         \"DIRECT\";\n\n//        ====== Section V ==== Bypasses for ZPA ===================================\n\t\t  /*
@@ -124,8 +125,8 @@ interactions:
         that does not resolve, we send directly:\n        \n          return \"PROXY
         ${GATEWAY}:9400; PROXY ${SECONDARY_GATEWAY}:9400; PROXY ${GATEWAY}:80; PROXY
         ${SECONDARY_GATEWAY}:80; DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6157,"name":"mobile_proxy.pac","description":"Service
-        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/mobile_proxy.pac","pacContent":"function
+        version","totalHits":13267,"lastModificationTime":1666399173,"createTime":1666399173},{"id":17394,"name":"mobile_proxy.pac","description":"Service
+        Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/mobile_proxy.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n                        var
         resolved_ip = dnsResolve(host);\n            /* Don''t send non-FQDN or private
         IP auths to us */\n            if (isPlainHostName(host) || shExpMatch(host,
@@ -184,14 +185,15 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n                    (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                                (url.substring(0,5)
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                                (url.substring(0,5)
         == \"http:\" || url.substring(0,6) == \"https:\"))\n                return
-        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerbeta.net\"))\n                return
-        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerbeta.net\"))\n                return  \"PROXY
+        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerthree.net\"))\n                return
+        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerthree.net\"))\n                return  \"PROXY
         ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nreturn \"PROXY ${GATEWAY}:8080;
         PROXY ${SECONDARY_GATEWAY}:8080; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6158,"name":"proxy.pac","description":"Service
-        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/proxy.pac","pacContent":"\n\tfunction
+        version","totalHits":1300,"lastModificationTime":1666399173,"createTime":1666399173},{"id":17395,"name":"proxy.pac","description":"Service
+        Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/proxy.pac","pacContent":"\n\tfunction
         FindProxyForURL(url, host) {\n\n    var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n    var
         resolved_ip = dnsResolve(host);\n   // var country = \"${COUNTRY}\";\n\n    /*
         Don''t send non-FQDN or private IP auths to us */\n    if (isPlainHostName(host)
@@ -243,63 +245,17 @@ interactions:
         ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\")) ||\n\t\t(localHostOrDomainIs(host,
         \"trust.zsuxp.net\")) ||\n        (localHostOrDomainIs(host, \"trust.ztwqa.net\"))
         ||\n\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\")) ||\n\t\t(localHostOrDomainIs(host,
-        \"trust.zsenvaa.net\")) ) &&\n            (url.substring(0,5) == \"http:\"
-        || url.substring(0,6) == \"https:\"))\n        return \"DIRECT\";\n\n\t/*
-        for users of Canada if you want to direct traffic to only canada gateways*/\n//\tif
-        (shExpMatch(country, \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80;
-        PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/* for all users
-        if you want to direct traffic to country gateways by default */\n//\treturn
-        \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
+        \"trust.zsenvaa.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsafety.net\"))
+        ) &&\n            (url.substring(0,5) == \"http:\" || url.substring(0,6) ==
+        \"https:\"))\n        return \"DIRECT\";\n\n\t/* for users of Canada if you
+        want to direct traffic to only canada gateways*/\n//\tif (shExpMatch(country,
+        \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/*
+        for all users if you want to direct traffic to country gateways by default
+        */\n//\treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
         Default Traffic Forwarding. Forwarding to Zen on port 80, but you can use
         port 9400 also */\n    return \"PROXY ${GATEWAY_FX}:80; PROXY ${SECONDARY_GATEWAY_FX}:80;
         DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":18805,"name":"Test_Pac_File_01","description":"Test_Pac_File_01","domain":"securitygeek.io","pacUrl":"https://pac.zscalerbeta.net/securitygeek.io/Test_Pac_File_01","pacContent":"\nfunction
-        FindProxyForURL(url, host) {\n\n//        ****************************************************************************\n//        This
-        is an example PAC file that should be edited prior to being put to use.\n//        ****************************************************************************\n\n//        Consider
-        the following:\n//         - Keep production PAC files small. Delete all comments
-        if possible\n//         - Delete any examples or sections that do not fit
-        your needs\n//         - Consolidate bypass criteria into fewer if() statements
-        if possible\n//         - Be sure you are bypassing only traffic that *must*
-        be bypassed\n//         - Be sure to not perform any DNS resolution in the
-        PAC\n//         - Zscaler recommends sending bypassed internet traffic via
-        on-premise proxy compared\n//           to the internet directly\n\n//        ======
-        Section I ==== Internal/Specific Destinations ==============================
-        \n\n//        Most special use IPv4 addresses (RFC 5735) defined within this
-        regex.\n          var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n          var
-        resolved_ip = dnsResolve(host);\n\n          /* Don''t send non-FQDN or private
-        IP auths to us */\n          if (isInNet(resolved_ip, \"192.0.2.0\",\"255.255.255.0\")
-        || privateIP.test(resolved_ip))\n\t\t          return \"DIRECT\";\n\n//        Specific
-        destinations can be bypassed here. Example lines for host, and\n//        domain
-        provided. Replace with your specific information. Add internal \n//        domains
-        that cannot be publicly resolved here.\n\n          if (isPlainHostName(host)
-        || (host == \"host.example.com\") ||\n                  shExpMatch(host, \"*.example.com\"))\n                  return
-        \"DIRECT\";\n\n//        If you have a website that is hosted both internally
-        and externally,\n//        and you want to bypass proxy for internal version
-        only, use the following\n\n//        if (shExpMatch(host, \"internal.example.com\"))\n//        {\n//                var
-        resolved_ip = dnsResolve(host);\n//                if (privateIP.test(resolved_ip))\n//                        return
-        \"DIRECT\";\n//        }\n\n//        ====== Section II ==== Special Bypasses
-        for SAML============================== \n\n//        if (shExpMatch(host,
-        \"*.okta.com\") || shExpMatch(host, \"*.oktacdn.com\"))\n//                return
-        \"DIRECT\";\n                \n//        if (shExpMatch(host, \"my_iwa_server.my_example_domain.com\"))\n//                return
-        \"DIRECT\";\n\n//        ====== Section III ==== Bypasses for other protocols
-        ============================\n\n//        Send everything other than HTTP
-        and HTTPS direct\n//        Uncomment middle line if FTP over HTTP is enabled\n           \n          if
-        ((url.substring(0,5) != \"http:\") &&\n//                (url.substring(0,4)
-        != \"ftp:\") &&\n                 (url.substring(0,6) != \"https:\"))\n                 return
-        \"DIRECT\";\n\n//        ====== Section IV ==== Bypasses for Zscaler ===================================\n\n//        Go
-        direct for queries about Zscaler infrastructure status\n\n         var trust
-        = /^(trust|ips)\\.(zscaler|zscalerone|zscalertwo|zscalerthree|zsdemo|zscalergov|zscloud|zsfalcon|zdxcloud|zdxpreview|zdxbeta|zspreview|zsdevel|zsbetagov|zscalerten|zdxten|zdxdevel|zdxgov|zsqa|zscaleranalytics|zsprotect|riskanalytics|zdxqa|zscalerrisk|zscalergscm|zscalermscm|zscascm|ztwcloud|zsca|zsqatwo|zscalerfour|zscalerfive|zscalerbetatwo|zsdkcloud|zscmeleven|zscalereleven|zdxeleven|fcceleven)\\.(com|net)$/;\n         var
-        iam = /^.*\\.(zslogin|zsloginbeta|zslogindemo|zsloginalpha).net$/;\n\n         if
-        (trust.test(host) || iam.test(host) || /^trust.zscaler.us$/.test(host))\n             return
-        \"DIRECT\";\n\n//        ====== Section V ==== Bypasses for ZPA ===================================\n\t\t  /*
-        test with ZPA*/\n\t\t  if (isInNet(resolved_ip, \"100.64.0.0\",\"255.255.0.0\"))\n                 return
-        \"DIRECT\";\n\n//        ====== Section VI ==== DEFAULT FORWARDING ================================
-        \n\n//        If your company has purchased dedicated port, kindly use that
-        in this file.\n//        Port 9400 is the default port followed by 80. If
-        that does not resolve, we send directly:\n        \n          return \"PROXY
-        ${GATEWAY}:9400; PROXY ${SECONDARY_GATEWAY}:9400; PROXY ${GATEWAY}:80; PROXY
-        ${SECONDARY_GATEWAY}:80; DIRECT\";\n}\n","editable":true,"pacUrlObfuscated":false,"pacVerificationStatus":"VERIFY_NOERR","pacVersionStatus":"DEPLOYED","pacVersion":5,"pacCommitMessage":"Clone
-        of Test_Pac_File_01","totalHits":0,"lastModificationTime":1741299034,"lastModifiedBy":{"id":8061243,"name":"REDACTED"},"createTime":1741299034}]'
+        version","totalHits":6141801,"lastModificationTime":1666399173,"createTime":1666399173}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -321,33 +277,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:18 GMT
+      - Fri, 13 Mar 2026 03:20:47 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '519'
+      - '796'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 28142d74-6f05-9eba-91dc-4e48d87660cf
+      - 8edb880a-9266-9acf-8c6b-7c46543542f9
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4966'
       x-ratelimit-reset:
-      - '42'
+      - '14'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -369,12 +327,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/6155/version
+    uri: https://easm.test.zscaler.com/zia/api/v1/pacFiles/17392/version
   response:
     body:
-      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+      string: '[{"id":17392,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/kerberos.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
         resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
         private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
@@ -430,10 +388,11 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
-        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
         \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}]'
+        version","totalHits":0,"lastModificationTime":1666399173,"createTime":1666399173}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -455,101 +414,39 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:19 GMT
+      - Fri, 13 Mar 2026 03:20:48 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '576'
+      - '652'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 72fc1d00-309b-9800-bdc4-b765bffeb381
+      - fe42b9e1-89ac-9f3b-aa2a-09928f6c207b
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4965'
       x-ratelimit-reset:
-      - '41'
+      - '13'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
       - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 21:43:08 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
     status:
       code: 200
       message: OK
@@ -567,12 +464,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/6155/version/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/pacFiles/17392/version/1
   response:
     body:
-      string: '{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+      string: '{"id":17392,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/kerberos.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
         resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
         private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
@@ -628,10 +525,11 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
-        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
         \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}'
+        version","totalHits":0,"lastModificationTime":1666399173,"createTime":1666399173}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -653,7 +551,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:24:37 GMT
+      - Fri, 13 Mar 2026 03:20:49 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -665,23 +563,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '479'
+      - '900'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 44918971-bade-9573-918e-74f9f6131689
+      - bbd484c0-1a18-9127-9d8f-6f0ce0928357
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4987'
+      - '4964'
       x-ratelimit-reset:
-      - '24'
+      - '12'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -701,9 +599,9 @@ interactions:
       Content-Length:
       - '60'
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles/validate
+    uri: https://easm.test.zscaler.com/zia/api/v1/pacFiles/validate
   response:
     body:
       string: '{"success":true,"message":null,"severity":null,"messages":[],"warningCount":0,"errorCount":0}'
@@ -728,7 +626,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:24:38 GMT
+      - Fri, 13 Mar 2026 03:20:51 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -736,23 +634,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '947'
+      - '2140'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fd951996-c03c-9e65-a525-1b13f58a42fc
+      - e03a43d2-21f0-9e0a-89e3-8fd8dac17a5f
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4963'
       x-ratelimit-reset:
-      - '23'
+      - '11'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -774,12 +672,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/pacFiles?search=default
+    uri: https://easm.test.zscaler.com/zia/api/v1/pacFiles?search=default
   response:
     body:
-      string: '[{"id":6155,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/kerberos.pac","pacContent":"function
+      string: '[{"id":17392,"name":"kerberos.pac","description":"Service Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/kerberos.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n            var
         resolved_ip = dnsResolve(host);\n\n            /* Don''t send non-FQDN or
         private IP auths to us */\n            if (isPlainHostName(host) || isInNet(resolved_ip,
@@ -835,11 +733,12 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n            (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                (url.substring(0,5)
-        == \"http:\" || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
+        ||\n\t\t    (localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t    (localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                (url.substring(0,5) == \"http:\"
+        || url.substring(0,6) == \"https:\"))\n            \treturn \"DIRECT\";\n\t\t\treturn
         \"PROXY ${GATEWAY_HOST}:8800; PROXY ${SECONDARY_GATEWAY_HOST}:8800; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6157,"name":"mobile_proxy.pac","description":"Service
-        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/mobile_proxy.pac","pacContent":"function
+        version","totalHits":0,"lastModificationTime":1666399173,"createTime":1666399173},{"id":17394,"name":"mobile_proxy.pac","description":"Service
+        Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/mobile_proxy.pac","pacContent":"function
         FindProxyForURL(url, host) {\n            var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n                        var
         resolved_ip = dnsResolve(host);\n            /* Don''t send non-FQDN or private
         IP auths to us */\n            if (isPlainHostName(host) || shExpMatch(host,
@@ -898,14 +797,15 @@ interactions:
         \"trust.zsst4.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\"))
         ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsuxp.net\")) ||\n                    (localHostOrDomainIs(host,
         \"trust.ztwqa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\"))
-        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ) &&\n                                (url.substring(0,5)
+        ||\n\t\t\t\t\t(localHostOrDomainIs(host, \"trust.zsenvaa.net\")) ||\n\t\t\t\t\t(localHostOrDomainIs(host,
+        \"trust.zsafety.net\")) ) &&\n                                (url.substring(0,5)
         == \"http:\" || url.substring(0,6) == \"https:\"))\n                return
-        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerbeta.net\"))\n                return
-        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerbeta.net\"))\n                return  \"PROXY
+        \"DIRECT\";\nif (dnsDomainIs(host,\"login.zscalerthree.net\"))\n                return
+        \"PROXY ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nif (dnsDomainIs(host,\"gateway.zscalerthree.net\"))\n                return  \"PROXY
         ${GATEWAY}:80; PROXY ${SECONDARY_GATEWAY}:80;DIRECT\";\nreturn \"PROXY ${GATEWAY}:8080;
         PROXY ${SECONDARY_GATEWAY}:8080; DIRECT\";}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661},{"id":6158,"name":"proxy.pac","description":"Service
-        Default.","domain":"zscalerbeta.net","pacUrl":"https://pac.zscalerbeta.net/zscalerbeta.net/proxy.pac","pacContent":"\n\tfunction
+        version","totalHits":1301,"lastModificationTime":1666399173,"createTime":1666399173},{"id":17395,"name":"proxy.pac","description":"Service
+        Default.","domain":"zscalerthree.net","pacUrl":"https://pac.zscalerthree.net/zscalerthree.net/proxy.pac","pacContent":"\n\tfunction
         FindProxyForURL(url, host) {\n\n    var privateIP = /^(0|10|127|192\\.168|172\\.1[6789]|172\\.2[0-9]|172\\.3[01]|169\\.254|192\\.88\\.99)\\.[0-9.]+$/;\n    var
         resolved_ip = dnsResolve(host);\n   // var country = \"${COUNTRY}\";\n\n    /*
         Don''t send non-FQDN or private IP auths to us */\n    if (isPlainHostName(host)
@@ -957,17 +857,17 @@ interactions:
         ||\n\t\t(localHostOrDomainIs(host, \"trust.zsst5.net\")) ||\n\t\t(localHostOrDomainIs(host,
         \"trust.zsuxp.net\")) ||\n        (localHostOrDomainIs(host, \"trust.ztwqa.net\"))
         ||\n\t\t(localHostOrDomainIs(host, \"trust.zsystest.net\")) ||\n\t\t(localHostOrDomainIs(host,
-        \"trust.zsenvaa.net\")) ) &&\n            (url.substring(0,5) == \"http:\"
-        || url.substring(0,6) == \"https:\"))\n        return \"DIRECT\";\n\n\t/*
-        for users of Canada if you want to direct traffic to only canada gateways*/\n//\tif
-        (shExpMatch(country, \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80;
-        PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/* for all users
-        if you want to direct traffic to country gateways by default */\n//\treturn
-        \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
+        \"trust.zsenvaa.net\")) ||\n\t\t(localHostOrDomainIs(host, \"trust.zsafety.net\"))
+        ) &&\n            (url.substring(0,5) == \"http:\" || url.substring(0,6) ==
+        \"https:\"))\n        return \"DIRECT\";\n\n\t/* for users of Canada if you
+        want to direct traffic to only canada gateways*/\n//\tif (shExpMatch(country,
+        \"Canada\")) {\n//\t \treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n//\t}\n\n\t/*
+        for all users if you want to direct traffic to country gateways by default
+        */\n//\treturn \"PROXY ${COUNTRY_GATEWAY_FX}:80; PROXY ${COUNTRY_SECONDARY_GATEWAY_FX};DIRECT\";\n\n\n    /*
         Default Traffic Forwarding. Forwarding to Zen on port 80, but you can use
         port 9400 also */\n    return \"PROXY ${GATEWAY_FX}:80; PROXY ${SECONDARY_GATEWAY_FX}:80;
         DIRECT\";\n}","editable":false,"pacUrlObfuscated":false,"pacVersionStatus":"DEPLOYED","pacVersion":1,"pacCommitMessage":"Initial
-        version","totalHits":0,"lastModificationTime":1656370661,"createTime":1656370661}]'
+        version","totalHits":6143229,"lastModificationTime":1666399173,"createTime":1666399173}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -989,7 +889,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:24:39 GMT
+      - Fri, 13 Mar 2026 03:20:52 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1001,23 +901,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '545'
+      - '885'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 34c62c7a-b8d1-9878-8b9d-3109ecbd4108
+      - 40779e47-3c97-90f1-97ab-897288b861b2
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4962'
       x-ratelimit-reset:
-      - '22'
+      - '9'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

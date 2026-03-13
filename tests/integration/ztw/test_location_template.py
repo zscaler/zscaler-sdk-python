@@ -58,7 +58,7 @@ class TestLocationTemplate:
                     },
                 )
                 assert error is None, f"Error creating location template: {error}"
-                template_id = created_location.id if hasattr(created_location, 'id') else created_location.get("id", None)
+                template_id = created_location.id if hasattr(created_location, "id") else created_location.get("id", None)
                 assert template_id is not None, "Location template creation failed"
             except Exception as exc:
                 errors.append(f"Location template creation failed: {exc}")
@@ -69,11 +69,10 @@ class TestLocationTemplate:
                 templates, _, error = client.ztw.location_template.list_location_templates()
                 assert error is None, f"Error listing location templates: {error}"
                 retrieved_template = next(
-                    (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
-                    None
+                    (t for t in templates if (t.id if hasattr(t, "id") else t.get("id")) == template_id), None
                 )
                 assert retrieved_template is not None, f"Could not find template with ID {template_id}"
-                retrieved_id = retrieved_template.id if hasattr(retrieved_template, 'id') else retrieved_template.get("id")
+                retrieved_id = retrieved_template.id if hasattr(retrieved_template, "id") else retrieved_template.get("id")
                 assert retrieved_id == template_id, "Incorrect location template retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Location Template failed: {exc}")
@@ -106,11 +105,10 @@ class TestLocationTemplate:
                 templates, _, error = client.ztw.location_template.list_location_templates()
                 assert error is None, f"Error listing location templates after update: {error}"
                 updated_location = next(
-                    (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
-                    None
+                    (t for t in templates if (t.id if hasattr(t, "id") else t.get("id")) == template_id), None
                 )
                 assert updated_location is not None, f"Could not find updated template with ID {template_id}"
-                updated_desc = updated_location.desc if hasattr(updated_location, 'desc') else updated_location.get("desc")
+                updated_desc = updated_location.desc if hasattr(updated_location, "desc") else updated_location.get("desc")
                 assert updated_desc == updated_description, "Location template update failed"
             except Exception as exc:
                 errors.append(f"Updating location template failed: {exc}")
@@ -120,9 +118,7 @@ class TestLocationTemplate:
                 locations, _, error = client.ztw.location_template.list_location_templates()
                 assert error is None, f"Error listing location templates: {error}"
                 # Check if the newly created location is in the list of templates
-                found_location = any(
-                    (loc.id if hasattr(loc, 'id') else loc.get("id")) == template_id for loc in locations
-                )
+                found_location = any((loc.id if hasattr(loc, "id") else loc.get("id")) == template_id for loc in locations)
                 assert found_location, "Newly created location template not found in the list of templates."
             except Exception as exc:
                 errors.append(f"Listing location templates failed: {exc}")
@@ -136,8 +132,10 @@ class TestLocationTemplate:
                     assert error is None, f"Error deleting location template: {error}"
                     # delete_location_template returns (None, response, None) on success
                     # Check response status code if available
-                    if response and hasattr(response, 'status_code'):
-                        assert response.status_code == 204, f"Location template deletion failed with status {response.status_code}"
+                    if response and hasattr(response, "status_code"):
+                        assert (
+                            response.status_code == 204
+                        ), f"Location template deletion failed with status {response.status_code}"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting location failed: {exc}")
 

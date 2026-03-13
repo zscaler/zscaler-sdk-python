@@ -65,16 +65,16 @@ def get_config():
         sys.exit(1)
 
     return {
-        'clientId': client_id,
-        'clientSecret': client_secret,
-        'vanityDomain': vanity_domain,
-        'cloud': cloud,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "vanityDomain": vanity_domain,
+        "cloud": cloud,
     }
 
 
 def get_time_range(days: int):
     """Get start and end time in epoch milliseconds.
-    
+
     Note: Z-Insights API requires end_time to be at least 1 day before current time.
     """
     # End time is 1 day ago (API requirement)
@@ -95,7 +95,7 @@ def format_bytes(bytes_val):
     """Format bytes into human-readable format."""
     if bytes_val is None:
         return "N/A"
-    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
         if bytes_val < 1024:
             return f"{bytes_val:.2f} {unit}"
         bytes_val /= 1024
@@ -103,21 +103,9 @@ def format_bytes(bytes_val):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Query Shadow IT discovered applications from Z-Insights"
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=10,
-        help="Maximum number of entries to return (default: 10)"
-    )
-    parser.add_argument(
-        "--days",
-        type=int,
-        default=7,
-        help="Number of days to query (default: 7)"
-    )
+    parser = argparse.ArgumentParser(description="Query Shadow IT discovered applications from Z-Insights")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum number of entries to return (default: 10)")
+    parser.add_argument("--days", type=int, default=7, help="Number of days to query (default: 7)")
     args = parser.parse_args()
 
     config = get_config()
@@ -129,9 +117,7 @@ def main():
         # Query discovered applications
         print_header("Shadow IT Discovered Applications")
         entries, response, error = client.zinsights.shadow_it.get_apps(
-            start_time=start_time,
-            end_time=end_time,
-            limit=args.limit
+            start_time=start_time, end_time=end_time, limit=args.limit
         )
 
         if error:
@@ -139,12 +125,12 @@ def main():
         elif entries:
             print(f"  Found {len(entries)} applications:\n")
             for entry in entries:
-                app_name = entry.get('application', 'Unknown')
-                category = entry.get('application_category', 'N/A')
-                risk = entry.get('risk_index', 'N/A')
-                state = entry.get('sanctioned_state', 'N/A')
-                integrations = entry.get('integration', 0)
-                data_consumed = entry.get('data_consumed', 0)
+                app_name = entry.get("application", "Unknown")
+                category = entry.get("application_category", "N/A")
+                risk = entry.get("risk_index", "N/A")
+                state = entry.get("sanctioned_state", "N/A")
+                integrations = entry.get("integration", 0)
+                data_consumed = entry.get("data_consumed", 0)
                 print(f"  App: {app_name}")
                 print(f"    Category: {category}")
                 print(f"    Risk Index: {risk}")
@@ -157,10 +143,7 @@ def main():
 
         # Query comprehensive summary
         print_header("Shadow IT Summary")
-        summary, response, error = client.zinsights.shadow_it.get_shadow_it_summary(
-            start_time=start_time,
-            end_time=end_time
-        )
+        summary, response, error = client.zinsights.shadow_it.get_shadow_it_summary(start_time=start_time, end_time=end_time)
 
         if error:
             print(f"Error: {error}")
@@ -170,14 +153,14 @@ def main():
             print(f"  Total Bytes: {format_bytes(summary.get('total_bytes', 0))}")
             print(f"  Upload Bytes: {format_bytes(summary.get('total_upload_bytes', 0))}")
             print(f"  Download Bytes: {format_bytes(summary.get('total_download_bytes', 0))}")
-            
+
             # Sample from group_by_app_cat_for_app
             print("\n  Apps by Category (top 5):")
-            group_data = summary.get('group_by_app_cat_for_app', {})
-            entries = group_data.get('entries', [])[:5]
+            group_data = summary.get("group_by_app_cat_for_app", {})
+            entries = group_data.get("entries", [])[:5]
             for entry in entries:
-                name = entry.get('name', 'Unknown')
-                total = entry.get('total', 0)
+                name = entry.get("name", "Unknown")
+                total = entry.get("total", 0)
                 print(f"    {name}: {total:,} apps")
         else:
             print("  No summary data available.")

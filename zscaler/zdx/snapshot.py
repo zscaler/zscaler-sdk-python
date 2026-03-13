@@ -90,28 +90,26 @@ class SnapshotAPI(APIClient):
         )
 
         # Handle expiry conversion from hours to Unix epoch
-        query_params = kwargs.get('query_params', {})
+        query_params = kwargs.get("query_params", {})
         body = {}
 
         # Extract the main parameters for the body
-        if 'name' in kwargs:
-            body['name'] = kwargs['name']
-        if 'alert_id' in kwargs:
-            body['alert_id'] = kwargs['alert_id']
+        if "name" in kwargs:
+            body["name"] = kwargs["name"]
+        if "alert_id" in kwargs:
+            body["alert_id"] = kwargs["alert_id"]
 
         # Check if expiry is in query_params (from decorator) and convert it
-        if 'expiry' in query_params:
+        if "expiry" in query_params:
             import time
+
             # Convert hours to Unix epoch (current time + hours * 3600 seconds)
-            expiry_hours = query_params.pop('expiry')  # Remove from query_params
+            expiry_hours = query_params.pop("expiry")  # Remove from query_params
             expiry_epoch = int(time.time()) + (expiry_hours * 3600)
-            body['expiry'] = expiry_epoch
+            body["expiry"] = expiry_epoch
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-            params=query_params or {}
+            method=http_method, endpoint=api_url, body=body, params=query_params or {}
         )
 
         if error:

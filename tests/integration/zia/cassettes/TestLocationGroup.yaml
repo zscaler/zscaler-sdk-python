@@ -13,27 +13,81 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups
   response:
     body:
-      string: '[{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"comments":"Default
+      string: '[{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"Default
         Location Group - Corporate User Traffic","lastModTime":1619561356,"predefined":true},{"id":24326829,"name":"Server
-        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["SERVER"]},"comments":"Default
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["SERVER"]},"locations":[{"id":166080180,"name":"Location_20260219040945"},{"id":166862881,"name":"Location_20260227110338"},{"id":166873020,"name":"Location_20260227170256"},{"id":167080684,"name":"Location_20260302161529"},{"id":167698587,"name":"Location_20260309104402"}],"locationsCount":5,"comments":"Default
         Location Group - Server Traffic","lastModTime":1619561356,"predefined":true},{"id":24326830,"name":"Guest
         Wifi Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]},"comments":"Default
         Location Group - Guest Wifi","lastModTime":1619561356,"predefined":true},{"id":24326831,"name":"IoT
         Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["IOT"]},"comments":"Default
         Location Group - IoT Traffic","lastModTime":1619561356,"predefined":true},{"id":59050241,"name":"Workload
         Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]},"locations":[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71"},{"id":45772677,"name":"nostrud
-        qui dolore"}],"locationsCount":12,"comments":"Default Location Group - Workload
-        Traffic","lastModTime":1666399620,"predefined":true},{"id":66754704,"name":"SDWAN_CAN","groupType":"STATIC_GROUP","comments":"SDWAN_CAN","lastModUser":{"id":24328827,"name":"William
-        Guilherme"},"lastModTime":1677799854},{"id":66754715,"name":"SDWAN_GLOBAL","groupType":"STATIC_GROUP","comments":"SDWAN_GLOBAL","lastModUser":{"id":24328827,"name":"William
-        Guilherme"},"lastModTime":1677799863},{"id":66754722,"name":"SDWAN_USA","groupType":"STATIC_GROUP","comments":"SDWAN_USA","lastModUser":{"id":24328827,"name":"William
+        qui dolore"},{"id":159819758,"name":"vdqIQRy"}],"locationsCount":13,"comments":"Default
+        Location Group - Workload Traffic","lastModTime":1666399620,"predefined":true},{"id":66754704,"name":"SDWAN_CAN","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_CAN","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799854},{"id":66754715,"name":"SDWAN_GLOBAL","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_GLOBAL","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799863},{"id":66754722,"name":"SDWAN_USA","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_USA","lastModUser":{"id":24328827,"name":"William
         Guilherme"},"lastModTime":1677799872},{"id":157892460,"name":"All Extranet
         Location Group","groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"comments":"Auto-created
-        - All Extranet Locations","lastModUser":{"id":65544,"name":"DEFAULT ADMIN"},"lastModTime":1763256806,"predefined":true}]'
+        - All Extranet Locations","lastModUser":{"id":65544,"name":"DEFAULT ADMIN"},"lastModTime":1763256805,"predefined":true},{"id":165104836,"name":"Extranet
+        Group for test_KDFV0unbx0","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165104835,"name":"test_KDFV0unbx0"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770602520},{"id":165182493,"name":"Extranet
+        Group for 20260209083516_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165182492,"name":"20260209083516_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770654921},{"id":165183657,"name":"Extranet
+        Group for 20260209084412_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183656,"name":"20260209084412_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770655464},{"id":165183952,"name":"Extranet
+        Group for 20260209084625_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183949,"name":"20260209084625_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770655589},{"id":165186544,"name":"Extranet
+        Group for 20260209090523_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186543,"name":"20260209090523_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656730},{"id":165186692,"name":"Extranet
+        Group for 20260209090645_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186691,"name":"20260209090645_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656812},{"id":165186829,"name":"Extranet
+        Group for 20260209090751_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186827,"name":"20260209090751_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656875},{"id":165187378,"name":"Extranet
+        Group for 20260209091131_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165187377,"name":"20260209091131_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770657096},{"id":165188461,"name":"Extranet
+        Group for 20260209091945_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165188459,"name":"20260209091945_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770657589},{"id":165190062,"name":"Extranet
+        Group for 20260209093306_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190060,"name":"20260209093306_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770658388},{"id":165190561,"name":"Extranet
+        Group for 20260209093811_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190560,"name":"20260209093811_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770658693},{"id":165215756,"name":"Extranet
+        Group for 20260209144142_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165215754,"name":"20260209144142_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770676904},{"id":165917906,"name":"Extranet
+        Group for 20260217124116_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165917904,"name":"20260217124116_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771360877},{"id":165921551,"name":"Extranet
+        Group for 20260217131936_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165921549,"name":"20260217131936_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771363177},{"id":165928528,"name":"Extranet
+        Group for 20260217152951_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928527,"name":"20260217152951_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771370993},{"id":165928584,"name":"Extranet
+        Group for 20260217153030_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928582,"name":"20260217153030_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771371033},{"id":165928793,"name":"Extranet
+        Group for 20260217153344_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928784,"name":"20260217153344_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771371226},{"id":166008040,"name":"Extranet
+        Group for 20260218092734_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166008039,"name":"20260218092734_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771435656},{"id":166080027,"name":"Extranet
+        Group for 20260219040636_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166080023,"name":"20260219040636_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771502797},{"id":166108472,"name":"Extranet
+        Group for 20260219090619_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166108471,"name":"20260219090619_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771520781},{"id":166139764,"name":"Extranet
+        Group for 20260219165600_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166139763,"name":"20260219165600_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771548962},{"id":166213871,"name":"Extranet
+        Group for 20260220103947_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166213870,"name":"20260220103947_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771612789},{"id":166230502,"name":"Extranet
+        Group for 20260220165926_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166230501,"name":"20260220165926_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771635568},{"id":166880696,"name":"Extranet
+        Group for 20260227185537_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166880695,"name":"20260227185537_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1772247338},{"id":167533917,"name":"Extranet
+        Group for 20260306163507_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167533916,"name":"20260306163507_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1772843709},{"id":167682535,"name":"Extranet
+        Group for 20260309084514_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167682531,"name":"20260309084514_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1773071122},{"id":167688036,"name":"Extranet
+        Group for 20260309092641_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167688033,"name":"20260309092641_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1773073606}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -55,7 +109,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:09 GMT
+      - Fri, 13 Mar 2026 03:19:56 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -67,23 +121,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '820'
+      - '795'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7c70ad17-ae19-94cc-8bf1-026640705e9a
+      - c7fe4cc4-9eeb-9357-9c46-587c474faf2b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4961'
       x-ratelimit-reset:
-      - '52'
+      - '5'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -105,9 +159,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/lite
   response:
     body:
       string: '[{"id":24326827,"name":"Unassigned Locations","dynamicLocationGroupCriteria":{"profiles":["NONE"]}},{"id":24326828,"name":"Corporate
@@ -116,7 +170,34 @@ interactions:
         Wifi Group","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]}},{"id":24326831,"name":"IoT
         Traffic Group","dynamicLocationGroupCriteria":{"profiles":["IOT"]}},{"id":59050241,"name":"Workload
         Traffic Group","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]}},{"id":66754704,"name":"SDWAN_CAN"},{"id":66754715,"name":"SDWAN_GLOBAL"},{"id":66754722,"name":"SDWAN_USA"},{"id":157892460,"name":"All
-        Extranet Location Group","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"predefined":true}]'
+        Extranet Location Group","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"predefined":true},{"id":165104836,"name":"Extranet
+        Group for test_KDFV0unbx0","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165104835},"profiles":["EXTRANET"]}},{"id":165182493,"name":"Extranet
+        Group for 20260209083516_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165182492},"profiles":["EXTRANET"]}},{"id":165183657,"name":"Extranet
+        Group for 20260209084412_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183656},"profiles":["EXTRANET"]}},{"id":165183952,"name":"Extranet
+        Group for 20260209084625_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183949},"profiles":["EXTRANET"]}},{"id":165186544,"name":"Extranet
+        Group for 20260209090523_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186543},"profiles":["EXTRANET"]}},{"id":165186692,"name":"Extranet
+        Group for 20260209090645_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186691},"profiles":["EXTRANET"]}},{"id":165186829,"name":"Extranet
+        Group for 20260209090751_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186827},"profiles":["EXTRANET"]}},{"id":165187378,"name":"Extranet
+        Group for 20260209091131_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165187377},"profiles":["EXTRANET"]}},{"id":165188461,"name":"Extranet
+        Group for 20260209091945_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165188459},"profiles":["EXTRANET"]}},{"id":165190062,"name":"Extranet
+        Group for 20260209093306_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190060},"profiles":["EXTRANET"]}},{"id":165190561,"name":"Extranet
+        Group for 20260209093811_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190560},"profiles":["EXTRANET"]}},{"id":165215756,"name":"Extranet
+        Group for 20260209144142_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165215754},"profiles":["EXTRANET"]}},{"id":165917906,"name":"Extranet
+        Group for 20260217124116_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165917904},"profiles":["EXTRANET"]}},{"id":165921551,"name":"Extranet
+        Group for 20260217131936_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165921549},"profiles":["EXTRANET"]}},{"id":165928528,"name":"Extranet
+        Group for 20260217152951_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928527},"profiles":["EXTRANET"]}},{"id":165928584,"name":"Extranet
+        Group for 20260217153030_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928582},"profiles":["EXTRANET"]}},{"id":165928793,"name":"Extranet
+        Group for 20260217153344_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928784},"profiles":["EXTRANET"]}},{"id":166008040,"name":"Extranet
+        Group for 20260218092734_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166008039},"profiles":["EXTRANET"]}},{"id":166080027,"name":"Extranet
+        Group for 20260219040636_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166080023},"profiles":["EXTRANET"]}},{"id":166108472,"name":"Extranet
+        Group for 20260219090619_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166108471},"profiles":["EXTRANET"]}},{"id":166139764,"name":"Extranet
+        Group for 20260219165600_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166139763},"profiles":["EXTRANET"]}},{"id":166213871,"name":"Extranet
+        Group for 20260220103947_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166213870},"profiles":["EXTRANET"]}},{"id":166230502,"name":"Extranet
+        Group for 20260220165926_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166230501},"profiles":["EXTRANET"]}},{"id":166880696,"name":"Extranet
+        Group for 20260227185537_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166880695},"profiles":["EXTRANET"]}},{"id":167533917,"name":"Extranet
+        Group for 20260306163507_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167533916},"profiles":["EXTRANET"]}},{"id":167682535,"name":"Extranet
+        Group for 20260309084514_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167682531},"profiles":["EXTRANET"]}},{"id":167688036,"name":"Extranet
+        Group for 20260309092641_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167688033},"profiles":["EXTRANET"]}}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -138,7 +219,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:10 GMT
+      - Fri, 13 Mar 2026 03:19:57 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -146,27 +227,27 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '237'
+      - '256'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a4d552ea-5e69-9de8-ae61-bba5f61b6b77
+      - 2dfbe695-6fa0-9deb-975f-93d7b16e5d73
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4960'
       x-ratelimit-reset:
-      - '51'
+      - '4'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -188,19 +269,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/locations/groups/count
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/count
   response:
     body:
-      string: '9'
+      string: '36'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
       content-length:
-      - '1'
+      - '2'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -215,7 +296,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:10 GMT
+      - Fri, 13 Mar 2026 03:19:57 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -223,23 +304,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '219'
+      - '208'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6ab661c1-2708-9798-81d3-38beb7c254b5
+      - 4c0d3aa1-6a8a-90a8-be7b-f4bfba32ddd4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4959'
       x-ratelimit-reset:
-      - '50'
+      - '3'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -72,6 +72,9 @@ from zscaler.zpa.stepup_auth_level import StepUpAuthLevelAPI
 from zscaler.zpa.user_portal_aup import UserPortalAUPAPI
 from zscaler.zpa.location_controller import LocationControllerAPI
 from zscaler.zpa.workload_tag_group import WorkloadTagGroupAPI
+from zscaler.zpa.tag_group import TagGroupAPI
+from zscaler.zpa.tag_key import TagKeyAPI
+from zscaler.zpa.tag_namespace import TagNamespaceAPI
 
 
 class ZPAService:
@@ -427,3 +430,18 @@ class ZPAService:
     def workload_tag_group(self) -> WorkloadTagGroupAPI:
         """The interface object for the :ref:`ZPA Workload Tag Group interface <zpa-workload_tag_group>`."""
         return WorkloadTagGroupAPI(self._request_executor, self._config)
+
+    @property
+    def tag_group(self) -> TagGroupAPI:
+        """The interface object for the :ref:`ZPA Tag Group interface <zpa-tag_group>`."""
+        return TagGroupAPI(self._request_executor, self._config)
+
+    @property
+    def tag_key(self) -> TagKeyAPI:
+        """The interface object for the :ref:`ZPA Tag Key interface <zpa-tag_key>`."""
+        return TagKeyAPI(self._request_executor, self._config)
+
+    @property
+    def tag_namespace(self) -> TagNamespaceAPI:
+        """The interface object for the :ref:`ZPA Tag Namespace interface <zpa-tag_namespace>`."""
+        return TagNamespaceAPI(self._request_executor, self._config)

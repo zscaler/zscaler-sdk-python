@@ -1,67 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 06:10:58 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -75,18 +13,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminRoles/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminUsers
   response:
     body:
-      string: '[{"id":10579,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":10580,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":21073,"rank":7,"name":"DevOps_Role","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":25650,"rank":7,"name":"SDWAN-VeloCloud","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":25651,"rank":7,"name":"SDWAN-SilverPeak","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":25652,"rank":7,"name":"Engineering_Role","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":25955,"rank":7,"name":"ZIA_API_Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":33860,"rank":7,"name":"ZIA_API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+      string: '[{"id":165214882,"loginName":"REDACTED","userName":"20260209142140_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770675715,"name":"20260209142140_created"},{"id":165215336,"loginName":"REDACTED","userName":"20260209143211_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143211_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676336,"name":"20260209143211_created"},{"id":165215387,"loginName":"REDACTED","userName":"20260209143342_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143342_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676426,"name":"20260209143342_created"},{"id":165215551,"loginName":"REDACTED","userName":"20260209143657_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143657_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676620,"name":"20260209143657_created"},{"id":165218309,"loginName":"REDACTED","userName":"20260209153504_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209153504_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770680108,"name":"20260209153504_created"},{"id":165218439,"loginName":"REDACTED","userName":"20260209153715_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209153715_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770680239,"name":"20260209153715_created"},{"id":166908682,"loginName":"REDACTED","userName":"20260228150618_created","email":"REDACTED","role":{"id":18756,"name":"SDWAN-VeloCloud","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1772319987,"name":"20260228150618_created"},{"id":167681139,"loginName":"REDACTED","userName":"20260309083440_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260309083440_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1773070486,"name":"20260309083440_created"},{"id":43049874,"loginName":"REDACTED","userName":"SDWAN-SilverPeak","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1648532304,"name":"SDWAN-SilverPeak"},{"id":43113234,"loginName":"REDACTED","userName":"SDWAN-VeloCloud","email":"REDACTED","role":{"id":18756,"name":"SDWAN-VeloCloud","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"SD-WAN
+        VeloCloud","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"isSecurityReportCommEnabled":true,"isProductUpdateCommEnabled":true,"pwdLastModifiedTime":1648590036,"name":"SDWAN-VeloCloud"},{"id":70382026,"loginName":"REDACTED","userName":"Zscaler
+        DLP Auditor","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770675541,"name":"Zscaler
+        DLP Auditor"}]'
     headers:
       cache-control:
       - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss
       content-disposition:
       - attachment; filename="api.json"
       content-encoding:
@@ -105,7 +43,164 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 06:11:00 GMT
+      - Fri, 13 Mar 2026 03:13:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '486'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - ae24ba1a-8a36-9f6b-b199-b28a25f77d81
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4987'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminUsers?includeAuditorUsers=True
+  response:
+    body:
+      string: '[{"id":165214882,"loginName":"REDACTED","userName":"20260209142140_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770675715,"name":"20260209142140_created"},{"id":165215336,"loginName":"REDACTED","userName":"20260209143211_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143211_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676336,"name":"20260209143211_created"},{"id":165215387,"loginName":"REDACTED","userName":"20260209143342_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143342_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676426,"name":"20260209143342_created"},{"id":165215551,"loginName":"REDACTED","userName":"20260209143657_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209143657_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770676620,"name":"20260209143657_created"},{"id":165218309,"loginName":"REDACTED","userName":"20260209153504_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209153504_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770680108,"name":"20260209153504_created"},{"id":165218439,"loginName":"REDACTED","userName":"20260209153715_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260209153715_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770680239,"name":"20260209153715_created"},{"id":166908682,"loginName":"REDACTED","userName":"20260228150618_created","email":"REDACTED","role":{"id":18756,"name":"SDWAN-VeloCloud","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1772319987,"name":"20260228150618_created"},{"id":167681139,"loginName":"REDACTED","userName":"20260309083440_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"20260309083440_updated","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1773070486,"name":"20260309083440_created"},{"id":43049874,"loginName":"REDACTED","userName":"SDWAN-SilverPeak","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1648532304,"name":"SDWAN-SilverPeak"},{"id":43113234,"loginName":"REDACTED","userName":"SDWAN-VeloCloud","email":"REDACTED","role":{"id":18756,"name":"SDWAN-VeloCloud","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"comments":"SD-WAN
+        VeloCloud","adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"isSecurityReportCommEnabled":true,"isProductUpdateCommEnabled":true,"pwdLastModifiedTime":1648590036,"name":"SDWAN-VeloCloud"},{"id":70382026,"loginName":"REDACTED","userName":"Zscaler
+        DLP Auditor","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"pwdLastModifiedTime":1770675541,"name":"Zscaler
+        DLP Auditor"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:31 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '491'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5ee605bd-21af-9744-b272-4cbbe39c5f06
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4986'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminUsers/165214882
+  response:
+    body:
+      string: '{"id":165214882,"loginName":"REDACTED","userName":"20260209142140_created","email":"REDACTED","role":{"id":18740,"name":"SDWAN-SilverPeak","isNameL10nTag":true,"extensions":{"adminRank":"7","roleType":"SDWAN"}},"adminScopescopeGroupMemberEntities":[],"adminScopeType":"ORGANIZATION","adminScopeScopeEntities":[],"disabled":false,"isPasswordLoginAllowed":true,"pwdLastModifiedTime":1770675715,"name":"20260209142140_created"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:31 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -117,23 +212,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1464'
+      - '227'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 017e4e68-2129-9d77-a399-c584d96083f1
+      - 4ab77c86-a3b1-91f3-afb4-cac82e0085e7
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4985'
       x-ratelimit-reset:
-      - '2'
+      - '29'
       x-transaction-id:
-      - 11481e46-38f3-4d41-92e7-cd3c830d919d
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -141,380 +236,4 @@ interactions:
     status:
       code: 200
       message: OK
-- request:
-    body: '{"userName": "tests-vcr0001", "loginName": "tests-vcr0002@example.com",
-      "email": "tests-vcr0003@example.com", "adminScopeType": "ORGANIZATION", "comments":
-      "Test admin user created by integration tests", "role": {"id": 10579}, "password":"REDACTED"}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '254'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminUsers
-  response:
-    body:
-      string: '{"message":"Administrator account requested to be added/updated has
-        a higher or equal rank than current administrator"}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 06:11:00 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '348'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 7ee96178-a2c8-9e5c-9afe-a371ad2c7f14
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4999'
-      x-ratelimit-reset:
-      - '60'
-      x-transaction-id:
-      - 11481e46-38f3-4d41-92e7-cd3c830d919d
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 400
-      message: Bad Request
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminUsers
-  response:
-    body:
-      string: '[]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '2'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 06:11:00 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '302'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 886f48fe-f1d6-9f32-9e72-f45d7b87f2dc
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4998'
-      x-ratelimit-reset:
-      - '60'
-      x-transaction-id:
-      - 11481e46-38f3-4d41-92e7-cd3c830d919d
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminUsers?includeAuditorUsers=True
-  response:
-    body:
-      string: '[{"id":22725462,"loginName":"REDACTED","userName":"auditor01","role":{"id":39521,"name":"Auditor"},"comments":"auditor01","disabled":false,"isAuditor":true,"pwdLastModifiedTime":0,"newLocationCreateAllowed":false,"name":"auditor01"}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 06:11:01 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '376'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 57b60335-85de-951a-9891-1f084f195176
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4997'
-      x-ratelimit-reset:
-      - '59'
-      x-transaction-id:
-      - 11481e46-38f3-4d41-92e7-cd3c830d919d
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminUsers?includeAdminUsers=True
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 06:13:06 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 5d473434-420b-9aea-b3ba-633503b5b1a6
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Fri, 19 Dec 2025 06:13:07 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/adminUsers?includeAdminUsers=True
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 06:13:07 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - ae1963cf-c5e4-9f3f-a88f-58551af32b0d
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
 version: 1

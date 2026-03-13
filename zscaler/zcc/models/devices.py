@@ -237,26 +237,16 @@ class DeviceCleanup(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.active = config["active"] \
-                if "active" in config else None
-            self.auto_purge_days = config["autoPurgeDays"] \
-                if "autoPurgeDays" in config else None
-            self.auto_removal_days = config["autoRemovalDays"] \
-                if "autoRemovalDays" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.created_by = config["createdBy"] \
-                if "createdBy" in config else None
-            self.device_exceed_limit = config["deviceExceedLimit"] \
-                if "deviceExceedLimit" in config else None
-            self.edited_by = config["editedBy"] \
-                if "editedBy" in config else None
-            self.force_remove_type = config["forceRemoveType"] \
-                if "forceRemoveType" in config else None
-            self.force_remove_type_string = config["forceRemoveTypeString"] \
-                if "forceRemoveTypeString" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
+            self.active = config["active"] if "active" in config else None
+            self.auto_purge_days = config["autoPurgeDays"] if "autoPurgeDays" in config else None
+            self.auto_removal_days = config["autoRemovalDays"] if "autoRemovalDays" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.device_exceed_limit = config["deviceExceedLimit"] if "deviceExceedLimit" in config else None
+            self.edited_by = config["editedBy"] if "editedBy" in config else None
+            self.force_remove_type = config["forceRemoveType"] if "forceRemoveType" in config else None
+            self.force_remove_type_string = config["forceRemoveTypeString"] if "forceRemoveTypeString" in config else None
+            self.id = config["id"] if "id" in config else None
         else:
             self.active = None
             self.auto_purge_days = None
@@ -284,7 +274,7 @@ class DeviceCleanup(ZscalerObject):
             "editedBy": self.edited_by,
             "forceRemoveType": self.force_remove_type,
             "forceRemoveTypeString": self.force_remove_type_string,
-            "id": self.id
+            "id": self.id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -334,64 +324,37 @@ class DeviceDetails(ZscalerObject):
             self.zapp_arch = config.get("zapp_arch") or config.get("zappArch")
 
             # Additional fields from the API response
-            self.id = config["id"] \
-                if "id" in config else None
-            self.internal_model = config["internal_model"] \
-                if "internal_model" in config else None
-            self.zdp_version = config["zdpVersion"] \
-                if "zdpVersion" in config else None
-            self.serial_number = config["serialNumber"] \
-                if "serialNumber" in config else None
-            self.zia_enabled = config["ziaEnabled"] \
-                if "ziaEnabled" in config else None
-            self.zpa_enabled = config["zpaEnabled"] \
-                if "zpaEnabled" in config else None
-            self.zdx_enabled = config["zdxEnabled"] \
-                if "zdxEnabled" in config else None
-            self.zd_enabled = config["zdEnabled"] \
-                if "zdEnabled" in config else None
-            self.zdp_enabled = config["zdpEnabled"] \
-                if "zdpEnabled" in config else None
-            self.zia_health = config["ziaHealth"] \
-                if "ziaHealth" in config else None
-            self.zpa_health = config["zpaHealth"] \
-                if "zpaHealth" in config else None
-            self.zdx_health = config["zdxHealth"] \
-                if "zdxHealth" in config else None
-            self.zd_health = config["zdHealth"] \
-                if "zdHealth" in config else None
-            self.zdp_health = config["zdpHealth"] \
-                if "zdpHealth" in config else None
-            self.zpa_last_seen_time = config["zpaLastSeenTime"] \
-                if "zpaLastSeenTime" in config else None
-            self.zdx_last_seen_time = config["zdxLastSeenTime"] \
-                if "zdxLastSeenTime" in config else None
-            self.zd_last_seen_time = config["zdLastSeenTime"] \
-                if "zdLastSeenTime" in config else None
-            self.zdp_last_seen_time = config["zdpLastSeenTime"] \
-                if "zdpLastSeenTime" in config else None
-            self.zcc_logged_in_user_type = config["zccLoggedInUserType"] \
-                if "zccLoggedInUserType" in config else None
-            self.external_device_id = config["externalDeviceId"] \
-                if "externalDeviceId" in config else None
-            self.zcc_force_revert = config["zccForceRevert"] \
-                if "zccForceRevert" in config else None
-            self.anti_tampering_status = config["antiTamperingStatus"] \
-                if "antiTamperingStatus" in config else None
-            self.device_trust = config["deviceTrust"] \
-                if "deviceTrust" in config else None
-            self.zcc_tunnel_version = config["zccTunnelVersion"] \
-                if "zccTunnelVersion" in config else None
-            self.vdi = config["vdi"] \
-                if "vdi" in config else None
-            self.strict_enforcement = config["strictEnforcement"] \
-                if "strictEnforcement" in config else None
-            self.expected_zcc_version = config["expectedZCCVersion"] \
-                if "expectedZCCVersion" in config else None
-            self.expected_zcc_version_timestamp = config["expectedZCCVersionTimestamp"] \
-                if "expectedZCCVersionTimestamp" in config else None
-            self.zcc_upgrade_status = config["zccUpgradeStatus"] \
-                if "zccUpgradeStatus" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.internal_model = config["internal_model"] if "internal_model" in config else None
+            self.zdp_version = config["zdpVersion"] if "zdpVersion" in config else None
+            self.serial_number = config["serialNumber"] if "serialNumber" in config else None
+            self.zia_enabled = config["ziaEnabled"] if "ziaEnabled" in config else None
+            self.zpa_enabled = config["zpaEnabled"] if "zpaEnabled" in config else None
+            self.zdx_enabled = config["zdxEnabled"] if "zdxEnabled" in config else None
+            self.zd_enabled = config["zdEnabled"] if "zdEnabled" in config else None
+            self.zdp_enabled = config["zdpEnabled"] if "zdpEnabled" in config else None
+            self.zia_health = config["ziaHealth"] if "ziaHealth" in config else None
+            self.zpa_health = config["zpaHealth"] if "zpaHealth" in config else None
+            self.zdx_health = config["zdxHealth"] if "zdxHealth" in config else None
+            self.zd_health = config["zdHealth"] if "zdHealth" in config else None
+            self.zdp_health = config["zdpHealth"] if "zdpHealth" in config else None
+            self.zpa_last_seen_time = config["zpaLastSeenTime"] if "zpaLastSeenTime" in config else None
+            self.zdx_last_seen_time = config["zdxLastSeenTime"] if "zdxLastSeenTime" in config else None
+            self.zd_last_seen_time = config["zdLastSeenTime"] if "zdLastSeenTime" in config else None
+            self.zdp_last_seen_time = config["zdpLastSeenTime"] if "zdpLastSeenTime" in config else None
+            self.zcc_logged_in_user_type = config["zccLoggedInUserType"] if "zccLoggedInUserType" in config else None
+            self.external_device_id = config["externalDeviceId"] if "externalDeviceId" in config else None
+            self.zcc_force_revert = config["zccForceRevert"] if "zccForceRevert" in config else None
+            self.anti_tampering_status = config["antiTamperingStatus"] if "antiTamperingStatus" in config else None
+            self.device_trust = config["deviceTrust"] if "deviceTrust" in config else None
+            self.zcc_tunnel_version = config["zccTunnelVersion"] if "zccTunnelVersion" in config else None
+            self.vdi = config["vdi"] if "vdi" in config else None
+            self.strict_enforcement = config["strictEnforcement"] if "strictEnforcement" in config else None
+            self.expected_zcc_version = config["expectedZCCVersion"] if "expectedZCCVersion" in config else None
+            self.expected_zcc_version_timestamp = (
+                config["expectedZCCVersionTimestamp"] if "expectedZCCVersionTimestamp" in config else None
+            )
+            self.zcc_upgrade_status = config["zccUpgradeStatus"] if "zccUpgradeStatus" in config else None
 
             self.device_otp_array = ZscalerCollection.form_list(
                 config["deviceOtpArray"] if "deviceOtpArray" in config else [], str
@@ -530,7 +493,7 @@ class DeviceDetails(ZscalerObject):
             "strictEnforcement": self.strict_enforcement,
             "expectedZCCVersion": self.expected_zcc_version,
             "expectedZCCVersionTimestamp": self.expected_zcc_version_timestamp,
-            "zccUpgradeStatus": self.zcc_upgrade_status
+            "zccUpgradeStatus": self.zcc_upgrade_status,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -551,18 +514,12 @@ class LogFetchInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.log_ts = config["logTs"] \
-                if "logTs" in config else None
-            self.log_ack_ts = config["logAckTs"] \
-                if "logAckTs" in config else None
-            self.error = config["error"] \
-                if "error" in config else None
-            self.log_fetch_pcap_enabled = config["logFetchPCAPEnabled"] \
-                if "logFetchPCAPEnabled" in config else None
-            self.log_fetch_db_enabled = config["logFetchDBEnabled"] \
-                if "logFetchDBEnabled" in config else None
-            self.log_fetch_from_no_of_days = config["logFetchFromNoOfDays"] \
-                if "logFetchFromNoOfDays" in config else None
+            self.log_ts = config["logTs"] if "logTs" in config else None
+            self.log_ack_ts = config["logAckTs"] if "logAckTs" in config else None
+            self.error = config["error"] if "error" in config else None
+            self.log_fetch_pcap_enabled = config["logFetchPCAPEnabled"] if "logFetchPCAPEnabled" in config else None
+            self.log_fetch_db_enabled = config["logFetchDBEnabled"] if "logFetchDBEnabled" in config else None
+            self.log_fetch_from_no_of_days = config["logFetchFromNoOfDays"] if "logFetchFromNoOfDays" in config else None
         else:
             self.log_ts = None
             self.log_ack_ts = None
@@ -582,7 +539,7 @@ class LogFetchInfo(ZscalerObject):
             "error": self.error,
             "logFetchPCAPEnabled": self.log_fetch_pcap_enabled,
             "logFetchDBEnabled": self.log_fetch_db_enabled,
-            "logFetchFromNoOfDays": self.log_fetch_from_no_of_days
+            "logFetchFromNoOfDays": self.log_fetch_from_no_of_days,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

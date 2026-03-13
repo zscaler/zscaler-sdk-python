@@ -35,38 +35,26 @@ class VZenNodes(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.zgateway_id = config["zgatewayId"] \
-                if "zgatewayId" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.in_production = config["inProduction"] \
-                if "inProduction" in config else None
-            self.ip_address = config["ipAddress"] \
-                if "ipAddress" in config else None
-            self.subnet_mask = config["subnetMask"] \
-                if "subnetMask" in config else None
-            self.default_gateway = config["defaultGateway"] \
-                if "defaultGateway" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.ip_sec_enabled = config["ipSecEnabled"] \
-                if "ipSecEnabled" in config else None
-            self.on_demand_support_tunnel_enabled = config["onDemandSupportTunnelEnabled"] \
-                if "onDemandSupportTunnelEnabled" in config else None
-            self.establish_support_tunnel_enabled = config["establishSupportTunnelEnabled"] \
-                if "establishSupportTunnelEnabled" in config else None
-            self.load_balancer_ip_address = config["loadBalancerIpAddress"] \
-                if "loadBalancerIpAddress" in config else None
-            self.deployment_mode = config["deploymentMode"] \
-                if "deploymentMode" in config else None
-            self.cluster_name = config["clusterName"] \
-                if "clusterName" in config else None
-            self.vzen_sku_type = config["vzenSkuType"] \
-                if "vzenSkuType" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.zgateway_id = config["zgatewayId"] if "zgatewayId" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.in_production = config["inProduction"] if "inProduction" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.subnet_mask = config["subnetMask"] if "subnetMask" in config else None
+            self.default_gateway = config["defaultGateway"] if "defaultGateway" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.ip_sec_enabled = config["ipSecEnabled"] if "ipSecEnabled" in config else None
+            self.on_demand_support_tunnel_enabled = (
+                config["onDemandSupportTunnelEnabled"] if "onDemandSupportTunnelEnabled" in config else None
+            )
+            self.establish_support_tunnel_enabled = (
+                config["establishSupportTunnelEnabled"] if "establishSupportTunnelEnabled" in config else None
+            )
+            self.load_balancer_ip_address = config["loadBalancerIpAddress"] if "loadBalancerIpAddress" in config else None
+            self.deployment_mode = config["deploymentMode"] if "deploymentMode" in config else None
+            self.cluster_name = config["clusterName"] if "clusterName" in config else None
+            self.vzen_sku_type = config["vzenSkuType"] if "vzenSkuType" in config else None
         else:
             self.id = None
             self.zgateway_id = None
@@ -106,7 +94,7 @@ class VZenNodes(ZscalerObject):
             "loadBalancerIpAddress": self.load_balancer_ip_address,
             "deploymentMode": self.deployment_mode,
             "clusterName": self.cluster_name,
-            "vzenSkuType": self.vzen_sku_type
+            "vzenSkuType": self.vzen_sku_type,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

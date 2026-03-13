@@ -50,4 +50,3 @@ class TestSecurityPolicySettings:
             errors.append(f"Exception during security policy settings test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

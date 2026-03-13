@@ -600,11 +600,11 @@ class IntermediateCertsAPI(APIClient):
         # Prepare file content
         if file_path:
             # Use file path for upload
-            with open(file_path, 'rb') as f:
+            with open(file_path, "rb") as f:
                 file_content = f.read()
         elif file_input_stream:
             # Use string content for upload
-            file_content = file_input_stream.encode('utf-8')
+            file_content = file_input_stream.encode("utf-8")
         else:
             return (None, None, ValueError("Either file_path or file_input_stream must be provided"))
 
@@ -619,22 +619,16 @@ class IntermediateCertsAPI(APIClient):
         form_data = io.BytesIO()
 
         # Add the file part
-        form_data.write(f'--{boundary}\r\n'.encode())
+        form_data.write(f"--{boundary}\r\n".encode())
         form_data.write(b'Content-Disposition: form-data; name="fileUpload"; filename="certificate.pem"\r\n')
-        form_data.write(b'Content-Type: application/octet-stream\r\n\r\n')
+        form_data.write(b"Content-Type: application/octet-stream\r\n\r\n")
         form_data.write(file_content)
-        form_data.write(f'\r\n--{boundary}--\r\n'.encode())
+        form_data.write(f"\r\n--{boundary}--\r\n".encode())
 
-        headers = {
-            'Content-Type': f'multipart/form-data; boundary={boundary}'
-        }
+        headers = {"Content-Type": f"multipart/form-data; boundary={boundary}"}
 
         request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            body=form_data.getvalue(),
-            headers=headers,
-            use_raw_data_for_body=True
+            http_method, api_url, body=form_data.getvalue(), headers=headers, use_raw_data_for_body=True
         )
         if error:
             return (None, None, error)

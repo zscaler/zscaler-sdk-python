@@ -69,11 +69,7 @@ class Entitlement(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "roles": self.roles,
-            "scope": self.scope,
-            "service": self.service
-        }
+        current_obj_format = {"roles": self.roles, "scope": self.scope, "service": self.service}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -93,18 +89,12 @@ class Service(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.service_name = config["serviceName"] \
-                if "serviceName" in config else None
-            self.cloud_name = config["cloudName"] \
-                if "cloudName" in config else None
-            self.cloud_domain_name = config["cloudDomainName"] \
-                if "cloudDomainName" in config else None
-            self.org_name = config["orgName"] \
-                if "orgName" in config else None
-            self.org_id = config["orgId"] \
-                if "orgId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.service_name = config["serviceName"] if "serviceName" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.cloud_domain_name = config["cloudDomainName"] if "cloudDomainName" in config else None
+            self.org_name = config["orgName"] if "orgName" in config else None
+            self.org_id = config["orgId"] if "orgId" in config else None
         else:
             self.id = None
             self.service_name = None
@@ -145,9 +135,7 @@ class Entitlements(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.entitlements = ZscalerCollection.form_list(
-                config if isinstance(config, list) else [], Entitlement
-            )
+            self.entitlements = ZscalerCollection.form_list(config if isinstance(config, list) else [], Entitlement)
         else:
             self.entitlements = []
 
@@ -156,8 +144,6 @@ class Entitlements(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "entitlements": self.entitlements
-        }
+        current_obj_format = {"entitlements": self.entitlements}
         parent_req_format.update(current_obj_format)
         return parent_req_format

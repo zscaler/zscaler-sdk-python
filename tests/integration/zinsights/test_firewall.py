@@ -34,9 +34,7 @@ class TestFirewall:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.firewall.get_traffic_by_action(
-            start_time=start_time,
-            end_time=end_time,
-            limit=10
+            start_time=start_time, end_time=end_time, limit=10
         )
 
         # Verify SDK handles response correctly
@@ -49,9 +47,7 @@ class TestFirewall:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.firewall.get_traffic_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            limit=10
+            start_time=start_time, end_time=end_time, limit=10
         )
 
         # Verify SDK handles response correctly
@@ -64,9 +60,7 @@ class TestFirewall:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.firewall.get_network_services(
-            start_time=start_time,
-            end_time=end_time,
-            limit=10
+            start_time=start_time, end_time=end_time, limit=10
         )
 
         # Verify SDK handles response correctly

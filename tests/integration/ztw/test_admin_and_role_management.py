@@ -42,7 +42,7 @@ class TestAdminRole:
             if roles:  # If there are any roles
                 # Select the first role for further testing
                 first_role = roles[0]
-                role_id = first_role.id if hasattr(first_role, 'id') else first_role.get("id")
+                role_id = first_role.id if hasattr(first_role, "id") else first_role.get("id")
 
         except Exception as exc:
             errors.append(f"Listing roles failed: {exc}")

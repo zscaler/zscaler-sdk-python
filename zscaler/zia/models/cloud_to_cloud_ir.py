@@ -35,15 +35,13 @@ class CloudToCloudIR(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
 
-            self.last_tenant_validation_time = config["lastTenantValidationTime"] \
-                if "lastTenantValidationTime" in config else None
+            self.last_tenant_validation_time = (
+                config["lastTenantValidationTime"] if "lastTenantValidationTime" in config else None
+            )
 
             if "lastValidationMsg" in config:
                 if isinstance(config["lastValidationMsg"], LastValidationMsg):
@@ -55,9 +53,7 @@ class CloudToCloudIR(ZscalerObject):
             else:
                 self.last_validation_msg = None
 
-            self.status = ZscalerCollection.form_list(
-                config["status"] if "status" in config else [], str
-            )
+            self.status = ZscalerCollection.form_list(config["status"] if "status" in config else [], str)
 
             if "onboardableEntity" in config:
                 if isinstance(config["onboardableEntity"], OnboardableEntity):
@@ -101,7 +97,7 @@ class CloudToCloudIR(ZscalerObject):
             "lastModifiedBy": self.last_modified_by,
             "lastTenantValidationTime": self.last_tenant_validation_time,
             "lastValidationMsg": self.last_validation_msg,
-            "onboardableEntity": self.onboardable_entity
+            "onboardableEntity": self.onboardable_entity,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -122,80 +118,45 @@ class TenantAuthorizationInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.access_token = config["accessToken"] \
-                if "accessToken" in config else None
-            self.bot_token = config["botToken"] \
-                if "botToken" in config else None
-            self.redirect_url = config["redirectUrl"] \
-                if "redirectUrl" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.env = config["env"] \
-                if "env" in config else None
-            self.temp_auth_code = config["tempAuthCode"] \
-                if "tempAuthCode" in config else None
-            self.subdomain = config["subdomain"] \
-                if "subdomain" in config else None
-            self.apicp = config["apicp"] \
-                if "apicp" in config else None
-            self.client_id = config["clientId"] \
-                if "clientId" in config else None
-            self.client_secret = config["clientSecret"] \
-                if "clientSecret" in config else None
-            self.secret_token = config["secretToken"] \
-                if "secretToken" in config else None
-            self.user_name = config["userName"] \
-                if "userName" in config else None
-            self.user_pwd = config["userPwd"] \
-                if "userPwd" in config else None
-            self.instance_url = config["instanceUrl"] \
-                if "instanceUrl" in config else None
-            self.role_arn = config["roleArn"] \
-                if "roleArn" in config else None
-            self.quarantine_bucket_name = config["quarantineBucketName"] \
-                if "quarantineBucketName" in config else None
-            self.cloud_trail_bucket_name = config["cloudTrailBucketName"] \
-                if "cloudTrailBucketName" in config else None
-            self.bot_id = config["botId"] \
-                if "botId" in config else None
-            self.org_api_key = config["orgApiKey"] \
-                if "orgApiKey" in config else None
-            self.external_id = config["externalId"] \
-                if "externalId" in config else None
-            self.enterprise_id = config["enterpriseId"] \
-                if "enterpriseId" in config else None
-            self.cred_json = config["credJson"] \
-                if "credJson" in config else None
-            self.role = config["role"] \
-                if "role" in config else None
-            self.organization_id = config["organizationId"] \
-                if "organizationId" in config else None
-            self.workspace_name = config["workspaceName"] \
-                if "workspaceName" in config else None
-            self.workspace_id = config["workspaceId"] \
-                if "workspaceId" in config else None
-            self.qtn_channel_url = config["qtnChannelUrl"] \
-                if "qtnChannelUrl" in config else None
+            self.access_token = config["accessToken"] if "accessToken" in config else None
+            self.bot_token = config["botToken"] if "botToken" in config else None
+            self.redirect_url = config["redirectUrl"] if "redirectUrl" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.env = config["env"] if "env" in config else None
+            self.temp_auth_code = config["tempAuthCode"] if "tempAuthCode" in config else None
+            self.subdomain = config["subdomain"] if "subdomain" in config else None
+            self.apicp = config["apicp"] if "apicp" in config else None
+            self.client_id = config["clientId"] if "clientId" in config else None
+            self.client_secret = config["clientSecret"] if "clientSecret" in config else None
+            self.secret_token = config["secretToken"] if "secretToken" in config else None
+            self.user_name = config["userName"] if "userName" in config else None
+            self.user_pwd = config["userPwd"] if "userPwd" in config else None
+            self.instance_url = config["instanceUrl"] if "instanceUrl" in config else None
+            self.role_arn = config["roleArn"] if "roleArn" in config else None
+            self.quarantine_bucket_name = config["quarantineBucketName"] if "quarantineBucketName" in config else None
+            self.cloud_trail_bucket_name = config["cloudTrailBucketName"] if "cloudTrailBucketName" in config else None
+            self.bot_id = config["botId"] if "botId" in config else None
+            self.org_api_key = config["orgApiKey"] if "orgApiKey" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
+            self.enterprise_id = config["enterpriseId"] if "enterpriseId" in config else None
+            self.cred_json = config["credJson"] if "credJson" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.organization_id = config["organizationId"] if "organizationId" in config else None
+            self.workspace_name = config["workspaceName"] if "workspaceName" in config else None
+            self.workspace_id = config["workspaceId"] if "workspaceId" in config else None
+            self.qtn_channel_url = config["qtnChannelUrl"] if "qtnChannelUrl" in config else None
             self.features_supported = ZscalerCollection.form_list(
                 config["featuresSupported"] if "featuresSupported" in config else [], str
             )
-            self.mal_qtn_lib_name = config["malQtnLibName"] \
-                if "malQtnLibName" in config else None
-            self.dlp_qtn_lib_name = config["dlpQtnLibName"] \
-                if "dlpQtnLibName" in config else None
-            self.credentials = config["credentials"] \
-                if "credentials" in config else None
-            self.token_endpoint = config["tokenEndpoint"] \
-                if "tokenEndpoint" in config else None
-            self.rest_api_endpoint = config["restApiEndpoint"] \
-                if "restApiEndpoint" in config else None
+            self.mal_qtn_lib_name = config["malQtnLibName"] if "malQtnLibName" in config else None
+            self.dlp_qtn_lib_name = config["dlpQtnLibName"] if "dlpQtnLibName" in config else None
+            self.credentials = config["credentials"] if "credentials" in config else None
+            self.token_endpoint = config["tokenEndpoint"] if "tokenEndpoint" in config else None
+            self.rest_api_endpoint = config["restApiEndpoint"] if "restApiEndpoint" in config else None
 
-            self.qtn_info_cleared = config["qtnInfoCleared"] \
-                if "qtnInfoCleared" in config else None
+            self.qtn_info_cleared = config["qtnInfoCleared"] if "qtnInfoCleared" in config else None
 
-            self.qtn_info = ZscalerCollection.form_list(
-                config["qtnInfo"] if "qtnInfo" in config else [], QtnInfo
-            )
+            self.qtn_info = ZscalerCollection.form_list(config["qtnInfo"] if "qtnInfo" in config else [], QtnInfo)
 
             self.smir_bucket_config = ZscalerCollection.form_list(
                 config["smirBucketConfig"] if "smirBucketConfig" in config else [], SmirBucketConfig
@@ -300,16 +261,11 @@ class OnboardableEntity(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.application = config["application"] \
-                if "application" in config else None
-            self.enterprise_tenant_id = config["enterpriseTenantId"] \
-                if "enterpriseTenantId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.application = config["application"] if "application" in config else None
+            self.enterprise_tenant_id = config["enterpriseTenantId"] if "enterpriseTenantId" in config else None
 
             if "tenantAuthorizationInfo" in config:
                 if isinstance(config["tenantAuthorizationInfo"], TenantAuthorizationInfo):
@@ -384,14 +340,10 @@ class SmirBucketConfig(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.url = config["url"] \
-                if "url" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.url = config["url"] if "url" in config else None
+            self.status = config["status"] if "status" in config else None
         else:
             self.id = None
             self.name = None
@@ -428,12 +380,9 @@ class QtnInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.admin_id = config["adminId"] \
-                if "adminId" in config else None
-            self.qtn_folder_path = config["qtnFolderPath"] \
-                if "qtnFolderPath" in config else None
-            self.mod_time = config["modTime"] \
-                if "modTime" in config else None
+            self.admin_id = config["adminId"] if "adminId" in config else None
+            self.qtn_folder_path = config["qtnFolderPath"] if "qtnFolderPath" in config else None
+            self.mod_time = config["modTime"] if "modTime" in config else None
         else:
             self.admin_id = None
             self.qtn_folder_path = None
@@ -468,10 +417,8 @@ class LastValidationMsg(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.error_msg = config["errorMsg"] \
-                if "errorMsg" in config else None
-            self.error_code = config["errorCode"] \
-                if "errorCode" in config else None
+            self.error_msg = config["errorMsg"] if "errorMsg" in config else None
+            self.error_code = config["errorCode"] if "errorCode" in config else None
         else:
             self.error_msg = None
             self.error_code = None

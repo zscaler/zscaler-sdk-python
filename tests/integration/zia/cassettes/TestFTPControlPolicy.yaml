@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/ftpSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/ftpSettings
   response:
     body:
-      string: '{"ftpOverHttpEnabled":true,"ftpEnabled":true,"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"],"urls":["test1.acme.com"]}'
+      string: '{"ftpOverHttpEnabled":true,"ftpEnabled":true,"urlCategories":["HISTORY","GOVERNMENT","HEALTH","IMAGE_HOST","INTERNET_SERVICES","HOBBIES_AND_LEISURE","INSURANCE"],"urls":["test10.acme.com","test1.acme.com"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:05 GMT
+      - Fri, 13 Mar 2026 03:19:39 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +52,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '811'
+      - '628'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d3dd7ad0-487a-9656-8903-21ddbcc8737c
+      - 8c0c6714-b4a9-9924-a9e9-80338f4bf905
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4989'
       x-ratelimit-reset:
-      - '56'
+      - '21'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -77,8 +77,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"ftpOverHttpEnabled": true, "ftpEnabled": true, "urlCategories": ["AI_ML_APPS",
-      "PROFESSIONAL_SERVICES", "GENERAL_AI_ML"], "urls": ["test1.acme.com", "test1.acme.com"]}'
+    body: '{"ftpOverHttpEnabled": true}'
     headers:
       Accept:
       - application/json
@@ -87,23 +86,23 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '169'
+      - '28'
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/ftpSettings
+    uri: https://easm.test.zscaler.com/zia/api/v1/ftpSettings
   response:
     body:
-      string: '{"ftpOverHttpEnabled":true,"ftpEnabled":true,"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"],"urls":["test1.acme.com"]}'
+      string: '{"ftpOverHttpEnabled":true,"ftpEnabled":false,"urlCategories":["ANY"]}'
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
-      content-encoding:
-      - gzip
+      content-length:
+      - '70'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -118,35 +117,31 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:51:08 GMT
+      - Fri, 13 Mar 2026 03:19:43 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2852'
+      - '3418'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ab84c59e-c2e1-9153-9994-f1eff205ea05
+      - f88d41aa-ccab-940e-8c87-31de7c9cdc58
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4988'
       x-ratelimit-reset:
-      - '55'
+      - '21'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

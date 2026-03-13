@@ -42,7 +42,7 @@ class TestTrustedNetworksExtended:
                 assert isinstance(networks, list), "Expected a list of networks"
                 if networks:
                     network = networks[0]
-                    assert hasattr(network, 'as_dict'), "Network should have as_dict method"
+                    assert hasattr(network, "as_dict"), "Network should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing trusted networks failed: {exc}")
 
@@ -66,11 +66,11 @@ class TestTrustedNetworksExtended:
                 "trusted_gateways": "",
                 "trusted_dhcp_servers": "",
             }
-            
+
             created, _, err = client.zcc.trusted_networks.add_trusted_network(**new_network)
-            
+
             if err is None and created:
-                created_network_id = created.id if hasattr(created, 'id') else None
+                created_network_id = created.id if hasattr(created, "id") else None
                 assert created is not None, "Created network should not be None"
         except Exception:
             # Creation may fail - the goal is code coverage
@@ -90,19 +90,15 @@ class TestTrustedNetworksExtended:
 
         try:
             # First get a network to update
-            networks, _, err = client.zcc.trusted_networks.list_by_company(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            networks, _, err = client.zcc.trusted_networks.list_by_company(query_params={"page": 1, "page_size": 1})
+
             if err is None and networks and len(networks) > 0:
                 network = networks[0]
-                network_dict = network.as_dict() if hasattr(network, 'as_dict') else {}
-                
+                network_dict = network.as_dict() if hasattr(network, "as_dict") else {}
+
                 # Try to update with same values (non-destructive)
                 if network_dict:
-                    result, response, err = client.zcc.trusted_networks.update_trusted_network(
-                        **network_dict
-                    )
+                    result, response, err = client.zcc.trusted_networks.update_trusted_network(**network_dict)
                     # Update may succeed or fail depending on network configuration
         except Exception:
             # Update may fail - the goal is code coverage
@@ -115,9 +111,7 @@ class TestTrustedNetworksExtended:
 
         try:
             # Try to delete a non-existent network (should fail gracefully)
-            result, response, err = client.zcc.trusted_networks.delete_trusted_network(
-                network_id=999999999
-            )
+            result, response, err = client.zcc.trusted_networks.delete_trusted_network(network_id=999999999)
             # Should return an error for non-existent network
         except Exception:
             # Expected to fail - the goal is code coverage
@@ -147,25 +141,23 @@ class TestTrustedNetworksCRUD:
                 "trusted_gateways": "192.168.1.1",
                 "trusted_dhcp_servers": "",
             }
-            
+
             created, _, err = client.zcc.trusted_networks.add_trusted_network(**new_network)
-            
+
             if err is None and created:
-                created_network_id = created.id if hasattr(created, 'id') else None
-                
+                created_network_id = created.id if hasattr(created, "id") else None
+
                 if created_network_id:
                     # Step 2: Update the network
                     updated_network = new_network.copy()
                     updated_network["id"] = created_network_id
                     updated_network["network_name"] = "Updated CRUD Trusted Network"
                     updated_network["dns_servers"] = "1.1.1.1"
-                    
+
                     updated, _, err = client.zcc.trusted_networks.update_trusted_network(**updated_network)
-                    
+
                     # Step 3: Delete the network
-                    _, _, err = client.zcc.trusted_networks.delete_trusted_network(
-                        network_id=created_network_id
-                    )
+                    _, _, err = client.zcc.trusted_networks.delete_trusted_network(network_id=created_network_id)
         except Exception:
             # CRUD cycle may fail - the goal is code coverage
             pass
@@ -176,4 +168,3 @@ class TestTrustedNetworksCRUD:
                     client.zcc.trusted_networks.delete_trusted_network(network_id=created_network_id)
                 except Exception:
                     pass
-

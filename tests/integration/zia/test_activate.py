@@ -66,4 +66,3 @@ class TestActivate:
             errors.append(f"Exception during activation test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

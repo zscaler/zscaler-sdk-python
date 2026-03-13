@@ -15,10 +15,22 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import os
+from pathlib import Path
+
 import pytest
 
 from zscaler import ZscalerClient
 from tests.test_utils import reset_vcr_counters
+
+# When recording (MOCK_TESTS=false), load .env so credentials are available even when
+# pytest is run from an IDE or subprocess that doesn't inherit shell env vars
+if os.environ.get("MOCK_TESTS", "true").strip().lower() == "false":
+    try:
+        from dotenv import load_dotenv
+        project_root = Path(__file__).resolve().parents[3]
+        load_dotenv(project_root / ".env")
+    except ImportError:
+        pass  # python-dotenv not installed; rely on existing env
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
@@ -27,7 +39,7 @@ PYTEST_MOCK_CLIENT = "pytest_mock_client"
 def reset_counters_per_test():
     """
     Reset VCR counters before each test function.
-    
+
     This ensures that generate_random_string() and generate_random_ip()
     return the same deterministic values during both recording and playback.
     Each test starts with counter at 0, so the same sequence is generated.
@@ -39,44 +51,44 @@ def reset_counters_per_test():
 class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
-    
+
     Instead of using random names (which break VCR playback), this class
     provides consistent, predictable names that work with recorded cassettes.
-    
+
     Usage:
         names = NameGenerator("app_segment")
         name = names.name       # "tests-app-segment"
         desc = names.description  # "Test App Segment"
         updated_name = names.updated_name  # "tests-app-segment-updated"
     """
-    
+
     def __init__(self, resource_type: str, suffix: str = ""):
         """
         Initialize with a resource type identifier.
-        
+
         Args:
             resource_type: A descriptive string for the resource (e.g., "app_segment", "server_group")
             suffix: Optional suffix for uniqueness (e.g., "1", "alt")
         """
         self.resource_type = resource_type.lower().replace("_", "-")
         self.suffix = f"-{suffix}" if suffix else ""
-        
+
     @property
     def name(self) -> str:
         """Returns deterministic test name like 'tests-app-segment'"""
         return f"tests-{self.resource_type}{self.suffix}"
-    
+
     @property
     def updated_name(self) -> str:
         """Returns deterministic updated name like 'tests-app-segment-updated'"""
         return f"tests-{self.resource_type}{self.suffix}-updated"
-    
+
     @property
     def description(self) -> str:
         """Returns deterministic description like 'Test App Segment'"""
         words = self.resource_type.replace("-", " ").title()
         return f"Test {words}{self.suffix}"
-    
+
     @property
     def updated_description(self) -> str:
         """Returns deterministic updated description"""

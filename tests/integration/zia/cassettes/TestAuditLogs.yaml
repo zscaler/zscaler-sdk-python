@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/auditlogEntryReport
+    uri: https://easm.test.zscaler.com/zia/api/v1/auditlogEntryReport
   response:
     body:
       string: '{"code":"RESOURCE_NOT_FOUND","message":"No Report to download"}'
@@ -40,7 +40,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 06:11:39 GMT
+      - Fri, 13 Mar 2026 03:14:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -48,23 +48,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '94'
+      - '77'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6fa26f4b-c620-9f70-9731-5bb50597c200
+      - ea737d0b-be76-983d-b744-a04c8d2d49ce
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4982'
+      - '4980'
       x-ratelimit-reset:
-      - '21'
+      - '46'
       x-transaction-id:
-      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -73,7 +73,7 @@ interactions:
       code: 404
       message: Not Found
 - request:
-    body: '{"startTime": "1766038299004", "endTime": "1766124699004"}'
+    body: '{"startTime": "1773285254734", "endTime": "1773371654734"}'
     headers:
       Accept:
       - application/json
@@ -86,9 +86,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/auditlogEntryReport%22
+    uri: https://easm.test.zscaler.com/zia/api/v1/auditlogEntryReport%22
   response:
     body:
       string: ''
@@ -111,7 +111,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Fri, 19 Dec 2025 06:11:39 GMT
+      - Fri, 13 Mar 2026 03:14:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -119,23 +119,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '80'
+      - '75'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 89db01d1-1d8f-926c-9ad2-aa6ea9586bd2
+      - fb3b6e21-d1db-93f5-9d9d-769b1924bbb0
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4981'
+      - '4979'
       x-ratelimit-reset:
-      - '21'
+      - '45'
       x-transaction-id:
-      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -157,9 +157,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/auditlogEntryReport
+    uri: https://easm.test.zscaler.com/zia/api/v1/auditlogEntryReport
   response:
     body:
       string: '{"code":"RESOURCE_NOT_FOUND","message":"No Report to download"}'
@@ -184,7 +184,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 06:11:39 GMT
+      - Fri, 13 Mar 2026 03:14:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -192,23 +192,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '93'
+      - '129'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a1a9123a-be0f-95d5-b28e-f7ec08c26100
+      - 10b012c0-f626-9d16-b7c0-8cb481bce61a
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4980'
+      - '4978'
       x-ratelimit-reset:
-      - '21'
+      - '45'
       x-transaction-id:
-      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -230,9 +230,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/auditlogEntryReport/download
+    uri: https://easm.test.zscaler.com/zia/api/v1/auditlogEntryReport/download
   response:
     body:
       string: "<!doctype html><html lang=\"en\"><head><title>HTTP Status 406 \u2013
@@ -264,7 +264,7 @@ interactions:
       content-type:
       - text/html;charset=utf-8
       date:
-      - Fri, 19 Dec 2025 06:11:39 GMT
+      - Fri, 13 Mar 2026 03:14:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -276,23 +276,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '94'
+      - '149'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 58a8fe58-d498-9aea-80df-48ecfa27e63a
+      - 3fdcd669-2a98-9d6a-b459-04372387e35c
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4979'
+      - '4977'
       x-ratelimit-reset:
-      - '21'
+      - '45'
       x-transaction-id:
-      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -314,9 +314,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.11 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.beta.zsapi.net/zia/api/v1/auditlogEntryReport%22
+    uri: https://easm.test.zscaler.com/zia/api/v1/auditlogEntryReport%22
   response:
     body:
       string: ''
@@ -339,7 +339,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Fri, 19 Dec 2025 06:11:39 GMT
+      - Fri, 13 Mar 2026 03:14:16 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -347,23 +347,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '86'
+      - '122'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - da2aa43c-6467-95d1-b9e9-f1f63047b497
+      - 0894b259-4ed9-9712-899d-b8751a159da3
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4978'
+      - '4976'
       x-ratelimit-reset:
-      - '21'
+      - '45'
       x-transaction-id:
-      - e6d96497-3e8f-4612-a22d-3fd728368f5f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

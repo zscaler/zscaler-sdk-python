@@ -36,24 +36,15 @@ class CustomerDRToolVersion(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.latest = config["latest"] \
-                if "latest" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.platform = config["platform"] \
-                if "platform" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.latest = config["latest"] if "latest" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.platform = config["platform"] if "platform" in config else None
+            self.version = config["version"] if "version" in config else None
         else:
             self.creation_time = None
             self.customer_id = None
@@ -79,7 +70,7 @@ class CustomerDRToolVersion(ZscalerObject):
             "modifiedTime": self.modified_time,
             "name": self.name,
             "platform": self.platform,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

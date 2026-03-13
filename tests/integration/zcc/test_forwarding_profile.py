@@ -38,11 +38,11 @@ class TestForwardingProfile:
             profiles, response, err = client.zcc.forwarding_profile.list_by_company()
             assert err is None, f"Error listing forwarding profiles: {err}"
             assert isinstance(profiles, list), "Expected a list of forwarding profiles"
-            
+
             # Verify response structure if we have profiles
             if profiles:
                 profile = profiles[0]
-                assert hasattr(profile, 'as_dict'), "Forwarding profile should have as_dict method"
+                assert hasattr(profile, "as_dict"), "Forwarding profile should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing forwarding profiles failed: {exc}")
 
@@ -55,9 +55,7 @@ class TestForwardingProfile:
         errors = []
 
         try:
-            profiles, response, err = client.zcc.forwarding_profile.list_by_company(
-                query_params={"page": 1, "page_size": 10}
-            )
+            profiles, response, err = client.zcc.forwarding_profile.list_by_company(query_params={"page": 1, "page_size": 10})
             assert err is None, f"Error listing forwarding profiles with pagination: {err}"
             assert isinstance(profiles, list), "Expected a list of forwarding profiles"
         except Exception as exc:
@@ -72,13 +70,10 @@ class TestForwardingProfile:
         errors = []
 
         try:
-            profiles, response, err = client.zcc.forwarding_profile.list_by_company(
-                query_params={"search": "test"}
-            )
+            profiles, response, err = client.zcc.forwarding_profile.list_by_company(query_params={"search": "test"})
             assert err is None, f"Error listing forwarding profiles with search: {err}"
             assert isinstance(profiles, list), "Expected a list of forwarding profiles"
         except Exception as exc:
             errors.append(f"Listing forwarding profiles with search failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the search forwarding profile test:\n{chr(10).join(errors)}"
-

@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/tenancyRestrictionProfile
+    uri: https://easm.test.zscaler.com/zia/api/v1/tenancyRestrictionProfile
   response:
     body:
-      string: '[{"id":12130430,"name":"zscaler_demo01","appType":"DROPBOX","itemTypePrimary":"TENANT_RESTRICTION_TEAM_ID","itemDataPrimary":["dbmid:AACziDn9tHAGQ0lVpDpzUi9Li-glV96qVas"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":22733534,"name":"YouTubeTenant01","appType":"YOUTUBE","description":"test","itemTypePrimary":"TENANT_RESTRICTION_CATEGORY_ID","itemValue":["TENANT_RESTRICTION_ANIME_OR_ANIMATION","TENANT_RESTRICTION_ACTION_OR_ADVENTURE"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":23742257,"name":"SGIO-MSFT-CA","appType":"MSLOGINSERVICES","description":"SGIO-MSFT-CA","itemTypePrimary":"TENANT_RESTRICTION_TENANT_DIRECTORY","itemDataPrimary":["76b66e9c-201a-49dc-bb7e-e9d77604a4c2"],"itemTypeSecondary":"TENANT_RESTRICTION_TENANT_NAME","itemDataSecondary":["securitygeek.ca","securitygeek.dev"],"restrictPersonalO365Domains":true,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":23745108,"name":"SGIO-MSFT-CA_v2","appType":"MSLOGINSERVICES","description":"SGIO-MSFT-CA","itemTypePrimary":"TENANT_RESTRICTION_TENANT_POLICY_ID","itemDataPrimary":["76b66e9c-201a-49dc-bb7e-e9d77604a4c2:quadsj"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":true,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":23745252,"name":"YouTube01_Profile","appType":"YOUTUBE","description":"YouTube01_Profile","itemTypePrimary":"TENANT_RESTRICTION_CATEGORY_ID","itemValue":["TENANT_RESTRICTION_ACTION_OR_ADVENTURE"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":23745253,"name":"Google_Profile01","appType":"GOOGLE","description":"Google_Profile01","itemTypePrimary":"TENANT_RESTRICTION_DOMAIN","itemDataPrimary":["acme.com"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":23745254,"name":"Dropbox_Profile","appType":"DROPBOX","description":"Dropbox_Profile","itemTypePrimary":"TENANT_RESTRICTION_TEAM_ID","itemDataPrimary":["139732608"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false}]'
+      string: '[{"id":25700062,"name":"SGIO-MSFT-CA","appType":"MSLOGINSERVICES","description":"SGIO-MSFT-CA","itemTypePrimary":"TENANT_RESTRICTION_TENANT_DIRECTORY","itemDataPrimary":["76b66e9c-201a-49dc-bb7e-e9d77604a4c2"],"itemTypeSecondary":"TENANT_RESTRICTION_TENANT_NAME","itemDataSecondary":["securitygeek.dev","securitygeekio.ca"],"restrictPersonalO365Domains":true,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":25700074,"name":"SGIO-MSFT1","appType":"MSLOGINSERVICES","itemTypePrimary":"TENANT_RESTRICTION_TENANT_DIRECTORY","itemDataPrimary":["02ddc0c2-02a1-40f0-b91d-f1ae13bd1f63"],"itemTypeSecondary":"TENANT_RESTRICTION_TENANT_NAME","itemDataSecondary":["NetIPSEC.onmicrosoft.com","securitygeek.io"],"restrictPersonalO365Domains":true,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false},{"id":66184529,"name":"zscaler_demo01","appType":"DROPBOX","description":"zscaler_demo01","itemTypePrimary":"TENANT_RESTRICTION_TEAM_ID","itemDataPrimary":["139732608"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -40,108 +40,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:40:01 GMT
+      - Fri, 13 Mar 2026 03:23:44 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '400'
+      - '587'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b2fb7569-c83f-987f-abd8-84286459cdbf
+      - 52fab45a-0a58-9072-8576-97b4a444a4cb
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4965'
       x-ratelimit-reset:
-      - '60'
+      - '16'
       x-transaction-id:
-      - a1804b72-cbe7-4ad2-aa15-3c7bf1668aee
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/tenancyRestrictionProfile/12130430
-  response:
-    body:
-      string: '{"id":12130430,"name":"zscaler_demo01","appType":"DROPBOX","itemTypePrimary":"TENANT_RESTRICTION_TEAM_ID","itemDataPrimary":["dbmid:AACziDn9tHAGQ0lVpDpzUi9Li-glV96qVas"],"restrictPersonalO365Domains":false,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 21:40:01 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '294'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 35ad6f49-c5c3-92d7-b415-ec9293a889f7
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4996'
-      x-ratelimit-reset:
-      - '59'
-      x-transaction-id:
-      - a1804b72-cbe7-4ad2-aa15-3c7bf1668aee
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -164,9 +91,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/tenancyRestrictionProfile
+    uri: https://easm.test.zscaler.com/zia/api/v1/tenancyRestrictionProfile
   response:
     body:
       string: '{"message":"Request body is invalid."}'
@@ -191,7 +118,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 06:13:59 GMT
+      - Fri, 13 Mar 2026 03:23:45 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -199,23 +126,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '169'
+      - '181'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3c4cc5c8-0442-9888-9940-797b0495d9a4
+      - 77c757d2-e04d-9ff0-97c7-13541907f4be
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4964'
       x-ratelimit-reset:
-      - '2'
+      - '16'
       x-transaction-id:
-      - 0f5d63ae-9b19-4d82-931b-d55d0f77ff91
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -223,4 +150,81 @@ interactions:
     status:
       code: 400
       message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/tenancyRestrictionProfile/25700062
+  response:
+    body:
+      string: '{"id":25700062,"name":"SGIO-MSFT-CA","appType":"MSLOGINSERVICES","description":"SGIO-MSFT-CA","itemTypePrimary":"TENANT_RESTRICTION_TENANT_DIRECTORY","itemDataPrimary":["76b66e9c-201a-49dc-bb7e-e9d77604a4c2"],"itemTypeSecondary":"TENANT_RESTRICTION_TENANT_NAME","itemDataSecondary":["securitygeek.dev","securitygeekio.ca"],"restrictPersonalO365Domains":true,"allowGoogleConsumers":false,"msLoginServicesTrV2":false,"allowGoogleVisitors":false,"allowGcpCloudStorageRead":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:23:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '575'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 83830a68-a6cc-9092-a3f4-34eb49208a45
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4963'
+      x-ratelimit-reset:
+      - '15'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
 version: 1

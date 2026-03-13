@@ -17,15 +17,24 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import pytest
 from zscaler.zinsights.models.enums import SortOrder
 from zscaler.zinsights.models.inputs import (
-    OrderByInput, StringFilter,
-    WebEntriesFilterBy, WebOrderBy,
-    CasbEntriesFilterBy, CasbEntryOrderBy,
-    CyberSecurityEntriesFilterBy, CyberSecurityEntryOrderBy,
-    FirewallEntriesFilterBy, FirewallEntryOrderBy,
-    ShadowITAppsFilterBy, ShadowITAppsOrderBy,
-    ShadowITEntriesFilterBy, ShadowITEntryOrderBy,
-    IoTDeviceFilterBy, IoTDeviceOrderBy,
-    CasbIncidentFilterBy, TimeRangeInput
+    OrderByInput,
+    StringFilter,
+    WebEntriesFilterBy,
+    WebOrderBy,
+    CasbEntriesFilterBy,
+    CasbEntryOrderBy,
+    CyberSecurityEntriesFilterBy,
+    CyberSecurityEntryOrderBy,
+    FirewallEntriesFilterBy,
+    FirewallEntryOrderBy,
+    ShadowITAppsFilterBy,
+    ShadowITAppsOrderBy,
+    ShadowITEntriesFilterBy,
+    ShadowITEntryOrderBy,
+    IoTDeviceFilterBy,
+    IoTDeviceOrderBy,
+    CasbIncidentFilterBy,
+    TimeRangeInput,
 )
 
 
@@ -38,11 +47,11 @@ class TestOrderByInput:
         order_by = OrderByInput(field_name="test_field", order=SortOrder.ASC)
         assert order_by.field_name == "test_field"
         assert order_by.order == SortOrder.ASC
-        
+
         # Test as_dict
         result = order_by.as_dict()
         assert result == {"field_name": "test_field", "order": "ASC"}
-        
+
         # Test to_graphql
         gql = order_by.to_graphql()
         assert "test_field" in gql
@@ -103,7 +112,7 @@ class TestFiltersComprehensive:
         filter_by = ShadowITAppsFilterBy(
             application=StringFilter(eq="App1"),
             application_category=StringFilter(ne="Games"),
-            sanctioned_state=StringFilter(in_list=["SANCTIONED"])
+            sanctioned_state=StringFilter(in_list=["SANCTIONED"]),
         )
         result = filter_by.as_dict()
         assert "application" in result
@@ -121,10 +130,7 @@ class TestFiltersComprehensive:
         assert result == {"risk_index": "DESC"}
 
     def test_shadow_it_apps_order_by_multiple(self):
-        order_by = ShadowITAppsOrderBy(
-            application=SortOrder.ASC,
-            computed_risk_index=SortOrder.DESC
-        )
+        order_by = ShadowITAppsOrderBy(application=SortOrder.ASC, computed_risk_index=SortOrder.DESC)
         result = order_by.as_dict()
         assert "application" in result
         assert "computed_risk_index" in result
@@ -136,8 +142,7 @@ class TestFiltersComprehensive:
 
     def test_iot_device_filter_by_multiple(self):
         filter_by = IoTDeviceFilterBy(
-            classifications=StringFilter(in_list=["Class1", "Class2"]),
-            category=StringFilter(ne="Unknown")
+            classifications=StringFilter(in_list=["Class1", "Class2"]), category=StringFilter(ne="Unknown")
         )
         result = filter_by.as_dict()
         assert "classifications" in result
@@ -157,9 +162,8 @@ class TestFiltersComprehensive:
         filter_by = CasbIncidentFilterBy(policy="Test Policy", app_name="Test App")
         result = filter_by.as_dict()
         assert result == {"policy": "Test Policy", "app_name": "Test App"}
-        
+
         # Test to_graphql
         gql = filter_by.to_graphql()
         assert "policy" in gql
         assert "app_name" in gql
-

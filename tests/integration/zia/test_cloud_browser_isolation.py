@@ -46,4 +46,3 @@ class TestCloudBrowserIsolation:
             errors.append(f"Exception during cloud browser isolation test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

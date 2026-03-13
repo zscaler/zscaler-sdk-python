@@ -36,7 +36,7 @@ class TestBandwidthClasses:
         errors = []
         class_id = None
         update_class = None
-        
+
         # Use deterministic names for VCR
         names = NameGenerator("bandwidth-class")
 

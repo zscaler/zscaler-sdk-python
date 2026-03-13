@@ -45,15 +45,11 @@ class TestAdminRoles:
             assert len(roles) > 0, "Should have at least one role"
 
             # Test list_roles with search
-            search_roles, response, err = client.zia.admin_roles.list_roles(
-                query_params={"search": "Super Admin"}
-            )
+            search_roles, response, err = client.zia.admin_roles.list_roles(query_params={"search": "Super Admin"})
             assert err is None, f"List roles with search failed: {err}"
 
             # Test list_roles with include_auditor_role
-            roles_with_auditor, response, err = client.zia.admin_roles.list_roles(
-                query_params={"include_auditor_role": True}
-            )
+            roles_with_auditor, response, err = client.zia.admin_roles.list_roles(query_params={"include_auditor_role": True})
             assert err is None, f"List roles with include_auditor_role failed: {err}"
 
             # Test get_role - get the first role from the list
@@ -75,7 +71,7 @@ class TestAdminRoles:
                     device_info_access="READ_ONLY",
                 )
                 if err is None and created_role is not None:
-                    role_id = created_role.id if hasattr(created_role, 'id') else None
+                    role_id = created_role.id if hasattr(created_role, "id") else None
 
                     # Test update_role
                     if role_id:

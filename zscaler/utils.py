@@ -224,6 +224,7 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
+
 def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
     """
     For each (key, payload_key) in 'id_groups':
@@ -389,6 +390,7 @@ def pick_version_profile(kwargs: list, payload: list):
             payload["versionProfileId"] = 1
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
+
 
 def calculate_epoch(hours: int):
     current_time = int(time.time())
@@ -669,7 +671,9 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     """
     # Validate time zone
     if time_zone_str not in pytz.all_timezones:
-        raise ValueError(f"Invalid time zone. Please visit the following site for reference: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones:{time_zone_str}")
+        raise ValueError(
+            f"Invalid time zone. Please visit the following site for reference: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones:{time_zone_str}"
+        )
 
     # Convert times
     try:
@@ -757,57 +761,62 @@ def format_url(base_string):
     """
     return "".join([line.strip() for line in base_string.splitlines()])
 
+
 def validate_and_format_date(date_str: str) -> str:
     """
     Validates and formats date string for ZCC API.
     Accepts various date formats and returns ZCC API format (YYYY-MM-DD HH:MM:SS GMT).
-    
+
     Args:
         date_str (str): Date string in various formats
-        
+
     Returns:
         str: Date in ZCC API format (YYYY-MM-DD HH:MM:SS GMT)
-        
+
     Raises:
         ValueError: If date format is invalid
     """
     if not date_str:
         raise ValueError("Date string cannot be empty")
-    
+
     try:
         # Try to parse the date string
         parsed_date = parser.parse(date_str)
-        
+
         # If no timezone info, assume UTC
         if parsed_date.tzinfo is None:
             parsed_date = pytz.UTC.localize(parsed_date)
-        
+
         # Convert to ZCC API format: YYYY-MM-DD HH:MM:SS GMT
         return parsed_date.strftime("%Y-%m-%d %H:%M:%S GMT")
     except (ValueError, TypeError) as e:
-        raise ValueError(f"Invalid date format: {date_str}. Expected formats: YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Error: {e}")
+        raise ValueError(
+            f"Invalid date format: {date_str}. Expected formats: YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Error: {e}"
+        )
 
 
 def validate_time_zone(time_zone_str: str) -> str:
     """
     Validates time zone string against IANA Time Zone database.
-    
+
     Args:
         time_zone_str (str): IANA time zone string
-        
+
     Returns:
         str: Validated time zone string
-        
+
     Raises:
         ValueError: If time zone is invalid
     """
     if not time_zone_str:
         raise ValueError("Time zone cannot be empty")
-    
+
     # Check if it's a valid IANA time zone
     if time_zone_str not in pytz.all_timezones:
-        raise ValueError(f"Invalid time zone: {time_zone_str}. Please use a valid IANA time zone (e.g., 'America/New_York', 'UTC', 'Europe/London')")
-    
+        raise ValueError(
+            f"Invalid time zone: {time_zone_str}. Please use a valid IANA time zone (e.g., 'America/New_York', 'UTC', 'Europe/London')"
+        )
+
     return time_zone_str
 
 
@@ -821,20 +830,11 @@ def zcc_param_mapper(func):
         # -------------------------------
         # Detect source of raw inputs
         # -------------------------------
-        raw_os = (
-            query_params.get("os_type") or
-            query_params.get("os_types") or
-            body.get("os_type") or
-            body.get("os_types")
-        )
+        raw_os = query_params.get("os_type") or query_params.get("os_types") or body.get("os_type") or body.get("os_types")
 
         if raw_os:
             raw_os = [raw_os] if isinstance(raw_os, str) else raw_os
-            mapped = [
-                str(zcc_param_map["os"].get(os.lower()))
-                for os in raw_os
-                if zcc_param_map["os"].get(os.lower())
-            ]
+            mapped = [str(zcc_param_map["os"].get(os.lower())) for os in raw_os if zcc_param_map["os"].get(os.lower())]
             if not mapped:
                 raise ValueError("Invalid `os_type` or `os_types` provided.")
             # Use singular key if original was singular, plural if original was plural
@@ -844,10 +844,7 @@ def zcc_param_mapper(func):
                 mapped_params["osTypes"] = ",".join(mapped)
 
         # Handle device_type (uses same mapping as os_type)
-        raw_device_type = (
-            query_params.get("device_type") or
-            body.get("device_type")
-        )
+        raw_device_type = query_params.get("device_type") or body.get("device_type")
 
         if raw_device_type:
             raw_device_type = [raw_device_type] if isinstance(raw_device_type, str) else raw_device_type
@@ -861,18 +858,16 @@ def zcc_param_mapper(func):
             mapped_params["deviceType"] = ",".join(mapped)
 
         raw_reg = (
-            query_params.get("registration_type") or
-            query_params.get("registration_types") or
-            body.get("registration_type") or
-            body.get("registration_types")
+            query_params.get("registration_type")
+            or query_params.get("registration_types")
+            or body.get("registration_type")
+            or body.get("registration_types")
         )
 
         if raw_reg:
             raw_reg = [raw_reg] if isinstance(raw_reg, str) else raw_reg
             mapped = [
-                str(zcc_param_map["reg_type"].get(rt.lower()))
-                for rt in raw_reg
-                if zcc_param_map["reg_type"].get(rt.lower())
+                str(zcc_param_map["reg_type"].get(rt.lower())) for rt in raw_reg if zcc_param_map["reg_type"].get(rt.lower())
             ]
             if not mapped:
                 raise ValueError("Invalid `registration_type(s)` provided.")
@@ -884,39 +879,28 @@ def zcc_param_mapper(func):
 
         # Handle date parameters
         start_date = (
-            query_params.get("start_date") or
-            query_params.get("startDate") or
-            body.get("start_date") or
-            body.get("startDate")
+            query_params.get("start_date") or query_params.get("startDate") or body.get("start_date") or body.get("startDate")
         )
-        
+
         if start_date:
             try:
                 mapped_params["startDate"] = validate_and_format_date(start_date)
             except ValueError as e:
                 raise ValueError(f"Invalid start_date: {e}")
-        
-        end_date = (
-            query_params.get("end_date") or
-            query_params.get("endDate") or
-            body.get("end_date") or
-            body.get("endDate")
-        )
-        
+
+        end_date = query_params.get("end_date") or query_params.get("endDate") or body.get("end_date") or body.get("endDate")
+
         if end_date:
             try:
                 mapped_params["endDate"] = validate_and_format_date(end_date)
             except ValueError as e:
                 raise ValueError(f"Invalid end_date: {e}")
-        
+
         # Handle time zone parameter
         time_zone = (
-            query_params.get("time_zone") or
-            query_params.get("Time-Zone") or
-            body.get("time_zone") or
-            body.get("Time-Zone")
+            query_params.get("time_zone") or query_params.get("Time-Zone") or body.get("time_zone") or body.get("Time-Zone")
         )
-        
+
         if time_zone:
             try:
                 mapped_params["Time-Zone"] = validate_time_zone(time_zone)
@@ -925,12 +909,17 @@ def zcc_param_mapper(func):
 
         # Clean aliases
         for key in [
-            "os_type", "os_types",
+            "os_type",
+            "os_types",
             "device_type",
-            "registration_type", "registration_types",
-            "start_date", "startDate",
-            "end_date", "endDate",
-            "time_zone", "Time-Zone",
+            "registration_type",
+            "registration_types",
+            "start_date",
+            "startDate",
+            "end_date",
+            "endDate",
+            "time_zone",
+            "Time-Zone",
         ]:
             query_params.pop(key, None)
             kwargs.pop(key, None)
@@ -945,6 +934,7 @@ def zcc_param_mapper(func):
         return func(self, *args, **kwargs)
 
     return wrapper
+
 
 zcc_param_map = {
     "os": {
@@ -964,11 +954,10 @@ zcc_param_map = {
     },
 }
 
+
 class RateLimitExceededError(Exception):
     def __init__(self, retry_at: datetime):
-        super().__init__(
-            f"/downloadDevices daily limit reached. Try again at {retry_at.isoformat()}."
-        )
+        super().__init__(f"/downloadDevices daily limit reached. Try again at {retry_at.isoformat()}.")
         self.retry_at = retry_at
 
 
@@ -1034,4 +1023,3 @@ def dump_response(
         log_lines.append(f"\n{response_body}")
     log_lines.append("-" * 68)
     logger.info("\n".join(log_lines))
-
