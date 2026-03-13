@@ -384,7 +384,9 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_web_probe(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_web_probe(
+        self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Returns a single web probe for a specific application being used by a device.
 
@@ -453,7 +455,9 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceAppCloudPathProbes]]:
+    def list_cloudpath_probes(
+        self, device_id: str, app_id: str, query_params: Optional[dict] = None
+    ) -> APIResult[List[DeviceAppCloudPathProbes]]:
         """
         Returns a list of all active cloudpath probes for a specific application being used by a device.
 
@@ -571,7 +575,9 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_cloudpath(
+        self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Returns a single cloudpath for a specific application being used by a device.
 

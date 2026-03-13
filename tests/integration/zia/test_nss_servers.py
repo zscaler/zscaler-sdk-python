@@ -36,7 +36,7 @@ class TestNSSServers:
         errors = []
         nss_id = None
         update_server = None
-        
+
         # Use deterministic names for VCR
         names = NameGenerator("nss-server")
 

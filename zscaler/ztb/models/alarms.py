@@ -19,7 +19,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 
-class Alarm(ZscalerObject):
+class Alarms(ZscalerObject):
     """
     A class for individual ZTB Alarm objects.
     """
@@ -28,6 +28,9 @@ class Alarm(ZscalerObject):
         super().__init__(config)
 
         if config:
+            # Handle ZTB response envelope: {"result": {...alarm fields...}}
+            if "result" in config and isinstance(config["result"], dict):
+                config = config["result"]
             self.alarm_id = config["alarmId"] if "alarmId" in config else None
             self.description = config["description"] if "description" in config else None
             self.severity = config["severity"] if "severity" in config else None
@@ -93,9 +96,8 @@ class AlarmResult(ZscalerObject):
 
         if config:
             self.total_alarms_count = config["totalAlarmsCount"] if "totalAlarmsCount" in config else 0
-            self.alarms = ZscalerCollection.form_list(
-                config["alarms"] if "alarms" in config else [], Alarm
-            )
+
+            self.alarms = ZscalerCollection.form_list(config["alarms"] if "alarms" in config else [], Alarms)
         else:
             self.total_alarms_count = 0
             self.alarms = []
@@ -151,6 +153,44 @@ class AlarmResponse(ZscalerObject):
             "errorCode": self.error_code,
             "requestKey": self.request_key,
             "result": self.result.request_format() if self.result else None,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class AlarmBulkAcknowledge(ZscalerObject):
+    """
+    A class for AlarmBulkAcknowledge objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the AlarmBulkAcknowledge model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the AlarmBulkAcknowledge configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.action_taken_time = config["action_taken_time"] if "action_taken_time" in config else None
+            self.action_taken_user = config["action_taken_user"] if "action_taken_user" in config else None
+            self.ids = ZscalerCollection.form_list(config["ids"] if "ids" in config else [], str)
+        else:
+            # Initialize with default None or 0 values
+            self.id = None
+            self.action_taken_user = None
+            self.ids = []
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "action_taken_time": self.action_taken_time,
+            "action_taken_user": self.action_taken_user,
+            "ids": self.ids,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

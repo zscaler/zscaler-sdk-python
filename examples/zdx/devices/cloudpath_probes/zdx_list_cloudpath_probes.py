@@ -184,7 +184,7 @@ def main():
         # Legacy client configuration
         ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
         ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
-        
+
         if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
             print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
             return
@@ -193,27 +193,27 @@ def main():
             "key_id": ZDX_CLIENT_ID,
             "key_secret": ZDX_CLIENT_SECRET,
         }
-        
+
         client = LegacyZDXClient(config)
     else:
         # OneAPI client configuration
         ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
         ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
         ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
-        
+
         if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
             print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
             return
 
         config = {
-            'clientId': ZSCALER_CLIENT_ID,
-            'clientSecret': ZSCALER_CLIENT_SECRET,
+            "clientId": ZSCALER_CLIENT_ID,
+            "clientSecret": ZSCALER_CLIENT_SECRET,
         }
-        
+
         # Add vanity domain if provided
         if ZSCALER_VANITY_DOMAIN:
-            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
-        
+            config["vanityDomain"] = ZSCALER_VANITY_DOMAIN
+
         client = ZscalerClient(config)
 
     # Prompt the user for action choice
@@ -240,15 +240,15 @@ def main():
             if err:
                 print(f"Error listing cloudpath probes: {err}")
                 return
-            
+
             # Convert to list of dictionaries for display
             probes_data = []
             for probe in cloudpath_probes:
-                if hasattr(probe, 'as_dict'):
+                if hasattr(probe, "as_dict"):
                     probes_data.append(probe.as_dict())
                 else:
                     probes_data.append(probe)
-            
+
             headers = ["ID", "Name", "Num Probes", "Leg SRC", "Leg DST", "Latency"]
             data = extract_probes_data(probes_data)
             display_table(data, headers)
@@ -260,16 +260,18 @@ def main():
 
         # Call the API to get cloudpath probe details
         try:
-            cloudpath_probe, _, err = client.zdx.devices.get_cloudpath_probe(device_id, app_id, probe_id, query_params=query_params)
+            cloudpath_probe, _, err = client.zdx.devices.get_cloudpath_probe(
+                device_id, app_id, probe_id, query_params=query_params
+            )
             if err:
                 print(f"Error retrieving cloudpath probe details: {err}")
                 return
-            
-            if hasattr(cloudpath_probe, 'as_dict'):
+
+            if hasattr(cloudpath_probe, "as_dict"):
                 probe_data = cloudpath_probe.as_dict()
             else:
                 probe_data = cloudpath_probe
-            
+
             headers = ["Leg SRC", "Leg DST", "Metric", "Unit", "Timestamp", "Value"]
             if isinstance(probe_data, BoxList):
                 data = extract_probe_details(probe_data)
@@ -288,12 +290,12 @@ def main():
             if err:
                 print(f"Error retrieving cloudpath data: {err}")
                 return
-            
-            if hasattr(cloudpath_data, 'as_dict'):
+
+            if hasattr(cloudpath_data, "as_dict"):
                 data_dict = cloudpath_data.as_dict()
             else:
                 data_dict = cloudpath_data
-            
+
             headers = [
                 "Timestamp",
                 "Leg SRC",

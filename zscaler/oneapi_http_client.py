@@ -48,7 +48,7 @@ class HTTPClient:
         self.zwa_legacy_client: Optional[LegacyZWAClientHelper] = zwa_legacy_client
         self.ztb_legacy_client: Optional[LegacyZTBClientHelper] = ztb_legacy_client
         self.zguard_legacy_client: Optional[LegacyZGuardClientHelper] = zguard_legacy_client
-        
+
         # Determine if legacy clients are enabled
         self.use_zcc_legacy_client: bool = zcc_legacy_client is not None
         self.use_ztw_legacy_client: bool = ztw_legacy_client is not None
@@ -58,7 +58,7 @@ class HTTPClient:
         self.use_zwa_legacy_client: bool = zwa_legacy_client is not None
         self.use_ztb_legacy_client: bool = ztb_legacy_client is not None
         self.use_zguard_legacy_client: bool = zguard_legacy_client is not None
-        
+
         # Set timeout for all HTTP requests
         request_timeout: Optional[int] = http_config.get("requestTimeout", None)
         self._timeout: Optional[int] = request_timeout if request_timeout and request_timeout > 0 else None

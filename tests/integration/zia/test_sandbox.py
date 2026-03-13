@@ -60,10 +60,7 @@ class TestSandbox:
             # Test get_report with details
             try:
                 test_hash = "d41d8cd98f00b204e9800998ecf8427e"
-                report_full, response, err = client.zia.sandbox.get_report(
-                    md5_hash=test_hash,
-                    report_details="full"
-                )
+                report_full, response, err = client.zia.sandbox.get_report(md5_hash=test_hash, report_details="full")
             except Exception:
                 pass
 

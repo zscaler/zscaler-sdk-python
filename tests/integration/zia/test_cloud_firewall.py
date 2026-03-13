@@ -124,4 +124,3 @@ class TestCloudFirewall:
             errors.append(f"Exception during cloud firewall test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

@@ -126,7 +126,7 @@ class TestApplicationSegment:
                 if app_segment_id:
                     time.sleep(2)  # ZPA API requires time for eventual consistency
                     segment_list, _, err = client.zpa.application_segment.list_segments(
-                        query_params={'search': app_segment_name}
+                        query_params={"search": app_segment_name}
                     )
                     assert err is None, f"Error listing Application Segment: {err}"
                     assert segment_list is not None, "Segment list is None"

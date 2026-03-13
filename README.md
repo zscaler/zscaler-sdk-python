@@ -36,6 +36,7 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [ZCC API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc)
 * [ZIdentity](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
 * [ZTW API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector)
+* [ZTB API (Zero Trust Branch)](https://help.zscaler.com/)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
 
@@ -55,8 +56,8 @@ This library uses semantic versioning and updates are posted in ([release notes]
 
 The latest release can always be found on the ([releases page](github-releases))
 
-> Requires Python version 3.9.2 or higher.
-Zscaler SDK for Python is compatible with Python 3.9, 3.10, 3.11, and 3.12.
+> Requires Python version 3.10 or higher.
+Zscaler SDK for Python is compatible with Python 3.10, 3.11, and 3.12.
 
 ## Need help?
 
@@ -1485,26 +1486,52 @@ if __name__ == "__main__":
 
 ### Zero Trust Branch (ZTB) API
 
-The ZTB API uses JWT token-based authorization via the `Authorization` header. Unlike ZIA/ZTW, it does **not** use JSESSIONID session cookies.
+ZTB (Zero Trust Branch) authenticates via **API key**. The client calls
+`POST /api/v3/api-key-auth/login` with `{"api_key": "..."}` and receives a
+`delegate_token` used as `Authorization: Bearer <token>` for all subsequent requests.
+Unlike ZIA/ZTW, ZTB does **not** use JSESSIONID session cookies.
 
 **Environment Variables:**
 
 | Variable | Required | Description |
 |---|---|---|
-| `ZTB_TOKEN` | Yes (or pass `token`) | JWT token for ZTB API access |
-| `ZTB_OVERRIDE_URL` | Yes (or pass `override_url`) | Base URL for the ZTB API (e.g. `https://zscalerbd-api.goairgap.com`). The subdomain is tenant-specific — there is no default. |
-| `ZTB_CLOUD` | No | Cloud identifier (informational only; not used for URL construction yet) |
+| `ZTB_API_KEY` | Yes (or pass `api_key`) | ZTB API key created in the ZTB UI |
+| `ZTB_CLOUD` | Yes* (or pass `cloud`) | Cloud subdomain for your tenancy (e.g. `zscalerbd-api`). Used to build base URL: `https://{cloud}.goairgap.com` |
+| `ZTB_OVERRIDE_URL` | No (or pass `override_url`) | Full base URL override (e.g. `https://zscalerbd-api.goairgap.com`). If set, `cloud` is not required. Use for non-standard or test URLs. |
 | `ZSCALER_PARTNER_ID` | No | Partner ID for `x-partner-id` header |
+
+\* Either `ZTB_CLOUD` or `ZTB_OVERRIDE_URL` must be provided.
 
 **Configuration Options:**
 
 | Option | Default | Description |
 |---|---|---|
-| `override_url` | _(required)_ | Full base URL including tenant-specific subdomain |
-| `auth_scheme` | `"raw"` | `"raw"`: sends `Authorization: <token>`. `"bearer"`: sends `Authorization: Bearer <token>` |
-| `max_retries` | `5` | Max retry attempts for 429/5xx/network errors |
-| `token_provider` | `None` | Optional callable returning a fresh token string |
+| `api_key` | _(required)_ | ZTB API key from the ZTB console |
+| `cloud` | _(required if no override_url)_ | Cloud subdomain (e.g. `zscalerbd-api`) |
+| `override_url` | `None` | Full base URL override. When set, `cloud` is ignored. Include protocol (`https://`). |
+| `partner_id` | `None` | Partner ID for `x-partner-id` header |
 | `timeout` | `240` | Request timeout in seconds |
+| `max_retries` | `5` | Max retry attempts for 429/5xx/network errors |
+
+**Important Notes:**
+
+- On **401 Unauthorized**, the client automatically re-authenticates and retries once.
+- On **429** (rate limit) or **5xx** (502/503/504), the SDK retries with exponential backoff.
+- ZTB is available only via the **Legacy** client (`LegacyZTBClient`). OneAPI/OAuth2 is not supported for ZTB.
+
+**Available Resources (via `client.ztb.<resource>`):**
+
+- `alarms` — Alarms API
+- `api_keys` — API key auth
+- `app_connector_config` — App connector configuration
+- `devices` — Active devices, device tags, OS list, device details, DHCP history, filter values
+- `groups_router` — Groups router
+- `logs` — Logs and visibility charts
+- `policy_comments` — Policy comments
+- `ransomware_kill` — Ransomware kill
+- `site` — Site management
+- `site2site_vpn` — Site-to-site VPN (Cloud Gateway)
+- `template_router` — Template router
 
 **Usage Example (Legacy Client):**
 
@@ -1512,9 +1539,9 @@ The ZTB API uses JWT token-based authorization via the `Authorization` header. U
 from zscaler.oneapi_client import LegacyZTBClient
 
 config = {
-    "token": "{yourJWTToken}",
-    "override_url": "https://{yourSubdomain}.goairgap.com",
-    "auth_scheme": "raw",  # or "bearer"
+    "api_key": "{yourZTBAPIKey}",
+    "cloud": "zscalerbd-api",  # or use override_url for full URL
+    "logging": {"enabled": False, "verbose": False},
 }
 
 def main():
@@ -1525,17 +1552,23 @@ def main():
             return
         print(f"Alarms: {alarms}")
 
+        devices, _, err = client.ztb.devices.list_active_devices(
+            query_params={"page": 1, "limit": 25}
+        )
+        if not err:
+            for d in devices:
+                print(d.hostname)
+
 if __name__ == "__main__":
     main()
 ```
 
-You can also use a dynamic token provider:
+**Using override_url (e.g. for test or custom tenant):**
 
 ```py
 config = {
+    "api_key": "{yourZTBAPIKey}",
     "override_url": "https://{yourSubdomain}.goairgap.com",
-    "token_provider": lambda: get_token_from_vault(),
-    "auth_scheme": "bearer",
 }
 ```
 

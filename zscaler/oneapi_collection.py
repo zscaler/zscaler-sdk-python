@@ -1,6 +1,6 @@
 from typing import List, Type, TypeVar, Any
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class ZscalerCollection:

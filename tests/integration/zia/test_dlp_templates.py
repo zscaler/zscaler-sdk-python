@@ -50,7 +50,11 @@ class TestDLPTemplates:
                     template_content="Test DLP template content for VCR testing",
                 )
                 if err is None and created_template is not None:
-                    template_id = created_template.get("id") if isinstance(created_template, dict) else getattr(created_template, "id", None)
+                    template_id = (
+                        created_template.get("id")
+                        if isinstance(created_template, dict)
+                        else getattr(created_template, "id", None)
+                    )
 
                     # Test get_dlp_templates
                     if template_id:

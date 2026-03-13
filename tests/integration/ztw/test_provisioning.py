@@ -43,7 +43,7 @@ class TestProvisioningUrl:
                 assert error is None, f"Error listing provisioning urls: {error}"
                 assert isinstance(urls, list), "Expected a list of provisioning urls"
                 assert len(urls) > 0, "Expected at least one provisioning url"
-                provision_id = urls[0].id if hasattr(urls[0], 'id') else urls[0].get("id")
+                provision_id = urls[0].id if hasattr(urls[0], "id") else urls[0].get("id")
                 assert provision_id is not None, "Expected the first provisioning url to have an ID"
             except Exception as exc:
                 errors.append(f"Listing provisioning urls failed: {exc}")
@@ -54,7 +54,11 @@ class TestProvisioningUrl:
                     provisioning_url_details, _, error = client.ztw.provisioning_url.get_provisioning_url(provision_id)
                     assert error is None, f"Error getting provisioning url: {error}"
                     assert provisioning_url_details is not None, "Expected valid provisioning url details"
-                    detail_id = provisioning_url_details.id if hasattr(provisioning_url_details, 'id') else provisioning_url_details.get("id")
+                    detail_id = (
+                        provisioning_url_details.id
+                        if hasattr(provisioning_url_details, "id")
+                        else provisioning_url_details.get("id")
+                    )
                     assert detail_id == provision_id, "Mismatch in provisioning url ID"
                 except Exception as exc:
                     errors.append(f"Fetching provisioning url by ID failed: {exc}")

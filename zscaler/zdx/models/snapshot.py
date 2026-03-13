@@ -35,21 +35,13 @@ class Snapshot(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"] \
-                if "name" in config else None
-            self.alert_id = config["alert_id"] \
-                if "alert_id" in config else None
-            self.expiry = config["expiry"] \
-                if "expiry" in config else None
-            self.obfuscation = ZscalerCollection.form_list(
-                config["obfuscation"] if "obfuscation" in config else [], str
-            )
-            self.id = config["id"] \
-                if "id" in config else None
-            self.url = config["url"] \
-                if "url" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.alert_id = config["alert_id"] if "alert_id" in config else None
+            self.expiry = config["expiry"] if "expiry" in config else None
+            self.obfuscation = ZscalerCollection.form_list(config["obfuscation"] if "obfuscation" in config else [], str)
+            self.id = config["id"] if "id" in config else None
+            self.url = config["url"] if "url" in config else None
+            self.status = config["status"] if "status" in config else None
         else:
             self.name = None
             self.alert_id = None
@@ -71,7 +63,7 @@ class Snapshot(ZscalerObject):
             "obfuscation": self.obfuscation,
             "id": self.id,
             "url": self.url,
-            "status": self.status
+            "status": self.status,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

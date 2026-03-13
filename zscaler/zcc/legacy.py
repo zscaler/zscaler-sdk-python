@@ -10,10 +10,7 @@ from typing import TYPE_CHECKING
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.user_agent import UserAgent
-from zscaler.utils import (
-    is_token_expired,
-    RateLimitExceededError
-)
+from zscaler.utils import is_token_expired, RateLimitExceededError
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.logger import setup_logging
 
@@ -74,14 +71,7 @@ class LegacyZCCClientHelper:
     DOWNLOAD_DEVICES_RESET_TIME = timedelta(days=1)
 
     def __init__(
-        self,
-        api_key=None,
-        secret_key=None,
-        cloud=None,
-        partner_id=None,
-        timeout=240,
-        cache=None,
-        request_executor_impl=None
+        self, api_key=None, secret_key=None, cloud=None, partner_id=None, timeout=240, cache=None, request_executor_impl=None
     ):
         from zscaler.request_executor import RequestExecutor
 
@@ -185,7 +175,7 @@ class LegacyZCCClientHelper:
         """
         retry_after_sec = response.headers.get("X-Rate-Limit-Retry-After-Seconds")
         if retry_after_sec and retry_after_sec.isdigit():
-            return int(retry_after_sec) + 1        # 1-second pad
+            return int(retry_after_sec) + 1  # 1-second pad
         return default
 
     # ------------------------------------------------------------------
@@ -283,9 +273,7 @@ class LegacyZCCClientHelper:
                     # for all other paths, allow limited retry
                     attempts += 1
                     if attempts == max_attempts:
-                        raise ValueError(
-                            "Specific IP addresses are subjected to a rate limit of 100 calls per hour."
-                        )
+                        raise ValueError("Specific IP addresses are subjected to a rate limit of 100 calls per hour.")
 
                     backoff = self._get_backoff_seconds(response, default=60)
                     logger.warning("Rate limit (429). Retrying in %s seconds …", backoff)
@@ -298,9 +286,7 @@ class LegacyZCCClientHelper:
                     # treat as a soft-429
                     attempts += 1
                     if attempts == max_attempts:
-                        raise ValueError(
-                            "Specific IP addresses are subjected to a rate limit of 100 calls per hour."
-                        )
+                        raise ValueError("Specific IP addresses are subjected to a rate limit of 100 calls per hour.")
                     logger.warning("Server reports 0 remaining calls. Retrying in 60 seconds …")
                     time.sleep(60)
                     continue
@@ -320,10 +306,7 @@ class LegacyZCCClientHelper:
                 attempts += 1
                 if attempts == max_attempts:
                     raise
-                logger.warning(
-                    "Network error talking to %s. Retrying … (%d/%d) %s",
-                    url, attempts, max_attempts, str(e)
-                )
+                logger.warning("Network error talking to %s. Retrying … (%d/%d) %s", url, attempts, max_attempts, str(e))
                 time.sleep(5)
 
         return response, {

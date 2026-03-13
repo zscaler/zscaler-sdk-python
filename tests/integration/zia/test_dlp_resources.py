@@ -75,7 +75,7 @@ class TestDLPResources:
             # Test get_dlp_idm_profiles if available
             if idm_profiles and len(idm_profiles) > 0:
                 # IDM profiles may use profile_id or template_id instead of id
-                profile_id = getattr(idm_profiles[0], 'profile_id', None) or getattr(idm_profiles[0], 'template_id', None)
+                profile_id = getattr(idm_profiles[0], "profile_id", None) or getattr(idm_profiles[0], "template_id", None)
                 if profile_id:
                     fetched_profile, response, err = client.zia.dlp_resources.get_dlp_idm_profiles(profile_id)
                     # Don't fail if get fails
@@ -93,4 +93,3 @@ class TestDLPResources:
             errors.append(f"Exception during DLP resources test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

@@ -39,29 +39,45 @@ logger = logging.getLogger("zscaler-sdk-python")
 
 if TYPE_CHECKING:
     from zscaler.ztb.alarms import AlarmsAPI
+    from zscaler.ztb.api_key import APIKeyAuthRouterAPI
+    from zscaler.ztb.app_connector_config import AppConnectorConfigAPI
+    from zscaler.ztb.devices import DevicesAPI
+    from zscaler.ztb.groups_router import GroupsRouterAPI
+    from zscaler.ztb.logs import LogsAPI
+    from zscaler.ztb.policy_comments import PolicyCommentsAPI
+    from zscaler.ztb.ransomware_kill import RansomwareKillAPI
+    from zscaler.ztb.site import SiteAPI
+    from zscaler.ztb.site2site_vpn import Site2SiteVPNAPI
+    from zscaler.ztb.template_router import TemplateRouterAPI
 
 # ASSUMPTION: ZTB rate limits are unknown.  We use conservative defaults.
 _DEFAULT_GET_LIMIT = 5
 _DEFAULT_POST_PUT_DELETE_LIMIT = 5
-_DEFAULT_GET_FREQ = 1  # 1-second window
+_DEFAULT_GET_FREQ = 1
 _DEFAULT_POST_PUT_DELETE_FREQ = 1
 
 _MAX_RETRY_BACKOFF_SECONDS = 30
 _DEFAULT_MAX_RETRIES = 5
 
-# Transient HTTP status codes eligible for retry (besides 429)
 _RETRYABLE_5XX = frozenset({502, 503, 504})
+
+_ZTB_LOGIN_PATH = "/api/v3/api-key-auth/login"
 
 
 class LegacyZTBClientHelper:
     """
     A Controller to access Endpoints in the Zero Trust Branch (ZTB) API.
 
-    ZTB uses JWT token-based authorization via the ``Authorization: Bearer``
-    header, **not** JSESSIONID session cookies.
+    ZTB authenticates via API key: the client calls
+    ``POST /api/v3/api-key-auth/login`` with ``{"api_key": "..."}`` and
+    receives a ``delegate_token`` used as ``Authorization: Bearer <token>``
+    for all subsequent requests.
+
+    If a request returns 401, the client automatically re-authenticates
+    and retries once.
 
     Attributes:
-        token (str): The JWT token for ZTB API access.
+        api_key (str): The ZTB API key (created in the ZTB UI).
         cloud (str): The Zscaler cloud subdomain for your tenancy
             (e.g. ``zscalerbd-api``). Used to construct the base URL:
             ``https://{cloud}.goairgap.com``
@@ -73,9 +89,6 @@ class LegacyZTBClientHelper:
             When using this attribute, there is no need to supply the ``cloud``
             attribute. The override URL will be prepended to the API endpoint suffixes.
             The protocol must be included i.e. ``https://``.
-
-        token_provider (callable):
-            Optional callable returning a fresh token string for dynamic retrieval.
     """
 
     _vendor = "Zscaler"
@@ -97,14 +110,11 @@ class LegacyZTBClientHelper:
     ) -> None:
         from zscaler.request_executor import RequestExecutor
 
-        # --- Token resolution ---
-        self.token: Optional[str] = kw.get("token") or os.getenv(f"{self._env_base}_TOKEN")
-        self.token_provider: Optional[Callable[[], str]] = kw.get("token_provider")
-
-        if not self.token and not self.token_provider:
+        # --- API key resolution ---
+        self.api_key: Optional[str] = kw.get("api_key") or os.getenv(f"{self._env_base}_API_KEY")
+        if not self.api_key:
             raise ValueError(
-                "A ZTB token is required. Supply 'token' kwarg, set the "
-                "ZTB_TOKEN environment variable, or provide a 'token_provider' callable."
+                "A ZTB API key is required. Supply 'api_key' kwarg or set the " "ZTB_API_KEY environment variable."
             )
 
         # --- Cloud ---
@@ -115,11 +125,9 @@ class LegacyZTBClientHelper:
                 f"{self._env_base}_CLOUD environment variable."
             )
 
-        # --- URL construction (same pattern as ZIA) ---
+        # --- URL construction ---
         self.url = (
-            kw.get("override_url")
-            or os.getenv(f"{self._env_base}_OVERRIDE_URL")
-            or f"https://{self.env_cloud}.goairgap.com"
+            kw.get("override_url") or os.getenv(f"{self._env_base}_OVERRIDE_URL") or f"https://{self.env_cloud}.goairgap.com"
         )
 
         # --- Misc ---
@@ -127,6 +135,9 @@ class LegacyZTBClientHelper:
         self.timeout: int = timeout
         self.fail_safe: bool = fail_safe
         self.max_retries: int = max_retries
+
+        # --- Delegate token (populated by authenticate()) ---
+        self._delegate_token: Optional[str] = None
 
         # --- Cache ---
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
@@ -142,7 +153,7 @@ class LegacyZTBClientHelper:
         ua = UserAgent()
         self.user_agent: str = ua.get_user_agent_string()
 
-        # --- Rate limiter (conservative defaults, ASSUMPTION: limits unknown) ---
+        # --- Rate limiter ---
         self.rate_limiter = RateLimiter(
             get_limit=_DEFAULT_GET_LIMIT,
             post_put_delete_limit=_DEFAULT_POST_PUT_DELETE_LIMIT,
@@ -159,6 +170,9 @@ class LegacyZTBClientHelper:
         if self.partner_id:
             self.headers["x-partner-id"] = self.partner_id
 
+        # --- Authenticate (obtain delegate_token) ---
+        self.authenticate()
+
         # --- RequestExecutor config block ---
         self.config: Dict[str, Any] = {
             "client": {
@@ -169,31 +183,63 @@ class LegacyZTBClientHelper:
                 "cache": {"enabled": cache_enabled},
             }
         }
-        self.request_executor = (request_executor_impl or RequestExecutor)(
-            self.config, self.cache, ztb_legacy_client=self
+        self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, ztb_legacy_client=self)
+
+    # ------------------------------------------------------------------
+    # Authentication
+    # ------------------------------------------------------------------
+
+    def authenticate(self) -> None:
+        """
+        Authenticates with the ZTB API by posting the api_key to
+        ``/api/v3/api-key-auth/login`` and extracts the ``delegate_token``
+        from the response.
+        """
+        url = f"{self.url}{_ZTB_LOGIN_PATH}"
+        method = "POST"
+        payload = {"api_key": self.api_key}
+        request_uuid = str(uuid.uuid4())
+        start_time = time.time()
+
+        dump_request(logger, url, method, payload, {}, self.headers, request_uuid)
+
+        resp = requests.post(
+            url,
+            json=payload,
+            headers=self.headers,
+            timeout=self.timeout,
         )
+
+        dump_response(logger, url, method, resp, {}, request_uuid, start_time)
+
+        parsed_response, err = check_response_for_error(url, resp, resp.text)
+        if err:
+            raise err
+
+        try:
+            result = parsed_response["result"]
+            token = result["delegate_token"]
+            if not token:
+                raise KeyError("empty delegate_token")
+        except (KeyError, TypeError) as e:
+            raise ValueError(
+                f"Unexpected authentication response shape. "
+                f'Expected {{"result": {{"delegate_token": "..."}}}}, '
+                f"got: {parsed_response}"
+            ) from e
+
+        self._delegate_token = token
+        logger.info("ZTB authentication successful. Delegate token obtained.")
 
     # ------------------------------------------------------------------
     # Token helpers
     # ------------------------------------------------------------------
 
-    def _get_token(self) -> str:
-        """Return the current token, calling token_provider if configured."""
-        if self.token_provider is not None:
-            token = self.token_provider()
-            if not token:
-                raise ValueError("token_provider returned an empty token")
-            return token
-        if not self.token:
-            raise ValueError("No ZTB token available")
-        return self.token
-
     def _build_auth_header_value(self) -> str:
-        """Build the ``Authorization: Bearer <token>`` header value."""
-        token = self._get_token()
-        if token.lower().startswith("bearer "):
-            return token
-        return f"Bearer {token}"
+        """Build the ``Authorization: Bearer <delegate_token>`` header value."""
+        if not self._delegate_token:
+            raise ValueError("No ZTB delegate token available. Call authenticate() first.")
+        return f"Bearer {self._delegate_token}"
 
     # ------------------------------------------------------------------
     # URL helpers
@@ -217,9 +263,13 @@ class LegacyZTBClientHelper:
         headers: Optional[Dict[str, str]] = None,
     ) -> Tuple[requests.Response, Dict[str, Any]]:
         """
-        Send an HTTP request to the ZTB API using JWT Bearer Authorization.
+        Send an HTTP request to the ZTB API.
 
-        Handles:
+        Uses ``Authorization: Bearer <delegate_token>`` obtained from the
+        login flow. On 401 responses, automatically re-authenticates and
+        retries once.
+
+        Also handles:
           - 429 (Too Many Requests) with Retry-After parsing and exponential backoff.
           - 5xx transient errors (502/503/504) with exponential backoff.
           - Transient network errors with exponential backoff.
@@ -229,6 +279,7 @@ class LegacyZTBClientHelper:
         """
         url = f"{self.url}/{path.lstrip('/')}"
         attempts = 0
+        did_reauth = False
 
         while attempts <= self.max_retries:
             try:
@@ -253,12 +304,18 @@ class LegacyZTBClientHelper:
 
                 dump_response(logger, url, method, resp, params, request_uuid, start_time)
 
+                # --- 401 handling: re-authenticate and retry once ---
+                if resp.status_code == 401 and not did_reauth:
+                    logger.warning("Received 401 Unauthorized. Re-authenticating and retrying...")
+                    self.authenticate()
+                    did_reauth = True
+                    continue
+
                 # --- 429 handling ---
                 if resp.status_code == 429:
                     sleep_time = self._parse_retry_after(resp.headers, attempts)
                     logger.warning(
-                        "Rate limit exceeded (429). Retrying in %.1f seconds. "
-                        "(Attempt %d/%d)",
+                        "Rate limit exceeded (429). Retrying in %.1f seconds. " "(Attempt %d/%d)",
                         sleep_time,
                         attempts + 1,
                         self.max_retries,
@@ -271,8 +328,7 @@ class LegacyZTBClientHelper:
                 if resp.status_code in _RETRYABLE_5XX:
                     sleep_time = self._exponential_backoff(attempts)
                     logger.warning(
-                        "Transient server error (%d). Retrying in %.1f seconds. "
-                        "(Attempt %d/%d)",
+                        "Transient server error (%d). Retrying in %.1f seconds. " "(Attempt %d/%d)",
                         resp.status_code,
                         sleep_time,
                         attempts + 1,
@@ -336,7 +392,7 @@ class LegacyZTBClientHelper:
     @staticmethod
     def _exponential_backoff(attempt: int) -> float:
         """Exponential backoff with jitter, capped at _MAX_RETRY_BACKOFF_SECONDS."""
-        base = min(2 ** attempt, _MAX_RETRY_BACKOFF_SECONDS)
+        base = min(2**attempt, _MAX_RETRY_BACKOFF_SECONDS)
         jitter = random.uniform(0, base * 0.25)
         return min(base + jitter, _MAX_RETRY_BACKOFF_SECONDS)
 
@@ -369,10 +425,113 @@ class LegacyZTBClientHelper:
 
     @property
     def alarms(self) -> "AlarmsAPI":
-        """Interface for the ZTB Alarms API (/api/v2/alarm)."""
+        """
+        The interface object for the :ref:`ZTB Alarms interface <ztb-alarms>`.
+
+        """
         from zscaler.ztb.alarms import AlarmsAPI
 
         return AlarmsAPI(self.request_executor)
+
+    @property
+    def api_keys(self) -> "APIKeyAuthRouterAPI":
+        """
+        The interface object for the :ref:`ZTB API Key Auth interface <ztb-api_keys>`.
+
+        """
+        from zscaler.ztb.api_key import APIKeyAuthRouterAPI
+
+        return APIKeyAuthRouterAPI(self.request_executor)
+
+    @property
+    def app_connector_config(self) -> "AppConnectorConfigAPI":
+        """
+        The interface object for the :ref:`ZTB App Connector Config interface <ztb-app_connector_config>`.
+
+        """
+        from zscaler.ztb.app_connector_config import AppConnectorConfigAPI
+
+        return AppConnectorConfigAPI(self.request_executor)
+
+    @property
+    def devices(self) -> "DevicesAPI":
+        """
+        The interface object for the :ref:`ZTB Devices interface <ztb-devices>`.
+
+        """
+        from zscaler.ztb.devices import DevicesAPI
+
+        return DevicesAPI(self.request_executor)
+
+    @property
+    def groups_router(self) -> "GroupsRouterAPI":
+        """
+        The interface object for the :ref:`ZTB Groups Router interface <ztb-groups_router>`.
+
+        """
+        from zscaler.ztb.groups_router import GroupsRouterAPI
+
+        return GroupsRouterAPI(self.request_executor)
+
+    @property
+    def logs(self) -> "LogsAPI":
+        """
+        The interface object for the :ref:`ZTB Logs interface <ztb-logs>`.
+
+        """
+        from zscaler.ztb.logs import LogsAPI
+
+        return LogsAPI(self.request_executor)
+
+    @property
+    def policy_comments(self) -> "PolicyCommentsAPI":
+        """
+        The interface object for the :ref:`ZTB Policy Comments interface <ztb-policy_comments>`.
+
+        """
+        from zscaler.ztb.policy_comments import PolicyCommentsAPI
+
+        return PolicyCommentsAPI(self.request_executor)
+
+    @property
+    def ransomware_kill(self) -> "RansomwareKillAPI":
+        """
+        The interface object for the :ref:`ZTB Ransomware Kill interface <ztb-ransomware_kill>`.
+
+        """
+        from zscaler.ztb.ransomware_kill import RansomwareKillAPI
+
+        return RansomwareKillAPI(self.request_executor)
+
+    @property
+    def site(self) -> "SiteAPI":
+        """
+        The interface object for the :ref:`ZTB Site interface <ztb-site>`.
+
+        """
+        from zscaler.ztb.site import SiteAPI
+
+        return SiteAPI(self.request_executor)
+
+    @property
+    def site2site_vpn(self) -> "Site2SiteVPNAPI":
+        """
+        The interface object for the :ref:`ZTB Site2Site VPN interface <ztb-site2site_vpn>`.
+
+        """
+        from zscaler.ztb.site2site_vpn import Site2SiteVPNAPI
+
+        return Site2SiteVPNAPI(self.request_executor)
+
+    @property
+    def template_router(self) -> "TemplateRouterAPI":
+        """
+        The interface object for the :ref:`ZTB Template Router interface <ztb-template_router>`.
+
+        """
+        from zscaler.ztb.template_router import TemplateRouterAPI
+
+        return TemplateRouterAPI(self.request_executor)
 
     # ------------------------------------------------------------------
     # Custom headers (consistent with other legacy clients)

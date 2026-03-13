@@ -235,11 +235,13 @@ class InspectionControllerAPI(APIClient):
             if isinstance(grp, PredefinedInspectionControlResource) and grp.default_group:
                 for ctrl in grp.predefined_inspection_controls:
                     action_val = getattr(ctrl, "default_action", None) or getattr(ctrl, "action", None)
-                    default_predefs.append({
-                        "id": ctrl.id,
-                        "action": action_val,
-                        "defaultAction": action_val,
-                    })
+                    default_predefs.append(
+                        {
+                            "id": ctrl.id,
+                            "action": action_val,
+                            "defaultAction": action_val,
+                        }
+                    )
 
         if not default_predefs:
             return None, None, "Default predefined controls are missing or empty."
@@ -250,13 +252,16 @@ class InspectionControllerAPI(APIClient):
         }
 
         predefined_controls_extra = kwargs.pop("predefined_controls", [])
-        payload["predefinedControls"].extend([
-            {
-                "id": ctrl["id"],
-                "action": ctrl["action"],
-                "defaultAction": ctrl["action"],
-            } for ctrl in predefined_controls_extra
-        ])
+        payload["predefinedControls"].extend(
+            [
+                {
+                    "id": ctrl["id"],
+                    "action": ctrl["action"],
+                    "defaultAction": ctrl["action"],
+                }
+                for ctrl in predefined_controls_extra
+            ]
+        )
 
         payload.update(kwargs)
 
@@ -310,11 +315,13 @@ class InspectionControllerAPI(APIClient):
             if isinstance(grp, PredefinedInspectionControlResource) and grp.default_group:
                 for ctrl in grp.predefined_inspection_controls:
                     action_val = getattr(ctrl, "default_action", None) or getattr(ctrl, "action", None)
-                    default_predefs.append({
-                        "id": ctrl.id,
-                        "action": action_val,
-                        "defaultAction": action_val,
-                    })
+                    default_predefs.append(
+                        {
+                            "id": ctrl.id,
+                            "action": action_val,
+                            "defaultAction": action_val,
+                        }
+                    )
 
         if not default_predefs:
             return None, None, "Default predefined controls are missing or empty."
@@ -327,13 +334,16 @@ class InspectionControllerAPI(APIClient):
 
         # Add any caller-supplied predefined controls
         predefined_controls_extra = kwargs.pop("predefined_controls", [])
-        payload["predefinedControls"].extend([
-            {
-                "id": ctrl["id"],
-                "action": ctrl["action"],
-                "defaultAction": ctrl["action"],
-            } for ctrl in predefined_controls_extra
-        ])
+        payload["predefinedControls"].extend(
+            [
+                {
+                    "id": ctrl["id"],
+                    "action": ctrl["action"],
+                    "defaultAction": ctrl["action"],
+                }
+                for ctrl in predefined_controls_extra
+            ]
+        )
 
         payload.update(kwargs)
 
@@ -486,11 +496,7 @@ class InspectionControllerAPI(APIClient):
             predefined_controls_extra = kwargs.pop("predefined_controls")
             payload["predefinedControls"].extend(
                 [
-                    {
-                        "id": control["id"],
-                        "action": control["action"],
-                        "default_action": control["action"]
-                    }
+                    {"id": control["id"], "action": control["action"], "default_action": control["action"]}
                     for control in predefined_controls_extra
                 ]
             )
@@ -819,8 +825,7 @@ class InspectionControllerAPI(APIClient):
         return (None, response, None)
 
     def list_predef_controls(
-        self,
-        query_params: Optional[dict] = None
+        self, query_params: Optional[dict] = None
     ) -> APIResult[List[PredefinedInspectionControlResource]]:
         """
         Returns a list of predefined ZPA Inspection Controls.
@@ -855,18 +860,12 @@ class InspectionControllerAPI(APIClient):
 
         version = qp.get("version")
         if version is None:
-            return (
-                None,
-                None,
-                ValueError("'version' is required in query_params")
-            )
+            return (None, None, ValueError("'version' is required in query_params"))
         if version not in SUPPORTED:
             return (
                 None,
                 None,
-                ValueError(
-                    f"Unsupported version '{version}'. Supported values: {', '.join(sorted(SUPPORTED))}"
-                )
+                ValueError(f"Unsupported version '{version}'. Supported values: {', '.join(sorted(SUPPORTED))}"),
             )
 
         search_field = qp.pop("search_field", None)

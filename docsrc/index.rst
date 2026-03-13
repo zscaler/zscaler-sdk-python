@@ -7,6 +7,7 @@
    :caption: Contents
 
    zs/zcc/index
+   zs/ztb/index
    zs/ztw/index
    zs/zdx/index
    zs/zia/index
@@ -58,6 +59,7 @@ across multiple products such as:
 - `ZDX API <https://help.zscaler.com/zdx/understanding-zdx-api>`__
 - `ZCC API <https://help.zscaler.com/client-connector/getting-started-client-connector-api>`__
 - `ZTW API <https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api>`__
+- `ZTB API (Zero Trust Branch) <https://help.zscaler.com/>`__
 - `ZWA API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
 - `Zidentity API <https://help.zscaler.com/zidentity/understanding-zidentity-apis>`__
 - `Z-Insights API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
@@ -87,10 +89,8 @@ Version Status
 The latest release can always be found on the (`releases
 page <github-releases>`__)
 
-   Requires Python version 3.8.0 or higher. Zscaler SDK for Python is
-   compatible with Python 3.8 *(until*\ `June
-   2023 <https://devguide.python.org/versions/>`__\ *)*, 3.8, 3.9, 3.10,
-   and 3.11.
+   Requires Python version 3.10 or higher. Zscaler SDK for Python is
+   compatible with Python 3.10, 3.11, and 3.12.
 
 Need help?
 ----------

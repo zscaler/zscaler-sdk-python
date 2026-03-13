@@ -13,7 +13,6 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -28,7 +27,7 @@ packages = [
 "Bug Tracker" = "https://github.com/zscaler/zscaler-sdk-python/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.9.2,<4.0"
+python = ">=3.10,<4.0"
 requests = ">=2.32.3"
 urllib3 = ">=2.6.0"
 cryptography = ">=45.0.2"
@@ -51,7 +50,7 @@ pytest-mock = ">=3.12.0"
 pytest-asyncio = ">=0.23.0"
 pytest-cov = ">=6.2.1"
 pytest-recording = ">=0.13.1"
-vcrpy = {version = ">=8.1.0", python = ">=3.10"}
+vcrpy = ">=8.1.0"
 pyfakefs = ">=5.7.0"
 responses = ">=0.25.7"
 sphinx = ">=7.2.0"

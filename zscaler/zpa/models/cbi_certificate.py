@@ -45,11 +45,6 @@ class CBICertificate(ZscalerObject):
             dict: A dictionary representing the CBICertificate for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "pem": self.pem,
-            "isDefault": self.is_default
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "pem": self.pem, "isDefault": self.is_default}
         parent_req_format.update(current_obj_format)
         return parent_req_format

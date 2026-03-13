@@ -152,11 +152,7 @@ class URLCategoriesAPI(APIClient):
         return (result, response, None)
 
     def add_url_category(
-        self,
-        super_category: str,
-        urls: Optional[List[str]] = None,
-        configured_name: Optional[str] = None,
-        **kwargs
+        self, super_category: str, urls: Optional[List[str]] = None, configured_name: Optional[str] = None, **kwargs
     ) -> APIResult[URLCategory]:
         """
         Adds a new custom URL category.

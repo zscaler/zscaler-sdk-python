@@ -15,18 +15,22 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-from zscaler.zinsights.models.enums import (
-    SortOrder, WebTrafficUnits, TrendInterval,
-    IncidentsGroupBy, ActionStatus
-)
+from zscaler.zinsights.models.enums import SortOrder, WebTrafficUnits, TrendInterval, IncidentsGroupBy, ActionStatus
 from zscaler.zinsights.models.inputs import (
-    StringFilter, WebEntriesFilterBy, WebOrderBy,
-    FirewallEntriesFilterBy, FirewallEntryOrderBy,
-    CasbEntriesFilterBy, CasbEntryOrderBy,
-    CyberSecurityEntriesFilterBy, CyberSecurityEntryOrderBy,
-    ShadowITAppsFilterBy, ShadowITAppsOrderBy,
-    IoTDeviceFilterBy, IoTDeviceOrderBy,
-    TimeRangeInput
+    StringFilter,
+    WebEntriesFilterBy,
+    WebOrderBy,
+    FirewallEntriesFilterBy,
+    FirewallEntryOrderBy,
+    CasbEntriesFilterBy,
+    CasbEntryOrderBy,
+    CyberSecurityEntriesFilterBy,
+    CyberSecurityEntryOrderBy,
+    ShadowITAppsFilterBy,
+    ShadowITAppsOrderBy,
+    IoTDeviceFilterBy,
+    IoTDeviceOrderBy,
+    TimeRangeInput,
 )
 
 
@@ -137,8 +141,7 @@ class TestShadowITFiltersAndOrders:
 
     def test_shadow_it_apps_filter_by(self):
         filter_by = ShadowITAppsFilterBy(
-            application=StringFilter(eq="Dropbox"),
-            sanctioned_state=StringFilter(ne="UNSANCTIONED")
+            application=StringFilter(eq="Dropbox"), sanctioned_state=StringFilter(ne="UNSANCTIONED")
         )
         result = filter_by.as_dict()
         assert "application" in result
@@ -146,10 +149,7 @@ class TestShadowITFiltersAndOrders:
         assert "sanctioned_state" in result
 
     def test_shadow_it_apps_order_by(self):
-        order_by = ShadowITAppsOrderBy(
-            risk_index=SortOrder.DESC,
-            data_consumed=SortOrder.DESC
-        )
+        order_by = ShadowITAppsOrderBy(risk_index=SortOrder.DESC, data_consumed=SortOrder.DESC)
         result = order_by.as_dict()
         assert result == {"risk_index": "DESC", "data_consumed": "DESC"}
 
@@ -160,19 +160,13 @@ class TestIoTFiltersAndOrders:
     """
 
     def test_iot_device_filter_by(self):
-        filter_by = IoTDeviceFilterBy(
-            category=StringFilter(eq="Camera"),
-            classifications=StringFilter(nin=["Unknown"])
-        )
+        filter_by = IoTDeviceFilterBy(category=StringFilter(eq="Camera"), classifications=StringFilter(nin=["Unknown"]))
         result = filter_by.as_dict()
         assert "category" in result
         assert "classifications" in result
 
     def test_iot_device_order_by(self):
-        order_by = IoTDeviceOrderBy(
-            total=SortOrder.DESC,
-            category=SortOrder.ASC
-        )
+        order_by = IoTDeviceOrderBy(total=SortOrder.DESC, category=SortOrder.ASC)
         result = order_by.as_dict()
         assert result == {"total": "DESC", "category": "ASC"}
 
@@ -186,4 +180,3 @@ class TestTimeRangeInput:
         tr = TimeRangeInput(start_time=1000000, end_time=2000000)
         result = tr.as_dict()
         assert result == {"start_time": 1000000, "end_time": 2000000}
-

@@ -33,10 +33,10 @@ class EnrollmentCertificate(ZscalerObject):
             self.creation_time = config["creationTime"] if config and "creationTime" in config else None
             self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
             self.get_cname = config["getcName"] if config and "getcName" in config else None
-            self.valid_from_in_epoch_sec = config["validFromInEpochSec"] \
-                if config and "validFromInEpochSec" in config else None
-            self.valid_to_in_epoch_sec = config["validToInEpochSec"] \
-                if config and "validToInEpochSec" in config else None
+            self.valid_from_in_epoch_sec = (
+                config["validFromInEpochSec"] if config and "validFromInEpochSec" in config else None
+            )
+            self.valid_to_in_epoch_sec = config["validToInEpochSec"] if config and "validToInEpochSec" in config else None
             self.certificate = config["certificate"] if config and "certificate" in config else None
             self.issued_to = config["issuedTo"] if config and "issuedTo" in config else None
             self.issued_by = config["issuedBy"] if config and "issuedBy" in config else None
@@ -56,9 +56,7 @@ class EnrollmentCertificate(ZscalerObject):
             )
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
-            self.root_certificate_id = (
-                config["rootCertificateId"] if config and "rootCertificateId" in config else None
-            )
+            self.root_certificate_id = config["rootCertificateId"] if config and "rootCertificateId" in config else None
         else:
             self.id = None
             self.modified_time = None

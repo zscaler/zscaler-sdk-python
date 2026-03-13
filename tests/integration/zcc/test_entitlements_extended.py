@@ -89,4 +89,3 @@ class TestEntitlementsExtended:
             errors.append(f"Getting ZPA group entitlements failed: {exc}")
 
         # Don't assert - may fail in test environment
-

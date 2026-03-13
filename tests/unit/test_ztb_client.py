@@ -2,18 +2,18 @@
 Unit tests for the ZTB (Zero Trust Branch) client.
 
 Tests:
-  1. Auth header always uses Bearer format.
-  2. URL constructed from cloud name: https://{cloud}-api.goairgap.com
-  3. Override URL takes precedence over cloud-derived URL.
-  4. Missing cloud raises ValueError.
-  5. 429 Retry-After parsing for values like "0 seconds" and "2".
-  6. Exponential backoff on 5xx transient errors.
-  7. Network error retries.
-  8. Token provider callable support.
-  9. LegacyZTBClient construction via oneapi_client.
+  1. Authentication via POST /api/v3/api-key-auth/login → delegate_token.
+  2. Auth header always uses Bearer + delegate_token.
+  3. URL constructed from cloud name: https://{cloud}.goairgap.com
+  4. Override URL takes precedence over cloud-derived URL.
+  5. Missing cloud / api_key raises ValueError.
+  6. 401 triggers automatic re-authentication and retry.
+  7. 429 Retry-After parsing.
+  8. Exponential backoff on 5xx transient errors.
+  9. Network error retries.
+  10. LegacyZTBClient construction via oneapi_client.
 """
 
-import logging
 import os
 import pytest
 from unittest.mock import Mock, patch, MagicMock, call
@@ -25,6 +25,15 @@ from zscaler.ztb.legacy import LegacyZTBClientHelper
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+_TEST_DELEGATE_TOKEN = "test-delegate-token-abc123"
+
+_LOGIN_RESPONSE = {
+    "result": {
+        "delegate_token": _TEST_DELEGATE_TOKEN,
+    }
+}
+
 
 def _make_response(status_code=200, json_data=None, headers=None, text=""):
     """Create a mock requests.Response."""
@@ -38,42 +47,100 @@ def _make_response(status_code=200, json_data=None, headers=None, text=""):
     return resp
 
 
+def _make_login_response():
+    """Create a mock response for a successful /api/v3/api-key-auth/login."""
+    return _make_response(200, json_data=_LOGIN_RESPONSE)
+
+
 def _build_client(**overrides):
-    """Build a LegacyZTBClientHelper with sane test defaults."""
+    """Build a LegacyZTBClientHelper with sane test defaults, mocking the login call."""
     defaults = {
-        "token": "test-jwt-token",
+        "api_key": "test-api-key",
         "cloud": "zscalerbd-api",
         "timeout": 10,
         "max_retries": 3,
     }
-    # Allow cloud=None to be passed explicitly for missing-cloud tests
     for k, v in overrides.items():
         defaults[k] = v
-    with patch("zscaler.request_executor.RequestExecutor"):
-        return LegacyZTBClientHelper(**defaults)
+
+    with patch("zscaler.request_executor.RequestExecutor"), patch(
+        "requests.post", return_value=_make_login_response()
+    ) as mock_post, patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None)):
+        client = LegacyZTBClientHelper(**defaults)
+    return client
 
 
 # ===========================================================================
-# Test: Auth header formation (always Bearer)
+# Test: Authentication flow
 # ===========================================================================
+
+
+class TestAuthentication:
+
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None))
+    @patch("zscaler.request_executor.RequestExecutor")
+    def test_authenticate_calls_login_endpoint(self, mock_exec, mock_check, mock_post):
+        mock_post.return_value = _make_login_response()
+
+        client = LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
+
+        mock_post.assert_called_once()
+        call_args = mock_post.call_args
+        assert call_args[1]["json"] == {"api_key": "my-api-key"}
+        assert "zscalerbd-api.goairgap.com/api/v3/api-key-auth/login" in call_args[0][0]
+
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None))
+    @patch("zscaler.request_executor.RequestExecutor")
+    def test_authenticate_stores_delegate_token(self, mock_exec, mock_check, mock_post):
+        mock_post.return_value = _make_login_response()
+
+        client = LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
+
+        assert client._delegate_token == _TEST_DELEGATE_TOKEN
+
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error")
+    @patch("zscaler.request_executor.RequestExecutor")
+    def test_authenticate_bad_response_shape_raises(self, mock_exec, mock_check, mock_post):
+        mock_post.return_value = _make_response(200, json_data={"unexpected": "shape"})
+        mock_check.return_value = ({"unexpected": "shape"}, None)
+
+        with pytest.raises(ValueError, match="Unexpected authentication response shape"):
+            LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
+
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error")
+    @patch("zscaler.request_executor.RequestExecutor")
+    def test_authenticate_empty_token_raises(self, mock_exec, mock_check, mock_post):
+        mock_post.return_value = _make_response(200, json_data={"result": {"delegate_token": ""}})
+        mock_check.return_value = ({"result": {"delegate_token": ""}}, None)
+
+        with pytest.raises(ValueError, match="Unexpected authentication response shape"):
+            LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
+
+    def test_missing_api_key_raises(self):
+        with patch.dict(os.environ, {}, clear=True):
+            os.environ.pop("ZTB_API_KEY", None)
+            with pytest.raises(ValueError, match="API key is required"):
+                _build_client(api_key=None)
+
+
+# ===========================================================================
+# Test: Auth header formation (always Bearer + delegate_token)
+# ===========================================================================
+
 
 class TestAuthHeaderFormation:
 
-    def test_bearer_prefix_added_automatically(self):
-        client = _build_client(token="my-jwt")
-        assert client._build_auth_header_value() == "Bearer my-jwt"
-
-    def test_does_not_double_prefix(self):
-        client = _build_client(token="Bearer already-prefixed")
-        assert client._build_auth_header_value() == "Bearer already-prefixed"
-
-    def test_case_insensitive_prefix_detection(self):
-        client = _build_client(token="bearer lowercased")
-        assert client._build_auth_header_value() == "bearer lowercased"
+    def test_bearer_header_uses_delegate_token(self):
+        client = _build_client()
+        assert client._build_auth_header_value() == f"Bearer {_TEST_DELEGATE_TOKEN}"
 
     @patch("requests.request")
     def test_send_sets_bearer_authorization_header(self, mock_request):
-        client = _build_client(token="my-jwt")
+        client = _build_client()
         mock_resp = _make_response(200, json_data={"ok": True})
         mock_request.return_value = mock_resp
 
@@ -81,12 +148,13 @@ class TestAuthHeaderFormation:
             resp, ctx = client.send("GET", "/api/v2/alarm")
 
         _, kwargs = mock_request.call_args
-        assert kwargs["headers"]["Authorization"] == "Bearer my-jwt"
+        assert kwargs["headers"]["Authorization"] == f"Bearer {_TEST_DELEGATE_TOKEN}"
 
 
 # ===========================================================================
 # Test: URL resolution from cloud name
 # ===========================================================================
+
 
 class TestURLResolution:
 
@@ -121,7 +189,7 @@ class TestURLResolution:
     def test_missing_cloud_raises(self):
         with patch.dict(os.environ, {}, clear=True):
             os.environ.pop("ZTB_CLOUD", None)
-            os.environ.pop("ZTB_TOKEN", None)
+            os.environ.pop("ZTB_API_KEY", None)
             with pytest.raises(ValueError, match="Cloud environment must be set"):
                 _build_client(cloud=None)
 
@@ -151,8 +219,59 @@ class TestURLResolution:
 
 
 # ===========================================================================
+# Test: 401 auto-reauthentication
+# ===========================================================================
+
+
+class TestAutoReauth:
+
+    @patch("requests.request")
+    @patch("requests.post")
+    def test_401_triggers_reauth_and_retry(self, mock_post, mock_request):
+        client = _build_client()
+
+        new_token = "refreshed-delegate-token"
+        new_login_resp = {"result": {"delegate_token": new_token}}
+        mock_post.return_value = _make_response(200, json_data=new_login_resp)
+
+        resp_401 = _make_response(401, text='{"message":"Unauthorized"}')
+        resp_200 = _make_response(200, json_data={"ok": True})
+        mock_request.side_effect = [resp_401, resp_200]
+
+        with patch("zscaler.ztb.legacy.check_response_for_error", return_value=(new_login_resp, None)) as mock_check:
+            resp, ctx = client.send("GET", "/api/v2/alarm")
+
+        assert resp.status_code == 200
+        mock_post.assert_called_once()
+        assert client._delegate_token == new_token
+
+    @patch("requests.request")
+    @patch("requests.post")
+    def test_401_reauth_only_once(self, mock_post, mock_request):
+        """If reauth succeeds but the retried request also returns 401, don't loop."""
+        client = _build_client()
+
+        new_login_resp = {"result": {"delegate_token": "new-token"}}
+        mock_post.return_value = _make_response(200, json_data=new_login_resp)
+
+        resp_401 = _make_response(401, text='{"message":"Unauthorized"}')
+        mock_request.return_value = resp_401
+
+        with patch("zscaler.ztb.legacy.check_response_for_error") as mock_check:
+            mock_check.side_effect = [
+                (new_login_resp, None),
+                (None, Exception("401 Unauthorized")),
+            ]
+            with pytest.raises(Exception, match="401 Unauthorized"):
+                client.send("GET", "/api/v2/alarm")
+
+        mock_post.assert_called_once()
+
+
+# ===========================================================================
 # Test: 429 handling and Retry-After parsing
 # ===========================================================================
+
 
 class TestRetryAfterParsing:
 
@@ -213,6 +332,7 @@ class TestRetryAfterParsing:
 # Test: 5xx transient error retries
 # ===========================================================================
 
+
 class TestTransientErrorRetries:
 
     @patch("requests.request")
@@ -260,6 +380,7 @@ class TestTransientErrorRetries:
 # Test: Network error retries
 # ===========================================================================
 
+
 class TestNetworkErrorRetries:
 
     @patch("requests.request")
@@ -291,42 +412,9 @@ class TestNetworkErrorRetries:
 
 
 # ===========================================================================
-# Test: Token provider
-# ===========================================================================
-
-class TestTokenProvider:
-
-    def test_token_provider_callable(self):
-        provider = Mock(return_value="dynamic-token")
-        client = _build_client(token=None, token_provider=provider)
-        assert client._get_token() == "dynamic-token"
-        provider.assert_called_once()
-
-    def test_token_provider_empty_raises(self):
-        provider = Mock(return_value="")
-        client = _build_client(token=None, token_provider=provider)
-        with pytest.raises(ValueError, match="empty token"):
-            client._get_token()
-
-    def test_static_token_preferred_over_none_provider(self):
-        client = _build_client(token="static-token", token_provider=None)
-        assert client._get_token() == "static-token"
-
-    def test_token_provider_takes_precedence_over_static(self):
-        provider = Mock(return_value="dynamic")
-        client = _build_client(token="static", token_provider=provider)
-        assert client._get_token() == "dynamic"
-
-    def test_no_token_and_no_provider_raises(self):
-        with pytest.raises(ValueError, match="token is required"):
-            with patch.dict(os.environ, {}, clear=True):
-                os.environ.pop("ZTB_TOKEN", None)
-                _build_client(token=None, token_provider=None)
-
-
-# ===========================================================================
 # Test: Exponential backoff calculation
 # ===========================================================================
+
 
 class TestExponentialBackoff:
 
@@ -349,6 +437,7 @@ class TestExponentialBackoff:
 # Test: No JSESSIONID logic present
 # ===========================================================================
 
+
 class TestNoJSessionID:
 
     def test_no_jsessionid_attribute(self):
@@ -367,36 +456,50 @@ class TestNoJSessionID:
 # Test: LegacyZTBClient (oneapi_client entrypoint)
 # ===========================================================================
 
+
 class TestLegacyZTBClientEntrypoint:
 
     @patch("zscaler.request_executor.RequestExecutor")
-    def test_legacy_ztb_client_construction(self, mock_executor):
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None))
+    def test_legacy_ztb_client_construction(self, mock_check, mock_post, mock_executor):
         from zscaler.oneapi_client import LegacyZTBClient
 
+        mock_post.return_value = _make_login_response()
+
         config = {
-            "token": "my-token",
+            "api_key": "my-api-key",
             "cloud": "zscalerbd-api",
         }
         client = LegacyZTBClient(config)
         assert client.use_legacy_client is True
         assert isinstance(client.ztb_legacy_client, LegacyZTBClientHelper)
         assert client.ztb_legacy_client.url == "https://zscalerbd-api.goairgap.com"
+        assert client.ztb_legacy_client._delegate_token == _TEST_DELEGATE_TOKEN
 
     @patch("zscaler.request_executor.RequestExecutor")
-    @patch.dict(os.environ, {"ZTB_TOKEN": "env-token", "ZTB_CLOUD": "envcloud-api"})
-    def test_legacy_ztb_client_from_env(self, mock_executor):
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None))
+    @patch.dict(os.environ, {"ZTB_API_KEY": "env-api-key", "ZTB_CLOUD": "envcloud-api"})
+    def test_legacy_ztb_client_from_env(self, mock_check, mock_post, mock_executor):
         from zscaler.oneapi_client import LegacyZTBClient
 
+        mock_post.return_value = _make_login_response()
+
         client = LegacyZTBClient({})
-        assert client.ztb_legacy_client.token == "env-token"
+        assert client.ztb_legacy_client.api_key == "env-api-key"
         assert client.ztb_legacy_client.url == "https://envcloud-api.goairgap.com"
 
     @patch("zscaler.request_executor.RequestExecutor")
-    def test_legacy_ztb_client_with_override_url(self, mock_executor):
+    @patch("requests.post")
+    @patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None))
+    def test_legacy_ztb_client_with_override_url(self, mock_check, mock_post, mock_executor):
         from zscaler.oneapi_client import LegacyZTBClient
 
+        mock_post.return_value = _make_login_response()
+
         config = {
-            "token": "my-token",
+            "api_key": "my-api-key",
             "cloud": "zscalerbd-api",
             "override_url": "https://custom.example.com",
         }
@@ -407,6 +510,7 @@ class TestLegacyZTBClientEntrypoint:
 # ===========================================================================
 # Test: Context manager
 # ===========================================================================
+
 
 class TestContextManager:
 
@@ -419,6 +523,7 @@ class TestContextManager:
 # ===========================================================================
 # Test: Headers
 # ===========================================================================
+
 
 class TestHeaders:
 

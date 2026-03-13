@@ -37,6 +37,7 @@ from zscaler.ztw.account_groups import AccountGroupsAPI
 from zscaler.ztw.discovery_service import DiscoveryServiceAPI
 from zscaler.ztw.workload_groups import WorkloadGroupsAPI
 
+
 class ZTWService:
     """ZTW Service client, exposing various ZTW APIs."""
 

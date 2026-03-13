@@ -5,11 +5,7 @@ import requests
 
 class ZscalerAPIError(Exception):
     def __init__(
-        self, 
-        url: str, 
-        response_details: requests.Response, 
-        response_body: Union[Dict[str, Any], str], 
-        service_type: str = ""
+        self, url: str, response_details: requests.Response, response_body: Union[Dict[str, Any], str], service_type: str = ""
     ) -> None:
         self.status_code: int = response_details.status_code
         self.url: str = url
@@ -36,7 +32,7 @@ class ZscalerAPIError(Exception):
             for param in self.params:
                 if isinstance(param, list):
                     # Flatten lists and join with commas
-                    param_strings.append(', '.join(str(item) for item in param))
+                    param_strings.append(", ".join(str(item) for item in param))
                 else:
                     # Convert non-list items to strings
                     param_strings.append(str(param))

@@ -34,17 +34,17 @@ _vcr_port_counter = 1000
 def generate_random_string(length=10):
     """
     Generate a deterministic string for testing with VCR.
-    
+
     ALWAYS returns deterministic values (counter-based) to ensure
     recording and playback use the same values.
-    
+
     This ensures VCR cassettes capture and replay with matching request data.
-    
+
     The format is "vcr{counter:04d}" which generates strings like:
     vcr0001, vcr0002, etc. (8 characters, fits within default length=10)
     """
     global _vcr_string_counter
-    
+
     # Always use deterministic strings for VCR consistency
     # This ensures recording and playback generate identical values
     _vcr_string_counter += 1
@@ -55,15 +55,15 @@ def generate_random_string(length=10):
 def generate_random_ip(subnet):
     """
     Generate a deterministic IP address from a subnet for VCR testing.
-    
+
     ALWAYS returns deterministic IPs (counter-based) to ensure
     recording and playback use the same values.
     """
     global _vcr_ip_counter
-    
+
     network = ipaddress.ip_network(subnet)
     hosts = list(network.hosts())
-    
+
     # Always use deterministic IPs for VCR consistency
     _vcr_ip_counter += 1
     index = _vcr_ip_counter % len(hosts)
@@ -138,7 +138,7 @@ def generate_random_port_ranges(count: int, range_size: int = 1) -> List[str]:
         A list of port range strings.
     """
     global _vcr_port_counter
-    
+
     # Always use deterministic port ranges for VCR consistency
     port_ranges = []
     for i in range(count):

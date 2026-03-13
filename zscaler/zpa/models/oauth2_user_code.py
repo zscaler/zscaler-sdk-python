@@ -33,21 +33,13 @@ class OAuth2UserCode(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.component_group_id = config["componentGroupId"] \
-                if "componentGroupId" in config else None
-            self.config_cloud_name = config["configCloudName"] \
-                if "configCloudName" in config else None
-            self.enrollment_server = config["enrollmentServer"] \
-                if "enrollmentServer" in config else None
-            self.nonce_association_type = config["nonceAssociationType"] \
-                if "nonceAssociationType" in config else None
-            self.tenant_id = config["tenantId"] \
-                if "tenantId" in config else None
-            self.user_codes = ZscalerCollection.form_list(
-                config["userCodes"] if "userCodes" in config else [], str
-            )
-            self.zcomponent_id = config["zcomponentId"] \
-                if "zcomponentId" in config else None
+            self.component_group_id = config["componentGroupId"] if "componentGroupId" in config else None
+            self.config_cloud_name = config["configCloudName"] if "configCloudName" in config else None
+            self.enrollment_server = config["enrollmentServer"] if "enrollmentServer" in config else None
+            self.nonce_association_type = config["nonceAssociationType"] if "nonceAssociationType" in config else None
+            self.tenant_id = config["tenantId"] if "tenantId" in config else None
+            self.user_codes = ZscalerCollection.form_list(config["userCodes"] if "userCodes" in config else [], str)
+            self.zcomponent_id = config["zcomponentId"] if "zcomponentId" in config else None
         else:
             self.component_group_id = None
             self.config_cloud_name = None
@@ -69,7 +61,7 @@ class OAuth2UserCode(ZscalerObject):
             "nonceAssociationType": self.nonce_association_type,
             "tenantId": self.tenant_id,
             "userCodes": self.user_codes,
-            "zcomponentId": self.zcomponent_id
+            "zcomponentId": self.zcomponent_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

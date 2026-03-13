@@ -373,8 +373,7 @@ class AppSegmentsBAV2API(APIClient):
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
             segments_list, _, err = app_segment_api.get_segments_by_type(
-                application_type="BROWSER_ACCESS",
-                query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
+                application_type="BROWSER_ACCESS", query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
             )
 
             if err:

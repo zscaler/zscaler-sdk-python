@@ -171,7 +171,7 @@ class LegacyZIAClientHelper:
         request_executor_impl: Optional[Type] = None,
         session_safety_margin: int = 30,
         use_session_validation: bool = True,
-        **kw: Any
+        **kw: Any,
     ) -> None:
         from zscaler.request_executor import RequestExecutor
 
@@ -213,8 +213,10 @@ class LegacyZIAClientHelper:
 
         self.max_idle_time = datetime.timedelta(minutes=5) - datetime.timedelta(seconds=self.session_safety_margin)
         self.last_activity = None
-        self.use_session_validation = kw.get("use_session_validation", use_session_validation) or os.getenv(
-            f"{self._env_base}_USE_SESSION_VALIDATION", "true").lower() == "true"
+        self.use_session_validation = (
+            kw.get("use_session_validation", use_session_validation)
+            or os.getenv(f"{self._env_base}_USE_SESSION_VALIDATION", "true").lower() == "true"
+        )
 
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
         self.cache = NoOpCache()
@@ -493,8 +495,9 @@ class LegacyZIAClientHelper:
                     sleep_time = int(retry_after) if retry_after else 2
                     # ZIA rate limit is 1/second, so wait at least 1 second
                     sleep_time = max(sleep_time, 1)
-                    logger.warning(f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
-                                   f"(Attempt {attempts + 1}/5)")
+                    logger.warning(
+                        f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. " f"(Attempt {attempts + 1}/5)"
+                    )
                     sleep(sleep_time)
                     attempts += 1
                     continue

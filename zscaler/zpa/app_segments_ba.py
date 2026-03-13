@@ -425,16 +425,16 @@ class ApplicationSegmentBAAPI(APIClient):
             for app in clientless_apps:
                 # Find the segment that matches the domain and belongs to this segment
                 matched_segment = next(
-                    (
-                        seg for seg in segments_list
-                        if seg.domain == app.get("domain") and str(seg.app_id) == segment_id
-                    ),
-                    None
+                    (seg for seg in segments_list if seg.domain == app.get("domain") and str(seg.app_id) == segment_id), None
                 )
 
                 if not matched_segment:
-                    return (None, None, f"Error: No matching clientless App found for domain \
-                        '{app.get('domain')}' in existing segments.")
+                    return (
+                        None,
+                        None,
+                        f"Error: No matching clientless App found for domain \
+                        '{app.get('domain')}' in existing segments.",
+                    )
 
                 # Update the app with required IDs
                 app["appId"] = segment_id
@@ -481,12 +481,7 @@ class ApplicationSegmentBAAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_segment_ba(
-        self,
-        segment_id: str,
-        force_delete: bool = False,
-        microtenant_id: str = None
-    ) -> APIResult[dict]:
+    def delete_segment_ba(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified Application Segment from ZPA.
 

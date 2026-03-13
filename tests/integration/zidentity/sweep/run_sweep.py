@@ -73,7 +73,7 @@ class TestSweepUtility:
                 raise Exception(f"Error listing groups: {error}")
 
             # Access the records field from the response object
-            groups = groups_response.records if hasattr(groups_response, 'records') else []
+            groups = groups_response.records if hasattr(groups_response, "records") else []
             test_groups = [pra for pra in groups if hasattr(pra, "name") and pra.name.startswith("tests-")]
             logging.info(f"Found {len(test_groups)} group named starting with 'tests-' to delete.")
 
@@ -88,6 +88,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping groups: {str(e)}")
             raise
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

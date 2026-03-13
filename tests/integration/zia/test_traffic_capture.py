@@ -66,7 +66,7 @@ class TestTrafficCapture:
                     action="ALLOW",
                 )
                 if err is None and created_rule is not None:
-                    rule_id = created_rule.id if hasattr(created_rule, 'id') else None
+                    rule_id = created_rule.id if hasattr(created_rule, "id") else None
 
                     # Test get_rule
                     if rule_id:

@@ -42,7 +42,7 @@ class TestForwardingProfileExtended:
                 assert isinstance(profiles, list), "Expected a list of profiles"
                 if profiles:
                     profile = profiles[0]
-                    assert hasattr(profile, 'as_dict'), "Profile should have as_dict method"
+                    assert hasattr(profile, "as_dict"), "Profile should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing forwarding profiles failed: {exc}")
 
@@ -55,19 +55,15 @@ class TestForwardingProfileExtended:
 
         try:
             # First get a profile to update
-            profiles, _, err = client.zcc.forwarding_profile.list_by_company(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            profiles, _, err = client.zcc.forwarding_profile.list_by_company(query_params={"page": 1, "page_size": 1})
+
             if err is None and profiles and len(profiles) > 0:
                 profile = profiles[0]
-                profile_dict = profile.as_dict() if hasattr(profile, 'as_dict') else {}
-                
+                profile_dict = profile.as_dict() if hasattr(profile, "as_dict") else {}
+
                 # Try to update with same values (non-destructive)
                 if profile_dict:
-                    result, response, err = client.zcc.forwarding_profile.update_forwarding_profile(
-                        **profile_dict
-                    )
+                    result, response, err = client.zcc.forwarding_profile.update_forwarding_profile(**profile_dict)
                     # Update may succeed or fail depending on profile configuration
         except Exception:
             # Update may fail - the goal is code coverage
@@ -80,9 +76,7 @@ class TestForwardingProfileExtended:
 
         try:
             # Try to delete a non-existent profile (should fail gracefully)
-            result, response, err = client.zcc.forwarding_profile.delete_forwarding_profile(
-                profile_id=999999999
-            )
+            result, response, err = client.zcc.forwarding_profile.delete_forwarding_profile(profile_id=999999999)
             # Should return an error for non-existent profile
         except Exception:
             # Expected to fail - the goal is code coverage
@@ -107,24 +101,22 @@ class TestForwardingProfileCRUD:
                 "hostname": "test-server.example.com",
                 "resolved_ips_for_hostname": "192.168.1.1",
             }
-            
+
             created, _, err = client.zcc.forwarding_profile.update_forwarding_profile(**new_profile)
-            
+
             if err is None and created:
-                created_profile_id = created.id if hasattr(created, 'id') else None
-                
+                created_profile_id = created.id if hasattr(created, "id") else None
+
                 if created_profile_id:
                     # Step 2: Update the profile
                     updated_profile = new_profile.copy()
                     updated_profile["id"] = created_profile_id
                     updated_profile["hostname"] = "updated-test-server.example.com"
-                    
+
                     updated, _, err = client.zcc.forwarding_profile.update_forwarding_profile(**updated_profile)
-                    
+
                     # Step 3: Delete the profile
-                    _, _, err = client.zcc.forwarding_profile.delete_forwarding_profile(
-                        profile_id=created_profile_id
-                    )
+                    _, _, err = client.zcc.forwarding_profile.delete_forwarding_profile(profile_id=created_profile_id)
         except Exception:
             # CRUD cycle may fail - the goal is code coverage
             pass
@@ -135,4 +127,3 @@ class TestForwardingProfileCRUD:
                     client.zcc.forwarding_profile.delete_forwarding_profile(profile_id=created_profile_id)
                 except Exception:
                     pass
-

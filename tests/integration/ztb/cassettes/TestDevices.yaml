@@ -1,0 +1,175 @@
+interactions:
+- request:
+    body: '{"api_key": "REDACTED"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://ztb.test.zscaler.com/api/v3/api-key-auth/login
+  response:
+    body:
+      string: '{"result":{"delegate_token":"vcr-playback-token-12345"}}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v2/devices/active
+  response:
+    body:
+      string: '{"result":{"count":0,"rows":[]}}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v2/devices/active?search=DESKTOP&page=1&limit=10
+  response:
+    body:
+      string: '{"result":{"count":0,"rows":[]}}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v2/devices/tags
+  response:
+    body:
+      string: '{"Tags":["category: computers","type:personal computer"],"cluster_token":"","token":""}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v3/device/group-by/list
+  response:
+    body:
+      string: '{"cluster_token":"","result":{"rows":["type","category"]},"token":""}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v3/device/operating-systems?page=1&limit=10
+  response:
+    body:
+      string: '{"cluster_token":"","result":{"count":0,"limit":10,"page":1,"rows":[]},"token":""}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v3/device/type?page=1
+  response:
+    body:
+      string: '{"cluster_token":"","result":{"count":0,"rows":[]},"token":""}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer vcr-playback-token-12345
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://ztb.test.zscaler.com/api/v3/device/filters/type/values
+  response:
+    body:
+      string: '{"cluster_token":"","result":{"count":0,"values":[]},"token":""}'
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK

@@ -61,16 +61,15 @@ class TestWebPolicyExtended:
             policies, _, err = client.zcc.web_policy.list_by_company(
                 query_params={"device_type": "windows", "page": 1, "page_size": 1}
             )
-            
+
             if err is None and policies and len(policies) > 0:
                 policy = policies[0]
-                policy_id = policy.policy_id if hasattr(policy, 'policy_id') else policy.get('policyId')
-                
+                policy_id = policy.policy_id if hasattr(policy, "policy_id") else policy.get("policyId")
+
                 if policy_id:
                     # Try to activate the policy (toggle on if off, or off if on)
                     result, response, err = client.zcc.web_policy.activate_web_policy(
-                        device_type=3,  # Windows
-                        policy_id=policy_id
+                        device_type=3, policy_id=policy_id  # Windows
                     )
                     # Activation may succeed or fail depending on policy state
         except Exception:
@@ -87,16 +86,14 @@ class TestWebPolicyExtended:
             policies, _, err = client.zcc.web_policy.list_by_company(
                 query_params={"device_type": "windows", "page": 1, "page_size": 1}
             )
-            
+
             if err is None and policies and len(policies) > 0:
                 policy = policies[0]
-                policy_dict = policy.as_dict() if hasattr(policy, 'as_dict') else policy
-                
+                policy_dict = policy.as_dict() if hasattr(policy, "as_dict") else policy
+
                 # Try to update with same values (non-destructive)
                 if policy_dict:
-                    result, response, err = client.zcc.web_policy.web_policy_edit(
-                        **policy_dict
-                    )
+                    result, response, err = client.zcc.web_policy.web_policy_edit(**policy_dict)
                     # Edit may succeed or fail depending on policy configuration
         except Exception:
             # Edit may fail - the goal is code coverage
@@ -109,9 +106,7 @@ class TestWebPolicyExtended:
 
         try:
             # Try to delete a non-existent policy (should fail gracefully)
-            result, response, err = client.zcc.web_policy.delete_web_policy(
-                policy_id=999999999
-            )
+            result, response, err = client.zcc.web_policy.delete_web_policy(policy_id=999999999)
             # Should return an error for non-existent policy
         except Exception:
             # Expected to fail - the goal is code coverage
@@ -137,24 +132,22 @@ class TestWebPolicyCRUD:
                 "device_type": 3,  # Windows
                 "enabled": False,  # Keep disabled to avoid affecting production
             }
-            
+
             created, _, err = client.zcc.web_policy.web_policy_edit(**new_policy)
-            
+
             if err is None and created:
-                created_policy_id = created.policy_id if hasattr(created, 'policy_id') else None
-                
+                created_policy_id = created.policy_id if hasattr(created, "policy_id") else None
+
                 if created_policy_id:
                     # Step 2: Update the policy
                     updated_policy = new_policy.copy()
                     updated_policy["policy_id"] = created_policy_id
                     updated_policy["description"] = "Updated test policy"
-                    
+
                     updated, _, err = client.zcc.web_policy.web_policy_edit(**updated_policy)
-                    
+
                     # Step 3: Delete the policy
-                    _, _, err = client.zcc.web_policy.delete_web_policy(
-                        policy_id=created_policy_id
-                    )
+                    _, _, err = client.zcc.web_policy.delete_web_policy(policy_id=created_policy_id)
         except Exception:
             # CRUD cycle may fail - the goal is code coverage
             pass
@@ -165,4 +158,3 @@ class TestWebPolicyCRUD:
                     client.zcc.web_policy.delete_web_policy(policy_id=created_policy_id)
                 except Exception:
                     pass
-

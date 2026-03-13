@@ -87,7 +87,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #                 # Update the private cloud group
 #                 updated_name = group_name + " Updated"
 #                 _, _, err = client.zpa.private_cloud_group.update_cloud_group(
-#                     group_id, 
+#                     group_id,
 #                     name=updated_name
 #                 )
 #                 assert err is None, f"Error updating group: {err}"

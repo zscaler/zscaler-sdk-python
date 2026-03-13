@@ -65,8 +65,8 @@ class TestBandwidthRules:
                     enabled=True,
                     order=1,
                     rank=7,
-                    max_bandwidth='100',
-                    min_bandwidth='20',
+                    max_bandwidth="100",
+                    min_bandwidth="20",
                     bandwidth_class_ids=[class_id],
                     protocols=[
                         "WEBSOCKETSSL_RULE",
@@ -79,7 +79,7 @@ class TestBandwidthRules:
                         "HTTPS_RULE",
                         "HTTP_RULE",
                         "SSL_RULE",
-                        "TUNNEL_RULE"
+                        "TUNNEL_RULE",
                     ],
                 )
                 assert error is None, f"Bandwidth Rule creation failed: {error}"
@@ -107,8 +107,8 @@ class TestBandwidthRules:
                     enabled=True,
                     order=1,
                     rank=7,
-                    max_bandwidth='100',
-                    min_bandwidth='20',
+                    max_bandwidth="100",
+                    min_bandwidth="20",
                     bandwidth_class_ids=[class_id],
                     protocols=[
                         "WEBSOCKETSSL_RULE",
@@ -121,7 +121,7 @@ class TestBandwidthRules:
                         "HTTPS_RULE",
                         "HTTP_RULE",
                         "SSL_RULE",
-                        "TUNNEL_RULE"
+                        "TUNNEL_RULE",
                     ],
                 )
                 assert error is None, f"Error updating Bandwidth Rule: {error}"

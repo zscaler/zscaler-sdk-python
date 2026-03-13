@@ -14,12 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+import logging
 from typing import Dict, Any, Optional, List
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.ztb.models.alarms import Alarms
+from zscaler.ztb.models.alarms import AlarmBulkAcknowledge
 
 
 class AlarmsAPI(APIClient):
@@ -42,7 +45,7 @@ class AlarmsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_alarms(self) -> APIResult:
+    def list_alarms(self, query_params: Optional[dict] = None) -> APIResult:
         """
         Get all alarms.
 
@@ -72,7 +75,7 @@ class AlarmsAPI(APIClient):
         Examples:
             >>> alarms, response, error = client.ztb.alarms.list_alarms()
         """
-        http_method = "GET"
+        http_method = "get".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -80,17 +83,28 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body={}, headers={}, params={}
-        )
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
         if error:
             return (None, None, error)
 
         response, error = self._request_executor.execute(request)
+
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(Alarms(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def get_alarm(self, alarm_id: str) -> APIResult:
         """
@@ -100,12 +114,12 @@ class AlarmsAPI(APIClient):
             alarm_id: The alarm identifier.
 
         Returns:
-            Tuple of (result, response, error).
+            Tuple of (Alarm instance, response, error).
 
         Examples:
             >>> alarm, response, error = client.ztb.alarms.get_alarm("abc-123")
         """
-        http_method = "GET"
+        http_method = "get".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -113,32 +127,38 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body={}, headers={}, params={}
-        )
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, Alarms)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = Alarms(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def create_alarm(self, payload: Dict[str, Any]) -> APIResult:
+    def create_alarm(self, **kwargs) -> APIResult:
         """
         Create a new alarm.
 
         Args:
-            payload: Alarm creation payload.
+            **kwargs: Alarm creation fields.
 
         Returns:
-            Tuple of (result, response, error).
+            Tuple of (Alarm instance, response, error).
 
         Examples:
-            >>> alarm, response, error = client.ztb.alarms.create_alarm({"name": "test"})
+            >>> alarm, response, error = client.ztb.alarms.create_alarm(name="test")
         """
-        http_method = "POST"
+        http_method = "post".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -146,32 +166,38 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, Alarms)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = Alarms(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def update_alarm(self, payload: Dict[str, Any]) -> APIResult:
+    def update_alarm_patch(self, **kwargs) -> APIResult:
         """
         Update an alarm (PATCH).
 
         Args:
-            payload: Alarm update payload.
+            alarm_id: The alarm identifier.
+            **kwargs: Alarm update fields.
 
         Returns:
-            Tuple of (result, response, error).
+            Tuple of (Alarm instance, response, error).
 
         Examples:
-            >>> alarm, response, error = client.ztb.alarms.update_alarm({"id": "abc", "status": "active"})
+            >>> alarm, response, error = client.ztb.alarms.update_alarm("abc-123", status="active")
         """
-        http_method = "PATCH"
+        http_method = "patch".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -179,32 +205,38 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, Alarms)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = Alarms(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def update_alarm_put(self, payload: Dict[str, Any]) -> APIResult:
+    def update_alarm_put(self, **kwargs) -> APIResult:
         """
         Update an alarm (PUT).
 
         Args:
-            payload: Full alarm replacement payload.
+            alarm_id: The alarm identifier.
+            **kwargs: Full alarm replacement fields.
 
         Returns:
-            Tuple of (result, response, error).
+            Tuple of (Alarm instance, response, error).
 
         Examples:
-            >>> alarm, response, error = client.ztb.alarms.update_alarm_put({"id": "abc", "name": "new"})
+            >>> alarm, response, error = client.ztb.alarms.update_alarm_put("abc-123", name="new")
         """
-        http_method = "PUT"
+        http_method = "put".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -212,32 +244,75 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, headers={}, params={}
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Alarms)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = Alarms(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_alarm(self, alarm_id: int) -> APIResult[dict]:
+        """
+        Deletes the specified Alarm.
+
+        Args:
+            alarm_id (str): The unique identifier of the Alarm.
+
+        Returns:
+            tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete a Alarm:
+
+            >>> _, _, error = client.ztb.alarms.delete_alarm('73459')
+            >>> if error:
+            ...     print(f"Error deleting Alarm: {error}")
+            ...     return
+            ... print(f"Alarm with ID {'73459' deleted successfully.")
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._ztb_base_endpoint}
+            /alarm/{alarm_id}
+        """
         )
+
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
+        return (None, response, None)
 
-        return (response.get_body(), response, None)
-
-    def bulk_acknowledge(self, payload: Dict[str, Any]) -> APIResult:
+    def bulk_acknowledge(self, **kwargs) -> APIResult:
         """
         Bulk acknowledge alarms.
 
         Args:
-            payload: Bulk acknowledge payload.
+            **kwargs: Bulk acknowledge payload fields.
 
         Returns:
             Tuple of (result, response, error).
 
         Examples:
-            >>> result, response, error = client.ztb.alarms.bulk_acknowledge({"ids": ["a","b"]})
+            >>> result, response, error = client.ztb.alarms.bulk_acknowledge(ids=["a","b"])
         """
-        http_method = "PATCH"
+        http_method = "patch".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -245,17 +320,22 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, AlarmBulkAcknowledge)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = AlarmBulkAcknowledge(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def bulk_acknowledge_all(self) -> APIResult:
         """
@@ -267,7 +347,7 @@ class AlarmsAPI(APIClient):
         Examples:
             >>> result, response, error = client.ztb.alarms.bulk_acknowledge_all()
         """
-        http_method = "PATCH"
+        http_method = "patch".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -275,32 +355,37 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body={}, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, AlarmBulkAcknowledge)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = AlarmBulkAcknowledge(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def bulk_ignore(self, payload: Dict[str, Any]) -> APIResult:
+    def bulk_ignore(self, **kwargs) -> APIResult:
         """
         Bulk ignore alarms.
 
         Args:
-            payload: Bulk ignore payload.
+            **kwargs: Bulk ignore payload fields.
 
         Returns:
             Tuple of (result, response, error).
 
         Examples:
-            >>> result, response, error = client.ztb.alarms.bulk_ignore({"ids": ["a","b"]})
+            >>> result, response, error = client.ztb.alarms.bulk_ignore(ids=["a","b"])
         """
-        http_method = "DELETE"
+        http_method = "delete".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -308,17 +393,22 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, AlarmBulkAcknowledge)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = AlarmBulkAcknowledge(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def bulk_ignore_all(self) -> APIResult:
         """
@@ -330,7 +420,7 @@ class AlarmsAPI(APIClient):
         Examples:
             >>> result, response, error = client.ztb.alarms.bulk_ignore_all()
         """
-        http_method = "DELETE"
+        http_method = "delete".upper()
         api_url = format_url(
             f"""
             {self._ztb_base_endpoint}
@@ -338,14 +428,19 @@ class AlarmsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body={}, headers={}, params={}
-        )
+        body = kwargs
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, AlarmBulkAcknowledge)
         if error:
             return (None, response, error)
 
-        return (response.get_body(), response, None)
+        try:
+            result = AlarmBulkAcknowledge(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

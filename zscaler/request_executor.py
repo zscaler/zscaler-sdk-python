@@ -22,7 +22,7 @@ from zscaler.zwa.legacy import LegacyZWAClientHelper
 from zscaler.ztb.legacy import LegacyZTBClientHelper
 from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
-logger = logging.getLogger('zscaler-sdk-python')
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class RequestExecutor:
@@ -282,7 +282,7 @@ class RequestExecutor:
         # Special handling for zidentity to avoid endpoint duplication
         if service_type == "zidentity" and endpoint.startswith("/admin/api/v1/"):
             # Remove the /admin/api/v1 prefix since it's already in the base URL
-            endpoint = endpoint[len("/admin/api/v1/"):]
+            endpoint = endpoint[len("/admin/api/v1/") :]
 
         final_url = f"{base_url}/{endpoint.lstrip('/')}"
 
@@ -341,6 +341,10 @@ class RequestExecutor:
         if self.use_legacy_client and self.zdx_legacy_client:
             return body  # Do not convert anything, just return as-is
 
+        # Ensure ZTB remains snake_case without affecting other services
+        if self.use_legacy_client and self.ztb_legacy_client:
+            return body  # Do not convert anything, just return as-is
+
         # Special handling for ZDX endpoints - keep snake_case format
         if "/zdx/" in endpoint:
             return body  # Do not convert ZDX requests to camelCase
@@ -349,10 +353,15 @@ class RequestExecutor:
         if "/easm/" in endpoint:
             return body  # Do not convert ZEASM requests to camelCase
 
+        # Special handling for ZTB endpoints - keep snake_case format
+        if "/ztb/" in endpoint:
+            return body  # Do not convert ZTB requests to camelCase
+
         # Special handling for ZCC service - use selective conversion
         if "/zcc/" in endpoint and body:
             from zscaler.helpers import convert_keys_to_camel_case_selective
             from zscaler.zcc.models.webpolicy import WebPolicy
+
             # Use the WebPolicy's snake_case keys for selective conversion
             body = convert_keys_to_camel_case_selective(body, WebPolicy.SNAKE_CASE_KEYS)
             return body
@@ -401,7 +410,7 @@ class RequestExecutor:
             # Handle search parameter for ZPA - the API now uses a filtering/query parameter format.
             # The search string must be in the format: fieldName operator fieldValue
             # Examples: "name+EQ+CDE Segment Group", "enabled+EQ+true"
-            # 
+            #
             # For user convenience, if a simple string is provided (not in filter format),
             # we automatically convert it to "name+EQ+<search_string>" for exact name matching.
             # If the search string already contains operators (EQ, NE, GT, LT, etc.), we use it as-is.
@@ -411,17 +420,30 @@ class RequestExecutor:
                     # Remove any existing quotes
                     if search_value.startswith('"') and search_value.endswith('"'):
                         search_value = search_value[1:-1]
-                    
+
                     # Check if the search string already contains filter operators
                     # Common ZPA filter operators: EQ, NE, GT, LT, GE, LE, CONTAINS, STARTSWITH, ENDSWITH
-                    filter_operators = ['+EQ+', '+NE+', '+GT+', '+LT+', '+GE+', '+LE+', 
-                                      '+CONTAINS+', '+STARTSWITH+', '+ENDSWITH+',
-                                      '%2BEQ%2B', '%2BNE%2B', '%2BGT%2B', '%2BLT%2B', 
-                                      '%2BGE%2B', '%2BLE%2B']
-                    
+                    filter_operators = [
+                        "+EQ+",
+                        "+NE+",
+                        "+GT+",
+                        "+LT+",
+                        "+GE+",
+                        "+LE+",
+                        "+CONTAINS+",
+                        "+STARTSWITH+",
+                        "+ENDSWITH+",
+                        "%2BEQ%2B",
+                        "%2BNE%2B",
+                        "%2BGT%2B",
+                        "%2BLT%2B",
+                        "%2BGE%2B",
+                        "%2BLE%2B",
+                    ]
+
                     # Check if search value already contains any filter operator pattern
                     has_filter_operator = any(op in search_value.upper() for op in filter_operators)
-                    
+
                     if not has_filter_operator:
                         # Simple search string - convert to name+EQ+<search_string> format
                         # This provides exact name matching by default
@@ -554,7 +576,9 @@ class RequestExecutor:
     def _cache_enabled(self):
         return self._config["client"]["cache"]["enabled"] == True
 
-    def fire_request(self, request: Dict[str, Any]) -> Tuple[Optional["ZscalerAPIResponse"], Optional[int], Optional[str], Optional[Exception]]:
+    def fire_request(
+        self, request: Dict[str, Any]
+    ) -> Tuple[Optional["ZscalerAPIResponse"], Optional[int], Optional[str], Optional[Exception]]:
         """
         Send request using HTTP client.
 
@@ -622,8 +646,10 @@ class RequestExecutor:
             self._mutations_occurred = True
             logger.debug(f"Mutation detected: {request['method']} request to {request['url']}")
         else:
-            logger.debug(f"Non-mutation request: {request['method']} request to {request['url']} "
-                         f"(mutations_occurred={self._mutations_occurred})")
+            logger.debug(
+                f"Non-mutation request: {request['method']} request to {request['url']} "
+                f"(mutations_occurred={self._mutations_occurred})"
+            )
 
         # Perform the actual HTTP request
         response, error = self._http_client.send_request(request)
@@ -652,8 +678,12 @@ class RequestExecutor:
                 return self.fire_request_helper(request, attempts, request_start_time)
             else:
                 logger.error("401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
-                return request, response, response.text, Exception(
-                    "401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
+                return (
+                    request,
+                    response,
+                    response.text,
+                    Exception("401 Unauthorized - token refresh attempts exhausted or OAuth not available."),
+                )
 
         # ZIA-specific: Handle EDIT_LOCK_NOT_AVAILABLE (409 Conflict)
         # This error occurs when another admin session holds the edit lock
@@ -664,10 +694,10 @@ class RequestExecutor:
                     response_body = response.text
                     if response_body and "EDIT_LOCK_NOT_AVAILABLE" in response_body:
                         # Calculate backoff with exponential delay: 5s, 10s, 20s, etc.
-                        backoff_seconds = 5 * (2 ** attempts)
+                        backoff_seconds = 5 * (2**attempts)
                         # Cap at 60 seconds max backoff
                         backoff_seconds = min(backoff_seconds, 60)
-                        
+
                         logger.warning(
                             f"ZIA edit lock not available (attempt {attempts + 1}/{max_retries + 1}). "
                             f"Another admin session may be holding the lock. "
@@ -685,8 +715,10 @@ class RequestExecutor:
             if backoff_seconds is None:
                 return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
 
-            logger.info(f"Hit rate limit or retryable status {response.status_code}. "
-                        f"Retrying request in {backoff_seconds} seconds.")
+            logger.info(
+                f"Hit rate limit or retryable status {response.status_code}. "
+                f"Retrying request in {backoff_seconds} seconds."
+            )
             time.sleep(backoff_seconds)
             attempts += 1
             return self.fire_request_helper(request, attempts, request_start_time)
@@ -830,8 +862,9 @@ class RequestExecutor:
             # Both ZIA and ZTW require explicit deauthentication to activate staged configurations
             # but only when mutations (POST/PUT/DELETE) have occurred during the session
             if service_type.lower() in ["zia", "ztw"]:
-                logger.debug(f"{service_type.upper()} service requires explicit deauthentication to activate "
-                             f"staged configurations")
+                logger.debug(
+                    f"{service_type.upper()} service requires explicit deauthentication to activate " f"staged configurations"
+                )
 
             # Send DELETE request to deauthenticate
             logger.debug(f"Deauthenticating from {service_type} at {url}")
@@ -856,7 +889,9 @@ class RequestExecutor:
                 logger.debug(f"Successfully deauthenticated from {service_type}")
                 return True
             else:
-                logger.warning(f"Unexpected response during deauthentication: {response.status_code if response else 'No response'}")
+                logger.warning(
+                    f"Unexpected response during deauthentication: {response.status_code if response else 'No response'}"
+                )
                 return False
 
         except Exception as e:
@@ -865,13 +900,13 @@ class RequestExecutor:
 
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
-            headers.get("x-ratelimit-reset") or
-            headers.get("X-RateLimit-Reset") or
-            headers.get("RateLimit-Reset") or
-
+            headers.get("x-ratelimit-reset")
+            or headers.get("X-RateLimit-Reset")
+            or headers.get("RateLimit-Reset")
+            or
             # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
-            headers.get("X-Rate-Limit-Retry-After-Seconds") or
-            headers.get("X-Rate-Limit-Remaining")
+            headers.get("X-Rate-Limit-Retry-After-Seconds")
+            or headers.get("X-Rate-Limit-Remaining")
         )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
@@ -895,16 +930,13 @@ class RequestExecutor:
             return None
 
         # ✅ INSERT THIS BLOCK — check against maxRetrySeconds from config
-        max_retry_seconds = (
-            self._config.get("client", {})
-            .get("rateLimit", {})
-            .get("maxRetrySeconds", None)
-        )
+        max_retry_seconds = self._config.get("client", {}).get("rateLimit", {}).get("maxRetrySeconds", None)
         if max_retry_seconds is not None:
             try:
                 max_retry_seconds = int(max_retry_seconds)
                 if backoff > max_retry_seconds:
                     from zscaler.exceptions.exceptions import RetryTooLong
+
                     raise RetryTooLong(
                         f"Retry wait time {backoff} seconds exceeds configured maxRetrySeconds {max_retry_seconds}."
                     )

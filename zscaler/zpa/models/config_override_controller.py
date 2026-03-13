@@ -33,34 +33,20 @@ class ConfigOverrideController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.broker_name = config["brokerName"] \
-                if "brokerName" in config else None
-            self.config_key = config["configKey"] \
-                if "configKey" in config else None
-            self.config_value = config["configValue"] \
-                if "configValue" in config else None
-            self.config_value_int = config["configValueInt"] \
-                if "configValueInt" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
-            self.customer_name = config["customerName"] \
-                if "customerName" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.target_gid = config["targetGid"] \
-                if "targetGid" in config else None
-            self.target_name = config["targetName"] \
-                if "targetName" in config else None
-            self.target_type = config["targetType"] \
-                if "targetType" in config else None
+            self.broker_name = config["brokerName"] if "brokerName" in config else None
+            self.config_key = config["configKey"] if "configKey" in config else None
+            self.config_value = config["configValue"] if "configValue" in config else None
+            self.config_value_int = config["configValueInt"] if "configValueInt" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.customer_name = config["customerName"] if "customerName" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.target_gid = config["targetGid"] if "targetGid" in config else None
+            self.target_name = config["targetName"] if "targetName" in config else None
+            self.target_type = config["targetType"] if "targetType" in config else None
         else:
             self.broker_name = None
             self.config_key = None
@@ -96,7 +82,7 @@ class ConfigOverrideController(ZscalerObject):
             "modifiedTime": self.modified_time,
             "targetGid": self.target_gid,
             "targetName": self.target_name,
-            "targetType": self.target_type
+            "targetType": self.target_type,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

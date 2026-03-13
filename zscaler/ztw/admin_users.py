@@ -243,7 +243,7 @@ class AdminUsersAPI(APIClient):
                     login_name="jsmith",
                     role="admin",
                     email="jsmith@example.com",
-                    password="password123",
+                    password="********",
                     )
 
             Create a new admin with some additional parameters::
@@ -253,7 +253,7 @@ class AdminUsersAPI(APIClient):
                     login_name="jsmith",
                     role="admin",
                     email="jsmith@example.com",
-                    password="password123",
+                    password="********",
                     is_default_admin=False,
                     disabled=False,
                     comments="New admin user"

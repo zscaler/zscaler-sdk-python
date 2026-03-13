@@ -64,10 +64,10 @@ def get_config():
         sys.exit(1)
 
     return {
-        'clientId': client_id,
-        'clientSecret': client_secret,
-        'vanityDomain': vanity_domain,
-        'cloud': cloud,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "vanityDomain": vanity_domain,
+        "cloud": cloud,
     }
 
 
@@ -79,15 +79,8 @@ def print_header(title: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Query IoT device statistics from Z-Insights"
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=20,
-        help="Maximum number of entries to return (default: 20)"
-    )
+    parser = argparse.ArgumentParser(description="Query IoT device statistics from Z-Insights")
+    parser.add_argument("--limit", type=int, default=20, help="Maximum number of entries to return (default: 20)")
     args = parser.parse_args()
 
     config = get_config()
@@ -96,9 +89,7 @@ def main():
 
     with ZscalerClient(config) as client:
         print_header("IoT Device Statistics")
-        entries, response, error = client.zinsights.iot.get_device_stats(
-            limit=args.limit
-        )
+        entries, response, error = client.zinsights.iot.get_device_stats(limit=args.limit)
 
         if error:
             print(f"Error: {error}")
@@ -106,7 +97,7 @@ def main():
             # Group by category for better display
             categories = {}
             for entry in entries:
-                category = entry.get('category', 'Unknown')
+                category = entry.get("category", "Unknown")
                 if category not in categories:
                     categories[category] = []
                 categories[category].append(entry)
@@ -114,8 +105,8 @@ def main():
             for category, devices in categories.items():
                 print(f"\n  {category}:")
                 for device in devices:
-                    device_type = device.get('type', 'Unknown')
-                    count = device.get('device_count', 0)
+                    device_type = device.get("type", "Unknown")
+                    count = device.get("device_count", 0)
                     print(f"    - {device_type}: {count:,} devices")
         else:
             print("  No IoT device data available.")
@@ -127,4 +118,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

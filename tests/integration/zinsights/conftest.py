@@ -40,7 +40,7 @@ def zinsights_client(fs):
 def get_time_range(days: int = 7):
     """
     Get time range for Z-Insights queries.
-    
+
     Note: Z-Insights API requires end_time to be at least 1 day before current time.
     """
     # End time is 1 day ago (API requirement)
@@ -100,4 +100,3 @@ class MockZInsightsClient(ZscalerClient):
             fs.resume()
         else:
             super().__init__(client_config)
-

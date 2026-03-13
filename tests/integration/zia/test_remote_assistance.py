@@ -46,7 +46,11 @@ class TestRemoteAssistance:
             # Test update_remote_assistance - update with current values
             try:
                 # Just re-apply current settings to test the update endpoint
-                view_only = original_settings.get("view_only_enabled", False) if isinstance(original_settings, dict) else getattr(original_settings, "view_only_enabled", False)
+                view_only = (
+                    original_settings.get("view_only_enabled", False)
+                    if isinstance(original_settings, dict)
+                    else getattr(original_settings, "view_only_enabled", False)
+                )
                 updated_settings, response, err = client.zia.remote_assistance.update_remote_assistance(
                     view_only_enabled=view_only,
                 )

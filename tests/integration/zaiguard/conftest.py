@@ -26,7 +26,7 @@ PYTEST_MOCK_CLIENT = "pytest_mock_client"
 def reset_counters_per_test():
     """
     Reset VCR counters before each test function.
-    
+
     This ensures that generate_random_string() and generate_random_ip()
     return the same deterministic values during both recording and playback.
     Each test starts with counter at 0, so the same sequence is generated.
@@ -38,49 +38,49 @@ def reset_counters_per_test():
 class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
-    
+
     Instead of using random names (which break VCR playback), this class
     provides consistent, predictable names that work with recorded cassettes.
-    
+
     Usage:
         names = NameGenerator("policy_detection")
         name = names.name       # "tests-policy-detection"
         desc = names.description  # "Test Policy Detection"
     """
-    
+
     def __init__(self, resource_type: str, suffix: str = ""):
         """
         Initialize with a resource type identifier.
-        
+
         Args:
             resource_type: A descriptive string for the resource (e.g., "policy_detection")
             suffix: Optional suffix for uniqueness (e.g., "1", "alt")
         """
         self.resource_type = resource_type.lower().replace("_", "-")
         self.suffix = f"-{suffix}" if suffix else ""
-        
+
     @property
     def name(self) -> str:
         """Returns the base test name."""
         return f"tests-{self.resource_type}{self.suffix}"
-    
+
     @property
     def description(self) -> str:
         """Returns a human-readable description."""
         readable = self.resource_type.replace("-", " ").title()
         return f"Test {readable}{self.suffix}"
-    
+
     @property
     def updated_name(self) -> str:
         """Returns the name for update operations."""
         return f"tests-{self.resource_type}{self.suffix}-updated"
-    
+
     @property
     def updated_description(self) -> str:
         """Returns the description for update operations."""
         readable = self.resource_type.replace("-", " ").title()
         return f"Updated Test {readable}{self.suffix}"
-    
+
     def with_suffix(self, suffix: str) -> "NameGenerator":
         """Returns a new generator with an additional suffix."""
         new_suffix = f"{self.suffix.lstrip('-')}-{suffix}" if self.suffix else suffix
@@ -131,19 +131,19 @@ class MockZGuardClient(LegacyZGuardClient):
 
         # Initialize the client
         super().__init__(client_config)
-    
+
     def get_rate_limit_stats(self):
         """Expose rate limit stats from the legacy client helper."""
-        if hasattr(self, '_request_executor') and hasattr(self._request_executor, 'zguard_legacy_client'):
+        if hasattr(self, "_request_executor") and hasattr(self._request_executor, "zguard_legacy_client"):
             return self._request_executor.zguard_legacy_client.get_rate_limit_stats()
         return {"total_throttles": 0, "request_count_throttles": 0, "content_size_throttles": 0, "currently_limited": False}
-    
+
     def reset_rate_limit_stats(self):
         """Reset rate limit stats from the legacy client helper."""
-        if hasattr(self, '_request_executor') and hasattr(self._request_executor, 'zguard_legacy_client'):
+        if hasattr(self, "_request_executor") and hasattr(self._request_executor, "zguard_legacy_client"):
             self._request_executor.zguard_legacy_client.reset_rate_limit_stats()
-    
+
     def clear_rate_limits(self):
         """Clear rate limits from the legacy client helper."""
-        if hasattr(self, '_request_executor') and hasattr(self._request_executor, 'zguard_legacy_client'):
+        if hasattr(self, "_request_executor") and hasattr(self._request_executor, "zguard_legacy_client"):
             self._request_executor.zguard_legacy_client.clear_rate_limits()

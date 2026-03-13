@@ -41,6 +41,7 @@ help:
 	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zinsights                Check style with flake8 for zinsights packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with flake8 for zaiguard packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:ztb                      Check style with flake8 for ztb packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
@@ -54,6 +55,9 @@ help:
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zinsights    Run only zinsights integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zaiguard     Run only zaiguard integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:ztb          Run only ztb integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)security$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  security-scan                 Run Trivy (vuln + secret scan, excludes local_dev/openapi)$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  build:dist                    Build the distribution for publishing$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)publish$(COLOR_NONE)"
@@ -185,6 +189,10 @@ test\:integration\:zeasm:
 
 test-simple:
 	poetry run pytest --disable-warnings
+
+security-scan:
+	@echo "$(COLOR_ZSCALER)Running Trivy security scan (vuln + secret)...$(COLOR_NONE)"
+	trivy fs . --scanners vuln,secret --skip-version-check
 
 coverage:
 	poetry run pytest --cov=zscaler --cov-report xml --cov-report term
@@ -362,10 +370,12 @@ publish\:prod:
 
 # Runtime-only dependencies
 sync-deps:
+	@poetry export --help >/dev/null 2>&1 || poetry self add poetry-plugin-export
 	poetry export -f requirements.txt --without-hashes > requirements.txt
 
 # Dev dependencies for contributors/CI
 sync-dev-deps:
+	@poetry export --help >/dev/null 2>&1 || poetry self add poetry-plugin-export
 	poetry export -f requirements.txt --without-hashes --with dev > requirements-dev.txt
 
 

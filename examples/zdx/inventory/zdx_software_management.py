@@ -179,7 +179,7 @@ def main():
         # Legacy client configuration
         ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
         ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
-        
+
         if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
             print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
             return
@@ -188,27 +188,27 @@ def main():
             "key_id": ZDX_CLIENT_ID,
             "key_secret": ZDX_CLIENT_SECRET,
         }
-        
+
         client = LegacyZDXClient(config)
     else:
         # OneAPI client configuration
         ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
         ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
         ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
-        
+
         if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
             print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
             return
 
         config = {
-            'clientId': ZSCALER_CLIENT_ID,
-            'clientSecret': ZSCALER_CLIENT_SECRET,
+            "clientId": ZSCALER_CLIENT_ID,
+            "clientSecret": ZSCALER_CLIENT_SECRET,
         }
-        
+
         # Add vanity domain if provided
         if ZSCALER_VANITY_DOMAIN:
-            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
-        
+            config["vanityDomain"] = ZSCALER_VANITY_DOMAIN
+
         client = ZscalerClient(config)
 
     # Prompt the user to choose an option
@@ -225,20 +225,20 @@ def main():
         query_params = {}
         if since:
             query_params["since"] = since
-        
+
         all_softwares, _, err = client.zdx.inventory.list_softwares(query_params=query_params)
         if err:
             print(f"Error listing softwares: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         data = []
         for software in all_softwares:
-            if hasattr(software, 'as_dict'):
+            if hasattr(software, "as_dict"):
                 data.append(software.as_dict())
             else:
                 data.append(software)
-        
+
         print(f"Data collected from API (all softwares): {data}")  # Debugging print statement
         display_softwares(data, max_entries)
 
@@ -248,20 +248,20 @@ def main():
         query_params = {}
         if since:
             query_params["since"] = since
-        
+
         software_keys, _, err = client.zdx.inventory.list_software_keys(software_key, query_params=query_params)
         if err:
             print(f"Error listing software keys: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         data = []
         for key in software_keys:
-            if hasattr(key, 'as_dict'):
+            if hasattr(key, "as_dict"):
                 data.append(key.as_dict())
             else:
                 data.append(key)
-        
+
         print(f"Data collected from API (software keys): {data}")  # Debugging print statement
         display_software_keys(data, max_entries)
 

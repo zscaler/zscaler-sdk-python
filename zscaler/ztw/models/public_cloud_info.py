@@ -90,26 +90,19 @@ class PublicCloudInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
             self.account_groups = ZscalerCollection.form_list(
                 config["accountGroups"] if "accountGroups" in config else [], common.CommonIDNameExternalID
             )
 
-            self.cloud_type = config["cloudType"] \
-                if "cloudType" in config else None
-            self.external_id = config["externalId"] \
-                if "externalId" in config else None
-            self.last_mod_time = config["lastModTime"] \
-                if "lastModTime" in config else None
-            self.last_sync_time = config["lastSyncTime"] \
-                if "lastSyncTime" in config else None
-            self.permission_status = config["permissionStatus"] \
-                if "permissionStatus" in config else None
-                
+            self.cloud_type = config["cloudType"] if "cloudType" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+            self.last_sync_time = config["lastSyncTime"] if "lastSyncTime" in config else None
+            self.permission_status = config["permissionStatus"] if "permissionStatus" in config else None
+
             self.region_status = ZscalerCollection.form_list(
                 config["regionStatus"] if "regionStatus" in config else [], common.CommonPublicCloudInfo
             )
@@ -169,7 +162,7 @@ class PublicCloudInfo(ZscalerObject):
             "lastSyncTime": self.last_sync_time,
             "permissionStatus": self.permission_status,
             "regionStatus": self.region_status,
-            "supportedRegions": self.supported_regions
+            "supportedRegions": self.supported_regions,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
