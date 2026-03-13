@@ -50,9 +50,7 @@ class TestCloudFirewallRules:
 
             # Step 2: List firewall rules with query params
             try:
-                filtered_rules, _, error = client.zia.cloud_firewall_rules.list_rules(
-                    query_params={'rule_action': 'ALLOW'}
-                )
+                filtered_rules, _, error = client.zia.cloud_firewall_rules.list_rules(query_params={"rule_action": "ALLOW"})
                 assert error is None, f"Error listing firewall rules with filter: {error}"
             except Exception as exc:
                 errors.append(f"Failed to list firewall rules with filter: {exc}")
@@ -125,7 +123,7 @@ class TestCloudFirewallRules:
             # Step 7: List rules with pagination
             try:
                 paginated_rules, _, error = client.zia.cloud_firewall_rules.list_rules(
-                    query_params={'page': 1, 'page_size': 10}
+                    query_params={"page": 1, "page_size": 10}
                 )
                 assert error is None, f"Error listing firewall rules with pagination: {error}"
             except Exception as exc:
@@ -143,4 +141,3 @@ class TestCloudFirewallRules:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-

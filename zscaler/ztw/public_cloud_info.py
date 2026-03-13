@@ -485,11 +485,11 @@ class PublicCloudInfoAPI(APIClient):
 
         try:
             # Ensure we have a valid response object with status_code attribute
-            if not hasattr(raw_response, 'status_code'):
+            if not hasattr(raw_response, "status_code"):
                 return (None, raw_response, error if error else "Invalid response object")
 
             status_code = raw_response.status_code
-            body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
+            body_text = raw_response.text.strip() if hasattr(raw_response, "text") else ""
 
             # HTTP 200 = successful response with URL string
             if status_code == 200:

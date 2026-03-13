@@ -35,20 +35,13 @@ class DeviceDeepTraces(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.trace_id = config["trace_id"] \
-                if "trace_id" in config else None
-            self.trace_details = config["trace_details"] \
-                if "trace_details" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.expected_time_minutes = config["expected_time_minutes"] \
-                if "expected_time_minutes" in config else None
-            self.created_at = config["created_at"] \
-                if "created_at" in config else None
-            self.started_at = config["started_at"] \
-                if "started_at" in config else None
-            self.ended_at = config["ended_at"] \
-                if "ended_at" in config else None
+            self.trace_id = config["trace_id"] if "trace_id" in config else None
+            self.trace_details = config["trace_details"] if "trace_details" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.expected_time_minutes = config["expected_time_minutes"] if "expected_time_minutes" in config else None
+            self.created_at = config["created_at"] if "created_at" in config else None
+            self.started_at = config["started_at"] if "started_at" in config else None
+            self.ended_at = config["ended_at"] if "ended_at" in config else None
 
             if "trace_details" in config:
                 if isinstance(config["trace_details"], TraceDetails):
@@ -80,7 +73,7 @@ class DeviceDeepTraces(ZscalerObject):
             "expected_time_minutes": self.expected_time_minutes,
             "created_at": self.created_at,
             "started_at": self.started_at,
-            "ended_at": self.ended_at
+            "ended_at": self.ended_at,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -101,20 +94,13 @@ class TraceDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.session_name = config["session_name"] \
-                if "session_name" in config else None
-            self.user_id = config["user_id"] \
-                if "user_id" in config else None
-            self.username = config["username"] \
-                if "username" in config else None
-            self.device_id = config["device_id"] \
-                if "device_id" in config else None
-            self.device_name = config["device_name"] \
-                if "device_name" in config else None
-            self.session_length_minutes = config["session_length_minutes"] \
-                if "session_length_minutes" in config else None
-            self.probe_device = config["probe_device"] \
-                if "probe_device" in config else None
+            self.session_name = config["session_name"] if "session_name" in config else None
+            self.user_id = config["user_id"] if "user_id" in config else None
+            self.username = config["username"] if "username" in config else None
+            self.device_id = config["device_id"] if "device_id" in config else None
+            self.device_name = config["device_name"] if "device_name" in config else None
+            self.session_length_minutes = config["session_length_minutes"] if "session_length_minutes" in config else None
+            self.probe_device = config["probe_device"] if "probe_device" in config else None
         else:
             self.session_name = None
             self.user_id = None
@@ -136,7 +122,7 @@ class TraceDetails(ZscalerObject):
             "device_id": self.device_id,
             "device_name": self.device_name,
             "session_length_minutes": self.session_length_minutes,
-            "probe_device": self.probe_device
+            "probe_device": self.probe_device,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -412,9 +398,7 @@ class DeepTraceEvents(ZscalerObject):
 
         if config:
             self.timestamp = config["timestamp"] if "timestamp" in config else None
-            self.events = ZscalerCollection.form_list(
-                    config["events"] if "events" in config else [], devices.Events
-                )
+            self.events = ZscalerCollection.form_list(config["events"] if "events" in config else [], devices.Events)
         else:
             self.timestamp = None
             self.events = []
@@ -424,10 +408,7 @@ class DeepTraceEvents(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "timestamp": self.timestamp,
-            "events": self.events
-        }
+        current_obj_format = {"timestamp": self.timestamp, "events": self.events}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -462,11 +443,6 @@ class DeviceApplicationAnalysis(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "device_id": self.device_id,
-            "app_id": self.app_id,
-            "t0": self.t0,
-            "t1": self.t1
-        }
+        current_obj_format = {"device_id": self.device_id, "app_id": self.app_id, "t0": self.t0, "t1": self.t1}
         parent_req_format.update(current_obj_format)
         return parent_req_format

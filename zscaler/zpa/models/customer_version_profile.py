@@ -62,9 +62,7 @@ class CustomerVersionProfile(ZscalerObject):
             )
 
             self.version_details = (
-                ZscalerCollection.form_list(config["versionDetails"], VersionDetails)
-                if "versionDetails" in config
-                else []
+                ZscalerCollection.form_list(config["versionDetails"], VersionDetails) if "versionDetails" in config else []
             )
 
         else:
@@ -130,12 +128,9 @@ class VersionDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.latest_platform = config["latestPlatform"] \
-                if "latestPlatform" in config else None
-            self.role = config["role"] \
-                if "role" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.latest_platform = config["latestPlatform"] if "latestPlatform" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.version = config["version"] if "version" in config else None
 
         else:
             self.latest_platform = None

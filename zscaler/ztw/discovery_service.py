@@ -74,9 +74,7 @@ class DiscoveryServiceAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_discovery_service_permissions(
-        self, account_group_id: int, **kwargs
-    ) -> APIResult[DiscoveryServicePermissions]:
+    def update_discovery_service_permissions(self, account_group_id: int, **kwargs) -> APIResult[DiscoveryServicePermissions]:
         """
         Verifies the specified AWS account permissions using the discovery role and external ID.
 

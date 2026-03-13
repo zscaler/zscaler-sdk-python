@@ -25,16 +25,16 @@ MIN_RSA_KEY_SIZE: int = 2048  # NIST recommends minimum 2048 bits for RSA keys
 def validate_rsa_key_strength(private_key_obj: Union[rsa.RSAPrivateKey, Any]) -> Optional[int]:
     """
     Validate that an RSA private key meets minimum security requirements.
-    
+
     This addresses CWE-326 (Inadequate Encryption Strength) by ensuring
     RSA keys meet NIST recommendations of at least 2048 bits.
-    
+
     Args:
         private_key_obj: RSA private key object from cryptography library
-        
+
     Raises:
         ValueError: If the key size is below the minimum requirement
-        
+
     Returns:
         int: The key size in bits
     """
@@ -59,19 +59,19 @@ class OAuth:
     This class contains the OAuth actions for the Zscaler Client.
     """
 
-    _instance: Optional['OAuth'] = None
+    _instance: Optional["OAuth"] = None
     _last_config: Optional[Dict[str, Any]] = None
 
-    def __new__(cls, request_executor: 'RequestExecutor', config: Dict[str, Any]) -> 'OAuth':
+    def __new__(cls, request_executor: "RequestExecutor", config: Dict[str, Any]) -> "OAuth":
         if cls._instance is None or cls._last_config != config:
             cls._instance = super(OAuth, cls).__new__(cls)
             cls._last_config = config
             cls._instance.__init__(request_executor, config)
         return cls._instance
 
-    def __init__(self, request_executor: 'RequestExecutor', config: Dict[str, Any]) -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: Dict[str, Any]) -> None:
         if not hasattr(self, "_initialized"):
-            self._request_executor: 'RequestExecutor' = request_executor
+            self._request_executor: "RequestExecutor" = request_executor
             self._config: Dict[str, Any] = config
             self._access_token: Optional[str] = None
             self._token_expires_at: Optional[float] = None
@@ -94,7 +94,7 @@ class OAuth:
         cache_config: Union[Dict[str, Any], Any] = self._config.get("cache", {})
 
         # If cache is already a cache instance, return it
-        if hasattr(cache_config, 'get') and hasattr(cache_config, 'add'):
+        if hasattr(cache_config, "get") and hasattr(cache_config, "add"):
             return cache_config
 
         # If cache is a dict with enabled flag
@@ -166,9 +166,9 @@ class OAuth:
 
         try:
             token_data: Dict[str, Union[str, float]] = {
-                'access_token': access_token,
-                'expires_at': expires_at,
-                'issued_at': time.time()
+                "access_token": access_token,
+                "expires_at": expires_at,
+                "issued_at": time.time(),
             }
 
             # Store token data directly (not as tuple)
@@ -198,7 +198,7 @@ class OAuth:
         """
         if token_data:
             # Check cached token data
-            expires_at: Optional[float] = token_data.get('expires_at')
+            expires_at: Optional[float] = token_data.get("expires_at")
             if not expires_at:
                 return True
             return time.time() >= expires_at
@@ -221,8 +221,10 @@ class OAuth:
         client_config: Dict[str, Any] = self._config.get("client", {})
         if "clientId" not in client_config:
             logging.error("OAuth authentication not available for legacy client configurations.")
-            raise ValueError("OAuth authentication not available for legacy client configurations. "
-                             "Use legacy authentication methods instead.")
+            raise ValueError(
+                "OAuth authentication not available for legacy client configurations. "
+                "Use legacy authentication methods instead."
+            )
 
         # logging.debug("Starting authentication process.")
         client_id: str = client_config["clientId"]
@@ -345,9 +347,7 @@ class OAuth:
             # Convert JWK to PEM using jwcrypto, then load with cryptography
             jwk_obj = JWK.from_json(json.dumps(jwk_key))
             pem_bytes = jwk_obj.export_to_pem(private_key=True, password=None)
-            private_key_obj = serialization.load_pem_private_key(
-                pem_bytes, password=None, backend=default_backend()
-            )
+            private_key_obj = serialization.load_pem_private_key(pem_bytes, password=None, backend=default_backend())
 
         elif "BEGIN PRIVATE KEY" in private_key:
             # **Raw PEM Private Key**
@@ -427,9 +427,9 @@ class OAuth:
         # 1. Check cache first (if enabled)
         cached_token: Optional[Dict[str, Any]] = self._get_cached_token()
         if cached_token and not self._is_token_expired(cached_token):
-            self._access_token = cached_token['access_token']
-            self._token_expires_at = cached_token['expires_at']
-            self._token_issued_at = cached_token.get('issued_at', time.time())
+            self._access_token = cached_token["access_token"]
+            self._token_expires_at = cached_token["expires_at"]
+            self._token_issued_at = cached_token.get("issued_at", time.time())
             logger.debug("Using cached access token")
             return self._access_token
 
@@ -519,22 +519,22 @@ class OAuth:
         """
         if not self._access_token:
             return {
-                'has_token': False,
-                'expires_at': None,
-                'issued_at': None,
-                'is_expired': True,
-                'time_until_expiry': None,
-                'cached': False
+                "has_token": False,
+                "expires_at": None,
+                "issued_at": None,
+                "is_expired": True,
+                "time_until_expiry": None,
+                "cached": False,
             }
 
         now: float = time.time()
         time_until_expiry: Optional[float] = self._token_expires_at - now if self._token_expires_at else None
 
         return {
-            'has_token': True,
-            'expires_at': self._token_expires_at,
-            'issued_at': self._token_issued_at,
-            'is_expired': self._is_token_expired(),
-            'time_until_expiry': time_until_expiry,
-            'cached': self._cache_enabled() and self._cache.contains(self._cache_key) if self._cache else False
+            "has_token": True,
+            "expires_at": self._token_expires_at,
+            "issued_at": self._token_issued_at,
+            "is_expired": self._is_token_expired(),
+            "time_until_expiry": time_until_expiry,
+            "cached": self._cache_enabled() and self._cache.contains(self._cache_key) if self._cache else False,
         }

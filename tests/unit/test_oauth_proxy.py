@@ -12,22 +12,17 @@ from zscaler.oneapi_http_client import HTTPClient
 def test_oauth_proxy_setup_function():
     """Test the _setup_proxy helper function."""
     from urllib.parse import urlparse
-    
+
     # Create HTTPClient instance to access _setup_proxy method
     http_client = HTTPClient({"headers": {}})
-    
+
     # Test with None proxy
     proxy_string = http_client._setup_proxy(None)
     assert proxy_string is None or isinstance(proxy_string, str)
-    
+
     # Test with proxy configuration
-    proxy_config = {
-        "host": "proxy.example.com",
-        "port": "8080",
-        "username": "user",
-        "password": "pass"
-    }
-    
+    proxy_config = {"host": "proxy.example.com", "port": "8080", "username": "user", "password": "pass"}
+
     proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
@@ -35,13 +30,10 @@ def test_oauth_proxy_setup_function():
     assert parsed.port == 8080
     assert parsed.username == "user"
     assert parsed.password == "pass"
-    
+
     # Test with proxy configuration without auth
-    proxy_config_no_auth = {
-        "host": "proxy.example.com",
-        "port": "8080"
-    }
-    
+    proxy_config_no_auth = {"host": "proxy.example.com", "port": "8080"}
+
     proxy_string = http_client._setup_proxy(proxy_config_no_auth)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
@@ -54,14 +46,12 @@ def test_oauth_proxy_setup_function():
 def test_oauth_proxy_setup_without_port():
     """Test _setup_proxy function without port."""
     from urllib.parse import urlparse
-    
+
     # Create HTTPClient instance to access _setup_proxy method
     http_client = HTTPClient({"headers": {}})
-    
-    proxy_config = {
-        "host": "proxy.example.com"
-    }
-    
+
+    proxy_config = {"host": "proxy.example.com"}
+
     proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
@@ -76,40 +66,38 @@ def test_oauth_client_secret_with_proxy():
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
             "vanityDomain": "testcompany",
-            "proxy": {
-                "host": "proxy.example.com",
-                "port": "8080"
-            }
+            "proxy": {"host": "proxy.example.com", "port": "8080"},
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock the requests.post call to verify proxy is used
-    with patch('requests.post') as mock_post:
+    with patch("requests.post") as mock_post:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
         mock_post.return_value = mock_response
-        
+
         # Call the authentication method
         result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-        
+
         # Verify that requests.post was called with proxy configuration
         mock_post.assert_called_once()
         call_args = mock_post.call_args
-        
+
         # Check that proxies parameter is included
-        assert 'proxies' in call_args.kwargs
-        proxies = call_args.kwargs['proxies']
+        assert "proxies" in call_args.kwargs
+        proxies = call_args.kwargs["proxies"]
         assert proxies is not None
-        assert 'http' in proxies
-        assert 'https' in proxies
-        
+        assert "http" in proxies
+        assert "https" in proxies
+
         # Ensure the proxy host and port are correctly set
         from urllib.parse import urlparse
-        http_parsed = urlparse(proxies['http'])
-        https_parsed = urlparse(proxies['https'])
+
+        http_parsed = urlparse(proxies["http"])
+        https_parsed = urlparse(proxies["https"])
         assert http_parsed.hostname == "proxy.example.com"
         assert str(http_parsed.port) == "8080"
         assert https_parsed.hostname == "proxy.example.com"
@@ -118,7 +106,7 @@ def test_oauth_client_secret_with_proxy():
 
 def test_oauth_private_key_with_proxy():
     """Test OAuth private key authentication with proxy configuration.
-    
+
     Note: This test verifies that the proxy configuration is passed to the private key
     authentication method. The actual JWT signing is complex to mock, so we focus on
     the proxy configuration aspect which is the same for both client secret and private key auth.
@@ -129,30 +117,28 @@ def test_oauth_private_key_with_proxy():
             "clientId": "test_client_id",
             "privateKey": "-----BEGIN PRIVATE KEY-----\ntest_private_key\n-----END PRIVATE KEY-----",
             "vanityDomain": "testcompany",
-            "proxy": {
-                "host": "proxy.example.com",
-                "port": "8080"
-            }
+            "proxy": {"host": "proxy.example.com", "port": "8080"},
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Test that the proxy configuration is properly set up
     proxy_config = oauth._config["client"].get("proxy")
     assert proxy_config is not None
     assert proxy_config["host"] == "proxy.example.com"
     assert proxy_config["port"] == "8080"
-    
+
     # Test that the _setup_proxy function works with the config
     from urllib.parse import urlparse
+
     http_client = HTTPClient({"headers": {}})
     proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
     assert parsed.hostname == "proxy.example.com"
     assert parsed.port == 8080
-    
+
     # The actual private key authentication is complex to mock due to JWT signing,
     # but the proxy configuration logic is identical to client secret authentication
     # which is already tested in test_oauth_client_secret_with_proxy()
@@ -166,41 +152,37 @@ def test_oauth_proxy_with_authentication():
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
             "vanityDomain": "testcompany",
-            "proxy": {
-                "host": "proxy.example.com",
-                "port": "8080",
-                "username": "proxy_user",
-                "password": "proxy_pass"
-            }
+            "proxy": {"host": "proxy.example.com", "port": "8080", "username": "proxy_user", "password": "proxy_pass"},
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock the requests.post call
-    with patch('requests.post') as mock_post:
+    with patch("requests.post") as mock_post:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
         mock_post.return_value = mock_response
-        
+
         # Call the authentication method
         result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-        
+
         # Verify that requests.post was called with proxy configuration
         mock_post.assert_called_once()
         call_args = mock_post.call_args
-        
+
         # Check that proxies parameter includes authentication
-        assert 'proxies' in call_args.kwargs
-        proxies = call_args.kwargs['proxies']
+        assert "proxies" in call_args.kwargs
+        proxies = call_args.kwargs["proxies"]
         assert proxies is not None
-        assert 'http' in proxies
-        assert 'https' in proxies
-        
+        assert "http" in proxies
+        assert "https" in proxies
+
         # Check that proxy URL includes authentication
         from urllib.parse import urlparse
-        proxy_url = proxies['http']
+
+        proxy_url = proxies["http"]
         parsed = urlparse(proxy_url)
         assert parsed.username == "proxy_user"
         assert parsed.password == "proxy_pass"
@@ -215,70 +197,71 @@ def test_oauth_no_proxy_configuration():
         "client": {
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
-            "vanityDomain": "testcompany"
+            "vanityDomain": "testcompany",
             # No proxy configuration
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock the requests.post call
-    with patch('requests.post') as mock_post:
+    with patch("requests.post") as mock_post:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
         mock_post.return_value = mock_response
-        
+
         # Call the authentication method
         result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-        
+
         # Verify that requests.post was called without proxy configuration
         mock_post.assert_called_once()
         call_args = mock_post.call_args
-        
+
         # Check that proxies parameter is None or not included
-        if 'proxies' in call_args.kwargs:
-            assert call_args.kwargs['proxies'] is None
+        if "proxies" in call_args.kwargs:
+            assert call_args.kwargs["proxies"] is None
 
 
 def test_oauth_proxy_environment_variables():
     """Test OAuth proxy configuration using environment variables."""
     import os
-    
+
     mock_request_executor = Mock()
     config = {
         "client": {
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
             "vanityDomain": "testcompany",
-            "proxy": None  # No proxy in config, should fall back to env vars
+            "proxy": None,  # No proxy in config, should fall back to env vars
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock environment variables
-    with patch.dict(os.environ, {'HTTP_PROXY': 'http://env-proxy.example.com:8080'}):
+    with patch.dict(os.environ, {"HTTP_PROXY": "http://env-proxy.example.com:8080"}):
         # Mock the requests.post call
-        with patch('requests.post') as mock_post:
+        with patch("requests.post") as mock_post:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
             mock_post.return_value = mock_response
-            
+
             # Call the authentication method
             result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-            
+
             # Verify that requests.post was called with environment proxy
             mock_post.assert_called_once()
             call_args = mock_post.call_args
-            
+
             # Check that proxies parameter uses environment variable
-            assert 'proxies' in call_args.kwargs
-            proxies = call_args.kwargs['proxies']
+            assert "proxies" in call_args.kwargs
+            proxies = call_args.kwargs["proxies"]
             assert proxies is not None
             from urllib.parse import urlparse
-            parsed = urlparse(proxies['http'])
+
+            parsed = urlparse(proxies["http"])
             assert parsed.hostname == "env-proxy.example.com"
             assert parsed.port == 8080
 
@@ -291,23 +274,20 @@ def test_oauth_proxy_error_handling():
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
             "vanityDomain": "testcompany",
-            "proxy": {
-                "host": "invalid-proxy.example.com",
-                "port": "8080"
-            }
+            "proxy": {"host": "invalid-proxy.example.com", "port": "8080"},
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock requests.post to raise a connection error
-    with patch('requests.post') as mock_post:
+    with patch("requests.post") as mock_post:
         mock_post.side_effect = requests.exceptions.ProxyError("Unable to connect to proxy")
-        
+
         # Call the authentication method and expect an exception
         with pytest.raises(Exception) as exc_info:
             oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-        
+
         # Verify the error is related to proxy connection
         assert "proxy" in str(exc_info.value).lower() or "connect" in str(exc_info.value).lower()
 
@@ -315,23 +295,16 @@ def test_oauth_proxy_error_handling():
 def test_oauth_proxy_consistency_with_http_client():
     """Test that OAuth proxy configuration is consistent with HTTPClient."""
     # Test HTTPClient proxy setup
-    oauth_proxy_config = {
-        "host": "proxy.example.com",
-        "port": "8080",
-        "username": "user",
-        "password": "pass"
-    }
-    
-    http_config = {
-        "headers": {},
-        "proxy": oauth_proxy_config
-    }
+    oauth_proxy_config = {"host": "proxy.example.com", "port": "8080", "username": "user", "password": "pass"}
+
+    http_config = {"headers": {}, "proxy": oauth_proxy_config}
     http_client = HTTPClient(http_config)
     http_proxy_string = http_client._setup_proxy(oauth_proxy_config)
-    
+
     # Verify the proxy string is correct
     assert http_proxy_string is not None
     from urllib.parse import urlparse
+
     parsed = urlparse(http_proxy_string)
     assert parsed.hostname == "proxy.example.com"
     assert parsed.port == 8080
@@ -342,7 +315,7 @@ def test_oauth_proxy_consistency_with_http_client():
 def test_oauth_proxy_different_clouds():
     """Test OAuth proxy configuration with different cloud environments."""
     clouds = ["alpha", "beta", "gamma", "preview"]
-    
+
     for cloud in clouds:
         mock_request_executor = Mock()
         config = {
@@ -351,35 +324,33 @@ def test_oauth_proxy_different_clouds():
                 "clientSecret": "test_client_secret",
                 "vanityDomain": "testcompany",
                 "cloud": cloud,
-                "proxy": {
-                    "host": "proxy.example.com",
-                    "port": "8080"
-                }
+                "proxy": {"host": "proxy.example.com", "port": "8080"},
             }
         }
-        
+
         oauth = OAuth(mock_request_executor, config)
-        
+
         # Mock the requests.post call
-        with patch('requests.post') as mock_post:
+        with patch("requests.post") as mock_post:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
             mock_post.return_value = mock_response
-            
+
             # Call the authentication method
             result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
-            
+
             # Verify that requests.post was called with proxy configuration
             mock_post.assert_called_once()
             call_args = mock_post.call_args
-            
+
             # Check that proxies parameter is included regardless of cloud
-            assert 'proxies' in call_args.kwargs
-            proxies = call_args.kwargs['proxies']
+            assert "proxies" in call_args.kwargs
+            proxies = call_args.kwargs["proxies"]
             assert proxies is not None
             from urllib.parse import urlparse
-            parsed = urlparse(proxies['http'])
+
+            parsed = urlparse(proxies["http"])
             assert parsed.hostname == "proxy.example.com"
             assert parsed.port == 8080
 
@@ -392,41 +363,39 @@ def test_oauth_proxy_integration():
             "clientId": "test_client_id",
             "clientSecret": "test_client_secret",
             "vanityDomain": "testcompany",
-            "proxy": {
-                "host": "proxy.example.com",
-                "port": "8080"
-            }
+            "proxy": {"host": "proxy.example.com", "port": "8080"},
         }
     }
-    
+
     oauth = OAuth(mock_request_executor, config)
-    
+
     # Mock the entire authentication flow
-    with patch('requests.post') as mock_post:
+    with patch("requests.post") as mock_post:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
         mock_response.url = "https://testcompany.zslogin.net/oauth2/v1/token"
         mock_post.return_value = mock_response
-        
+
         # Mock the response checker
-        with patch('zscaler.errors.response_checker.check_response_for_error') as mock_checker:
+        with patch("zscaler.errors.response_checker.check_response_for_error") as mock_checker:
             mock_checker.return_value = ({"access_token": "test_token", "expires_in": 3600}, None)
-            
+
             # Call the main authentication method
             result = oauth.authenticate()
-            
+
             # Verify that requests.post was called with proxy configuration
             mock_post.assert_called_once()
             call_args = mock_post.call_args
-            
+
             # Check that proxies parameter is included
-            assert 'proxies' in call_args.kwargs
-            proxies = call_args.kwargs['proxies']
+            assert "proxies" in call_args.kwargs
+            proxies = call_args.kwargs["proxies"]
             assert proxies is not None
             from urllib.parse import urlparse
-            http_parsed = urlparse(proxies['http'])
-            https_parsed = urlparse(proxies['https'])
+
+            http_parsed = urlparse(proxies["http"])
+            https_parsed = urlparse(proxies["https"])
             assert http_parsed.hostname == "proxy.example.com"
             assert str(http_parsed.port) == "8080"
             assert https_parsed.hostname == "proxy.example.com"

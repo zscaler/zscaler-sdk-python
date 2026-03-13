@@ -14,12 +14,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups
   response:
     body:
-      string: '{"id":10177036,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["192.168.100.4","192.168.100.5"],"description":"tests-vcr0002","ipCategories":[],"countries":[]}'
+      string: '{"id":10596685,"name":"tests-vcr0001","type":"DSTN_IP","addresses":["192.168.100.4","192.168.100.5"],"description":"tests-vcr0002","ipCategories":[],"countries":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -43,7 +43,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:31 GMT
+      - Fri, 13 Mar 2026 03:19:07 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,23 +55,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2597'
+      - '3781'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - a6f65d7b-884b-99c0-ab22-869be12ad422
+      - 126f8ebc-38e1-9702-8888-ac50b4f78cfa
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4998'
       x-ratelimit-reset:
-      - '32'
+      - '57'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -94,12 +94,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/ipSourceGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipSourceGroups
   response:
     body:
-      string: '{"id":10177041,"name":"tests-vcr0003","ipAddresses":["192.168.100.1","192.168.100.2","192.168.100.3"],"description":"Integration
+      string: '{"id":10596690,"name":"tests-vcr0003","ipAddresses":["192.168.100.1","192.168.100.2","192.168.100.3"],"description":"Integration
         test source group"}'
     headers:
       cache-control:
@@ -122,7 +122,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:33 GMT
+      - Fri, 13 Mar 2026 03:19:10 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -134,23 +134,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2343'
+      - '3507'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ed778ce3-6347-95d9-ab0b-5e99cbd50c81
+      - 3f93de44-b71b-98bd-a46a-538ddb5862c4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4997'
       x-ratelimit-reset:
-      - '29'
+      - '53'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -161,8 +161,8 @@ interactions:
 - request:
     body: '{"name": "tests-vcr0004", "description": "Integration test Forwarding Control
       Rule", "order": 1, "rank": 7, "type": "FORWARDING", "forwardMethod": "DIRECT",
-      "state": "ENABLED", "destIpGroups": [{"id": 10177036}], "srcIpGroups": [{"id":
-      10177041}]}'
+      "state": "ENABLED", "destIpGroups": [{"id": 10596685}], "srcIpGroups": [{"id":
+      10596690}]}'
     headers:
       Accept:
       - application/json
@@ -175,13 +175,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/forwardingRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/forwardingRules
   response:
     body:
-      string: '{"id":1571785,"name":"tests-vcr0004","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Integration
-        test Forwarding Control Rule","srcIpGroups":[{"id":10177041}],"destIpCategories":["ANY"],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10177036}]}'
+      string: '{"id":1690935,"name":"tests-vcr0004","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Integration
+        test Forwarding Control Rule","srcIpGroups":[{"id":10596690}],"destIpCategories":["ANY"],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10596685}]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -203,7 +203,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:39 GMT
+      - Fri, 13 Mar 2026 03:19:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -215,23 +215,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5301'
+      - '4153'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2eca935d-9bad-9460-87e1-535c19cdeeb4
+      - 132bad38-429d-9b8d-bddd-6ae56db18750
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4996'
       x-ratelimit-reset:
-      - '27'
+      - '49'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -253,13 +253,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/forwardingRules/1571785
+    uri: https://easm.test.zscaler.com/zia/api/v1/forwardingRules/1690935
   response:
     body:
-      string: '{"accessControl":"READ_WRITE","id":1571785,"name":"tests-vcr0004","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Integration
-        test Forwarding Control Rule","lastModifiedTime":1764201037,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIpGroups":[{"id":10177041,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10177036,"name":"tests-vcr0001"}]}'
+      string: '{"accessControl":"READ_WRITE","id":1690935,"name":"tests-vcr0004","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Integration
+        test Forwarding Control Rule","lastModifiedTime":1773371953,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIpGroups":[{"id":10596690,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10596685,"name":"tests-vcr0001"}]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -281,7 +281,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:41 GMT
+      - Fri, 13 Mar 2026 03:19:17 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -293,23 +293,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2336'
+      - '2046'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 4c16c8e3-9682-9310-b270-18d19d07feb0
+      - 54640505-47f0-907b-92a7-f97de3255b5b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4995'
       x-ratelimit-reset:
-      - '21'
+      - '45'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -333,13 +333,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/forwardingRules/1571785
+    uri: https://easm.test.zscaler.com/zia/api/v1/forwardingRules/1690935
   response:
     body:
-      string: '{"id":1571785,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
-        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":[]}'
+      string: '{"id":1690935,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
+        integration test Forwarding Control Rule","lastModifiedTime":1773371964,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -361,7 +361,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:49 GMT
+      - Fri, 13 Mar 2026 03:19:24 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -373,23 +373,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '7759'
+      - '7481'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c44551e2-d79e-9f38-bb2c-ab728acbb09d
+      - c2793648-fcda-9b95-abb1-263504a05f86
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4994'
       x-ratelimit-reset:
-      - '19'
+      - '43'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -411,9 +411,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/forwardingRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/forwardingRules
   response:
     body:
       string: '[{"accessControl":"READ_WRITE","id":241782,"name":"ZPA Pool For Stray
@@ -429,16 +429,17 @@ interactions:
         all ZPA application to fallback ZPA Pool","lastModifiedTime":1696730204,"destIpCategories":[],"resCategories":[],"destCountries":[]},{"accessControl":"READ_WRITE","id":1557997,"name":"Allow
         Extranet DNS Traffic","type":"FORWARDING","order":-100,"rank":0,"locationGroups":[{"id":157892460,"name":"All
         Extranet Location Group"}],"forwardMethod":"DIRECT","state":"ENABLED","description":"Allow
-        DNS traffic from Extranet Locations","lastModifiedTime":1763256806,"destIpCategories":[],"resCategories":[],"destCountries":[],"nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}]},{"accessControl":"READ_WRITE","id":1557998,"name":"Extranet
+        DNS traffic from Extranet Locations","lastModifiedTime":1763256805,"destIpCategories":[],"resCategories":[],"destCountries":[],"nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}]},{"accessControl":"READ_WRITE","id":1557998,"name":"Extranet
         Traffic to ZPA","type":"FORWARDING","order":-101,"rank":0,"locationGroups":[{"id":157892460,"name":"All
         Extranet Location Group"}],"forwardMethod":"ZPA","state":"ENABLED","description":"Forwards
-        all Extranet applications to ZPA","lastModifiedTime":1763256806,"destIpCategories":[],"resCategories":[],"destCountries":[],"zpaAppSegments":[{"id":10130735,"name":"Extranet
+        all Extranet applications to ZPA","lastModifiedTime":1763256805,"destIpCategories":[],"resCategories":[],"destCountries":[],"zpaAppSegments":[{"id":10130735,"name":"Extranet
         App Segment","externalId":"3"}],"zpaGateway":{"id":10130736,"name":"Auto Extranet
         ZPA Gateway"}},{"accessControl":"READ_WRITE","id":1557999,"name":"Stray Extranet
         Traffic from ZPA","type":"FORWARDING","order":-102,"rank":0,"locationGroups":[{"id":157892460,"name":"All
         Extranet Location Group"}],"forwardMethod":"DROP","state":"ENABLED","description":"Automatically
-        created Extranet Pool Stray Traffic for ZIA","lastModifiedTime":1763256806,"destIpCategories":[],"resCategories":[],"destCountries":[]},{"accessControl":"READ_WRITE","id":1571785,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
-        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[]}]'
+        created Extranet Pool Stray Traffic for ZIA","lastModifiedTime":1763256805,"destIpCategories":[],"resCategories":[],"destCountries":[]},{"accessControl":"READ_WRITE","id":1685414,"name":"test_rule_247ec72b","type":"FORWARDING","order":2,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"updated
+        description","lastModifiedTime":1773371953,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[]},{"accessControl":"READ_WRITE","id":1690935,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
+        integration test Forwarding Control Rule","lastModifiedTime":1773371964,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[]}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -460,7 +461,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:52 GMT
+      - Fri, 13 Mar 2026 03:19:27 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -472,23 +473,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2545'
+      - '2172'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3823baf7-422c-93dd-931b-56f3b99759da
+      - f7510bc5-1a2b-9da2-bc26-4e246133312e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4987'
+      - '4993'
       x-ratelimit-reset:
-      - '11'
+      - '35'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -510,9 +511,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/forwardingRules/1571785
+    uri: https://easm.test.zscaler.com/zia/api/v1/forwardingRules/1690935
   response:
     body:
       string: ''
@@ -533,7 +534,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:50:59 GMT
+      - Fri, 13 Mar 2026 03:19:33 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -543,23 +544,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '7077'
+      - '6372'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 89315a6f-63ba-9d12-a34b-64c520c89804
+      - b6bc2be7-d21b-9570-8ee0-e395f2cf6284
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4986'
+      - '4992'
       x-ratelimit-reset:
-      - '8'
+      - '33'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -581,9 +582,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/ipDestinationGroups/10177036
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipDestinationGroups/10596685
   response:
     body:
       string: ''
@@ -606,7 +607,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:51:01 GMT
+      - Fri, 13 Mar 2026 03:19:36 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -616,23 +617,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2234'
+      - '2838'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c135b7dd-1d32-919e-b3d1-9c3b17127721
+      - 50412851-882a-9da1-b6b3-4edc59b1f7ac
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4985'
+      - '4991'
       x-ratelimit-reset:
-      - '1'
+      - '26'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -654,9 +655,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/ipSourceGroups/10177041
+    uri: https://easm.test.zscaler.com/zia/api/v1/ipSourceGroups/10596690
   response:
     body:
       string: ''
@@ -677,7 +678,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:51:04 GMT
+      - Fri, 13 Mar 2026 03:19:38 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -687,23 +688,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2314'
+      - '1867'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2514fb73-bd51-96aa-b05f-3c170fe87ea5
+      - 6a31c2ab-2c7c-9fdd-953a-a31c4eee7ff0
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4990'
       x-ratelimit-reset:
-      - '59'
+      - '23'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

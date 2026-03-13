@@ -23,6 +23,7 @@ from zscaler.zinsights.models.enums import SortOrder, ActionStatus
 # Base Classes
 # ============================================================================
 
+
 @dataclass
 class OrderByInput:
     """
@@ -32,6 +33,7 @@ class OrderByInput:
         field_name: The field to order by.
         order: The sort order (ASC or DESC).
     """
+
     field_name: str
     order: SortOrder = SortOrder.DESC
 
@@ -49,12 +51,14 @@ class NewsFeedEntriesOrderBy(OrderByInput):
     """
     Ordering options for news feed queries.
     """
+
     pass
 
 
 # ============================================================================
 # StringFilter - Base filter for all domains (must be defined first)
 # ============================================================================
+
 
 @dataclass
 class StringFilter:
@@ -69,6 +73,7 @@ class StringFilter:
         in_list: In - match any string in the list.
         nin: Not in - exclude any string in the list.
     """
+
     eq: Optional[str] = None
     ne: Optional[str] = None
     in_list: Optional[List[str]] = None  # 'in' is a Python keyword
@@ -92,11 +97,13 @@ class StringFilter:
 # Base Filter and Order Classes (DRY)
 # ============================================================================
 
+
 @dataclass
 class BaseNameFilterBy:
     """
     Base filter class for entries that only filter by name.
     """
+
     name: Optional[StringFilter] = None
 
     def as_dict(self) -> Optional[Dict[str, Any]]:
@@ -114,6 +121,7 @@ class BaseNameTotalOrderBy:
     """
     Base order class for entries with name and total fields.
     """
+
     name: Optional[SortOrder] = None
     total: Optional[SortOrder] = None
 
@@ -131,15 +139,18 @@ class BaseNameTotalOrderBy:
 # Web Traffic Filters and Orders
 # ============================================================================
 
+
 @dataclass
 class WebEntriesFilterBy(BaseNameFilterBy):
     """Filter options for web traffic entries using StringFilter."""
+
     pass
 
 
 @dataclass
 class WebOrderBy(BaseNameTotalOrderBy):
     """Ordering options for web traffic entries (name, total)."""
+
     pass
 
 
@@ -147,15 +158,18 @@ class WebOrderBy(BaseNameTotalOrderBy):
 # CASB / SaaS Security Filters and Orders
 # ============================================================================
 
+
 @dataclass
 class CasbEntriesFilterBy(BaseNameFilterBy):
     """Filter options for CASB (SaaS Security) entries using StringFilter."""
+
     pass
 
 
 @dataclass
 class CasbEntryOrderBy(BaseNameTotalOrderBy):
     """Ordering options for CASB entries (name, total)."""
+
     pass
 
 
@@ -163,15 +177,18 @@ class CasbEntryOrderBy(BaseNameTotalOrderBy):
 # Cyber Security Filters and Orders
 # ============================================================================
 
+
 @dataclass
 class CyberSecurityEntriesFilterBy(BaseNameFilterBy):
     """Filter options for Cyber Security entries using StringFilter."""
+
     pass
 
 
 @dataclass
 class CyberSecurityEntryOrderBy(BaseNameTotalOrderBy):
     """Ordering options for Cyber Security entries (name, total)."""
+
     pass
 
 
@@ -179,9 +196,11 @@ class CyberSecurityEntryOrderBy(BaseNameTotalOrderBy):
 # Firewall Filters and Orders
 # ============================================================================
 
+
 @dataclass
 class FirewallEntriesFilterBy(BaseNameFilterBy):
     """Filter options for Zero Trust Firewall entries using StringFilter."""
+
     pass
 
 
@@ -194,6 +213,7 @@ class FirewallEntryOrderBy:
         field_name: The field to order by (e.g., 'name', 'total').
         order: Sort order (ASC or DESC).
     """
+
     field_name: str
     order: SortOrder = SortOrder.DESC
 
@@ -206,6 +226,7 @@ class FirewallEntryOrderBy:
 # Shadow IT Filters and Orders
 # ============================================================================
 
+
 @dataclass
 class ShadowITAppsFilterBy:
     """
@@ -216,6 +237,7 @@ class ShadowITAppsFilterBy:
         application_category: Filter by application category using StringFilter.
         sanctioned_state: Filter by sanctioned state using StringFilter.
     """
+
     application: Optional[StringFilter] = None
     application_category: Optional[StringFilter] = None
     sanctioned_state: Optional[StringFilter] = None
@@ -251,6 +273,7 @@ class ShadowITAppsOrderBy:
         sanctioned_state: Sort order for sanctioned_state field.
         data_consumed: Sort order for data_consumed field.
     """
+
     application: Optional[SortOrder] = None
     application_category: Optional[SortOrder] = None
     risk_index: Optional[SortOrder] = None
@@ -279,18 +302,21 @@ class ShadowITAppsOrderBy:
 @dataclass
 class ShadowITEntriesFilterBy(BaseNameFilterBy):
     """Filter options for Shadow IT summary entries (used in group_by queries)."""
+
     pass
 
 
 @dataclass
 class ShadowITEntryOrderBy(BaseNameTotalOrderBy):
     """Ordering options for Shadow IT summary entries (name, total)."""
+
     pass
 
 
 # ============================================================================
 # IoT Filters and Orders
 # ============================================================================
+
 
 @dataclass
 class IoTDeviceFilterBy:
@@ -302,6 +328,7 @@ class IoTDeviceFilterBy:
         classification_uuid: Filter by classification UUID using StringFilter.
         category: Filter by device category using StringFilter.
     """
+
     classifications: Optional[StringFilter] = None
     classification_uuid: Optional[StringFilter] = None
     category: Optional[StringFilter] = None
@@ -335,6 +362,7 @@ class IoTDeviceOrderBy:
         category: Sort order for the category field.
         total: Sort order for the total field.
     """
+
     classifications: Optional[SortOrder] = None
     classification_uuid: Optional[SortOrder] = None
     category: Optional[SortOrder] = None
@@ -358,6 +386,7 @@ class IoTDeviceOrderBy:
 # Legacy / Other Filters (kept for backwards compatibility)
 # ============================================================================
 
+
 @dataclass
 class CasbIncidentFilterBy:
     """
@@ -368,6 +397,7 @@ class CasbIncidentFilterBy:
         app_name: Filter by application name.
         user_name: Filter by user name.
     """
+
     policy: Optional[str] = None
     app_name: Optional[str] = None
     user_name: Optional[str] = None
@@ -404,6 +434,7 @@ class TimeRangeInput:
         start_time: Start time in epoch milliseconds.
         end_time: End time in epoch milliseconds.
     """
+
     start_time: int
     end_time: int
 
@@ -419,34 +450,27 @@ __all__ = [
     "StringFilter",
     "BaseNameFilterBy",
     "BaseNameTotalOrderBy",
-
     # Web Traffic
     "WebEntriesFilterBy",
     "WebOrderBy",
-
     # CASB / SaaS Security
     "CasbEntriesFilterBy",
     "CasbEntryOrderBy",
     "CasbIncidentFilterBy",
-
     # Cyber Security
     "CyberSecurityEntriesFilterBy",
     "CyberSecurityEntryOrderBy",
-
     # Firewall
     "FirewallEntriesFilterBy",
     "FirewallEntryOrderBy",
-
     # Shadow IT
     "ShadowITAppsFilterBy",
     "ShadowITAppsOrderBy",
     "ShadowITEntriesFilterBy",
     "ShadowITEntryOrderBy",
-
     # IoT
     "IoTDeviceFilterBy",
     "IoTDeviceOrderBy",
-
     # Other
     "NewsFeedEntriesOrderBy",
     "TimeRangeInput",

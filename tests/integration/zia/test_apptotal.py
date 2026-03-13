@@ -87,4 +87,3 @@ class TestAppTotal:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-

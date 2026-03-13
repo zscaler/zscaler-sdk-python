@@ -50,7 +50,9 @@ class TestWorkloadGroups:
                     description="Test workload group for VCR testing",
                 )
                 if err is None and created_group is not None:
-                    group_id = created_group.get("id") if isinstance(created_group, dict) else getattr(created_group, "id", None)
+                    group_id = (
+                        created_group.get("id") if isinstance(created_group, dict) else getattr(created_group, "id", None)
+                    )
 
                     # Test get_group
                     if group_id:

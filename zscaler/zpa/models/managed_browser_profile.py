@@ -33,26 +33,16 @@ class ManagedBrowserProfile(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.browser_type = config["browserType"] \
-                if "browserType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.customer_id = config["customerId"] \
-                if "customerId" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
+            self.browser_type = config["browserType"] if "browserType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
 
             if "chromePostureProfile" in config:
                 if isinstance(config["chromePostureProfile"], ChromePostureProfile):
@@ -93,7 +83,7 @@ class ManagedBrowserProfile(ZscalerObject):
             "modifiedBy": self.modified_by,
             "modifiedTime": self.modified_time,
             "microtenantId": self.microtenant_id,
-            "microtenantName": self.microtenant_name
+            "microtenantName": self.microtenant_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -114,18 +104,12 @@ class ChromePostureProfile(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.browser_type = config["browserType"] \
-                if "browserType" in config else None
-            self.crowd_strike_agent = config["crowdStrikeAgent"] \
-                if "crowdStrikeAgent" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.browser_type = config["browserType"] if "browserType" in config else None
+            self.crowd_strike_agent = config["crowdStrikeAgent"] if "crowdStrikeAgent" in config else None
         else:
             self.id = None
             self.creation_time = None

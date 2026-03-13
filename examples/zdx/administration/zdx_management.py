@@ -71,7 +71,7 @@ def main():
         # Legacy client configuration
         ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
         ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
-        
+
         if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
             print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
             return
@@ -80,27 +80,27 @@ def main():
             "key_id": ZDX_CLIENT_ID,
             "key_secret": ZDX_CLIENT_SECRET,
         }
-        
+
         client = LegacyZDXClient(config)
     else:
         # OneAPI client configuration
         ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
         ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
         ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
-        
+
         if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
             print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
             return
 
         config = {
-            'clientId': ZSCALER_CLIENT_ID,
-            'clientSecret': ZSCALER_CLIENT_SECRET,
+            "clientId": ZSCALER_CLIENT_ID,
+            "clientSecret": ZSCALER_CLIENT_SECRET,
         }
-        
+
         # Add vanity domain if provided
         if ZSCALER_VANITY_DOMAIN:
-            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
-        
+            config["vanityDomain"] = ZSCALER_VANITY_DOMAIN
+
         client = ZscalerClient(config)
 
     # Handle --departments
@@ -108,20 +108,20 @@ def main():
         query_params = {}
         if args.since:
             query_params["since"] = args.since
-        
+
         dept_list, _, err = client.zdx.admin.list_departments(query_params=query_params)
         if err:
             print(f"Error listing departments: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         departments_data = []
         for dept in dept_list:
-            if hasattr(dept, 'as_dict'):
+            if hasattr(dept, "as_dict"):
                 departments_data.append(dept.as_dict())
             else:
                 departments_data.append(dept)
-        
+
         display_table(["ID", "Name"], departments_data)
 
     # Handle --locations
@@ -129,20 +129,20 @@ def main():
         query_params = {}
         if args.since:
             query_params["since"] = args.since
-        
+
         locations_list, _, err = client.zdx.admin.list_locations(query_params=query_params)
         if err:
             print(f"Error listing locations: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         locations_data = []
         for location in locations_list:
-            if hasattr(location, 'as_dict'):
+            if hasattr(location, "as_dict"):
                 locations_data.append(location.as_dict())
             else:
                 locations_data.append(location)
-        
+
         display_table(["ID", "Name"], locations_data)
 
     else:

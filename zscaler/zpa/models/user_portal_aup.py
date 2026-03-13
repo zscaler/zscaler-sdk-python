@@ -34,30 +34,18 @@ class UserPortalAUP(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.aup = config["aup"] \
-                if "aup" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.email = config["email"] \
-                if "email" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.phone_num = config["phoneNum"] \
-                if "phoneNum" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
+            self.aup = config["aup"] if "aup" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.email = config["email"] if "email" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.phone_num = config["phoneNum"] if "phoneNum" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
         else:
             self.aup = None
             self.creation_time = None
@@ -89,7 +77,7 @@ class UserPortalAUP(ZscalerObject):
             "name": self.name,
             "phoneNum": self.phone_num,
             "microtenantId": self.microtenant_id,
-            "microtenantName": self.microtenant_name
+            "microtenantName": self.microtenant_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

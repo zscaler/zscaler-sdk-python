@@ -18,12 +18,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/fileTypeRules
   response:
     body:
-      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
+      string: '{"id":1690934,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
         test file type control rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_P7Z","FTCATEGORY_B64"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"name":"tests-vcr0001"}'
     headers:
       cache-control:
@@ -46,7 +46,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:16 GMT
+      - Fri, 13 Mar 2026 03:18:53 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -58,23 +58,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5806'
+      - '4839'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 816be933-7e06-9f8f-8941-7c3a56618557
+      - 80d0a6da-3d20-9a68-9533-489c5036973e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4964'
       x-ratelimit-reset:
-      - '49'
+      - '12'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -96,13 +96,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+    uri: https://easm.test.zscaler.com/zia/api/v1/fileTypeRules/1690934
   response:
     body:
-      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
-        test file type control rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_B64","FTCATEGORY_P7Z"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1764201014,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}'
+      string: '{"id":1690934,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
+        test file type control rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_B64","FTCATEGORY_P7Z"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -124,7 +124,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:17 GMT
+      - Fri, 13 Mar 2026 03:18:54 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -136,23 +136,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '985'
+      - '1036'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ac11f3ad-aeff-99e1-868e-a2e7cd08c0e7
+      - 26cf5b4a-0dae-9cae-8bb5-39ee41735d16
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4963'
       x-ratelimit-reset:
-      - '43'
+      - '7'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -179,12 +179,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+    uri: https://easm.test.zscaler.com/zia/api/v1/fileTypeRules/1690934
   response:
     body:
-      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
+      string: '{"id":1690934,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
         integration test File Type Control Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_P7Z","FTCATEGORY_B64"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"name":"tests-vcr0001"}'
     headers:
       cache-control:
@@ -207,7 +207,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:23 GMT
+      - Fri, 13 Mar 2026 03:18:59 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -219,23 +219,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5677'
+      - '4483'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 51764690-ced5-9250-88c3-6b21a34ba348
+      - e6dc6af0-fe9e-9872-b3ba-0fee54bca790
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4962'
       x-ratelimit-reset:
-      - '42'
+      - '6'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -257,13 +257,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/fileTypeRules
   response:
     body:
-      string: '[{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
-        integration test File Type Control Rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_B64","FTCATEGORY_P7Z"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1764201021,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}]'
+      string: '[{"id":1655836,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":6,"description":"testAcc_firewall_dns_rule","browserEunTemplateId":0,"fileTypes":["FTCATEGORY_PDF_DOCUMENT","FTCATEGORY_MS_POWERPOINT","FTCATEGORY_MS_WORD","FTCATEGORY_MS_EXCEL"],"fileTypeCategories":[{"id":7,"name":"FTCATEGORY_PDF_DOCUMENT","parent":"OTHER_DOCUMENTS"},{"id":4,"name":"FTCATEGORY_MS_POWERPOINT","parent":"OFFICE_DOCUMENTS"},{"id":5,"name":"FTCATEGORY_MS_WORD","parent":"OFFICE_DOCUMENTS"},{"id":6,"name":"FTCATEGORY_MS_EXCEL","parent":"OFFICE_DOCUMENTS"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":true,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tf-acc-test-vwpdvlzohc","labels":[{"id":4099711,"name":"Test-Label-Context-Manager-1772670246"}],"cloudApplications":[]},{"id":1659821,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":5,"description":"testAcc_firewall_dns_rule","browserEunTemplateId":0,"fileTypes":[],"fileTypeCategories":[],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":0,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":true,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tf-acc-test-drsiwrpgee","labels":[{"id":4117875,"name":"Test-Label-Context-Manager-1772473348"}],"cloudApplications":[]},{"id":1664135,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":4,"description":"testAcc_firewall_dns_rule","browserEunTemplateId":0,"fileTypes":["FTCATEGORY_PDF_DOCUMENT","FTCATEGORY_MS_POWERPOINT","FTCATEGORY_MS_WORD","FTCATEGORY_MS_EXCEL"],"fileTypeCategories":[{"id":7,"name":"FTCATEGORY_PDF_DOCUMENT","parent":"OTHER_DOCUMENTS"},{"id":4,"name":"FTCATEGORY_MS_POWERPOINT","parent":"OFFICE_DOCUMENTS"},{"id":5,"name":"FTCATEGORY_MS_WORD","parent":"OFFICE_DOCUMENTS"},{"id":6,"name":"FTCATEGORY_MS_EXCEL","parent":"OFFICE_DOCUMENTS"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":true,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tf-acc-test-lomtcapvhi","labels":[{"id":4139655,"name":"tf-acc-test-hzzxvjzfqc"}],"cloudApplications":["GMXDE","QQ_MAIL","EM_CLIENT","SUBSCRIBERMAIL","INBOX_WEBMAIL","POCZTA_O2","ONE_HUNDRED_AND_SIXTY_THREE_MAIL","POCZTA_ONET","ATOMPARK_SOFTWARE_ATOMIC_EMAIL_TRACKER","MAILDOCKER","GLOBIMAIL","MAILENABLE","AGARI_BRAND_PROTECTION","TUFFMAIL_COM","EMAILFREENETDE","CLAWS_MAIL","MAILTONLINEDE","EEVID","SOCKETLABS","CIPHER_CRAFT_EMAIL","BIGLOBE_MAIL","MAILSPRING","ONLINE_EE","ICLOUD_MAIL","WINMAILRU","ONETWOSIX","EMAIL_HIPPO","ONE_HUNDRED_AND_THIRTY_NINE_EMAIL","UOL_MAIL","LETTERMELATER_COM","MAIL_KING","LEADGNOME","STARTMAIL","TOM_MAIL","EASYMAIL7","EMAIL_LIST_VERIFY","NOTABLIST","CYBOZU_MAILWISE","FREEMAIL","HEY","PRIVATEEMAIL","SIMPRESSIVE","MAILJET","MAILTRACK_FOR_GMAIL","UNIBOX","ZENDIRECT","HUSHMAIL","TELENET_WEBMAIL","KIRIM_EMAIL","HELPSPOT","MAIL_IN_A_BOX","CENTRUM","SAPO","JUNK_EMAIL_FILTER","FASTMAIL","UNROLL","TILIQ","KAGOYA_MAIL_SERVER","AUTHSMTP","CLOUDSELL","KINTONE_KMAILER","MAILUP","PINGLY","MAIL_LABS","BLASTMAIL","GAGGLE_MAIL","SINA_MAIL","OCN_MAIL_SERVICE","FINDTHATLEAD","EWE_CLOUD_WEBMAIL","REDIFFMAIL_PRO","MAIL2WEB","AFTERLOGIC_WEBMAIL","KIWI_FOR_GMAIL","EVERYONE_NET","CLOUDMAILIN","LAPOSTE","DADA_MAIL","MAILIFY","DUOCIRCLE_SPAM_FILTERING","ORANGEFR","LOLLIPOP_WEB_MAILER_BY_GMO","NIFCLOUD_BUSINESS_MAIL","EGROUPWARE","MAILRAMBLERRU","SOVERIN","HENNGE_CUSTOMERS_MAIL_CLOUD","AOL_MAIL","NCR_COUNTERPOINT","AMPSY","SERVERMX","COMCASTMAIL","SENDWP","WINDOWS_LIVE_HOTMAIL","RAINLOOP","NAVER_MAIL","WEBDE","MAILDROP","VIRGILIO_MAIL","GOOGLE_WEBMAIL","GMELIUS","FLOW_E","HOTMAIL_PERSONAL","GOO","REDIFFMAIL","PROTONMAIL","PREMAILER","HAI2_MAIL","MAILBOX_RENTAL","MAILDEALER","YAHOO_WEBMAIL","BANANATAG","KNAK_","MAILYANDEXRU","DOPPLER_RELAY","LYCOS_MAIL_WEBMAIL","SOHU_MAIL","DATAMAIL_LINGUISTIC_EMAIL_APP","KINGMAILER","ROADRUNNER","ZOHO","MAILO","TISCALI_MAIL","MYSMTP"]},{"id":1685338,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":3,"description":"updated
+        description","browserEunTemplateId":0,"fileTypes":["FTCATEGORY_ALZ"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"}],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"test_rule_6f83efd8","cloudApplications":[]},{"id":1685439,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":2,"description":"updated
+        description","browserEunTemplateId":0,"fileTypes":["FTCATEGORY_ALZ"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"}],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371930,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"test_rule_83ecb164","cloudApplications":[]},{"id":1690934,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
+        integration test File Type Control Rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_P7Z","FTCATEGORY_B64"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1773371937,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -285,7 +287,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:50:25 GMT
+      - Fri, 13 Mar 2026 03:19:00 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -293,27 +295,27 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1265'
+      - '1128'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 882bf956-16a1-921e-a7a9-3046d257cc5e
+      - 6455f0a3-37e5-910f-9a9b-c48b19a9474c
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4961'
       x-ratelimit-reset:
-      - '37'
+      - '1'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -335,9 +337,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+    uri: https://easm.test.zscaler.com/zia/api/v1/fileTypeRules/1690934
   response:
     body:
       string: ''
@@ -358,7 +360,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:50:28 GMT
+      - Fri, 13 Mar 2026 03:19:03 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -368,23 +370,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3170'
+      - '2939'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 574aaf47-7db2-98c1-9a1b-01c17d6a2470
+      - 80880274-3a85-95a2-991c-cbd2fe1261dc
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4999'
       x-ratelimit-reset:
-      - '35'
+      - '60'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/authDomains
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/authDomains
   response:
     body:
       string: '{"authDomains":["securitygeek.io","securitygeekio.zslogin.net"]}'
@@ -29,7 +29,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:14 GMT
+      - Fri, 13 Mar 2026 02:44:55 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -47,23 +47,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '45'
+      - '40'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 28d837b6-5ff8-95e9-a204-3cf5fe3c7f37
+      - 856ca5e3-1aa4-9e9b-9753-bee21690483d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4950'
+      - '4795'
       x-ratelimit-reset:
-      - '46'
+      - '5'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -84,12 +84,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants
   response:
     body:
-      string: '{"id":"216196257331394559","modifiedTime":"1764191894","creationTime":"1764191894","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0002","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true}'
+      string: '{"id":"216196257331404644","modifiedTime":"1773369895","creationTime":"1773369895","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0002","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true}'
     headers:
       cache-control:
       - no-store
@@ -100,7 +100,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:14 GMT
+      - Fri, 13 Mar 2026 02:44:55 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -118,23 +118,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '200'
+      - '292'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b2ffd01f-b145-9830-b354-4fb1d311c06d
+      - 7f3d5af4-9bf2-914b-96f9-af3427fe858c
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4949'
+      - '4794'
       x-ratelimit-reset:
-      - '46'
+      - '5'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -154,12 +154,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331394559
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331404644
   response:
     body:
-      string: '{"id":"216196257331394559","modifiedTime":"1764191894","creationTime":"1764191894","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0002","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true,"scopeOrder":"1"}'
+      string: '{"id":"216196257331404644","modifiedTime":"1773369895","creationTime":"1773369895","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0002","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true,"scopeOrder":"1"}'
     headers:
       cache-control:
       - no-store
@@ -170,7 +170,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:14 GMT
+      - Fri, 13 Mar 2026 02:44:56 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -188,23 +188,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '41'
+      - '44'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f05f1cd0-9de2-99ee-beaf-a0b9fe88fc65
+      - d2b25008-0a84-9c05-b628-e026f5ef01a4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4948'
+      - '4793'
       x-ratelimit-reset:
-      - '46'
+      - '5'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -225,9 +225,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331394559
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331404644
   response:
     body:
       string: ''
@@ -237,7 +237,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:14 GMT
+      - Fri, 13 Mar 2026 02:44:56 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -259,17 +259,17 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2a2ccb9a-e7a2-949c-9d3d-58a8023a7366
+      - 692ee3c3-6890-9660-b250-f46632d45152
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4947'
+      - '4792'
       x-ratelimit-reset:
-      - '46'
+      - '4'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -289,12 +289,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331394559","modifiedTime":"1764191894","creationTime":"1764191894","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0001","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true,"scopeOrder":"1"},{"id":"0","name":"Default","description":"This
+      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331404644","modifiedTime":"1773369896","creationTime":"1773369895","modifiedBy":"216196257331372705","name":"tests-micro-vcr0001","description":"tests-micro-vcr0001","enabled":true,"operator":"OR","criteriaAttribute":"AuthDomain","privilegedApprovalsEnabled":true,"scopeOrder":"1"},{"id":"0","name":"Default","description":"This
         is the default Microtenant for users not associated to any Microtenant","enabled":true,"operator":"OR","privilegedApprovalsEnabled":true,"scopeOrder":"2"}]}'
     headers:
       cache-control:
@@ -306,7 +306,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:15 GMT
+      - Fri, 13 Mar 2026 02:44:56 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -324,23 +324,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '533'
+      - '61'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7ec2b536-b2e7-9922-a058-18ac2ca4310f
+      - 2fc976a4-5358-9e6c-93d3-c4822b09c5c8
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4946'
+      - '4791'
       x-ratelimit-reset:
-      - '45'
+      - '4'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -360,12 +360,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/summary
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/summary
   response:
     body:
-      string: '[{"id":"216196257331394559","name":"tests-micro-vcr0001","enabled":true},{"id":"0","name":"Default","enabled":true}]'
+      string: '[{"id":"216196257331404644","name":"tests-micro-vcr0001","enabled":true},{"id":"0","name":"Default","enabled":true}]'
     headers:
       cache-control:
       - no-store
@@ -376,7 +376,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:15 GMT
+      - Fri, 13 Mar 2026 02:44:56 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -394,23 +394,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '39'
+      - '35'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 34453181-91ff-9968-acc7-265a7f8db5dc
+      - 82d87271-f2e5-96e4-ab18-689c8eb3dfc4
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4945'
+      - '4790'
       x-ratelimit-reset:
-      - '45'
+      - '4'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:
@@ -430,9 +430,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331394559
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/microtenants/216196257331404644
   response:
     body:
       string: ''
@@ -442,7 +442,7 @@ interactions:
       content-security-policy:
       - default-src 'none'; upgrade-insecure-requests
       date:
-      - Wed, 26 Nov 2025 21:18:16 GMT
+      - Fri, 13 Mar 2026 02:44:56 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -458,23 +458,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '394'
+      - '222'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e87a9075-5e6c-93fe-a0e4-fb872a70012b
+      - b27b4173-18c8-9efa-ae39-bcc1caec71dc
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4944'
+      - '4789'
       x-ratelimit-reset:
-      - '45'
+      - '4'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 226c6db1-956e-490b-a401-e617cf588fdb
       x-xss-protection:
       - '0'
     status:

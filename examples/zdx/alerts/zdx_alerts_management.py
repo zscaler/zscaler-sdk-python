@@ -107,7 +107,7 @@ def main():
         # Legacy client configuration
         ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
         ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
-        
+
         if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
             print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
             return
@@ -116,27 +116,27 @@ def main():
             "key_id": ZDX_CLIENT_ID,
             "key_secret": ZDX_CLIENT_SECRET,
         }
-        
+
         client = LegacyZDXClient(config)
     else:
         # OneAPI client configuration
         ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
         ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
         ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
-        
+
         if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
             print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
             return
 
         config = {
-            'clientId': ZSCALER_CLIENT_ID,
-            'clientSecret': ZSCALER_CLIENT_SECRET,
+            "clientId": ZSCALER_CLIENT_ID,
+            "clientSecret": ZSCALER_CLIENT_SECRET,
         }
-        
+
         # Add vanity domain if provided
         if ZSCALER_VANITY_DOMAIN:
-            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
-        
+            config["vanityDomain"] = ZSCALER_VANITY_DOMAIN
+
         client = ZscalerClient(config)
 
     # Prompt the user to choose an alert type
@@ -156,20 +156,20 @@ def main():
         query_params = {}
         if since:
             query_params["since"] = since
-        
+
         ongoing_alerts, _, err = client.zdx.alerts.list_ongoing(query_params=query_params)
         if err:
             print(f"Error listing ongoing alerts: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         data = []
         for alert in ongoing_alerts:
-            if hasattr(alert, 'as_dict'):
+            if hasattr(alert, "as_dict"):
                 data.append(alert.as_dict())
             else:
                 data.append(alert)
-        
+
         print(f"Data collected from API (ongoing alerts): {data}")  # Debugging print statement
         display_alerts(data)
 
@@ -177,20 +177,20 @@ def main():
         query_params = {}
         if since:
             query_params["since"] = since
-        
+
         historical_alerts, _, err = client.zdx.alerts.list_historical(query_params=query_params)
         if err:
             print(f"Error listing historical alerts: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         data = []
         for alert in historical_alerts:
-            if hasattr(alert, 'as_dict'):
+            if hasattr(alert, "as_dict"):
                 data.append(alert.as_dict())
             else:
                 data.append(alert)
-        
+
         print(f"Data collected from API (historical alerts): {data}")  # Debugging print statement
         display_alerts(data)
 
@@ -200,12 +200,12 @@ def main():
         if err:
             print(f"Error getting alert details: {err}")
             return
-        
-        if hasattr(alert_details, 'as_dict'):
+
+        if hasattr(alert_details, "as_dict"):
             alert_details_dict = alert_details.as_dict()
         else:
             alert_details_dict = alert_details
-        
+
         print(f"Alert details: {alert_details_dict}")  # Debugging print statement
         display_alerts([alert_details_dict])
         # Display impacted departments, locations, and geolocations
@@ -221,20 +221,20 @@ def main():
         query_params = {}
         if since:
             query_params["since"] = since
-        
+
         affected_devices, _, err = client.zdx.alerts.list_affected_devices(alert_id, query_params=query_params)
         if err:
             print(f"Error listing affected devices: {err}")
             return
-        
+
         # Convert to list of dictionaries for display
         data = []
         for device in affected_devices:
-            if hasattr(device, 'as_dict'):
+            if hasattr(device, "as_dict"):
                 data.append(device.as_dict())
             else:
                 data.append(device)
-        
+
         headers = ["Device ID", "Device Name", "User ID", "User Name", "User Email"]
         print(f"Data collected from API (affected devices): {data}")  # Debugging print statement
         display_table(headers, data)

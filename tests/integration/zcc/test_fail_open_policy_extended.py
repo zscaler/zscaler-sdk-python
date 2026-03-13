@@ -42,7 +42,7 @@ class TestFailOpenPolicyExtended:
                 assert isinstance(policies, list), "Expected a list of policies"
                 if policies:
                     policy = policies[0]
-                    assert hasattr(policy, 'as_dict'), "Policy should have as_dict method"
+                    assert hasattr(policy, "as_dict"), "Policy should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing fail open policies failed: {exc}")
 
@@ -55,19 +55,15 @@ class TestFailOpenPolicyExtended:
 
         try:
             # First get a policy to update
-            policies, _, err = client.zcc.fail_open_policy.list_by_company(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            policies, _, err = client.zcc.fail_open_policy.list_by_company(query_params={"page": 1, "page_size": 1})
+
             if err is None and policies and len(policies) > 0:
                 policy = policies[0]
-                policy_dict = policy.as_dict() if hasattr(policy, 'as_dict') else {}
-                
+                policy_dict = policy.as_dict() if hasattr(policy, "as_dict") else {}
+
                 # Try to update with same values (non-destructive)
                 if policy_dict:
-                    result, response, err = client.zcc.fail_open_policy.update_failopen_policy(
-                        **policy_dict
-                    )
+                    result, response, err = client.zcc.fail_open_policy.update_failopen_policy(**policy_dict)
                     # Update may succeed or fail depending on policy configuration
         except Exception:
             # Update may fail - the goal is code coverage
@@ -80,14 +76,12 @@ class TestFailOpenPolicyExtended:
 
         try:
             # First get an existing policy to get its ID
-            policies, _, err = client.zcc.fail_open_policy.list_by_company(
-                query_params={"page": 1, "page_size": 1}
-            )
-            
+            policies, _, err = client.zcc.fail_open_policy.list_by_company(query_params={"page": 1, "page_size": 1})
+
             if err is None and policies and len(policies) > 0:
                 policy = policies[0]
-                policy_id = policy.id if hasattr(policy, 'id') else None
-                
+                policy_id = policy.id if hasattr(policy, "id") else None
+
                 if policy_id:
                     # Try to update with specific fail open parameters
                     result, response, err = client.zcc.fail_open_policy.update_failopen_policy(
@@ -106,4 +100,3 @@ class TestFailOpenPolicyExtended:
         except Exception:
             # Update may fail - the goal is code coverage
             pass
-

@@ -37,9 +37,7 @@ class ApplicationActiveUsers(ZscalerObject):
         if config:
             self.next_offset = config["next_offset"] if "next_offset" in config else None
 
-            self.users = ZscalerCollection.form_list(
-                config["users"] if "users" in config else [], common.CommonIDName
-            )
+            self.users = ZscalerCollection.form_list(config["users"] if "users" in config else [], common.CommonIDName)
         else:
             self.next_offset = None
             self.users = []
@@ -76,9 +74,7 @@ class ApplicationUserDetails(ZscalerObject):
             self.name = config["name"] if "name" in config else None
             self.email = config["email"] if "email" in config else None
             self.score = config["score"] if "score" in config else None
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], common.Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], common.Devices)
         else:
             self.id = None
             self.name = None

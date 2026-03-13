@@ -377,12 +377,7 @@ class GroupsAPI(APIClient):
 
         return (result, response, None)
 
-    def add_user_to_group(
-        self,
-        group_id: str,
-        user_id: str,
-        **kwargs
-    ) -> APIResult[dict]:
+    def add_user_to_group(self, group_id: str, user_id: str, **kwargs) -> APIResult[dict]:
         """
         Adds a specific user to an existing group using the group ID and the user ID.
 
@@ -480,9 +475,9 @@ class GroupsAPI(APIClient):
         """
         )
 
-        if 'id' in kwargs and isinstance(kwargs['id'], list):
+        if "id" in kwargs and isinstance(kwargs["id"], list):
             transformed_ids = []
-            for user_id in kwargs['id']:
+            for user_id in kwargs["id"]:
                 transformed_ids.append({"id": user_id})
             body = transformed_ids
         else:
@@ -548,9 +543,9 @@ class GroupsAPI(APIClient):
         """
         )
 
-        if 'id' in kwargs and isinstance(kwargs['id'], list):
+        if "id" in kwargs and isinstance(kwargs["id"], list):
             transformed_ids = []
-            for user_id in kwargs['id']:
+            for user_id in kwargs["id"]:
                 transformed_ids.append({"id": user_id})
             body = transformed_ids
         else:

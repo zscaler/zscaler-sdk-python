@@ -19,12 +19,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/sandboxRules
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandboxRules
   response:
     body:
-      string: '{"id":1571786,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Integration
+      string: '{"id":1690938,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Integration
         test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"state":"ENABLED","rank":7,"baRuleAction":"BLOCK","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":40}'
     headers:
       cache-control:
@@ -47,7 +47,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:05 GMT
+      - Fri, 13 Mar 2026 03:22:29 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -59,23 +59,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3107'
+      - '2777'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - eb058f3a-a91d-926b-a8b2-3df09ad30036
+      - 5ce1ba95-d4a1-9d50-acbc-cb357504bb6e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4999'
       x-ratelimit-reset:
-      - '58'
+      - '34'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -97,13 +97,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/sandboxRules/1571786
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandboxRules/1690938
   response:
     body:
-      string: '{"id":1571786,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Integration
-        test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201124,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"BLOCK","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":40}'
+      string: '{"id":1690938,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Integration
+        test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_P7Z","FTCATEGORY_BZIP2"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1773372148,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"BLOCK","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":40}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -125,7 +125,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:06 GMT
+      - Fri, 13 Mar 2026 03:22:30 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -137,23 +137,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '963'
+      - '886'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3b1fba19-e983-99c4-ba3e-8ba8130b7a59
+      - fbebf4bd-102f-953b-bd60-495e2d2de25e
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4998'
       x-ratelimit-reset:
-      - '55'
+      - '31'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -181,13 +181,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/sandboxRules/1571786
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandboxRules/1690938
   response:
     body:
-      string: '{"id":1571786,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Updated
-        integration test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201130,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"ALLOW","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":45}'
+      string: '{"id":1690938,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Updated
+        integration test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_P7Z","FTCATEGORY_BZIP2"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1773372152,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"ALLOW","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":45}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -209,7 +209,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:52:11 GMT
+      - Fri, 13 Mar 2026 03:22:33 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -221,23 +221,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '4868'
+      - '3122'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2c37f2d1-5bdc-991c-9286-4194d9bd56a2
+      - 84abc7a5-d94e-9684-ba75-ac33bb7f443f
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4997'
       x-ratelimit-reset:
-      - '54'
+      - '30'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -259,9 +259,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/sandboxRules/1571786
+    uri: https://easm.test.zscaler.com/zia/api/v1/sandboxRules/1690938
   response:
     body:
       string: ''
@@ -282,7 +282,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Wed, 26 Nov 2025 23:52:13 GMT
+      - Fri, 13 Mar 2026 03:22:36 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -292,23 +292,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1988'
+      - '2125'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 87bb31ff-c069-904a-bee9-b556c170010c
+      - f98fdbcf-556d-9225-ab22-aa9e54b8478d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4996'
       x-ratelimit-reset:
-      - '49'
+      - '27'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

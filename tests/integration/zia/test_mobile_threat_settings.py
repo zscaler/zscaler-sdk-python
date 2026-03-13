@@ -47,7 +47,11 @@ class TestMobileThreatSettings:
             try:
                 # Just re-apply current settings to test the update endpoint
                 updated_settings, response, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
-                    sms_phishing_enabled=original_settings.get("sms_phishing_enabled", False) if isinstance(original_settings, dict) else getattr(original_settings, "sms_phishing_enabled", False),
+                    sms_phishing_enabled=(
+                        original_settings.get("sms_phishing_enabled", False)
+                        if isinstance(original_settings, dict)
+                        else getattr(original_settings, "sms_phishing_enabled", False)
+                    ),
                 )
                 # Update may fail due to permissions - that's ok
             except Exception:

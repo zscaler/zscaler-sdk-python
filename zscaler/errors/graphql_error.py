@@ -23,20 +23,19 @@ import requests
 @dataclass
 class GraphQLErrorLocation:
     """Represents a location in a GraphQL query where an error occurred."""
+
     line: int
     column: int
 
     @classmethod
     def from_dict(cls, data: Dict[str, int]) -> "GraphQLErrorLocation":
-        return cls(
-            line=data.get("line", 0),
-            column=data.get("column", 0)
-        )
+        return cls(line=data.get("line", 0), column=data.get("column", 0))
 
 
 @dataclass
 class GraphQLErrorDetail:
     """Represents a single GraphQL error from the errors array."""
+
     message: str
     locations: List[GraphQLErrorLocation] = field(default_factory=list)
     path: List[str] = field(default_factory=list)
@@ -44,15 +43,12 @@ class GraphQLErrorDetail:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "GraphQLErrorDetail":
-        locations = [
-            GraphQLErrorLocation.from_dict(loc)
-            for loc in data.get("locations", [])
-        ]
+        locations = [GraphQLErrorLocation.from_dict(loc) for loc in data.get("locations", [])]
         return cls(
             message=data.get("message", "Unknown GraphQL error"),
             locations=locations,
             path=data.get("path", []),
-            extensions=data.get("extensions", {})
+            extensions=data.get("extensions", {}),
         )
 
     @property
@@ -92,7 +88,7 @@ class GraphQLAPIError(Exception):
         url: str,
         response_details: requests.Response,
         response_body: Union[Dict[str, Any], str],
-        service_type: str = "zins"
+        service_type: str = "zins",
     ) -> None:
         self.url: str = url
         self.status_code: int = response_details.status_code
@@ -108,9 +104,7 @@ class GraphQLAPIError(Exception):
 
         # Extract GraphQL errors
         raw_errors = response_body.get("errors", [])
-        self.errors: List[GraphQLErrorDetail] = [
-            GraphQLErrorDetail.from_dict(err) for err in raw_errors
-        ]
+        self.errors: List[GraphQLErrorDetail] = [GraphQLErrorDetail.from_dict(err) for err in raw_errors]
 
         # Store the data portion (may be partial)
         self.data: Optional[Dict[str, Any]] = response_body.get("data")
@@ -162,13 +156,8 @@ class GraphQLAPIError(Exception):
             "status": self.status_code,
             "url": self.url,
             "errors": [
-                {
-                    "message": err.message,
-                    "path": err.path,
-                    "classification": err.classification
-                }
-                for err in self.errors
-            ]
+                {"message": err.message, "path": err.path, "classification": err.classification} for err in self.errors
+            ],
         }
         return json.dumps(error_payload, indent=2)
 
@@ -204,4 +193,3 @@ def is_graphql_error_response(response_body: Union[Dict[str, Any], str]) -> bool
         return True
 
     return False
-

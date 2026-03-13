@@ -30,7 +30,9 @@ class IPDestinationGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
+    def list_ip_destination_groups(
+        self, exclude_type: str = None, query_params: Optional[dict] = None
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Returns a list of IP Destination Groups.
 
@@ -289,12 +291,7 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_destination_group(
-        self,
-        group_id: str,
-        query_params: Optional[dict] = None,
-        **kwargs
-    ) -> APIResult[dict]:
+    def update_ip_destination_group(self, group_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Updates the specified IP Destination Group.
 

@@ -73,7 +73,7 @@ class WorkloadGroups(ZscalerObject):
             "expression": self.expression,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
-            "expressionJson": self.expression_json
+            "expressionJson": self.expression_json,
         }
 
 
@@ -106,7 +106,7 @@ class ExpressionJson(ZscalerObject):
         current_obj_format = {
             "tagType": self.tag_type,
             "operator": self.operator,
-            "expressionContainers": self.expression_containers
+            "expressionContainers": self.expression_containers,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -143,11 +143,7 @@ class ExpressionContainers(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "tagType": self.tag_type,
-            "operator": self.operator,
-            "tagContainer": self.tag_container
-        }
+        current_obj_format = {"tagType": self.tag_type, "operator": self.operator, "tagContainer": self.tag_container}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -161,9 +157,7 @@ class TagContainer(ZscalerObject):
         super().__init__(config)
         if config:
             self.operator = config["operator"] if "operator" in config else None
-            self.tags = ZscalerCollection.form_list(
-                config["tags"] if "tags" in config else [], Tags
-            )
+            self.tags = ZscalerCollection.form_list(config["tags"] if "tags" in config else [], Tags)
 
         else:
             self.operator = None

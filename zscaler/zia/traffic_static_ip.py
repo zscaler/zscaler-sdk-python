@@ -1,4 +1,5 @@
 import json
+
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -359,11 +360,11 @@ class TrafficStaticIPAPI(APIClient):
 
         try:
             # Ensure we have a valid response object with status_code attribute
-            if not hasattr(raw_response, 'status_code'):
+            if not hasattr(raw_response, "status_code"):
                 return (False, raw_response, error if error else "Invalid response object")
 
             status_code = raw_response.status_code
-            body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
+            body_text = raw_response.text.strip() if hasattr(raw_response, "text") else ""
 
             # HTTP 200 with "SUCCESS" = IP is valid (not in system)
             # Important: Ignore any error that might have been set for non-JSON responses

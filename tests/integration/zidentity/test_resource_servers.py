@@ -40,7 +40,7 @@ class TestResourceServers:
             resource_response, _, err = client.zidentity.resource_servers.list_resource_servers()  # Correctly unpack the tuple
             assert err is None, f"Error listing resource servers: {err}"
             assert resource_response is not None, "Expected a resource servers response object"
-            assert hasattr(resource_response, 'records'), "Expected resource_response to have records field"
+            assert hasattr(resource_response, "records"), "Expected resource_response to have records field"
             if resource_response.records:  # If there are any resource servers, proceed with further operations
                 first_resource = resource_response.records[0]
                 resource_id = first_resource.id  # Access the 'id' attribute using dot notation
@@ -54,7 +54,9 @@ class TestResourceServers:
                 fetched_resource, _, err = client.zidentity.resource_servers.get_resource_server(resource_id)
                 assert err is None, f"Error fetching Resource Server by ID: {err}"
                 assert fetched_resource is not None, "Expected a valid Resource Server object"
-                assert fetched_resource.id == resource_id, "Mismatch in Resource Server ID"  # Use dot notation for object access
+                assert (
+                    fetched_resource.id == resource_id
+                ), "Mismatch in Resource Server ID"  # Use dot notation for object access
             except Exception as exc:
                 errors.append(f"Fetching Resource Server by ID failed: {str(exc)}")
 

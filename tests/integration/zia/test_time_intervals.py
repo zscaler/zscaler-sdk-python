@@ -48,11 +48,15 @@ class TestTimeIntervals:
                 created_interval, response, err = client.zia.time_intervals.add_time_intervals(
                     name="TestInterval_VCR",
                     start_time=480,  # 8:00 AM in minutes
-                    end_time=1020,   # 5:00 PM in minutes
+                    end_time=1020,  # 5:00 PM in minutes
                     days_of_week=["MON", "TUE", "WED", "THU", "FRI"],
                 )
                 if err is None and created_interval is not None:
-                    interval_id = created_interval.get("id") if isinstance(created_interval, dict) else getattr(created_interval, "id", None)
+                    interval_id = (
+                        created_interval.get("id")
+                        if isinstance(created_interval, dict)
+                        else getattr(created_interval, "id", None)
+                    )
 
                     # Test get_time_intervals
                     if interval_id:
@@ -66,7 +70,7 @@ class TestTimeIntervals:
                                 interval_id=interval_id,
                                 name="TestInterval_VCR_Updated",
                                 start_time=540,  # 9:00 AM
-                                end_time=1080,   # 6:00 PM
+                                end_time=1080,  # 6:00 PM
                                 days_of_week=["MON", "TUE", "WED", "THU", "FRI"],
                             )
                             # Update may fail - that's ok

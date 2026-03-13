@@ -1,69 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 01:30:06 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -77,29 +13,37 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/extranet
+    uri: https://easm.test.zscaler.com/zia/api/v1/extranet
   response:
     body:
-      string: '[{"id":22417761,"name":"NewExtranet 1002","description":"NewExtranet
-        1031 test","extranetDNSList":[{"id":1324194,"name":"NewExtranet 5816","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324195,"name":"NewExtranet
-        4356","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337248,"modifiedAt":1757089560},{"id":22417757,"name":"NewExtranet
-        1930","description":"NewExtranet 8220","extranetDNSList":[{"id":1324190,"name":"NewExtranet
-        5624","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324191,"name":"NewExtranet
-        9589","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746336338,"modifiedAt":1746336338},{"id":22417759,"name":"NewExtranet
-        2669","description":"NewExtranet 7753","extranetDNSList":[{"id":1324192,"name":"NewExtranet
-        6305","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324193,"name":"NewExtranet
-        2846","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337055,"modifiedAt":1746337055},{"id":22417763,"name":"NewExtranet
-        2807","description":"NewExtranet 4904","extranetDNSList":[{"id":1324196,"name":"NewExtranet
-        8289","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324197,"name":"NewExtranet
-        5123","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337570,"modifiedAt":1746337570},{"id":22417755,"name":"NewExtranet
-        7276","description":"NewExtranet 7319","extranetDNSList":[{"id":1324188,"name":"NewExtranet
-        5532","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324189,"name":"NewExtranet
-        4667","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746335621,"modifiedAt":1746335621},{"id":22394092,"name":"NewExtranet
-        8432","description":"NewExtranet 1153","extranetDNSList":[{"id":1322259,"name":"NewExtranet
-        5127","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1322260,"name":"NewExtranet
-        5141","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1745870026,"modifiedAt":1745870027}]'
+      string: '[{"id":165182492,"name":"20260209083516_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4094980,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4094981,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770654921,"modifiedAt":1770654921},{"id":165183656,"name":"20260209084412_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4094999,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095000,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770655463,"modifiedAt":1770655464},{"id":165183949,"name":"20260209084625_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095001,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095002,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770655588,"modifiedAt":1770655589},{"id":165186543,"name":"20260209090523_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095123,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095124,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770656729,"modifiedAt":1770656730},{"id":165186691,"name":"20260209090645_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095125,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095126,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770656811,"modifiedAt":1770656812},{"id":165186827,"name":"20260209090751_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095128,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095129,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770656875,"modifiedAt":1770656876},{"id":165187377,"name":"20260209091131_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095172,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095173,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770657096,"modifiedAt":1770657096},{"id":165188459,"name":"20260209091945_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095188,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095189,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770657589,"modifiedAt":1770657589},{"id":165190060,"name":"20260209093306_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095228,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095229,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770658388,"modifiedAt":1770658389},{"id":165190560,"name":"20260209093811_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095253,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095254,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770658693,"modifiedAt":1770658693},{"id":165215754,"name":"20260209144142_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4095892,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4095893,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770676904,"modifiedAt":1770676905},{"id":165917904,"name":"20260217124116_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4139970,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4139971,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771360877,"modifiedAt":1771360878},{"id":165921549,"name":"20260217131936_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4140011,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4140012,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771363177,"modifiedAt":1771363177},{"id":165928527,"name":"20260217152951_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4140325,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4140326,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771370993,"modifiedAt":1771370993},{"id":165928582,"name":"20260217153030_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4140327,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4140328,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771371033,"modifiedAt":1771371034},{"id":165928784,"name":"20260217153344_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4140331,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4140332,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771371225,"modifiedAt":1771371226},{"id":166008039,"name":"20260218092734_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4144722,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4144723,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771435655,"modifiedAt":1771435656},{"id":166080023,"name":"20260219040636_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4150945,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4150946,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771502797,"modifiedAt":1771502797},{"id":166108471,"name":"20260219090619_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4151978,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4151979,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771520781,"modifiedAt":1771520781},{"id":166139763,"name":"20260219165600_created","description":"Automation
+        Create Extranet More","extranetDNSList":[{"id":4155324,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4155325,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771548961,"modifiedAt":1771549079},{"id":166213870,"name":"20260220103947_created","description":"20260220103947_updated","extranetDNSList":[{"id":4160179,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4160180,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771612789,"modifiedAt":1771612791},{"id":166230501,"name":"20260220165926_created","description":"20260220165926_updated","extranetDNSList":[{"id":4160761,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4160762,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1771635568,"modifiedAt":1771635570},{"id":166880695,"name":"20260227185537_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4233832,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4233833,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1772247338,"modifiedAt":1772247339},{"id":167068811,"name":"20260302105830_created","description":"20260302105830_updated","extranetDNSList":[{"id":4264444,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4264445,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1772477913,"modifiedAt":1772477915},{"id":167533916,"name":"20260306163507_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4300328,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4300329,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1772843709,"modifiedAt":1772843709},{"id":167682531,"name":"20260309084514_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4318052,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4318053,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1773071120,"modifiedAt":1773071122},{"id":167688033,"name":"20260309092641_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4318202,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4318203,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1773073605,"modifiedAt":1773073621},{"id":165104835,"name":"test_KDFV0unbx0","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4092074,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4092075,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770602520,"modifiedAt":1770602520}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -121,110 +65,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 01:30:08 GMT
+      - Fri, 13 Mar 2026 03:24:37 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1577'
+      - '272'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f42de55f-abb3-9330-8f44-60b6fd612893
+      - 86fa8b1d-50bf-9b3e-94ed-d80bcf2a5a06
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4992'
       x-ratelimit-reset:
-      - '53'
+      - '23'
       x-transaction-id:
-      - 38c8207b-f2e7-4100-a779-124b7cb8369f
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/extranet/22417761
-  response:
-    body:
-      string: '{"id":22417761,"name":"NewExtranet 1002","description":"NewExtranet
-        1031 test","extranetDNSList":[{"id":1324194,"name":"NewExtranet 5816","primaryDNSServer":"8.8.8.8","secondaryDNSServer":"4.4.2.2","useAsDefault":true}],"extranetIpPoolList":[{"id":1324195,"name":"NewExtranet
-        4356","ipStart":"192.168.200.1","ipEnd":"192.168.200.21","useAsDefault":true}],"createdAt":1746337248,"modifiedAt":1757089560}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 01:30:08 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '196'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 7ed7fb44-68cc-948f-aab4-caf208305b6f
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4998'
-      x-ratelimit-reset:
-      - '52'
-      x-transaction-id:
-      - 38c8207b-f2e7-4100-a779-124b7cb8369f
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -247,9 +116,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/extranet
+    uri: https://easm.test.zscaler.com/zia/api/v1/extranet
   response:
     body:
       string: '{"message":"Request body is invalid."}'
@@ -274,7 +143,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:38:21 GMT
+      - Fri, 13 Mar 2026 03:24:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -282,23 +151,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '149'
+      - '128'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 47d58495-5f1d-9efa-a7d9-1013df8e5f68
+      - 53c6984a-0904-9c8f-aabe-9e1e0b3d23a8
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4991'
       x-ratelimit-reset:
-      - '39'
+      - '23'
       x-transaction-id:
-      - e83b5cf0-8615-46bf-bcdc-9038e0597b42
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -306,4 +175,82 @@ interactions:
     status:
       code: 400
       message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/extranet/165182492
+  response:
+    body:
+      string: '{"id":165182492,"name":"20260209083516_created","description":"Automation
+        Create Extranet","extranetDNSList":[{"id":4094980,"name":"65gk-DNS","primaryDNSServer":"8.8.8.88","secondaryDNSServer":"8.8.8.123","useAsDefault":true}],"extranetIpPoolList":[{"id":4094981,"name":"47dj-TP","ipStart":"9.9.9.89","ipEnd":"9.9.9.121","useAsDefault":true}],"createdAt":1770654921,"modifiedAt":1770654921}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:24:38 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '323'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 29ab0de3-dba2-98ea-b266-6b363cc8b7bf
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '22'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
 version: 1

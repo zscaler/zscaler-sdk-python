@@ -55,7 +55,11 @@ class TestRiskProfiles:
                     risk_index_bucket="LOW",
                 )
                 if err is None and created_profile is not None:
-                    profile_id = created_profile.get("id") if isinstance(created_profile, dict) else getattr(created_profile, "id", None)
+                    profile_id = (
+                        created_profile.get("id")
+                        if isinstance(created_profile, dict)
+                        else getattr(created_profile, "id", None)
+                    )
 
                     # Test get_risk_profile
                     if profile_id:

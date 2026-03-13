@@ -34,9 +34,7 @@ class TestSaasSecurity:
         start_time, end_time = get_time_range(7)
 
         entries, response, err = client.zinsights.saas_security.get_casb_app_report(
-            start_time=start_time,
-            end_time=end_time,
-            limit=10
+            start_time=start_time, end_time=end_time, limit=10
         )
 
         # Verify SDK handles response correctly

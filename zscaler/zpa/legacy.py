@@ -288,11 +288,13 @@ class LegacyZPAClientHelper:
                     # ZPA returns non-standard format with 's' suffix (e.g., '8s' instead of '8')
                     # Strip the 's' suffix before converting to int
                     if retry_after:
-                        sleep_time = int(retry_after.rstrip('sS'))
+                        sleep_time = int(retry_after.rstrip("sS"))
                     else:
                         sleep_time = 2
-                    logger.warning(f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
-                                   f"(Attempt {attempts + 1}/{max_retries})")
+                    logger.warning(
+                        f"Rate limit exceeded (429). Retrying in {sleep_time} seconds. "
+                        f"(Attempt {attempts + 1}/{max_retries})"
+                    )
                     sleep(sleep_time)
                     attempts += 1
                     continue
@@ -301,8 +303,9 @@ class LegacyZPAClientHelper:
                 if err:
                     raise err
 
-                logger.info("Legacy client request executed successfully. "
-                            "Status: %d, URL: %s", response.status_code, base_url)
+                logger.info(
+                    "Legacy client request executed successfully. " "Status: %d, URL: %s", response.status_code, base_url
+                )
 
                 return response, {
                     "method": method,

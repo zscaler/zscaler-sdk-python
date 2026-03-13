@@ -33,12 +33,9 @@ class CommonIDNameDisplayName(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.display_name = config["displayName"] \
-                if "displayName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.display_name = config["displayName"] if "displayName" in config else None
         else:
             self.id = None
             self.name = None
@@ -73,10 +70,8 @@ class CommonIDName(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
         else:
             self.id = None
             self.name = None

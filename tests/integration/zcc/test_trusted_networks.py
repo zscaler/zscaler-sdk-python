@@ -39,11 +39,11 @@ class TestTrustedNetworks:
             networks, response, err = client.zcc.trusted_networks.list_by_company()
             assert err is None, f"Error listing trusted networks: {err}"
             assert isinstance(networks, list), "Expected a list of trusted networks"
-            
+
             # Verify response structure if we have networks
             if networks:
                 network = networks[0]
-                assert hasattr(network, 'as_dict'), "Trusted network should have as_dict method"
+                assert hasattr(network, "as_dict"), "Trusted network should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing trusted networks failed: {exc}")
 
@@ -56,9 +56,7 @@ class TestTrustedNetworks:
         errors = []
 
         try:
-            networks, response, err = client.zcc.trusted_networks.list_by_company(
-                query_params={"page": 1, "page_size": 10}
-            )
+            networks, response, err = client.zcc.trusted_networks.list_by_company(query_params={"page": 1, "page_size": 10})
             assert err is None, f"Error listing trusted networks with pagination: {err}"
             assert isinstance(networks, list), "Expected a list of trusted networks"
         except Exception as exc:
@@ -73,9 +71,7 @@ class TestTrustedNetworks:
         errors = []
 
         try:
-            networks, response, err = client.zcc.trusted_networks.list_by_company(
-                query_params={"search": "test"}
-            )
+            networks, response, err = client.zcc.trusted_networks.list_by_company(query_params={"search": "test"})
             assert err is None, f"Error listing trusted networks with search: {err}"
             assert isinstance(networks, list), "Expected a list of trusted networks"
         except Exception as exc:
@@ -99,11 +95,11 @@ class TestTrustedNetworks:
                 dns_servers="10.10.10.10, 10.10.10.11",
                 dns_search_domains="test.example.com",
             )
-            
+
             if err is None and created_network:
-                assert hasattr(created_network, 'as_dict'), "Created network should have as_dict method"
-                created_network_id = created_network.id if hasattr(created_network, 'id') else None
-                
+                assert hasattr(created_network, "as_dict"), "Created network should have as_dict method"
+                created_network_id = created_network.id if hasattr(created_network, "id") else None
+
                 # Update the trusted network
                 if created_network_id:
                     updated_network, response, err = client.zcc.trusted_networks.update_trusted_network(
@@ -113,9 +109,9 @@ class TestTrustedNetworks:
                         dns_servers="10.10.10.10",
                         dns_search_domains="updated.example.com",
                     )
-                    
+
                     if err is None and updated_network:
-                        assert hasattr(updated_network, 'as_dict'), "Updated network should have as_dict method"
+                        assert hasattr(updated_network, "as_dict"), "Updated network should have as_dict method"
         except Exception as exc:
             errors.append(f"Trusted network CRUD operations failed: {exc}")
         finally:
@@ -127,4 +123,3 @@ class TestTrustedNetworks:
                     pass
 
         assert len(errors) == 0, f"Errors occurred during the trusted networks CRUD test:\n{chr(10).join(errors)}"
-

@@ -76,7 +76,7 @@ def main():
         # Legacy client configuration
         ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
         ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
-        
+
         if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
             print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
             return
@@ -85,27 +85,27 @@ def main():
             "key_id": ZDX_CLIENT_ID,
             "key_secret": ZDX_CLIENT_SECRET,
         }
-        
+
         client = LegacyZDXClient(config)
     else:
         # OneAPI client configuration
         ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
         ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
         ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
-        
+
         if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
             print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
             return
 
         config = {
-            'clientId': ZSCALER_CLIENT_ID,
-            'clientSecret': ZSCALER_CLIENT_SECRET,
+            "clientId": ZSCALER_CLIENT_ID,
+            "clientSecret": ZSCALER_CLIENT_SECRET,
         }
-        
+
         # Add vanity domain if provided
         if ZSCALER_VANITY_DOMAIN:
-            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
-        
+            config["vanityDomain"] = ZSCALER_VANITY_DOMAIN
+
         client = ZscalerClient(config)
 
     # Prompt the user for device ID and trace ID
@@ -118,12 +118,12 @@ def main():
         if err:
             print(f"Error retrieving deeptrace top processes: {err}")
             return
-        
-        if hasattr(top_processes, 'as_dict'):
+
+        if hasattr(top_processes, "as_dict"):
             top_processes_dict = top_processes.as_dict()
         else:
             top_processes_dict = top_processes
-        
+
         headers = ["Category", "Unit", "Process Name", "Process ID"]
         data = extract_top_processes_data(top_processes_dict)
         display_table(data, headers)

@@ -34,84 +34,51 @@ class PrivateCloudController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.application_start_time = config["applicationStartTime"] \
-                if "applicationStartTime" in config else None
-            self.control_channel_status = config["controlChannelStatus"] \
-                if "controlChannelStatus" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.ctrl_broker_name = config["ctrlBrokerName"] \
-                if "ctrlBrokerName" in config else None
-            self.current_version = config["currentVersion"] \
-                if "currentVersion" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.expected_sarge_version = config["expectedSargeVersion"] \
-                if "expectedSargeVersion" in config else None
-            self.expected_upgrade_time = config["expectedUpgradeTime"] \
-                if "expectedUpgradeTime" in config else None
-            self.expected_version = config["expectedVersion"] \
-                if "expectedVersion" in config else None
-            self.fingerprint = config["fingerprint"] \
-                if "fingerprint" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.issued_cert_id = config["issuedCertId"] \
-                if "issuedCertId" in config else None
-            self.last_broker_connect_time = config["lastBrokerConnectTime"] \
-                if "lastBrokerConnectTime" in config else None
-            self.last_broker_connect_time_duration = config["lastBrokerConnectTimeDuration"] \
-                if "lastBrokerConnectTimeDuration" in config else None
-            self.last_broker_disconnect_time = config["lastBrokerDisconnectTime"] \
-                if "lastBrokerDisconnectTime" in config else None
-            self.last_broker_disconnect_time_duration = config["lastBrokerDisconnectTimeDuration"] \
-                if "lastBrokerDisconnectTimeDuration" in config else None
-            self.last_o_s_upgrade_time = config["lastOSUpgradeTime"] \
-                if "lastOSUpgradeTime" in config else None
-            self.last_sarge_upgrade_time = config["lastSargeUpgradeTime"] \
-                if "lastSargeUpgradeTime" in config else None
-            self.last_upgrade_time = config["lastUpgradeTime"] \
-                if "lastUpgradeTime" in config else None
-            self.latitude = config["latitude"] \
-                if "latitude" in config else None
-            self.location = config["location"] \
-                if "location" in config else None
-            self.longitude = config["longitude"] \
-                if "longitude" in config else None
-            self.master_last_sync_time = config["masterLastSyncTime"] \
-                if "masterLastSyncTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.provisioning_key_id = config["provisioningKeyId"] \
-                if "provisioningKeyId" in config else None
-            self.provisioning_key_name = config["provisioningKeyName"] \
-                if "provisioningKeyName" in config else None
-            self.os_upgrade_enabled = config["osUpgradeEnabled"] \
-                if "osUpgradeEnabled" in config else None
-            self.os_upgrade_status = config["osUpgradeStatus"] \
-                if "osUpgradeStatus" in config else None
-            self.platform = config["platform"] \
-                if "platform" in config else None
-            self.platform_detail = config["platformDetail"] \
-                if "platformDetail" in config else None
-            self.platform_version = config["platformVersion"] \
-                if "platformVersion" in config else None
-            self.previous_version = config["previousVersion"] \
-                if "previousVersion" in config else None
-            self.private_ip = config["privateIp"] \
-                if "privateIp" in config else None
-            self.public_ip = config["publicIp"] \
-                if "publicIp" in config else None
-            self.read_only = config["readOnly"] \
-                if "readOnly" in config else None
-            self.restriction_type = config["restrictionType"] \
-                if "restrictionType" in config else None
+            self.application_start_time = config["applicationStartTime"] if "applicationStartTime" in config else None
+            self.control_channel_status = config["controlChannelStatus"] if "controlChannelStatus" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.ctrl_broker_name = config["ctrlBrokerName"] if "ctrlBrokerName" in config else None
+            self.current_version = config["currentVersion"] if "currentVersion" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.expected_sarge_version = config["expectedSargeVersion"] if "expectedSargeVersion" in config else None
+            self.expected_upgrade_time = config["expectedUpgradeTime"] if "expectedUpgradeTime" in config else None
+            self.expected_version = config["expectedVersion"] if "expectedVersion" in config else None
+            self.fingerprint = config["fingerprint"] if "fingerprint" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.issued_cert_id = config["issuedCertId"] if "issuedCertId" in config else None
+            self.last_broker_connect_time = config["lastBrokerConnectTime"] if "lastBrokerConnectTime" in config else None
+            self.last_broker_connect_time_duration = (
+                config["lastBrokerConnectTimeDuration"] if "lastBrokerConnectTimeDuration" in config else None
+            )
+            self.last_broker_disconnect_time = (
+                config["lastBrokerDisconnectTime"] if "lastBrokerDisconnectTime" in config else None
+            )
+            self.last_broker_disconnect_time_duration = (
+                config["lastBrokerDisconnectTimeDuration"] if "lastBrokerDisconnectTimeDuration" in config else None
+            )
+            self.last_o_s_upgrade_time = config["lastOSUpgradeTime"] if "lastOSUpgradeTime" in config else None
+            self.last_sarge_upgrade_time = config["lastSargeUpgradeTime"] if "lastSargeUpgradeTime" in config else None
+            self.last_upgrade_time = config["lastUpgradeTime"] if "lastUpgradeTime" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.location = config["location"] if "location" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.master_last_sync_time = config["masterLastSyncTime"] if "masterLastSyncTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.provisioning_key_id = config["provisioningKeyId"] if "provisioningKeyId" in config else None
+            self.provisioning_key_name = config["provisioningKeyName"] if "provisioningKeyName" in config else None
+            self.os_upgrade_enabled = config["osUpgradeEnabled"] if "osUpgradeEnabled" in config else None
+            self.os_upgrade_status = config["osUpgradeStatus"] if "osUpgradeStatus" in config else None
+            self.platform = config["platform"] if "platform" in config else None
+            self.platform_detail = config["platformDetail"] if "platformDetail" in config else None
+            self.platform_version = config["platformVersion"] if "platformVersion" in config else None
+            self.previous_version = config["previousVersion"] if "previousVersion" in config else None
+            self.private_ip = config["privateIp"] if "privateIp" in config else None
+            self.public_ip = config["publicIp"] if "publicIp" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
 
             self.runtime_os = (
                 config.get("runtime_os")  # ← used by the converted keys
@@ -119,51 +86,36 @@ class PrivateCloudController(ZscalerObject):
                 or config.get("runtimeOS")  # ← raw from the API
                 or False  # ← fallback
             )
-            self.sarge_upgrade_attempt = config["sargeUpgradeAttempt"] \
-                if "sargeUpgradeAttempt" in config else None
-            self.sarge_upgrade_status = config["sargeUpgradeStatus"] \
-                if "sargeUpgradeStatus" in config else None
-            self.sarge_version = config["sargeVersion"] \
-                if "sargeVersion" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.shard_last_sync_time = config["shardLastSyncTime"] \
-                if "shardLastSyncTime" in config else None
-            self.enrollment_cert = config["enrollmentCert"] \
-                if "enrollmentCert" in config else None
-            self.private_cloud_controller_group_id = config["privateCloudControllerGroupId"] \
-                if "privateCloudControllerGroupId" in config else None
-            self.private_cloud_controller_group_name = config["privateCloudControllerGroupName"] \
-                if "privateCloudControllerGroupName" in config else None
-            self.site_sp_dns_name = config["siteSpDnsName"] \
-                if "siteSpDnsName" in config else None
-            self.upgrade_attempt = config["upgradeAttempt"] \
-                if "upgradeAttempt" in config else None
-            self.upgrade_status = config["upgradeStatus"] \
-                if "upgradeStatus" in config else None
-            self.userdb_last_sync_time = config["userdbLastSyncTime"] \
-                if "userdbLastSyncTime" in config else None
-            self.zscaler_managed = config["zscalerManaged"] \
-                if "zscalerManaged" in config else None
+            self.sarge_upgrade_attempt = config["sargeUpgradeAttempt"] if "sargeUpgradeAttempt" in config else None
+            self.sarge_upgrade_status = config["sargeUpgradeStatus"] if "sargeUpgradeStatus" in config else None
+            self.sarge_version = config["sargeVersion"] if "sargeVersion" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.shard_last_sync_time = config["shardLastSyncTime"] if "shardLastSyncTime" in config else None
+            self.enrollment_cert = config["enrollmentCert"] if "enrollmentCert" in config else None
+            self.private_cloud_controller_group_id = (
+                config["privateCloudControllerGroupId"] if "privateCloudControllerGroupId" in config else None
+            )
+            self.private_cloud_controller_group_name = (
+                config["privateCloudControllerGroupName"] if "privateCloudControllerGroupName" in config else None
+            )
+            self.site_sp_dns_name = config["siteSpDnsName"] if "siteSpDnsName" in config else None
+            self.upgrade_attempt = config["upgradeAttempt"] if "upgradeAttempt" in config else None
+            self.upgrade_status = config["upgradeStatus"] if "upgradeStatus" in config else None
+            self.userdb_last_sync_time = config["userdbLastSyncTime"] if "userdbLastSyncTime" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
-            self.ip_acl = ZscalerCollection.form_list(
-                config["ipAcl"] if "ipAcl" in config else [], str
-            )
-            self.listen_ips = ZscalerCollection.form_list(
-                config["listenIps"] if "listenIps" in config else [], str
-            )
-            self.publish_ips = ZscalerCollection.form_list(
-                config["publishIps"] if "publishIps" in config else [], str
-            )
+            self.ip_acl = ZscalerCollection.form_list(config["ipAcl"] if "ipAcl" in config else [], str)
+            self.listen_ips = ZscalerCollection.form_list(config["listenIps"] if "listenIps" in config else [], str)
+            self.publish_ips = ZscalerCollection.form_list(config["publishIps"] if "publishIps" in config else [], str)
 
             if "privateCloudControllerVersion" in config:
                 if isinstance(config["privateCloudControllerVersion"], PrivateCloudcontrollerVersion):
                     self.private_cloud_controller_version = config["privateCloudControllerVersion"]
                 elif config["privateCloudControllerVersion"] is not None:
                     self.private_cloud_controller_version = PrivateCloudcontrollerVersion(
-                        config["privateCloudControllerVersion"])
+                        config["privateCloudControllerVersion"]
+                    )
                 else:
                     self.private_cloud_controller_version = None
             else:
@@ -298,7 +250,7 @@ class PrivateCloudController(ZscalerObject):
             "upgradeStatus": self.upgrade_status,
             "userdbLastSyncTime": self.userdb_last_sync_time,
             "zpnSubModuleUpgradeList": self.zpn_sub_module_upgrade_list,
-            "zscalerManaged": self.zscaler_managed
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -319,30 +271,18 @@ class ZPNSubmoduleUpgradeList(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.current_version = config["currentVersion"] \
-                if "currentVersion" in config else None
-            self.entity_gid = config["entityGid"] \
-                if "entityGid" in config else None
-            self.entity_type = config["entityType"] \
-                if "entityType" in config else None
-            self.expected_version = config["expectedVersion"] \
-                if "expectedVersion" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.previous_version = config["previousVersion"] \
-                if "previousVersion" in config else None
-            self.role = config["role"] \
-                if "role" in config else None
-            self.upgrade_status = config["upgradeStatus"] \
-                if "upgradeStatus" in config else None
-            self.upgrade_time = config["upgradeTime"] \
-                if "upgradeTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.current_version = config["currentVersion"] if "currentVersion" in config else None
+            self.entity_gid = config["entityGid"] if "entityGid" in config else None
+            self.entity_type = config["entityType"] if "entityType" in config else None
+            self.expected_version = config["expectedVersion"] if "expectedVersion" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.previous_version = config["previousVersion"] if "previousVersion" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.upgrade_status = config["upgradeStatus"] if "upgradeStatus" in config else None
+            self.upgrade_time = config["upgradeTime"] if "upgradeTime" in config else None
         else:
             self.creation_time = None
             self.current_version = None
@@ -374,7 +314,7 @@ class ZPNSubmoduleUpgradeList(ZscalerObject):
             "previousVersion": self.previous_version,
             "role": self.role,
             "upgradeStatus": self.upgrade_status,
-            "upgradeTime": self.upgrade_time
+            "upgradeTime": self.upgrade_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -395,90 +335,53 @@ class PrivateCloudcontrollerVersion(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.application_start_time = config["applicationStartTime"] \
-                if "applicationStartTime" in config else None
-            self.broker_id = config["brokerId"] \
-                if "brokerId" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.ctrl_channel_status = config["ctrlChannelStatus"] \
-                if "ctrlChannelStatus" in config else None
-            self.current_version = config["currentVersion"] \
-                if "currentVersion" in config else None
-            self.disable_auto_update = config["disableAutoUpdate"] \
-                if "disableAutoUpdate" in config else None
-            self.expected_sarge_version = config["expectedSargeVersion"] \
-                if "expectedSargeVersion" in config else None
-            self.expected_version = config["expectedVersion"] \
-                if "expectedVersion" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.last_connect_time = config["lastConnectTime"] \
-                if "lastConnectTime" in config else None
-            self.last_disconnect_time = config["lastDisconnectTime"] \
-                if "lastDisconnectTime" in config else None
-            self.last_o_s_upgrade_time = config["lastOSUpgradeTime"] \
-                if "lastOSUpgradeTime" in config else None
-            self.last_sarge_upgrade_time = config["lastSargeUpgradeTime"] \
-                if "lastSargeUpgradeTime" in config else None
-            self.last_upgraded_time = config["lastUpgradedTime"] \
-                if "lastUpgradedTime" in config else None
-            self.lone_warrior = config["loneWarrior"] \
-                if "loneWarrior" in config else None
-            self.master_last_sync_time = config["masterLastSyncTime"] \
-                if "masterLastSyncTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.os_upgrade_enabled = config["osUpgradeEnabled"] \
-                if "osUpgradeEnabled" in config else None
-            self.os_upgrade_status = config["osUpgradeStatus"] \
-                if "osUpgradeStatus" in config else None
-            self.platform = config["platform"] \
-                if "platform" in config else None
-            self.platform_detail = config["platformDetail"] \
-                if "platformDetail" in config else None
-            self.platform_version = config["platformVersion"] \
-                if "platformVersion" in config else None
-            self.previous_version = config["previousVersion"] \
-                if "previousVersion" in config else None
-            self.private_ip = config["privateIp"] \
-                if "privateIp" in config else None
-            self.public_ip = config["publicIp"] \
-                if "publicIp" in config else None
-            self.restart_instructions = config["restartInstructions"] \
-                if "restartInstructions" in config else None
-            self.restart_time_in_sec = config["restartTimeInSec"] \
-                if "restartTimeInSec" in config else None
+            self.application_start_time = config["applicationStartTime"] if "applicationStartTime" in config else None
+            self.broker_id = config["brokerId"] if "brokerId" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.ctrl_channel_status = config["ctrlChannelStatus"] if "ctrlChannelStatus" in config else None
+            self.current_version = config["currentVersion"] if "currentVersion" in config else None
+            self.disable_auto_update = config["disableAutoUpdate"] if "disableAutoUpdate" in config else None
+            self.expected_sarge_version = config["expectedSargeVersion"] if "expectedSargeVersion" in config else None
+            self.expected_version = config["expectedVersion"] if "expectedVersion" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.last_connect_time = config["lastConnectTime"] if "lastConnectTime" in config else None
+            self.last_disconnect_time = config["lastDisconnectTime"] if "lastDisconnectTime" in config else None
+            self.last_o_s_upgrade_time = config["lastOSUpgradeTime"] if "lastOSUpgradeTime" in config else None
+            self.last_sarge_upgrade_time = config["lastSargeUpgradeTime"] if "lastSargeUpgradeTime" in config else None
+            self.last_upgraded_time = config["lastUpgradedTime"] if "lastUpgradedTime" in config else None
+            self.lone_warrior = config["loneWarrior"] if "loneWarrior" in config else None
+            self.master_last_sync_time = config["masterLastSyncTime"] if "masterLastSyncTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.os_upgrade_enabled = config["osUpgradeEnabled"] if "osUpgradeEnabled" in config else None
+            self.os_upgrade_status = config["osUpgradeStatus"] if "osUpgradeStatus" in config else None
+            self.platform = config["platform"] if "platform" in config else None
+            self.platform_detail = config["platformDetail"] if "platformDetail" in config else None
+            self.platform_version = config["platformVersion"] if "platformVersion" in config else None
+            self.previous_version = config["previousVersion"] if "previousVersion" in config else None
+            self.private_ip = config["privateIp"] if "privateIp" in config else None
+            self.public_ip = config["publicIp"] if "publicIp" in config else None
+            self.restart_instructions = config["restartInstructions"] if "restartInstructions" in config else None
+            self.restart_time_in_sec = config["restartTimeInSec"] if "restartTimeInSec" in config else None
             self.runtime_os = (
                 config.get("runtime_os")  # ← used by the converted keys
                 or config.get("runtimeOs")  # ← if not snake_cased
                 or config.get("runtimeOS")  # ← raw from the API
                 or False  # ← fallback
             )
-            self.sarge_upgrade_attempt = config["sargeUpgradeAttempt"] \
-                if "sargeUpgradeAttempt" in config else None
-            self.sarge_upgrade_status = config["sargeUpgradeStatus"] \
-                if "sargeUpgradeStatus" in config else None
-            self.sarge_version = config["sargeVersion"] \
-                if "sargeVersion" in config else None
-            self.shard_last_sync_time = config["shardLastSyncTime"] \
-                if "shardLastSyncTime" in config else None
-            self.private_cloud_controller_group_id = config["privateCloudControllerGroupId"] \
-                if "privateCloudControllerGroupId" in config else None
-            self.system_start_time = config["systemStartTime"] \
-                if "systemStartTime" in config else None
-            self.tunnel_id = config["tunnelId"] \
-                if "tunnelId" in config else None
-            self.upgrade_attempt = config["upgradeAttempt"] \
-                if "upgradeAttempt" in config else None
-            self.upgrade_now_once = config["upgradeNowOnce"] \
-                if "upgradeNowOnce" in config else None
-            self.upgrade_status = config["upgradeStatus"] \
-                if "upgradeStatus" in config else None
-            self.userdb_last_sync_time = config["userdbLastSyncTime"] \
-                if "userdbLastSyncTime" in config else None
+            self.sarge_upgrade_attempt = config["sargeUpgradeAttempt"] if "sargeUpgradeAttempt" in config else None
+            self.sarge_upgrade_status = config["sargeUpgradeStatus"] if "sargeUpgradeStatus" in config else None
+            self.sarge_version = config["sargeVersion"] if "sargeVersion" in config else None
+            self.shard_last_sync_time = config["shardLastSyncTime"] if "shardLastSyncTime" in config else None
+            self.private_cloud_controller_group_id = (
+                config["privateCloudControllerGroupId"] if "privateCloudControllerGroupId" in config else None
+            )
+            self.system_start_time = config["systemStartTime"] if "systemStartTime" in config else None
+            self.tunnel_id = config["tunnelId"] if "tunnelId" in config else None
+            self.upgrade_attempt = config["upgradeAttempt"] if "upgradeAttempt" in config else None
+            self.upgrade_now_once = config["upgradeNowOnce"] if "upgradeNowOnce" in config else None
+            self.upgrade_status = config["upgradeStatus"] if "upgradeStatus" in config else None
+            self.userdb_last_sync_time = config["userdbLastSyncTime"] if "userdbLastSyncTime" in config else None
         else:
             self.application_start_time = None
             self.broker_id = None
@@ -566,7 +469,7 @@ class PrivateCloudcontrollerVersion(ZscalerObject):
             "upgradeAttempt": self.upgrade_attempt,
             "upgradeNowOnce": self.upgrade_now_once,
             "upgradeStatus": self.upgrade_status,
-            "userdbLastSyncTime": self.userdb_last_sync_time
+            "userdbLastSyncTime": self.userdb_last_sync_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -35,15 +35,10 @@ class Organizations(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.next_page: Optional[Any] = config["next_page"] \
-                if "next_page" in config else None
-            self.prev_page: Optional[Any] = config["prev_page"] \
-                if "prev_page" in config else None
-            self.results = ZscalerCollection.form_list(
-                config["results"] if "results" in config else [], common.CommonIDName
-            )
-            self.total_results: Optional[Any] = config["total_results"] \
-                if "total_results" in config else None
+            self.next_page: Optional[Any] = config["next_page"] if "next_page" in config else None
+            self.prev_page: Optional[Any] = config["prev_page"] if "prev_page" in config else None
+            self.results = ZscalerCollection.form_list(config["results"] if "results" in config else [], common.CommonIDName)
+            self.total_results: Optional[Any] = config["total_results"] if "total_results" in config else None
         else:
             self.next_page: Optional[Any] = None
             self.prev_page: Optional[Any] = None
@@ -59,7 +54,7 @@ class Organizations(ZscalerObject):
             "next_page": self.next_page,
             "prev_page": self.prev_page,
             "results": self.results,
-            "total_results": self.total_results
+            "total_results": self.total_results,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

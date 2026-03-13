@@ -33,11 +33,7 @@ class TestShadowIT:
         client = zinsights_client
         start_time, end_time = get_time_range(7)
 
-        entries, response, err = client.zinsights.shadow_it.get_apps(
-            start_time=start_time,
-            end_time=end_time,
-            limit=10
-        )
+        entries, response, err = client.zinsights.shadow_it.get_apps(start_time=start_time, end_time=end_time, limit=10)
 
         # Verify SDK handles response correctly
         assert response is not None or err is not None
@@ -48,10 +44,7 @@ class TestShadowIT:
         client = zinsights_client
         start_time, end_time = get_time_range(7)
 
-        summary, response, err = client.zinsights.shadow_it.get_shadow_it_summary(
-            start_time=start_time,
-            end_time=end_time
-        )
+        summary, response, err = client.zinsights.shadow_it.get_shadow_it_summary(start_time=start_time, end_time=end_time)
 
         # Verify SDK handles response correctly
         assert response is not None or err is not None

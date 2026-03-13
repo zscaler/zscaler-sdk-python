@@ -207,9 +207,7 @@ class FirewallResourcesAPI(APIClient):
         return (result, response, None)
 
     def list_ip_destination_groups_lite(
-        self,
-        exclude_type: str = None,
-        query_params: Optional[dict] = None
+        self, exclude_type: str = None, query_params: Optional[dict] = None
     ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
@@ -301,9 +299,7 @@ class FirewallResourcesAPI(APIClient):
         return (result, response, None)
 
     def list_ipv6_destination_groups_lite(
-        self,
-        exclude_type: str = None,
-        query_params: Optional[dict] = None
+        self, exclude_type: str = None, query_params: Optional[dict] = None
     ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
@@ -528,12 +524,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_destination_group(
-        self,
-        group_id: str,
-        query_params: Optional[dict] = None,
-        **kwargs
-    ) -> APIResult[dict]:
+    def update_ip_destination_group(self, group_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Updates the specified IP Destination Group.
 

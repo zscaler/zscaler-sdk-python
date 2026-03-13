@@ -1,0 +1,138 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import Dict, Optional, Any
+
+from zscaler.oneapi_object import ZscalerObject
+
+
+class RansomwareKillEmailTemplate(ZscalerObject):
+    """
+    A class for the ZTB Ransomware Kill email template.
+
+    Represents the email template configuration for ransomware kill
+    notifications. Used by GET/POST
+    ``/api/v3/ransomware-kill/email-template/{site_id}``.
+
+    Attributes:
+        cluster_token (str): Cluster token.
+        email_body (str): The body of the notification email.
+        recipients (str): Comma-separated list of recipient emails.
+        token (str): Authentication token.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            if "result" in config and isinstance(config["result"], dict):
+                config = config["result"]
+            self.cluster_token = config.get("cluster_token")
+            self.email_body = config.get("email_body")
+            self.recipients = config.get("recipients")
+            self.token = config.get("token")
+        else:
+            self.cluster_token = None
+            self.email_body = None
+            self.recipients = None
+            self.token = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cluster_token": self.cluster_token,
+            "email_body": self.email_body,
+            "recipients": self.recipients,
+            "token": self.token,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class RansomwareKillState(ZscalerObject):
+    """
+    A class for the ZTB Ransomware Kill state (success response).
+
+    Used by ``GET /api/v3/ransomware-kill/state/`` on 200 Success.
+
+    Attributes:
+        cluster_token (str): Cluster token.
+        result (str): Optional result field.
+        token (str): Authentication token.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            self.cluster_token = config.get("cluster_token")
+            self.result = config.get("result")
+            self.token = config.get("token")
+        else:
+            self.cluster_token = None
+            self.result = None
+            self.token = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cluster_token": self.cluster_token,
+            "result": self.result,
+            "token": self.token,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class RansomwareKillErrorPayload(ZscalerObject):
+    """
+    A class for the ZTB Ransomware Kill error/default response.
+
+    Used when ``GET /api/v3/ransomware-kill/state/`` returns an empty or
+    error payload (non-200 or default response).
+
+    Attributes:
+        detail (str): Error detail message.
+        error_code (int): Error code.
+        message (str): Error message.
+        request_key (str): Request key for tracing.
+        status_code (int): HTTP status code.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            self.detail = config.get("detail")
+            self.error_code = config.get("errorCode") or config.get("error_code")
+            self.message = config.get("message")
+            self.request_key = config.get("requestKey") or config.get("request_key")
+            self.status_code = config.get("statusCode") or config.get("status_code")
+        else:
+            self.detail = None
+            self.error_code = None
+            self.message = None
+            self.request_key = None
+            self.status_code = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "detail": self.detail,
+            "errorCode": self.error_code,
+            "message": self.message,
+            "requestKey": self.request_key,
+            "statusCode": self.status_code,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

@@ -33,30 +33,18 @@ class StepUpAuthLevel(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.delta = config["delta"] \
-                if "delta" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.iam_auth_level_id = config["iamAuthLevelId"] \
-                if "iamAuthLevelId" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.parent_iam_auth_level_id = config["parentIamAuthLevelId"] \
-                if "parentIamAuthLevelId" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
-            self.user_message = config["userMessage"] \
-                if "userMessage" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.delta = config["delta"] if "delta" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.iam_auth_level_id = config["iamAuthLevelId"] if "iamAuthLevelId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.parent_iam_auth_level_id = config["parentIamAuthLevelId"] if "parentIamAuthLevelId" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.user_message = config["userMessage"] if "userMessage" in config else None
         else:
             self.creation_time = None
             self.delta = None
@@ -88,7 +76,7 @@ class StepUpAuthLevel(ZscalerObject):
             "parentIamAuthLevelId": self.parent_iam_auth_level_id,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
-            "userMessage": self.user_message
+            "userMessage": self.user_message,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

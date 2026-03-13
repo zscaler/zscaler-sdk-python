@@ -76,16 +76,16 @@ def get_config():
         sys.exit(1)
 
     return {
-        'clientId': client_id,
-        'clientSecret': client_secret,
-        'vanityDomain': vanity_domain,
-        'cloud': cloud,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "vanityDomain": vanity_domain,
+        "cloud": cloud,
     }
 
 
 def get_time_range(days: int):
     """Get start and end time in epoch milliseconds.
-    
+
     Note: Z-Insights API requires end_time to be at least 1 day before current time.
     """
     # End time is 1 day ago (API requirement)
@@ -103,21 +103,9 @@ def print_header(title: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Query web traffic analytics from Z-Insights"
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=10,
-        help="Maximum number of entries to return (default: 10)"
-    )
-    parser.add_argument(
-        "--days",
-        type=int,
-        default=7,
-        help="Number of days to query (default: 7)"
-    )
+    parser = argparse.ArgumentParser(description="Query web traffic analytics from Z-Insights")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum number of entries to return (default: 10)")
+    parser.add_argument("--days", type=int, default=7, help="Number of days to query (default: 7)")
     args = parser.parse_args()
 
     config = get_config()
@@ -129,10 +117,7 @@ def main():
         # Query traffic by location
         print_header("Web Traffic by Location")
         entries, response, error = client.zinsights.web_traffic.get_traffic_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=args.limit
         )
 
         if error:
@@ -146,10 +131,7 @@ def main():
         # Query overall traffic (no grouping)
         print_header("Overall Web Traffic (No Grouping)")
         entries, response, error = client.zinsights.web_traffic.get_no_grouping(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=args.limit
         )
 
         if error:
@@ -163,10 +145,7 @@ def main():
         # Query protocols
         print_header("Web Traffic by Protocol")
         entries, response, error = client.zinsights.web_traffic.get_protocols(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=args.limit
         )
 
         if error:
@@ -180,10 +159,7 @@ def main():
         # Query threat super categories
         print_header("Web Traffic by Threat Super Category")
         entries, response, error = client.zinsights.web_traffic.get_threat_super_categories(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=args.limit
         )
 
         if error:
@@ -197,10 +173,7 @@ def main():
         # Query threat class
         print_header("Web Traffic by Threat Class")
         entries, response, error = client.zinsights.web_traffic.get_threat_class(
-            start_time=start_time,
-            end_time=end_time,
-            traffic_unit="TRANSACTIONS",
-            limit=args.limit
+            start_time=start_time, end_time=end_time, traffic_unit="TRANSACTIONS", limit=args.limit
         )
 
         if error:
