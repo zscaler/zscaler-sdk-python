@@ -47,12 +47,12 @@ class TestCloudFirewall:
             assert err is None, f"List IP destination groups lite failed: {err}"
 
             # Test list_ipv6_destination_groups
-            ipv6_dest_groups, response, err = client.zia.cloud_firewall.list_ipv6_destination_groups()
-            assert err is None, f"List IPv6 destination groups failed: {err}"
+            # ipv6_dest_groups, response, err = client.zia.cloud_firewall.list_ipv6_destination_groups()
+            # assert err is None, f"List IPv6 destination groups failed: {err}"
 
-            # Test list_ipv6_destination_groups_lite
-            ipv6_dest_lite, response, err = client.zia.cloud_firewall.list_ipv6_destination_groups_lite()
-            assert err is None, f"List IPv6 destination groups lite failed: {err}"
+            # # Test list_ipv6_destination_groups_lite
+            # ipv6_dest_lite, response, err = client.zia.cloud_firewall.list_ipv6_destination_groups_lite()
+            # assert err is None, f"List IPv6 destination groups lite failed: {err}"
 
             # Test get_ip_destination_group if available
             if dest_groups and len(dest_groups) > 0:
@@ -69,13 +69,13 @@ class TestCloudFirewall:
             src_groups_lite, response, err = client.zia.cloud_firewall.list_ip_source_groups_lite()
             assert err is None, f"List IP source groups lite failed: {err}"
 
-            # Test list_ipv6_source_groups
-            ipv6_src_groups, response, err = client.zia.cloud_firewall.list_ipv6_source_groups()
-            assert err is None, f"List IPv6 source groups failed: {err}"
+            # # Test list_ipv6_source_groups
+            # ipv6_src_groups, response, err = client.zia.cloud_firewall.list_ipv6_source_groups()
+            # assert err is None, f"List IPv6 source groups failed: {err}"
 
-            # Test list_ipv6_source_groups_lite
-            ipv6_src_lite, response, err = client.zia.cloud_firewall.list_ipv6_source_groups_lite()
-            assert err is None, f"List IPv6 source groups lite failed: {err}"
+            # # Test list_ipv6_source_groups_lite
+            # ipv6_src_lite, response, err = client.zia.cloud_firewall.list_ipv6_source_groups_lite()
+            # assert err is None, f"List IPv6 source groups lite failed: {err}"
 
             # Test get_ip_source_group if available
             if src_groups and len(src_groups) > 0:

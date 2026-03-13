@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/network
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v2/admin/customers/216196257331281920/network
   response:
     body:
-      string: '{"totalPages":"1","totalCount":"20","list":[{"id":"216196257331372849","modifiedTime":"1726180958","creationTime":"1726180958","modifiedBy":"72057594037928115","name":"BDTrustedNetwork
+      string: '{"totalPages":"2","totalCount":"24","list":[{"id":"216196257331372849","modifiedTime":"1726180958","creationTime":"1726180958","modifiedBy":"72057594037928115","name":"BDTrustedNetwork
         (zscalerthree.net)","networkId":"01b54e90-39c1-43e1-a484-6d5c33c65195","zscalerCloud":"zscalerthree"},{"id":"216196257331369930","modifiedTime":"1696823868","creationTime":"1696823868","modifiedBy":"72057594037928115","name":"BDTrustedNetwork01
         (zscalerthree.net)","networkId":"928c092b-3fe1-49bb-b01f-0618e4f38468","zscalerCloud":"zscalerthree"},{"id":"216196257331372841","modifiedTime":"1726180714","creationTime":"1726180714","modifiedBy":"72057594037928115","name":"BD
         TrustedNetwork01 (zscalerthree.net)","networkId":"b2f1cfd0-915a-46c1-925c-c3a65ada29e5","zscalerCloud":"zscalerthree"},{"id":"216196257331372843","modifiedTime":"1726180775","creationTime":"1726180775","modifiedBy":"72057594037928115","name":"BD    TrustedNetwork01
@@ -36,9 +36,9 @@ interactions:
         (zscalerthree.net)","networkId":"f13c5571-7f9a-457f-bc96-ca8e907a9fa1","zscalerCloud":"zscalerthree"},{"id":"216196257331372838","modifiedTime":"1726180664","creationTime":"1726180664","modifiedBy":"72057594037928115","name":"BD-TrustedNetwork03
         (zscalerthree.net)","networkId":"d7d90482-7d0d-4eef-b1c1-e1c5d6eb21db","zscalerCloud":"zscalerthree"},{"id":"216196257331382971","modifiedTime":"1742711231","creationTime":"1742711231","modifiedBy":"72057594037928115","name":"BDTrustedNetwork_Dev100_Update
         (zscalerthree.net)","networkId":"f52ad818-3a29-4100-a2aa-a752104ceabe","zscalerCloud":"zscalerthree"},{"id":"216196257331383018","modifiedTime":"1747077805","creationTime":"1747077805","modifiedBy":"72057594037928115","name":"NewTrustedNetwork
-        7522 (zscalerthree.net)","networkId":"e235a139-aa32-4f4b-904b-7daf0006d1b4","zscalerCloud":"zscalerthree"},{"id":"216196257331382999","modifiedTime":"1745906093","creationTime":"1745906093","modifiedBy":"72057594037928115","name":"OttawaNW
-        (zscalerthree.net)","networkId":"652485b4-6b99-4534-8368-6933bf4201cc","zscalerCloud":"zscalerthree"},{"id":"216196257331382998","modifiedTime":"1745906077","creationTime":"1745906077","modifiedBy":"72057594037928115","name":"OttawaNW2
-        (zscalerthree.net)","networkId":"1b102695-7f9c-4d48-a193-b9353303bfd3","zscalerCloud":"zscalerthree"}]}'
+        7522 (zscalerthree.net)","networkId":"e235a139-aa32-4f4b-904b-7daf0006d1b4","zscalerCloud":"zscalerthree"},{"id":"216196257331396035","modifiedTime":"1765237400","creationTime":"1765237400","modifiedBy":"72057594037928115","name":"On_Trusted_Network_Mac
+        (zscalerthree.net)","networkId":"32817b53-a0f9-42e6-ba37-d99bb43af376","zscalerCloud":"zscalerthree"},{"id":"216196257331382999","modifiedTime":"1745906093","creationTime":"1745906093","modifiedBy":"72057594037928115","name":"OttawaNW
+        (zscalerthree.net)","networkId":"652485b4-6b99-4534-8368-6933bf4201cc","zscalerCloud":"zscalerthree"}]}'
     headers:
       cache-control:
       - no-store
@@ -49,7 +49,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:52 GMT
+      - Fri, 13 Mar 2026 02:45:39 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -67,23 +67,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '39'
+      - '38'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c2dda983-e30f-9f61-ba75-652c7653288a
+      - 14025064-0b8c-97cd-90b6-94669200db56
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4848'
+      - '4899'
       x-ratelimit-reset:
-      - '8'
+      - '21'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 39998292-7bb5-48c8-abfc-a236c3bceb8e
       x-xss-protection:
       - '0'
     status:
@@ -103,9 +103,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/network/216196257331372849
+    uri: https://easm.test.zscaler.com/zpa/mgmtconfig/v1/admin/customers/216196257331281920/network/216196257331372849
   response:
     body:
       string: '{"id":"216196257331372849","modifiedTime":"1726180958","creationTime":"1726180958","modifiedBy":"72057594037928115","name":"BDTrustedNetwork
@@ -120,7 +120,7 @@ interactions:
       content-type:
       - application/json;charset=utf-8
       date:
-      - Wed, 26 Nov 2025 21:18:53 GMT
+      - Fri, 13 Mar 2026 02:45:39 GMT
       expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       pragma:
@@ -138,23 +138,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '40'
+      - '38'
       x-frame-options:
       - DENY
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b04e8aa3-0b68-98d7-8f65-9c07b042a58e
+      - 19b2e7ac-beaf-9a5b-924d-f85b69652234
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4847'
+      - '4898'
       x-ratelimit-reset:
-      - '7'
+      - '21'
       x-transaction-id:
-      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      - 39998292-7bb5-48c8-abfc-a236c3bceb8e
       x-xss-protection:
       - '0'
     status:

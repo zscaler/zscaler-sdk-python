@@ -13,24 +13,24 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/eun
+    uri: https://easm.test.zscaler.com/zia/api/v1/eun
   response:
     body:
       string: '{"aupFrequency":"NEVER","aupDayOffset":0,"aupMessage":"","notificationType":"DEFAULT","displayReason":true,"displayCompName":true,"displayCompLogo":true,"customText":"Website
-        blocked","urlCatReviewEnabled":true,"urlCatReviewSubmitToSecurityCloud":true,"urlCatReviewCustomLocation":null,"urlCatReviewText":"If
+        blocked","urlCatReviewEnabled":true,"urlCatReviewSubmitToSecurityCloud":false,"urlCatReviewCustomLocation":"https://redirect.acme.com","urlCatReviewText":"If
         you believe you received this message in error, please click here to request
-        a review of this site.","securityReviewEnabled":true,"securityReviewSubmitToSecurityCloud":true,"securityReviewCustomLocation":null,"securityReviewText":"Click
+        a review of this site.","securityReviewEnabled":true,"securityReviewSubmitToSecurityCloud":true,"securityReviewCustomLocation":"https://redirect.acme.com","securityReviewText":"Click
         to request security review.","webDlpReviewEnabled":true,"webDlpReviewSubmitToSecurityCloud":false,"webDlpReviewCustomLocation":"https://redirect.acme.com","webDlpReviewText":"Click
-        to request policy review.","redirectUrl":"https://redirect.acme.com","supportEmail":"REDACTED","supportPhone":"+91-9000000000","orgPolicyLink":"http://8061240.zscalerbeta.net/policy.html","cautionAgainAfter":300,"cautionPerDomain":true,"cautionCustomText":"Proceeding
+        to request policy review.","redirectUrl":"https://redirect.acme.com","supportEmail":"REDACTED","supportPhone":"+91-9000000000","orgPolicyLink":"http://24326813.zscalerthree.net/policy.html","cautionAgainAfter":300,"cautionPerDomain":true,"cautionCustomText":"Proceeding
         to visit the site may violate your company policy. Press the \"Continue\"
         button to access the site anyway or press the \"Back\" button on your browser
         to go back","idpProxyNotificationText":"","quarantineCustomNotificationText":"We
-        are checking this file for a potential security risk.The file you attempted
+        are checking this file for a potential security risk. The file you attempted
         to download is being analyzed for your protection.\nIt is not blocked. The
         analysis can take up to 10 minutes, depending on the size and type of the
-        file.If safe, your file downloads automatically.\nIf unsafe, the file will
+        file. If safe, your file downloads automatically.\nIf unsafe, the file will
         be blocked."}'
     headers:
       cache-control:
@@ -53,101 +53,39 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:01:11 GMT
+      - Fri, 13 Mar 2026 03:18:47 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '190'
+      - '192'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 9f0f1e6b-27b5-9983-b305-a2bd3b79cd48
+      - b45c4ce4-f3a8-92ca-b315-17c54d389091
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4966'
       x-ratelimit-reset:
-      - '49'
+      - '13'
       x-transaction-id:
-      - 32e5eb9d-8b47-4a8f-af72-83c82c7325eb
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
       - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 05:39:14 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
     status:
       code: 200
       message: OK
@@ -165,9 +103,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.beta.zsapi.net/zia/api/v1/eun
+    uri: https://easm.test.zscaler.com/zia/api/v1/eun
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Please mention a valid
@@ -193,7 +131,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:39:16 GMT
+      - Fri, 13 Mar 2026 03:18:48 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -201,23 +139,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1490'
+      - '248'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - e474a0ca-22b4-9d49-84f6-04f3396c1879
+      - 6dc9376b-84ba-9607-9bf1-089efc0faec1
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4965'
       x-ratelimit-reset:
-      - '46'
+      - '12'
       x-transaction-id:
-      - 302dd0ba-18ce-4ef5-9adc-567234a905be
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

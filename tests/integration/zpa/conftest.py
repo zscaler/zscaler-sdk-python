@@ -15,10 +15,22 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import os
+from pathlib import Path
+
 import pytest
 
 from zscaler import ZscalerClient
 from tests.test_utils import reset_vcr_counters
+
+# When recording (MOCK_TESTS=false), load .env so credentials are available even when
+# pytest is run from an IDE or subprocess that doesn't inherit shell env vars
+if os.environ.get("MOCK_TESTS", "true").strip().lower() == "false":
+    try:
+        from dotenv import load_dotenv
+        project_root = Path(__file__).resolve().parents[3]
+        load_dotenv(project_root / ".env")
+    except ImportError:
+        pass  # python-dotenv not installed; rely on existing env
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 

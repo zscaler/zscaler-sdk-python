@@ -147,7 +147,10 @@ def before_record_request(request):
     if request.body:
         body = request.body
         if isinstance(body, bytes):
+            body = re.sub(rb'client_id=[^&"]*', b"client_id=REDACTED", body)
             body = re.sub(rb'client_secret=[^&"]*', b"client_secret=REDACTED", body)
+            body = re.sub(rb'audience=[^&"]*', b"audience=REDACTED", body)
+            body = re.sub(rb'"client_id"\s*:\s*"[^"]*"', b'"client_id":"REDACTED"', body)
             body = re.sub(rb'"client_secret"\s*:\s*"[^"]*"', b'"client_secret":"REDACTED"', body)
             body = re.sub(rb'"password"\s*:\s*"[^"]*"', b'"password":"REDACTED"', body)
             body = re.sub(rb'"Password"\s*:\s*"[^"]*"', b'"Password":"REDACTED"', body)
@@ -169,7 +172,10 @@ def before_record_request(request):
                 body,
             )
         else:
+            body = re.sub(r'client_id=[^&"]*', "client_id=REDACTED", body)
             body = re.sub(r'client_secret=[^&"]*', "client_secret=REDACTED", body)
+            body = re.sub(r'audience=[^&"]*', "audience=REDACTED", body)
+            body = re.sub(r'"client_id"\s*:\s*"[^"]*"', '"client_id":"REDACTED"', body)
             body = re.sub(r'"client_secret"\s*:\s*"[^"]*"', '"client_secret":"REDACTED"', body)
             body = re.sub(r'"password"\s*:\s*"[^"]*"', '"password":"REDACTED"', body)
             body = re.sub(r'"Password"\s*:\s*"[^"]*"', '"Password":"REDACTED"', body)
@@ -225,12 +231,14 @@ def before_record_response(response):
             body = re.sub(rb'"access_token"\s*:\s*"[^"]*"', b'"access_token":"REDACTED_TOKEN"', body)
             body = re.sub(rb'"token"\s*:\s*"[^"]*"', b'"token":"REDACTED_TOKEN"', body)
             body = re.sub(rb"eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*", b"REDACTED_JWT_TOKEN", body)
+            # Redact OAuth credential fields
+            body = re.sub(rb'"client_id"\s*:\s*"[^"]*"', b'"client_id":"REDACTED"', body)
+            body = re.sub(rb'"client_secret"\s*:\s*"[^"]*"', b'"client_secret":"REDACTED"', body)
             # Redact password and API key fields
             body = re.sub(rb'"password"\s*:\s*"[^"]*"', b'"password":"REDACTED"', body)
             body = re.sub(rb'"Password"\s*:\s*"[^"]*"', b'"Password":"REDACTED"', body)
             body = re.sub(rb'"apiKey"\s*:\s*"[^"]*"', b'"apiKey":"REDACTED"', body)
             body = re.sub(rb'"api_key"\s*:\s*"[^"]*"', b'"api_key":"REDACTED"', body)
-            body = re.sub(rb'"client_secret"\s*:\s*"[^"]*"', b'"client_secret":"REDACTED"', body)
             # Redact pre-shared keys
             body = re.sub(rb'"preSharedKey"\s*:\s*"[^"]*"', b'"preSharedKey":"REDACTED"', body)
             body = re.sub(rb'"pre_shared_key"\s*:\s*"[^"]*"', b'"pre_shared_key":"REDACTED"', body)
@@ -325,12 +333,14 @@ def before_record_response(response):
             body = re.sub(r'"access_token"\s*:\s*"[^"]*"', '"access_token":"REDACTED_TOKEN"', body)
             body = re.sub(r'"token"\s*:\s*"[^"]*"', '"token":"REDACTED_TOKEN"', body)
             body = re.sub(r"eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*", "REDACTED_JWT_TOKEN", body)
+            # Redact OAuth credential fields
+            body = re.sub(r'"client_id"\s*:\s*"[^"]*"', '"client_id":"REDACTED"', body)
+            body = re.sub(r'"client_secret"\s*:\s*"[^"]*"', '"client_secret":"REDACTED"', body)
             # Redact password and API key fields
             body = re.sub(r'"password"\s*:\s*"[^"]*"', '"password":"REDACTED"', body)
             body = re.sub(r'"Password"\s*:\s*"[^"]*"', '"Password":"REDACTED"', body)
             body = re.sub(r'"apiKey"\s*:\s*"[^"]*"', '"apiKey":"REDACTED"', body)
             body = re.sub(r'"api_key"\s*:\s*"[^"]*"', '"api_key":"REDACTED"', body)
-            body = re.sub(r'"client_secret"\s*:\s*"[^"]*"', '"client_secret":"REDACTED"', body)
             # Redact pre-shared keys
             body = re.sub(r'"preSharedKey"\s*:\s*"[^"]*"', '"preSharedKey":"REDACTED"', body)
             body = re.sub(r'"pre_shared_key"\s*:\s*"[^"]*"', '"pre_shared_key":"REDACTED"', body)
@@ -468,7 +478,9 @@ def vcr_config():
             "x-api-key",
         ],
         "filter_post_data_parameters": [
+            ("client_id", "REDACTED"),
             ("client_secret", "REDACTED"),
+            ("audience", "REDACTED"),
             ("apiKey", "REDACTED"),
             ("api_key", "REDACTED"),
             ("password", "REDACTED"),

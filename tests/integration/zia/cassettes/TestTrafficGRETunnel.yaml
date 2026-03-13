@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
     headers:
       Accept:
       - application/json
@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://identity.test.zscaler.com/oauth2/v1/token
   response:
@@ -31,7 +31,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Thu, 27 Nov 2025 00:11:19 GMT
+      - Fri, 13 Mar 2026 03:37:04 GMT
       expires:
       - '0'
       pragma:
@@ -51,9 +51,9 @@ interactions:
       - SAMEORIGIN
       - SAMEORIGIN
       x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      - 500, 500;w=1, 100000;w=60
       x-ratelimit-remaining:
-      - '149'
+      - '499'
       x-ratelimit-reset:
       - '1'
       x-xss-protection:
@@ -75,13 +75,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/staticIP
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP
   response:
     body:
-      string: '{"id":3340005,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
-        Kansas, United States"},"routableIP":true,"lastModificationTime":1764202285,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338955,"ipAddress":"104.239.237.2","geoOverride":false,"latitude":37.6325999,"longitude":-97.7724999,"city":{"id":4269447,"name":"Cheney,
+        Kansas, United States"},"routableIP":true,"lastModificationTime":1773373030,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-vcr0001"}'
     headers:
       cache-control:
@@ -104,7 +104,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:26 GMT
+      - Fri, 13 Mar 2026 03:37:11 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -114,23 +114,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '6136'
+      - '6607'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6eb0670c-7391-9586-94c3-c9e1aa1bb10a
+      - ad1ffd2d-18ed-991d-9ec8-32ca98a19847
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4999'
       x-ratelimit-reset:
-      - '40'
+      - '56'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -152,14 +152,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips/recommendedList?sourceIp=104.239.237.2
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips/recommendedList?sourceIp=104.239.237.2
   response:
     body:
-      string: '[{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},{"id":270926,"virtualIp":"170.85.86.129","privateServiceEdge":false,"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
-        DC","countryCode":"US","region":"NorthAmerica"},{"id":56315,"virtualIp":"165.225.218.32","privateServiceEdge":false,"datacenter":"NLD1","latitude":27.0,"longitude":-100.0,"city":"Nuevo
-        Laredo","countryCode":"MX","region":"NorthAmerica"}]'
+      string: '[{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},{"id":270926,"virtualIp":"170.85.86.129","privateServiceEdge":false,"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
+        DC","countryCode":"US","region":"NorthAmerica"},{"id":28524,"virtualIp":"104.129.206.159","privateServiceEdge":false,"datacenter":"ATL2","latitude":34.0,"longitude":-84.0,"city":"Atlanta,
+        GA","countryCode":"US","region":"NorthAmerica"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -181,7 +181,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:27 GMT
+      - Fri, 13 Mar 2026 03:37:11 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -193,23 +193,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '495'
+      - '389'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3a0edfa3-b3f6-96cd-bb57-7f86ce3d237f
+      - 7ec6946c-a747-96c3-bc8c-2496c5e90f5d
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4998'
       x-ratelimit-reset:
-      - '34'
+      - '49'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -219,7 +219,7 @@ interactions:
       message: OK
 - request:
     body: '{"ipUnnumbered": true, "comment": "tests-vcr0002", "sourceIp": "104.239.237.2",
-      "primaryDestVip": {"id": 170301}, "secondaryDestVip": {"id": 213857}}'
+      "primaryDestVip": {"id": 170301}, "secondaryDestVip": {"id": 65303}}'
     headers:
       Accept:
       - application/json
@@ -228,16 +228,16 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '149'
+      - '148'
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.zsapi.net/zia/api/v1/greTunnels
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels
   response:
     body:
-      string: '{"id":3340005,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1764202288,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338955,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1773373033,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"tests-vcr0002","ipUnnumbered":true}'
     headers:
       cache-control:
@@ -260,7 +260,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:29 GMT
+      - Fri, 13 Mar 2026 03:37:14 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -272,23 +272,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2524'
+      - '2117'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c13022fd-c76e-9510-92a0-27a93fe9ec82
+      - a1327678-cd6e-9f8d-abea-83cf4f2c3e8b
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4997'
       x-ratelimit-reset:
-      - '33'
+      - '49'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -310,14 +310,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips/recommendedList?sourceIp=104.239.237.2
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips/recommendedList?sourceIp=104.239.237.2
   response:
     body:
-      string: '[{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},{"id":270926,"virtualIp":"170.85.86.129","privateServiceEdge":false,"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
-        DC","countryCode":"US","region":"NorthAmerica"},{"id":56315,"virtualIp":"165.225.218.32","privateServiceEdge":false,"datacenter":"NLD1","latitude":27.0,"longitude":-100.0,"city":"Nuevo
-        Laredo","countryCode":"MX","region":"NorthAmerica"}]'
+      string: '[{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},{"id":270926,"virtualIp":"170.85.86.129","privateServiceEdge":false,"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
+        DC","countryCode":"US","region":"NorthAmerica"},{"id":28524,"virtualIp":"104.129.206.159","privateServiceEdge":false,"datacenter":"ATL2","latitude":34.0,"longitude":-84.0,"city":"Atlanta,
+        GA","countryCode":"US","region":"NorthAmerica"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -339,7 +339,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:30 GMT
+      - Fri, 13 Mar 2026 03:37:15 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -351,23 +351,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1066'
+      - '867'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 02aa0a0e-ae15-9c98-8f0d-5a35b0a9be6d
+      - f5a079da-d6ef-9b4d-8795-16774e7fd685
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4996'
       x-ratelimit-reset:
-      - '31'
+      - '46'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -378,7 +378,7 @@ interactions:
 - request:
     body: '{"ipUnnumbered": true, "comment": "Updated GRE Tunnel vcr0003", "sourceIp":
       "104.239.237.2", "primaryDestVip": {"id": 170301}, "secondaryDestVip": {"id":
-      213857}}'
+      65303}}'
     headers:
       Accept:
       - application/json
@@ -387,16 +387,16 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '162'
+      - '161'
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.zsapi.net/zia/api/v1/greTunnels/3340005
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/4338955
   response:
     body:
-      string: '{"id":3340005,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1764202294,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338955,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1773373037,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"Updated GRE Tunnel vcr0003","ipUnnumbered":true}'
     headers:
       cache-control:
@@ -419,7 +419,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:36 GMT
+      - Fri, 13 Mar 2026 03:37:18 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -431,23 +431,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '5742'
+      - '3131'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 4a3f6f2c-7deb-908c-8204-b16b36eb1eaf
+      - 25ce82b8-4b0e-905e-b423-9bd58c3843b7
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4995'
       x-ratelimit-reset:
-      - '29'
+      - '45'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -469,12 +469,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/greTunnels/3340005
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/4338955
   response:
     body:
-      string: '{"id":3340005,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1764202294,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '{"id":4338955,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1773373037,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"Updated GRE Tunnel vcr0003","ipUnnumbered":true}'
     headers:
       cache-control:
@@ -497,7 +497,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:37 GMT
+      - Fri, 13 Mar 2026 03:37:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -509,23 +509,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '570'
+      - '641'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 243d2a7d-c9e6-9559-bede-919ea26cfa35
+      - 7825c746-957d-9843-9f47-86c9e7e4c3d3
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4994'
       x-ratelimit-reset:
-      - '23'
+      - '42'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -547,12 +547,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/greTunnels
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels
   response:
     body:
-      string: '[{"id":3340005,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":213857,"virtualIp":"170.85.96.129","privateServiceEdge":false,"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1764202294,"lastModifiedBy":{"id":117810311,"name":"API
+      string: '[{"id":4105713,"sourceIp":"104.238.235.24","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.19.196.208","lastModificationTime":1770823693,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false},{"id":4106311,"sourceIp":"104.238.235.59","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.17.144.232","lastModificationTime":1770831022,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false},{"id":4338955,"sourceIp":"104.239.237.2","primaryDestVip":{"id":170301,"virtualIp":"170.85.14.129","privateServiceEdge":false,"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US  ","region":"NorthAmerica","dontProvision":true},"secondaryDestVip":{"id":65303,"virtualIp":"165.225.10.32","privateServiceEdge":false,"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US  ","region":"NorthAmerica"},"lastModificationTime":1773373037,"lastModifiedBy":{"id":117810311,"name":"API
         Client Secret Authentication"},"comment":"Updated GRE Tunnel vcr0003","ipUnnumbered":true}]'
     headers:
       cache-control:
@@ -575,7 +577,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:38 GMT
+      - Fri, 13 Mar 2026 03:37:19 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -583,27 +585,27 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '718'
+      - '714'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2c3677da-3b17-9619-bfd3-8c82c43bdbd6
+      - 94fe2d67-d5c5-9ed3-87cc-ab647facce01
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4993'
       x-ratelimit-reset:
-      - '23'
+      - '41'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -625,9 +627,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/greTunnels/3340005
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/4338955
   response:
     body:
       string: ''
@@ -648,7 +650,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Thu, 27 Nov 2025 00:11:41 GMT
+      - Fri, 13 Mar 2026 03:37:23 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -658,23 +660,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3047'
+      - '3390'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 762b6ef6-8fe9-977f-bc9b-682543b3ed35
+      - a57ad71d-aef2-949e-b8a2-8529db8790a6
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4992'
       x-ratelimit-reset:
-      - '22'
+      - '40'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -696,9 +698,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.zsapi.net/zia/api/v1/staticIP/3340005
+    uri: https://easm.test.zscaler.com/zia/api/v1/staticIP/4338955
   response:
     body:
       string: ''
@@ -719,7 +721,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Thu, 27 Nov 2025 00:11:44 GMT
+      - Fri, 13 Mar 2026 03:37:28 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -729,23 +731,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2339'
+      - '5160'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0b969369-222a-9dfa-9076-420f03fa245e
+      - 8ce5ca34-a59d-9cd3-b9b1-ca464e1346db
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4991'
       x-ratelimit-reset:
-      - '19'
+      - '37'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -767,14 +769,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips/groupByDatacenter?sourceIp=104.239.237.2
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips/groupByDatacenter?sourceIp=104.239.237.2
   response:
     body:
-      string: '[{"datacenter":{"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":170301,"virtualIp":"170.85.14.129"}]},{"datacenter":{"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":213857,"virtualIp":"170.85.96.129"}]},{"datacenter":{"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":65303,"virtualIp":"165.225.10.32"}]},{"datacenter":{"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
-        DC","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":270926,"virtualIp":"170.85.86.129"}]},{"datacenter":{"datacenter":"NLD1","latitude":27.0,"longitude":-100.0,"city":"Nuevo
-        Laredo","countryCode":"MX","region":"NorthAmerica"},"greVips":[{"id":56315,"virtualIp":"165.225.218.32"}]}]'
+      string: '[{"datacenter":{"datacenter":"CHI2","latitude":39.0,"longitude":-89.0,"city":"Chicago","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":170301,"virtualIp":"170.85.14.129"}]},{"datacenter":{"datacenter":"DEN3","latitude":42.0,"longitude":-106.0,"city":"Denver","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":65303,"virtualIp":"165.225.10.32"}]},{"datacenter":{"datacenter":"DFW2","latitude":31.0,"longitude":-96.0,"city":"Dallas","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":213857,"virtualIp":"170.85.96.129"}]},{"datacenter":{"datacenter":"WAS4","latitude":38.0,"longitude":-77.0,"city":"Washington,
+        DC","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":270926,"virtualIp":"170.85.86.129"}]},{"datacenter":{"datacenter":"ATL2","latitude":34.0,"longitude":-84.0,"city":"Atlanta,
+        GA","countryCode":"US","region":"NorthAmerica"},"greVips":[{"id":28524,"virtualIp":"104.129.206.159"}]}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -796,7 +798,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:44 GMT
+      - Fri, 13 Mar 2026 03:37:29 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -808,23 +810,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '441'
+      - '392'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5e949f65-d8b6-9ca8-8567-5c26596c95e4
+      - 0e0a536f-c8fd-9161-9bea-18bdd0cc5dbe
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4990'
       x-ratelimit-reset:
-      - '16'
+      - '31'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -846,21 +848,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips?pageSize=10
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips?pageSize=10
   response:
     body:
       string: '[{"cloudName":"zscalerthree.net","region":"Oceania","country":"New
         Zealand","city":"Auckland","dataCenter":"AKL2","location":"173 E, 37 S","vpnIps":["147.161.216.40","147.161.216.41","147.161.216.42","147.161.216.43"],"vpnDomainName":"akl2-vpn.zscalerthree.net","greIps":["147.161.216.34"],"greDomainName":"akl2.gre.zscalerthree.net","pacIps":["147.161.216.36","147.161.216.37","147.161.216.38","147.161.216.39"],"pacDomainName":"akl2.sme.zscalerthree.net","svpnIps":["147.161.216.44"],"svpnDomainName":"akl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Europe","country":"The
         Netherlands","city":"Amsterdam","dataCenter":"AMS2","location":"5 E, 52 N","vpnIps":["165.225.240.38","165.225.28.14"],"vpnDomainName":"ams2-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["165.225.240.34","165.225.240.35","165.225.240.36","165.225.240.37","165.225.28.13"],"pacDomainName":"ams2.sme.zscalerthree.net","svpnIps":["165.225.240.58","165.225.28.23"],"svpnDomainName":"ams2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Europe","country":"The
         Netherlands","city":"Amsterdam","dataCenter":"AMS3","location":"5 E, 53 N","vpnIps":["87.58.118.130","87.58.118.131","87.58.118.132","87.58.118.133"],"vpnDomainName":"ams3-vpn.zscalerthree.net","greIps":["87.58.118.129"],"greDomainName":"ams3.gre.zscalerthree.net","pacIps":["87.58.119.129","87.58.119.130","87.58.119.131","87.58.119.132"],"pacDomainName":"ams3.sme.zscalerthree.net","svpnIps":["87.58.119.133"],"svpnDomainName":"ams3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
-        States","city":"Atlanta, GA","dataCenter":"ATL2","location":"84 W, 34 N","vpnIps":["104.129.206.48","104.129.206.49","104.129.206.50","104.129.206.161"],"vpnDomainName":"atl2-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["104.129.206.45","104.129.206.46","104.129.206.47","104.129.206.160"],"pacDomainName":"atl2.sme.zscalerthree.net","svpnIps":["104.129.206.30"],"svpnDomainName":"atl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
+        States","city":"Atlanta, GA","dataCenter":"ATL2","location":"84 W, 34 N","vpnIps":["104.129.206.48","104.129.206.49","104.129.206.50","104.129.206.161"],"vpnDomainName":"atl2-vpn.zscalerthree.net","greIps":["104.129.206.159"],"greDomainName":"atl2.gre.zscalerthree.net","pacIps":["104.129.206.45","104.129.206.46","104.129.206.47","104.129.206.160"],"pacDomainName":"atl2.sme.zscalerthree.net","svpnIps":["104.129.206.30"],"svpnDomainName":"atl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
         States","city":"Atlanta","dataCenter":"ATL3","location":"85 W, 32 N","vpnIps":["170.85.128.130","170.85.128.131","170.85.128.132","170.85.128.133"],"vpnDomainName":"atl3-vpn.zscalerthree.net","greIps":["170.85.128.129"],"greDomainName":"atl3.gre.zscalerthree.net","pacIps":["170.85.129.129","170.85.129.130","170.85.129.131","170.85.129.132"],"pacDomainName":"atl3.sme.zscalerthree.net","svpnIps":["170.85.129.133"],"svpnDomainName":"atl3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"China","city":"Beijing","dataCenter":"BJS1","location":"116
         E, 40 N","vpnIps":["211.144.19.18"],"vpnDomainName":"bjs1-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["211.144.19.28"],"pacDomainName":"bjs1.sme.zscalerthree.net","svpnIps":["211.144.19.28"],"svpnDomainName":"bjs1.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"China","city":"Beijing3","dataCenter":"BJS3","location":"117
         E, 41 N","vpnIps":["220.243.154.40","220.243.154.41","220.243.154.42","220.243.154.43"],"vpnDomainName":"bjs3-vpn.zscalerthree.net","greIps":["220.243.154.34"],"greDomainName":"bjs3.gre.zscalerthree.net","pacIps":["220.243.154.36","220.243.154.37","220.243.154.38","220.243.154.39"],"pacDomainName":"bjs3.sme.zscalerthree.net","svpnIps":["220.243.154.44"],"svpnDomainName":"bjs3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"SouthAmerica","country":"Colombia","city":"Bogota","dataCenter":"BOG1","location":"74
         W, 5 N","vpnIps":["98.98.26.36","98.98.186.34","98.98.186.35","98.98.186.36","98.98.186.37"],"vpnDomainName":"bog1-vpn.zscalerthree.net","greIps":["98.98.26.30","98.98.186.28"],"greDomainName":"bog1.gre.zscalerthree.net","pacIps":["98.98.26.32","98.98.26.33","98.98.26.34","98.98.26.35","98.98.186.30","98.98.186.31","98.98.186.32","98.98.186.33"],"pacDomainName":"bog1.sme.zscalerthree.net","svpnIps":["98.98.26.40","98.98.186.38"],"svpnDomainName":"bog1.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM6","location":"72
-        E, 20 N","vpnIps":["165.225.120.38","165.225.120.39","165.225.120.40","165.225.120.41","165.225.120.62"],"vpnDomainName":"bom6-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["165.225.120.34","165.225.120.35","165.225.120.36","165.225.120.37"],"pacDomainName":"bom6.sme.zscalerthree.net","svpnIps":["165.225.120.58"],"svpnDomainName":"bom6.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM7","location":"74
+        E, 20 N","vpnIps":["165.225.120.38","165.225.120.39","165.225.120.40","165.225.120.41","165.225.120.62","167.103.186.29","167.103.186.30","167.103.186.31","167.103.186.32","167.103.186.34"],"vpnDomainName":"bom6-vpn.zscalerthree.net","greIps":["165.225.120.32","167.103.186.23"],"greDomainName":"bom6.gre.zscalerthree.net","pacIps":["165.225.120.34","165.225.120.35","165.225.120.36","165.225.120.37","167.103.186.25","167.103.186.26","167.103.186.27","167.103.186.28"],"pacDomainName":"bom6.sme.zscalerthree.net","svpnIps":["165.225.120.58","167.103.186.33"],"svpnDomainName":"bom6.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM7","location":"74
         E, 22 N","vpnIps":["167.103.132.130","167.103.132.131","167.103.132.132","167.103.132.133"],"vpnDomainName":"bom7-vpn.zscalerthree.net","greIps":["167.103.132.129"],"greDomainName":"bom7.gre.zscalerthree.net","pacIps":["167.103.133.129","167.103.133.130","167.103.133.131","167.103.133.132"],"pacDomainName":"bom7.sme.zscalerthree.net","svpnIps":["167.103.133.133"],"svpnDomainName":"bom7.svpn.zscalerthree.net"}]'
     headers:
       cache-control:
@@ -883,7 +885,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:11:45 GMT
+      - Fri, 13 Mar 2026 03:37:30 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -893,23 +895,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '394'
+      - '223'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 11a21d79-ecc7-92df-b2fb-b33cc1f298b9
+      - 54307cb4-706c-93f8-a226-42d977e0adc8
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4989'
       x-ratelimit-reset:
-      - '15'
+      - '30'
       x-transaction-id:
-      - 5bd80a4f-f74e-49a0-9dd7-ca08fb84db27
+      - dee87f8a-2a15-49e3-b05a-94c166d0d5a0
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -931,9 +933,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips?pageSize=10
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips?pageSize=10
   response:
     body:
       string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
@@ -944,7 +946,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:13:09 GMT
+      - Fri, 13 Mar 2026 03:38:07 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -954,14 +956,14 @@ interactions:
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - b7871ccc-969d-9ba6-858f-93314566bb83
+      - 0b5bfdba-a20d-9b61-8a3a-aed2a927ed76
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
     status:
       code: 401
       message: Unauthorized
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
     headers:
       Accept:
       - application/json
@@ -974,7 +976,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
     uri: https://identity.test.zscaler.com/oauth2/v1/token
   response:
@@ -992,7 +994,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Thu, 27 Nov 2025 00:13:10 GMT
+      - Fri, 13 Mar 2026 03:38:08 GMT
       expires:
       - '0'
       pragma:
@@ -1014,9 +1016,9 @@ interactions:
       - SAMEORIGIN
       - SAMEORIGIN
       x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      - 500, 500;w=1, 100000;w=60
       x-ratelimit-remaining:
-      - '149'
+      - '499'
       x-ratelimit-reset:
       - '1'
       x-xss-protection:
@@ -1038,21 +1040,21 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/vips?pageSize=10
+    uri: https://easm.test.zscaler.com/zia/api/v1/vips?pageSize=10
   response:
     body:
       string: '[{"cloudName":"zscalerthree.net","region":"Oceania","country":"New
         Zealand","city":"Auckland","dataCenter":"AKL2","location":"173 E, 37 S","vpnIps":["147.161.216.40","147.161.216.41","147.161.216.42","147.161.216.43"],"vpnDomainName":"akl2-vpn.zscalerthree.net","greIps":["147.161.216.34"],"greDomainName":"akl2.gre.zscalerthree.net","pacIps":["147.161.216.36","147.161.216.37","147.161.216.38","147.161.216.39"],"pacDomainName":"akl2.sme.zscalerthree.net","svpnIps":["147.161.216.44"],"svpnDomainName":"akl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Europe","country":"The
         Netherlands","city":"Amsterdam","dataCenter":"AMS2","location":"5 E, 52 N","vpnIps":["165.225.240.38","165.225.28.14"],"vpnDomainName":"ams2-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["165.225.240.34","165.225.240.35","165.225.240.36","165.225.240.37","165.225.28.13"],"pacDomainName":"ams2.sme.zscalerthree.net","svpnIps":["165.225.240.58","165.225.28.23"],"svpnDomainName":"ams2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Europe","country":"The
         Netherlands","city":"Amsterdam","dataCenter":"AMS3","location":"5 E, 53 N","vpnIps":["87.58.118.130","87.58.118.131","87.58.118.132","87.58.118.133"],"vpnDomainName":"ams3-vpn.zscalerthree.net","greIps":["87.58.118.129"],"greDomainName":"ams3.gre.zscalerthree.net","pacIps":["87.58.119.129","87.58.119.130","87.58.119.131","87.58.119.132"],"pacDomainName":"ams3.sme.zscalerthree.net","svpnIps":["87.58.119.133"],"svpnDomainName":"ams3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
-        States","city":"Atlanta, GA","dataCenter":"ATL2","location":"84 W, 34 N","vpnIps":["104.129.206.48","104.129.206.49","104.129.206.50","104.129.206.161"],"vpnDomainName":"atl2-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["104.129.206.45","104.129.206.46","104.129.206.47","104.129.206.160"],"pacDomainName":"atl2.sme.zscalerthree.net","svpnIps":["104.129.206.30"],"svpnDomainName":"atl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
+        States","city":"Atlanta, GA","dataCenter":"ATL2","location":"84 W, 34 N","vpnIps":["104.129.206.48","104.129.206.49","104.129.206.50","104.129.206.161"],"vpnDomainName":"atl2-vpn.zscalerthree.net","greIps":["104.129.206.159"],"greDomainName":"atl2.gre.zscalerthree.net","pacIps":["104.129.206.45","104.129.206.46","104.129.206.47","104.129.206.160"],"pacDomainName":"atl2.sme.zscalerthree.net","svpnIps":["104.129.206.30"],"svpnDomainName":"atl2.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"NorthAmerica","country":"United
         States","city":"Atlanta","dataCenter":"ATL3","location":"85 W, 32 N","vpnIps":["170.85.128.130","170.85.128.131","170.85.128.132","170.85.128.133"],"vpnDomainName":"atl3-vpn.zscalerthree.net","greIps":["170.85.128.129"],"greDomainName":"atl3.gre.zscalerthree.net","pacIps":["170.85.129.129","170.85.129.130","170.85.129.131","170.85.129.132"],"pacDomainName":"atl3.sme.zscalerthree.net","svpnIps":["170.85.129.133"],"svpnDomainName":"atl3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"China","city":"Beijing","dataCenter":"BJS1","location":"116
         E, 40 N","vpnIps":["211.144.19.18"],"vpnDomainName":"bjs1-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["211.144.19.28"],"pacDomainName":"bjs1.sme.zscalerthree.net","svpnIps":["211.144.19.28"],"svpnDomainName":"bjs1.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"China","city":"Beijing3","dataCenter":"BJS3","location":"117
         E, 41 N","vpnIps":["220.243.154.40","220.243.154.41","220.243.154.42","220.243.154.43"],"vpnDomainName":"bjs3-vpn.zscalerthree.net","greIps":["220.243.154.34"],"greDomainName":"bjs3.gre.zscalerthree.net","pacIps":["220.243.154.36","220.243.154.37","220.243.154.38","220.243.154.39"],"pacDomainName":"bjs3.sme.zscalerthree.net","svpnIps":["220.243.154.44"],"svpnDomainName":"bjs3.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"SouthAmerica","country":"Colombia","city":"Bogota","dataCenter":"BOG1","location":"74
         W, 5 N","vpnIps":["98.98.26.36","98.98.186.34","98.98.186.35","98.98.186.36","98.98.186.37"],"vpnDomainName":"bog1-vpn.zscalerthree.net","greIps":["98.98.26.30","98.98.186.28"],"greDomainName":"bog1.gre.zscalerthree.net","pacIps":["98.98.26.32","98.98.26.33","98.98.26.34","98.98.26.35","98.98.186.30","98.98.186.31","98.98.186.32","98.98.186.33"],"pacDomainName":"bog1.sme.zscalerthree.net","svpnIps":["98.98.26.40","98.98.186.38"],"svpnDomainName":"bog1.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM6","location":"72
-        E, 20 N","vpnIps":["165.225.120.38","165.225.120.39","165.225.120.40","165.225.120.41","165.225.120.62"],"vpnDomainName":"bom6-vpn.zscalerthree.net","greIps":[],"greDomainName":"","pacIps":["165.225.120.34","165.225.120.35","165.225.120.36","165.225.120.37"],"pacDomainName":"bom6.sme.zscalerthree.net","svpnIps":["165.225.120.58"],"svpnDomainName":"bom6.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM7","location":"74
+        E, 20 N","vpnIps":["165.225.120.38","165.225.120.39","165.225.120.40","165.225.120.41","165.225.120.62","167.103.186.29","167.103.186.30","167.103.186.31","167.103.186.32","167.103.186.34"],"vpnDomainName":"bom6-vpn.zscalerthree.net","greIps":["165.225.120.32","167.103.186.23"],"greDomainName":"bom6.gre.zscalerthree.net","pacIps":["165.225.120.34","165.225.120.35","165.225.120.36","165.225.120.37","167.103.186.25","167.103.186.26","167.103.186.27","167.103.186.28"],"pacDomainName":"bom6.sme.zscalerthree.net","svpnIps":["165.225.120.58","167.103.186.33"],"svpnDomainName":"bom6.svpn.zscalerthree.net"},{"cloudName":"zscalerthree.net","region":"Asia","country":"India","city":"Mumbai","dataCenter":"BOM7","location":"74
         E, 22 N","vpnIps":["167.103.132.130","167.103.132.131","167.103.132.132","167.103.132.133"],"vpnDomainName":"bom7-vpn.zscalerthree.net","greIps":["167.103.132.129"],"greDomainName":"bom7.gre.zscalerthree.net","pacIps":["167.103.133.129","167.103.133.130","167.103.133.131","167.103.133.132"],"pacDomainName":"bom7.sme.zscalerthree.net","svpnIps":["167.103.133.133"],"svpnDomainName":"bom7.svpn.zscalerthree.net"}]'
     headers:
       cache-control:
@@ -1075,7 +1077,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 27 Nov 2025 00:13:13 GMT
+      - Fri, 13 Mar 2026 03:38:10 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1087,23 +1089,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '2857'
+      - '1818'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 766743d8-1fd0-93bc-9ae6-79b315769872
+      - 88ea42ab-a872-90f4-9f8d-c47f44b332ba
       x-oneapi-version:
-      - 109.1.85
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
       - '4999'
       x-ratelimit-reset:
-      - '50'
+      - '52'
       x-transaction-id:
-      - 77a88905-2ddc-41d2-8399-ccfe49482b37
+      - a3ec36c0-4307-40d8-b663-3b97649fb6b3
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
