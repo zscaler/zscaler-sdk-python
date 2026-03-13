@@ -115,9 +115,7 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-            self.ports = ZscalerCollection.form_list(
-                config["ports"] if "ports" in config else [], str
-            )
+            self.ports = ZscalerCollection.form_list(config["ports"] if "ports" in config else [], str)
             self.sub_loc_scope_values = ZscalerCollection.form_list(
                 config["subLocScopeValues"] if "subLocScopeValues" in config else [], str
             )
@@ -285,7 +283,6 @@ class LocationManagement(ZscalerObject):
             "extranetDns": self.extranet_dns,
             "defaultExtranetTsPool": self.default_extranet_ts_pool,
             "defaultExtranetDns": self.default_extranet_dns,
-
             "staticLocationGroups": [static.request_format() for static in (self.static_location_groups or [])],
             "dynamiclocationGroups": [dyn.request_format() for dyn in (self.dynamic_location_groups or [])],
             "vpnCredentials": [vpn.request_format() for vpn in (self.vpn_credentials or [])],
@@ -348,26 +345,16 @@ class RegionInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.city_geo_id = config["cityGeoId"] \
-                if "cityGeoId" in config else None
-            self.state_geo_id = config["stateGeoId"] \
-                if "stateGeoId" in config else None
-            self.latitude = config["latitude"] \
-                if "latitude" in config else None
-            self.longitude = config["longitude"] \
-                if "longitude" in config else None
-            self.city_name = config["cityName"] \
-                if "cityName" in config else None
-            self.state_name = config["stateName"] \
-                if "stateName" in config else None
-            self.country_name = config["countryName"] \
-                if "countryName" in config else None
-            self.country_code = config["countryCode"] \
-                if "countryCode" in config else None
-            self.postal_code = config["postalCode"] \
-                if "postalCode" in config else None
-            self.continent_code = config["continentCode"] \
-                if "continentCode" in config else None
+            self.city_geo_id = config["cityGeoId"] if "cityGeoId" in config else None
+            self.state_geo_id = config["stateGeoId"] if "stateGeoId" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.city_name = config["cityName"] if "cityName" in config else None
+            self.state_name = config["stateName"] if "stateName" in config else None
+            self.country_name = config["countryName"] if "countryName" in config else None
+            self.country_code = config["countryCode"] if "countryCode" in config else None
+            self.postal_code = config["postalCode"] if "postalCode" in config else None
+            self.continent_code = config["continentCode"] if "continentCode" in config else None
         else:
             self.city_geo_id = None
             self.state_geo_id = None
@@ -395,7 +382,7 @@ class RegionInfo(ZscalerObject):
             "countryName": self.country_name,
             "countryCode": self.country_code,
             "postalCode": self.postal_code,
-            "continentCode": self.continent_code
+            "continentCode": self.continent_code,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

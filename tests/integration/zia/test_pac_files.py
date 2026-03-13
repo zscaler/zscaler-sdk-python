@@ -67,9 +67,7 @@ class TestPacFiles:
                 pass
 
             # Test list_pac_files with query params
-            pac_files_filtered, response, err = client.zia.pac_files.list_pac_files(
-                query_params={"search": "default"}
-            )
+            pac_files_filtered, response, err = client.zia.pac_files.list_pac_files(query_params={"search": "default"})
             # Search may return empty - that's ok
 
         except Exception as e:

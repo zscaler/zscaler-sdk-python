@@ -35,19 +35,12 @@ class Users(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.results_total = config["results_total"] \
-                if "results_total" in config else None
-            self.page_offset = config["pageOffset"] \
-                if "pageOffset" in config else None
-            self.page_size = config["pageSize"] \
-                if "pageSize" in config else None
-            self.next_link = config["next_link"] \
-                if "next_link" in config else None
-            self.prev_link = config["prev_link"] \
-                if "prev_link" in config else None
-            self.records = ZscalerCollection.form_list(
-                config["records"] if "records" in config else [], UserRecord
-            )
+            self.results_total = config["results_total"] if "results_total" in config else None
+            self.page_offset = config["pageOffset"] if "pageOffset" in config else None
+            self.page_size = config["pageSize"] if "pageSize" in config else None
+            self.next_link = config["next_link"] if "next_link" in config else None
+            self.prev_link = config["prev_link"] if "prev_link" in config else None
+            self.records = ZscalerCollection.form_list(config["records"] if "records" in config else [], UserRecord)
         else:
             self.results_total = None
             self.page_offset = None
@@ -67,7 +60,7 @@ class Users(ZscalerObject):
             "pageSize": self.page_size,
             "next_link": self.next_link,
             "prev_link": self.prev_link,
-            "records": self.records
+            "records": self.records,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -88,32 +81,21 @@ class UserRecord(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.login_name = config["loginName"] \
-                if "loginName" in config else None
-            self.display_name = config["displayName"] \
-                if "displayName" in config else None
-            self.first_name = config["firstName"] \
-                if "firstName" in config else None
-            self.last_name = config["lastName"] \
-                if "lastName" in config else None
-            self.primary_email = config["primaryEmail"] \
-                if "primaryEmail" in config else None
-            self.secondary_email = config["secondaryEmail"] \
-                if "secondaryEmail" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.source = config["source"] \
-                if "source" in config else None
-            self.is_dynamic_group = config["isDynamicGroup"] \
-                if "isDynamicGroup" in config else None
-            self.dynamic_group = config["dynamicGroup"] \
-                if "dynamicGroup" in config else None
-            self.admin_entitlement_enabled = config["adminEntitlementEnabled"] \
-                if "adminEntitlementEnabled" in config else None
-            self.service_entitlement_enabled = config["serviceEntitlementEnabled"] \
-                if "serviceEntitlementEnabled" in config else None
+            self.login_name = config["loginName"] if "loginName" in config else None
+            self.display_name = config["displayName"] if "displayName" in config else None
+            self.first_name = config["firstName"] if "firstName" in config else None
+            self.last_name = config["lastName"] if "lastName" in config else None
+            self.primary_email = config["primaryEmail"] if "primaryEmail" in config else None
+            self.secondary_email = config["secondaryEmail"] if "secondaryEmail" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.source = config["source"] if "source" in config else None
+            self.is_dynamic_group = config["isDynamicGroup"] if "isDynamicGroup" in config else None
+            self.dynamic_group = config["dynamicGroup"] if "dynamicGroup" in config else None
+            self.admin_entitlement_enabled = config["adminEntitlementEnabled"] if "adminEntitlementEnabled" in config else None
+            self.service_entitlement_enabled = (
+                config["serviceEntitlementEnabled"] if "serviceEntitlementEnabled" in config else None
+            )
             self.custom_attrs_info = config if isinstance(config, dict) else {}
 
             if "idp" in config:

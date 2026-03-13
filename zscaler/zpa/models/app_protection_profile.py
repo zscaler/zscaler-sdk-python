@@ -35,34 +35,24 @@ class AppProtectionProfile(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.api_discovery_enabled = config["apiDiscoveryEnabled"] \
-                if "apiDiscoveryEnabled" in config else None
-            self.api_profile = config["apiProfile"] \
-                if "apiProfile" in config else None
-            self.check_control_deployment_status = config["checkControlDeploymentStatus"] \
-                if "checkControlDeploymentStatus" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.exceptions_version = config["exceptionsVersion"] \
-                if "exceptionsVersion" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.incarnation_number = config["incarnationNumber"] \
-                if "incarnationNumber" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.zs_defined_control_choice = config["zsDefinedControlChoice"] \
-                if "zsDefinedControlChoice" in config else None
-            self.predefined_controls_version = config["predefinedControlsVersion"] \
-                if "predefinedControlsVersion" in config else None
+            self.api_discovery_enabled = config["apiDiscoveryEnabled"] if "apiDiscoveryEnabled" in config else None
+            self.api_profile = config["apiProfile"] if "apiProfile" in config else None
+            self.check_control_deployment_status = (
+                config["checkControlDeploymentStatus"] if "checkControlDeploymentStatus" in config else None
+            )
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.exceptions_version = config["exceptionsVersion"] if "exceptionsVersion" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.incarnation_number = config["incarnationNumber"] if "incarnationNumber" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.zs_defined_control_choice = config["zsDefinedControlChoice"] if "zsDefinedControlChoice" in config else None
+            self.predefined_controls_version = (
+                config["predefinedControlsVersion"] if "predefinedControlsVersion" in config else None
+            )
             self.global_control_actions = ZscalerCollection.form_list(
                 config["globalControlActions"] if "globalControlActions" in config else [], str
             )
@@ -142,7 +132,7 @@ class AppProtectionProfile(ZscalerObject):
             "predefinedControlsVersion": self.predefined_controls_version,
             "threatlabzControls": self.threatlabz_controls,
             "websocketControls": self.websocket_controls,
-            "zsDefinedControlChoice": self.zs_defined_control_choice
+            "zsDefinedControlChoice": self.zs_defined_control_choice,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -163,10 +153,8 @@ class ControlsInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.count = config["count"] \
-                if "count" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.count = config["count"] if "count" in config else None
         else:
             self.control_type = None
             self.count = None
@@ -176,10 +164,7 @@ class ControlsInfo(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "controlType": self.control_type,
-            "count": self.count
-        }
+        current_obj_format = {"controlType": self.control_type, "count": self.count}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -199,42 +184,24 @@ class CustomControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_rule_json = config["controlRuleJson"] \
-                if "controlRuleJson" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.protocol_type = config["protocolType"] \
-                if "protocolType" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_rule_json = config["controlRuleJson"] if "controlRuleJson" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.version = config["version"] if "version" in config else None
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
@@ -249,9 +216,7 @@ class CustomControls(ZscalerObject):
             else:
                 self.control_exception = None
 
-            self.rules = ZscalerCollection.form_list(
-                config["rules"] if "rules" in config else [], InspectionRule
-            )
+            self.rules = ZscalerCollection.form_list(config["rules"] if "rules" in config else [], InspectionRule)
 
         else:
             self.action = None
@@ -302,7 +267,7 @@ class CustomControls(ZscalerObject):
             "rules": self.rules,
             "severity": self.severity,
             "type": self.type,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -323,42 +288,24 @@ class PredefinedControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.attachment = config["attachment"] \
-                if "attachment" in config else None
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.protocol_type = config["protocolType"] \
-                if "protocolType" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.attachment = config["attachment"] if "attachment" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.version = config["version"] if "version" in config else None
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
@@ -419,7 +366,7 @@ class PredefinedControls(ZscalerObject):
             "paranoiaLevel": self.paranoia_level,
             "protocolType": self.protocol_type,
             "severity": self.severity,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -440,42 +387,24 @@ class PredefinedADPControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.attachment = config["attachment"] \
-                if "attachment" in config else None
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.protocol_type = config["protocolType"] \
-                if "protocolType" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.attachment = config["attachment"] if "attachment" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.version = config["version"] if "version" in config else None
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
@@ -536,7 +465,7 @@ class PredefinedADPControls(ZscalerObject):
             "paranoiaLevel": self.paranoia_level,
             "protocolType": self.protocol_type,
             "severity": self.severity,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -557,42 +486,24 @@ class PredefinedAPIControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.attachment = config["attachment"] \
-                if "attachment" in config else None
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.protocol_type = config["protocolType"] \
-                if "protocolType" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.attachment = config["attachment"] if "attachment" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.version = config["version"] if "version" in config else None
 
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
@@ -654,7 +565,7 @@ class PredefinedAPIControls(ZscalerObject):
             "paranoiaLevel": self.paranoia_level,
             "protocolType": self.protocol_type,
             "severity": self.severity,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -675,44 +586,25 @@ class ThreatLabzControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.zscaler_info_url = config["zscalerInfoUrl"] \
-                if "zscalerInfoUrl" in config else None
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
-            self.ruleset_name = config["rulesetName"] \
-                if "rulesetName" in config else None
-            self.ruleset_version = config["rulesetVersion"] \
-                if "rulesetVersion" in config else None
-            self.engine_version = config["engineVersion"] \
-                if "engineVersion" in config else None
-            self.rule_deployment_state = config["ruleDeploymentState"] \
-                if "ruleDeploymentState" in config else None
-            self.last_deployment_time = config["lastDeploymentTime"] \
-                if "lastDeploymentTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.version = config["version"] if "version" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.zscaler_info_url = config["zscalerInfoUrl"] if "zscalerInfoUrl" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
+            self.ruleset_name = config["rulesetName"] if "rulesetName" in config else None
+            self.ruleset_version = config["rulesetVersion"] if "rulesetVersion" in config else None
+            self.engine_version = config["engineVersion"] if "engineVersion" in config else None
+            self.rule_deployment_state = config["ruleDeploymentState"] if "ruleDeploymentState" in config else None
+            self.last_deployment_time = config["lastDeploymentTime"] if "lastDeploymentTime" in config else None
         else:
             self.id = None
             self.modified_time = None
@@ -758,7 +650,7 @@ class ThreatLabzControls(ZscalerObject):
             "rulesetVersion": self.ruleset_version,
             "engineVersion": self.engine_version,
             "ruleDeploymentState": self.rule_deployment_state,
-            "lastDeploymentTime": self.last_deployment_time
+            "lastDeploymentTime": self.last_deployment_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -779,36 +671,21 @@ class WebSocketControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.version = config["version"] if "version" in config else None
 
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
@@ -864,7 +741,7 @@ class WebSocketControls(ZscalerObject):
             "name": self.name,
             "paranoiaLevel": self.paranoia_level,
             "severity": self.severity,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

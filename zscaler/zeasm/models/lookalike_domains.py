@@ -37,8 +37,7 @@ class LookALikeDomains(ZscalerObject):
             self.results = ZscalerCollection.form_list(
                 config["results"] if "results" in config else [], LookalikeDomainDetails
             )
-            self.total_results: Optional[Any] = config["total_results"] \
-                if "total_results" in config else None
+            self.total_results: Optional[Any] = config["total_results"] if "total_results" in config else None
         else:
             self.results: List[Any] = ZscalerCollection.form_list([], str)
             self.total_results: Optional[Any] = None
@@ -48,10 +47,7 @@ class LookALikeDomains(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "results": self.results,
-            "total_results": self.total_results
-        }
+        current_obj_format = {"results": self.results, "total_results": self.total_results}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -71,35 +67,22 @@ class LookalikeDomainDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.created_date: Optional[Any] = config["created_date"] \
-                if "created_date" in config else None
+            self.created_date: Optional[Any] = config["created_date"] if "created_date" in config else None
             self.deception_method: List[Any] = ZscalerCollection.form_list(
                 config["deception_method"] if "deception_method" in config else [], str
             )
-            self.description: Optional[Any] = config["description"] \
-                if "description" in config else None
-            self.expiration_date: Optional[Any] = config["expiration_date"] \
-                if "expiration_date" in config else None
-            self.is_registered: Optional[Any] = config["is_registered"] \
-                if "is_registered" in config else None
-            self.lookalike_raw: Optional[Any] = config["lookalike_raw"] \
-                if "lookalike_raw" in config else None
-            self.original_domain: Optional[Any] = config["original_domain"] \
-                if "original_domain" in config else None
-            self.registered_by: Optional[Any] = config["registered_by"] \
-                if "registered_by" in config else None
-            self.registrar: Optional[Any] = config["registrar"] \
-                if "registrar" in config else None
-            self.remediation: Optional[Any] = config["remediation"] \
-                if "remediation" in config else None
-            self.risk_category: Optional[Any] = config["risk_category"] \
-                if "risk_category" in config else None
-            self.risk_score: Optional[Any] = config["risk_score"] \
-                if "risk_score" in config else None
-            self.status: Optional[Any] = config["status"] \
-                if "status" in config else None
-            self.updated_date: Optional[Any] = config["updated_date"] \
-                if "updated_date" in config else None
+            self.description: Optional[Any] = config["description"] if "description" in config else None
+            self.expiration_date: Optional[Any] = config["expiration_date"] if "expiration_date" in config else None
+            self.is_registered: Optional[Any] = config["is_registered"] if "is_registered" in config else None
+            self.lookalike_raw: Optional[Any] = config["lookalike_raw"] if "lookalike_raw" in config else None
+            self.original_domain: Optional[Any] = config["original_domain"] if "original_domain" in config else None
+            self.registered_by: Optional[Any] = config["registered_by"] if "registered_by" in config else None
+            self.registrar: Optional[Any] = config["registrar"] if "registrar" in config else None
+            self.remediation: Optional[Any] = config["remediation"] if "remediation" in config else None
+            self.risk_category: Optional[Any] = config["risk_category"] if "risk_category" in config else None
+            self.risk_score: Optional[Any] = config["risk_score"] if "risk_score" in config else None
+            self.status: Optional[Any] = config["status"] if "status" in config else None
+            self.updated_date: Optional[Any] = config["updated_date"] if "updated_date" in config else None
         else:
             self.created_date: Optional[Any] = None
             self.deception_method: List[Any] = []
@@ -135,7 +118,7 @@ class LookalikeDomainDetails(ZscalerObject):
             "risk_category": self.risk_category,
             "risk_score": self.risk_score,
             "status": self.status,
-            "updated_date": self.updated_date
+            "updated_date": self.updated_date,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

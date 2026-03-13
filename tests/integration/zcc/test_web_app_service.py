@@ -38,11 +38,11 @@ class TestWebAppService:
             services, response, err = client.zcc.web_app_service.list_by_company()
             assert err is None, f"Error listing web app services: {err}"
             assert isinstance(services, list), "Expected a list of web app services"
-            
+
             # Verify response structure if we have services
             if services:
                 service = services[0]
-                assert hasattr(service, 'as_dict'), "Web app service should have as_dict method"
+                assert hasattr(service, "as_dict"), "Web app service should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing web app services failed: {exc}")
 
@@ -55,9 +55,7 @@ class TestWebAppService:
         errors = []
 
         try:
-            services, response, err = client.zcc.web_app_service.list_by_company(
-                query_params={"page": 1, "page_size": 10}
-            )
+            services, response, err = client.zcc.web_app_service.list_by_company(query_params={"page": 1, "page_size": 10})
             assert err is None, f"Error listing web app services with pagination: {err}"
             assert isinstance(services, list), "Expected a list of web app services"
         except Exception as exc:
@@ -72,13 +70,10 @@ class TestWebAppService:
         errors = []
 
         try:
-            services, response, err = client.zcc.web_app_service.list_by_company(
-                query_params={"search": "test"}
-            )
+            services, response, err = client.zcc.web_app_service.list_by_company(query_params={"search": "test"})
             assert err is None, f"Error listing web app services with search: {err}"
             assert isinstance(services, list), "Expected a list of web app services"
         except Exception as exc:
             errors.append(f"Listing web app services with search failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the search web app service test:\n{chr(10).join(errors)}"
-

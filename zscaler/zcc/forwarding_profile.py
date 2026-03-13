@@ -84,26 +84,26 @@ class ForwardingProfileAPI(APIClient):
 
     def update_forwarding_profile(self, **kwargs) -> APIResult[dict]:
         """
-       Updates a forwarding profile.
+        Updates a forwarding profile.
 
-        Args:
-            N/A
+         Args:
+             N/A
 
-        Returns:
-            tuple: A tuple containing the Create Forwarding Profile, response, and error.
+         Returns:
+             tuple: A tuple containing the Create Forwarding Profile, response, and error.
 
-        Examples:
-           Updates a forwarding profile.
+         Examples:
+            Updates a forwarding profile.
 
-            >>> updated_profile, response, error = client.zcc.forwarding_profile.update_forwarding_profile(
-            ...     name=ForwardingProfile01,
-            ...     hostname='server.acme.com',
-            ...     Resolved_ips_for_hostname='8.8.8.8',
-            ... )
-            >>> if error:
-            ...     print(f"Error adding forwwarding profile: {error}")
-            ...     return
-            ... print(f"Forwwarding profile added successfully: {updated_profile.as_dict()}")
+             >>> updated_profile, response, error = client.zcc.forwarding_profile.update_forwarding_profile(
+             ...     name=ForwardingProfile01,
+             ...     hostname='server.acme.com',
+             ...     Resolved_ips_for_hostname='8.8.8.8',
+             ... )
+             >>> if error:
+             ...     print(f"Error adding forwwarding profile: {error}")
+             ...     return
+             ... print(f"Forwwarding profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(

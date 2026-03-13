@@ -33,10 +33,8 @@ class DiscoveryService(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.trusted_account_id = config["trustedAccountId"] \
-                if "trustedAccountId" in config else None
-            self.trusted_role_name = config["trustedRoleName"] \
-                if "trustedRoleName" in config else None
+            self.trusted_account_id = config["trustedAccountId"] if "trustedAccountId" in config else None
+            self.trusted_role_name = config["trustedRoleName"] if "trustedRoleName" in config else None
         else:
             self.trusted_account_id = None
             self.trusted_role_name = None
@@ -46,10 +44,7 @@ class DiscoveryService(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "trustedAccountId": self.trusted_account_id,
-            "trustedRoleName": self.trusted_role_name
-        }
+        current_obj_format = {"trustedAccountId": self.trusted_account_id, "trustedRoleName": self.trusted_role_name}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -69,10 +64,8 @@ class DiscoveryServicePermissions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.discovery_role = config["discoveryRole"] \
-                if "discoveryRole" in config else None
-            self.external_id = config["externalId"] \
-                if "externalId" in config else None
+            self.discovery_role = config["discoveryRole"] if "discoveryRole" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
         else:
             self.discovery_role = None
             self.external_id = None
@@ -82,9 +75,6 @@ class DiscoveryServicePermissions(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "discoveryRole": self.discovery_role,
-            "externalId": self.external_id
-        }
+        current_obj_format = {"discoveryRole": self.discovery_role, "externalId": self.external_id}
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -43,9 +43,7 @@ class TestShadowITReport:
             assert isinstance(apps, list), "Apps should be a list"
 
             # Test list_apps with pagination
-            apps_paginated, response, err = client.zia.shadow_it_report.list_apps(
-                query_params={"page_number": 0, "limit": 10}
-            )
+            apps_paginated, response, err = client.zia.shadow_it_report.list_apps(query_params={"page_number": 0, "limit": 10})
             assert err is None, f"List apps with pagination failed: {err}"
 
             # Test list_custom_tags
@@ -56,11 +54,10 @@ class TestShadowITReport:
             # Test bulk_update (just attempting to call it with minimal impact)
             try:
                 if apps and len(apps) > 0:
-                    app_ids = [apps[0].id] if hasattr(apps[0], 'id') else []
+                    app_ids = [apps[0].id] if hasattr(apps[0], "id") else []
                     if app_ids:
                         result, response, err = client.zia.shadow_it_report.bulk_update(
-                            sanction_state="SANCTIONED",
-                            app_ids=app_ids
+                            sanction_state="SANCTIONED", app_ids=app_ids
                         )
                         # May fail due to permissions
             except Exception:
@@ -68,9 +65,7 @@ class TestShadowITReport:
 
             # Test export_shadow_it_report
             try:
-                report, err = client.zia.shadow_it_report.export_shadow_it_report(
-                    duration="LAST_1_DAYS"
-                )
+                report, err = client.zia.shadow_it_report.export_shadow_it_report(duration="LAST_1_DAYS")
                 # May return None or fail
             except Exception:
                 pass
@@ -78,9 +73,7 @@ class TestShadowITReport:
             # Test export_shadow_it_csv
             try:
                 csv_data, err = client.zia.shadow_it_report.export_shadow_it_csv(
-                    application="GOOGLE_APPS",
-                    entity="USER",
-                    duration="LAST_1_DAYS"
+                    application="GOOGLE_APPS", entity="USER", duration="LAST_1_DAYS"
                 )
                 # May fail
             except Exception:

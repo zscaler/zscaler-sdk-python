@@ -87,9 +87,7 @@ class DevicesAPI(APIClient):
         registration_types = query_params.get("registration_types")
         if registration_types:
             reg_types_resolved = [
-                str(zcc_param_map["reg_type"].get(item))
-                for item in registration_types
-                if zcc_param_map["reg_type"].get(item)
+                str(zcc_param_map["reg_type"].get(item)) for item in registration_types if zcc_param_map["reg_type"].get(item)
             ]
             if not reg_types_resolved:
                 raise ValueError("Invalid registration_type specified.")
@@ -98,12 +96,7 @@ class DevicesAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadDevices")
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            params=params,
-            headers={"Accept": "*/*"}
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, params=params, headers={"Accept": "*/*"})
 
         if error:
             raise Exception("Error creating request for downloading devices.")
@@ -175,9 +168,7 @@ class DevicesAPI(APIClient):
         registration_types = query_params.get("registration_types")
         if registration_types:
             reg_types_resolved = [
-                str(zcc_param_map["reg_type"].get(item))
-                for item in registration_types
-                if zcc_param_map["reg_type"].get(item)
+                str(zcc_param_map["reg_type"].get(item)) for item in registration_types if zcc_param_map["reg_type"].get(item)
             ]
             if not reg_types_resolved:
                 raise ValueError("Invalid registration_type specified.")
@@ -186,12 +177,7 @@ class DevicesAPI(APIClient):
         http_method = "get".upper()
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadServiceStatus")
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            params=params,
-            headers={"Accept": "*/*"}
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, params=params, headers={"Accept": "*/*"})
 
         if error:
             raise Exception("Error creating request for downloading service status.")
@@ -284,12 +270,7 @@ class DevicesAPI(APIClient):
         if "Time-Zone" in params:
             headers["Time-Zone"] = params.pop("Time-Zone")
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            params=params,
-            headers=headers
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, params=params, headers=headers)
 
         if error:
             raise Exception("Error creating request for downloading disable reasons report.")
@@ -470,32 +451,32 @@ class DevicesAPI(APIClient):
 
     def get_device_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
-       Lists device details of enrolled devices of your organization.
+        Lists device details of enrolled devices of your organization.
 
-        Keyword Args:
-                ``[query_params.username]`` {str, optional}: Filter by enrolled user name for the device.
-                ``[query_params.udid]`` {str, optional}: Filter by unique device identifier.
+         Keyword Args:
+                 ``[query_params.username]`` {str, optional}: Filter by enrolled user name for the device.
+                 ``[query_params.udid]`` {str, optional}: Filter by unique device identifier.
 
-        Returns:
-            :obj:`DeviceDetails`: Returns device detail information in the Client Connector Portal.
+         Returns:
+             :obj:`DeviceDetails`: Returns device detail information in the Client Connector Portal.
 
-        Examples:
-            Prints device details in the Client Connector Portal to the console:
+         Examples:
+             Prints device details in the Client Connector Portal to the console:
 
-            >>> details, _, err = client.zcc.devices.get_device_details()
-            >>> if err:
-            ...     print(f"Error listing device details: {err}")
-            ...     return
-            ... print(details.as_dict())
+             >>> details, _, err = client.zcc.devices.get_device_details()
+             >>> if err:
+             ...     print(f"Error listing device details: {err}")
+             ...     return
+             ... print(details.as_dict())
 
-            Prints device details in the Client Connector Portal to the console:
+             Prints device details in the Client Connector Portal to the console:
 
-            >>> details, _, err = client.zcc.devices.get_device_details(
-            ... query_params:{'username': 'jdoe'})
-            >>> if err:
-            ...     print(f"Error listing device details: {err}")
-            ...     return
-            ... print(details.as_dict())
+             >>> details, _, err = client.zcc.devices.get_device_details(
+             ... query_params:{'username': 'jdoe'})
+             >>> if err:
+             ...     print(f"Error listing device details: {err}")
+             ...     return
+             ... print(details.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -574,10 +555,7 @@ class DevicesAPI(APIClient):
         body = kwargs
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-            params=query_params
+            method=http_method, endpoint=api_url, body=body, params=query_params
         )
 
         if error:
@@ -643,10 +621,7 @@ class DevicesAPI(APIClient):
         body = kwargs
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-            params=query_params
+            method=http_method, endpoint=api_url, body=body, params=query_params
         )
 
         if error:

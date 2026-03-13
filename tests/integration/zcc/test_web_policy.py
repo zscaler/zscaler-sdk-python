@@ -38,11 +38,11 @@ class TestWebPolicy:
             policies, response, err = client.zcc.web_policy.list_by_company()
             assert err is None, f"Error listing web policies: {err}"
             assert isinstance(policies, list), "Expected a list of web policies"
-            
+
             # Verify response structure if we have policies
             if policies:
                 policy = policies[0]
-                assert hasattr(policy, 'as_dict'), "Web policy should have as_dict method"
+                assert hasattr(policy, "as_dict"), "Web policy should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing web policies failed: {exc}")
 
@@ -55,9 +55,7 @@ class TestWebPolicy:
         errors = []
 
         try:
-            policies, response, err = client.zcc.web_policy.list_by_company(
-                query_params={"page": 1, "page_size": 10}
-            )
+            policies, response, err = client.zcc.web_policy.list_by_company(query_params={"page": 1, "page_size": 10})
             assert err is None, f"Error listing web policies with pagination: {err}"
             assert isinstance(policies, list), "Expected a list of web policies"
         except Exception as exc:
@@ -75,9 +73,7 @@ class TestWebPolicy:
 
         for device_type in device_types:
             try:
-                policies, response, err = client.zcc.web_policy.list_by_company(
-                    query_params={"device_type": device_type}
-                )
+                policies, response, err = client.zcc.web_policy.list_by_company(query_params={"device_type": device_type})
                 assert err is None, f"Error listing web policies for {device_type}: {err}"
                 assert isinstance(policies, list), f"Expected a list of web policies for {device_type}"
             except Exception as exc:
@@ -92,13 +88,10 @@ class TestWebPolicy:
         errors = []
 
         try:
-            policies, response, err = client.zcc.web_policy.list_by_company(
-                query_params={"search": "test"}
-            )
+            policies, response, err = client.zcc.web_policy.list_by_company(query_params={"search": "test"})
             assert err is None, f"Error listing web policies with search: {err}"
             assert isinstance(policies, list), "Expected a list of web policies"
         except Exception as exc:
             errors.append(f"Listing web policies with search failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the search web policy test:\n{chr(10).join(errors)}"
-

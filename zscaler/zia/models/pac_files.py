@@ -124,20 +124,13 @@ class PacFileValidationResponse(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.success = config["success"] \
-                if "success" in config else None
-            self.message = config["message"] \
-                if "message" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.warning_count = config["warningCount"] \
-                if "warningCount" in config else None
-            self.error_count = config["errorCount"] \
-                if "errorCount" in config else None
+            self.success = config["success"] if "success" in config else None
+            self.message = config["message"] if "message" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.warning_count = config["warningCount"] if "warningCount" in config else None
+            self.error_count = config["errorCount"] if "errorCount" in config else None
 
-            self.messages = ZscalerCollection.form_list(
-                config["messages"] if "messages" in config else [], Messages
-            )
+            self.messages = ZscalerCollection.form_list(config["messages"] if "messages" in config else [], Messages)
         else:
             self.success = None
             self.message = None
@@ -157,7 +150,7 @@ class PacFileValidationResponse(ZscalerObject):
             "severity": self.severity,
             "messages": self.messages,
             "warningCount": self.warning_count,
-            "errorCount": self.error_count
+            "errorCount": self.error_count,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -178,20 +171,13 @@ class Messages(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.end_line = config["endLine"] \
-                if "endLine" in config else None
-            self.end_column = config["endColumn"] \
-                if "endColumn" in config else None
-            self.line = config["line"] \
-                if "line" in config else None
-            self.column = config["column"] \
-                if "column" in config else None
-            self.message = config["message"] \
-                if "message" in config else None
-            self.fatal = config["fatal"] \
-                if "fatal" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.end_line = config["endLine"] if "endLine" in config else None
+            self.end_column = config["endColumn"] if "endColumn" in config else None
+            self.line = config["line"] if "line" in config else None
+            self.column = config["column"] if "column" in config else None
+            self.message = config["message"] if "message" in config else None
+            self.fatal = config["fatal"] if "fatal" in config else None
         else:
             self.severity = None
             self.end_line = None
@@ -213,7 +199,7 @@ class Messages(ZscalerObject):
             "line": self.line,
             "column": self.column,
             "message": self.message,
-            "fatal": self.fatal
+            "fatal": self.fatal,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

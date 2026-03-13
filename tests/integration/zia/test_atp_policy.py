@@ -51,7 +51,11 @@ class TestATPPolicy:
             try:
                 if original_settings:
                     updated_settings, _, error = client.zia.atp_policy.update_atp_settings(
-                        malware_url_filter_enabled=original_settings.get("malware_url_filter_enabled", True) if isinstance(original_settings, dict) else getattr(original_settings, "malware_url_filter_enabled", True),
+                        malware_url_filter_enabled=(
+                            original_settings.get("malware_url_filter_enabled", True)
+                            if isinstance(original_settings, dict)
+                            else getattr(original_settings, "malware_url_filter_enabled", True)
+                        ),
                     )
                     # Update may fail - that's ok
             except Exception:
@@ -93,9 +97,7 @@ class TestATPPolicy:
                 if error is None:
                     # Step 7: Delete ATP malicious URL (cleanup)
                     try:
-                        _, _, error = client.zia.atp_policy.delete_atp_malicious_urls(
-                            malicious_urls=test_malicious_urls
-                        )
+                        _, _, error = client.zia.atp_policy.delete_atp_malicious_urls(malicious_urls=test_malicious_urls)
                         # Delete may fail - that's ok
                     except Exception:
                         pass

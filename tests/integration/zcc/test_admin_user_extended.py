@@ -43,7 +43,7 @@ class TestAdminUserExtended:
                 assert isinstance(users, list), "Expected a list of admin users"
                 if users:
                     user = users[0]
-                    assert hasattr(user, 'as_dict'), "User should have as_dict method"
+                    assert hasattr(user, "as_dict"), "User should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing admin users failed: {exc}")
 
@@ -101,9 +101,8 @@ class TestAdminUserExtended:
                 # Verify roles have expected attributes
                 if roles:
                     role = roles[0]
-                    assert hasattr(role, 'as_dict'), "Role should have as_dict method"
+                    assert hasattr(role, "as_dict"), "Role should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing all admin roles failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred: {chr(10).join(errors)}"
-

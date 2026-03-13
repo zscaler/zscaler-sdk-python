@@ -1,69 +1,5 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Mon, 09 Feb 2026 18:09:34 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{"name": "TestLabel_VCR_Integration", "description": "Test Description
       for VCR"}'
     headers:
@@ -78,13 +14,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/ruleLabels
+    uri: https://easm.test.zscaler.com/zia/api/v1/ruleLabels
   response:
     body:
-      string: '{"id":1887090,"name":"TestLabel_VCR_Integration","description":"Test
-        Description for VCR","lastModifiedTime":1770660576,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"createdBy":{"id":19475409,"name":"REDACTED"},"referencedRuleCount":0}'
+      string: '{"id":4338882,"name":"TestLabel_VCR_Integration","description":"Test
+        Description for VCR","lastModifiedTime":1773372096,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"createdBy":{"id":117810311,"name":"REDACTED"},"referencedRuleCount":0}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -106,7 +42,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 09 Feb 2026 18:09:37 GMT
+      - Fri, 13 Mar 2026 03:21:36 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -118,23 +54,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1976'
+      - '951'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5c42fd90-0b5a-9a4c-b954-38af9d70c708
+      - 4aa3ba9b-c428-974c-ba3a-bea75ce2a63d
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4994'
       x-ratelimit-reset:
       - '25'
       x-transaction-id:
-      - d5025a2a-9329-4262-b41d-eb669d6776de
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -157,13 +93,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: PUT
-    uri: https://api.beta.zsapi.net/zia/api/v1/ruleLabels/1887090
+    uri: https://easm.test.zscaler.com/zia/api/v1/ruleLabels/4338882
   response:
     body:
-      string: '{"id":1887090,"name":"UpdatedLabel_VCR_Integration","description":"Updated
-        Description for VCR","lastModifiedTime":1770660577,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"createdBy":{"id":19475409,"name":"REDACTED"},"referencedRuleCount":0}'
+      string: '{"id":4338882,"name":"UpdatedLabel_VCR_Integration","description":"Updated
+        Description for VCR","lastModifiedTime":1773372097,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"createdBy":{"id":117810311,"name":"REDACTED"},"referencedRuleCount":0}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -185,7 +121,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 09 Feb 2026 18:09:37 GMT
+      - Fri, 13 Mar 2026 03:21:38 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -197,23 +133,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '649'
+      - '2067'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7e1a9173-d033-9889-82d8-db7747270552
+      - 0b57a9ac-e835-90cc-870d-55d8e3e4a86d
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4993'
       x-ratelimit-reset:
-      - '23'
+      - '24'
       x-transaction-id:
-      - d5025a2a-9329-4262-b41d-eb669d6776de
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -235,13 +171,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/ruleLabels/1887090
+    uri: https://easm.test.zscaler.com/zia/api/v1/ruleLabels/4338882
   response:
     body:
-      string: '{"id":1887090,"name":"UpdatedLabel_VCR_Integration","description":"Updated
-        Description for VCR","lastModifiedTime":1770660577,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"createdBy":{"id":19475409,"name":"REDACTED"},"referencedRuleCount":0}'
+      string: '{"id":4338882,"name":"UpdatedLabel_VCR_Integration","description":"Updated
+        Description for VCR","lastModifiedTime":1773372097,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"createdBy":{"id":117810311,"name":"REDACTED"},"referencedRuleCount":0}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -263,7 +199,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Mon, 09 Feb 2026 18:09:38 GMT
+      - Fri, 13 Mar 2026 03:21:39 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -275,101 +211,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '246'
+      - '346'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - d15b7057-77d5-96bf-9da2-43df86e6076b
+      - d3cada27-31c2-98fa-b55c-3fa51a062025
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
-      x-ratelimit-reset:
-      - '23'
-      x-transaction-id:
-      - d5025a2a-9329-4262-b41d-eb669d6776de
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/ruleLabels?search=UpdatedLabel_VCR_Integration
-  response:
-    body:
-      string: '[{"id":1887090,"name":"UpdatedLabel_VCR_Integration","description":"Updated
-        Description for VCR","lastModifiedTime":1770660577,"lastModifiedBy":{"id":19475409,"name":"REDACTED"},"createdBy":{"id":19475409,"name":"REDACTED"},"referencedRuleCount":0}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Mon, 09 Feb 2026 18:09:40 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '2735'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 9871c002-641e-9e07-926f-428f2982a1ad
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4996'
+      - '4992'
       x-ratelimit-reset:
       - '22'
       x-transaction-id:
-      - d5025a2a-9329-4262-b41d-eb669d6776de
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -391,9 +249,87 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/ruleLabels?search=UpdatedLabel_VCR_Integration
+  response:
+    body:
+      string: '[{"id":4338882,"name":"UpdatedLabel_VCR_Integration","description":"Updated
+        Description for VCR","lastModifiedTime":1773372097,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"createdBy":{"id":117810311,"name":"REDACTED"},"referencedRuleCount":0}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:21:48 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '9038'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - af5c37b1-6cbf-9245-8db0-dd99179985cf
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '21'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: DELETE
-    uri: https://api.beta.zsapi.net/zia/api/v1/ruleLabels/1887090
+    uri: https://easm.test.zscaler.com/zia/api/v1/ruleLabels/4338882
   response:
     body:
       string: ''
@@ -414,7 +350,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Mon, 09 Feb 2026 18:09:41 GMT
+      - Fri, 13 Mar 2026 03:21:49 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -424,23 +360,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '596'
+      - '931'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3b69eee2-6803-9ba9-afc5-1f0f4ce6fa74
+      - 38cef3ac-059e-9161-882a-2330f1864aae
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4990'
       x-ratelimit-reset:
-      - '19'
+      - '12'
       x-transaction-id:
-      - d5025a2a-9329-4262-b41d-eb669d6776de
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

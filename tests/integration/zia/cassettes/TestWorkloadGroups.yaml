@@ -13,15 +13,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/workloadGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/workloadGroups
   response:
     body:
-      string: '[{"id":17811899,"name":"BD_WORKLOAD_GROUP01","description":"BD_WORKLOAD_GROUP01","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000
-        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1705956482,"lastModifiedBy":{"id":8061243,"name":"REDACTED"}},{"id":17866268,"name":"BD_WORKLOAD_GROUP02","description":"BD_WORKLOAD_GROUP02","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"IamInstanceProfile-Arn","value":"test01"}],"operator":"AND"}},{"tagType":"ANY","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"123456789"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000#\u0000\u0004\u0000\u0004","lastModifiedTime":1706735825,"lastModifiedBy":{"id":8061243,"name":"REDACTED"}},{"id":18618146,"name":"Test
-        Group","description":"Test Group","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"123456789"}],"operator":"AND"}},{"tagType":"VPC","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}},{"tagType":"VM","operator":"AND","tagContainer":{"tags":[{"key":"IamInstanceProfile-Arn","value":"test01"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000
-        \u0000\u0004\u0000\u0001\u0000\u0003\u0000''\u0000\u0004\u0000\u0001\u0000\u0003\u0000$\u0000\u0004\u0000\u0001\u0000\u0003\u0000&\u0000\u0004\u0000\u0004","lastModifiedTime":1758576388,"lastModifiedBy":{"id":19475409,"name":"REDACTED"}}]'
+      string: '[{"id":2665545,"name":"BD_WORKLOAD_GROUP01","description":"demo_CSUljL7d","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"12345"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000
+        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1772133321,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":9931582,"name":"BD_WORKLOAD_GROUP010","description":"BD_WORKLOAD_GROUP010","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000&\u0000\u0004\u0000\u0004","lastModifiedTime":1759949985,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":9977816,"name":"BD_WORKLOAD_GROUP01_1761585083686","description":"demergo_XcCCFoGn","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"12345"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000
+        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1761585092,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":9977838,"name":"BD_WORKLOAD_GROUP01_1761587080108","description":"aliquam_YoXt3rPt","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"12345"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000
+        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1761587092,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":9993039,"name":"DuHWIWl","description":"demo_CSUljL7d","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"12345"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000
+        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1761797586,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":10552636,"name":"WorkloadGroupDev01_145939b8","description":"WorkloadGroupDev01","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"123456789"}],"operator":"AND"}},{"tagType":"VPC","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000&\u0000\u0004\u0000\u0001\u0000\u0003\u0000$\u0000\u0004\u0000\u0001\u0000\u0003\u0000%\u0000\u0004\u0000\u0004","lastModifiedTime":1772474401,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":10552704,"name":"WorkloadGroupDev01_2488266b","description":"WorkloadGroupDev01","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"123456789"}],"operator":"AND"}},{"tagType":"VPC","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000&\u0000\u0004\u0000\u0001\u0000\u0003\u0000$\u0000\u0004\u0000\u0001\u0000\u0003\u0000%\u0000\u0004\u0000\u0004","lastModifiedTime":1772478041,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}},{"id":10563050,"name":"WorkloadGroupDev01_85b71f23","description":"WorkloadGroupDev01","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"123456789"}],"operator":"AND"}},{"tagType":"VPC","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}}]},"lastModifiedTime":1772651293,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -43,109 +44,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:40:00 GMT
+      - Fri, 13 Mar 2026 03:29:25 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '245'
+      - '367'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 191bcdea-bd35-913a-ac90-e8d2fcc58f78
+      - 543d27d9-071a-9c61-80d3-ac55c4af7718
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4978'
       x-ratelimit-reset:
-      - '60'
+      - '36'
       x-transaction-id:
-      - a1804b72-cbe7-4ad2-aa15-3c7bf1668aee
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/workloadGroups/17811899
-  response:
-    body:
-      string: '{"id":17811899,"name":"BD_WORKLOAD_GROUP01","description":"BD_WORKLOAD_GROUP01","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"example"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"Vpc-id","value":"vpcid12344"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000
-        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1705956482,"lastModifiedBy":{"id":8061243,"name":"REDACTED"}}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Fri, 19 Dec 2025 21:40:00 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '170'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 246860d8-1c1e-9ce1-b82a-783ad3c10dbf
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4998'
-      x-ratelimit-reset:
-      - '60'
-      x-transaction-id:
-      - a1804b72-cbe7-4ad2-aa15-3c7bf1668aee
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -168,9 +95,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/workloadGroups
+    uri: https://easm.test.zscaler.com/zia/api/v1/workloadGroups
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Workload group expression
@@ -196,7 +123,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:56:22 GMT
+      - Fri, 13 Mar 2026 03:29:25 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -204,23 +131,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '246'
+      - '162'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - efe66d90-4c0e-9fd5-9e3a-b4c437df5e3f
+      - d78cb0ac-5584-91ae-a304-428ed8096ea4
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4977'
       x-ratelimit-reset:
-      - '38'
+      - '35'
       x-transaction-id:
-      - ab4645ed-4154-47f4-9a9f-017aab0b604a
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -228,4 +155,82 @@ interactions:
     status:
       code: 400
       message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/workloadGroups/2665545
+  response:
+    body:
+      string: '{"id":2665545,"name":"BD_WORKLOAD_GROUP01","description":"demo_CSUljL7d","expressionJson":{"expressionContainers":[{"tagType":"ATTR","operator":"AND","tagContainer":{"tags":[{"key":"GroupId","value":"12345"}],"operator":"AND"}},{"tagType":"ENI","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}},{"tagType":"SUBNET","operator":"AND","tagContainer":{"tags":[{"key":"GroupName","value":"test"}],"operator":"AND"}}]},"expression":"\u0000\u0001\u0000\u0003\u0000\u0001\u0000\u0003\u0000\"\u0000\u0004\u0000\u0001\u0000\u0003\u0000
+        \u0000\u0004\u0000\u0001\u0000\u0003\u0000!\u0000\u0004\u0000\u0004","lastModifiedTime":1772133321,"lastModifiedBy":{"id":117810311,"name":"REDACTED"}}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:29:26 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '274'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b1cf28da-222f-96b7-8490-e827020b9977
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
 version: 1

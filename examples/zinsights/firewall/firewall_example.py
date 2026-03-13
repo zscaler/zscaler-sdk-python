@@ -65,16 +65,16 @@ def get_config():
         sys.exit(1)
 
     return {
-        'clientId': client_id,
-        'clientSecret': client_secret,
-        'vanityDomain': vanity_domain,
-        'cloud': cloud,
+        "clientId": client_id,
+        "clientSecret": client_secret,
+        "vanityDomain": vanity_domain,
+        "cloud": cloud,
     }
 
 
 def get_time_range(days: int):
     """Get start and end time in epoch milliseconds.
-    
+
     Note: Z-Insights API requires end_time to be at least 1 day before current time.
     """
     # End time is 1 day ago (API requirement)
@@ -92,21 +92,9 @@ def print_header(title: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Query Zero Trust Firewall analytics from Z-Insights"
-    )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=10,
-        help="Maximum number of entries to return (default: 10)"
-    )
-    parser.add_argument(
-        "--days",
-        type=int,
-        default=7,
-        help="Number of days to query (default: 7)"
-    )
+    parser = argparse.ArgumentParser(description="Query Zero Trust Firewall analytics from Z-Insights")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum number of entries to return (default: 10)")
+    parser.add_argument("--days", type=int, default=7, help="Number of days to query (default: 7)")
     args = parser.parse_args()
 
     config = get_config()
@@ -118,9 +106,7 @@ def main():
         # Query traffic by action
         print_header("Firewall Traffic by Action")
         entries, response, error = client.zinsights.firewall.get_traffic_by_action(
-            start_time=start_time,
-            end_time=end_time,
-            limit=args.limit
+            start_time=start_time, end_time=end_time, limit=args.limit
         )
 
         if error:
@@ -134,18 +120,16 @@ def main():
         # Query traffic by location
         print_header("Firewall Traffic by Location")
         entries, response, error = client.zinsights.firewall.get_traffic_by_location(
-            start_time=start_time,
-            end_time=end_time,
-            limit=args.limit
+            start_time=start_time, end_time=end_time, limit=args.limit
         )
 
         if error:
             print(f"Error: {error}")
         elif entries:
             for entry in entries:
-                loc_id = entry.get('id', 'N/A')
-                name = entry.get('name', 'Unknown')
-                total = entry.get('total', 0)
+                loc_id = entry.get("id", "N/A")
+                name = entry.get("name", "Unknown")
+                total = entry.get("total", 0)
                 print(f"  Location ID: {loc_id} | Name: {name} | Total: {total:,}")
         else:
             print("  No location data available.")
@@ -153,9 +137,7 @@ def main():
         # Query network services
         print_header("Firewall Network Services")
         entries, response, error = client.zinsights.firewall.get_network_services(
-            start_time=start_time,
-            end_time=end_time,
-            limit=args.limit
+            start_time=start_time, end_time=end_time, limit=args.limit
         )
 
         if error:
@@ -173,4 +155,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

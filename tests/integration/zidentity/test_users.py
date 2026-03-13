@@ -44,10 +44,10 @@ class TestUsers:
                 create_group, _, error = client.zidentity.users.add_user(
                     login_name="john.doe@securitygeek.io",
                     display_name="John Doe",
-                    first_name='John',
-                    last_name='Doe',
-                    primary_email='john.doe@securitygeek.io',
-                    secondary_email='jdoe@acme.com',
+                    first_name="John",
+                    last_name="Doe",
+                    primary_email="john.doe@securitygeek.io",
+                    secondary_email="jdoe@acme.com",
                     status=True,
                 )
                 assert error is None, f"Add User Error: {error}"
@@ -63,10 +63,10 @@ class TestUsers:
                         user_id=user_id,
                         login_name="john.doe@securitygeek.io",
                         display_name="John Doe",
-                        first_name='John',
-                        last_name='Doe',
-                        primary_email='john.doe@securitygeek.io',
-                        secondary_email='jdoe1@acme.com',
+                        first_name="John",
+                        last_name="Doe",
+                        primary_email="john.doe@securitygeek.io",
+                        secondary_email="jdoe1@acme.com",
                         status=True,
                     )
                     assert error is None, f"Update User Error: {error}"
@@ -89,7 +89,7 @@ class TestUsers:
                     users_response, _, error = client.zidentity.users.list_users()
                     assert error is None, f"List Users Error: {error}"
                     assert users_response is not None, "Expected a users response object"
-                    assert hasattr(users_response, 'records'), "Expected users_response to have records field"
+                    assert hasattr(users_response, "records"), "Expected users_response to have records field"
             except Exception as e:
                 errors.append(f"Exception during list_users: {str(e)}")
 

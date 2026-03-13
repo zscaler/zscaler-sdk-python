@@ -801,6 +801,7 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping vzen clusters: {str(e)}")
             raise
 
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 

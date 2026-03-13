@@ -67,7 +67,7 @@ class LegacyZGuardClientHelper:
         request_executor_impl: Optional[Type] = None,
         auto_retry_on_rate_limit: bool = True,
         max_rate_limit_retries: int = 3,
-        **kw: Any
+        **kw: Any,
     ) -> None:
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
 
@@ -97,9 +97,7 @@ class LegacyZGuardClientHelper:
 
         # Validate API key
         if not self.api_key:
-            raise ValueError(
-                f"API key is required. Please set 'api_key' or '{self._env_base}_API_KEY' environment variable."
-            )
+            raise ValueError(f"API key is required. Please set 'api_key' or '{self._env_base}_API_KEY' environment variable.")
 
         self.logger.info("Initializing %s client", self._product)
         self.logger.debug("API key configured")
@@ -120,7 +118,7 @@ class LegacyZGuardClientHelper:
         self.max_rate_limit_retries = max_rate_limit_retries
         self._rate_limit_lock = threading.Lock()
         self._request_count_wait_until = 0  # Timestamp when "rq" limit resets
-        self._content_size_wait_until = 0   # Timestamp when "cs" limit resets
+        self._content_size_wait_until = 0  # Timestamp when "cs" limit resets
 
         # Rate limit statistics
         self._total_throttles = 0
@@ -225,12 +223,12 @@ class LegacyZGuardClientHelper:
                 self._total_throttles += 1
 
                 # Calculate wait time
-                retry_after_millis = getattr(throttle, 'retry_after_millis', None)
+                retry_after_millis = getattr(throttle, "retry_after_millis", None)
                 wait_seconds = (retry_after_millis or 0) / 1000.0
                 max_wait_seconds = max(max_wait_seconds, wait_seconds)
 
-                metric = getattr(throttle, 'metric', None)
-                rlc_id = getattr(throttle, 'rlc_id', None)
+                metric = getattr(throttle, "metric", None)
+                rlc_id = getattr(throttle, "rlc_id", None)
 
                 # Track by metric type
                 if metric == "rq":
@@ -248,16 +246,13 @@ class LegacyZGuardClientHelper:
 
                 # Log details
                 logger.warning(
-                    f"AIGuard rate limit triggered: "
-                    f"rlcId={rlc_id}, metric={metric}, "
-                    f"retryAfter={retry_after_millis}ms"
+                    f"AIGuard rate limit triggered: " f"rlcId={rlc_id}, metric={metric}, " f"retryAfter={retry_after_millis}ms"
                 )
 
             # Apply rate limiting if auto_retry is enabled
             if self.auto_retry_on_rate_limit and max_wait_seconds > 0:
                 logger.info(
-                    f"AIGuard rate limit: {', '.join(throttle_info)}. "
-                    f"Sleeping for {max_wait_seconds:.1f} seconds..."
+                    f"AIGuard rate limit: {', '.join(throttle_info)}. " f"Sleeping for {max_wait_seconds:.1f} seconds..."
                 )
                 time.sleep(max_wait_seconds)
                 return True
@@ -393,6 +388,7 @@ class LegacyZGuardClientHelper:
         # Log request (with proper parameters for dump_request)
         import uuid
         import time
+
         request_uuid = str(uuid.uuid4())
         start_time = time.time()
 
@@ -403,7 +399,7 @@ class LegacyZGuardClientHelper:
             json=json,
             params=params or {},
             headers=dict(prepared.headers),
-            request_uuid=request_uuid
+            request_uuid=request_uuid,
         )
 
         # Create session if not exists
@@ -422,7 +418,7 @@ class LegacyZGuardClientHelper:
             params=params or {},
             request_uuid=request_uuid,
             start_time=start_time,
-            from_cache=False
+            from_cache=False,
         )
 
         return response

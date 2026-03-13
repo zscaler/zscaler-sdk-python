@@ -93,4 +93,3 @@ class TestLocations:
             errors.append(f"Exception during locations test: {str(e)}")
 
         assert len(errors) == 0, f"Errors occurred: {errors}"
-

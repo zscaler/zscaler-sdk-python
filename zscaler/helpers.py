@@ -47,14 +47,12 @@ def to_snake_case(string):
         "dnsResolutionOnTransparentProxyIPv6UrlCategories": "dns_resolution_on_transparent_proxy_ipv6_url_categories",
         "dnsResolutionOnTransparentProxyIPv6Apps": "dns_resolution_on_transparent_proxy_ipv6_apps",
         "enableIPv6DnsOptimizationOnAllTransparentProxy": "enable_ipv6_dns_optimization_on_all_transparent_proxy",
-        "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":
-            "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories",
+        "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories": "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories",
         "endPointDLPLogType": "end_point_dlp_log_type",
         "emailDLPLogType": "email_dlp_log_type",
         "extranetDNSList": "extranet_dns_list",
         "primaryDNSServer": "primary_dns_server",
         "secondaryDNSServer": "secondary_dns_server",
-
         # ZCC Edge Case Attributes
         "enableUDPTransportSelection": "enable_udp_transport_selection",
         "interceptZIATrafficAllAdapters": "intercept_zia_traffic_all_adapters",
@@ -133,7 +131,6 @@ def to_snake_case(string):
         "customDNS": "custom_dns",
         "ziaDRMethod": "zia_dr_method",
         "dropQuicTraffic": "drop_quic_traffic",
-
         # ZPA Edge Cases
         "serverGroupDTOs": "server_group_dtos",
         "extranetDTO": "extranet_dto",
@@ -142,7 +139,6 @@ def to_snake_case(string):
         "predefinedADPControls": "predefined_adp_controls",
         "runtimeOS": "runtime_os",
         "defaultCSP": "default_csp",
-
         # ZIdentity Edge Cases
         # "clientJWKsUrl": "clientJWKsUrl",
     }
@@ -200,16 +196,13 @@ def to_lower_camel_case(string):
         "dns_resolution_on_transparent_proxy_ipv6_exempt_apps": "dnsResolutionOnTransparentProxyIPv6ExemptApps",
         "dns_resolution_on_transparent_proxy_ipv6_url_categories": "dnsResolutionOnTransparentProxyIPv6UrlCategories",
         "dns_resolution_on_transparent_proxy_ipv6_apps": "dnsResolutionOnTransparentProxyIPv6Apps",
-        "enable_ipv6_dns_optimization_on_all_transparent_proxy":
-            "enableIPv6DnsOptimizationOnAllTransparentProxy",
-        "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories":
-            "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories",
+        "enable_ipv6_dns_optimization_on_all_transparent_proxy": "enableIPv6DnsOptimizationOnAllTransparentProxy",
+        "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories": "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories",
         "end_point_dlp_log_type": "endPointDLPLogType",
         "email_dlp_log_type": "emailDLPLogType",
         "extranet_dns_list": "extranetDNSList",
         "primary_dns_server": "primaryDNSServer",
         "secondary_dns_server": "secondaryDNSServer",
-
         # ZCC Edge Case Attributes
         "enable_udp_transport_selection": "enableUDPTransportSelection",
         "intercept_zia_traffic_all_adapters": "interceptZIATrafficAllAdapters",
@@ -287,7 +280,6 @@ def to_lower_camel_case(string):
         "custom_dns": "customDNS",
         "zia_dr_method": "ziaDRMethod",
         "drop_quic_traffic": "dropQuicTraffic",
-
         # ZPA Edge Cases
         "server_group_dtos": "serverGroupDTOs",
         "extranet_dto": "extranetDTO",

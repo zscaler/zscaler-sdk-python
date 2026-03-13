@@ -13,17 +13,34 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/zpaGateways
+    uri: https://easm.test.zscaler.com/zia/api/v1/zpaGateways
   response:
     body:
-      string: '[{"id":18614602,"name":"Auto Extranet ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto
-        Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1758054219,"description":"Predefined
-        Extranet ZPA gateway for ZIA inspection of Extranet App Segments"},{"id":18661667,"name":"ZPA_GW01","zpaServerGroup":{"id":0,"name":"test_zpa_server_group_sLUQi","externalId":"72058304855158914"},"lastModifiedBy":{"id":19474996,"name":"REDACTED"},"lastModifiedTime":1759161459,"description":"ZPA_GW01"},{"id":17682691,"name":"Auto
-        ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect
-        App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1692235143,"description":"Predefined
-        ZPA gateway for ZIA inspection of App Segments","readOnly":true}]'
+      string: '[{"id":2387145,"name":"Auto ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto
+        Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1694912902,"description":"Predefined
+        ZPA gateway for ZIA inspection of App Segments","readOnly":true},{"id":9727909,"name":"ZPAGW02","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1755899371},{"id":10545942,"name":"test_zpa_gateway_02d0e25b","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772220075,"description":"Integration
+        test ZPA gateway"},{"id":10545966,"name":"test_zpa_gateway_8dbd163c","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772221725,"description":"Integration
+        test ZPA gateway"},{"id":10545967,"name":"test_zpa_gateway_fee12c1d","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772221768,"description":"Integration
+        test ZPA gateway"},{"id":10545969,"name":"test_zpa_gateway_7a77a64f","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222061,"description":"Integration
+        test ZPA gateway"},{"id":10546145,"name":"test_zpa_gateway_dde0d9bd","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225050,"description":"Integration
+        test ZPA gateway"},{"id":10542447,"name":"test_zpa_gateway_47cf755a","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155288},{"id":10545978,"name":"test_zpa_gateway_9ba47b82","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222222,"description":"Integration
+        test ZPA gateway"},{"id":10546160,"name":"test_zpa_gateway_36f4bbed","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225987,"description":"Integration
+        test ZPA gateway"},{"id":9380099,"name":"ZPAGW01_test_1761180012648","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1761418065,"description":"_test_1761191353722_test_1761191384723_test_1761418045902_test_1761418064537"},{"id":10130736,"name":"Auto
+        Extranet ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect
+        App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1763256805,"description":"Predefined
+        Extranet ZPA gateway for ZIA inspection of Extranet App Segments"},{"id":10542449,"name":"test_zpa_gateway_aabb42b1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155464},{"id":10545908,"name":"test_zpa_gateway_fd6984de","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772216488,"description":"Integration
+        test ZPA gateway"},{"id":10545981,"name":"test_zpa_gateway_9ba47b83","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222901,"description":"govbinda"},{"id":10546146,"name":"test_zpa_gateway_e4e208da","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225107,"description":"Integration
+        test ZPA gateway"},{"id":10546364,"name":"test_zpa_gateway_9f6e2556","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772230652,"description":"Integration
+        test ZPA gateway"},{"id":10546698,"name":"test_zpa_gateway_e852bd11","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772253032,"description":"Integration
+        test ZPA gateway"},{"id":10542450,"name":"test_zpa_gateway_d3026b43","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155474},{"id":10545917,"name":"test_zpa_gateway_489b4996","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772218339,"description":"Integration
+        test ZPA gateway"},{"id":10546127,"name":"test_zpa_gateway_17b8e679","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772223410,"description":"Integration
+        test ZPA gateway"},{"id":10546139,"name":"test_zpa_gateway_c32e79fc","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772224339,"description":"Integration
+        test ZPA gateway"},{"id":10548279,"name":"test_zpa_gateway_35fb33c1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772409118,"description":"Integration
+        test ZPA gateway"},{"id":10546141,"name":"test_zpa_gateway_b713e4e1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772224825,"description":"Integration
+        test ZPA gateway"},{"id":10546366,"name":"test_zpa_gateway_7ae515bf","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772230867,"description":"Integration
+        test ZPA gateway"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -45,33 +62,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:22 GMT
+      - Fri, 13 Mar 2026 03:29:26 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '457'
+      - '515'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 798922e3-64f7-99b5-8cad-8f219401f1c1
+      - e29bea40-6a28-94fc-823b-13832bfa721e
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4975'
       x-ratelimit-reset:
-      - '38'
+      - '34'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -93,13 +112,33 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/zpaGateways/18614602
+    uri: https://easm.test.zscaler.com/zia/api/v1/zpaGateways?search=Gateway
   response:
     body:
-      string: '{"code":"RESOURCE_NOT_FOUND","message":"No server group is found with
-        the id. Check if any is provisioned in ZPA tenant 72058304855015424"}'
+      string: '[{"id":2387145,"name":"Auto ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto
+        Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1694912902,"description":"Predefined
+        ZPA gateway for ZIA inspection of App Segments","readOnly":true},{"id":10545942,"name":"test_zpa_gateway_02d0e25b","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772220075,"description":"Integration
+        test ZPA gateway"},{"id":10545966,"name":"test_zpa_gateway_8dbd163c","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772221725,"description":"Integration
+        test ZPA gateway"},{"id":10545967,"name":"test_zpa_gateway_fee12c1d","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772221768,"description":"Integration
+        test ZPA gateway"},{"id":10545969,"name":"test_zpa_gateway_7a77a64f","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222061,"description":"Integration
+        test ZPA gateway"},{"id":10546145,"name":"test_zpa_gateway_dde0d9bd","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225050,"description":"Integration
+        test ZPA gateway"},{"id":10542447,"name":"test_zpa_gateway_47cf755a","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155288},{"id":10545978,"name":"test_zpa_gateway_9ba47b82","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222222,"description":"Integration
+        test ZPA gateway"},{"id":10546160,"name":"test_zpa_gateway_36f4bbed","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225987,"description":"Integration
+        test ZPA gateway"},{"id":10130736,"name":"Auto Extranet ZPA Gateway","zpaServerGroup":{"id":0,"name":"Auto
+        Server Group"},"zpaAppSegments":[{"id":0,"name":"Inspect App Segments","externalId":"2"}],"lastModifiedBy":{"id":65544,"name":"REDACTED"},"lastModifiedTime":1763256805,"description":"Predefined
+        Extranet ZPA gateway for ZIA inspection of Extranet App Segments"},{"id":10542449,"name":"test_zpa_gateway_aabb42b1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155464},{"id":10545908,"name":"test_zpa_gateway_fd6984de","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772216488,"description":"Integration
+        test ZPA gateway"},{"id":10545981,"name":"test_zpa_gateway_9ba47b83","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772222901,"description":"govbinda"},{"id":10546146,"name":"test_zpa_gateway_e4e208da","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772225107,"description":"Integration
+        test ZPA gateway"},{"id":10546364,"name":"test_zpa_gateway_9f6e2556","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772230652,"description":"Integration
+        test ZPA gateway"},{"id":10546698,"name":"test_zpa_gateway_e852bd11","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772253032,"description":"Integration
+        test ZPA gateway"},{"id":10542450,"name":"test_zpa_gateway_d3026b43","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772155474},{"id":10545917,"name":"test_zpa_gateway_489b4996","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772218339,"description":"Integration
+        test ZPA gateway"},{"id":10546127,"name":"test_zpa_gateway_17b8e679","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772223410,"description":"Integration
+        test ZPA gateway"},{"id":10546139,"name":"test_zpa_gateway_c32e79fc","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772224339,"description":"Integration
+        test ZPA gateway"},{"id":10548279,"name":"test_zpa_gateway_35fb33c1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772409118,"description":"Integration
+        test ZPA gateway"},{"id":10546141,"name":"test_zpa_gateway_b713e4e1","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772224825,"description":"Integration
+        test ZPA gateway"},{"id":10546366,"name":"test_zpa_gateway_7ae515bf","zpaServerGroup":{"id":0,"name":"Example100","externalId":"216196257331370169"},"zpaAppSegments":[{"id":0,"name":"app03","externalId":"216196257331372698"},{"id":0,"name":"app02","externalId":"216196257331372697"}],"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"lastModifiedTime":1772230867,"description":"Integration
+        test ZPA gateway"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -121,33 +160,113 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:22 GMT
+      - Fri, 13 Mar 2026 03:29:27 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '443'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - de603d1b-ced4-9503-8e42-549515871e77
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/zpaGateways/2387145
+  response:
+    body:
+      string: '{"code":"RESOURCE_NOT_FOUND","message":"No server group is found with
+        the id. Check if any is provisioned in ZPA tenant 216196257331281920"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:29:27 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '191'
+      - '236'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f06b95ff-ab44-9802-bca2-0fbc03aa3f42
+      - 35f37b01-8947-9255-b070-0511134a9761
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4988'
+      - '4973'
       x-ratelimit-reset:
-      - '38'
+      - '33'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -155,152 +274,4 @@ interactions:
     status:
       code: 404
       message: Not Found
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/zpaGateways?search=Gateway
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 06:23:43 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - f61fc751-3e13-91ef-aced-71e8fc492a8e
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
-- request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 06:23:44 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/zpaGateways?search=Gateway
-  response:
-    body:
-      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
-        \"status\": \"\"\n}"
-    headers:
-      content-length:
-      - '71'
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 06:23:44 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-oneapi-api-category:
-      - public
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 743e4aa2-6a49-9099-85aa-bf6af67c5186
-      x-oneapi-version:
-      - 109.1.92
-    status:
-      code: 401
-      message: Unauthorized
 version: 1

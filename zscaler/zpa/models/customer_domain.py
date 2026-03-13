@@ -33,24 +33,15 @@ class CustomerDomainController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.association_type = config["associationType"] \
-                if "associationType" in config else None
-            self.capture = config["capture"] \
-                if "capture" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.domain = config["domain"] \
-                if "domain" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
+            self.association_type = config["associationType"] if "associationType" in config else None
+            self.capture = config["capture"] if "capture" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
         else:
             self.association_type = None
             self.capture = None
@@ -76,7 +67,7 @@ class CustomerDomainController(ZscalerObject):
             "modifiedBy": self.modified_by,
             "modifiedTime": self.modified_time,
             "name": self.name,
-            "microtenantId": self.microtenant_id
+            "microtenantId": self.microtenant_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

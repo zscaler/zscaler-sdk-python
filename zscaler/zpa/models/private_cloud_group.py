@@ -53,9 +53,7 @@ class PrivateCloudGroup(ZscalerObject):
             self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
-            self.site = ZscalerCollection.form_list(
-                config["site"] if "site" in config else [], PrivateCloudGroupSite
-            )
+            self.site = ZscalerCollection.form_list(config["site"] if "site" in config else [], PrivateCloudGroupSite)
 
         else:
             self.id = None
@@ -130,32 +128,19 @@ class PrivateCloudGroupSite(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.re_enroll_period = config["reEnrollPeriod"] \
-                if "reEnrollPeriod" in config else None
-            self.fire_drill_enabled = config["fireDrillEnabled"] \
-                if "fireDrillEnabled" in config else None
-            self.sitec_preferred = config["sitecPreferred"] \
-                if "sitecPreferred" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.read_only = config["readOnly"] \
-                if "readOnly" in config else None
-            self.restricted_entity = config["restrictedEntity"] \
-                if "restrictedEntity" in config else None
-            self.zscaler_managed = config["zscalerManaged"] \
-                if "zscalerManaged" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.re_enroll_period = config["reEnrollPeriod"] if "reEnrollPeriod" in config else None
+            self.fire_drill_enabled = config["fireDrillEnabled"] if "fireDrillEnabled" in config else None
+            self.sitec_preferred = config["sitecPreferred"] if "sitecPreferred" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restricted_entity = config["restrictedEntity"] if "restrictedEntity" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             self.private_broker_group_ids = ZscalerCollection.form_list(
                 config["privateBrokerGroupIds"] if "privateBrokerGroupIds" in config else [], PrivateBrokerGroupID
@@ -196,7 +181,7 @@ class PrivateCloudGroupSite(ZscalerObject):
             "enabled": self.enabled,
             "readOnly": self.read_only,
             "restrictedEntity": self.restricted_entity,
-            "zscalerManaged": self.zscaler_managed
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -217,12 +202,9 @@ class PrivateBrokerGroupID(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
         else:
             self.id = None
             self.name = None

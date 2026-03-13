@@ -44,9 +44,7 @@ class TestZPAGateway:
             assert isinstance(gateways, list), "Gateways should be a list"
 
             # Test list_gateways with query params
-            gateways_search, response, err = client.zia.zpa_gateway.list_gateways(
-                query_params={"search": "Gateway"}
-            )
+            gateways_search, response, err = client.zia.zpa_gateway.list_gateways(query_params={"search": "Gateway"})
 
             # Test add_gateway (may fail due to ZPA tenant configuration)
             try:
@@ -56,7 +54,11 @@ class TestZPAGateway:
                     zpa_tenant_id="test-tenant",
                 )
                 if err is None and created_gateway is not None:
-                    gateway_id = created_gateway.get("id") if isinstance(created_gateway, dict) else getattr(created_gateway, "id", None)
+                    gateway_id = (
+                        created_gateway.get("id")
+                        if isinstance(created_gateway, dict)
+                        else getattr(created_gateway, "id", None)
+                    )
 
                     # Test update_gateway
                     if gateway_id:

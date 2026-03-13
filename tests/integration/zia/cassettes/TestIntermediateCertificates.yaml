@@ -13,17 +13,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate
   response:
     body:
-      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514320,"certExpDate":2601650320,"description":"Zscaler
+      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514314,"certExpDate":2601650314,"description":"Zscaler
         Intermediate CA Certificate","currentState":"CERT_READY","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtsdgoSYvvGWGRBnzAlut\nauIZV5VvYfB4S7JF2Ebz8WxqO2WKH5jRKSsu7z6WB+HjYeBp2XY8H3ioyvDa5eTT\nKeIeK0QB3k3QeU8a+WpC1FJUxHOEBugkie7M9p6Qpe+Qv1/AX2NophOHcU42g+gy\nPL/+jk5FgJ8IQnaH7lZKb/vtmk0TK6gdcGjQeKQDenbds7MQjrWlFFKk7aHbAHC8\n6EobT+EzRPnPa435oQ027vDHc2NFOfHPqrkimUdqAy/2fWYLZp8V6UVSYX+k/+mn\nTTqBBCetb0AKTq5f62CjCh0enIQzTEff2OhtnRB6nzC+X9I8oP/Es3VabrwTCLVO\nkwIDAQAB\n-----END
-        PUBLIC KEY-----\n"},{"id":6978,"name":"IntermediateCert01","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":0,"certExpDate":0,"description":"IntermediateCert01","currentState":"PUBKEY_DONE","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyDPAV15dSPUEqEH02Bh+\nquF0FL8f+fNYpZHBH/j8C52o83bs1QN/zs2Z1Cu7BIKg6UCM2k0JzSyLsVBEifHg\nmXACaCSndv9s9zRjvX5muYqM3bP4gMPw6GzhHjEpcFJB09mTZjDDF3c7s+xrJLzT\nC9l7i2HvgB5P0HKEa2nQTwZslByAJR6UuJzc52AgyERRXXsozKQ56E+/Jt+dICjI\nrMA8d3OOY/+1cFSDZhPseOg6PE7wOUDu4xhsCIBGAhE7QXUSVCfrOguq7k30kOUL\niAAcKDOMz1NUyFGof7ncfU7kBZd3az9dOT2v7YpO/HNVmG4sUE8k1q/lraVSWErG\nnQIDAQAB\n-----END
-        PUBLIC KEY-----\n","keyGenerationTime":1757967567}]'
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmioqA+ZMX9KzDDO6VXfP\nWU4dQ3Knj68Y16L50vd6cAxY6CyBclodGxA1mwyIv+Q+kV1oaaoowMGjMDQVyCWF\na3w7MaiJdx1x0XgtO1u6nEtA7hRaYnJb+/8JLRdXjXQpPNRuis7CE/jfpaUn4zik\noBWk3GPQ3ZePX8PdQDtPd47Le5AXNd8rCpFRMOJSvZYYrlcEWqMbdBs5sSE3B2UK\nxQ00Qbj8eQHpvH1/aEa48KsY+9q4ZlB2xzS7AklK0NFwuebkhR9JTN59o9rxqVwG\nJhUbQGpUhMnG+g+4b1qrxRsyOFfludc9UjS5ofjSsZk5ypGZf5W/npp6Ctz+Qc/g\nkwIDAQAB\n-----END
+        PUBLIC KEY-----\n"},{"id":1401,"name":"SecurityGeek_Cert02","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1758057581,"certExpDate":1789594181,"description":"SecurityGeek_Cert02","currentState":"INTCERT_UPLOAD_DONE","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4KuIudoeGH3/jbsUfLSr\ngrqFHz7+KksEX35KeJe2IY5ZbHSGZxBJILtJVv9jqlZw4Js4pHTTLxrSIdavgmyd\ngNtlSMquGVmLbfaMlNsJhBmhlDYmztta+3T0V4RvmI3SpM94DLslH4KSI21VJhUw\n6qyJrhRVcctKTMm0oQMIaohkIuXgAQ4Xe1DJEOWwVyS/8/eUuooNERoDBfbzT1mk\nlSbJOR2W7yMr6DUeIoPaKygDM55LEzbqaCOvCzc7jUuRxxzfjNwBEU2dovdOwBQE\nJSJb3CX5JjvR7PBCNbxWn0/6BxQcTO9E9CPXRM/JhdNHxvt22illvGzyz5hfaIT7\n8wIDAQAB\n-----END
+        PUBLIC KEY-----\n","keyGenerationTime":1758057833,"csrFileName":"IntermediateCer02","csrGenerationTime":1758057872,"uploadedCertFileName":"tmp_rxqvzd7.pem"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -45,33 +45,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:20 GMT
+      - Fri, 13 Mar 2026 03:19:46 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '304'
+      - '714'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - ffdf13cd-b861-98a0-86ee-5262d11bb2c8
+      - 4aadce3d-e0f2-9e59-abe8-92d24245ef85
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4984'
       x-ratelimit-reset:
-      - '41'
+      - '15'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -93,13 +95,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/lite
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate?search=Zscaler
   response:
     body:
-      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514320,"certExpDate":2601650320,"description":"Zscaler
-        Intermediate CA Certificate","currentState":"CERT_READY"},{"id":6978,"name":"IntermediateCert01","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":0,"certExpDate":0,"description":"IntermediateCert01","currentState":"PUBKEY_DONE"}]'
+      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514314,"certExpDate":2601650314,"description":"Zscaler
+        Intermediate CA Certificate","currentState":"CERT_READY","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmioqA+ZMX9KzDDO6VXfP\nWU4dQ3Knj68Y16L50vd6cAxY6CyBclodGxA1mwyIv+Q+kV1oaaoowMGjMDQVyCWF\na3w7MaiJdx1x0XgtO1u6nEtA7hRaYnJb+/8JLRdXjXQpPNRuis7CE/jfpaUn4zik\noBWk3GPQ3ZePX8PdQDtPd47Le5AXNd8rCpFRMOJSvZYYrlcEWqMbdBs5sSE3B2UK\nxQ00Qbj8eQHpvH1/aEa48KsY+9q4ZlB2xzS7AklK0NFwuebkhR9JTN59o9rxqVwG\nJhUbQGpUhMnG+g+4b1qrxRsyOFfludc9UjS5ofjSsZk5ypGZf5W/npp6Ctz+Qc/g\nkwIDAQAB\n-----END
+        PUBLIC KEY-----\n"},{"id":1401,"name":"SecurityGeek_Cert02","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1758057581,"certExpDate":1789594181,"description":"SecurityGeek_Cert02","currentState":"INTCERT_UPLOAD_DONE","publicKey":"-----BEGIN
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4KuIudoeGH3/jbsUfLSr\ngrqFHz7+KksEX35KeJe2IY5ZbHSGZxBJILtJVv9jqlZw4Js4pHTTLxrSIdavgmyd\ngNtlSMquGVmLbfaMlNsJhBmhlDYmztta+3T0V4RvmI3SpM94DLslH4KSI21VJhUw\n6qyJrhRVcctKTMm0oQMIaohkIuXgAQ4Xe1DJEOWwVyS/8/eUuooNERoDBfbzT1mk\nlSbJOR2W7yMr6DUeIoPaKygDM55LEzbqaCOvCzc7jUuRxxzfjNwBEU2dovdOwBQE\nJSJb3CX5JjvR7PBCNbxWn0/6BxQcTO9E9CPXRM/JhdNHxvt22illvGzyz5hfaIT7\n8wIDAQAB\n-----END
+        PUBLIC KEY-----\n","keyGenerationTime":1758057833,"csrFileName":"IntermediateCer02","csrGenerationTime":1758057872,"uploadedCertFileName":"tmp_rxqvzd7.pem"}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -121,33 +127,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:20 GMT
+      - Fri, 13 Mar 2026 03:19:47 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '347'
+      - '601'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 46a753e8-e6a0-9386-b911-2fcee33f5cb8
+      - a3ec1f06-2643-9a68-a7af-7fc24c8ee2ce
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4983'
       x-ratelimit-reset:
-      - '40'
+      - '14'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -169,9 +177,87 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/readyToUse
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/lite
+  response:
+    body:
+      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514314,"certExpDate":2601650314,"description":"Zscaler
+        Intermediate CA Certificate","currentState":"CERT_READY"},{"id":1401,"name":"SecurityGeek_Cert02","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1758057581,"certExpDate":1789594181,"description":"SecurityGeek_Cert02","currentState":"INTCERT_UPLOAD_DONE"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:47 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '479'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b7ecee5b-5fd6-9b02-b739-5d0c33d856c0
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4982'
+      x-ratelimit-reset:
+      - '13'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/readyToUse
   response:
     body:
       string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","defaultCertificate":true}]'
@@ -196,7 +282,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:20 GMT
+      - Fri, 13 Mar 2026 03:19:48 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -204,23 +290,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '275'
+      - '514'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 23219ea0-a992-9912-a444-3094c5322a0a
+      - 4ab7212f-0bdc-9023-8b49-53eca256331e
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4981'
       x-ratelimit-reset:
-      - '40'
+      - '13'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -242,14 +328,160 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/readyToUse?search=Zscaler
   response:
     body:
-      string: '{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514320,"certExpDate":2601650320,"description":"Zscaler
+      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","defaultCertificate":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '81'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:49 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '477'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a869837b-0ce0-94f5-b51b-351ed0c69cf8
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4980'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestCACert_VCR", "keyType": "RSA"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '44'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate
+  response:
+    body:
+      string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Certificate type is required."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '75'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:49 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '81'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d626994e-a3e1-9e05-93bf-d3daf108e41d
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4979'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/1
+  response:
+    body:
+      string: '{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514314,"certExpDate":2601650314,"description":"Zscaler
         Intermediate CA Certificate","currentState":"CERT_READY","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtsdgoSYvvGWGRBnzAlut\nauIZV5VvYfB4S7JF2Ebz8WxqO2WKH5jRKSsu7z6WB+HjYeBp2XY8H3ioyvDa5eTT\nKeIeK0QB3k3QeU8a+WpC1FJUxHOEBugkie7M9p6Qpe+Qv1/AX2NophOHcU42g+gy\nPL/+jk5FgJ8IQnaH7lZKb/vtmk0TK6gdcGjQeKQDenbds7MQjrWlFFKk7aHbAHC8\n6EobT+EzRPnPa435oQ027vDHc2NFOfHPqrkimUdqAy/2fWYLZp8V6UVSYX+k/+mn\nTTqBBCetb0AKTq5f62CjCh0enIQzTEff2OhtnRB6nzC+X9I8oP/Es3VabrwTCLVO\nkwIDAQAB\n-----END
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmioqA+ZMX9KzDDO6VXfP\nWU4dQ3Knj68Y16L50vd6cAxY6CyBclodGxA1mwyIv+Q+kV1oaaoowMGjMDQVyCWF\na3w7MaiJdx1x0XgtO1u6nEtA7hRaYnJb+/8JLRdXjXQpPNRuis7CE/jfpaUn4zik\noBWk3GPQ3ZePX8PdQDtPd47Le5AXNd8rCpFRMOJSvZYYrlcEWqMbdBs5sSE3B2UK\nxQ00Qbj8eQHpvH1/aEa48KsY+9q4ZlB2xzS7AklK0NFwuebkhR9JTN59o9rxqVwG\nJhUbQGpUhMnG+g+4b1qrxRsyOFfludc9UjS5ofjSsZk5ypGZf5W/npp6Ctz+Qc/g\nkwIDAQAB\n-----END
         PUBLIC KEY-----\n"}'
     headers:
       cache-control:
@@ -272,33 +504,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 21:42:21 GMT
+      - Fri, 13 Mar 2026 03:19:49 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '236'
+      - '368'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - f46eb94a-51c0-9343-bc94-cd8c782f10e5
+      - 14fe072f-98ac-9e19-a048-ed36b8c3cd7a
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4978'
       x-ratelimit-reset:
-      - '40'
+      - '11'
       x-transaction-id:
-      - b8b2ad22-3f70-4a3c-beb3-5be707d91e6e
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -320,12 +554,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/lite/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/lite/1
   response:
     body:
-      string: '{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514320,"certExpDate":2601650320,"description":"Zscaler
+      string: '{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514314,"certExpDate":2601650314,"description":"Zscaler
         Intermediate CA Certificate","currentState":"CERT_READY"}'
     headers:
       cache-control:
@@ -348,33 +582,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:01:12 GMT
+      - Fri, 13 Mar 2026 03:19:50 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '298'
+      - '305'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7a36cb3f-116c-9550-b65e-dac705351022
+      - d1bb7dc8-f33a-9b8a-b526-579f2bc18347
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4977'
       x-ratelimit-reset:
-      - '49'
+      - '11'
       x-transaction-id:
-      - 32e5eb9d-8b47-4a8f-af72-83c82c7325eb
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -396,9 +632,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/showCert/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/showCert/1
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"This operation is not applicable
@@ -424,33 +660,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:01:12 GMT
+      - Fri, 13 Mar 2026 03:19:50 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '290'
+      - '273'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 684a6bc1-f1ae-9f9a-af97-955d58bcbd21
+      - 3fe9e141-67d0-9d8f-a6a5-eed87ea1f986
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4993'
+      - '4976'
       x-ratelimit-reset:
-      - '48'
+      - '10'
       x-transaction-id:
-      - 32e5eb9d-8b47-4a8f-af72-83c82c7325eb
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -472,9 +710,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/showCsr/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/showCsr/1
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"This operation is not applicable
@@ -500,33 +738,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Fri, 19 Dec 2025 22:01:12 GMT
+      - Fri, 13 Mar 2026 03:19:51 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '266'
+      - '443'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 7fa59b13-2a94-95a9-b1bb-54b3e39e2edc
+      - f164e331-6944-9ed7-afe1-695b696027ab
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4992'
+      - '4975'
       x-ratelimit-reset:
-      - '48'
+      - '10'
       x-transaction-id:
-      - 32e5eb9d-8b47-4a8f-af72-83c82c7325eb
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -548,9 +788,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/downloadCsr/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/downloadCsr/1
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"This operation is not applicable
@@ -576,33 +816,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:24:35 GMT
+      - Fri, 13 Mar 2026 03:19:51 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '262'
+      - '364'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 2a2dea64-7a88-9a96-b0d2-e15a327d6cc8
+      - 278247fe-e619-9ba0-ac0c-6d1d3b55b0eb
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4991'
+      - '4974'
       x-ratelimit-reset:
-      - '25'
+      - '9'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -624,24 +866,24 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/downloadPublicKey/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/downloadPublicKey/1
   response:
     body:
       string: '-----BEGIN PUBLIC KEY-----
 
-        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtsdgoSYvvGWGRBnzAlut
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmioqA+ZMX9KzDDO6VXfP
 
-        auIZV5VvYfB4S7JF2Ebz8WxqO2WKH5jRKSsu7z6WB+HjYeBp2XY8H3ioyvDa5eTT
+        WU4dQ3Knj68Y16L50vd6cAxY6CyBclodGxA1mwyIv+Q+kV1oaaoowMGjMDQVyCWF
 
-        KeIeK0QB3k3QeU8a+WpC1FJUxHOEBugkie7M9p6Qpe+Qv1/AX2NophOHcU42g+gy
+        a3w7MaiJdx1x0XgtO1u6nEtA7hRaYnJb+/8JLRdXjXQpPNRuis7CE/jfpaUn4zik
 
-        PL/+jk5FgJ8IQnaH7lZKb/vtmk0TK6gdcGjQeKQDenbds7MQjrWlFFKk7aHbAHC8
+        oBWk3GPQ3ZePX8PdQDtPd47Le5AXNd8rCpFRMOJSvZYYrlcEWqMbdBs5sSE3B2UK
 
-        6EobT+EzRPnPa435oQ027vDHc2NFOfHPqrkimUdqAy/2fWYLZp8V6UVSYX+k/+mn
+        xQ00Qbj8eQHpvH1/aEa48KsY+9q4ZlB2xzS7AklK0NFwuebkhR9JTN59o9rxqVwG
 
-        TTqBBCetb0AKTq5f62CjCh0enIQzTEff2OhtnRB6nzC+X9I8oP/Es3VabrwTCLVO
+        JhUbQGpUhMnG+g+4b1qrxRsyOFfludc9UjS5ofjSsZk5ypGZf5W/npp6Ctz+Qc/g
 
         kwIDAQAB
 
@@ -671,7 +913,7 @@ interactions:
       content-type:
       - application/octet-stream
       date:
-      - Sat, 20 Dec 2025 05:24:36 GMT
+      - Fri, 13 Mar 2026 03:19:51 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -679,23 +921,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '256'
+      - '248'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 217f81e5-b493-9a42-b5f2-bb257f354c88
+      - fe688e2a-6edd-93fd-b336-a253402e0a43
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4990'
+      - '4973'
       x-ratelimit-reset:
-      - '25'
+      - '9'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-ua-compatible:
       - IE=Edge,chrome=IE8
       x-xss-protection:
@@ -719,9 +961,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/verifyKeyAttestation/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/verifyKeyAttestation/1
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"This operation is not applicable
@@ -747,33 +989,35 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 05:24:36 GMT
+      - Fri, 13 Mar 2026 03:19:52 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '230'
+      - '273'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 0c4fb101-ba1a-933e-8023-7cefbff5a7f5
+      - 78b85b60-354d-9e3a-b030-e1d3d6b86364
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4989'
+      - '4972'
       x-ratelimit-reset:
-      - '24'
+      - '9'
       x-transaction-id:
-      - 8b954864-803b-44a0-a08d-d49004055dbd
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -782,70 +1026,6 @@ interactions:
       code: 403
       message: Forbidden
 - request:
-    body: grant_type=client_credentials&client_id=iplmcq3k7060d&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '143'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
-  response:
-    body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
-    headers:
-      cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
-        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
-      content-type:
-      - application/json;charset=UTF-8
-      date:
-      - Sat, 20 Dec 2025 06:20:21 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      server:
-      - ingress-gateway
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
-      transfer-encoding:
-      - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 10000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
     body: '{}'
     headers:
       Accept:
@@ -859,237 +1039,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate?search=Zscaler
-  response:
-    body:
-      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","type":"ZSCALER","region":"GLOBAL","status":"ENABLED","defaultCertificate":true,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":1738514320,"certExpDate":2601650320,"description":"Zscaler
-        Intermediate CA Certificate","currentState":"CERT_READY","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtsdgoSYvvGWGRBnzAlut\nauIZV5VvYfB4S7JF2Ebz8WxqO2WKH5jRKSsu7z6WB+HjYeBp2XY8H3ioyvDa5eTT\nKeIeK0QB3k3QeU8a+WpC1FJUxHOEBugkie7M9p6Qpe+Qv1/AX2NophOHcU42g+gy\nPL/+jk5FgJ8IQnaH7lZKb/vtmk0TK6gdcGjQeKQDenbds7MQjrWlFFKk7aHbAHC8\n6EobT+EzRPnPa435oQ027vDHc2NFOfHPqrkimUdqAy/2fWYLZp8V6UVSYX+k/+mn\nTTqBBCetb0AKTq5f62CjCh0enIQzTEff2OhtnRB6nzC+X9I8oP/Es3VabrwTCLVO\nkwIDAQAB\n-----END
-        PUBLIC KEY-----\n"},{"id":6978,"name":"IntermediateCert01","type":"CUSTOM_SW","region":"GLOBAL","status":"ENABLED","defaultCertificate":false,"keyType":"RSA_2K","fallbackCertId":0,"certStartDate":0,"certExpDate":0,"description":"IntermediateCert01","currentState":"PUBKEY_DONE","publicKey":"-----BEGIN
-        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyDPAV15dSPUEqEH02Bh+\nquF0FL8f+fNYpZHBH/j8C52o83bs1QN/zs2Z1Cu7BIKg6UCM2k0JzSyLsVBEifHg\nmXACaCSndv9s9zRjvX5muYqM3bP4gMPw6GzhHjEpcFJB09mTZjDDF3c7s+xrJLzT\nC9l7i2HvgB5P0HKEa2nQTwZslByAJR6UuJzc52AgyERRXXsozKQ56E+/Jt+dICjI\nrMA8d3OOY/+1cFSDZhPseOg6PE7wOUDu4xhsCIBGAhE7QXUSVCfrOguq7k30kOUL\niAAcKDOMz1NUyFGof7ncfU7kBZd3az9dOT2v7YpO/HNVmG4sUE8k1q/lraVSWErG\nnQIDAQAB\n-----END
-        PUBLIC KEY-----\n","keyGenerationTime":1757967567}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 06:20:23 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - accept-encoding, Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '2268'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - f2c2b5a1-7d7c-96a0-868f-ac5f8ddc698a
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4999'
-      x-ratelimit-reset:
-      - '39'
-      x-transaction-id:
-      - 3e4a8d06-bd48-4130-979f-d63cd1fc65ce
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/readyToUse?search=Zscaler
-  response:
-    body:
-      string: '[{"id":1,"name":"Zscaler Intermediate CA Certificate","defaultCertificate":true}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '81'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 06:20:24 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '356'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 495b824a-6e53-9469-aa6d-5330aca402a2
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4998'
-      x-ratelimit-reset:
-      - '36'
-      x-transaction-id:
-      - 3e4a8d06-bd48-4130-979f-d63cd1fc65ce
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"name": "TestCACert_VCR", "keyType": "RSA"}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '44'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate
-  response:
-    body:
-      string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Certificate type is required."}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '75'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Sat, 20 Dec 2025 06:20:24 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '146'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
-      x-oneapi-request-id:
-      - 7af87e3b-dce3-9472-839b-a47c6dc32ded
-      x-oneapi-version:
-      - 109.1.92
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4997'
-      x-ratelimit-reset:
-      - '36'
-      x-transaction-id:
-      - 3e4a8d06-bd48-4130-979f-d63cd1fc65ce
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 400
-      message: Bad Request
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/finalizeCert/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/finalizeCert/1
   response:
     body:
       string: '{"code":"INVALID_INPUT_ARGUMENT","message":"This operation is not applicable
@@ -1115,7 +1067,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 20 Dec 2025 06:20:25 GMT
+      - Fri, 13 Mar 2026 03:19:52 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1127,23 +1079,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '499'
+      - '347'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c727d6e3-3d86-91bf-90c6-e20b6e05f660
+      - 83271160-7b03-989d-adf5-843bec9cd507
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4971'
       x-ratelimit-reset:
-      - '35'
+      - '8'
       x-transaction-id:
-      - 3e4a8d06-bd48-4130-979f-d63cd1fc65ce
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -1165,9 +1117,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.12 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
     method: POST
-    uri: https://api.beta.zsapi.net/zia/api/v1/intermediateCaCertificate/uploadCertChain/1
+    uri: https://easm.test.zscaler.com/zia/api/v1/intermediateCaCertificate/uploadCertChain/1
   response:
     body:
       string: ''
@@ -1190,7 +1142,7 @@ interactions:
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       date:
-      - Sat, 20 Dec 2025 06:20:25 GMT
+      - Fri, 13 Mar 2026 03:19:53 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -1198,23 +1150,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '86'
+      - '172'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.beta.zsapi.net
+      - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 8d37a3b0-9e68-971e-ad62-e2013d323772
+      - b4025bf2-0e07-955e-9c3f-335ade9ea2cf
       x-oneapi-version:
-      - 109.1.92
+      - 109.1.146
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4970'
       x-ratelimit-reset:
-      - '35'
+      - '8'
       x-transaction-id:
-      - 3e4a8d06-bd48-4130-979f-d63cd1fc65ce
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

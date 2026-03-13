@@ -49,10 +49,10 @@ class TestUserPortal:
                 user_notification=portal_description,
                 user_notification_enabled=True,
                 managed_by_zs=True,
-                domain='securitygeek.io',
+                domain="securitygeek.io",
                 ext_label=ext_label,
-                ext_domain_name='-securitygeek-io.b.zscalerportal.net',
-                ext_domain="securitygeek.io"
+                ext_domain_name="-securitygeek-io.b.zscalerportal.net",
+                ext_domain="securitygeek.io",
             )
             assert err is None, f"Error creating portal: {err}"
             assert created_portal is not None
@@ -78,18 +78,18 @@ class TestUserPortal:
                 # Update the portal
                 updated_name = portal_name + " Updated"
                 _, _, err = client.zpa.user_portal_controller.update_user_portal(
-                    portal_id, 
+                    portal_id,
                     name=updated_name,
                     description=portal_description,
                     enabled=True,
                     user_notification=portal_description,
                     user_notification_enabled=True,
                     managed_by_zs=True,
-                    domain='securitygeek.io',
+                    domain="securitygeek.io",
                     ext_label=ext_label,
-                    ext_domain_name='-securitygeek-io.b.zscalerportal.net',
-                    ext_domain="securitygeek.io"                    
-                    )
+                    ext_domain_name="-securitygeek-io.b.zscalerportal.net",
+                    ext_domain="securitygeek.io",
+                )
                 assert err is None, f"Error updating portal: {err}"
 
                 updated_portal, _, err = client.zpa.user_portal_controller.get_user_portal(portal_id)

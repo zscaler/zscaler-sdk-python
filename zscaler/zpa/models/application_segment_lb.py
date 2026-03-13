@@ -34,15 +34,13 @@ class WeightedLBConfig(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.application_id = config["applicationId"] \
-                if "applicationId" in config else None
+            self.application_id = config["applicationId"] if "applicationId" in config else None
 
-            self.weighted_load_balancing = config["weightedLoadBalancing"] \
-                if "weightedLoadBalancing" in config else None
+            self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else None
 
             self.application_to_server_group_mappings = ZscalerCollection.form_list(
-                config["applicationToServerGroupMappings"] if
-                "applicationToServerGroupMappings" in config else [], ApplicationToServerGroupMappings
+                config["applicationToServerGroupMappings"] if "applicationToServerGroupMappings" in config else [],
+                ApplicationToServerGroupMappings,
             )
         else:
             self.application_id = None
@@ -57,7 +55,7 @@ class WeightedLBConfig(ZscalerObject):
         current_obj_format = {
             "applicationId": self.application_id,
             "applicationToServerGroupMappings": self.application_to_server_group_mappings,
-            "weightedLoadBalancing": self.weighted_load_balancing
+            "weightedLoadBalancing": self.weighted_load_balancing,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -78,14 +76,10 @@ class ApplicationToServerGroupMappings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.passive = config["passive"] \
-                if "passive" in config else None
-            self.weight = config["weight"] \
-                if "weight" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.passive = config["passive"] if "passive" in config else None
+            self.weight = config["weight"] if "weight" in config else None
         else:
             self.id = None
             self.name = None
@@ -97,11 +91,6 @@ class ApplicationToServerGroupMappings(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "passive": self.passive,
-            "weight": self.weight
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "passive": self.passive, "weight": self.weight}
         parent_req_format.update(current_obj_format)
         return parent_req_format

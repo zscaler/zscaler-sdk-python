@@ -38,11 +38,11 @@ class TestFailOpenPolicy:
             policies, response, err = client.zcc.fail_open_policy.list_by_company()
             assert err is None, f"Error listing fail open policies: {err}"
             assert isinstance(policies, list), "Expected a list of fail open policies"
-            
+
             # Verify response structure if we have policies
             if policies:
                 policy = policies[0]
-                assert hasattr(policy, 'as_dict'), "Fail open policy should have as_dict method"
+                assert hasattr(policy, "as_dict"), "Fail open policy should have as_dict method"
         except Exception as exc:
             errors.append(f"Listing fail open policies failed: {exc}")
 
@@ -55,13 +55,10 @@ class TestFailOpenPolicy:
         errors = []
 
         try:
-            policies, response, err = client.zcc.fail_open_policy.list_by_company(
-                query_params={"page": 1, "page_size": 10}
-            )
+            policies, response, err = client.zcc.fail_open_policy.list_by_company(query_params={"page": 1, "page_size": 10})
             assert err is None, f"Error listing fail open policies with pagination: {err}"
             assert isinstance(policies, list), "Expected a list of fail open policies"
         except Exception as exc:
             errors.append(f"Listing fail open policies with pagination failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during the paginated fail open policy test:\n{chr(10).join(errors)}"
-

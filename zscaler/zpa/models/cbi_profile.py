@@ -34,29 +34,21 @@ class CBIProfile(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.banner_id = config["bannerId"] \
-                if "bannerId" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.cbi_url = config["cbiUrl"] \
-                if "cbiUrl" in config else None
-            self.is_default = config["isDefault"] \
-                if "isDefault" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.banner_id = config["bannerId"] if "bannerId" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.cbi_url = config["cbiUrl"] if "cbiUrl" in config else None
+            self.is_default = config["isDefault"] if "isDefault" in config else None
 
             self.region_ids = ZscalerCollection.form_list(config["regionIds"] if "regionIds" in config else [], str)
 
             self.certificate_ids = ZscalerCollection.form_list(
-                config["certificateIds"] if "certificateIds" in config else [],
-                str
+                config["certificateIds"] if "certificateIds" in config else [], str
             )
 
             self.certificates = ZscalerCollection.form_list(
-                config["certificates"] if "certificates" in config else [],
-                Certificates
+                config["certificates"] if "certificates" in config else [], Certificates
             )
 
             self.regions = ZscalerCollection.form_list(config["regions"] if "regions" in config else [], Regions)
@@ -156,10 +148,8 @@ class DebugMode(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.allowed = config["allowed"] \
-                if "allowed" in config else None
-            self.file_password = config["filePassword"] \
-                if "filePassword" in config else None
+            self.allowed = config["allowed"] if "allowed" in config else None
+            self.file_password = config["filePassword"] if "filePassword" in config else None
 
         else:
             self.allowed = None
@@ -193,16 +183,11 @@ class UserExperience(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.browser_in_browser = config["browserInBrowser"] \
-                if "browserInBrowser" in config else None
-            self.session_persistence = config["sessionPersistence"] \
-                if "sessionPersistence" in config else None
-            self.persist_isolation_bar = config["persistIsolationBar"] \
-                if "persistIsolationBar" in config else None
-            self.translate = config["translate"] \
-                if "translate" in config else None
-            self.zgpu = config["zgpu"] \
-                if "zgpu" in config else None
+            self.browser_in_browser = config["browserInBrowser"] if "browserInBrowser" in config else None
+            self.session_persistence = config["sessionPersistence"] if "sessionPersistence" in config else None
+            self.persist_isolation_bar = config["persistIsolationBar"] if "persistIsolationBar" in config else None
+            self.translate = config["translate"] if "translate" in config else None
+            self.zgpu = config["zgpu"] if "zgpu" in config else None
 
             if "forwardToZia" in config:
                 if isinstance(config["forwardToZia"], ForwardToZia):
@@ -253,14 +238,10 @@ class ForwardToZia(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.cloud_name = config["cloudName"] \
-                if "cloudName" in config else None
-            self.pac_file_url = config["pacFileUrl"] \
-                if "pacFileUrl" in config else None
-            self.organization_id = config["organizationId"] \
-                if "organizationId" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.pac_file_url = config["pacFileUrl"] if "pacFileUrl" in config else None
+            self.organization_id = config["organizationId"] if "organizationId" in config else None
 
         else:
             self.enabled = None
@@ -298,22 +279,14 @@ class SecurityControls(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.copy_paste = config["copyPaste"] \
-                if "copyPaste" in config else None
-            self.upload_download = config["uploadDownload"] \
-                if "uploadDownload" in config else None
-            self.document_viewer = config["documentViewer"] \
-                if "documentViewer" in config else None
-            self.local_render = config["localRender"] \
-                if "localRender" in config else None
-            self.allow_printing = config["allowPrinting"] \
-                if "allowPrinting" in config else None
-            self.restrict_keystrokes = config["restrictKeystrokes"] \
-                if "restrictKeystrokes" in config else None
-            self.camera_and_mic = config["cameraAndMic"] \
-                if "cameraAndMic" in config else None
-            self.flattened_pdf = config["flattenedPdf"] \
-                if "flattenedPdf" in config else None
+            self.copy_paste = config["copyPaste"] if "copyPaste" in config else None
+            self.upload_download = config["uploadDownload"] if "uploadDownload" in config else None
+            self.document_viewer = config["documentViewer"] if "documentViewer" in config else None
+            self.local_render = config["localRender"] if "localRender" in config else None
+            self.allow_printing = config["allowPrinting"] if "allowPrinting" in config else None
+            self.restrict_keystrokes = config["restrictKeystrokes"] if "restrictKeystrokes" in config else None
+            self.camera_and_mic = config["cameraAndMic"] if "cameraAndMic" in config else None
+            self.flattened_pdf = config["flattenedPdf"] if "flattenedPdf" in config else None
 
             if "deepLink" in config:
                 if isinstance(config["deepLink"], DeepLink):
@@ -383,12 +356,8 @@ class DeepLink(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [],
-                str
-            )
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.applications = ZscalerCollection.form_list(config["applications"] if "applications" in config else [], str)
 
         else:
             self.enabled = None
@@ -422,16 +391,11 @@ class Watermark(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.show_user_id = config["showUserId"] \
-                if "showUserId" in config else None
-            self.show_timestamp = config["showTimestamp"] \
-                if "showTimestamp" in config else None
-            self.show_message = config["showMessage"] \
-                if "showMessage" in config else None
-            self.message = config["message"] \
-                if "message" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.show_user_id = config["showUserId"] if "showUserId" in config else None
+            self.show_timestamp = config["showTimestamp"] if "showTimestamp" in config else None
+            self.show_message = config["showMessage"] if "showMessage" in config else None
+            self.message = config["message"] if "message" in config else None
 
         else:
             self.enabled = None
@@ -471,14 +435,10 @@ class Certificates(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.is_default = config["isDefault"] \
-                if "isDefault" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.is_default = config["isDefault"] if "isDefault" in config else None
 
         else:
             self.id = None
@@ -516,10 +476,8 @@ class Regions(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
         else:
             self.id = None
@@ -553,8 +511,7 @@ class Banner(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
 
         else:
             self.id = None

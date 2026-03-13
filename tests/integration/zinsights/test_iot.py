@@ -38,6 +38,6 @@ class TestIoT:
         assert response is not None or err is not None
         if stats:
             print(f"Devices count: {stats.get('devices_count', 0)}")
-            entries = stats.get('entries', [])
+            entries = stats.get("entries", [])
             print(f"Entries count: {len(entries)}")
         print("Device stats query completed")

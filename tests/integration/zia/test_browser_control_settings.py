@@ -50,9 +50,9 @@ class TestBrowserControlSettings:
             try:
                 if original_settings:
                     updated_settings, _, error = client.zia.browser_control_settings.update_browser_control_settings(
-                        plugin_check_frequency='DAILY',
-                        bypass_plugins=['ACROBAT', 'FLASH'],
-                        bypass_applications=['OUTLOOKEXP'],
+                        plugin_check_frequency="DAILY",
+                        bypass_plugins=["ACROBAT", "FLASH"],
+                        bypass_applications=["OUTLOOKEXP"],
                         bypass_all_browsers=False,
                         allow_all_browsers=True,
                         enable_warnings=True,
@@ -73,9 +73,9 @@ class TestBrowserControlSettings:
             # Step 4: Update with blocked browser versions
             try:
                 settings_with_blocked, _, error = client.zia.browser_control_settings.update_browser_control_settings(
-                    plugin_check_frequency='WEEKLY',
-                    blocked_chrome_versions=['CH143', 'CH142'],
-                    blocked_firefox_versions=['MF145', 'MF144'],
+                    plugin_check_frequency="WEEKLY",
+                    blocked_chrome_versions=["CH143", "CH142"],
+                    blocked_firefox_versions=["MF145", "MF144"],
                     allow_all_browsers=False,
                     enable_warnings=True,
                 )
@@ -97,4 +97,3 @@ class TestBrowserControlSettings:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-

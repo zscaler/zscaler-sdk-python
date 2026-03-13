@@ -89,4 +89,5 @@ class HeaderUpdateError(Exception):
 
 class RetryTooLong(Exception):
     """Raised when backoff time exceeds maxRetrySeconds configuration."""
+
     pass

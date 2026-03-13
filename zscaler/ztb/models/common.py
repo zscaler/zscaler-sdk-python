@@ -1,0 +1,66 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import Dict, List, Optional, Any, Union
+from zscaler.oneapi_object import ZscalerObject
+
+
+class Common(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+
+        if config:
+            self.cluster_token = config["cluster_token"] if "cluster_token" in config else None
+            self.token = config["token"] if "token" in config else None
+            self.results = ZscalerCollection.form_list(config["results"] if "results" in config else [], CommonResult)
+
+        else:
+            # Defaults when config is None
+            self.cluster_token = None
+            self.token = None
+            self.results = []
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cluster_token": self.cluster_token,
+            "token": self.token,
+            "results": self.results,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class CommonResult(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+
+        if config:
+            self.interface_type = config["interface_type"] if "interface_type" in config else None
+            self.name = config["name"] if "name" in config else None
+        else:
+            # Defaults when config is None
+            self.interface_type = None
+            self.name = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "interface_type": self.interface_type,
+            "name": self.name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

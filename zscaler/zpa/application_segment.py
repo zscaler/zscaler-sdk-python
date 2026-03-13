@@ -474,10 +474,7 @@ class ApplicationSegmentAPI(APIClient):
         return (result, response, None)
 
     def delete_segment(
-        self,
-        segment_id: str,
-        force_delete: bool = False,
-        microtenant_id: Optional[str] = None
+        self, segment_id: str, force_delete: bool = False, microtenant_id: Optional[str] = None
     ) -> APIResult[None]:
         """
         Deletes the specified Application Segment from ZPA.
@@ -864,10 +861,7 @@ class ApplicationSegmentAPI(APIClient):
         return (result, response, None)
 
     def update_weighted_lb_config(
-        self,
-        segment_id: str,
-        query_params: Optional[dict] = None,
-        **kwargs
+        self, segment_id: str, query_params: Optional[dict] = None, **kwargs
     ) -> APIResult[WeightedLBConfig]:
         """
         Updates the Weighted Load Balancing configuration for the specified Application Segment.
@@ -941,9 +935,7 @@ class ApplicationSegmentAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, {}, params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params=query_params)
         if error:
             return (None, None, error)
 

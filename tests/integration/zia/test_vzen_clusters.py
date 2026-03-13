@@ -36,19 +36,19 @@ class TestVZENClusters:
         errors = []
         cluster_id = None
         update_cluster = None
-        
+
         # Use deterministic names for VCR
         names = NameGenerator("vzen-cluster")
 
         try:
             try:
                 create_cluster, _, error = client.zia.vzen_clusters.add_vzen_cluster(
-                    name=names.name, 
+                    name=names.name,
                     enabled=True,
-                    type='VIP',
-                    ip_address='192.168.90.7',
-                    subnet_mask='255.255.255.0',
-                    default_gateway='192.168.90.254',
+                    type="VIP",
+                    ip_address="192.168.90.7",
+                    subnet_mask="255.255.255.0",
+                    default_gateway="192.168.90.254",
                     ip_sec_enabled=False,
                 )
                 assert error is None, f"Add Cluster Error: {error}"
@@ -63,10 +63,10 @@ class TestVZENClusters:
                         cluster_id=cluster_id,
                         name=names.updated_name,
                         enabled=True,
-                        type='VIP',
-                        ip_address='192.168.90.7',
-                        subnet_mask='255.255.255.0',
-                        default_gateway='192.168.90.254',
+                        type="VIP",
+                        ip_address="192.168.90.7",
+                        subnet_mask="255.255.255.0",
+                        default_gateway="192.168.90.254",
                         ip_sec_enabled=False,
                     )
                     assert error is None, f"Update Cluster Error: {error}"
@@ -84,7 +84,9 @@ class TestVZENClusters:
 
             try:
                 if update_cluster:
-                    clusters, _, error = client.zia.vzen_clusters.list_vzen_clusters(query_params={"search": update_cluster.name})
+                    clusters, _, error = client.zia.vzen_clusters.list_vzen_clusters(
+                        query_params={"search": update_cluster.name}
+                    )
                     assert error is None, f"List clusters Error: {error}"
                     assert clusters is not None and isinstance(clusters, list), "No clusters found or invalid format."
             except Exception as e:

@@ -35,26 +35,16 @@ class NPNClientController(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.client_ip_address = config["clientIpAddress"] \
-                if "clientIpAddress" in config else None
-            self.common_name = config["commonName"] \
-                if "commonName" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.device_state = config["deviceState"] \
-                if "deviceState" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.vpn_service_edge_name = config["vpnServiceEdgeName"] \
-                if "vpnServiceEdgeName" in config else None
-            self.vpn_service_edge_id = config["vpnServiceEdgeId"] \
-                if "vpnServiceEdgeId" in config else None
-            self.user_name = config["UserName"] \
-                if "UserName" in config else None
+            self.client_ip_address = config["clientIpAddress"] if "clientIpAddress" in config else None
+            self.common_name = config["commonName"] if "commonName" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.device_state = config["deviceState"] if "deviceState" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.vpn_service_edge_name = config["vpnServiceEdgeName"] if "vpnServiceEdgeName" in config else None
+            self.vpn_service_edge_id = config["vpnServiceEdgeId"] if "vpnServiceEdgeId" in config else None
+            self.user_name = config["UserName"] if "UserName" in config else None
         else:
             self.client_ip_address = None
             self.common_name = None
@@ -82,7 +72,7 @@ class NPNClientController(ZscalerObject):
             "modifiedTime": self.modified_time,
             "vpnServiceEdgeName": self.vpn_service_edge_name,
             "vpnServiceEdgeId": self.vpn_service_edge_id,
-            "UserName": self.user_name
+            "UserName": self.user_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
