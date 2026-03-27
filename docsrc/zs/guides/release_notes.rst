@@ -6,13 +6,29 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-## 1.9.18 (March 26, 2025)
+1.9.19 (March 27, 2025)
+---------------------------
 
-### Notes
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+------------
+
+* (`#476 <https://github.com/zscaler/zscaler-sdk-python/pull/476>`_) - Fixed ZPA Service Edge Controller attribute incosistency.
+
+1.9.18 (March 26, 2025)
+---------------------------
+
+Notes
+-----
 
 - Python Versions: **v3.10, v3.11, v3.12**
 
-### Enhancements
+Enhancements
+--------------
 
 * (`#474 <https://github.com/zscaler/zscaler-sdk-python/pull/474>`_) - Added new ZMS (Zscaler Microsegmentation) GraphQL service:
   * ``agents`` - List agents, agent connection status statistics, agent version statistics
@@ -51,17 +67,21 @@ Zscaler Python SDK Changelog
   * Service type ``bi`` mapped in ``request_executor.py``
   * Unit tests, Sphinx documentation, and Makefile targets
 
-## 1.9.17 (March 12, 2025)
+1.9.17 (March 12, 2025)
+---------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.10, v3.11, v3.12**
 
-### Breaking Changes
+Breaking Changes
+-----------------
 
 - **Python 3.9 no longer supported.** Minimum required Python version is now 3.10. This change resolves dependency conflicts with `vcrpy` and `urllib3`.
 
-### Enhancements
+Enhancements
+-------------
 
 * (`#467 <https://github.com/zscaler/zscaler-sdk-python/pull/467>`_) - Added ZPA Tag Controller resources:
   * ``tag_namespace`` - Tag namespaces: list, get, get_by_name, create, update, delete, update_namespace_status
@@ -81,11 +101,13 @@ Zscaler Python SDK Changelog
 1.9.16 (February 16, 2026)
 ---------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.9, v3.10, v3.11, v3.12**
 
-### Bug Fixes:
+Bug Fixes:
+-----------
 
 (`#460 <https://github.com/zscaler/zscaler-sdk-python/pull/460>`_) - Fixed URLCategory model assigning function reference instead of calling `form_list` for `regex_patterns` and `regex_patterns_retaining_parent_category`
 
@@ -323,7 +345,8 @@ Notes
 
 - Python Versions: **v3.9, v3.10, v3.11, v3.12**
 
-### Enhancements:
+Enhancements:
+-------------------
 
 (`#427 <https://github.com/zscaler/zscaler-sdk-python/pull/427>`_) - Added VCR-based integration testing with recorded HTTP cassettes for faster, deterministic test execution.
 
@@ -360,7 +383,8 @@ Bug Fixes:
 
 (`#423 <https://github.com/zscaler/zscaler-sdk-python/pull/423>`_) - Fixed type hints for Cloud Firewall list functions.
 
-### New ZIA Endpoint - Traffic Capture Policy
+New ZIA Endpoint - Traffic Capture Policy
+----------------------------------------------
 
 (`#423 <https://github.com/zscaler/zscaler-sdk-python/pull/423>`_) - Added the following new ZIA Endpoints
     - Added `GET /trafficCaptureRules` Retrieves the list of Traffic Capture policy rules
@@ -589,7 +613,8 @@ Enhancements
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Added automatic `x-partner-id` header injection for all API requests when `partnerId` is provided in the configuration. The header is automatically included in all requests across OneAPI and Legacy clients (ZIA, ZPA, ZTW, ZCC, ZDX, ZWA) when `partnerId` is specified via config dictionary or `ZSCALER_PARTNER_ID` environment variable.
 
-### Bug Fixes:
+Bug Fixes:
+---------------
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Fixed context manager deauthentication for ZTW and ZIA services to only trigger on mutations (POST/PUT/DELETE operations). GET-only sessions no longer invoke unnecessary deauthentication, improving performance and reducing API calls.
 
@@ -601,7 +626,8 @@ Notes
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
-### Security Enhancements:
+Security Enhancements:
+---------------------------
 
 (`#396 <https://github.com/zscaler/zscaler-sdk-python/pull/396>`_) - Added RSA key strength validation for OAuth JWT authentication. The SDK now enforces a minimum 2048-bit key size for RSA private keys (NIST recommendation), rejecting weak keys with clear error messages.
 
@@ -629,7 +655,8 @@ Bug Fixes
 1.8.3 (September 22, 2025)
 ---------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 

@@ -65,7 +65,7 @@ class ServiceEdgeControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa}
+            {self._zpa_base_endpoint}
             /serviceEdge
         """)
 
@@ -112,7 +112,7 @@ class ServiceEdgeControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""{
-            self._base_endpoint}/serviceEdge/{service_edge_id}
+            self._zpa_base_endpoint}/serviceEdge/{service_edge_id}
         """)
 
         microtenant_id = kwargs.pop("microtenant_id", None)
@@ -160,7 +160,7 @@ class ServiceEdgeControllerAPI(APIClient):
         """
         http_method = "put".upper()
         api_url = format_url(f"""{
-            self._base_endpoint}/serviceEdge/{service_edge_id}"
+            self._zpa_base_endpoint}/serviceEdge/{service_edge_id}
         """)
 
         body = {}
@@ -210,7 +210,7 @@ class ServiceEdgeControllerAPI(APIClient):
         """
         http_method = "delete".upper()
         api_url = format_url(f"""
-            {self._base_endpoint}/serviceEdge/{service_edge_id}"
+            {self._zpa_base_endpoint}/serviceEdge/{service_edge_id}
             """)
 
         microtenant_id = kwargs.pop("microtenant_id", None)
@@ -224,7 +224,7 @@ class ServiceEdgeControllerAPI(APIClient):
         if error:
             return None
 
-        return response.get_status_code()
+        return response.get_status()
 
     def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> int:
         """
@@ -238,7 +238,7 @@ class ServiceEdgeControllerAPI(APIClient):
         """
         http_method = "post".upper()
         api_url = format_url(f"""
-            {self._base_endpoint}/serviceEdge/bulkDelete"
+            {self._zpa_base_endpoint}/serviceEdge/bulkDelete
             """)
 
         payload = {"ids": service_edge_ids}
@@ -246,7 +246,9 @@ class ServiceEdgeControllerAPI(APIClient):
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, json=payload, params=params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body=payload, params=params
+        )
         if error:
             return None
 
@@ -254,4 +256,4 @@ class ServiceEdgeControllerAPI(APIClient):
         if error:
             return None
 
-        return response.get_status_code()
+        return response.get_status()
