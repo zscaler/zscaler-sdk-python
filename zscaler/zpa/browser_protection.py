@@ -52,12 +52,10 @@ class BrowserProtectionProfileAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /activeBrowserProtectionProfile
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -111,12 +109,10 @@ class BrowserProtectionProfileAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /browserProtectionProfile
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -200,12 +196,10 @@ class BrowserProtectionProfileAPI(APIClient):
             ... print(f"Browser protection profile updated successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /browserProtectionProfile/setActive/{profile_id}
-        """
-        )
+        """)
 
         body = kwargs
 

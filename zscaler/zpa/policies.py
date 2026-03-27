@@ -350,12 +350,10 @@ class PolicySetControllerAPI(APIClient):
             raise ValueError(f"Incorrect policy type provided: {policy_type}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/policyType/{mapped_policy_type}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenantId")
@@ -491,12 +489,10 @@ class PolicySetControllerAPI(APIClient):
             raise ValueError(f"Incorrect policy type provided: {policy_type}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/rules/policyType/{mapped_policy_type}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -583,12 +579,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'access' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         # Construct the payload with any additional attributes from kwargs
         payload = {
@@ -774,12 +768,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'timeout' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -860,12 +852,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'timeout' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -966,12 +956,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'client_forwarding' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1076,12 +1064,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'client_forwarding' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         # Construct the body from kwargs (as a dictionary)
         body = kwargs
@@ -1183,12 +1169,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'isolation' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1303,12 +1287,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'isolation' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -1369,12 +1351,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'inspection' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -1474,12 +1454,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'inspection' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -1627,12 +1605,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'access' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -1800,12 +1776,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'access' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1933,12 +1907,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'timeout' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -2058,12 +2030,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'timeout' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -2184,12 +2154,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'client_forwarding' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -2291,12 +2259,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'client_forwarding' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -2410,12 +2376,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'isolation' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -2538,12 +2502,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'isolation' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -2676,12 +2638,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'inspection' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -2801,12 +2761,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'inspection' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -2938,12 +2896,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'credential' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
         microtenant_id = body.get("microtenant_id", None)
@@ -3082,12 +3038,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'credential' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
         microtenant_id = body.get("microtenant_id", None)
@@ -3219,12 +3173,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'capabilities' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -3369,12 +3321,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'capabilities' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -3519,12 +3469,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'redirection' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -3665,12 +3613,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'redirection' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -3805,12 +3751,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'browser protection' policy type")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -3923,12 +3867,10 @@ class PolicySetControllerAPI(APIClient):
             return (None, None, "No policy ID found for 'Browser Protection' policy type")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -4012,12 +3954,10 @@ class PolicySetControllerAPI(APIClient):
 
         # Construct the HTTP method and URL
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/rule/{rule_id}
-        """
-        )
+        """)
 
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -4092,12 +4032,10 @@ class PolicySetControllerAPI(APIClient):
         if error or not policy_set_id:
             return (None, response, error)
 
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id.get("id")}/rule/{rule_id}/reorder/{rule_order}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -4182,12 +4120,10 @@ class PolicySetControllerAPI(APIClient):
         if not policy_set_id:
             return (None, None, f"No policy ID found for policy_type: {policy_type}")
 
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/{policy_set_id}/reorder
-        """
-        )
+        """)
 
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -4247,12 +4183,10 @@ class PolicySetControllerAPI(APIClient):
             ... print(f"Available risk score values: {risk_scores}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /riskScoreValues
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -4357,12 +4291,10 @@ class PolicySetControllerAPI(APIClient):
                 raise ValueError(f"Incorrect policy type provided: {policy_type}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/rules/policyType/{mapped_policy_type}/count
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id")
@@ -4467,12 +4399,10 @@ class PolicySetControllerAPI(APIClient):
                 raise ValueError(f"Incorrect policy type provided: {policy_type}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v1}
             /policySet/rules/policyType/{mapped_policy_type}/application/{application_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

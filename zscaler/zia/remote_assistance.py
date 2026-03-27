@@ -55,12 +55,10 @@ class RemoteAssistanceAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /remoteAssistance
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -117,12 +115,10 @@ class RemoteAssistanceAPI(APIClient):
             ...         print(f"Failed to update remote assistance settings: {err}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /remoteAssistance
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

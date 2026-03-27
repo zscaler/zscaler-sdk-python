@@ -77,12 +77,10 @@ class PacFilesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -149,12 +147,10 @@ class PacFilesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -202,12 +198,10 @@ class PacFilesAPI(APIClient):
             ... print(f"Fetched pac_file by ID: {pac_file.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version/{pac_version}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -269,12 +263,10 @@ class PacFilesAPI(APIClient):
 
         # Preserve the existing logic for payload and request
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -361,19 +353,15 @@ class PacFilesAPI(APIClient):
             delete_version = kwargs.pop("delete_version", None)
             if not delete_version:
                 delete_version = min(pac_versions)  # Default to the oldest version if delete_version is not provided
-            api_url = format_url(
-                f"""
+            api_url = format_url(f"""
                 {self._zia_base_endpoint}
                 /pacFiles/{pac_id}/version/{pac_version}?deleteVersion={delete_version}
-            """
-            )
+            """)
         else:
-            api_url = format_url(
-                f"""
+            api_url = format_url(f"""
                 {self._zia_base_endpoint}
                 /pacFiles/{pac_id}/version/{pac_version}
-            """
-            )
+            """)
 
         # Step 4: Use the constructor logic to create the request and execute it
         body = kwargs
@@ -425,12 +413,10 @@ class PacFilesAPI(APIClient):
             ...     print("PAC file validation failed.")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles/validate
-        """
-        )
+        """)
 
         # Normalize so validator sees the function at line 1
         pac = textwrap.dedent(pac_file_content).lstrip("\r\n")
@@ -502,12 +488,10 @@ class PacFilesAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version/{pac_version}/action/{pac_version_action}
-        """
-        )
+        """)
 
         # Append optional newLKGVer parameter to the URL if provided
         if new_lkg_ver is not None:
@@ -557,12 +541,10 @@ class PacFilesAPI(APIClient):
             ... print(f"Pac File with ID '18805'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}
-        """
-        )
+        """)
 
         params = {}
 

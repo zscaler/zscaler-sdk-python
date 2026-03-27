@@ -66,12 +66,10 @@ class AppServersAPI(APIClient):
             ...     print(server.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /server
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -124,12 +122,10 @@ class AppServersAPI(APIClient):
             ...     print(server.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /server/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -170,12 +166,10 @@ class AppServersAPI(APIClient):
             ... print(f"Fetched app server by ID: {fetched_server.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -226,11 +220,9 @@ class AppServersAPI(APIClient):
             ... print(f"app server created successfully: {new_portal.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
-            /server"""
-        )
+            /server""")
 
         body = kwargs
 
@@ -275,12 +267,10 @@ class AppServersAPI(APIClient):
             ... print(f"application servers created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -330,12 +320,10 @@ class AppServersAPI(APIClient):
             ... print(f"application server with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

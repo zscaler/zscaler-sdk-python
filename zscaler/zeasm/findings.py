@@ -65,12 +65,10 @@ class FindingsAPI(APIClient):
                 ...     print(f"  ID: {finding.id}, Category: {finding.category}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/findings
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -118,12 +116,10 @@ class FindingsAPI(APIClient):
                 >>> print(finding.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/findings/{finding_id}/details
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -174,12 +170,10 @@ class FindingsAPI(APIClient):
                 >>>     print(evidence.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/findings/{finding_id}/evidence
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -227,12 +221,10 @@ class FindingsAPI(APIClient):
                 >>>     print(finding.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/findings/{finding_id}/scan-output
-        """
-        )
+        """)
 
         body = {}
         headers = {}

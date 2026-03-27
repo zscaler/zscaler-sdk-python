@@ -73,12 +73,10 @@ class TrafficCaptureAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -122,12 +120,10 @@ class TrafficCaptureAPI(APIClient):
             ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/{rule_id}
-            """
-        )
+            """)
         body = {}
         headers = {}
 
@@ -231,12 +227,10 @@ class TrafficCaptureAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -345,12 +339,10 @@ class TrafficCaptureAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -399,12 +391,10 @@ class TrafficCaptureAPI(APIClient):
             ... print(f"Rule with ID {updated_rule.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -446,12 +436,10 @@ class TrafficCaptureAPI(APIClient):
             ... print(f"Max order configured: {rule_order_info.get('maxOrderConfigured')}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/order
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -496,12 +484,10 @@ class TrafficCaptureAPI(APIClient):
             ...     print(count.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/count
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -554,12 +540,10 @@ class TrafficCaptureAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /trafficCaptureRules/ruleLabels
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

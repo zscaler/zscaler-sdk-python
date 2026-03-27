@@ -17,7 +17,7 @@ from zscaler.zpa.models import segment_group, application_segment, app_connector
 from zscaler.zdx.models import devices as zdx_devices, users as zdx_users
 from zscaler.zcc.models import devices as zcc_devices
 from zscaler.ztw.models import location_management as ztw_location_management
-from zscaler.zidentity.models import users as zidentity_users, groups as zidentity_groups
+from zscaler.zid.models import users as zid_users, groups as zid_groups
 from zscaler.zwa.models import common as zwa_common
 
 
@@ -277,30 +277,30 @@ class TestZTWModels:
         assert location.name == "Test ZTW Location"
 
 
-class TestZIdentityModels:
-    """Test ZIdentity model instantiation."""
+class TestZIdModels:
+    """Test Z Identity (zid) model instantiation."""
 
-    def test_zidentity_user_instantiation(self):
-        """Test ZIdentity User model instantiation."""
+    def test_zid_user_instantiation(self):
+        """Test Z Identity User model instantiation."""
         config = {
             "id": "user123",
             "username": "testuser",
             "email": "test@example.com",
         }
 
-        user = zidentity_users.UserRecord(config)
+        user = zid_users.UserRecord(config)
         assert user is not None
         assert isinstance(user, ZscalerObject)
 
-    def test_zidentity_group_instantiation(self):
-        """Test ZIdentity Group model instantiation."""
+    def test_zid_group_instantiation(self):
+        """Test Z Identity Group model instantiation."""
         config = {
             "id": "group123",
             "name": "Test Group",
             "description": "Test Description",
         }
 
-        group = zidentity_groups.GroupRecord(config)
+        group = zid_groups.GroupRecord(config)
         assert group is not None
         assert isinstance(group, ZscalerObject)
 

@@ -75,12 +75,10 @@ class TrustedNetworksAPI(APIClient):
             ...         print(profile.network_id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /network
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -121,12 +119,10 @@ class TrustedNetworksAPI(APIClient):
             ... print(fetched_network.network_id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /network/{network_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

@@ -61,12 +61,10 @@ class ConfigOverrideControllerAPI(APIClient):
             ...     print(override.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /configOverrides
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -107,12 +105,10 @@ class ConfigOverrideControllerAPI(APIClient):
             ... print(f"Fetched config override by ID: {fetched_config.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /configOverrides/{config_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -147,12 +143,10 @@ class ConfigOverrideControllerAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /configOverrides
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -188,12 +182,10 @@ class ConfigOverrideControllerAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /configOverrides/{config_id}
-        """
-        )
+        """)
 
         body = {}
 

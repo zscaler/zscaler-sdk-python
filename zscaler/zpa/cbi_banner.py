@@ -50,12 +50,10 @@ class CBIBannerAPI(APIClient):
             ...     print(banner.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /banners
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -92,12 +90,10 @@ class CBIBannerAPI(APIClient):
             ... print(f"Fetched banner by ID: {fetched_banner.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -140,12 +136,10 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner added successfully: {added_banner.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /banner
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -190,12 +184,10 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner updated successfully: {updated_banner.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -240,12 +232,10 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

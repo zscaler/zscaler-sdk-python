@@ -58,12 +58,10 @@ class SubCloudsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /subclouds
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -99,12 +97,10 @@ class SubCloudsAPI(APIClient):
             tuple: A tuple containing the updated Sub Clouds, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /subclouds/{cloud_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -141,12 +137,10 @@ class SubCloudsAPI(APIClient):
             ... )
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /subclouds/isLastDcInCountry/{cloud_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

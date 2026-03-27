@@ -58,12 +58,10 @@ class BandwidthClassesAPI(APIClient):
             ...     print(bwd.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -116,12 +114,10 @@ class BandwidthClassesAPI(APIClient):
             ...     print(bwd.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -163,12 +159,10 @@ class BandwidthClassesAPI(APIClient):
             ...     print(f"Fetched class by ID: {fetched_class.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses/{class_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -216,12 +210,10 @@ class BandwidthClassesAPI(APIClient):
             ... print(f"Class added successfully: {added_class.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -270,12 +262,10 @@ class BandwidthClassesAPI(APIClient):
             ... print(f"Class added successfully: {updated_class.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses/{class_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -314,12 +304,10 @@ class BandwidthClassesAPI(APIClient):
             ...     print(f"Class with ID {'125454'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthClasses/{class_id}
-        """
-        )
+        """)
 
         params = {}
 

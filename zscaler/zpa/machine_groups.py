@@ -62,12 +62,10 @@ class MachineGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /machineGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -120,12 +118,10 @@ class MachineGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /machineGroup/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -168,12 +164,10 @@ class MachineGroupsAPI(APIClient):
             ... print(fetched_group.id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /machineGroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

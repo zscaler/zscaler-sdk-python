@@ -67,12 +67,10 @@ class CustomerVersionProfileAPI(APIClient):
             ...     print(pra.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /visible/versionProfiles
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -112,12 +110,10 @@ class CustomerVersionProfileAPI(APIClient):
             ... print(version_profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /versionProfile
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -161,12 +157,10 @@ class CustomerVersionProfileAPI(APIClient):
             ... print(f"Version profile updated: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /versionProfiles/{profile_id}
-        """
-        )
+        """)
 
         body = {"removeOverrideFlag": remove_override_flag}
 

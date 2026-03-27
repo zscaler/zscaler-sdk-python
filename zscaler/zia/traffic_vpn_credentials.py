@@ -67,12 +67,10 @@ class TrafficVPNCredentialAPI(APIClient):
             ...     print(credential.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vpnCredentials
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -130,12 +128,10 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -193,12 +189,10 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, None, ValueError("Pre-shared key must be provided."))
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vpnCredentials
-        """
-        )
+        """)
 
         # Prepare the request body from kwargs
         body = kwargs
@@ -240,12 +234,10 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-        """
-        )
+        """)
 
         # Retrieve the current VPN credential for validation
         current_credential, _, err = self.get_vpn_credential(credential_id)
@@ -306,12 +298,10 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -346,12 +336,10 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, ValueError("Maximum 100 credential IDs allowed per bulk delete request"))
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vpnCredentials/bulkDelete
-        """
-        )
+        """)
 
         payload = {"ids": credential_ids}
 

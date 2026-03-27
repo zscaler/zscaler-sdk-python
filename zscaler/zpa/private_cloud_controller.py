@@ -69,12 +69,10 @@ class PrivateCloudControllerAPI(APIClient):
             ...     print(controller.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudController
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -115,12 +113,10 @@ class PrivateCloudControllerAPI(APIClient):
             ... print(f"Fetched controller by ID: {fetched_controller.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /privateCloudController/{controller_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -171,12 +167,10 @@ class PrivateCloudControllerAPI(APIClient):
             ... print(f"private controller created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudController/{controller_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -222,12 +216,10 @@ class PrivateCloudControllerAPI(APIClient):
             ... print(f"Private Cloud Controller with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudController/{controller_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -261,12 +253,10 @@ class PrivateCloudControllerAPI(APIClient):
             ... print(f"Private Cloud Controller with ID {'999999'} restarted successfully.")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudController/{controller_id}/restart
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

@@ -68,12 +68,10 @@ class IPGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -142,12 +140,10 @@ class IPGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipGroups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -198,12 +194,10 @@ class IPGroupsAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -245,12 +239,10 @@ class IPGroupsAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 

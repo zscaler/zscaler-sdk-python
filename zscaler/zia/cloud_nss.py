@@ -58,12 +58,10 @@ class CloudNSSAPI(APIClient):
             ...     print(feed)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -107,12 +105,10 @@ class CloudNSSAPI(APIClient):
             ...    print(feed.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/{feed_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -306,12 +302,10 @@ class CloudNSSAPI(APIClient):
             ... print(f"NSS Feed added successfully: {added_feed.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -487,12 +481,10 @@ class CloudNSSAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/{feed_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -532,12 +524,10 @@ class CloudNSSAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/{feed_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -574,12 +564,10 @@ class CloudNSSAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/feedOutputDefaults
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -622,12 +610,10 @@ class CloudNSSAPI(APIClient):
             ...    print(feed.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/testConnectivity/{feed_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -664,12 +650,10 @@ class CloudNSSAPI(APIClient):
             ...    print(validation_result)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssFeeds/validateFeedFormat
-            """
-        )
+            """)
 
         query_params = {"type": feed_type} if feed_type else {}
 

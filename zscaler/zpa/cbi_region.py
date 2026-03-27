@@ -47,12 +47,10 @@ class CBIRegionAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /regions
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

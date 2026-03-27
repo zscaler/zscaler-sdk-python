@@ -57,12 +57,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -113,12 +111,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ... print(f"Fetched Tenancy Restriction Profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile/{profile_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -213,12 +209,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ... print(f"tenancy restriction profile added successfully: {added_tenancy.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -271,12 +265,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ... print(f"tenancy restriction profile updated successfully: {updated_tenancy.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile/{profile_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -316,12 +308,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ... print(f"Tenant Restriction Profile with ID {'1254654'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile/{profile_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -378,12 +368,10 @@ class TenancyRestrictionProfileAPI(APIClient):
             ...         print(item)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /tenancyRestrictionProfile/app-item-count/{app_type}/{item_type}
-            """
-        )
+            """)
 
         # body = {"cloudApps": cloud_apps}
 

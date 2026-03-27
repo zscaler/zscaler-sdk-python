@@ -55,12 +55,10 @@ class SandboxRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandboxRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -113,12 +111,10 @@ class SandboxRulesAPI(APIClient):
             ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandboxRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -198,12 +194,10 @@ class SandboxRulesAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandboxRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -292,12 +286,10 @@ class SandboxRulesAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandboxRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -346,12 +338,10 @@ class SandboxRulesAPI(APIClient):
             ... print(f"Rule with ID {'544852'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandboxRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

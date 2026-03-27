@@ -325,12 +325,10 @@ class DevicesAPI(APIClient):
             ...     print(device.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getDevices
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -374,12 +372,10 @@ class DevicesAPI(APIClient):
             ...     print(devices)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getDeviceCleanupInfo
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -425,12 +421,10 @@ class DevicesAPI(APIClient):
             ... print(device)
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /setDeviceCleanupInfo
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -479,12 +473,10 @@ class DevicesAPI(APIClient):
              ... print(details.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getDeviceDetails
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -543,12 +535,10 @@ class DevicesAPI(APIClient):
             ...     print(f"Removed device: {device.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /removeDevices
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -609,12 +599,10 @@ class DevicesAPI(APIClient):
             ...     print(f"Removed device: {device.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /forceRemoveDevices
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -667,12 +655,10 @@ class DevicesAPI(APIClient):
             ... print("Removed machine tunnel:", remove_tunnels)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /removeMachineTunnel
-        """
-        )
+        """)
 
         query_params = convert_keys_to_camel_case(query_params or {})
         body = convert_keys_to_camel_case(kwargs or {})

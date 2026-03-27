@@ -53,7 +53,7 @@ TEST_URLS = {
     "zpa": "https://config.test.zscaler.com",
     "zcc": "https://mobile.test.zscaler.com",
     "zdx": "https://zdx.test.zscaler.com",
-    "zidentity": "https://identity.test.zscaler.com",
+    "zid": "https://identity.test.zscaler.com",
     "zeasm": "https://easm.test.zscaler.com",
     "ztb": "https://ztb.test.zscaler.com",
 }
@@ -66,7 +66,7 @@ URL_PATTERNS = {
     "zpa_alt": r"https://[a-z0-9-]+\.private\.zscaler\.com",
     "zcc": r"https://api-mobile\.zscaler\.net",
     "zdx": r"https://api\.zdxcloud\.net",
-    "zidentity": r"https://[a-z0-9-]+\.zslogin\.net",
+    "zid": r"https://[a-z0-9-]+\.zslogin\.net",
     "zeasm": r"https://api\.zsapi\.net",
     "ztb": r"https://[a-z0-9-]+\.goairgap\.com",
 }
@@ -120,7 +120,7 @@ def before_record_request(request):
         "zpa_alt": TEST_URLS["zpa"],
         "zcc": TEST_URLS["zcc"],
         "zdx": TEST_URLS["zdx"],
-        "zidentity": TEST_URLS["zidentity"],
+        "zid": TEST_URLS["zid"],
         "zeasm": TEST_URLS["zeasm"],
         "ztb": TEST_URLS["ztb"],
     }
@@ -220,7 +220,7 @@ def before_record_response(response):
             "zpa_alt": TEST_URLS_BYTES["zpa"],
             "zcc": TEST_URLS_BYTES["zcc"],
             "zdx": TEST_URLS_BYTES["zdx"],
-            "zidentity": TEST_URLS_BYTES["zidentity"],
+            "zid": TEST_URLS_BYTES["zid"],
             "zeasm": TEST_URLS_BYTES["zeasm"],
             "ztb": TEST_URLS_BYTES["ztb"],
         }
@@ -413,7 +413,7 @@ def before_record_response(response):
                 "zpa_alt": TEST_URLS["zpa"],
                 "zcc": TEST_URLS["zcc"],
                 "zdx": TEST_URLS["zdx"],
-                "zidentity": TEST_URLS["zidentity"],
+                "zid": TEST_URLS["zid"],
                 "zeasm": TEST_URLS["zeasm"],
                 "ztb": TEST_URLS["ztb"],
             }

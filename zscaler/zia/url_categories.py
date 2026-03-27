@@ -71,12 +71,10 @@ class URLCategoriesAPI(APIClient):
             ...     print(categories)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -125,12 +123,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"Fetched url category by ID: {fetched_category.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/{category_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -223,12 +219,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"url category added successfully: {added_category.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories
-        """
-        )
+        """)
 
         custom_category = kwargs.pop("custom_category", False)
 
@@ -299,12 +293,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"url category added successfully: {added_category.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories
-        """
-        )
+        """)
 
         if not configured_name:
             raise ValueError("`configured_name` is mandatory and cannot be empty.")
@@ -507,12 +499,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"url category updated successfully: {update_category.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/{category_id}?action=ADD_TO_LIST
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -560,12 +550,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"url category updated successfully: {update_category.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/{category_id}?action=REMOVE_FROM_LIST
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -604,12 +592,10 @@ class URLCategoriesAPI(APIClient):
             ... print(f"url category with ID {CUSTOM_01} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/{category_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -643,12 +629,10 @@ class URLCategoriesAPI(APIClient):
             ...     print(entry)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlLookup
-        """
-        )
+        """)
 
         results = []
         for chunk in chunker(urls, 100):
@@ -690,12 +674,10 @@ class URLCategoriesAPI(APIClient):
             ...     print(item)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/review/domains
-        """
-        )
+        """)
 
         results = []
         for chunk in chunker(urls, 100):
@@ -733,12 +715,10 @@ class URLCategoriesAPI(APIClient):
             ...     print(item)
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/review/domains
-        """
-        )
+        """)
 
         results = []
         for chunk in chunker(urls, 100):
@@ -767,12 +747,10 @@ class URLCategoriesAPI(APIClient):
             ... print(quota)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlCategories/urlQuota
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:

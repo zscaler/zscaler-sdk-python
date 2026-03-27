@@ -61,12 +61,10 @@ class WebPolicyAPI(APIClient):
             ...     print(policy.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /web/policy/listByCompany
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -113,12 +111,10 @@ class WebPolicyAPI(APIClient):
             ... print(f"web policy Info activated successfully: {web_policy.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /web/policy/activate
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -151,12 +147,10 @@ class WebPolicyAPI(APIClient):
             tuple: A tuple containing the updated Web Policy, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /web/policy/edit
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -187,12 +181,10 @@ class WebPolicyAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /web/policy/{policy_id}/delete
-        """
-        )
+        """)
 
         params = {}
 

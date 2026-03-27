@@ -64,12 +64,10 @@ class ServiceEdgeControllerAPI(APIClient):
             ...     print(edge.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa}
             /serviceEdge
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.pop("microtenant_id", None)
@@ -113,11 +111,9 @@ class ServiceEdgeControllerAPI(APIClient):
             ... print(f"Fetched service edge by ID: {fetched_service_edge.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._base_endpoint}/serviceEdge/{service_edge_id}
-        """
-        )
+        """)
 
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -163,11 +159,9 @@ class ServiceEdgeControllerAPI(APIClient):
             ... print(f"Service Edge created successfully: {update_service_edge.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._base_endpoint}/serviceEdge/{service_edge_id}"
-        """
-        )
+        """)
 
         body = {}
 
@@ -215,11 +209,9 @@ class ServiceEdgeControllerAPI(APIClient):
             ... print(f"Service Edge with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._base_endpoint}/serviceEdge/{service_edge_id}"
-            """
-        )
+            """)
 
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -245,11 +237,9 @@ class ServiceEdgeControllerAPI(APIClient):
             int: Status code for the operation.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._base_endpoint}/serviceEdge/bulkDelete"
-            """
-        )
+            """)
 
         payload = {"ids": service_edge_ids}
 

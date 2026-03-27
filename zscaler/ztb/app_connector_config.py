@@ -56,12 +56,10 @@ class AppConnectorConfigAPI(APIClient):
             >>> app_connector_config, response, error = client.ztb.app_connector_config.get_app_connector_config("abc-123")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /appconnector/config
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -95,12 +93,10 @@ class AppConnectorConfigAPI(APIClient):
             >>> app_connector_config, response, error = client.ztb.app_connector_config.create_app_connector_config(name="test")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /appconnector/config
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -139,12 +135,10 @@ class AppConnectorConfigAPI(APIClient):
             ... print(f"AppConnector config with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /appconnector/config
-        """
-        )
+        """)
 
         params = {}
 

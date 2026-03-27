@@ -13,8 +13,10 @@
    zs/zia/index
    zs/zpa/index
    zs/zwa/index
-   zs/zidentity/index
-   zs/zinsights/index
+   zs/zid/index
+   zs/zins/index
+   zs/zms/index
+   zs/zbi/index
    zs/zeasm/index
    zs/zaiguard/index
    zs/guides/index
@@ -1146,7 +1148,7 @@ Construct a client instance by passing your Zidentity `clientId`, `clientSecret`
 
    def main():
       with ZscalerClient(config) as client:
-         users, _, error = client.zidentity.groups.list_groups()
+         users, _, error = client.zid.groups.list_groups()
          if error:
                print(f"Error listing users: {error}")
                return
@@ -1157,7 +1159,7 @@ Construct a client instance by passing your Zidentity `clientId`, `clientSecret`
       main()
 
 
-Zidentity OneAPI Client ID and Private Key Authentication
+ZIdentity OneAPI Client ID and Private Key Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: py
@@ -1174,7 +1176,7 @@ Zidentity OneAPI Client ID and Private Key Authentication
 
    def main():
       with ZscalerClient(config) as client:
-         users, _, error = client.zidentity.groups.list_groups()
+         users, _, error = client.zid.groups.list_groups()
          if error:
                print(f"Error listing users: {error}")
                return

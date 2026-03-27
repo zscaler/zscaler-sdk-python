@@ -58,12 +58,10 @@ class PRACredentialAPI(APIClient):
             ...     print(pra.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -106,12 +104,10 @@ class PRACredentialAPI(APIClient):
             ... print(f"Fetched credential by ID: {fetched_credential.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /credential/{credential_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -161,12 +157,10 @@ class PRACredentialAPI(APIClient):
             ... print(f"credential added successfully: {added_credential.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -237,12 +231,10 @@ class PRACredentialAPI(APIClient):
             ... print(f"credential updated successfully: {updated_console.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential/{credential_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -314,12 +306,10 @@ class PRACredentialAPI(APIClient):
             ... print(f"PRA Credential with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential/{credential_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -359,12 +349,10 @@ class PRACredentialAPI(APIClient):
             ... print(f"Credential with ID {updated_credential.id} moved successfully.")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential/{credential_id}/move
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

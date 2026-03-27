@@ -84,12 +84,10 @@ class AlertsAPI(APIClient):
             ...      print(alert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /alerts/ongoing
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -132,12 +130,10 @@ class AlertsAPI(APIClient):
             ...     print(alert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /alerts/{alert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -210,12 +206,10 @@ class AlertsAPI(APIClient):
             ...     print(alert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /alerts/historical
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -288,12 +282,10 @@ class AlertsAPI(APIClient):
             ...     print(dev.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /alerts/{alert_id}/affected_devices
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

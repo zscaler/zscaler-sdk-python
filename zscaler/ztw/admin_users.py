@@ -52,12 +52,10 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /passwordChange
-        """
-        )
+        """)
 
         # Define the fixed payload
         payload = {
@@ -123,11 +121,9 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}/adminUsers
-            """
-        )
+            """)
         query_params = query_params or {}
 
         # Prepare request body and headers
@@ -172,11 +168,9 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}/adminUsers/{admin_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -260,12 +254,10 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminUsers
-        """
-        )
+        """)
 
         payload = {
             "loginName": login_name,
@@ -342,12 +334,10 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminUsers/{admin_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -383,12 +373,10 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminUsers/{admin_id}
-        """
-        )
+        """)
 
         params = {}
 

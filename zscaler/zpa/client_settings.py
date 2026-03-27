@@ -67,12 +67,10 @@ class ClientSettingsAPI(APIClient):
             ...     print(setting.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /clientSetting
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -109,12 +107,10 @@ class ClientSettingsAPI(APIClient):
             ...     print(setting.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /clientSetting/all
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -153,12 +149,10 @@ class ClientSettingsAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /clientSetting
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -194,12 +188,10 @@ class ClientSettingsAPI(APIClient):
             ... print(f"Client setting with ID deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /clientSetting
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

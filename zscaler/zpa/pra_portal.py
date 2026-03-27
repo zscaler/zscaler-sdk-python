@@ -62,12 +62,10 @@ class PRAPortalAPI(APIClient):
             ...     print(pra.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praPortal
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -110,12 +108,10 @@ class PRAPortalAPI(APIClient):
             ... print(f"Fetched portal by ID: {fetched_portal.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /praPortal/{portal_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -166,12 +162,10 @@ class PRAPortalAPI(APIClient):
             ... print(f"portal created successfully: {new_portal.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /praPortal
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -220,12 +214,10 @@ class PRAPortalAPI(APIClient):
             ... print(f"portal created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praPortal/{portal_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -272,12 +264,10 @@ class PRAPortalAPI(APIClient):
             ... print(f"PRA Portal with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praPortal/{portal_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

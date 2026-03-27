@@ -78,12 +78,10 @@ class GroupsRouterAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -128,12 +126,10 @@ class GroupsRouterAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -187,12 +183,10 @@ class GroupsRouterAPI(APIClient):
             ... print(f"Group created successfully: {created_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -235,12 +229,10 @@ class GroupsRouterAPI(APIClient):
             ... print(f"Group updated successfully (PATCH): {patched_group.as_dict()}")
         """
         http_method = "patch".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -287,12 +279,10 @@ class GroupsRouterAPI(APIClient):
             ... print(f"Group updated successfully (PUT): {updated_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -331,12 +321,10 @@ class GroupsRouterAPI(APIClient):
             ... print(f"Group with ID 73459 deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 

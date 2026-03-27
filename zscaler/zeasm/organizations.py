@@ -68,12 +68,10 @@ class OrganizationsAPI(APIClient):
                 ...     print(f"Using organization: {org_id}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations
-        """
-        )
+        """)
 
         body = {}
         headers = {}

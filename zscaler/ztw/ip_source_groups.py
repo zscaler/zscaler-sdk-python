@@ -68,12 +68,10 @@ class IPSourceGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -146,12 +144,10 @@ class IPSourceGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -202,12 +198,10 @@ class IPSourceGroupsAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -249,12 +243,10 @@ class IPSourceGroupsAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 

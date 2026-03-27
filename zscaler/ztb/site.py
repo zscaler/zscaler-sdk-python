@@ -70,12 +70,10 @@ class SiteAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -104,12 +102,10 @@ class SiteAPI(APIClient):
             tuple: (Site instance, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/siteByID/{site_id}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
@@ -134,12 +130,10 @@ class SiteAPI(APIClient):
             tuple: (Site instance, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/siteByName/{name}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
@@ -164,12 +158,10 @@ class SiteAPI(APIClient):
             tuple: (created Site or None, Response, error).
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/
-        """
-        )
+        """)
         body = kwargs
         request, error = self._request_executor.create_request(
             http_method, api_url, body, {"Content-Type": "application/json"}
@@ -199,12 +191,10 @@ class SiteAPI(APIClient):
             tuple: (None or updated Site, Response, error).
         """
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/{site_id}
-        """
-        )
+        """)
         if body:
             req_body = body.request_format()
         else:
@@ -231,12 +221,10 @@ class SiteAPI(APIClient):
             tuple: (None, Response, error).
         """
         http_method = "DELETE"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/{site_id}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
@@ -253,12 +241,10 @@ class SiteAPI(APIClient):
             tuple: (result string, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/MD5
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
@@ -283,12 +269,10 @@ class SiteAPI(APIClient):
             tuple: (list of AppSegment, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/app_segments
-        """
-        )
+        """)
         query_params = query_params or {}
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
         if error:
@@ -315,12 +299,10 @@ class SiteAPI(APIClient):
             tuple: (None, Response, error).
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/app_segments/{site_id}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {"Content-Type": "application/json"})
         if error:
             return (None, None, error)
@@ -341,12 +323,10 @@ class SiteAPI(APIClient):
             tuple: (response data or None, Response, error).
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/cloudSite/
-        """
-        )
+        """)
         req_body = (body.request_format() if body else {}) | kwargs
         request, error = self._request_executor.create_request(
             http_method, api_url, req_body, {"Content-Type": "application/json"}
@@ -376,12 +356,10 @@ class SiteAPI(APIClient):
             tuple: (HostnameConfig instance, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/hostnameconfig
-        """
-        )
+        """)
         params = dict(query_params) if query_params else {}
         params["gateway_ipaddress"] = gateway_ipaddress
         params["site_name"] = site_name
@@ -409,12 +387,10 @@ class SiteAPI(APIClient):
             tuple: (list of SiteNameItem, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/names
-        """
-        )
+        """)
         query_params = query_params or {}
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
         if error:
@@ -441,12 +417,10 @@ class SiteAPI(APIClient):
             tuple: (SiteOverview instance, Response, error).
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/siteByID/{site_id}/overview
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
@@ -472,12 +446,10 @@ class SiteAPI(APIClient):
             tuple: (None, Response, error).
         """
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/{site_id}/static_ips_mapping
-        """
-        )
+        """)
         body = {"enabled": enabled}
         request, error = self._request_executor.create_request(
             http_method, api_url, body, {"Content-Type": "application/json"}
@@ -501,12 +473,10 @@ class SiteAPI(APIClient):
             tuple: (None, Response, error).
         """
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /Site/{site_id}/template/{template_id}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)

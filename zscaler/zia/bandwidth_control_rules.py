@@ -72,12 +72,10 @@ class BandwidthControlRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -132,12 +130,10 @@ class BandwidthControlRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -185,12 +181,10 @@ class BandwidthControlRulesAPI(APIClient):
         ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -261,12 +255,10 @@ class BandwidthControlRulesAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -344,12 +336,10 @@ class BandwidthControlRulesAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
         body["id"] = rule_id
@@ -401,12 +391,10 @@ class BandwidthControlRulesAPI(APIClient):
             ...     print(f"Bandwidth rule with ID {'125454'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /bandwidthControlRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -67,12 +67,10 @@ class AdminAPI(APIClient):
             ...     print(dept.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /administration/departments
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -134,12 +132,10 @@ class AdminAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /administration/locations
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

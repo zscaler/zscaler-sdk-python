@@ -80,12 +80,10 @@ class InspectionControllerAPI(APIClient):
             tuple: A tuple containing (list of InspectionProfile instances, Response, error)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -116,12 +114,10 @@ class InspectionControllerAPI(APIClient):
             InspectionProfile: The corresponding inspection profile object.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}
-            """
-        )
+            """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, kwargs)
         if error:
@@ -218,12 +214,10 @@ class InspectionControllerAPI(APIClient):
                 A tuple containing the `InspectionProfile` instance, the response object, and an error (if any).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile
-        """
-        )
+        """)
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
 
         groups, _, err = self.list_predef_controls(query_params={"version": version})
@@ -297,12 +291,10 @@ class InspectionControllerAPI(APIClient):
             InspectionProfile: The updated inspection profile object.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}
-        """
-        )
+        """)
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
 
         # Get default predefined controls
@@ -377,12 +369,10 @@ class InspectionControllerAPI(APIClient):
             int: Status code of the delete operation.
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}
-        """
-        )
+        """)
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url)
@@ -456,12 +446,10 @@ class InspectionControllerAPI(APIClient):
             InspectionProfile: The updated ZPA Inspection Profile resource record.
         """
         http_method = "patch".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}/patch
-        """
-        )
+        """)
 
         # Fetch all predefined control groups
         control_groups, _, err = self.list_predef_controls()
@@ -556,12 +544,10 @@ class InspectionControllerAPI(APIClient):
             tuple: A tuple containing (list of AppProtectionCustomControl instances, Response, error)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -609,12 +595,10 @@ class InspectionControllerAPI(APIClient):
             ...     print(control.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -652,12 +636,10 @@ class InspectionControllerAPI(APIClient):
             ... print(f"Fetched ba predefined control by ID: {fetched_predf_control.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/{control_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {})
         if error:
@@ -684,11 +666,9 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The corresponding custom control object.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {})
         if error:
@@ -715,11 +695,9 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The newly created custom control object.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}/inspectionControls/custom
-        """
-        )
+        """)
 
         # Extract rules from kwargs
         rules = kwargs.pop("rules", [])
@@ -753,12 +731,10 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The updated custom control object.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/{control_id}
-        """
-        )
+        """)
 
         # Fetch existing control and handle errors
         existing_control, _, err = self.get_custom_control(control_id)
@@ -807,12 +783,10 @@ class InspectionControllerAPI(APIClient):
             int: The status code for the operation.
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/{control_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {})
         if error:
@@ -909,12 +883,10 @@ class InspectionControllerAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/actionTypes
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -950,12 +922,10 @@ class InspectionControllerAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/severityTypes
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -991,12 +961,10 @@ class InspectionControllerAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/controlTypes
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1032,12 +1000,10 @@ class InspectionControllerAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/httpMethods
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1070,12 +1036,10 @@ class InspectionControllerAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/versions
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1113,12 +1077,10 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The corresponding predefined control object.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/adp
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1155,12 +1117,10 @@ class InspectionControllerAPI(APIClient):
             AppProtectionCustomControl: The corresponding predefined control object.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/api
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

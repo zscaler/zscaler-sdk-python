@@ -78,12 +78,10 @@ class ApplicationSegmentBAAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -133,12 +131,10 @@ class ApplicationSegmentBAAPI(APIClient):
             ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -257,12 +253,10 @@ class ApplicationSegmentBAAPI(APIClient):
             ... print(f"segment created successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -390,12 +384,10 @@ class ApplicationSegmentBAAPI(APIClient):
             ... print(f"segment updated successfully: {update_segment.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -509,12 +501,10 @@ class ApplicationSegmentBAAPI(APIClient):
             ... print(f"Application segment with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

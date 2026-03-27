@@ -64,12 +64,10 @@ class DeviceManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /deviceGroups
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -128,12 +126,10 @@ class DeviceManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /deviceGroups/devices
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}
@@ -173,12 +169,10 @@ class DeviceManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /deviceGroups/devices/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}

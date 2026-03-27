@@ -63,12 +63,10 @@ class LookALikeDomainsAPI(APIClient):
                 ...     print(domain.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/lookalike-domains
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -116,12 +114,10 @@ class LookALikeDomainsAPI(APIClient):
                 >>> print(domain.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zeasm_base_endpoint}
             /organizations/{org_id}/lookalike-domains/{lookalike_raw}/details
-        """
-        )
+        """)
 
         body = {}
         headers = {}

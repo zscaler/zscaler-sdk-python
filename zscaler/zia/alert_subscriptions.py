@@ -57,12 +57,10 @@ class AlertSubscriptionsAPI(APIClient):
             ... print(f"Alert Subscription added successfully: {alert_list.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /alertSubscriptions
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -100,12 +98,10 @@ class AlertSubscriptionsAPI(APIClient):
             ... print(f"Fetched alert subscription by ID: {fetched_alert.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /alertSubscriptions/{subscription_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -156,12 +152,10 @@ class AlertSubscriptionsAPI(APIClient):
             ... print(f"Alert Subscription added successfully: {added_alert.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /alertSubscriptions
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -233,12 +227,10 @@ class AlertSubscriptionsAPI(APIClient):
             ... print(f"Alert Subscription updated successfully: {updated_alert.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /alertSubscriptions/{subscription_id}
-            """
-        )
+            """)
 
         body = kwargs
         body["id"] = subscription_id
@@ -281,12 +273,10 @@ class AlertSubscriptionsAPI(APIClient):
             ... print(f"Alert Subscription with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /alertSubscriptions/{subscription_id}
-        """
-        )
+        """)
 
         params = {}
 

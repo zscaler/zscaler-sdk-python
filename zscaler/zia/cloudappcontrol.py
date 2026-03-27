@@ -55,12 +55,10 @@ class CloudAppControlAPI(APIClient):
                 ...         print(action)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/availableActions
-            """
-        )
+            """)
 
         body = {"cloudApps": cloud_apps}
 
@@ -109,12 +107,10 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -158,12 +154,10 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/{rule_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -201,12 +195,10 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/ruleTypeMapping
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -392,12 +384,10 @@ class CloudAppControlAPI(APIClient):
                 - `ISOLATE_WEBMAIL_VIEW`
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -593,12 +583,10 @@ class CloudAppControlAPI(APIClient):
                 - `ISOLATE_WEBMAIL_VIEW`
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -645,12 +633,10 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -730,12 +716,10 @@ class CloudAppControlAPI(APIClient):
         """
         http_method = "post".upper()
         params = {"name": name}
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/duplicate/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 

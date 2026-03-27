@@ -57,12 +57,10 @@ class RoleControllerAPI(APIClient):
             ...     print(role.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /roles
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -107,12 +105,10 @@ class RoleControllerAPI(APIClient):
             ... print(f"Fetched role by ID: {fetched_role.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /roles/{role_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -197,12 +193,10 @@ class RoleControllerAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /roles
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -291,12 +285,10 @@ class RoleControllerAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /roles/{role_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -341,12 +333,10 @@ class RoleControllerAPI(APIClient):
             ... print(f"Role with ID {'2445851154'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /roles/{role_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -382,12 +372,10 @@ class RoleControllerAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /permissionGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

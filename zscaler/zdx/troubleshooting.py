@@ -57,12 +57,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(trace.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -107,12 +105,10 @@ class TroubleshootingAPI(APIClient):
             ...             print(trace.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -167,12 +163,10 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Trace Started successfully: {start_trace.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -216,12 +210,10 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Trace with ID {trace_id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -260,12 +252,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(process.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/top-processes
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -309,12 +299,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(metric.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/webprobe-metrics
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -358,12 +346,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(process.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/cloudpath-metrics
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -406,12 +392,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(process.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/cloudpath
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -455,12 +439,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(metric.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/health-metrics
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -504,12 +486,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(event.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}/events
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -556,12 +536,10 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Analysis Started successfully: {start_analysis.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /analysis
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -609,12 +587,10 @@ class TroubleshootingAPI(APIClient):
             ...     print(trace.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /analysis/{analysis_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -658,12 +634,10 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Trace Analysis with ID {trace_id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /analysis/{analysis_id}
-        """
-        )
+        """)
 
         params = {}
 

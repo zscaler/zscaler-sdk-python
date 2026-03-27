@@ -72,12 +72,10 @@ class IPRangesAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ipRanges
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -115,12 +113,10 @@ class IPRangesAPI(APIClient):
             ... print(f"Fetched ip range by ID: {fetched_range.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ipRanges/{range_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -181,12 +177,10 @@ class IPRangesAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ipRanges
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -253,12 +247,10 @@ class IPRangesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ipRanges/{range_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -301,12 +293,10 @@ class IPRangesAPI(APIClient):
             ... print(f"IP Range with ID {72058304855141483} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ipRanges/{range_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -382,12 +372,10 @@ class IPRangesAPI(APIClient):
             ...         print(item.request_format())
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /ipRanges/search
-        """
-        )
+        """)
 
         body = kwargs
 

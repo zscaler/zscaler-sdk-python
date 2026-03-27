@@ -54,10 +54,10 @@ class Site2SiteVPNAPI(APIClient):
                 ``[query_params.page]`` (int): Page number for pagination.
                 ``[query_params.limit]`` (int): Page size / limit.
                 ``[query_params.sort]`` (str): Sort field. Available values:
-                    location, region, sites, public_ip, gateway_name,
-                    operational_state, updated_at, created_at.
+                location, region, sites, public_ip, gateway_name,
+                operational_state, updated_at, created_at.
                 ``[query_params.sortdir]`` (str): Sort direction. Available values:
-                    asc, desc. Default: desc.
+                asc, desc. Default: desc.
 
         Returns:
             tuple: (list of CloudGatewayHub instances, Response, error).
@@ -76,12 +76,10 @@ class Site2SiteVPNAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/hubs
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -120,12 +118,10 @@ class Site2SiteVPNAPI(APIClient):
             >>> print(conn.as_dict())
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s/{cluster_id}
-        """
-        )
+        """)
         body = {}
         headers = {}
 
@@ -166,12 +162,10 @@ class Site2SiteVPNAPI(APIClient):
             >>> result, _, error = client.ztb.site2site_vpn.create_s2s_connections(12345, conn)
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s/{cluster_id}
-        """
-        )
+        """)
         body = connection.request_format() if connection else {}
         headers = {"Content-Type": "application/json"}
 
@@ -202,12 +196,10 @@ class Site2SiteVPNAPI(APIClient):
             tuple: (updated S2SConnection or None, Response, error).
         """
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s/{cluster_id}
-        """
-        )
+        """)
         body = connection.request_format() if connection else {}
         headers = {"Content-Type": "application/json"}
 
@@ -243,12 +235,10 @@ class Site2SiteVPNAPI(APIClient):
             ... )
         """
         http_method = "DELETE"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s/{cluster_id}
-        """
-        )
+        """)
         req = S2SDeleteRequest({"gateway_ids": gateway_ids})
         body = req.request_format()
         headers = {"Content-Type": "application/json"}
@@ -281,12 +271,10 @@ class Site2SiteVPNAPI(APIClient):
             ...     print(gw.as_dict())
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s/{cluster_id}/gateways
-        """
-        )
+        """)
         body = {}
         headers = {}
 
@@ -324,12 +312,10 @@ class Site2SiteVPNAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /CloudGateway/s2s_hubs
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}

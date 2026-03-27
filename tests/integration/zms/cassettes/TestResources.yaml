@@ -1,0 +1,71 @@
+interactions:
+- request:
+    body: '{"query": "\n            query ListResources(\n                $customerId:
+      ID!, $pageNum: Int, $pageSize: Int,\n                $includeDeleted: Boolean,
+      $filter: ResourceQueryFilter,\n                $orderBy: ResourceQueryOrderBy\n            )
+      {\n                resources(\n                    customerId: $customerId,\n                    pageNum:
+      $pageNum,\n                    pageSize: $pageSize,\n                    includeDeleted:
+      $includeDeleted,\n                    filter: $filter,\n                    orderBy:
+      $orderBy\n                ) {\n                    nodes {\n                        id\n                        name\n                        resourceType\n                        status\n                        cloudProvider\n                        cloudRegion\n                        resourceHostname\n                        platformOs\n                        platformOsDistro\n                        platformOsVersion\n                        localIps\n                        deleted\n                        modifiedTime\n                        agentId\n                        appZoneIds\n                        appZoneNames\n                        appZoneMappingState\n                    }\n                    pageInfo
+      {\n                        pageNumber\n                        pageSize\n                        totalCount\n                        totalPages\n                    }\n                }\n            }\n        ",
+      "variables": {"customerId": "72058304855015424", "pageNum": 1, "pageSize": 20,
+      "includeDeleted": false}, "operationName": "ListResources"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1615'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zms/graphql
+  response:
+    body:
+      string: '{"data":{"resources":{"nodes":[],"pageInfo":{"pageNumber":1,"pageSize":20,"totalCount":0,"totalPages":0}}}}
+
+        '
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-store
+      content-length:
+      - '108'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 26 Mar 2026 03:33:45 GMT
+      etag:
+      - W/"6c-D2uECa0pJOT6CgHhSTOx0+SKk3k"
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '69'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - d0502f52-9dd3-9175-b050-b747884dfc5e
+      x-oneapi-version:
+      - 109.1.146-hotfix
+      x-powered-by:
+      - Express
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 4b11a4bc-f13e-41aa-8b99-47582577ff56
+    status:
+      code: 200
+      message: OK
+version: 1

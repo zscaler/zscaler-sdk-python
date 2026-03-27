@@ -75,12 +75,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}
@@ -123,12 +121,10 @@ class UserManagementAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/{user_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -179,12 +175,10 @@ class UserManagementAPI(APIClient):
             ...     print(user.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/references
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -256,12 +250,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -321,12 +313,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/{user_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -361,12 +351,10 @@ class UserManagementAPI(APIClient):
             >>> user = zia.users.delete_user('99999')
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/{user_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -394,12 +382,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/bulkDelete
-        """
-        )
+        """)
 
         payload = {"ids": user_ids}
 
@@ -457,12 +443,10 @@ class UserManagementAPI(APIClient):
             ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -502,12 +486,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments/{department_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -543,12 +525,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments/lite/{department_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -581,12 +561,10 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the newly added Department, response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -620,12 +598,10 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the updated Department, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments/{department_id}
-        """
-        )
+        """)
 
         body = {}
         body.update(kwargs)
@@ -663,12 +639,10 @@ class UserManagementAPI(APIClient):
             ...     return
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /departments/{deparment_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -719,12 +693,10 @@ class UserManagementAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -766,12 +738,10 @@ class UserManagementAPI(APIClient):
             ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -819,12 +789,10 @@ class UserManagementAPI(APIClient):
             >>> user_group = zia.users.get_group('99999')
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -859,12 +827,10 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the newly added Group, response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -898,12 +864,10 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the updated Group, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -933,12 +897,10 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -980,12 +942,10 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /users/auditors
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}

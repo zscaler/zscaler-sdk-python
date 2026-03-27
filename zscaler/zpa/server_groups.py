@@ -69,12 +69,10 @@ class ServerGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serverGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -116,12 +114,10 @@ class ServerGroupsAPI(APIClient):
             ... print(f"Fetched server group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /serverGroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -195,12 +191,10 @@ class ServerGroupsAPI(APIClient):
             ... print(f"Server Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serverGroup
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -257,12 +251,10 @@ class ServerGroupsAPI(APIClient):
             ... print(f"Server Group added successfully: {added_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serverGroup/{group_id}
-        """
-        )
+        """)
 
         # Fetch the existing group to ensure mandatory fields like appConnectorGroups are preserved
         existing_group, _, err = self.get_group(group_id)
@@ -326,12 +318,10 @@ class ServerGroupsAPI(APIClient):
             ... print(f"server groups with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serverGroup/{group_id}
-        """
-        )
+        """)
 
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}

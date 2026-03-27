@@ -73,12 +73,10 @@ class ShadowITAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplications/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -123,12 +121,10 @@ class ShadowITAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customTags
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -202,12 +198,10 @@ class ShadowITAPI(APIClient):
             ...     print("Applications updated successfully")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplications/bulkUpdate
-        """
-        )
+        """)
 
         sanction_state_mapping = {
             "sanctioned": "SANCTIONED",
@@ -442,12 +436,10 @@ class ShadowITAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /shadowIT/applications/export
-        """
-        )
+        """)
 
         payload = {"duration": duration}
         payload.update(kwargs)  # Update the payload with kwargs

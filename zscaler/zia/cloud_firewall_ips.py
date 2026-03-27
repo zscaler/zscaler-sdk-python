@@ -69,12 +69,10 @@ class FirewallIPSRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallIpsRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -127,12 +125,10 @@ class FirewallIPSRulesAPI(APIClient):
         ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallIpsRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -221,12 +217,10 @@ class FirewallIPSRulesAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallIpsRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -323,12 +317,10 @@ class FirewallIPSRulesAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallIpsRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -374,12 +366,10 @@ class FirewallIPSRulesAPI(APIClient):
             ... print(f"Rule with ID {updated_rule.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallIpsRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

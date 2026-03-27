@@ -58,12 +58,10 @@ class OrganizationInformationAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /orgInformation
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -104,12 +102,10 @@ class OrganizationInformationAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /orgInformation/lite
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -150,12 +146,10 @@ class OrganizationInformationAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /subscriptions
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 

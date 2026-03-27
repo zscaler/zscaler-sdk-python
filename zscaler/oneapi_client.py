@@ -18,8 +18,8 @@ from zscaler.zpa.zpa_service import ZPAService
 from zscaler.zwa.zwa_service import ZWAService
 from zscaler.ztb.ztb_service import ZTBService
 
-# from zscaler.binsights.binsights_service import BIService
-from zscaler.zidentity.zidentity_service import ZIdentityService
+from zscaler.zbi.zbi_service import ZBIService
+from zscaler.zid.zid_service import ZIdService
 from zscaler.zeasm.zeasm_service import ZEASMService
 from zscaler.zaiguard.zaiguard_service import ZGuardService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
@@ -223,11 +223,11 @@ class Client:
         self._ztb = None
         self._zpa = None
         self._zdx = None
-        self._zidentity = None
+        self._zid = None
         self._zeasm = None
         self._zins = None  # Z-Insights (GraphQL Analytics API)
-        # self._bi = None
-        # self.logger.debug("Client initialized successfully.")
+        self._zms = None  # ZMS - Zscaler Microsegmentation (GraphQL API)
+        self._zbi = None  # Zscaler Business Insights (REST API)
         self._zguard = None
 
     def authenticate(self):
@@ -302,16 +302,21 @@ class Client:
         return self._zpa
 
     @property
-    def zidentity(self):
-        if self._zidentity is None:
-            self._zidentity = ZIdentityService(self._request_executor)
-        return self._zidentity
+    def zid(self):
+        if self._zid is None:
+            self._zid = ZIdService(self._request_executor)
+        return self._zid
 
-    # @property
-    # def bi(self):
-    #     if self._bi is None:
-    #         self._bi = BIService(self._request_executor)
-    #     return self._bi
+    @property
+    def zidentity(self):
+        """Alias for zid property (backward compatibility)."""
+        return self.zid
+
+    @property
+    def zbi(self):
+        if self._zbi is None:
+            self._zbi = ZBIService(self._request_executor)
+        return self._zbi
 
     @property
     def zeasm(self):
@@ -328,7 +333,7 @@ class Client:
         return self._zguard
 
     @property
-    def zinsights(self):
+    def zins(self):
         """
         Z-Insights Analytics Service (GraphQL API).
 
@@ -345,26 +350,66 @@ class Client:
 
         Example:
             with ZscalerClient(config) as client:
-                response, error = client.zinsights.graphql.execute(
+                response, error = client.zins.graphql.execute(
                     query='{ WEB_TRAFFIC { ... } }'
                 )
         """
         if self.use_legacy_client:
             raise RuntimeError(
-                "Z-Insights (zinsights) does not support legacy client authentication. "
+                "Z-Insights (zins) does not support legacy client authentication. "
                 "Please use OneAPI authentication with clientId and clientSecret."
             )
         if self._zins is None:
-            from zscaler.zinsights.zinsights_service import ZInsightsService
+            from zscaler.zins.zins_service import ZInsService
 
-            self._zins = ZInsightsService(self._request_executor)
+            self._zins = ZInsService(self._request_executor)
         return self._zins
 
-    # Alias for backward compatibility
     @property
-    def zins(self):
-        """Alias for zinsights property."""
-        return self.zinsights
+    def zinsights(self):
+        """Alias for zins property (backward compatibility)."""
+        return self.zins
+
+    @property
+    def zms(self):
+        """
+        ZMS (Zscaler Microsegmentation) Service (GraphQL API).
+
+        Provides access to Zscaler Microsegmentation data including:
+        - Agents: Agent management and statistics
+        - Agent Groups: Agent group management
+        - Nonces: Provisioning key management
+        - Resources: Resource visibility and protection status
+        - Resource Groups: Managed and unmanaged resource groups
+        - Policy Rules: Microsegmentation policy management
+        - App Zones: Application zone management
+        - App Catalog: Application catalog entries
+        - Tags: Tag namespace, key, and value management
+
+        Note: ZMS only supports OneAPI authentication.
+        Legacy client authentication is not supported.
+
+        Example:
+            with ZscalerClient(config) as client:
+                result, _, err = client.zms.agents.list_agents(
+                    customer_id="123456789"
+                )
+        """
+        if self.use_legacy_client:
+            raise RuntimeError(
+                "ZMS (Microsegmentation) does not support legacy client authentication. "
+                "Please use OneAPI authentication with clientId and clientSecret."
+            )
+        if self._zms is None:
+            from zscaler.zms.zms_service import ZMSService
+
+            self._zms = ZMSService(self._request_executor)
+        return self._zms
+
+    @property
+    def zmicroseg(self):
+        """Alias for zms property."""
+        return self.zms
 
     def __enter__(self):
         """

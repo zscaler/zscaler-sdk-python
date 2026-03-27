@@ -51,12 +51,10 @@ class ServiceEdgeScheduleAPI(APIClient):
             tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeSchedule
-        """
-        )
+        """)
 
         # Use passed customer_id or fallback to initialized customer_id
         customer_id = customer_id or self.customer_id
@@ -99,12 +97,10 @@ class ServiceEdgeScheduleAPI(APIClient):
             tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeSchedule
-        """
-        )
+        """)
 
         customer_id = schedule.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:
@@ -167,12 +163,10 @@ class ServiceEdgeScheduleAPI(APIClient):
         """
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeSchedule/{scheduler_id}
-        """
-        )
+        """)
 
         customer_id = schedule.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:

@@ -78,12 +78,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}
@@ -139,12 +137,10 @@ class PublicCloudInfoAPI(APIClient):
             ...     print(public_account.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -190,12 +186,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/{cloud_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -272,12 +266,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -355,12 +347,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/{cloud_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -401,12 +391,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/{cloud_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -454,12 +442,10 @@ class PublicCloudInfoAPI(APIClient):
             ... print(f"CloudFormation template URL: {template_url}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/cloudFormationTemplate
-        """
-        )
+        """)
 
         query_params = {}
         if aws_account_id:
@@ -524,12 +510,10 @@ class PublicCloudInfoAPI(APIClient):
             ...     print(count)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/count
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -583,12 +567,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/generateExternalId
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -648,12 +630,10 @@ class PublicCloudInfoAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudInfo/{cloud_id}/changeState
-        """
-        )
+        """)
 
         body = {}
 

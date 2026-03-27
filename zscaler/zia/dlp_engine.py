@@ -64,12 +64,10 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -134,12 +132,10 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -184,12 +180,10 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines/{engine_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -247,12 +241,10 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -310,12 +302,10 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines/{engine_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -350,11 +340,9 @@ class DLPEngineAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/dlpEngines/{engine_id}
-            """
-        )
+            """)
         params = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
@@ -381,12 +369,10 @@ class DLPEngineAPI(APIClient):
             >>> zia.dlp.validate_dlp_expression("((D63.S > 1) AND (D38.S > 0))")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpEngines/validateDlpExpr
-        """
-        )
+        """)
 
         payload = {"data": expression}
 

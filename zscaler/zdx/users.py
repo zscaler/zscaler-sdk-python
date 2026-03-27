@@ -81,12 +81,10 @@ class UsersAPI(APIClient):
             ...     print(user)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /users
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -137,12 +135,10 @@ class UsersAPI(APIClient):
             ...     print(user)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /users/{user_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

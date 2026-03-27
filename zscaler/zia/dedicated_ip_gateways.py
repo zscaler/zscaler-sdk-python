@@ -56,12 +56,10 @@ class DedicatedIPGatewaysAPI(APIClient):
             ...     print(gw.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dedicatedIPGateways/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}

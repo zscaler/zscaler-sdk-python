@@ -74,12 +74,10 @@ class LocationTemplateAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /locationTemplate
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -131,12 +129,10 @@ class LocationTemplateAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /locationTemplate/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -229,12 +225,10 @@ class LocationTemplateAPI(APIClient):
         payload.update({k: v for k, v in kwargs.items() if v is not None})
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /locationTemplate
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(
             method=http_method, endpoint=api_url, body=payload, headers={}, params={}
@@ -321,12 +315,10 @@ class LocationTemplateAPI(APIClient):
             kwargs["template"] = tmpl
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /locationTemplate/{template_id}
-        """
-        )
+        """)
 
         payload = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -371,12 +363,10 @@ class LocationTemplateAPI(APIClient):
                 ...     print(f"Template with ID {update_template.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /locationTemplate/{template_id}
-        """
-        )
+        """)
 
         params = {}
 

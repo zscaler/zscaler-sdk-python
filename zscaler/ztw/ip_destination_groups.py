@@ -80,18 +80,14 @@ class IPDestinationGroupsAPI(APIClient):
 
         # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -165,30 +161,24 @@ class IPDestinationGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups/lite
-        """
-        )
+        """)
 
         # Define supported values for exclude_type
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -261,12 +251,10 @@ class IPDestinationGroupsAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -361,12 +349,10 @@ class IPDestinationGroupsAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -406,12 +392,10 @@ class IPDestinationGroupsAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ipDestinationGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 

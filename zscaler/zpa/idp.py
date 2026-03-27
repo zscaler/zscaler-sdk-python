@@ -71,12 +71,10 @@ class IDPControllerAPI(APIClient):
             ...     print(idp.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /idp
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -117,12 +115,10 @@ class IDPControllerAPI(APIClient):
             ... print(fetched_cert.id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /idp/{idp_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

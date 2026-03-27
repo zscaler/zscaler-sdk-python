@@ -95,12 +95,10 @@ class ActivationAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecAdminActivateStatus
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 

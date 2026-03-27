@@ -75,12 +75,10 @@ class UserPortalLinkAPI(APIClient):
             ...     print(portal.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userPortalLink
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -125,12 +123,10 @@ class UserPortalLinkAPI(APIClient):
             ... print(f"Fetched user portal link by ID: {fetched_portal.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userPortalLink/{portal_link_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -182,12 +178,10 @@ class UserPortalLinkAPI(APIClient):
             ... print(f"user portal link added successfully: {added_portal_link.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userPortalLink
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -243,12 +237,10 @@ class UserPortalLinkAPI(APIClient):
             ... print(f"user portal link added successfully: {added_portal_link.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userPortalLink/{portal_link_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -298,12 +290,10 @@ class UserPortalLinkAPI(APIClient):
             ... print(f"user portal link with ID {'513265'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userPortalLink/{portal_link_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -372,12 +362,10 @@ class UserPortalLinkAPI(APIClient):
             ...     print(console.as_dict())
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /userPortalLink/bulk
-        """
-        )
+        """)
 
         user_portal_links = []
         for portal_link in portal_links:
@@ -443,12 +431,10 @@ class UserPortalLinkAPI(APIClient):
             ... print(f"Fetched portal link by ID: {fetched_portal_link.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /userPortalLink/userPortal/{portal_link_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

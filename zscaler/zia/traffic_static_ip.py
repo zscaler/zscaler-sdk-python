@@ -71,12 +71,10 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /staticIP
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -117,12 +115,10 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /staticIP/{static_ip_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -183,12 +179,10 @@ class TrafficStaticIPAPI(APIClient):
             ... print(f"static_ip added successfully: {added_static_ip.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /staticIP
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -223,12 +217,10 @@ class TrafficStaticIPAPI(APIClient):
             :obj:`tuple`: The updated static IP resource record.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /staticIP/{static_ip_id}
-        """
-        )
+        """)
 
         # Fetch the current static IP data
         current_ip, _, err = self.get_static_ip(static_ip_id)
@@ -283,12 +275,10 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zia_base_endpoint}
             /staticIP/{static_ip_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -332,12 +322,10 @@ class TrafficStaticIPAPI(APIClient):
         """
         # Define the HTTP method and API endpoint
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /staticIP/validate
-        """
-        )
+        """)
 
         # Create the payload with the IP address
         payload = {"ipAddress": ip_address}

@@ -71,12 +71,10 @@ class PolicyDetectionAPI(APIClient):
                 ... )
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._base_endpoint}
             /detection/execute-policy
-        """
-        )
+        """)
 
         body = {
             "content": content,
@@ -151,12 +149,10 @@ class PolicyDetectionAPI(APIClient):
                 ... )
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._base_endpoint}
             /detection/resolve-and-execute-policy
-        """
-        )
+        """)
 
         body = {
             "content": content,

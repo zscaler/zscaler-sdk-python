@@ -74,12 +74,10 @@ class UserPortalAUPAPI(APIClient):
             ...     print(f"Name: {aup.name}, Enabled: {aup.enabled}, Description: {aup.description}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userportal/aup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -141,12 +139,10 @@ class UserPortalAUPAPI(APIClient):
             ... print(f"Fetched AUP: {aup.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userportal/aup/{portal_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -218,12 +214,10 @@ class UserPortalAUPAPI(APIClient):
             ... print(f"AUP ID: {aup.id}, Name: {aup.name}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userportal/aup
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -294,12 +288,10 @@ class UserPortalAUPAPI(APIClient):
             ... print(f"AUP ID: {updated_aup.id}, Enabled: {updated_aup.enabled}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userportal/aup/{portal_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -362,12 +354,10 @@ class UserPortalAUPAPI(APIClient):
             ... print(f"AUP deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /userportal/aup/{portal_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

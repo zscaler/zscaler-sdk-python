@@ -64,11 +64,9 @@ class WorkloadGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}/workloadGroups
-        """
-        )
+        """)
 
         body = {}
         headers = {}

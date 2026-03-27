@@ -51,12 +51,10 @@ class WebAppServiceAPI(APIClient):
             ...         print(policy)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webAppService/listByCompany
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

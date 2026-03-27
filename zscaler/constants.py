@@ -21,15 +21,15 @@ BACKOFF_FACTOR = 1
 BACKOFF_BASE_DURATION = 2
 
 ZSCALER_ONE_API_DEV = "https://help.zscaler.com/oneapi"
-ZIDENTITY_DEV = "https://help.zscaler.com/zidentity"
+ZID_DEV = "https://help.zscaler.com/zidentity"
 
-GET_ZSCALER_CLIENT_ID = f"{ZIDENTITY_DEV}" "/about-api-clients"
+GET_ZSCALER_CLIENT_ID = f"{ZID_DEV}" "/about-api-clients"
 
-GET_ZSCALER_CLIENT_SECRET = f"{ZIDENTITY_DEV}" "/about-api-clients"
+GET_ZSCALER_CLIENT_SECRET = f"{ZID_DEV}" "/about-api-clients"
 
-GET_ZSCALER_VANITY_DOMAIN = f"{ZIDENTITY_DEV}" "/migrating-zscaler-service-admins-zidentity"
+GET_ZSCALER_VANITY_DOMAIN = f"{ZID_DEV}" "/migrating-zscaler-service-admins-zidentity"
 
-GET_ZSCALER_CLOUD = f"{ZIDENTITY_DEV}" "/migrating-zscaler-service-admins-zidentity"
+GET_ZSCALER_CLOUD = f"{ZID_DEV}" "/migrating-zscaler-service-admins-zidentity"
 
 GET_ZPA_CUSTOMER_ID = f"{ZSCALER_ONE_API_DEV}" "/getting-started#ZPA-customerId-ZSLogin-admin-portal"
 

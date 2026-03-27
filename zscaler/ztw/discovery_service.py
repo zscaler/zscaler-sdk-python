@@ -48,12 +48,10 @@ class DiscoveryServiceAPI(APIClient):
             ... print(f"Discovery settings: {discovery_settings.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /discoveryService/workloadDiscoverySettings
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -90,12 +88,10 @@ class DiscoveryServiceAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /discoveryService/{account_group_id}/permissions
-        """
-        )
+        """)
 
         body = {}
 

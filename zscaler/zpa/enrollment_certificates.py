@@ -66,12 +66,10 @@ class EnrollmentCertificateAPI(APIClient):
             ...     print(cert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /enrollmentCert
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -112,12 +110,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(fetched_cert.id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert/{certificate_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -172,12 +168,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(f"Self signed certificate added successfully: {added_cert.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -236,12 +230,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(f"Self signed certificate added successfully: {added_cert.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert/{cert_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -298,12 +290,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(f"Certificate with ID '8569' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert/{cert_id}
-        """
-        )
+        """)
 
         params = {"dryRun": dry_run} if dry_run else {}
 
@@ -342,12 +332,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(added_csr.csr)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert/csr/generate
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -416,12 +404,10 @@ class EnrollmentCertificateAPI(APIClient):
             ... print(added_cert.zrsaencryptedprivatekey)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /enrollmentCert/selfsigned/generate
-        """
-        )
+        """)
 
         body = kwargs
 

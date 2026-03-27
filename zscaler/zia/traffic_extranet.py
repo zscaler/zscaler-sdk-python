@@ -61,12 +61,10 @@ class TrafficExtranetAPI(APIClient):
             ...     print(extranet.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /extranet
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -111,12 +109,10 @@ class TrafficExtranetAPI(APIClient):
             ... print(f"Fetched Extranet by ID: {fetched_extranet.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -177,12 +173,10 @@ class TrafficExtranetAPI(APIClient):
             ... print(f"Extranet added successfully: {added_extranet.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /extranet
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -246,12 +240,10 @@ class TrafficExtranetAPI(APIClient):
             ... print(f"Extranet updated successfully: {updated_extranet.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """
-        )
+        """)
 
         body = kwargs
         body["id"] = extranet_id
@@ -290,12 +282,10 @@ class TrafficExtranetAPI(APIClient):
             ... print(f"Extranet with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """
-        )
+        """)
 
         params = {}
 

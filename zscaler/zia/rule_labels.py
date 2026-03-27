@@ -63,12 +63,10 @@ class RuleLabelsAPI(APIClient):
             ...     print(label.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -114,12 +112,10 @@ class RuleLabelsAPI(APIClient):
             ... print(f"Fetched Rule Label by ID: {fetched_label.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels/{label_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -166,12 +162,10 @@ class RuleLabelsAPI(APIClient):
             ... print(f"Label added successfully: {added_label.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -218,12 +212,10 @@ class RuleLabelsAPI(APIClient):
             ... print(f"Rule Label updated successfully: {updated_label.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels/{label_id}
-        """
-        )
+        """)
         body = kwargs
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
@@ -260,12 +252,10 @@ class RuleLabelsAPI(APIClient):
             ... print(f"Rule Label with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels/{label_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -302,12 +292,10 @@ class RuleLabelsAPI(APIClient):
             ...     print(label.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ruleLabels/ruleType/{rule_type}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

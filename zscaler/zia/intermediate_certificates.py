@@ -39,12 +39,10 @@ class IntermediateCertsAPI(APIClient):
         List of intermediate CA certificates added for SSL inspection.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -80,12 +78,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -109,12 +105,10 @@ class IntermediateCertsAPI(APIClient):
         List of intermediate CA certificates added for SSL inspection.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -150,12 +144,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/lite/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -179,12 +171,10 @@ class IntermediateCertsAPI(APIClient):
         List of intermediate CA certificates that are ready to use for SSL inspection.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/readyToUse
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -221,12 +211,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/showCert/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -257,12 +245,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/showCsr/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -308,12 +294,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing the newly added Rule Label (Box), response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -347,12 +331,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing the updated intermediate CA certificate, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/{cert_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -383,12 +365,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/{cert_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -413,12 +393,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/downloadCsr/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -448,12 +426,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/downloadPublicKey/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -483,12 +459,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/finalizeCert/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -518,12 +492,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/generateCsr/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -553,12 +525,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/keyPair/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -590,12 +560,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/uploadCert/{cert_id}
-        """
-        )
+        """)
 
         # Prepare file content
         if file_path:
@@ -654,12 +622,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/uploadCertChain/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -689,12 +655,10 @@ class IntermediateCertsAPI(APIClient):
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /intermediateCaCertificate/verifyKeyAttestation/{cert_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

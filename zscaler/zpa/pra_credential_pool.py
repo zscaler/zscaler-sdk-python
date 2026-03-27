@@ -64,12 +64,10 @@ class PRACredentialPoolAPI(APIClient):
             ...     print(pra.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -114,12 +112,10 @@ class PRACredentialPoolAPI(APIClient):
             ... print(f"Fetched Privileged credential pool by ID: {fetched_pool.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool/{pool_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -162,12 +158,10 @@ class PRACredentialPoolAPI(APIClient):
             ... print(f"Fetched Privileged credential pool by ID: {fetched_pool.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool/{pool_id}/credential
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -214,12 +208,10 @@ class PRACredentialPoolAPI(APIClient):
             ... print(f"Privileged credential pool added successfully: {add_pool.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -269,12 +261,10 @@ class PRACredentialPoolAPI(APIClient):
             ... print(f"Privileged credential pool added successfully: {update_pool.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool/{pool_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -326,12 +316,10 @@ class PRACredentialPoolAPI(APIClient):
             ... print(f"privileged credential pools with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /credential-pool/{pool_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

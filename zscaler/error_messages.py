@@ -7,7 +7,6 @@ from zscaler.constants import (
     GET_ZPA_MICROTENANT_ID,
 )
 
-
 ERROR_MESSAGE_CLIENT_ID_MISSING = (
     "Your Zscaler Client ID is missing. "
     "You can generate one in the ZIdentity"

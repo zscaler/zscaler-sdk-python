@@ -76,12 +76,10 @@ class AlarmsAPI(APIClient):
             >>> alarms, response, error = client.ztb.alarms.list_alarms()
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -120,12 +118,10 @@ class AlarmsAPI(APIClient):
             >>> alarm, response, error = client.ztb.alarms.get_alarm("abc-123")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/{alarm_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -159,12 +155,10 @@ class AlarmsAPI(APIClient):
             >>> alarm, response, error = client.ztb.alarms.create_alarm(name="test")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -198,12 +192,10 @@ class AlarmsAPI(APIClient):
             >>> alarm, response, error = client.ztb.alarms.update_alarm("abc-123", status="active")
         """
         http_method = "patch".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -237,12 +229,10 @@ class AlarmsAPI(APIClient):
             >>> alarm, response, error = client.ztb.alarms.update_alarm_put("abc-123", name="new")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -281,12 +271,10 @@ class AlarmsAPI(APIClient):
             ... print(f"Alarm with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/{alarm_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -313,12 +301,10 @@ class AlarmsAPI(APIClient):
             >>> result, response, error = client.ztb.alarms.bulk_acknowledge(ids=["a","b"])
         """
         http_method = "patch".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/bulkAcknowledge
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -348,12 +334,10 @@ class AlarmsAPI(APIClient):
             >>> result, response, error = client.ztb.alarms.bulk_acknowledge_all()
         """
         http_method = "patch".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/bulkAcknowledgeAll
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -386,12 +370,10 @@ class AlarmsAPI(APIClient):
             >>> result, response, error = client.ztb.alarms.bulk_ignore(ids=["a","b"])
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/bulkIgnore
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -421,12 +403,10 @@ class AlarmsAPI(APIClient):
             >>> result, response, error = client.ztb.alarms.bulk_ignore_all()
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /alarm/bulkIgnoreAll
-        """
-        )
+        """)
 
         body = kwargs
 

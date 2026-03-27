@@ -62,12 +62,10 @@ class CloudSandboxAPI(APIClient):
             ...         print(f"Response: {submit}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._sandbox_base_endpoint}
             /submit
-            """
-        )
+            """)
 
         with open(file_path, "rb") as file:
             file_content = file.read()
@@ -125,12 +123,10 @@ class CloudSandboxAPI(APIClient):
             ...         print(f"Response: {submit}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._sandbox_base_endpoint}
             /discan
-            """
-        )
+            """)
 
         with open(file_path, "rb") as file:
             file_content = file.read()
@@ -172,12 +168,10 @@ class CloudSandboxAPI(APIClient):
             tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandbox/report/quota
-            """
-        )
+            """)
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -213,12 +207,10 @@ class CloudSandboxAPI(APIClient):
             tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sandbox/report/{md5_hash}?details={report_details}
-            """
-        )
+            """)
 
         # Create the request
         request, error = self._request_executor.create_request(
@@ -250,12 +242,10 @@ class CloudSandboxAPI(APIClient):
             tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /behavioralAnalysisAdvancedSettings
-            """
-        )
+            """)
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -287,12 +277,10 @@ class CloudSandboxAPI(APIClient):
             tuple: A tuple containing the result, response, and error.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /behavioralAnalysisAdvancedSettings/fileHashCount
-            """
-        )
+            """)
 
         # Create the request
         request, error = self._request_executor.create_request(
@@ -345,12 +333,10 @@ class CloudSandboxAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /behavioralAnalysisAdvancedSettings
-            """
-        )
+            """)
 
         payload = {"md5HashValueList": md5_hash_value_list}
 

@@ -66,12 +66,10 @@ class CloudApplicationInstancesAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplicationInstances
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -116,12 +114,10 @@ class CloudApplicationInstancesAPI(APIClient):
             ... print(f"Fetched cloud application instance by ID: {fetched_instance.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplicationInstances/{instance_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -183,12 +179,10 @@ class CloudApplicationInstancesAPI(APIClient):
             ... print(f"cloud application instance added successfully: {added_instance.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplicationInstances
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -242,12 +236,10 @@ class CloudApplicationInstancesAPI(APIClient):
             ... print(f"cloud application instance updated successfully: {updated_instance.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplicationInstances/{instance_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -287,12 +279,10 @@ class CloudApplicationInstancesAPI(APIClient):
             ... print(f"cloud application instance with ID {'1254654'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudApplicationInstances/{instance_id}
-        """
-        )
+        """)
 
         params = {}
 

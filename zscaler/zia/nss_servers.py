@@ -80,12 +80,10 @@ class NssServersAPI(APIClient):
                 ...         print(nss.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssServers
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -131,12 +129,10 @@ class NssServersAPI(APIClient):
             ... print(f"Fetched nss server by ID: {fetched_nss_server.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssServers/{nss_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -190,12 +186,10 @@ class NssServersAPI(APIClient):
             ...     print(f"NSS server added successfully: {added_server.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssServers
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -243,12 +237,10 @@ class NssServersAPI(APIClient):
             ... print(f"nss server updated successfully: {added_server.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssServers/{nss_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -287,12 +279,10 @@ class NssServersAPI(APIClient):
             ... print(f"nss server with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /nssServers/{nss_id}
-        """
-        )
+        """)
 
         params = {}
 

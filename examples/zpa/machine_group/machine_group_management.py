@@ -36,7 +36,6 @@ Get details of a specific Machine Group by Name:
     $ python3 machine_group_management.py -n "Group_Name"
 """
 
-
 import argparse
 import json
 import os

@@ -61,12 +61,10 @@ class CloudConnectorControllerAPI(APIClient):
             ...     print(connector.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /cloudConnector
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

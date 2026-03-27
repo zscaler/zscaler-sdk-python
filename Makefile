@@ -38,8 +38,10 @@ help:
 	@echo "$(COLOR_OK)  lint:zdx                      Check style with flake8 for zdx packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zinsights                Check style with flake8 for zinsights packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zid                      Check style with flake8 for zid packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zins                     Check style with flake8 for zins packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zms                     Check style with flake8 for zms packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zbi                     Check style with flake8 for zbi packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with flake8 for zaiguard packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:ztb                      Check style with flake8 for ztb packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
@@ -53,7 +55,9 @@ help:
 	@echo "$(COLOR_OK)  test:integration:zdx          Run only zdx integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:zinsights    Run only zinsights integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zins         Run only zins integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zms         Run only zms integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zbi         Run only zbi integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zaiguard     Run only zaiguard integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:ztb          Run only ztb integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)security$(COLOR_NONE)"
@@ -117,13 +121,21 @@ lint\:zia:
 	poetry run flake8 zscaler/zia --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zia --count --select=E9,F63,F7,F82 --show-source --statistics
 
-lint\:zidentity:
-	poetry run flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
+lint\:zid:
+	poetry run flake8 zscaler/zid --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zid --count --select=E9,F63,F7,F82 --show-source --statistics
 
-lint\:zinsights:
-	poetry run flake8 zscaler/zinsights --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zinsights --count --select=E9,F63,F7,F82 --show-source --statistics
+lint\:zins:
+	poetry run flake8 zscaler/zins --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zins --count --select=E9,F63,F7,F82 --show-source --statistics
+
+lint\:zms:
+	poetry run flake8 zscaler/zms --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zms --count --select=E9,F63,F7,F82 --show-source --statistics
+
+lint\:zbi:
+	poetry run flake8 zscaler/zbi --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zbi --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zwa:
 	poetry run flake8 zscaler/zwa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
@@ -171,13 +183,21 @@ test\:integration\:zia:
 	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zia --disable-warnings
 
-test\:integration\:zidentity:
-	@echo "$(COLOR_ZSCALER)Running zidentity integration tests...$(COLOR_NONE)"
-	poetry run pytest tests/integration/zidentity --disable-warnings
+test\:integration\:zid:
+	@echo "$(COLOR_ZSCALER)Running zid integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zid --disable-warnings
 
-test\:integration\:zinsights:
-	@echo "$(COLOR_ZSCALER)Running zinsights integration tests...$(COLOR_NONE)"
-	poetry run pytest tests/integration/zinsights --disable-warnings
+test\:integration\:zins:
+	@echo "$(COLOR_ZSCALER)Running zins integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zins --disable-warnings
+
+test\:integration\:zms:
+	@echo "$(COLOR_ZSCALER)Running zms integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zms --disable-warnings
+
+test\:integration\:zbi:
+	@echo "$(COLOR_ZSCALER)Running zbi integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zbi --disable-warnings
 
 test\:integration\:zwa:
 	@echo "$(COLOR_ZSCALER)Running zwa integration tests...$(COLOR_NONE)"
@@ -212,11 +232,17 @@ coverage\:zia:
 coverage\:zpa:
 	poetry run pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
 
-coverage\:zidentity:
-	poetry run pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
+coverage\:zid:
+	poetry run pytest tests/integration/zid --cov=zscaler/zid --cov-report xml --cov-report term 
 
-coverage\:zinsights:
-	poetry run pytest tests/integration/zinsights --cov=zscaler/zinsights --cov-report xml --cov-report term
+coverage\:zins:
+	poetry run pytest tests/integration/zins --cov=zscaler/zins --cov-report xml --cov-report term
+
+coverage\:zms:
+	poetry run pytest tests/integration/zms --cov=zscaler/zms --cov-report xml --cov-report term
+
+coverage\:zbi:
+	poetry run pytest tests/integration/zbi --cov=zscaler/zbi --cov-report xml --cov-report term
 
 coverage\:zeasm:
 	poetry run pytest tests/integration/zeasm --cov=zscaler/zeasm --cov-report xml --cov-report term
@@ -271,15 +297,25 @@ test\:vcr\:record\:zdx:
 	@echo "$(COLOR_ZSCALER)Recording ZDX VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=false poetry run pytest tests/integration/zdx --record-mode=rewrite -v --disable-warnings
 
-# Record VCR cassettes for ZIdentity
-test\:vcr\:record\:zidentity:
-	@echo "$(COLOR_ZSCALER)Recording ZIdentity VCR cassettes...$(COLOR_NONE)"
-	MOCK_TESTS=false poetry run pytest tests/integration/zidentity --record-mode=rewrite -v --disable-warnings
+# Record VCR cassettes for Zid
+test\:vcr\:record\:zid:
+	@echo "$(COLOR_ZSCALER)Recording Zid VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zid --record-mode=rewrite -v --disable-warnings
 
-# Record VCR cassettes for ZInsights
-test\:vcr\:record\:zinsights:
-	@echo "$(COLOR_ZSCALER)Recording ZInsights VCR cassettes...$(COLOR_NONE)"
-	MOCK_TESTS=false poetry run pytest tests/integration/zinsights --record-mode=rewrite -v --disable-warnings
+# Record VCR cassettes for Z-Insights (zins)
+test\:vcr\:record\:zins:
+	@echo "$(COLOR_ZSCALER)Recording Z-Insights (zins) VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zins --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZMS
+test\:vcr\:record\:zms:
+	@echo "$(COLOR_ZSCALER)Recording ZMS VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zms --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZBI
+test\:vcr\:record\:zbi:
+	@echo "$(COLOR_ZSCALER)Recording ZBI VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zbi --record-mode=rewrite -v --disable-warnings
 
 # Record VCR cassettes for ZTW
 test\:vcr\:record\:ztw:
@@ -311,15 +347,25 @@ test\:vcr\:playback\:zdx:
 	@echo "$(COLOR_ZSCALER)Playing back ZDX VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=true poetry run pytest tests/integration/zdx -v --disable-warnings
 
-# Playback VCR cassettes for ZIdentity (no credentials needed)
-test\:vcr\:playback\:zidentity:
-	@echo "$(COLOR_ZSCALER)Playing back ZIdentity VCR cassettes...$(COLOR_NONE)"
-	MOCK_TESTS=true poetry run pytest tests/integration/zidentity -v --disable-warnings
+# Playback VCR cassettes for Zid (no credentials needed)
+test\:vcr\:playback\:zid:
+	@echo "$(COLOR_ZSCALER)Playing back Zid VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zid -v --disable-warnings
 
-# Playback VCR cassettes for ZInsights (no credentials needed)
-test\:vcr\:playback\:zinsights:
-	@echo "$(COLOR_ZSCALER)Playing back ZInsights VCR cassettes...$(COLOR_NONE)"
-	MOCK_TESTS=true poetry run pytest tests/integration/zinsights -v --disable-warnings
+# Playback VCR cassettes for Z-Insights (zins) (no credentials needed)
+test\:vcr\:playback\:zins:
+	@echo "$(COLOR_ZSCALER)Playing back Z-Insights (zins) VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zins -v --disable-warnings
+
+# Playback VCR cassettes for ZMS (no credentials needed)
+test\:vcr\:playback\:zms:
+	@echo "$(COLOR_ZSCALER)Playing back ZMS VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zms -v --disable-warnings
+
+# Playback VCR cassettes for ZBI (no credentials needed)
+test\:vcr\:playback\:zbi:
+	@echo "$(COLOR_ZSCALER)Playing back ZBI VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zbi -v --disable-warnings
 
 # Playback VCR cassettes for ZTW (no credentials needed)
 test\:vcr\:playback\:ztw:
@@ -348,13 +394,13 @@ sweep\:zpa:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZPA_SDK_TEST_SWEEP=true poetry run python tests/integration/zpa/sweep/run_sweep.py --sweep
 
-sweep\:zidentity:
+sweep\:zid:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZIDENTITY_SDK_TEST_SWEEP=true poetry run python tests/integration/zidentity/sweep/run_sweep.py --sweep
+	ZIDENTITY_SDK_TEST_SWEEP=true poetry run python tests/integration/zid/sweep/run_sweep.py --sweep
 
-sweep\:zinsights:
+sweep\:zins:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZINSIGHTS_SDK_TEST_SWEEP=true poetry run python tests/integration/zinsights/sweep/run_sweep.py --sweep
+	ZINS_SDK_TEST_SWEEP=true poetry run python tests/integration/zins/sweep/run_sweep.py --sweep
 
 
 build\:dist:

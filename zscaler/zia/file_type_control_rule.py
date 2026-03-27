@@ -50,12 +50,10 @@ class FileTypeControlRuleAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -102,12 +100,10 @@ class FileTypeControlRuleAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -186,12 +182,10 @@ class FileTypeControlRuleAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -280,12 +274,10 @@ class FileTypeControlRuleAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -333,12 +325,10 @@ class FileTypeControlRuleAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -393,12 +383,10 @@ class FileTypeControlRuleAPI(APIClient):
             ...    print(category.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /fileTypeCategories
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

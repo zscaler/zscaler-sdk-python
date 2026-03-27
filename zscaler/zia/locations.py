@@ -96,12 +96,10 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -144,12 +142,10 @@ class LocationsAPI(APIClient):
             ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/{location_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -301,12 +297,10 @@ class LocationsAPI(APIClient):
             ... print(f"location added successfully: {added_location.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -462,12 +456,10 @@ class LocationsAPI(APIClient):
             ... print(f"location updated successfully: {update_location.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/{location_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -506,12 +498,10 @@ class LocationsAPI(APIClient):
             ... print(f"location with ID {'123454'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/{location_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -550,12 +540,10 @@ class LocationsAPI(APIClient):
             return (None, ValueError("Maximum 100 location IDs allowed per bulk delete request"))
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/bulkDelete
-        """
-        )
+        """)
 
         payload = {"ids": location_ids}
 
@@ -620,12 +608,10 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/{location_id}/sublocations
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -694,12 +680,10 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -762,12 +746,10 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/groups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -812,12 +794,10 @@ class LocationsAPI(APIClient):
             ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/groups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -867,12 +847,10 @@ class LocationsAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/groups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -924,12 +902,10 @@ class LocationsAPI(APIClient):
             ... print(f"Total location groups found: {count}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/groups/count
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -984,12 +960,10 @@ class LocationsAPI(APIClient):
             return (None, None, ValueError("Both latitude and longitude must be provided"))
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /region/byGeoCoordinates
-        """
-        )
+        """)
 
         query_params = {"latitude": latitude, "longitude": longitude}
 
@@ -1039,12 +1013,10 @@ class LocationsAPI(APIClient):
             return (None, None, ValueError("IP address must be provided"))
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /region/byIPAddress/{ip}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1104,12 +1076,10 @@ class LocationsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /region/search
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1156,12 +1126,10 @@ class LocationsAPI(APIClient):
             ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /locations/supportedCountries
-        """
-        )
+        """)
 
         body = {}
         headers = {}

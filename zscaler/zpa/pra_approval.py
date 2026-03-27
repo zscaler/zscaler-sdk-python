@@ -63,12 +63,10 @@ class PRAApprovalAPI(APIClient):
         ...     print(approval.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /approval
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -113,12 +111,10 @@ class PRAApprovalAPI(APIClient):
         ... print(f"Fetched approval by ID: {approval.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /approval/{approval_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -176,12 +172,10 @@ class PRAApprovalAPI(APIClient):
         ... print(f"Pra approval added successfully: {added_approval.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /approval
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -265,12 +259,10 @@ class PRAApprovalAPI(APIClient):
         ... print(f"PRA approval updated successfully: {updated_approval.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /approval/{approval_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -347,12 +339,10 @@ class PRAApprovalAPI(APIClient):
         ... print(f"PRA Approval with ID {99999} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /approval/{approval_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -374,12 +364,10 @@ class PRAApprovalAPI(APIClient):
             int: Status code of the delete operation.
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /approval/expired
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

@@ -69,12 +69,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v2}
             /devices/active
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -119,12 +117,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -149,12 +145,10 @@ class DevicesAPI(APIClient):
             ...     print(tags.tags)
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v2}
             /devices/tags
-        """
-        )
+        """)
         body = {}
         headers = {}
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
@@ -181,12 +175,10 @@ class DevicesAPI(APIClient):
             >>> groups, _, err = client.ztb.devices.get_group_by_list()
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device/group-by/list
-        """
-        )
+        """)
         body = {}
         headers = {}
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
@@ -225,12 +217,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device/operating-systems
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -265,12 +255,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v2}
             /devices/details/id/{device_id}/{minutes}
-        """
-        )
+        """)
         body = {}
         headers = {}
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
@@ -302,12 +290,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device/details/{device_id}
-        """
-        )
+        """)
         body = {}
         headers = {}
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
@@ -340,12 +326,10 @@ class DevicesAPI(APIClient):
             >>> fv, _, err = client.ztb.devices.get_filter_values("type")
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device/filters/{field}/values
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -385,12 +369,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v3}
             /device/{group}
-        """
-        )
+        """)
         query_params = query_params or {}
         body = {}
         headers = {}
@@ -425,12 +407,10 @@ class DevicesAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_v2}
             /devices/active/details/{device_id}/{minutes}
-        """
-        )
+        """)
         body = {}
         headers = {}
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)

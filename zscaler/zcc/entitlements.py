@@ -51,12 +51,10 @@ class EntitlementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getZdxGroupEntitlements
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -91,12 +89,10 @@ class EntitlementAPI(APIClient):
             tuple: A tuple containing the ZDX Group Entitlement.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /updateZdxGroupEntitlement
-        """
-        )
+        """)
         body = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
@@ -134,12 +130,10 @@ class EntitlementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getZpaGroupEntitlements
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -174,12 +168,10 @@ class EntitlementAPI(APIClient):
             tuple: A tuple containing the ZPA Group Entitlement.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /updateZpaGroupEntitlement
-        """
-        )
+        """)
         body = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})

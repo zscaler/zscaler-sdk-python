@@ -63,12 +63,10 @@ class ScimAttributeHeaderAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /idp/{idp_id}/scimattribute
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -106,12 +104,10 @@ class ScimAttributeHeaderAPI(APIClient):
             >>> attribute = zpa.scim_attributes.get_attribute('99999', scim_attribute_id="88888")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /idp/{idp_id}/scimattribute/{attribute_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -157,12 +153,10 @@ class ScimAttributeHeaderAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_userconfig}
             /scimattribute/idpId/{idp_id}/attributeId/{attribute_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
