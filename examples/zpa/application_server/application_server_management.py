@@ -53,7 +53,6 @@ import json
 from zscaler import ZPAClientHelper
 from zscaler.utils import str2bool
 
-
 # Initialize ZIAClientHelper with environment variables
 ZPA_CLIENT_ID = os.getenv("ZPA_CLIENT_ID")
 ZPA_CLIENT_SECRET = os.getenv("ZPA_CLIENT_SECRET")

@@ -62,12 +62,10 @@ class DLPIncidentsAPI(APIClient):
             ...    print(incident.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/transactions/{transaction_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -117,12 +115,10 @@ class DLPIncidentsAPI(APIClient):
             ...    print(inc.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -166,12 +162,10 @@ class DLPIncidentsAPI(APIClient):
             ...     print(inc.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/change-history
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -218,12 +212,10 @@ class DLPIncidentsAPI(APIClient):
             ...     print(trigger.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/triggers
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -273,12 +265,10 @@ class DLPIncidentsAPI(APIClient):
             ...     print(ticket.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/tickets
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -323,12 +313,10 @@ class DLPIncidentsAPI(APIClient):
             ... print(evidence.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/evidence
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -522,12 +510,10 @@ class DLPIncidentsAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/labels
-        """
-        )
+        """)
 
         # Construct the request body
         body = {"labels": labels} if labels else {}
@@ -570,12 +556,10 @@ class DLPIncidentsAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zwa_base_endpoint}
             /incidents/{incident_id}/notes
-        """
-        )
+        """)
 
         # Construct the request body
         body = {"notes": notes} if notes else {}

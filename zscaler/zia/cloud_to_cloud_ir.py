@@ -64,12 +64,10 @@ class CloudToCloudIRAPI(APIClient):
             ...    print(c2c.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudToCloudIR
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -111,12 +109,10 @@ class CloudToCloudIRAPI(APIClient):
             ... print(f"Fetched c2c receiver by ID: {fetched_receiver.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudToCloudIR/{receiver_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -169,12 +165,10 @@ class CloudToCloudIRAPI(APIClient):
             ...    print(c2c.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudToCloudIR/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -222,12 +216,10 @@ class CloudToCloudIRAPI(APIClient):
             ... print(f"Total c2c receivers found: {count}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudToCloudIR/count
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -277,12 +269,10 @@ class CloudToCloudIRAPI(APIClient):
             ... print(f"C2C Deletion with ID {'123454'} validated successfully.")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cloudToCloudIR/config/{receiver_id}/validateDelete
-        """
-        )
+        """)
 
         params = {}
 

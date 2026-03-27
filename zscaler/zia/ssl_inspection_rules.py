@@ -55,12 +55,10 @@ class SSLInspectionAPI(APIClient):
         ...    pprint(rule)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sslInspectionRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -111,12 +109,10 @@ class SSLInspectionAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sslInspectionRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -206,12 +202,10 @@ class SSLInspectionAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sslInspectionRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -302,12 +296,10 @@ class SSLInspectionAPI(APIClient):
             ... print(f"Rule updated successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sslInspectionRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -356,12 +348,10 @@ class SSLInspectionAPI(APIClient):
             ... print(f"Rule with ID {'5458'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /sslInspectionRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

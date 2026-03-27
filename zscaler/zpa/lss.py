@@ -113,12 +113,10 @@ class LSSConfigControllerAPI(APIClient):
             >>> lss_configs = zpa.lss.list_configs(search="example", pagesize=100)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_lss_base_endpoint_v2}
             /lssConfig
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -151,12 +149,10 @@ class LSSConfigControllerAPI(APIClient):
             LSSConfig: The corresponding LSS Receiver config object.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_lss_base_endpoint_v2}
             /lssConfig/{lss_config_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -237,12 +233,10 @@ class LSSConfigControllerAPI(APIClient):
                 )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_lss_base_endpoint_v2}
             /lssConfig
-        """
-        )
+        """)
 
         # Map the source log type to ZPA internal log codes
         source_log_type = self.source_log_map[source_log_type]
@@ -330,12 +324,10 @@ class LSSConfigControllerAPI(APIClient):
                     source_log_type="user_status")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_lss_base_endpoint_v2}
             /lssConfig/{lss_config_id}
-        """
-        )
+        """)
 
         # Fetch the current configuration so we can merge with the new values
         current_config, _, error = self.get_config(lss_config_id)
@@ -430,12 +422,10 @@ class LSSConfigControllerAPI(APIClient):
             int: Status code of the delete operation.
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_lss_base_endpoint_v2}
             /lssConfig/{lss_config_id}
-        """
-        )
+        """)
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url)
@@ -464,12 +454,10 @@ class LSSConfigControllerAPI(APIClient):
             >>> web_browser_type = zpa.lss.get_client_types('web_browser')
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_lss_endpoint_v2}
             /clientTypes
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -506,21 +494,17 @@ class LSSConfigControllerAPI(APIClient):
 
         # Check if a specific log_type is provided; if so, use the specific endpoint
         if log_type:
-            api_url = format_url(
-                f"""
+            api_url = format_url(f"""
                 {self._zpa_lss_base_endpoint_v2}
                 /lssConfig/logType/formats
-            """
-            )
+            """)
             query_params["logType"] = log_type
         else:
             # Otherwise, fetch all log formats
-            api_url = format_url(
-                f"""
+            api_url = format_url(f"""
                 {self._zpa_base_lss_url_v2}
                 /logType/formats
-            """
-            )
+            """)
 
         # Prepare request and execute
         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
@@ -549,12 +533,10 @@ class LSSConfigControllerAPI(APIClient):
             >>> user_activity_codes = zpa.lss.get_status_codes(log_type="user_activity")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_lss_url_v2}
             /statusCodes
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

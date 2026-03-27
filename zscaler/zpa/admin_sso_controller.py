@@ -54,12 +54,10 @@ class AdminSSOControllerAPI(APIClient):
             ... print(f"Current SSO login-only setting: {fetched['ssologinonly']}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /ssoLoginOptions
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -105,12 +103,10 @@ class AdminSSOControllerAPI(APIClient):
             ... print("SSO login-only setting updated successfully.")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /ssoLoginOptions
-        """
-        )
+        """)
 
         body = kwargs
         request, error = self._request_executor.create_request(http_method, api_url, body=body)

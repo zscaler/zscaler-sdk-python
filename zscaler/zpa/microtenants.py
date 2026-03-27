@@ -59,12 +59,10 @@ class MicrotenantsAPI(APIClient):
             ...     print(tenant.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /microtenants
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
@@ -103,12 +101,10 @@ class MicrotenantsAPI(APIClient):
             ... print(fetched_microtenant.id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /microtenants/{microtenant_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -141,12 +137,10 @@ class MicrotenantsAPI(APIClient):
             ...     print(microtenant.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /microtenants/summary
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -229,12 +223,10 @@ class MicrotenantsAPI(APIClient):
             ...         print(item.request_format())
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /microtenants/search
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -277,12 +269,10 @@ class MicrotenantsAPI(APIClient):
                 )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /microtenants
-        """
-        )
+        """)
 
         # Construct the body from kwargs (as a dictionary)
         body = kwargs
@@ -327,12 +317,10 @@ class MicrotenantsAPI(APIClient):
                 )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /microtenants/{microtenant_id}
-        """
-        )
+        """)
 
         # Start with an empty body or an existing resource's current data
         body = {}
@@ -380,12 +368,10 @@ class MicrotenantsAPI(APIClient):
             >>> zpa.microtenants.delete_microtenant('99999')
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /microtenants/{microtenant_id}
-        """
-        )
+        """)
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url)

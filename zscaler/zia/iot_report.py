@@ -52,12 +52,10 @@ class IOTReportAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /iotDiscovery/deviceTypes
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -96,12 +94,10 @@ class IOTReportAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /iotDiscovery/categories
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -140,12 +136,10 @@ class IOTReportAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /iotDiscovery/classifications
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -183,12 +177,10 @@ class IOTReportAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /iotDiscovery/deviceList
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 

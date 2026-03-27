@@ -27,6 +27,7 @@ from tests.test_utils import reset_vcr_counters
 if os.environ.get("MOCK_TESTS", "true").strip().lower() == "false":
     try:
         from dotenv import load_dotenv
+
         project_root = Path(__file__).resolve().parents[3]
         load_dotenv(project_root / ".env")
     except ImportError:

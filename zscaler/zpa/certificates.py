@@ -66,12 +66,10 @@ class CertificatesAPI(APIClient):
             ...     print(cert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /certificate
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -125,12 +123,10 @@ class CertificatesAPI(APIClient):
             ...     print(cert.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /clientlessCertificate/issued
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -176,12 +172,10 @@ class CertificatesAPI(APIClient):
             ... print(fetched_cert.id)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /certificate/{certificate_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -228,12 +222,10 @@ class CertificatesAPI(APIClient):
             ... print(f"BA Certificate added successfully: {added_certificate.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /certificate
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -280,12 +272,10 @@ class CertificatesAPI(APIClient):
             ... print(f"BA Certificate added successfully: {updated_certificate.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /certificate/{certificate_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -333,12 +323,10 @@ class CertificatesAPI(APIClient):
             ... print(f"BA Certificate with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /certificate/{certificate_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

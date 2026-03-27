@@ -47,12 +47,10 @@ class WebPrivacyAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getWebPrivacyInfo
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -115,12 +113,10 @@ class WebPrivacyAPI(APIClient):
             ... print(f"web Privacy Info updated successfully: {private_info.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /setWebPrivacyInfo
-        """
-        )
+        """)
 
         body = {}
 

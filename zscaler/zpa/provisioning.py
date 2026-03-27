@@ -100,12 +100,10 @@ class ProvisioningKeyAPI(APIClient):
             ...     print(keys.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -164,12 +162,10 @@ class ProvisioningKeyAPI(APIClient):
             ... print(f"Fetched provisioning key by ID: {fetched_key.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -234,12 +230,10 @@ class ProvisioningKeyAPI(APIClient):
             ... print(f"Fetched provisioning key by App Connector or Service Edge ID: {fetched_key.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}zcomponent/{zcomponent_id}/provisioningKey
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -296,12 +290,10 @@ class ProvisioningKeyAPI(APIClient):
             raise ValueError("key_type must be provided.")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -371,12 +363,10 @@ class ProvisioningKeyAPI(APIClient):
             raise ValueError("key_type must be provided.")
 
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
-            """
-        )
+            """)
 
         body = kwargs
         microtenant_id = body.get("microtenant_id")
@@ -439,12 +429,10 @@ class ProvisioningKeyAPI(APIClient):
             ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

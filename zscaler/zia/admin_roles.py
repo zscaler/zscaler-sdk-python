@@ -72,12 +72,10 @@ class AdminRolesAPI(APIClient):
             ...  print(f"Fetched roles: {[role.as_dict() for role in role]}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminRoles/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -124,12 +122,10 @@ class AdminRolesAPI(APIClient):
             ... print(f"Fetched Admin role by ID: {fetched_role.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminRoles/{role_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -345,12 +341,10 @@ class AdminRolesAPI(APIClient):
                 ... print(f"Role added successfully: {add_role.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminRoles
-        """
-        )
+        """)
 
         body = kwargs
         if "feature_permissions" in body and isinstance(body["feature_permissions"], dict):
@@ -479,12 +473,10 @@ class AdminRolesAPI(APIClient):
                 ... print(f"Role added successfully: {add_role.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminRoles/{role_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -527,12 +519,10 @@ class AdminRolesAPI(APIClient):
             ... print(f"Admin Role with ID {143783113} deleted successfully")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminRoles/{role_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -568,12 +558,10 @@ class AdminRolesAPI(APIClient):
             ... print(settings)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /passwordExpiry/settings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -622,12 +610,10 @@ class AdminRolesAPI(APIClient):
             ... print(settings)
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/advancedThreatSettings
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

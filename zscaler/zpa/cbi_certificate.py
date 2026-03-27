@@ -50,12 +50,10 @@ class CBICertificateAPI(APIClient):
             ...     print(certificate.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /certificates
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -92,12 +90,10 @@ class CBICertificateAPI(APIClient):
             ... print(f"Fetched certificate by ID: {fetched_certificate.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -135,12 +131,10 @@ class CBICertificateAPI(APIClient):
             )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /certificate
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -183,12 +177,10 @@ class CBICertificateAPI(APIClient):
             )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -233,12 +225,10 @@ class CBICertificateAPI(APIClient):
             ... print(f"CBI Certificate with ID {updated_certificate.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

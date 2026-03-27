@@ -71,12 +71,10 @@ class TemplateRouterAPI(APIClient):
             ...     print(template.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -121,12 +119,10 @@ class TemplateRouterAPI(APIClient):
             ... print(f"Fetched template by ID: {fetched_template.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates/{template_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -180,12 +176,10 @@ class TemplateRouterAPI(APIClient):
             ... print(f"Group created successfully: {created_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -232,12 +226,10 @@ class TemplateRouterAPI(APIClient):
             ... print(f"Group updated successfully (PUT): {updated_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates/{template_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -276,12 +268,10 @@ class TemplateRouterAPI(APIClient):
             ... print(f"Template with ID 73459 deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates/{template_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -320,12 +310,10 @@ class TemplateRouterAPI(APIClient):
             ...     print(iface.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates/interfaces/{platform}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -371,12 +359,10 @@ class TemplateRouterAPI(APIClient):
             ...     print(name.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /templates/names
-        """
-        )
+        """)
 
         body = {}
         headers = {}

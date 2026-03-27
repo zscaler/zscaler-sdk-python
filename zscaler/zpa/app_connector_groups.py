@@ -64,12 +64,10 @@ class AppConnectorGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -122,12 +120,10 @@ class AppConnectorGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -170,12 +166,10 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /appConnectorGroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -216,12 +210,10 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /appConnectorGroup/{group_id}/sg
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -304,12 +296,10 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"connector group created successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /appConnectorGroup
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -395,12 +385,10 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"connector group created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup/{group_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -448,12 +436,10 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"app connector group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup/{group_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

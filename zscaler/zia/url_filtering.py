@@ -82,12 +82,10 @@ class URLFilteringAPI(APIClient):
         ...     print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlFilteringRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -133,12 +131,10 @@ class URLFilteringAPI(APIClient):
             ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlFilteringRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -240,12 +236,10 @@ class URLFilteringAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlFilteringRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -359,12 +353,10 @@ class URLFilteringAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlFilteringRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -413,12 +405,10 @@ class URLFilteringAPI(APIClient):
             ... print(f"Rule with ID {'524558'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /urlFilteringRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -452,12 +442,10 @@ class URLFilteringAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /advancedUrlFilterAndCloudAppSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -540,12 +528,10 @@ class URLFilteringAPI(APIClient):
                     )
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /advancedUrlFilterAndCloudAppSettings
-            """
-        )
+            """)
         body = {}
         body.update(kwargs)
 

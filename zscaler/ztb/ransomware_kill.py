@@ -63,12 +63,10 @@ class RansomwareKillAPI(APIClient):
                 >>> print(template.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /ransomware-kill/email-template/{site_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -127,12 +125,10 @@ class RansomwareKillAPI(APIClient):
                 >>> print(template.as_dict())
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /ransomware-kill/email-template/{site_id}
-        """
-        )
+        """)
 
         body: Dict[str, Any] = {
             "cluster_token": cluster_token,
@@ -182,12 +178,10 @@ class RansomwareKillAPI(APIClient):
                 ...     print(state.cluster_token, state.token)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /ransomware-kill/state/
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -240,12 +234,10 @@ class RansomwareKillAPI(APIClient):
                 >>> print("State updated successfully.")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /ransomware-kill/state/{site_id}/{color}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

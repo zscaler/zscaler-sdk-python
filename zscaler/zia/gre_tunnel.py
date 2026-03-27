@@ -64,12 +64,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         ...     print(tunnel.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -113,12 +111,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         ... print(f"Fetched tunnel by ID: {tunnel.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels/{tunnel_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -211,12 +207,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ... print(f"Tunnel added successfully: {added_tunnel.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -314,12 +308,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ... print(f"Tunnel added successfully: {update_tunnel.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels/{tunnel_id}
-        """
-        )
+        """)
 
         if tunnel_id is None:
             raise ValueError("tunnel_id is a required parameter for updating a GRE tunnel.")
@@ -373,12 +365,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ... print(f"Tunnel with ID {updated_tunnel.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels/{tunnel_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -415,12 +405,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ...     print(rule)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /greTunnels/availableInternalIpRanges
-            """
-        )
+            """)
 
         query_params = query_params or {}
 
@@ -485,12 +473,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         """
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vips/recommendedList
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -586,12 +572,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         query_params = query_params or {}
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vips/groupByDatacenter
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -647,12 +631,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ...     print(vip)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /vips
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -697,12 +679,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         ...     print(tunnel.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /orgProvisioning/ipGreTunnelInfo
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

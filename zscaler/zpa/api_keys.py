@@ -62,12 +62,10 @@ class ApiKeysAPI(APIClient):
             ...     print(key.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /apiKeys
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -110,12 +108,10 @@ class ApiKeysAPI(APIClient):
             ... print(f"Fetched key by ID: {fetched_key.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /apiKeys/{key_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -172,12 +168,10 @@ class ApiKeysAPI(APIClient):
             ... print(f"Client Secret: {client_secret}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /apiKeys
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -237,12 +231,10 @@ class ApiKeysAPI(APIClient):
             ... print(f"API key created successfully: {added_key.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /apiKeys/{key_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -289,12 +281,10 @@ class ApiKeysAPI(APIClient):
             ... print(f"API Key with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /apiKeys/{key_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

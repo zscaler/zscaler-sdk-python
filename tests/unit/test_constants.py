@@ -12,7 +12,7 @@ from zscaler.constants import (
     BACKOFF_FACTOR,
     BACKOFF_BASE_DURATION,
     ZSCALER_ONE_API_DEV,
-    ZIDENTITY_DEV,
+    ZID_DEV,
     GET_ZSCALER_CLIENT_ID,
     GET_ZSCALER_CLIENT_SECRET,
     GET_ZSCALER_VANITY_DOMAIN,
@@ -82,11 +82,11 @@ def test_retry_constants():
 def test_help_urls():
     """Test help URLs are correctly defined."""
     assert ZSCALER_ONE_API_DEV == "https://help.zscaler.com/oneapi"
-    assert ZIDENTITY_DEV == "https://help.zscaler.com/zidentity"
+    assert ZID_DEV == "https://help.zscaler.com/zidentity"
 
     # Test that URLs are HTTPS
     assert ZSCALER_ONE_API_DEV.startswith("https://")
-    assert ZIDENTITY_DEV.startswith("https://")
+    assert ZID_DEV.startswith("https://")
 
 
 def test_get_urls():
@@ -197,17 +197,17 @@ def test_help_urls_consistency():
     from urllib.parse import urlparse
 
     # All help URLs should be from help.zscaler.com
-    help_urls = [ZSCALER_ONE_API_DEV, ZIDENTITY_DEV]
+    help_urls = [ZSCALER_ONE_API_DEV, ZID_DEV]
     for url in help_urls:
         parsed = urlparse(url)
         assert parsed.netloc == "help.zscaler.com", f"Expected help.zscaler.com but got {parsed.netloc}"
         assert parsed.scheme == "https"
 
     # GET URLs should reference the help URLs (use startswith for safe prefix checking)
-    assert GET_ZSCALER_CLIENT_ID.startswith(ZIDENTITY_DEV)
-    assert GET_ZSCALER_CLIENT_SECRET.startswith(ZIDENTITY_DEV)
-    assert GET_ZSCALER_VANITY_DOMAIN.startswith(ZIDENTITY_DEV)
-    assert GET_ZSCALER_CLOUD.startswith(ZIDENTITY_DEV)
+    assert GET_ZSCALER_CLIENT_ID.startswith(ZID_DEV)
+    assert GET_ZSCALER_CLIENT_SECRET.startswith(ZID_DEV)
+    assert GET_ZSCALER_VANITY_DOMAIN.startswith(ZID_DEV)
+    assert GET_ZSCALER_CLOUD.startswith(ZID_DEV)
     assert GET_ZPA_CUSTOMER_ID.startswith(ZSCALER_ONE_API_DEV)
     assert GET_ZPA_MICROTENANT_ID.startswith(ZSCALER_ONE_API_DEV)
 
@@ -270,7 +270,7 @@ def test_url_security():
     all_urls = [
         DEV_AUTH_URL,
         ZSCALER_ONE_API_DEV,
-        ZIDENTITY_DEV,
+        ZID_DEV,
         GET_ZSCALER_CLIENT_ID,
         GET_ZSCALER_CLIENT_SECRET,
         GET_ZSCALER_VANITY_DOMAIN,

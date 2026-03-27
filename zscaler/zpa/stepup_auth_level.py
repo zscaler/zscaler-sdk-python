@@ -73,12 +73,10 @@ class StepUpAuthLevelAPI(APIClient):
             ...     print(f"Name: {level.name}, Delta: {level.delta}, Description: {level.description}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /stepupauthlevel
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

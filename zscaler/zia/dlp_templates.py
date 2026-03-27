@@ -73,12 +73,10 @@ class DLPTemplatesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpNotificationTemplates
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -127,12 +125,10 @@ class DLPTemplatesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpNotificationTemplates/{template_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -182,12 +178,10 @@ class DLPTemplatesAPI(APIClient):
             ...                         html_message="<html><body>HTML message content</body></html>")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpNotificationTemplates
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -239,12 +233,10 @@ class DLPTemplatesAPI(APIClient):
             ...                         html_message="<html><body>HTML message content</body></html>")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpNotificationTemplates/{template_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -283,12 +275,10 @@ class DLPTemplatesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpNotificationTemplates/{template_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -83,7 +83,7 @@ class TestServiceEdgeGroupProvisioningKey:
             try:
                 # Create a SERVICE_EDGE_GRP Provisioning Key
                 connector_key_name = "tests-pkseg-" + generate_random_string()
-                (created_svc_edge_group_key, _, err) = client.zpa.provisioning.add_provisioning_key(
+                created_svc_edge_group_key, _, err = client.zpa.provisioning.add_provisioning_key(
                     key_type=key_type,
                     name=connector_key_name,
                     max_usage=2,

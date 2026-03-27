@@ -54,12 +54,10 @@ class EndUserNotificationAPI(APIClient):
             ...     print(f"Support Email: {settings['support_email']}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /eun
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -137,12 +135,10 @@ class EndUserNotificationAPI(APIClient):
             ...         print("EUN settings updated successfully.")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /eun
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

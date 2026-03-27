@@ -50,8 +50,13 @@ ignore:
   - "zscaler/zcc/models/*"
   - "zscaler/zdx/models/*"
   - "zscaler/ztw/models/*"
-  - "zscaler/zidentity/models/*"
+  - "zscaler/zid/models/*"
   - "zscaler/zeasm/models/*"
+  - "zscaler/zwa/models/*"
+  - "zscaler/ztb/models/*"
+  - "zscaler/zbi/models/*"
+  - "zscaler/zins/models/*"
+  - "zscaler/zms/models/*"
 
 flags:
   unittests:
@@ -78,13 +83,33 @@ flags:
     paths:
       - zscaler/ztw/
     carryforward: true
-  zidentity-vcr:
+  zid-vcr:
     paths:
-      - zscaler/zidentity/
+      - zscaler/zid/
     carryforward: true
   zeasm-vcr:
     paths:
       - zscaler/zeasm/
+    carryforward: true
+  zwa-vcr:
+    paths:
+      - zscaler/zwa/
+    carryforward: true
+  ztb-vcr:
+    paths:
+      - zscaler/ztb/
+    carryforward: true
+  zbi-vcr:
+    paths:
+      - zscaler/zbi/
+    carryforward: true
+  zins-vcr:
+    paths:
+      - zscaler/zins/
+    carryforward: true
+  zms-vcr:
+    paths:
+      - zscaler/zms/
     carryforward: true
 
 # Codecov AI Configuration

@@ -128,11 +128,9 @@ class AdminUsersAPI(APIClient):
             ... print(f"Fetched Admin user by ID: {fetched_user.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/adminUsers/{user_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -235,12 +233,10 @@ class AdminUsersAPI(APIClient):
                 ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminUsers
-        """
-        )
+        """)
 
         payload = {
             "userName": name,
@@ -360,12 +356,10 @@ class AdminUsersAPI(APIClient):
                 ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminUsers/{user_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -411,12 +405,10 @@ class AdminUsersAPI(APIClient):
             ... print(f"Admin User with ID {143783113} deleted successfully")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminUsers/{user_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -473,12 +465,10 @@ class AdminUsersAPI(APIClient):
             ...      'id': '49814321'})
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /adminUsers/{user_id}/convertToUser
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

@@ -61,12 +61,10 @@ class AccountGroupsAPI(APIClient):
             ...     print(account_group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}
@@ -112,12 +110,10 @@ class AccountGroupsAPI(APIClient):
             ...     print(account_group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -161,12 +157,10 @@ class AccountGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups/{account_group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -217,12 +211,10 @@ class AccountGroupsAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -273,12 +265,10 @@ class AccountGroupsAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups/{account_group_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -317,12 +307,10 @@ class AccountGroupsAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups/{account_group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -357,12 +345,10 @@ class AccountGroupsAPI(APIClient):
             ... print(f"Total account groups found: {count}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /accountGroups/count
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

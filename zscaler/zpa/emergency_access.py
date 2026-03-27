@@ -64,12 +64,10 @@ class EmergencyAccessAPI(APIClient):
             ...     print(user.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/users
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -110,12 +108,10 @@ class EmergencyAccessAPI(APIClient):
             ... print(f"Fetched user by ID: {fetched_user.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/user/{user_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -168,12 +164,10 @@ class EmergencyAccessAPI(APIClient):
             ... print(f"emergency user created successfully: {added_user.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/user
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -232,12 +226,10 @@ class EmergencyAccessAPI(APIClient):
             ... print(f"emergency user updated successfully: {added_update_useruser.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/user/{user_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -280,12 +272,10 @@ class EmergencyAccessAPI(APIClient):
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/user/{user_id}/activate
-        """
-        )
+        """)
 
         # Query parameters for email notification
         query_params = {"sendEmail": "true"} if send_email else {}
@@ -327,12 +317,10 @@ class EmergencyAccessAPI(APIClient):
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /emergencyAccess/user/{user_id}/deactivate
-        """
-        )
+        """)
 
         # Check if microtenant_id is passed and set as a query parameter if present
         microtenant_id = kwargs.get("microtenant_id")

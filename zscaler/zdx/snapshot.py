@@ -82,12 +82,10 @@ class SnapshotAPI(APIClient):
             ... print(f"Snapshot shared successfully: {share_snapshot.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /snapshot/alert
-        """
-        )
+        """)
 
         # Handle expiry conversion from hours to Unix epoch
         query_params = kwargs.get("query_params", {})

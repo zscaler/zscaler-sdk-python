@@ -172,6 +172,18 @@ class RequestExecutor:
                 return f"https://api.{self.cloud}.zsapi.net"
             return self.BASE_URL
 
+        # Special handling for ZMS (Microsegmentation) GraphQL API
+        if "/zms" in endpoint:
+            if self.cloud and self.cloud != "production":
+                return f"https://api.{self.cloud}.zsapi.net"
+            return self.BASE_URL
+
+        # Special handling for Business Insights (ZBI) API
+        if "/bi" in endpoint:
+            if self.cloud and self.cloud != "production":
+                return f"https://api.{self.cloud}.zsapi.net"
+            return self.BASE_URL
+
         if self.cloud and self.cloud != "production":
             return f"https://api.{self.cloud}.zsapi.net"
         return self.BASE_URL
@@ -188,8 +200,8 @@ class RequestExecutor:
             return "zcc"
         elif "/zdx" in url:
             return "zdx"
-        # elif "/bi" in url:
-        #     return "bi"
+        elif "/bi" in url:
+            return "bi"
         elif "/zwa" in url:
             return "zwa"
         elif "/ztb" in url:
@@ -204,6 +216,8 @@ class RequestExecutor:
             return "zeasm"
         elif "/zins" in url:
             return "zins"
+        elif "/zms" in url:
+            return "zms"
         elif "/v1/detection" in url or (self.zguard_legacy_client and "/v1/" in url):
             return "zguard"
         if self.use_legacy_client:
@@ -228,7 +242,7 @@ class RequestExecutor:
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins", "/ztb"]
+        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins", "/zms", "/ztb", "/bi"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix) :]

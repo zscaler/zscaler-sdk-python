@@ -55,12 +55,10 @@ class AdminUserAPI(APIClient):
             ...     print(user.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getAdminUsers
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -104,12 +102,10 @@ class AdminUserAPI(APIClient):
             ... print(sync_info.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getAdminUsersSyncInfo
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -153,12 +149,10 @@ class AdminUserAPI(APIClient):
             ...         print(role.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getAdminRoles
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -200,12 +194,10 @@ class AdminUserAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /syncZiaZdxAdminUsers
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -245,12 +237,10 @@ class AdminUserAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /syncZpaAdminUsers
-        """
-        )
+        """)
 
         body = {}
         headers = {}

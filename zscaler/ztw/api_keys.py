@@ -52,12 +52,10 @@ class ProvisioningAPIKeyAPI(APIClient):
                     print(api_key)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /apiKeys
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -102,12 +100,10 @@ class ProvisioningAPIKeyAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /apiKeys/{key_id}/regenerate
-        """
-        )
+        """)
 
         body = kwargs
 

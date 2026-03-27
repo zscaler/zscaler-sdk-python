@@ -49,12 +49,10 @@ class AppConnectorScheduleAPI(APIClient):
             tuple: A tuple containing (AppConnectorSchedule, Response, error)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connectorSchedule
-        """
-        )
+        """)
 
         # Use passed customer_id or fallback to initialized customer_id
         customer_id = customer_id or self.customer_id
@@ -97,12 +95,10 @@ class AppConnectorScheduleAPI(APIClient):
             tuple: A tuple containing (AppConnectorSchedule, Response, error)
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connectorSchedule
-        """
-        )
+        """)
 
         customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:
@@ -164,12 +160,10 @@ class AppConnectorScheduleAPI(APIClient):
         """
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connectorSchedule/{scheduler_id}
-        """
-        )
+        """)
 
         customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
         if not customer_id:

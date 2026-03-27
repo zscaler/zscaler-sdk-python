@@ -94,12 +94,10 @@ class DevicesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -158,12 +156,10 @@ class DevicesAPI(APIClient):
             ...     print(dev.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -224,12 +220,10 @@ class DevicesAPI(APIClient):
             ...     print(app)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -285,12 +279,10 @@ class DevicesAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -352,12 +344,10 @@ class DevicesAPI(APIClient):
             ...     print(probe)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/web-probes
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -424,12 +414,10 @@ class DevicesAPI(APIClient):
             ...     print(probe)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/web-probes/{probe_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -484,12 +472,10 @@ class DevicesAPI(APIClient):
             ...     print(probe)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/cloudpath-probes
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -544,12 +530,10 @@ class DevicesAPI(APIClient):
             ...     print(probe)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -606,12 +590,10 @@ class DevicesAPI(APIClient):
             ...     print(probe)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}/cloudpath
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -662,12 +644,10 @@ class DevicesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/apps/{app_id}/call-quality-metrics
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -719,12 +699,10 @@ class DevicesAPI(APIClient):
             ...     print(metric)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/health-metrics
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -776,12 +754,10 @@ class DevicesAPI(APIClient):
             ...     print(event)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/events
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -836,12 +812,10 @@ class DevicesAPI(APIClient):
             ...     print(location)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /active_geo
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

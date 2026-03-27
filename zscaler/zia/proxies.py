@@ -52,12 +52,10 @@ class ProxiesAPI(APIClient):
             ...     print(gw.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxyGateways
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -99,12 +97,10 @@ class ProxiesAPI(APIClient):
             ...     print(gw.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxyGateways/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -156,12 +152,10 @@ class ProxiesAPI(APIClient):
             ...     print(label.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -207,12 +201,10 @@ class ProxiesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -245,12 +237,10 @@ class ProxiesAPI(APIClient):
             tuple: A tuple containing (Proxies instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies/{proxy_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -305,12 +295,10 @@ class ProxiesAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -344,12 +332,10 @@ class ProxiesAPI(APIClient):
             tuple: A tuple containing the updated Proxies, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies/{proxy_id}
-        """
-        )
+        """)
 
         body = kwargs
         body["id"] = proxy_id
@@ -379,12 +365,10 @@ class ProxiesAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /proxies/{proxy_id}
-        """
-        )
+        """)
 
         params = {}
 

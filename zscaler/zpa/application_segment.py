@@ -80,12 +80,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(app.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -135,12 +133,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -259,12 +255,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"segment created successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -503,12 +497,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Application segment with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -561,12 +553,10 @@ class ApplicationSegmentAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{application_id}/move
-        """
-        )
+        """)
 
         payload = {
             "targetSegmentGroupId": kwargs.pop("target_segment_group_id", None),
@@ -630,12 +620,10 @@ class ApplicationSegmentAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{application_id}/share
-        """
-        )
+        """)
 
         payload = {
             "shareToMicrotenants": kwargs.pop("share_to_microtenants", None),
@@ -763,12 +751,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Segment added successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/provision
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -833,12 +819,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Fetched app segment LB by ID: {fetched_lb_config.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}/weightedLbConfig
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -921,12 +905,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Application segment lb updated successfully: {update_lb.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}/weightedLbConfig
-        """
-        )
+        """)
 
         body = dict(kwargs)
 
@@ -981,12 +963,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Multimatch updated successfully: {bulk_update.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/bulkUpdateMultiMatch
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1037,12 +1017,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     print("---")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/multimatchUnsupportedReferences
-        """
-        )
+        """)
 
         # The API expects a simple array of domain strings as the body
         body = domains
@@ -1086,12 +1064,10 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Max apps limit: {limits.get('maxAppsLimit')}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/count/currentAndMaxLimit
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -1129,12 +1105,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Configured date: {count.get('configuredDateInEpochSeconds')}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/configured/count
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -1184,12 +1158,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Names: {mapping.get('names')}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}/mappings
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1240,12 +1212,10 @@ class ApplicationSegmentAPI(APIClient):
             ...     f.write(csv_content)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/export
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

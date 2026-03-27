@@ -55,12 +55,10 @@ class ProvisioningURLAPI(APIClient):
                     print(role)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /provUrl
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -102,12 +100,10 @@ class ProvisioningURLAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /provUrl/{provision_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -167,12 +163,10 @@ class ProvisioningURLAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /provUrl
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -237,12 +231,10 @@ class ProvisioningURLAPI(APIClient):
             ... print(f"Provisioning URL updated successfully: {updated_prov_url.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /provUrl/{provision_id}
-        """
-        )
+        """)
         body = kwargs
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
@@ -277,12 +269,10 @@ class ProvisioningURLAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /provUrl/{provision_id}
-        """
-        )
+        """)
 
         params = {}
 

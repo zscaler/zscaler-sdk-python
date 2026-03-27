@@ -16,8 +16,12 @@ class ZscalerAPIError(Exception):
         if not isinstance(response_body, dict):
             response_body = {"message": str(response_body)}
 
-        self.error_code: Optional[Union[str, int]] = response_body.get("code") or response_body.get("id")
-        self.error_message: Optional[str] = response_body.get("message") or response_body.get("reason")
+        self.error_code: Optional[Union[str, int]] = (
+            response_body.get("code") or response_body.get("id") or response_body.get("errorCode")
+        )
+        self.error_message: Optional[str] = (
+            response_body.get("message") or response_body.get("reason") or response_body.get("errorDetails")
+        )
         self.params: List[Any] = response_body.get("params", [])
         self.path: Optional[str] = response_body.get("path")
 

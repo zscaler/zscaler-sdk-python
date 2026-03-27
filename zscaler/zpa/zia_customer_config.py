@@ -57,12 +57,10 @@ class ZIACustomerConfigAPI(APIClient):
             ...     print("ZIA cloud config is not available")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /config/isZiaCloudConfigAvailable
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -98,12 +96,10 @@ class ZIACustomerConfigAPI(APIClient):
             ...     print(config.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /config/ziaCloudConfig
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -152,12 +148,10 @@ class ZIACustomerConfigAPI(APIClient):
             ... print(f"ZIA cloud service config added successfully: {config.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /config/ziaCloudConfig
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -197,12 +191,10 @@ class ZIACustomerConfigAPI(APIClient):
             ... print(f"Allow disable: {config.get('allow_disable_session_termination_on_reauth')}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /config/sessionTerminationOnReauth
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -245,12 +237,10 @@ class ZIACustomerConfigAPI(APIClient):
             ... print(f"Session termination on reauth updated: {updated_config.session_termination_on_reauth}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /config/sessionTerminationOnReauth
-        """
-        )
+        """)
 
         body = kwargs
 

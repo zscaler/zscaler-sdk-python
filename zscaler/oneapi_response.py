@@ -207,6 +207,11 @@ class ZscalerAPIResponse:
             else:
                 # If it's already a list, use it as is
                 self._list = self._body if isinstance(self._body, list) else []
+        elif self._service_type == "bi":
+            # ZBI list reports returns {"reportType": "...", "reports": [...]}
+            # Custom apps and report configs return flat lists (handled above)
+            self._list = self._body.get("reports", [])
+            logger.debug("ZBI response: extracted %d reports from 'reports' key", len(self._list))
         elif self._service_type == "ztb":
             # ZTB wraps most responses in {"result": {...}}
             # For list endpoints the items live inside result (e.g. result.alarms)
@@ -369,6 +374,9 @@ class ZscalerAPIResponse:
             has_next = self._next_link is not None
             logger.debug("Has next page for ZIDENTITY: %s", has_next)
             return has_next
+        elif self._service_type == "bi":
+            # ZBI endpoints return all results in a single response
+            return False
         else:
             # For ZIA/ZCC with paginated responses (dict with "list" field):
             # - If we're on the first page and got results, try next page

@@ -61,12 +61,10 @@ class CloudConnectorGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /cloudConnectorGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -108,12 +106,10 @@ class CloudConnectorGroupsAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /cloudConnectorGroup/{group_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -157,12 +153,10 @@ class CloudConnectorGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /cloudConnectorGroup/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

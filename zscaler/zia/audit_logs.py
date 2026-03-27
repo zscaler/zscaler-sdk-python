@@ -45,12 +45,10 @@ class AuditLogsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /auditlogEntryReport
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
@@ -78,12 +76,10 @@ class AuditLogsAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /auditlogEntryReport"
-            """
-        )
+            """)
 
         payload = {
             "startTime": start_time,
@@ -112,12 +108,10 @@ class AuditLogsAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /auditlogEntryReport"
-            """
-        )
+            """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
@@ -144,12 +138,10 @@ class AuditLogsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /auditlogEntryReport/download
-            """
-        )
+            """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:

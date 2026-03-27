@@ -6,7 +6,6 @@ from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
 
 from zscaler.helpers import to_snake_case, flatten_dict, unflatten_dict
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -54,12 +54,10 @@ class BrowserControlSettingsPI(APIClient):
             ... print(settings)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /browserControlSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -199,12 +197,10 @@ class BrowserControlSettingsPI(APIClient):
             ... print(browser_settings)
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /browserControlSettings
-            """
-        )
+            """)
 
         body = kwargs
 

@@ -53,12 +53,10 @@ class ForwardingProfileAPI(APIClient):
             ...         print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webForwardingProfile/listByCompany
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -106,12 +104,10 @@ class ForwardingProfileAPI(APIClient):
              ... print(f"Forwwarding profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webForwardingProfile/edit
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -150,12 +146,10 @@ class ForwardingProfileAPI(APIClient):
             ... print(f"Forwarding Profile with ID '541244' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webForwardingProfile/{profile_id}/delete
-        """
-        )
+        """)
 
         params = {}
 

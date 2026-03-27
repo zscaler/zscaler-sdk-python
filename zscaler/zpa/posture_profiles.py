@@ -71,12 +71,10 @@ class PostureProfilesAPI(APIClient):
             ...         print(profile.posture_udid)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_v2}
             /posture
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -117,12 +115,10 @@ class PostureProfilesAPI(APIClient):
             ... print(fetched_profile.posture_udid)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /posture/{profile_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}

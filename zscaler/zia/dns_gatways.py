@@ -72,12 +72,10 @@ class DNSGatewayAPI(APIClient):
             ...     print(gw.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnsGateways
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -129,12 +127,10 @@ class DNSGatewayAPI(APIClient):
             ... print(f"Fetched dns gateway  by ID: {fetched_gw.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnsGateways/{gateway_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -192,12 +188,10 @@ class DNSGatewayAPI(APIClient):
             ... print(f"DNS Gateway added successfully: {added_gw.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnsGateways
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -260,12 +254,10 @@ class DNSGatewayAPI(APIClient):
             ... print(f"DNS Gateway updated successfully: {updated_gw.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnsGateways/{gateway_id}
-        """
-        )
+        """)
         body = kwargs
         body["id"] = gateway_id
 
@@ -308,12 +300,10 @@ class DNSGatewayAPI(APIClient):
             ... print(f"DNS Gateway with ID '778766' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnsGateways/{gateway_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -69,12 +69,10 @@ class AppConnectorControllerAPI(APIClient):
             ...     print(connector.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connector
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -115,12 +113,10 @@ class AppConnectorControllerAPI(APIClient):
             ... print(f"Fetched connector by ID: {fetched_connector.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /connector/{connector_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -171,12 +167,10 @@ class AppConnectorControllerAPI(APIClient):
             ... print(f"connector created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connector/{connector_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -222,12 +216,10 @@ class AppConnectorControllerAPI(APIClient):
             ... print(f"app connector with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connector/{connector_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -260,12 +252,10 @@ class AppConnectorControllerAPI(APIClient):
             ... print("Connectors deleted successfully.")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /connector/bulkDelete
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

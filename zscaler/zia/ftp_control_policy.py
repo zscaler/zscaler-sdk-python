@@ -54,12 +54,10 @@ class FTPControlPolicyAPI(APIClient):
             ... print(settings)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ftpSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -114,12 +112,10 @@ class FTPControlPolicyAPI(APIClient):
             ... print(ftp_settings)
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ftpSettings
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

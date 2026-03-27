@@ -88,7 +88,7 @@ class TestAppConnectorGroupProvisioningKey:
             try:
                 # Create a CONNECTOR_GRP Provisioning Key
                 connector_key_name = "tests-pkacg-" + generate_random_string()
-                (created_connector_key, _, err) = client.zpa.provisioning.add_provisioning_key(
+                created_connector_key, _, err = client.zpa.provisioning.add_provisioning_key(
                     key_type=key_type,
                     name=connector_key_name,
                     max_usage=2,

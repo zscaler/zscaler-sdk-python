@@ -61,12 +61,10 @@ class PolicyCommentsAPI(APIClient):
             ... )
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /policy-comments/comment/{policy_id}
-        """
-        )
+        """)
         params = dict(query_params) if query_params else {}
         params["policyType"] = policy_type
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, params=params)
@@ -109,12 +107,10 @@ class PolicyCommentsAPI(APIClient):
             ... )
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /policy-comments/comment/{policy_id}
-        """
-        )
+        """)
         body = {"comment": comment}
         params = dict(query_params) if query_params else {}
         params["policyType"] = policy_type
@@ -156,12 +152,10 @@ class PolicyCommentsAPI(APIClient):
             ... )
         """
         http_method = "PUT"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /policy-comments/comment/{comment_id}
-        """
-        )
+        """)
         body = {"comment": comment}
         request, error = self._request_executor.create_request(
             http_method, api_url, body, {"Content-Type": "application/json"}
@@ -189,12 +183,10 @@ class PolicyCommentsAPI(APIClient):
             ... )
         """
         http_method = "DELETE"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /policy-comments/comment/{comment_id}
-        """
-        )
+        """)
         request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)

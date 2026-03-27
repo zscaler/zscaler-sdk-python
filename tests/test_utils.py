@@ -24,7 +24,6 @@ from typing import List, Tuple
 
 import pytz
 
-
 # Deterministic counters for VCR - used for both recording and playback
 _vcr_string_counter = 0
 _vcr_ip_counter = 0

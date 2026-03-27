@@ -9,7 +9,6 @@ from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 
-
 # Test constants
 TTL = 3600  # 1 hour
 TTI = 1800  # 30 minutes

@@ -58,12 +58,10 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -114,12 +112,10 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -174,12 +170,10 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules/lite
-            """
-        )
+            """)
 
         query_params = query_params or {}
 
@@ -270,12 +264,10 @@ class DLPWebRuleAPI(APIClient):
             ...    description='TT#1965432122')
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -370,12 +362,10 @@ class DLPWebRuleAPI(APIClient):
                 >>> zia.web_dlp.update_rule('976597', description="TT#1965232866")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -421,12 +411,10 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /webDlpRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

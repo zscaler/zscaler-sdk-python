@@ -74,12 +74,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ... )
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules
-        """
-        )
+        """)
 
         params = {"ruleType": rule_type}
         if query_params:
@@ -148,12 +146,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules/{rule_id}
-        """
-        )
+        """)
 
         params = {"ruleType": rule_type} if rule_type else {}
 
@@ -200,12 +196,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ...     print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules/all
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -397,12 +391,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -599,12 +591,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ... print(f"Rule updated successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -669,12 +659,10 @@ class CasbdDlpRulesAPI(APIClient):
                 ... print(f"Rule with ID 1072324 deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbDlpRules/{rule_id}
-        """
-        )
+        """)
         params = {"ruleType": rule_type} if rule_type else {}
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)

@@ -70,12 +70,10 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminRoles
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -174,12 +172,10 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminRoles
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -270,12 +266,10 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminRoles/{role_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -311,12 +305,10 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /adminRoles/{role_id}
-        """
-        )
+        """)
 
         params = {}
 

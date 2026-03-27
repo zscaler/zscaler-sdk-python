@@ -51,12 +51,10 @@ class TrafficIPV6ConfigAPI(APIClient):
         ...  return ipv6_config
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipv6config
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -100,12 +98,10 @@ class TrafficIPV6ConfigAPI(APIClient):
         ...     print(ipv6.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipv6config/dns64prefix
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -161,12 +157,10 @@ class TrafficIPV6ConfigAPI(APIClient):
         ...     print(ipv6.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipv6config/nat64prefix
-        """
-        )
+        """)
 
         body = {}
         headers = {}

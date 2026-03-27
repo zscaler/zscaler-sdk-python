@@ -61,12 +61,10 @@ class LocationControllerAPI(APIClient):
             ...     print(location.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /location/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -116,12 +114,10 @@ class LocationControllerAPI(APIClient):
             ... print(f"Fetched location extranet resource by ID: {fetched_extranet_resource.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /location/extranetResource/{zpn_er_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -209,12 +205,10 @@ class LocationControllerAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /locationGroup/extranetResource/{zpn_er_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

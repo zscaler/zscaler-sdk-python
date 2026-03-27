@@ -58,12 +58,10 @@ class PRAConsoleAPI(APIClient):
             ...     print(pra.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praConsole
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -106,12 +104,10 @@ class PRAConsoleAPI(APIClient):
             ... print(f"Fetched console by ID: {fetched_console.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /praConsole/{console_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -150,12 +146,10 @@ class PRAConsoleAPI(APIClient):
             ... print(f"Fetched console by ID: {fetched_console.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /praConsole/praPortal/{portal_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -209,12 +203,10 @@ class PRAConsoleAPI(APIClient):
             ... print(f"Console created successfully: {new_console.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praConsole
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -273,12 +265,10 @@ class PRAConsoleAPI(APIClient):
             ... print(f"console updated successfully: {updated_console.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praConsole/{console_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -335,12 +325,10 @@ class PRAConsoleAPI(APIClient):
             ... print(f"PRA Console with ID {updated_console.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praConsole/{console_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -387,12 +375,10 @@ class PRAConsoleAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /praConsole/bulk
-        """
-        )
+        """)
         body = []
         for console in consoles:
             if isinstance(console, dict):

@@ -54,12 +54,10 @@ class TrustedNetworksAPI(APIClient):
             ...         print(network.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/listByCompany
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -130,12 +128,10 @@ class TrustedNetworksAPI(APIClient):
             ... print(f"Trusted network added successfully: {added_network.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/create
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -188,12 +184,10 @@ class TrustedNetworksAPI(APIClient):
             ... print(f"Trusted network updated successfully: {updated_network.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/edit
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -232,12 +226,10 @@ class TrustedNetworksAPI(APIClient):
             ... print(f"Trusted network with ID '541244' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/{network_id}/delete
-        """
-        )
+        """)
 
         params = {}
 

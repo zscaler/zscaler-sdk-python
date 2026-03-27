@@ -64,11 +64,9 @@ class WorkloadGroupsAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/workloadGroups
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -112,12 +110,10 @@ class WorkloadGroupsAPI(APIClient):
             ... print(f"Fetched Workload Group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /workloadGroups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -219,12 +215,10 @@ class WorkloadGroupsAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /workloadGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -332,12 +326,10 @@ class WorkloadGroupsAPI(APIClient):
             ... print(f"Workload Group updated successfully: {updated_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /workloadGroups/{group_id}
-        """
-        )
+        """)
         body = kwargs
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
@@ -374,12 +366,10 @@ class WorkloadGroupsAPI(APIClient):
             ... print(f"Workload Group with ID {'73459'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /workloadGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 

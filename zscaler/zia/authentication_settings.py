@@ -45,12 +45,10 @@ class AuthenticationSettingsAPI(APIClient):
                 - error: Error details if the request fails.
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings/exemptedUrls
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -82,12 +80,10 @@ class AuthenticationSettingsAPI(APIClient):
             >>> exempted_urls, response, error = zia.authentication_settings.add_urls_to_exempt_list(["example.com"])
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings/exemptedUrls?action=ADD_TO_LIST
-            """
-        )
+            """)
 
         payload = {"urls": url_list}
 
@@ -120,12 +116,10 @@ class AuthenticationSettingsAPI(APIClient):
             >>> exempted_urls, response, error = zia.authentication_settings.delete_urls_from_exempt_list(["example.com"])
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings/exemptedUrls?action=REMOVE_FROM_LIST
-        """
-        )
+        """)
 
         payload = {"urls": url_list}
 
@@ -164,12 +158,10 @@ class AuthenticationSettingsAPI(APIClient):
             ...     print(f"Saml Enabled: {settings.saml_enabled}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -207,12 +199,10 @@ class AuthenticationSettingsAPI(APIClient):
             ...     print(f"Saml Enabled: {settings.saml_enabled}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings/lite
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -278,12 +268,10 @@ class AuthenticationSettingsAPI(APIClient):
             ...     print(f"Settings updated: {settings.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /authSettings
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

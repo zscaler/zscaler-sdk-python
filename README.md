@@ -34,11 +34,13 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [ZIA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia)
 * [ZDX API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx)
 * [ZCC API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc)
-* [ZIdentity](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
+* [ZIdentity (zid)](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
 * [ZTW API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector)
 * [ZTB API (Zero Trust Branch)](https://help.zscaler.com/)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
+* Z-Insights (zins) — GraphQL Analytics API
+* ZMS (Zscaler Microsegmentation) — GraphQL Microsegmentation API
 
 This SDK is designed to support the new Zscaler API framework [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi)
 via a single OAuth2 HTTP client. The SDK is also backwards compatible with the previous
@@ -863,15 +865,17 @@ Each one of the configuration values above can be turned into an environment var
 | `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
 | `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
-### Zscaler ZIdentity API
+### Zscaler ZIdentity API (zid)
 
 This SDK supports programmatic integration with the Zscaler ZIdentity API service.
 
 The authentication to Zscaler ZIdentity service via the OneAPI framework, requires uses the API client `ZscalerClient`
 
-#### Zidentity Pagination
+Access via `client.zid` (primary) or `client.zidentity` (backward-compatible alias).
 
-Zidentity API supports pagination with a maximum page size of 100 records per request. The SDK automatically handles pagination for Zidentity endpoints.
+#### ZIdentity Pagination
+
+ZIdentity API supports pagination with a maximum page size of 100 records per request. The SDK automatically handles pagination for ZIdentity endpoints.
 
 **Key Features:**
 - **Maximum Page Size**: 100 records per page (enforced by API)
@@ -893,7 +897,7 @@ config = {
 def main():
     with ZscalerClient(config) as client:
         # Request 300 groups (will automatically fetch 3 pages)
-        groups_response, response, error = client.zidentity.groups.list_groups(
+        groups_response, response, error = client.zid.groups.list_groups(
             query_params={'page_size': 300}
         )
         
@@ -942,9 +946,9 @@ if __name__ == "__main__":
 
 ### Initialize OneAPI OAuth 2.0 Client
 
-#### Zidentity OneAPI Client ID and Client Secret Authentication
+#### ZIdentity OneAPI Client ID and Client Secret Authentication
 
-Construct a client instance by passing your Zidentity `clientId`, `clientSecret` and `vanityDomain`:
+Construct a client instance by passing your ZIdentity `clientId`, `clientSecret` and `vanityDomain`:
 
 ```py
 from zscaler import ZscalerClient
@@ -959,7 +963,7 @@ config = {
 
 def main():
     with ZscalerClient(config) as client:
-        users, _, error = client.zidentity.groups.list_groups()
+        users, _, error = client.zid.groups.list_groups()
         if error:
             print(f"Error listing users: {error}")
             return
@@ -970,7 +974,7 @@ if __name__ == "__main__":
     main()
 ```
 
-#### Zidentity OneAPI Client ID and Private Key Authentication
+#### ZIdentity OneAPI Client ID and Private Key Authentication
 
 ```py
 from zscaler import ZscalerClient
@@ -985,7 +989,7 @@ config = {
 
 def main():
     with ZscalerClient(config) as client:
-        users, _, error = client.zidentity.groups.list_groups()
+        users, _, error = client.zid.groups.list_groups()
         if error:
             print(f"Error listing users: {error}")
             return
@@ -1081,6 +1085,93 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+### Z-Insights (zins) — GraphQL Analytics API
+
+Z-Insights provides visibility and analytics across web traffic, firewall, IoT, SaaS security, shadow IT, and cyber security domains via a GraphQL API.
+
+**Note:** Z-Insights only supports OneAPI authentication. Legacy client authentication is not supported.
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta",
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        entries, _, err = client.zins.web_traffic.get_traffic_by_location(
+            start_time=start_time, end_time=end_time,
+            traffic_unit="TRANSACTIONS", limit=10
+        )
+        if err:
+            print(f"Error: {err}")
+            return
+        print(f"Entries: {len(entries) if entries else 0}")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Available Resources (via `client.zins.<resource>`):**
+
+- `web_traffic` — Traffic by location, protocols, threat categories, no-grouping
+- `firewall` — Traffic by action, location, network services
+- `cyber_security` — Incidents
+- `saas_security` — CASB app reports
+- `shadow_it` — Shadow IT app discovery
+- `iot` — IoT device statistics
+
+**Note:** `client.zinsights` is available as a backward-compatible alias for `client.zins`.
+
+### ZMS (Zscaler Microsegmentation) — GraphQL API
+
+ZMS provides microsegmentation management for agents, resources, policy rules, app zones, and tagging via a GraphQL API.
+
+**Note:** ZMS only supports OneAPI authentication. Legacy client authentication is not supported.
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta",
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        result, _, err = client.zms.agents.list_agents(
+            customer_id="123456789", page=1, page_size=20
+        )
+        if err:
+            print(f"Error: {err}")
+            return
+        for agent in result.get("nodes", []):
+            print(agent.get("name"))
+
+if __name__ == "__main__":
+    main()
+```
+
+**Available Resources (via `client.zms.<resource>`):**
+
+- `agents` — List agents, connection status statistics, version statistics
+- `agent_groups` — List agent groups, get TOTP secrets
+- `nonces` — List nonces (provisioning keys), get nonce by ID
+- `resources` — List resources, protection status, event metadata
+- `resource_groups` — List resource groups, get members, protection status
+- `policy_rules` — List policy rules, list default policy rules
+- `app_zones` — List app zones with filtering and pagination
+- `app_catalog` — List app catalog entries with filtering and ordering
+- `tags` — List tag namespaces, tag keys, and tag values
+
+**Note:** `client.zmicroseg` is available as an alias for `client.zms`.
 
 ## Zscaler Legacy API Framework
 

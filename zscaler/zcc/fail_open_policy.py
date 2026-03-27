@@ -52,12 +52,10 @@ class FailOpenPolicyAPI(APIClient):
             ...         print(policy.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webFailOpenPolicy/listByCompany
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -114,12 +112,10 @@ class FailOpenPolicyAPI(APIClient):
             ... print(f"Fail Open Policy updated successfully: {updated_policy.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /webFailOpenPolicy/edit
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)

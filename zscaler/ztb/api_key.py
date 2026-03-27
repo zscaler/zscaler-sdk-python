@@ -72,12 +72,10 @@ class APIKeyAuthRouterAPI(APIClient):
             ...     print(key.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /api-key-auth/list
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -125,12 +123,10 @@ class APIKeyAuthRouterAPI(APIClient):
             ... print(f"API key created successfully: {created_key.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /api-key-auth/create
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -169,12 +165,10 @@ class APIKeyAuthRouterAPI(APIClient):
             ... print(f"API key 'abc-123' revoked successfully.")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /api-key-auth/revoke/{api_key_id}
-        """
-        )
+        """)
 
         params = {}
 

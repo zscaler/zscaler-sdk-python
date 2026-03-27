@@ -95,12 +95,10 @@ class LocationManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /location
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -143,12 +141,10 @@ class LocationManagementAPI(APIClient):
             ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /location/{location_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -233,12 +229,10 @@ class LocationManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /location/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

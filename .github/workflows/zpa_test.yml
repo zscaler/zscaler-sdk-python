@@ -93,7 +93,7 @@ jobs:
   # Real API Tests - Runs weekly or on manual trigger
   # Requires credentials, tests actual API compatibility
   # ===========================================
-  zidentity-zs3-tenants:
+  zid-zs3-tenants:
     runs-on: ubuntu-latest
     # Run on schedule (weekly), or manual trigger with live selected
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'live')

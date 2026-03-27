@@ -69,12 +69,10 @@ class FirewallDNSRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallDnsRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -128,12 +126,10 @@ class FirewallDNSRulesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallDnsRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -225,12 +221,10 @@ class FirewallDNSRulesAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallDnsRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -331,12 +325,10 @@ class FirewallDNSRulesAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallDnsRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -382,12 +374,10 @@ class FirewallDNSRulesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /firewallDnsRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -51,7 +51,6 @@ Note:
     This script assumes that the ZIA environment is correctly configured and that the necessary environment variables are set. For detailed documentation on the ZIA API and the Python SDK, please refer to the official Zscaler documentation.
 """
 
-
 import argparse
 import json
 import os

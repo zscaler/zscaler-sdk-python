@@ -52,12 +52,10 @@ class CBIZPAProfileAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /zpaprofiles
-        """
-        )
+        """)
 
         query_params = query_params or {}
         query_params.update(kwargs)
@@ -96,12 +94,10 @@ class CBIZPAProfileAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /isolation/profiles
-        """
-        )
+        """)
 
         query_params = query_params or {}
         query_params.update(kwargs)

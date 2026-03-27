@@ -51,12 +51,10 @@ class ForwardingGatewaysAPI(APIClient):
         """
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /gateways
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -127,12 +125,10 @@ class ForwardingGatewaysAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /gateways/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -195,12 +191,10 @@ class ForwardingGatewaysAPI(APIClient):
             tuple: A tuple containing the newly added Forwarding Gateway, response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /gateways
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -234,12 +228,10 @@ class ForwardingGatewaysAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /gateways/{gateway_id}
-        """
-        )
+        """)
 
         params = {}
 

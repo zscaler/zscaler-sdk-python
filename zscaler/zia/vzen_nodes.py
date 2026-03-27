@@ -58,12 +58,10 @@ class VZENNodesAPI(APIClient):
             ...     print(zen_node.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenNodes
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -109,12 +107,10 @@ class VZENNodesAPI(APIClient):
             ... print(f"Fetched Zen Node by ID: {fetched_zen_node.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenNodes/{node_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -207,12 +203,10 @@ class VZENNodesAPI(APIClient):
             ... print(f"vzen node added successfully: {added_node.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenNodes
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -314,12 +308,10 @@ class VZENNodesAPI(APIClient):
             ... print(f"vzen node updated successfully: {updated_node.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenNodes/{node_id}
-        """
-        )
+        """)
         body = kwargs
 
         if "enabled" in kwargs:
@@ -359,12 +351,10 @@ class VZENNodesAPI(APIClient):
             ... print(f"Zen Node with ID {'73459'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenNodes/{node_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -1,5 +1,50 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.18 (March 26, 2025)
+
+### Notes
+
+- Python Versions: **v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* [PR #474](https://github.com/zscaler/zscaler-sdk-python/pull/474) - Added new ZMS (Zscaler Microsegmentation) GraphQL service:
+  * `agents` - List agents, agent connection status statistics, agent version statistics
+  * `agent_groups` - List agent groups, get agent group TOTP secrets
+  * `nonces` - List nonces (provisioning keys), get nonce by ID
+  * `resources` - List resources, resource protection status, event metadata
+  * `resource_groups` - List resource groups, get members, protection status
+  * `policy_rules` - List policy rules, list default policy rules
+  * `app_zones` - List app zones with filtering and pagination
+  * `app_catalog` - List app catalog entries with filtering and ordering
+  * `tags` - List tag namespaces, tag keys, and tag values
+  * Access via `client.zms` or `client.zmicroseg` (OneAPI authentication only)
+  * Includes 35 enums, 17 input filter types, and 9 common response models
+  * Centralized GraphQL error handling via `response_checker.py`
+  * VCR integration tests, unit tests, Sphinx documentation, and CI workflow
+
+* [PR #474](https://github.com/zscaler/zscaler-sdk-python/pull/474) - Renamed `zinsights` package to `zins`:
+  * Package `zscaler/zinsights/` renamed to `zscaler/zins/`
+  * Class `ZInsightsService` renamed to `ZInsService`
+  * `client.zins` is now the primary accessor; `client.zinsights` remains as a backward-compatible alias
+  * All tests, documentation, examples, Makefile targets, and CI workflow updated accordingly
+
+* [PR #474](https://github.com/zscaler/zscaler-sdk-python/pull/474) - Renamed `zidentity` package to `zid`:
+  * Package `zscaler/zidentity/` renamed to `zscaler/zid/`
+  * Class `ZIdentityService` renamed to `ZIdService`
+  * `client.zid` is now the primary accessor; `client.zidentity` remains as a backward-compatible alias
+  * All tests, documentation, examples, Makefile targets, and CI workflow updated accordingly
+
+* [PR #474](https://github.com/zscaler/zscaler-sdk-python/pull/474) - Added new ZBI (Zscaler Business Insights) REST service:
+  * `custom_apps` - Full CRUD for custom application definitions (list, get, create, update, delete)
+  * `report_configs` - Full CRUD for report configurations associated with custom apps
+  * `reports` - List available reports and download report files (binary)
+  * Access via `client.zbi` (OneAPI authentication only)
+  * Models include `CustomApp`, `Signature`, `ReportConfig`, `DeliveryInformation`, `ScheduleParams`, `BackfillParams`
+  * Base endpoint: `/bi/api/v1`
+  * Service type `bi` mapped in `request_executor.py`
+  * Unit tests, Sphinx documentation, and Makefile targets
+
 ## 1.9.17 (March 12, 2025)
 
 ### Notes

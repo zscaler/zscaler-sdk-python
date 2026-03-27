@@ -74,12 +74,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /icapServers
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -149,12 +147,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /icapServers/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -202,12 +198,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /icapServers/{icap_server_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -267,12 +261,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /incidentReceiverServers
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -341,12 +333,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /incidentReceiverServers/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -391,12 +381,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /incidentReceiverServers/{receiver_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -444,12 +432,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /idmprofile
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -489,12 +475,10 @@ class DLPResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /idmprofile/{profile_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -540,12 +524,10 @@ class DLPResourcesAPI(APIClient):
             >>> pprint(zia.dlp_resources.list_edm_schemas())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpExactDataMatchSchemas
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -605,12 +587,10 @@ class DLPResourcesAPI(APIClient):
             params["fetchTokens"] = fetch_tokens
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpExactDataMatchSchemas/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

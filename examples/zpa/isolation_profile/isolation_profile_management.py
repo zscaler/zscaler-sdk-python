@@ -36,7 +36,6 @@ Get details of a specific Isolation Profile  by Name:
     $ python3 isolation_profile_management.py -n "Profile_Name"
 """
 
-
 import argparse
 import json
 import os

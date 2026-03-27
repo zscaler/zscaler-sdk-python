@@ -64,12 +64,10 @@ class ApplicationSegmentByTypeAPI(APIClient):
             raise ValueError("The 'application_type' parameter must be provided.")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/getAppsByType
-        """
-        )
+        """)
 
         query_params = query_params or {}
         query_params.update(kwargs)
@@ -129,12 +127,10 @@ class ApplicationSegmentByTypeAPI(APIClient):
             ... print(f"Application segment with ID 999999 deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /application/{segment_id}/deleteAppByType
-        """
-        )
+        """)
 
         params = {"applicationType": application_type}
         if microtenant_id:

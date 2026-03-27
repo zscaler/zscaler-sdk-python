@@ -6,29 +6,70 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-Unreleased
-----------
+## 1.9.18 (March 26, 2025)
 
-Notes
------
+### Notes
 
 - Python Versions: **v3.10, v3.11, v3.12**
 
-Breaking Changes
-----------------
+### Enhancements
 
-- **Python 3.9 no longer supported.** Minimum required Python version is now 3.10. This change resolves dependency conflicts with ``vcrpy`` and ``urllib3``.
+* (`#474 <https://github.com/zscaler/zscaler-sdk-python/pull/474>`_) - Added new ZMS (Zscaler Microsegmentation) GraphQL service:
+  * ``agents`` - List agents, agent connection status statistics, agent version statistics
+  * ``agent_groups`` - List agent groups, get agent group TOTP secrets
+  * ``nonces`` - List nonces (provisioning keys), get nonce by ID
+  * ``resources`` - List resources, resource protection status, event metadata
+  * ``resource_groups`` - List resource groups, get members, protection status
+  * ``policy_rules`` - List policy rules, list default policy rules
+  * ``app_zones`` - List app zones with filtering and pagination
+  * ``app_catalog`` - List app catalog entries with filtering and ordering
+  * ``tags`` - List tag namespaces, tag keys, and tag values
+  * Access via ``client.zms`` or ``client.zmicroseg`` (OneAPI authentication only)
+  * Includes 35 enums, 17 input filter types, and 9 common response models
+  * Centralized GraphQL error handling via ``response_checker.py``
+  * VCR integration tests, unit tests, Sphinx documentation, and CI workflow
 
-Enhancements
-------------
+* (`#474 <https://github.com/zscaler/zscaler-sdk-python/pull/474>`_)  - Renamed ``zinsights`` package to ``zins``:
+  * Package ``zscaler/zinsights/`` renamed to ``zscaler/zins/``
+  * Class ``ZInsightsService`` renamed to ``ZInsService``
+  * ``client.zins`` is now the primary accessor; ``client.zinsights`` remains as a backward-compatible alias
+  * All tests, documentation, examples, Makefile targets, and CI workflow updated accordingly
 
-- Added ZPA Tag Controller resources aligned with the Go SDK:
+* (`#474 <https://github.com/zscaler/zscaler-sdk-python/pull/474>`_) - Renamed ``zidentity`` package to ``zid``:
+  * Package ``zscaler/zidentity/`` renamed to ``zscaler/zid/``
+  * Class ``ZIdentityService`` renamed to ``ZIdService``
+  * ``client.zid`` is now the primary accessor; ``client.zidentity`` remains as a backward-compatible alias
+  * All tests, documentation, examples, Makefile targets, and CI workflow updated accordingly
+
+* (`#474 <https://github.com/zscaler/zscaler-sdk-python/pull/474>`_) - Added new ZBI (Zscaler Business Insights) REST service:
+  * ``custom_apps`` - Full CRUD for custom application definitions (list, get, create, update, delete)
+  * ``report_configs`` - Full CRUD for report configurations associated with custom apps
+  * ``reports`` - List available reports and download report files (binary)
+  * Access via `client.zbi` (OneAPI authentication only)
+  * Models include ``CustomApp``, ``Signature``, ``ReportConfig``, ``DeliveryInformation``, ``ScheduleParams``, ``BackfillParams``
+  * Base endpoint: `/bi/api/v1`
+  * Service type ``bi`` mapped in ``request_executor.py``
+  * Unit tests, Sphinx documentation, and Makefile targets
+
+## 1.9.17 (March 12, 2025)
+
+### Notes
+
+- Python Versions: **v3.10, v3.11, v3.12**
+
+### Breaking Changes
+
+- **Python 3.9 no longer supported.** Minimum required Python version is now 3.10. This change resolves dependency conflicts with `vcrpy` and `urllib3`.
+
+### Enhancements
+
+* (`#467 <https://github.com/zscaler/zscaler-sdk-python/pull/467>`_) - Added ZPA Tag Controller resources:
   * ``tag_namespace`` - Tag namespaces: list, get, get_by_name, create, update, delete, update_namespace_status
   * ``tag_key`` - Tag keys (scoped to namespace): list, get, get_by_name, create, update, delete, bulk_update_status
   * ``tag_group`` - Tag groups: list, get, get_by_name, create, update, delete
   * Access via ``client.zpa.tag_namespace``, ``client.zpa.tag_key``, ``client.zpa.tag_group``
 
-- Added ZTB (Zero Trust Branch) package resources:
+* (`#467 <https://github.com/zscaler/zscaler-sdk-python/pull/467>`_) - Added ZTB (Zero Trust Branch) package resources:
   * ``alarms`` - Alarms: list_alarms, get_alarm, create_alarm, update_alarm_patch, update_alarm_put, delete_alarm, bulk_acknowledge, bulk_acknowledge_all, bulk_ignore, bulk_ignore_all
   * ``api_keys`` - API Key Auth: list_api_keys, create_api_key, revoke_api_key
   * ``app_connector_config`` - App Connector Config: get_app_connector_config, create_app_connector_config, delete_app_connector

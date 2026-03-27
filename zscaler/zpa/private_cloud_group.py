@@ -65,12 +65,10 @@ class PrivateCloudGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudControllerGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -113,12 +111,10 @@ class PrivateCloudGroupAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /privateCloudControllerGroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -207,12 +203,10 @@ class PrivateCloudGroupAPI(APIClient):
             ... print(f"private cloud group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /privateCloudControllerGroup
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -303,12 +297,10 @@ class PrivateCloudGroupAPI(APIClient):
             ... print(f"private cloud group updated successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudControllerGroup/{group_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -355,12 +347,10 @@ class PrivateCloudGroupAPI(APIClient):
             ... print(f"app Private Cloud Group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /privateCloudControllerGroup/{group_id}
-        """
-        )
+        """)
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -402,12 +392,10 @@ class PrivateCloudGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /privateCloudControllerGroup/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)

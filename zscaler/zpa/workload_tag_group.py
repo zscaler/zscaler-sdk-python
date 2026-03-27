@@ -61,12 +61,10 @@ class WorkloadTagGroupAPI(APIClient):
             ...     print(workload_tag_group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /workloadTagGroup/summary
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

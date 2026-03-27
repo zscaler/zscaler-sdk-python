@@ -56,12 +56,10 @@ class ATPPolicyAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/advancedThreatSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -147,12 +145,10 @@ class ATPPolicyAPI(APIClient):
             ...         print(f"Failed to update settings: {err}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/advancedThreatSettings
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)
@@ -192,12 +188,10 @@ class ATPPolicyAPI(APIClient):
         """
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/securityExceptions
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -239,12 +233,10 @@ class ATPPolicyAPI(APIClient):
             raise TypeError("bypass_urls must be a list of strings.")
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/securityExceptions
-            """
-        )
+            """)
 
         payload = {"bypassUrls": bypass_urls}
 
@@ -281,12 +273,10 @@ class ATPPolicyAPI(APIClient):
         """
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/maliciousUrls
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -329,12 +319,10 @@ class ATPPolicyAPI(APIClient):
             return (None, None, ValueError("The URL list cannot be empty."))
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/maliciousUrls?action=ADD_TO_LIST
-            """
-        )
+            """)
 
         payload = {"maliciousUrls": malicious_urls}
 
@@ -383,12 +371,10 @@ class ATPPolicyAPI(APIClient):
             return (None, None, ValueError("The URL list cannot be empty."))
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /cyberThreatProtection/maliciousUrls?action=REMOVE_FROM_LIST
-            """
-        )
+            """)
 
         payload = {"maliciousUrls": malicious_urls}
 

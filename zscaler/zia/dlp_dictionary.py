@@ -72,12 +72,10 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -134,12 +132,10 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -187,12 +183,10 @@ class DLPDictionaryAPI(APIClient):
             ... print(f"Fetched dictionary by ID: {fetched_dict.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries/{dict_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -281,11 +275,9 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/dlpDictionaries
-        """
-        )
+        """)
 
         payload = {
             "name": name,
@@ -373,12 +365,10 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries/{dict_id}
-        """
-        )
+        """)
 
         payload = kwargs.copy()
 
@@ -422,11 +412,9 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/dlpDictionaries/{dict_id}
-            """
-        )
+            """)
 
         params = {}
 
@@ -455,12 +443,10 @@ class DLPDictionaryAPI(APIClient):
             tuple: A tuple containing the validation result (DLPPatternValidation instance), response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries/validateDlpPattern
-        """
-        )
+        """)
 
         payload = {"data": pattern}
 
@@ -506,12 +492,10 @@ class DLPDictionaryAPI(APIClient):
         dict_id = dictionary.id
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dlpDictionaries/{dict_id}/predefinedIdentifiers
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:

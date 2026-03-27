@@ -63,12 +63,10 @@ class AccountDetailsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountDetails
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -116,12 +114,10 @@ class AccountDetailsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountDetails/{account_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -178,12 +174,10 @@ class AccountDetailsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountDetails/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -221,12 +215,10 @@ class AccountDetailsAPI(APIClient):
             ...    print(status)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountIdStatus
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -261,12 +253,10 @@ class AccountDetailsAPI(APIClient):
                 print(ztw.provisioning.update_public_account_status(account_id_enabled=True, sub_id_enabled=False))
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountIdStatus
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)

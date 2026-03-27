@@ -50,8 +50,11 @@ def check_response_for_error(url, response_details, response_body, service_type:
     if is_graphql_error_response(formatted_response):
         try:
             # Determine service type from URL if not provided
-            if not service_type and "/zins" in url:
-                service_type = "zins"
+            if not service_type:
+                if "/zins" in url:
+                    service_type = "zins"
+                elif "/zms" in url:
+                    service_type = "zms"
 
             error = GraphQLAPIError(url, response_details, formatted_response, service_type)
             logger.debug(f"GraphQL error detected: {error.message}")

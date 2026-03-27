@@ -69,12 +69,10 @@ class NatControlPolicyAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnatRules
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -127,12 +125,10 @@ class NatControlPolicyAPI(APIClient):
         ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnatRules/{rule_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -213,12 +209,10 @@ class NatControlPolicyAPI(APIClient):
             ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnatRules
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -305,12 +299,10 @@ class NatControlPolicyAPI(APIClient):
             ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnatRules/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -353,12 +345,10 @@ class NatControlPolicyAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dnatRules/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

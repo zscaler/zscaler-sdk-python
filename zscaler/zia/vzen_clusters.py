@@ -58,12 +58,10 @@ class VZENClustersAPI(APIClient):
             ...     print(vzen.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenClusters
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -109,12 +107,10 @@ class VZENClustersAPI(APIClient):
             ... print(f"Fetched VZEN Cluster by ID: {fetched_vzen.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenClusters/{cluster_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -179,12 +175,10 @@ class VZENClustersAPI(APIClient):
             ... print(f"VZEN Cluster added successfully: {added_vzen.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenClusters
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -241,12 +235,10 @@ class VZENClustersAPI(APIClient):
             ... print(f"VZEN Cluster added successfully: {added_vzen.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /virtualZenClusters/{cluster_id}
-        """
-        )
+        """)
         body = kwargs
 
         if "enabled" in kwargs:

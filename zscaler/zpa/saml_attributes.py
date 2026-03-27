@@ -60,12 +60,10 @@ class SAMLAttributesAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /samlAttribute
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -114,12 +112,10 @@ class SAMLAttributesAPI(APIClient):
             ...     return
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_v2}
             /samlAttribute/idp/{idp_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -157,12 +153,10 @@ class SAMLAttributesAPI(APIClient):
             ... print(f"Fetched saml attribute by ID: {fetched_admin.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /samlAttribute/{attribute_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -206,12 +200,10 @@ class SAMLAttributesAPI(APIClient):
             ... print(f"Saml Attribute added successfully: {added_saml_attribute.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /samlAttribute
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -254,12 +246,10 @@ class SAMLAttributesAPI(APIClient):
             ... print(f"Saml Attribute updated successfully: {updated_attribute.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /samlAttribute/{attribute_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -302,12 +292,10 @@ class SAMLAttributesAPI(APIClient):
             ... print(f"SAml Attribute with ID '72058304855114335' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /samlAttribute/{attribute_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url, {})
         if error:

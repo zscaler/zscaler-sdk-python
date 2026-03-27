@@ -60,12 +60,10 @@ class TrafficDatacentersAPI(APIClient):
             ...     print(f"Fetched dc by ID: {fetched_dc[0].as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dcExclusions
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -145,12 +143,10 @@ class TrafficDatacentersAPI(APIClient):
             ... print(f"DC added successfully: {added_dc[0].as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dcExclusions
-        """
-        )
+        """)
 
         try:
             start_time = kwargs.get("start_time")
@@ -216,12 +212,10 @@ class TrafficDatacentersAPI(APIClient):
             tuple: A tuple containing the updated DC Exclusion, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dcExclusions
-        """
-        )
+        """)
 
         try:
             start_time = kwargs.get("start_time")
@@ -284,12 +278,10 @@ class TrafficDatacentersAPI(APIClient):
             ...     print(f"DC with ID {added_dc[0].dcid} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /dcExclusions/{dc_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -328,12 +320,10 @@ class TrafficDatacentersAPI(APIClient):
         query_params = query_params or {}
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /datacenters
-        """
-        )
+        """)
 
         body = {}
         headers = {}

@@ -82,12 +82,10 @@ class SCIMGroupsAPI(APIClient):
             ...         print(scim_group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint_userconfig}
             /scimgroup/idpId/{idp_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -128,12 +126,10 @@ class SCIMGroupsAPI(APIClient):
             >>> group = zpa.scim_groups.get_scim_group('99999')
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint_userconfig}
             /scimgroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

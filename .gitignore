@@ -86,6 +86,7 @@ local_dev
 .vscode
 .claude
 .cursor
+trivy.yaml
 
 # vim swap files
 *.swp

@@ -46,12 +46,10 @@ class ActivationAPI(APIClient):
             >>> config_status, response, error = zia.config.status()
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /status
-        """
-        )
+        """)
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
@@ -83,12 +81,10 @@ class ActivationAPI(APIClient):
             >>> config_activate, response, error = zia.activate.activate()
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /status/activate
-        """
-        )
+        """)
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
@@ -130,12 +126,10 @@ class ActivationAPI(APIClient):
             ... print(f"Fetched Eusa status by ID: {fetched_eusa.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /eusaStatus/latest
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -184,12 +178,10 @@ class ActivationAPI(APIClient):
             ... print(f"EUSA status updated successfully: {updated_eusa_status.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /eusaStatus/{status_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)

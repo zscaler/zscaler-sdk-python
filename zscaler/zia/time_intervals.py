@@ -61,12 +61,10 @@ class TimeIntervalsAPI(APIClient):
             ...     print(interval.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeIntervals
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -111,12 +109,10 @@ class TimeIntervalsAPI(APIClient):
             ... print(f"Fetched time interval by ID: {fetched_interval.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeIntervals/{interval_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -169,12 +165,10 @@ class TimeIntervalsAPI(APIClient):
             ... print(f"Time Interval added successfully: {added_interval.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeIntervals
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -223,12 +217,10 @@ class TimeIntervalsAPI(APIClient):
             ... print(f"Time Interval updated successfully: {added_interval.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeIntervals/{interval_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -267,12 +259,10 @@ class TimeIntervalsAPI(APIClient):
             ... print(f"Time Interval with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeIntervals/{interval_id}
-        """
-        )
+        """)
 
         params = {}
 

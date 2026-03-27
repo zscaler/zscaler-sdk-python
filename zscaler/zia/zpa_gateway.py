@@ -68,11 +68,9 @@ class ZPAGatewayAPI(APIClient):
             ...     print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/zpaGateways
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -113,11 +111,9 @@ class ZPAGatewayAPI(APIClient):
             ... print(f"Fetched gateway by ID: {fetched_gateway.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}/zpaGateways/{gateway_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -195,12 +191,10 @@ class ZPAGatewayAPI(APIClient):
             return (None, None, ValueError("zpa_app_segments is required"))
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /zpaGateways
-        """
-        )
+        """)
 
         body = {
             "name": name,
@@ -284,12 +278,10 @@ class ZPAGatewayAPI(APIClient):
             return (None, None, ValueError("zpa_app_segments is required"))
 
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /zpaGateways/{gateway_id}
-        """
-        )
+        """)
 
         body = {
             "id": gateway_id,  # ← this is the key fix
@@ -336,12 +328,10 @@ class ZPAGatewayAPI(APIClient):
             ... print(f"Rule with ID {updated_gateway.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /zpaGateways/{gateway_id}
-        """
-        )
+        """)
 
         params = {}
 

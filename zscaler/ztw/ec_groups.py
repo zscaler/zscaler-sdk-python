@@ -57,12 +57,10 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecgroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -111,12 +109,10 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -163,12 +159,10 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecgroup/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -218,12 +212,10 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecInstance/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -261,12 +253,10 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}/vm/{vm_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -302,12 +292,10 @@ class ECGroupsAPI(APIClient):
                 print(ztw.ecgroups.delete_ec_group_vm("123456789"))
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}/vm/{vm_id}
-        """
-        )
+        """)
 
         params = {}
 

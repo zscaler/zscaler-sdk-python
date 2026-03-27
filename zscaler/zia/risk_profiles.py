@@ -58,12 +58,10 @@ class RiskProfilesAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -110,12 +108,10 @@ class RiskProfilesAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -158,12 +154,10 @@ class RiskProfilesAPI(APIClient):
             ... print(f"Fetched Risk Profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles/{profile_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -306,12 +300,10 @@ class RiskProfilesAPI(APIClient):
             ... print(f"Risk profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -390,12 +382,10 @@ class RiskProfilesAPI(APIClient):
             ... print(f"Risk profile added successfully: {update_profile.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles/{profile_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -434,12 +424,10 @@ class RiskProfilesAPI(APIClient):
             ... print(f"Risk profile with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /riskProfiles/{profile_id}
-        """
-        )
+        """)
 
         params = {}
 

@@ -53,12 +53,10 @@ class CBIProfileAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /profiles
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -95,12 +93,10 @@ class CBIProfileAPI(APIClient):
             ... print(f"Fetched profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:
@@ -211,12 +207,10 @@ class CBIProfileAPI(APIClient):
             ... print(f"CBI profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /profiles
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -306,12 +300,10 @@ class CBIProfileAPI(APIClient):
             ... print(f"CBI profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -367,12 +359,10 @@ class CBIProfileAPI(APIClient):
             ... print(f"CBI Profile with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
         if error:

@@ -57,12 +57,10 @@ class CustomFileTypesAPI(APIClient):
             ...    print(file.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -109,12 +107,10 @@ class CustomFileTypesAPI(APIClient):
             ...    print(file.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes/{file_id}
-            """
-        )
+            """)
 
         body = {}
         headers = {}
@@ -170,12 +166,10 @@ class CustomFileTypesAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -232,12 +226,10 @@ class CustomFileTypesAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes/{file_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -275,12 +267,10 @@ class CustomFileTypesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes/{file_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -310,12 +300,10 @@ class CustomFileTypesAPI(APIClient):
                 ...     print(f"Custom file types count: {count}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /customFileTypes/count
-            """
-        )
+            """)
 
         body = {}
         headers = {}

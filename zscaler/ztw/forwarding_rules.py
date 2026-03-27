@@ -67,12 +67,10 @@ class ForwardingControlRulesAPI(APIClient):
             ...     print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecRules/ecRdr
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -200,12 +198,10 @@ class ForwardingControlRulesAPI(APIClient):
             ... )
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecRules/ecRdr
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -338,12 +334,10 @@ class ForwardingControlRulesAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
             /ecRules/ecRdr/{rule_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -394,12 +388,10 @@ class ForwardingControlRulesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztw_base_endpoint}
              /ecRules/ecRdr/{rule_id}
-        """
-        )
+        """)
 
         params = {}
 

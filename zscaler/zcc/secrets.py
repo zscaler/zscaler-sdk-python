@@ -50,12 +50,10 @@ class SecretsAPI(APIClient):
             ... print("Full response:", otps.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getOtp
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -107,12 +105,10 @@ class SecretsAPI(APIClient):
             ...     print(passwords.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zcc_base_endpoint}
             /getPasswords
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

@@ -64,12 +64,10 @@ class SaaSSecurityAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /domainProfiles/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -118,12 +116,10 @@ class SaaSSecurityAPI(APIClient):
             ...     print(template.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /quarantineTombstoneTemplate/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -172,12 +168,10 @@ class SaaSSecurityAPI(APIClient):
             ...     print(label.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbEmailLabel/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -252,12 +246,10 @@ class SaaSSecurityAPI(APIClient):
             ...     print(tenant.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbTenant/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -310,12 +302,10 @@ class SaaSSecurityAPI(APIClient):
             ...     print(scan_info.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /casbTenant/scanInfo
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

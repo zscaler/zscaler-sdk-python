@@ -90,12 +90,10 @@ class OAuth2UserCodeAPI(APIClient):
             raise ValueError("key_type must be provided.")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/usercodes
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -151,12 +149,10 @@ class OAuth2UserCodeAPI(APIClient):
             raise ValueError("key_type must be provided.")
 
         http_method = "post".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/usercodes/status
-        """
-        )
+        """)
 
         body = kwargs
 

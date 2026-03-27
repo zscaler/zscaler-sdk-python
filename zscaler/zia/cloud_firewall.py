@@ -81,18 +81,14 @@ class FirewallResourcesAPI(APIClient):
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -167,18 +163,14 @@ class FirewallResourcesAPI(APIClient):
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/ipv6DestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -249,28 +241,22 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/lite
-        """
-        )
+        """)
 
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -342,28 +328,22 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/ipv6DestinationGroups/lite
-        """
-        )
+        """)
 
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(
-                f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}"
-            )
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -410,12 +390,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -495,12 +473,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -594,12 +570,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/{group_id}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -639,12 +613,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group with ID {updated_group.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipDestinationGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -695,12 +667,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -765,12 +735,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/ipv6SourceGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -835,12 +803,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -911,12 +877,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/ipv6SourceGroups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -965,12 +929,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1017,12 +979,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1079,12 +1039,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/{group_id}
-        """
-        )
+        """)
         body = {}
 
         body.update(kwargs)
@@ -1126,12 +1084,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group with ID 18382907 deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /ipSourceGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -1182,12 +1138,10 @@ class FirewallResourcesAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplicationGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1235,12 +1189,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplicationGroups/{group_id}
-        """
-        )
+        """)
         body = {}
         headers = {}
 
@@ -1286,12 +1238,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplicationGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1347,12 +1297,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplicationGroups/{group_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1393,12 +1341,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group with ID {updated_group.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplicationGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -1456,12 +1402,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplications
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1502,12 +1446,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkApplications/{app_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1567,12 +1509,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1638,12 +1578,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1689,12 +1627,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups/{group_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -1741,12 +1677,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1801,12 +1735,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Group added successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups/{group_id}
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -1850,12 +1782,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServiceGroups/{group_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -1910,12 +1840,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices
-        """
-        )
+        """)
         query_params = query_params or {}
 
         body = {}
@@ -1983,12 +1911,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices/lite
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -2037,12 +1963,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices/{service_id}
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -2107,12 +2031,10 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Service added successfully: {added_service.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices
-        """
-        )
+        """)
 
         body = kwargs
 
@@ -2189,12 +2111,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices/{service_id}
-        """
-        )
+        """)
 
         body = {}
 
@@ -2242,12 +2162,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /networkServices/{service_id}
-        """
-        )
+        """)
 
         params = {}
 
@@ -2272,12 +2190,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeWindows
-        """
-        )
+        """)
 
         body = {}
         headers = {}
@@ -2313,12 +2229,10 @@ class FirewallResourcesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /timeWindows/lite
-        """
-        )
+        """)
 
         body = {}
         headers = {}

@@ -46,12 +46,10 @@ class CustomerControllerAPI(APIClient):
             ...     pprint(auth_domains)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /authDomains
-            """
-        )
+            """)
 
         body = {}
         headers = {}

@@ -71,12 +71,10 @@ class InventoryAPI(APIClient):
             ...     print(software)
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /inventory/software
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -147,12 +145,10 @@ class InventoryAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zdx_base_endpoint}
             /inventory/software/{software_key}
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

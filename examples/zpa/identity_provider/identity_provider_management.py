@@ -36,7 +36,6 @@ Get details of a specific Identity Provider by Name:
     $ python3 identity_provider_management.py -n "IdP_Name"
 """
 
-
 import argparse
 import json
 import os

@@ -64,12 +64,10 @@ class ServiceEdgeGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeGroup
-        """
-        )
+        """)
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
@@ -112,12 +110,10 @@ class ServiceEdgeGroupAPI(APIClient):
             ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""{
+        api_url = format_url(f"""{
             self._zpa_base_endpoint}
             /serviceEdgeGroup/{group_id}
-        """
-        )
+        """)
 
         # Handle optional query parameters
         query_params = query_params or {}
@@ -209,12 +205,10 @@ class ServiceEdgeGroupAPI(APIClient):
             ... print(f"service edge group created successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeGroup
-        """
-        )
+        """)
 
         # Construct the body from kwargs (as a dictionary)
         body = kwargs
@@ -274,12 +268,10 @@ class ServiceEdgeGroupAPI(APIClient):
             ... print(f"service edge group created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeGroup/{group_id}
-        """
-        )
+        """)
 
         # Start with an empty body or an existing resource's current data
         body = {}
@@ -337,12 +329,10 @@ class ServiceEdgeGroupAPI(APIClient):
             ... print(f"service edge group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /serviceEdgeGroup/{group_id}
-        """
-        )
+        """)
 
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}

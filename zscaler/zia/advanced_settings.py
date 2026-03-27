@@ -55,12 +55,10 @@ class AdvancedSettingsAPI(APIClient):
             ...     print(f"Enable Office365: {settings.enable_office365}")
         """
         http_method = "get".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /advancedSettings
-        """
-        )
+        """)
 
         request, error = self._request_executor.create_request(http_method, api_url)
 
@@ -182,12 +180,10 @@ class AdvancedSettingsAPI(APIClient):
             ...         print(f"Failed to update settings: {err}")
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._zia_base_endpoint}
             /advancedSettings
-            """
-        )
+            """)
 
         body = {}
         body.update(kwargs)

@@ -65,12 +65,10 @@ class LogsAPI(APIClient):
             ...     print(item.type, item.id)
         """
         http_method = "GET"
-        api_url = format_url(
-            f"""
+        api_url = format_url(f"""
             {self._ztb_base_endpoint}
             /logs
-        """
-        )
+        """)
         query_params = query_params or {}
         request, error = self._request_executor.create_request(http_method, api_url, {}, {}, params=query_params)
         if error:
