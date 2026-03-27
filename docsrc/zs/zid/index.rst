@@ -1,4 +1,4 @@
-Zid
+ZID
 ==========
 This package covers the ZPA interface.
 

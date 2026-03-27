@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.19 (March 27, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes:
+
+* [PR #476](https://github.com/zscaler/zscaler-sdk-python/pull/476) - Fixed ZPA Service Edge Controller attribute incosistency.
+
 ## 1.9.18 (March 26, 2025)
 
 ### Notes

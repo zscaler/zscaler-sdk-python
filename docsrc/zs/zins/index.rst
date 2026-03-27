@@ -1,4 +1,4 @@
-Z-Insights (zins)
+ZINS (Z-Insights)
 ==================
 
 This package covers the Z-Insights (zins) Analytics API interface for querying security analytics data via GraphQL.
