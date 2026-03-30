@@ -27,7 +27,7 @@ def test_zscaler_api_response_initialization():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -36,7 +36,7 @@ def test_zscaler_api_response_initialization():
     assert response._headers == {"Authorization": "Bearer token"}
     assert response._params == {"page": 1, "limit": 10}
     assert response._status == 200
-    assert response._service_type == "ZPA"
+    assert response._service_type == "zpa"
     assert response._page == 1
     assert response._items_fetched == 1
     assert response._pages_fetched == 1
@@ -65,7 +65,7 @@ def test_zscaler_api_response_initialization_with_data_type():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
         data_type=TestModel,
@@ -93,7 +93,7 @@ def test_zscaler_api_response_initialization_with_all_entries():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
         all_entries=True,
@@ -120,7 +120,7 @@ def test_zscaler_api_response_initialization_with_sorting():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
         sort_order="asc",
@@ -151,7 +151,7 @@ def test_zscaler_api_response_initialization_with_time_range():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
         start_time="2024-01-01T00:00:00Z",
@@ -181,25 +181,25 @@ def test_validate_page_size():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
 
     # Test with valid page size
-    validated_size = response.validate_page_size(50, "ZPA")
+    validated_size = response.validate_page_size(50, "zpa")
     assert validated_size == 50
 
     # Test with page size exceeding max
-    validated_size = response.validate_page_size(1000, "ZPA")
+    validated_size = response.validate_page_size(1000, "zpa")
     assert validated_size == 500  # Max for ZPA
 
     # Test with page size below min
-    validated_size = response.validate_page_size(0, "ZDX")
+    validated_size = response.validate_page_size(0, "zdx")
     assert validated_size == 1  # Min for ZDX
 
     # Test with None page size - should return None to let API use its default
-    validated_size = response.validate_page_size(None, "ZIA")
+    validated_size = response.validate_page_size(None, "zia")
     assert validated_size is None  # Don't override API defaults
 
 
@@ -221,7 +221,7 @@ def test_get_headers():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -248,7 +248,7 @@ def test_get_body():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -275,7 +275,7 @@ def test_get_status():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -302,7 +302,7 @@ def test_build_json_response_zpa():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -330,7 +330,7 @@ def test_build_json_response_zdx():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZDX",
+        service_type="zdx",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -389,7 +389,7 @@ def test_build_json_response_zcc():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZCC",
+        service_type="zcc",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -402,7 +402,7 @@ def test_build_json_response_zcc():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZCC",
+        service_type="zcc",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -429,7 +429,7 @@ def test_build_json_response_zia():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZIA",
+        service_type="zia",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -455,7 +455,7 @@ def test_get_results():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -488,7 +488,7 @@ def test_get_results_with_data_type():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZCC",
+        service_type="zcc",
         res_details=mock_res_details,
         response_body=response_body,
         data_type=TestModel,
@@ -520,7 +520,7 @@ def test_has_next_zpa():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -551,7 +551,7 @@ def test_has_next_zdx():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZDX",
+        service_type="zdx",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -607,39 +607,49 @@ def test_has_next_zia_zcc():
         "params": {"page": 1, "limit": 10},
     }
 
-    # Test with flat list response - should return False (all data in single response)
+    # ZIA returns flat JSON arrays for paginated list endpoints.
+    # _is_flat_list_response must be False so pagination can proceed.
     response_body = '[{"id": 1, "name": "test"}]'
 
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZIA",
+        service_type="zia",
         res_details=mock_res_details,
         response_body=response_body,
     )
 
-    # Flat list responses should NOT have pagination
-    assert response._is_flat_list_response is True
-    assert response.has_next() is False
+    # ZIA flat list responses SHOULD allow pagination
+    assert response._is_flat_list_response is False
+    assert response.has_next() is True  # Got results → might have more
 
-    # Test with dict response (paginated format) - should support pagination
-    response_body_paginated = '{"list": [{"id": 1, "name": "test"}]}'
-
-    response_paginated = ZscalerAPIResponse(
+    # With explicit pageSize and fewer results than limit → no more pages
+    req_with_size = {
+        "url": "https://api.example.com/test",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"pageSize": 10},
+    }
+    response_partial = ZscalerAPIResponse(
         request_executor=mock_request_executor,
-        req=req,
-        service_type="ZIA",
+        req=req_with_size,
+        service_type="zia",
         res_details=mock_res_details,
-        response_body=response_body_paginated,
+        response_body=response_body,
     )
-
-    # Dict responses with "list" field support pagination
-    assert response_paginated._is_flat_list_response is False
-    assert response_paginated.has_next() is True
+    # Simulate being on page 2 so the limit-based heuristic applies
+    response_partial._pages_fetched = 2
+    # 1 result < limit 10, so no more pages
+    assert response_partial.has_next() is False
 
     # Test with no results
-    response_paginated._list = []
-    assert response_paginated.has_next() is False
+    response_empty = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req_with_size,
+        service_type="zia",
+        res_details=mock_res_details,
+        response_body="[]",
+    )
+    assert response_empty.has_next() is False
 
 
 def test_next_zpa():
@@ -662,7 +672,7 @@ def test_next_zpa():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -699,7 +709,7 @@ def test_next_zdx():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZDX",
+        service_type="zdx",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -769,7 +779,7 @@ def test_next_zia():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZIA",
+        service_type="zia",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -784,8 +794,8 @@ def test_next_zia():
     assert error is None
 
 
-def test_next_zia_flat_list_no_pagination():
-    """Test that flat list responses don't support pagination."""
+def test_next_zia_flat_list_pagination():
+    """Test that ZIA flat list responses DO support pagination."""
     mock_request_executor = Mock()
 
     mock_res_details = Mock()
@@ -795,27 +805,36 @@ def test_next_zia_flat_list_no_pagination():
     req = {
         "url": "https://api.example.com/test",
         "headers": {"Authorization": "Bearer token"},
-        "params": {"page": 1, "limit": 10},
+        "params": {"pageSize": 10},
     }
 
-    # Flat list response - all data returned in single response
-    response_body = '[{"id": 1, "name": "test"}]'
+    # ZIA returns flat list for paginated endpoints
+    response_body = json.dumps([{"id": i} for i in range(10)])
 
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZIA",
+        service_type="zia",
         res_details=mock_res_details,
         response_body=response_body,
     )
 
-    # Flat list responses should not have pagination
-    assert response._is_flat_list_response is True
-    assert response.has_next() is False
+    # ZIA flat lists must NOT be marked as non-paginated
+    assert response._is_flat_list_response is False
+    assert response._limit == 10
+    assert response.has_next() is True  # full page → might have more
 
-    # Calling next() should raise StopIteration
+    # Empty ZIA response → no more pages
+    empty_resp = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zia",
+        res_details=mock_res_details,
+        response_body="[]",
+    )
+    assert empty_resp.has_next() is False
     with pytest.raises(StopIteration):
-        response.next()
+        empty_resp.next()
 
 
 def test_next_no_more_pages():
@@ -836,7 +855,7 @@ def test_next_no_more_pages():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -865,7 +884,7 @@ def test_next_with_error():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -897,7 +916,7 @@ def test_next_with_empty_results():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -934,7 +953,7 @@ def test_next_with_data_type():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
         data_type=TestModel,
@@ -968,7 +987,7 @@ def test_str_representation():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -997,7 +1016,7 @@ def test_str_representation_with_error():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -1013,21 +1032,21 @@ def test_service_page_limits():
     """Test service page limits constants."""
     limits = ZscalerAPIResponse.SERVICE_PAGE_LIMITS
 
-    assert "ZPA" in limits
-    assert "ZIA" in limits
-    assert "ZDX" in limits
+    assert "zpa" in limits
+    assert "zia" in limits
+    assert "zdx" in limits
 
     # Test ZPA limits
-    assert limits["ZPA"]["default"] == 100
-    assert limits["ZPA"]["max"] == 500
+    assert limits["zpa"]["default"] == 100
+    assert limits["zpa"]["max"] == 500
 
     # Test ZIA limits
-    assert limits["ZIA"]["default"] == 500
-    assert limits["ZIA"]["max"] == 10000
+    assert limits["zia"]["default"] == 500
+    assert limits["zia"]["max"] == 10000
 
     # Test ZDX limits
-    assert limits["ZDX"]["default"] == 10
-    assert limits["ZDX"]["min"] == 1
+    assert limits["zdx"]["default"] == 10
+    assert limits["zdx"]["min"] == 1
 
 
 def test_validate_page_size_edge_cases():
@@ -1048,25 +1067,25 @@ def test_validate_page_size_edge_cases():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="ZPA",
+        service_type="zpa",
         res_details=mock_res_details,
         response_body=response_body,
     )
 
     # Test with negative page size
-    validated_size = response.validate_page_size(-5, "ZPA")
+    validated_size = response.validate_page_size(-5, "zpa")
     assert validated_size == 1
 
     # Test with very large page size
-    validated_size = response.validate_page_size(999999, "ZPA")
+    validated_size = response.validate_page_size(999999, "zpa")
     assert validated_size == 500
 
     # Test with string page size
-    validated_size = response.validate_page_size("50", "ZPA")
+    validated_size = response.validate_page_size("50", "zpa")
     assert validated_size == 50
 
     # Test with float page size
-    validated_size = response.validate_page_size(50.5, "ZPA")
+    validated_size = response.validate_page_size(50.5, "zpa")
     assert validated_size == 50
 
 
@@ -1088,15 +1107,189 @@ def test_validate_page_size_unknown_service():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="UNKNOWN",
+        service_type="unknown",
         res_details=mock_res_details,
         response_body=response_body,
     )
 
     # Test with None page size - should return None to let API use its default
-    validated_size = response.validate_page_size(None, "UNKNOWN")
+    validated_size = response.validate_page_size(None, "unknown")
     assert validated_size is None  # Don't override API defaults
 
     # Test with page size exceeding max
-    validated_size = response.validate_page_size(1000, "UNKNOWN")
+    validated_size = response.validate_page_size(1000, "unknown")
     assert validated_size == 100  # Max for unknown service
+
+
+# ---------------------------------------------------------------------------
+# JMESPath .search() tests
+# ---------------------------------------------------------------------------
+
+
+def _make_response(body_str, service_type="zpa"):
+    """Helper to build a ZscalerAPIResponse for search tests."""
+    mock_executor = Mock()
+    mock_res = Mock()
+    mock_res.headers = {"Content-Type": "application/json"}
+    mock_res.status_code = 200
+    req = {
+        "url": "https://api.example.com/test",
+        "headers": {},
+        "params": {},
+    }
+    return ZscalerAPIResponse(
+        request_executor=mock_executor,
+        req=req,
+        service_type=service_type,
+        res_details=mock_res,
+        response_body=body_str,
+    )
+
+
+def test_search_filter_on_flat_list():
+    """search() filters items from a flat-list response (ZIA-style)."""
+    body = json.dumps(
+        [
+            {"id": 1, "name": "Alice", "adminUser": True},
+            {"id": 2, "name": "Bob", "adminUser": False},
+            {"id": 3, "name": "Carol", "adminUser": True},
+        ]
+    )
+    resp = _make_response(body, service_type="zia")
+    admins = resp.search("[?adminUser==`true`]")
+    assert len(admins) == 2
+    assert all(u["adminUser"] for u in admins)
+
+
+def test_search_projection_on_flat_list():
+    """search() can project (select) specific fields."""
+    body = json.dumps(
+        [
+            {"id": 1, "name": "Alice", "email": "alice@z.com"},
+            {"id": 2, "name": "Bob", "email": "bob@z.com"},
+        ]
+    )
+    resp = _make_response(body, service_type="zia")
+    names = resp.search("[*].name")
+    assert names == ["Alice", "Bob"]
+
+
+def test_search_filter_and_projection():
+    """search() filters and projects in a single expression."""
+    body = json.dumps(
+        [
+            {"id": 1, "name": "Alice", "role": "admin"},
+            {"id": 2, "name": "Bob", "role": "user"},
+            {"id": 3, "name": "Carol", "role": "admin"},
+        ]
+    )
+    resp = _make_response(body, service_type="zia")
+    result = resp.search("[?role=='admin'].{name: name, id: id}")
+    assert result == [
+        {"name": "Alice", "id": 1},
+        {"name": "Carol", "id": 3},
+    ]
+
+
+def test_search_on_dict_with_list_key():
+    """search() works against dict responses (e.g. ZPA 'list' key)."""
+    body = json.dumps(
+        {
+            "list": [
+                {"id": 1, "name": "AppA", "enabled": True},
+                {"id": 2, "name": "AppB", "enabled": False},
+            ],
+            "totalPages": 1,
+            "totalCount": 2,
+        }
+    )
+    resp = _make_response(body, service_type="zpa")
+    enabled = resp.search("list[?enabled==`true`]")
+    assert len(enabled) == 1
+    assert enabled[0]["name"] == "AppA"
+
+
+def test_search_on_zdx_items():
+    """search() can filter items inside ZDX 'items' key."""
+    body = json.dumps(
+        {
+            "items": [
+                {"software_name": "Zscaler Client Connector", "vendor": "Zscaler", "device_total": 100},
+                {"software_name": "Chrome", "vendor": "Google", "device_total": 250},
+                {"software_name": "Zscaler Digital Experience", "vendor": "Zscaler", "device_total": 50},
+            ],
+            "next_offset": "abc123",
+        }
+    )
+    resp = _make_response(body, service_type="zdx")
+    result = resp.search("items[?vendor=='Zscaler'].{name: software_name, devices: device_total}")
+    assert len(result) == 2
+    assert result[0] == {"name": "Zscaler Client Connector", "devices": 100}
+    assert result[1] == {"name": "Zscaler Digital Experience", "devices": 50}
+
+
+def test_search_on_zbi_reports():
+    """search() works on ZBI responses with 'reports' key."""
+    body = json.dumps(
+        {
+            "reportType": "APPLICATION",
+            "reports": [
+                {"id": "r1", "status": "COMPLETED"},
+                {"id": "r2", "status": "PENDING"},
+                {"id": "r3", "status": "COMPLETED"},
+            ],
+        }
+    )
+    resp = _make_response(body, service_type="bi")
+    completed = resp.search("reports[?status=='COMPLETED']")
+    assert len(completed) == 2
+
+
+def test_search_no_match_returns_empty():
+    """search() returns [] when nothing matches."""
+    body = json.dumps(
+        [
+            {"id": 1, "name": "Alice"},
+        ]
+    )
+    resp = _make_response(body, service_type="zia")
+    result = resp.search("[?name=='Nobody']")
+    assert result == []
+
+
+def test_search_scalar_result_wrapped_in_list():
+    """A JMESPath expression that returns a scalar wraps it in a list."""
+    body = json.dumps(
+        {
+            "list": [{"id": 1}, {"id": 2}],
+            "totalPages": 1,
+            "totalCount": 2,
+        }
+    )
+    resp = _make_response(body, service_type="zpa")
+    result = resp.search("totalCount")
+    assert result == [2]
+
+
+def test_search_invalid_expression_raises():
+    """An invalid JMESPath expression raises ParseError."""
+    import jmespath
+
+    body = json.dumps([{"id": 1}])
+    resp = _make_response(body, service_type="zia")
+    with pytest.raises(jmespath.exceptions.ParseError):
+        resp.search("[invalid!!")
+
+
+def test_search_length_function():
+    """search() supports JMESPath built-in functions like length()."""
+    body = json.dumps(
+        [
+            {"id": 1, "tags": ["a", "b"]},
+            {"id": 2, "tags": ["a"]},
+            {"id": 3, "tags": ["a", "b", "c"]},
+        ]
+    )
+    resp = _make_response(body, service_type="zia")
+    result = resp.search("[?length(tags) > `1`].id")
+    assert sorted(result) == [1, 3]

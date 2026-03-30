@@ -105,6 +105,14 @@ class TagNamespaceAPI(APIClient):
             ...     print(err)
             >>> for ns in namespaces:
             ...     print(ns.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         params = query_params or {}
         microtenant_id = params.get("microtenant_id")

@@ -83,6 +83,14 @@ class UsersAPI(APIClient):
             ... for user in user_list.records:
             ...     print(user.as_dict())
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -355,6 +363,14 @@ class UsersAPI(APIClient):
             ...     return
             ... for user in groups_user_list:
             ...     print(user.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -37,6 +37,14 @@ class IntermediateCertsAPI(APIClient):
     def list_ca_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates added for SSL inspection.
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -103,6 +111,14 @@ class IntermediateCertsAPI(APIClient):
     def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates added for SSL inspection.
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -169,6 +185,14 @@ class IntermediateCertsAPI(APIClient):
     def list_ready_to_use(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates that are ready to use for SSL inspection.
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

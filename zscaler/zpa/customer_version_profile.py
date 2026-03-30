@@ -65,6 +65,14 @@ class CustomerVersionProfileAPI(APIClient):
             ... print(f"Total version profiles found: {len(version_list)}")
             ... for pra in version_list:
             ...     print(pra.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

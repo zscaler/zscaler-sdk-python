@@ -68,6 +68,14 @@ class AppSegmentsBAV2API(APIClient):
             ... print(f"Total application segment browser access found: {len(segment_list)}")
             ... for app in segments:
             ...     print(app.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

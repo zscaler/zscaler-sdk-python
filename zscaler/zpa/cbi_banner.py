@@ -48,6 +48,14 @@ class CBIBannerAPI(APIClient):
             ... print(f"Total banners found: {len(banner_list)}")
             ... for banner in banner_list:
             ...     print(banner.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

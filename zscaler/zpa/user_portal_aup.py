@@ -72,6 +72,14 @@ class UserPortalAUPAPI(APIClient):
             ... print(f"Total AUPs found: {len(aup_list)}")
             ... for aup in aup_list:
             ...     print(f"Name: {aup.name}, Enabled: {aup.enabled}, Description: {aup.description}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

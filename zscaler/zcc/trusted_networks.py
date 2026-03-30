@@ -52,6 +52,14 @@ class TrustedNetworksAPI(APIClient):
             ...     print(f"Total trusted networks found: {len(network_list)}")
             ...     for network in network_list:
             ...         print(network.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

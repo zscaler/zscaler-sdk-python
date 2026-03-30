@@ -323,6 +323,14 @@ class DevicesAPI(APIClient):
             ... print(f"Total devices found: {len(device_list)}")
             ... for device in device_list:
             ...     print(device.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

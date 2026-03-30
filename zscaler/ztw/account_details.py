@@ -61,6 +61,14 @@ class AccountDetailsAPI(APIClient):
             ... for account_group in account_groups_list:
             ...     print(account_group.as_dict())
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -172,6 +180,14 @@ class AccountDetailsAPI(APIClient):
             >>> for account in ztw.provisioning.list_public_account_details_lite(page_size=200, max_pages=2):
             ...    print(account)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -213,6 +229,14 @@ class AccountDetailsAPI(APIClient):
             List public account status:
             >>> status = ztw.provisioning.list_public_account_status()
             ...    print(status)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -69,6 +69,14 @@ class InventoryAPI(APIClient):
             ...     return
             ... for software in software_list:
             ...     print(software)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

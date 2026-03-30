@@ -881,6 +881,14 @@ class InspectionControllerAPI(APIClient):
             >>> for action_type in zpa.inspection.list_control_action_types():
             ...     print(action_type)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -919,6 +927,14 @@ class InspectionControllerAPI(APIClient):
         Examples:
             >>> for severity in zpa.inspection.list_control_severity_types():
             ...     print(severity)
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()
@@ -959,6 +975,14 @@ class InspectionControllerAPI(APIClient):
             >>> for control_type in zpa.inspection.list_control_types():
             ...     print(control_type)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -998,6 +1022,14 @@ class InspectionControllerAPI(APIClient):
             >>> for method in zpa.inspection.list_custom_http_methods():
             ...     print(method)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -1033,6 +1065,14 @@ class InspectionControllerAPI(APIClient):
         Returns:
             tuple: A dictionary containing all predefined ZPA Inspection Control versions.
 
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()
@@ -1075,6 +1115,14 @@ class InspectionControllerAPI(APIClient):
 
         Returns:
             AppProtectionCustomControl: The corresponding predefined control object.
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -1115,6 +1163,14 @@ class InspectionControllerAPI(APIClient):
 
         Returns:
             AppProtectionCustomControl: The corresponding predefined control object.
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

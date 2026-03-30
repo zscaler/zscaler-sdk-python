@@ -482,6 +482,14 @@ class PolicySetControllerAPI(APIClient):
 
         Example:
             >>> rules = zpa.policies.list_rules('access')
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         # Map the policy type to the ZPA API equivalent
         mapped_policy_type = self.POLICY_MAP.get(policy_type)

@@ -60,6 +60,14 @@ class CustomerDRToolVersionAPI(APIClient):
             ... print(f"Total Customer Support DR Tool Versions found: {len(fetch_tools)}")
             ... for tool in fetch_tools:
             ...     print(tool.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

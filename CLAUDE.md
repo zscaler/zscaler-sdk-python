@@ -36,6 +36,7 @@ After every code change, run `make format` then `make lint`. Fix all errors (ext
 
 - **Try/except**: Every function that parses response → model must wrap in try/except (see `segment_groups.py`)
 - **ZPA POST search**: Some endpoints use POST `/resource/search` with filterBy/pageBy/sortBy; use `_post_search_all_pages` or `CommonFilterSearch`
+- **JMESPath client-side filtering**: All list endpoints return a `ZscalerAPIResponse` that supports `resp.search(expression)` for client-side filtering/projection via [JMESPath](https://jmespath.org/). This is additive — `query_params` remain the primary mechanism for server-side filtering. See the Pagination section in `README.md` for examples.
 
 ## Key Conventions
 
@@ -43,7 +44,7 @@ After every code change, run `make format` then `make lint`. Fix all errors (ext
 |--------|------------|
 | Models from JSON | Always require JSON payload; map camelCase API keys → snake_case Python attributes |
 | Product design | Follow existing resource in same product (ZIA, ZPA, ZTW, ZTB) |
-| Docstrings | Args, Returns, Examples (with `>>>` code blocks) for every function |
+| Docstrings | Args, Returns, Examples (with `>>>` code blocks) for every function; `list_` functions must mention `resp.search()` |
 | Documentation | CHANGELOG, release_notes.rst, and `docsrc/zs/<product>/<module>.rst` (exact format in plan-sdk-service Phase 6) |
 | Naming | Model: PascalCase; API client: PascalCase + `API`; functions: snake_case |
 

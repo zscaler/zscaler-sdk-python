@@ -71,6 +71,14 @@ class ShadowITAPI(APIClient):
             ... print(f"Total cloud applications found: {len(app_list)}")
             ... for app in app_list:
             ...     print(app.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -119,6 +127,14 @@ class ShadowITAPI(APIClient):
             ... print(f"Total cloud applications found: {len(app_list)}")
             ... for app in app_list:
             ...     print(app.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

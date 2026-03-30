@@ -65,6 +65,14 @@ class TrafficVPNCredentialAPI(APIClient):
             ... print(f"Total UFQDN credentials found: {len(credentials_list)}")
             ... for credential in credentials_list:
             ...     print(credential.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

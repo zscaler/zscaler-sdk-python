@@ -72,6 +72,14 @@ class LocationTemplateAPI(APIClient):
             ... for template in template_list:
             ...     print(template.as_dict())
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -126,6 +134,14 @@ class LocationTemplateAPI(APIClient):
             ... print(f"Total templates found: {len(template_list)}")
             ... for template in template_list:
             ...     print(template.as_dict())
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()

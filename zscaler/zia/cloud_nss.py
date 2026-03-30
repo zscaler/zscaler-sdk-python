@@ -56,6 +56,14 @@ class CloudNSSAPI(APIClient):
             ... print("Feed Output Payload:")
             ... for feed in feeds:
             ...     print(feed)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -561,6 +569,14 @@ class CloudNSSAPI(APIClient):
         Examples:
             Get a list of all cloud application policies:
             >>> nss = zia.cloud_nss.list_feed_output()
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()

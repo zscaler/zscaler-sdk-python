@@ -316,6 +316,14 @@ class TrafficDatacentersAPI(APIClient):
             ... print(f"Total datacenters found: {len(dc_list)}")
             ... for dc in dc_list:
             ...     print(dc.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         query_params = query_params or {}
 

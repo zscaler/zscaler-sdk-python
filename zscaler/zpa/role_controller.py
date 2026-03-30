@@ -55,6 +55,14 @@ class RoleControllerAPI(APIClient):
             ... print(f"Total roles found: {len(role_list)}")
             ... for role in role_list:
             ...     print(role.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -370,6 +378,14 @@ class RoleControllerAPI(APIClient):
             ...     return
             ... for group in permission_groups:
             ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -59,6 +59,14 @@ class ConfigOverrideControllerAPI(APIClient):
             ... print(f"Total config override details found: {len(list_details)}")
             ... for override in list_details:
             ...     print(override.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

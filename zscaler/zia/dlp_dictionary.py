@@ -480,6 +480,14 @@ class DLPDictionaryAPI(APIClient):
 
             >>> pprint(zia.dlp_dictionary.list_dict_predefined_identifiers('USDL_LEAKAGE'))
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         dictionaries, response, error = self.list_dicts()
         if error:

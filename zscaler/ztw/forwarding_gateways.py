@@ -48,6 +48,14 @@ class ForwardingGatewaysAPI(APIClient):
             ... print(f"Total forwarding gateways found: {len(forwarding_gateways_list)}")
             ... for forwarding_gateway in forwarding_gateways_list:
             ...     print(forwarding_gateway.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
 
         http_method = "get".upper()

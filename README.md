@@ -25,6 +25,7 @@
 * [Zscaler Legacy API Framework](#zscaler-legacy-api-framework)
 * [Configuration reference](#configuration-reference)
 * [Pagination](#pagination)
+* [Client-Side Filtering with JMESPath](#client-side-filtering-with-jmespath)
 * [Contributing](#contributing)
 
 The Zscaler SDK for Python includes functionality to accelerate development via [Python](https://www.python.org/). This SDK can be
@@ -706,6 +707,95 @@ try:
 except StopIteration:
     print("All data fetched.")
 ```
+
+### Client-Side Filtering with JMESPath
+
+The SDK supports client-side filtering and projection of API results using [JMESPath](https://jmespath.org/) expressions. After any list call, you can use `resp.search(expression)` to filter, project, or reshape the response data without making additional API calls.
+
+JMESPath is a query language for JSON that lets you declaratively extract and transform elements from JSON documents. The `.search()` method applies a JMESPath expression to the current page of results and returns a list of matching items.
+
+#### Basic Filtering
+
+```py
+# Fetch users and filter admin users client-side
+users, resp, err = client.zia.user_management.list_users()
+admin_users = resp.search("[?adminUser==`true`]")
+print(f"Found {len(admin_users)} admin users")
+```
+
+#### Projection (Selecting Specific Fields)
+
+```py
+# Extract only names and emails
+users, resp, err = client.zia.user_management.list_users()
+names_emails = resp.search("[*].{name: name, email: email}")
+for item in names_emails:
+    print(f"{item['name']}: {item['email']}")
+```
+
+#### Combined Filtering and Projection
+
+```py
+# Filter by role and project specific fields
+users, resp, err = client.zia.user_management.list_users()
+result = resp.search("[?adminUser==`true`].{name: name, id: id}")
+```
+
+#### Nested Field Filtering
+
+```py
+# Filter users by department name
+users, resp, err = client.zia.user_management.list_users()
+eng_users = resp.search("[?department.name=='Engineering'].name")
+```
+
+#### Using with Paginated Results
+
+`.search()` operates on the current page. To filter across all pages, apply it to each page as you paginate:
+
+```py
+users, resp, err = client.zia.user_management.list_users(
+    query_params={"page_size": 1000}
+)
+all_admins = resp.search("[?adminUser==`true`]")
+
+while resp.has_next():
+    next_page, resp, err = resp.next()
+    if err:
+        break
+    if next_page:
+        all_admins.extend(resp.search("[?adminUser==`true`]"))
+
+print(f"Total admins across all pages: {len(all_admins)}")
+```
+
+#### Using with Wrapped Responses
+
+For APIs that wrap results in a named key (e.g., ZDX `items`, ZBI `reports`), reference the key in the expression:
+
+```py
+# ZDX software inventory
+items, resp, err = client.zdx.software.list_inventory()
+zscaler_sw = resp.search(
+    "items[?vendor=='Zscaler'].{name: software_name, devices: device_total}"
+)
+
+# ZBI reports
+reports, resp, err = client.zbi.reports.list_reports(report_type="APPLICATION")
+completed = resp.search("reports[?status=='COMPLETED']")
+```
+
+#### JMESPath Built-in Functions
+
+JMESPath supports built-in functions like `length()`, `sort_by()`, `max_by()`, and more:
+
+```py
+# Users with at least one group assigned
+users, resp, err = client.zia.user_management.list_users()
+with_groups = resp.search("[?length(groups || `[]`) > `0`]")
+```
+
+For the full JMESPath specification and function reference, see [jmespath.org](https://jmespath.org/).
 
 ## Logging
 

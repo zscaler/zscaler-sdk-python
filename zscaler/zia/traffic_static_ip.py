@@ -69,6 +69,14 @@ class TrafficStaticIPAPI(APIClient):
             >>> for ip_address in zia.traffic.list_static_ips(page_size=200, max_pages=2):
             ...    print(ip_address)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

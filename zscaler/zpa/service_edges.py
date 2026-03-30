@@ -62,6 +62,14 @@ class ServiceEdgeControllerAPI(APIClient):
             ... print(f"Total service edges found: {len(service_edge_list)}")
             ... for edge in service_edge_list:
             ...     print(edge.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -246,9 +254,7 @@ class ServiceEdgeControllerAPI(APIClient):
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body=payload, params=params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
             return None
 

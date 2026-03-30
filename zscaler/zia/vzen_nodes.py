@@ -56,6 +56,14 @@ class VZENNodesAPI(APIClient):
             ... print(f"Total Zen Nodes found: {len(zen_node_list)}")
             ... for zen_node in zen_node_list:
             ...     print(zen_node.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -78,6 +78,11 @@ class ApplicationSegmentAPI(APIClient):
             ... print(f"Total application segments found: {len(segment_list)}")
             ... for app in segments:
             ...     print(app.as_dict())
+
+            Use JMESPath to filter results client-side:
+
+            >>> segments, resp, err = client.zpa.application_segment.list_segments()
+            >>> enabled = resp.search("list[?enabled==`true`].{name: name, id: id}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
