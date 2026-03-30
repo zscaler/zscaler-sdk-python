@@ -148,7 +148,7 @@ class ForwardingControlAPI(APIClient):
             order (str): The order of the rule, defaults to adding rule to bottom of list.
             rank (str): The admin rank of the rule. Supported values 1-7
             forward_method (str): The type of traffic forwarding method selected from the available options
-            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
+            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`, `ENATDEDIP`, `GEOIP`
 
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
