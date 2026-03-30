@@ -74,6 +74,14 @@ class Site2SiteVPNAPI(APIClient):
             >>> hubs, _, error = client.ztb.site2site_vpn.list_hubs(
             ...     query_params={"search": "prod", "page": 1, "limit": 25, "sort": "region", "sortdir": "asc"}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""
@@ -310,6 +318,14 @@ class Site2SiteVPNAPI(APIClient):
             >>> hubs, _, error = client.ztb.site2site_vpn.list_s2s_hubs(
             ...     query_params={"provider": "aws"}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""

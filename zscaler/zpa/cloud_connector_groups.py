@@ -59,6 +59,14 @@ class CloudConnectorGroupsAPI(APIClient):
             ... print(f"Total connector groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -151,6 +159,14 @@ class CloudConnectorGroupsAPI(APIClient):
             ... print(f"Total cloud connector groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

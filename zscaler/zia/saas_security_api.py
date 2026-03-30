@@ -62,6 +62,14 @@ class SaaSSecurityAPI(APIClient):
             ... print(f"Total profiles found: {len(profile_list)}")
             ... for profile in profile_list:
             ...     print(profile.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -114,6 +122,14 @@ class SaaSSecurityAPI(APIClient):
             ... print(f"Total profiles found: {len(template_list)}")
             ... for template in template_list:
             ...     print(template.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -166,6 +182,14 @@ class SaaSSecurityAPI(APIClient):
             ... print(f"Total labels found: {len(label_list)}")
             ... for label in label_list:
             ...     print(label.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -244,6 +268,14 @@ class SaaSSecurityAPI(APIClient):
             ... print(f"Total tenants found: {len(tenant_list)}")
             ... for tenant in tenant_list:
             ...     print(tenant.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -300,6 +332,14 @@ class SaaSSecurityAPI(APIClient):
             ... print(f"Total scan information found: {len(scan_info_list)}")
             ... for scan_info in scan_info_list:
             ...     print(scan_info.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

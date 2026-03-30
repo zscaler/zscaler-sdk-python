@@ -3,6 +3,7 @@ import json
 import logging
 import uuid
 import requests
+import jmespath
 
 logger = logging.getLogger(__name__)
 
@@ -14,9 +15,9 @@ class ZscalerAPIResponse:
     """
 
     SERVICE_PAGE_LIMITS = {
-        "ZPA": {"default": 100, "max": 500},
-        "ZIA": {"default": 500, "max": 10000},
-        "ZDX": {"default": 10, "min": 1},
+        "zpa": {"default": 100, "max": 500},
+        "zia": {"default": 500, "max": 10000},
+        "zdx": {"default": 10, "min": 1},
     }
 
     def __init__(
@@ -51,10 +52,9 @@ class ZscalerAPIResponse:
 
         self._service_type = service_type
         self._offset = self._params.get("offset", 0)
-        self._limit = self.validate_page_size(self._params.get("limit"), service_type)
         self._next_offset = None
         self._list = []
-        self._is_flat_list_response = False  # Track if response is a flat list (no pagination metadata)
+        self._is_flat_list_response = False
 
         if all_entries:
             self._params["allEntries"] = True
@@ -69,21 +69,22 @@ class ZscalerAPIResponse:
         if end_time:
             self._params["endTime"] = end_time
 
-        # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
         if self._service_type == "zia":
+            # Normalize page_size → pageSize if still in snake_case
             if "page_size" in self._params:
                 self._params["pageSize"] = self._params.pop("page_size")
-
-        if self._service_type == "zia":
             # If user supplied pageNumber, initialize self._page accordingly
             if "pageNumber" in self._params:
                 try:
                     self._page = int(self._params["pageNumber"])
                 except Exception:
                     self._page = 1
-            # Always remove 'page' if present for ZIA
             self._params.pop("page", None)
-            # logger.debug(f"[DEBUG] __init__ params after ZIA normalization: {self._params}")
+
+        # Resolve the user-supplied page size from the correct param key per service.
+        # ZIA uses "pageSize"; ZPA uses "pagesize"; others use "limit".
+        raw_page_size = self._params.get("pageSize") or self._params.get("pagesize") or self._params.get("limit")
+        self._limit = self.validate_page_size(raw_page_size, service_type)
 
         if res_details:
             content_type = res_details.headers.get("Content-Type", "").lower()
@@ -160,20 +161,19 @@ class ZscalerAPIResponse:
         self._body = json.loads(response_body)
 
         if isinstance(self._body, list):
-            # Handle direct list responses (ZIA, ZPA simple lists, etc.)
-            # A flat list response means the API returned all results in one response
-            # without pagination metadata - pagination should NOT continue
             self._list = self._body
-            self._is_flat_list_response = True  # Mark as flat list - no pagination
-            # Check if this is a list of simple types (strings, numbers, etc.) vs dicts
-            # If it's a list of simple types, skip the cleaning logic
+
+            # ZIA returns flat JSON arrays for paginated list endpoints.
+            # Do NOT mark those as flat-list (non-paginated); let the
+            # page-size heuristic in _has_next() drive pagination instead.
+            if self._service_type == "zia":
+                self._is_flat_list_response = False
+            else:
+                self._is_flat_list_response = True
+
             if self._body and len(self._body) > 0 and not isinstance(self._body[0], dict):
-                # This is a list of simple types (e.g., ["CRITICAL", "HIGH", ...])
-                # Don't filter it - keep the original list as-is
-                # No cleaning needed for simple types
                 pass
             elif self._body and len(self._body) > 0:
-                # This is a list of dicts - apply cleaning logic
                 cleaned_list = []
                 for item in self._list:
                     if isinstance(item, dict):
@@ -181,8 +181,7 @@ class ZscalerAPIResponse:
                     else:
                         logger.warning("Non-dict item found in response list, skipping: %s", item)
                 self._list = cleaned_list
-            # If list is empty, _list is already set to empty list, no cleaning needed
-        elif self._service_type == "ZDX":
+        elif self._service_type == "zdx":
             self._list = self._body.get("items", [])
             self._next_offset = self._body.get("next_offset")
         elif self._service_type == "zidentity":
@@ -199,13 +198,11 @@ class ZscalerAPIResponse:
             self._total_results = self._body.get("total_results", 0)
             self._next_page = self._body.get("next_page")
             self._prev_page = self._body.get("prev_page")
-        elif self._service_type == "ZCC":
+        elif self._service_type == "zcc":
             # ZCC can return either a single object or a list of objects
             if isinstance(self._body, dict):
-                # If it's a single object, wrap it in a list
                 self._list = [self._body]
             else:
-                # If it's already a list, use it as is
                 self._list = self._body if isinstance(self._body, list) else []
         elif self._service_type == "bi":
             # ZBI list reports returns {"reportType": "...", "reports": [...]}
@@ -237,7 +234,7 @@ class ZscalerAPIResponse:
         else:
             # ZPA and possibly other services use a dict with "list" field
             self._list = self._body.get("list", [])
-            if self._service_type == "ZPA":
+            if self._service_type == "zpa":
                 self._total_pages = int(self._body.get("totalPages", 1))
                 self._total_count = int(self._body.get("totalCount", 0))
 
@@ -261,7 +258,7 @@ class ZscalerAPIResponse:
         """
         logger.debug("Fetching current page results")
 
-        if self._service_type.upper() == "ZCC" and self._type:
+        if self._service_type == "zcc" and self._type:
             try:
                 return [self._type(item) for item in self._list if isinstance(item, dict)]
             except Exception as wrap_error:
@@ -269,6 +266,49 @@ class ZscalerAPIResponse:
                 return self._list
 
         return self._list
+
+    def search(self, expression: str) -> List[Any]:
+        """
+        Applies a JMESPath expression to the current page of results for
+        client-side filtering and projection.
+
+        The expression is first evaluated against the full response body
+        (useful for expressions that reference top-level keys, e.g.
+        ``"users[?name=='Alice']"``).  If the body is a plain list, the
+        expression is applied directly to the list instead.
+
+        Args:
+            expression: A JMESPath expression string.
+
+        Returns:
+            A list of matching items (or projected dicts/values).  Returns
+            an empty list when nothing matches.
+
+        Raises:
+            jmespath.exceptions.ParseError: If *expression* is not valid
+                JMESPath syntax.
+
+        Examples:
+            >>> items, resp, err = client.zia.user_management.list_users()
+            >>> admins = resp.search("[?adminUser==`true`]")
+
+            >>> items, resp, err = client.zdx.software.list_inventory()
+            >>> zscaler = resp.search(
+            ...     "items[?vendor=='Zscaler'].{name: software_name}"
+            ... )
+        """
+        compiled = jmespath.compile(expression)
+
+        # Apply against the full body first (handles expressions that target
+        # a named key inside the response envelope, e.g. "reports[?x>1]").
+        target = self._body if self._body is not None else self._list
+        result = compiled.search(target)
+
+        if result is None:
+            return []
+        if isinstance(result, list):
+            return result
+        return [result]
 
     def has_next(self) -> bool:
         """
@@ -303,10 +343,10 @@ class ZscalerAPIResponse:
             logger.debug("No more pages to fetch")
             return [], None
 
-        if self._service_type.upper() == "ZDX":
+        if self._service_type == "zdx":
             logger.debug("[DEBUG] Taking ZDX pagination branch.")
             self._params["offset"] = self._next_offset
-        elif self._service_type.upper() == "ZIA":
+        elif self._service_type == "zia":
             logger.debug("[DEBUG] Taking ZIA pagination branch.")
             self._page += 1
             self._params["page"] = self._page
@@ -359,13 +399,11 @@ class ZscalerAPIResponse:
             logger.debug("Has next page: False (flat list response - all results returned in single response)")
             return False
 
-        if self._service_type == "ZPA":
-            # More pages if current page < total_pages
+        if self._service_type == "zpa":
             has_next = self._page < self._total_pages
             logger.debug("Has next page for ZPA: %s (page %d of %d)", has_next, self._page, self._total_pages)
             return has_next
-        elif self._service_type == "ZDX":
-            # More pages if next_offset is not None
+        elif self._service_type == "zdx":
             has_next = self._next_offset is not None
             logger.debug("Has next page for ZDX: %s", has_next)
             return has_next

@@ -70,6 +70,11 @@ class SegmentGroupsAPI(APIClient):
             ... print(f"Total segment groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
+
+            Use JMESPath to filter results client-side:
+
+            >>> groups, resp, err = client.zpa.segment_groups.list_groups()
+            >>> enabled = resp.search("list[?enabled==`true`].{name: name, id: id}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""

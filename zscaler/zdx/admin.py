@@ -65,6 +65,14 @@ class AdminAPI(APIClient):
             ... print(f"Total department found: {len(dept_list)}")
             ...  for dept in dept_list:
             ...     print(dept.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -130,6 +138,14 @@ class AdminAPI(APIClient):
             ... print(f"Total location found: {len(locations_list)}")
             ...  for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

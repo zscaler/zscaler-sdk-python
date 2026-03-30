@@ -63,6 +63,14 @@ class FindingsAPI(APIClient):
                 >>> print(f"Total findings: {findings.total_results}")
                 >>> for finding in findings.results:
                 ...     print(f"  ID: {finding.id}, Category: {finding.category}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

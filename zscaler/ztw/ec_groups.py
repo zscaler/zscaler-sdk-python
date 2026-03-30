@@ -55,6 +55,14 @@ class ECGroupsAPI(APIClient):
                 for group in ztw.ecgroups.list_ec_group():
                     print(group)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -157,6 +165,14 @@ class ECGroupsAPI(APIClient):
             >>> for group in ztw.ecgroups.list_ec_group_lite():
             ...    print(group)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -209,6 +225,14 @@ class ECGroupsAPI(APIClient):
 
             >>> for instance in ztw.ecgroups.list_ec_instance_lite():
             ...    print(instance)
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()

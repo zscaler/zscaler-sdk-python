@@ -94,6 +94,14 @@ class LocationsAPI(APIClient):
             ... print(f"Total locations found: {len(locations_list)}")
             ... for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -606,6 +614,14 @@ class LocationsAPI(APIClient):
             ... print(f"Total locations found: {len(locations_list)}")
             ... for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -678,6 +694,14 @@ class LocationsAPI(APIClient):
             ... print(f"Total locations found: {len(locations_list)}")
             ... for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -744,6 +768,14 @@ class LocationsAPI(APIClient):
             ... print(f"Total locations found: {len(locations_list)}")
             ... for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -845,6 +877,14 @@ class LocationsAPI(APIClient):
             ... print(f"Total locations found: {len(locations_list)}")
             ... for location in locations_list:
             ...     print(location.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -900,6 +940,14 @@ class LocationsAPI(APIClient):
             ...     print(f"Error fetching location group count: {error}")
             ...     return
             ... print(f"Total location groups found: {count}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -955,6 +1003,14 @@ class LocationsAPI(APIClient):
             ...     print(f"Error fetching coordinates by latitude and longitude: {error}")
             ...     return
             ... print(f"Fetched coordinates by latitude and longitude: {fetched_ip.as_dict()}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         if latitude is None or longitude is None:
             return (None, None, ValueError("Both latitude and longitude must be provided"))
@@ -1073,6 +1129,14 @@ class LocationsAPI(APIClient):
         Notes:
             Very broad or generic search terms may return a large number of results which can take a long time to be
             returned. Ensure you narrow your search result as much as possible to avoid this.
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()

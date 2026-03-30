@@ -56,6 +56,14 @@ class BandwidthClassesAPI(APIClient):
             ... print(f"Total Classes found: {len(classes_list)}")
             ... for bwd in classes_list:
             ...     print(bwd.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -112,6 +120,14 @@ class BandwidthClassesAPI(APIClient):
             ... print(f"Total Classes found: {len(classes_list)}")
             ... for bwd in classes_list:
             ...     print(bwd.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

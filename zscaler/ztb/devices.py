@@ -67,6 +67,14 @@ class DevicesAPI(APIClient):
             >>> devices, _, err = client.ztb.devices.list_active_devices(
             ...     query_params={"search": "DESKTOP", "page": 1, "limit": 25}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""
@@ -115,6 +123,14 @@ class DevicesAPI(APIClient):
             >>> body, _, err = client.ztb.devices.list_devices_by_category(
             ...     query_params={"type": "Computer", "page": 1}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""
@@ -215,6 +231,14 @@ class DevicesAPI(APIClient):
             >>> os_list, _, err = client.ztb.devices.list_operating_systems(
             ...     query_params={"page": 1, "limit": 50}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""
@@ -367,6 +391,14 @@ class DevicesAPI(APIClient):
             >>> rows, _, err = client.ztb.devices.list_devices_group_by(
             ...     "type", query_params={"page": 1}
             ... )
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "GET"
         api_url = format_url(f"""

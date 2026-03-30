@@ -45,6 +45,14 @@ class CBIRegionAPI(APIClient):
             ... if err:
             ...     print(f"Error listing regions: {err}")
             ...     return
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

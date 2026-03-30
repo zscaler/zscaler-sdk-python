@@ -55,6 +55,14 @@ class TroubleshootingAPI(APIClient):
             ...     return
             ... for trace in trace_list:
             ...     print(trace.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -67,6 +67,14 @@ class ServerGroupsAPI(APIClient):
             ... print(f"Total server groups found: {len(groups_list)}")
             ... for group in groups_list:
             ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

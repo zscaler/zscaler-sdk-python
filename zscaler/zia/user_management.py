@@ -49,7 +49,7 @@ class UserManagementAPI(APIClient):
                 ``[query_params.page]`` {int}: Specifies the page offset.
 
                 ``[query_params.page_size]`` {int}: Specifies the page size.
-                                                    The default size is 100, but the maximum size is 1000.
+                                                    The default size is 100, but the maximum size is 10,000.
 
         Returns:
             tuple: A tuple containing (list of UserManagement instances, Response, error)
@@ -72,6 +72,11 @@ class UserManagementAPI(APIClient):
             ...     return
             ... for dept in department_list:
             ...     print(dept.as_dict())
+
+            Use JMESPath to filter results client-side:
+
+            >>> users, resp, err = client.zia.user_management.list_users()
+            >>> admins = resp.search("[?adminUser==`true`].{name: name, id: id}")
 
         """
         http_method = "get".upper()
@@ -173,6 +178,14 @@ class UserManagementAPI(APIClient):
             ... print(f"Total users found: {len(user_list)}")
             ... for user in user_list:
             ...     print(user.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -441,6 +454,11 @@ class UserManagementAPI(APIClient):
             ...     print(f"Error fetching department by ID: {error}")
             ...     return
             ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
+
+            Use JMESPath to filter results client-side:
+
+            >>> depts, resp, err = client.zia.user_management.list_departments()
+            >>> names = resp.search("[*].name")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -691,6 +709,11 @@ class UserManagementAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
+
+            Use JMESPath to filter results client-side:
+
+            >>> groups, resp, err = client.zia.user_management.list_groups()
+            >>> group_names = resp.search("[*].name")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -939,6 +962,14 @@ class UserManagementAPI(APIClient):
             ... )
             >>> for user in user_list:
             ...    print(user.as_dict())
+
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
         http_method = "get".upper()

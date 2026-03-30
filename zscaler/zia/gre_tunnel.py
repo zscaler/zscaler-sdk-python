@@ -62,6 +62,14 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         ...     return
         ... for tunnel in tunnels_list:
         ...     print(tunnel.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -403,6 +411,14 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ...     return
             ... for rule in ranges:
             ...     print(rule)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -470,6 +486,14 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             ... secondary_vip_id = recommended_vips[1].id
             ... print(f"Primary VIP ID: {primary_vip_id}")
             ... print(f"Secondary VIP ID: {secondary_vip_id}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
 
         http_method = "get".upper()
@@ -568,6 +592,14 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             >>> for vip_group in vip_groups:
             ...    print(vip_group)
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         query_params = query_params or {}
 
@@ -629,6 +661,14 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             >>> print(f"Total vips found: {len(vip_list)}")
             >>> for vip in vip_list:
             ...     print(vip)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

@@ -434,6 +434,14 @@ class TrafficCaptureAPI(APIClient):
             ...     return
             ... print(f"Rule order range: {rule_order_info.get('ruleOrderRange')}")
             ... print(f"Max order configured: {rule_order_info.get('maxOrderConfigured')}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

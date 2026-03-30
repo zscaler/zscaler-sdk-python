@@ -76,6 +76,14 @@ class PublicCloudInfoAPI(APIClient):
             ... for public_cloud_info in public_cloud_info_list:
             ...     print(public_cloud_info.as_dict())
 
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -135,6 +143,14 @@ class PublicCloudInfoAPI(APIClient):
             ... print(f"Total public accounts found: {len(public_accounts_list)}")
             ... for public_account in public_accounts_list:
             ...     print(public_account.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""

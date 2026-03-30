@@ -6,6 +6,24 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.20 (March 30, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+--------------
+
+* (`#478 <https://github.com/zscaler/zscaler-sdk-python/pull/478>`_) - Added JMESPath client-side filtering support via ``resp.search(expression)`` on all ``list_`` response objects for filtering and projection of API results without additional API calls.
+
+Bug Fixes:
+------------
+
+* (`#478 <https://github.com/zscaler/zscaler-sdk-python/pull/478>`_) - Fixed ZIA pagination where ``has_next()`` returned ``False`` after the first page for flat-list endpoints. Normalized ``SERVICE_PAGE_LIMITS`` keys and ``pageSize`` parameter resolution to correctly drive page-based iteration.
+
 1.9.19 (March 27, 2025)
 ---------------------------
 

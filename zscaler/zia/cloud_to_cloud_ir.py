@@ -62,6 +62,14 @@ class CloudToCloudIRAPI(APIClient):
             ... print(f"Total c2c incident receiver found: {len(c2c_list)}")
             ... for c2c in c2c_list:
             ...    print(c2c.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -163,6 +171,14 @@ class CloudToCloudIRAPI(APIClient):
             ... print(f"Total c2c incident receiver found: {len(c2c_list)}")
             ... for c2c in c2c_list:
             ...    print(c2c.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -214,6 +230,14 @@ class CloudToCloudIRAPI(APIClient):
             ...     print(f"Error fetching c2c receivers count: {error}")
             ...     return
             ... print(f"Total c2c receivers found: {count}")
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
         """
         http_method = "get".upper()
         api_url = format_url(f"""
