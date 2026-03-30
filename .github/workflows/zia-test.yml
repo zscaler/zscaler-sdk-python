@@ -12,8 +12,8 @@ on:
     branches:
       - master
   schedule:
-    # Weekly real API tests on Sunday at 6:00 AM PST (14:00 UTC)
-    - cron: "0 14 * * 0"
+    # Weekday real API tests at 6:00 AM PST (14:00 UTC), Monday-Friday only
+    - cron: "0 14 * * 1-5"
   workflow_dispatch:
     inputs:
       test_type:
