@@ -9,8 +9,6 @@ on:
   merge_group:
     types: [checks_requested]
   push:
-    branches:
-      - master
   schedule:
     # Weekday real API tests at 6:00 AM PST (14:00 UTC), Monday-Friday only
     - cron: "0 14 * * 1-5"
