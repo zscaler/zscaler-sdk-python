@@ -181,7 +181,9 @@ class RequestExecutor:
         if not url:
             raise ValueError("URL cannot be None or empty.")
 
-        if "/zia" in url or "/zscsb" in url:
+        if "/ziam/admin/api/v1" in url:
+            return "ziam"
+        elif "/zia" in url or "/zscsb" in url:
             return "zia"
         elif "/ztw" in url:
             return "ztw"
@@ -197,8 +199,6 @@ class RequestExecutor:
             return "ztb"
         elif "/zpa" in url or "/mgmtconfig" in url:
             return "zpa"
-        elif "/ziam/admin/api/v1" in url:
-            return "ziam"
         elif "/admin" in url:
             return "admin"
         elif "/easm/easm-ui/v1" in url:
@@ -212,7 +212,9 @@ class RequestExecutor:
         if self.use_legacy_client:
             url = self.remove_oneapi_endpoint_prefix(url)
             # Recheck for service type after removing the prefix
-            if "/zia" in url or "/zscsb" in url:
+            if "/ziam/admin/api/v1" in url:
+                return "ziam"
+            elif "/zia" in url or "/zscsb" in url:
                 return "zia"
             elif "/ztw" in url:
                 return "ztw"
@@ -226,8 +228,6 @@ class RequestExecutor:
                 return "ztb"
             elif "/zpa" in url or "/mgmtconfig" in url:
                 return "zpa"
-            elif "/ziam/admin/api/v1" in url:
-                return "ziam"
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:

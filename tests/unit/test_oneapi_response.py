@@ -340,7 +340,7 @@ def test_build_json_response_zdx():
 
 
 def test_build_json_response_zidentity():
-    """Test building JSON response for Zidentity service."""
+    """Test building JSON response for ZIAM (ZIdentity Admin) service."""
     mock_request_executor = Mock()
     mock_res_details = Mock()
     mock_res_details.headers = {"Content-Type": "application/json"}
@@ -357,7 +357,7 @@ def test_build_json_response_zidentity():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="zidentity",
+        service_type="ziam",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -564,7 +564,7 @@ def test_has_next_zdx():
 
 
 def test_has_next_zidentity():
-    """Test has_next for Zidentity service."""
+    """Test has_next for ZIAM (ZIdentity Admin) service."""
     mock_request_executor = Mock()
     mock_res_details = Mock()
     mock_res_details.headers = {"Content-Type": "application/json"}
@@ -582,7 +582,7 @@ def test_has_next_zidentity():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="zidentity",
+        service_type="ziam",
         res_details=mock_res_details,
         response_body=response_body,
     )
@@ -722,7 +722,7 @@ def test_next_zdx():
 
 
 def test_next_zidentity():
-    """Test next method for Zidentity service."""
+    """Test next method for ZIAM (ZIdentity Admin) service."""
     mock_request_executor = Mock()
     mock_request_executor.fire_request.return_value = (
         None,
@@ -746,7 +746,7 @@ def test_next_zidentity():
     response = ZscalerAPIResponse(
         request_executor=mock_request_executor,
         req=req,
-        service_type="zidentity",
+        service_type="ziam",
         res_details=mock_res_details,
         response_body=response_body,
     )
