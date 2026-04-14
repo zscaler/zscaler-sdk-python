@@ -712,6 +712,29 @@ def test_get_service_type():
     assert service_type == "ziam"
 
 
+def test_get_service_type_admin_endpoint():
+    """Test get_service_type returns 'admin' for /admin/ endpoints."""
+    config = {"client": {"rateLimit": {"maxRetries": 2}}}
+
+    cache = NoOpCache()
+    executor = RequestExecutor(config, cache)
+
+    service_type = executor.get_service_type("/admin/some/resource")
+    assert service_type == "admin"
+
+
+def test_get_service_type_ziam_with_legacy_client():
+    """Test get_service_type returns 'ziam' for ZIAM endpoints via legacy client recheck."""
+    config = {"client": {"rateLimit": {"maxRetries": 2}}}
+
+    cache = NoOpCache()
+    mock_zpa = Mock()
+    executor = RequestExecutor(config, cache, zpa_legacy_client=mock_zpa)
+
+    service_type = executor.get_service_type("/ziam/admin/api/v1/users")
+    assert service_type == "ziam"
+
+
 def test_get_service_type_with_invalid_endpoint():
     """Test get_service_type method with invalid endpoint."""
     config = {"client": {"rateLimit": {"maxRetries": 2}}}
