@@ -39,12 +39,12 @@ class TestUsers:
             # Test: Add Group
             try:
                 create_group, _, error = client.zid.users.add_user(
-                    login_name="john.doe@securitygeek.io",
+                    login_name="john.doe1@securitygeek.io",
                     display_name="John Doe",
                     first_name="John",
                     last_name="Doe",
-                    primary_email="john.doe@securitygeek.io",
-                    secondary_email="jdoe@acme.com",
+                    primary_email="john.doe1@securitygeek.io",
+                    secondary_email="jdoe1@acme.com",
                     status=True,
                 )
                 assert error is None, f"Add User Error: {error}"
@@ -58,11 +58,11 @@ class TestUsers:
                 if user_id:
                     update_user, _, error = client.zid.users.update_user(
                         user_id=user_id,
-                        login_name="john.doe@securitygeek.io",
+                        login_name="john.doe1@securitygeek.io",
                         display_name="John Doe",
                         first_name="John",
                         last_name="Doe",
-                        primary_email="john.doe@securitygeek.io",
+                        primary_email="john.doe1@securitygeek.io",
                         secondary_email="jdoe1@acme.com",
                         status=True,
                     )

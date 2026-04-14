@@ -355,10 +355,6 @@ class RequestExecutor:
         if "/ztb/" in endpoint:
             return body  # Do not convert ZTB requests to camelCase
 
-        # Special handling for ZIAM (ZIdentity Admin) endpoints - keep snake_case format
-        if "/ziam/" in endpoint:
-            return body  # Do not convert ZIAM requests to camelCase
-
         # Special handling for ZCC service - use selective conversion
         if "/zcc/" in endpoint and body:
             from zscaler.helpers import convert_keys_to_camel_case_selective
