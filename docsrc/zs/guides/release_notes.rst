@@ -6,6 +6,25 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.21 (April 14, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+--------------
+
+* (`#484 <https://github.com/zscaler/zscaler-sdk-python/pull/484>`_) - Migrated ZIdentity (zid) service to the new ``/ziam/admin/api/v1`` URL path:
+  * Updated ``request_executor.py`` base URL resolution to use ``/ziam/`` prefix instead of the legacy ``/zidentity`` and ``/admin/api/v1`` patterns
+  * Service type for ZIdentity endpoints is now ``ziam`` (previously ``zidentity``)
+  * Base URL no longer includes ``/admin/api/v1``; the full path is carried by the endpoint, preventing URL duplication
+  * Added snake_case body preservation for ``/ziam/`` endpoints in ``_prepare_body()``
+  * Updated ``oneapi_response.py`` pagination and response parsing to use ``ziam`` service type
+  * Package name remains ``zid``; ``client.zid`` and ``client.zidentity`` accessors unchanged
+
 1.9.20 (March 30, 2025)
 ---------------------------
 

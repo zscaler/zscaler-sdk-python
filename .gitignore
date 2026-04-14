@@ -93,3 +93,4 @@ trivy.yaml
 .DS_Store
 install_package.sh
 openapi
+trivy.yaml
