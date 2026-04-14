@@ -28,7 +28,7 @@ class EntitlementAPI(APIClient):
     A Client object for the Entitlement API resource.
     """
 
-    _zidentity_base_endpoint = "/admin/api/v1"
+    _zidentity_base_endpoint = "/ziam/admin/api/v1"
 
     def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()

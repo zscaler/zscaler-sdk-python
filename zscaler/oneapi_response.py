@@ -184,8 +184,8 @@ class ZscalerAPIResponse:
         elif self._service_type == "zdx":
             self._list = self._body.get("items", [])
             self._next_offset = self._body.get("next_offset")
-        elif self._service_type == "zidentity":
-            # Zidentity uses "records" field for paginated responses
+        elif self._service_type == "ziam":
+            # ZIAM (ZIdentity Admin) uses "records" field for paginated responses
             self._list = self._body.get("records", [])
             self._next_link = self._body.get("next_link")
             self._prev_link = self._body.get("prev_link")
@@ -354,21 +354,17 @@ class ZscalerAPIResponse:
             if self._limit and "pageSize" not in self._params:
                 self._params["pageSize"] = self._limit
             logger.debug(f"[DEBUG] _fetch_next_page params for ZIA: {self._params}")
-        elif self._service_type == "zidentity":
-            logger.debug("[DEBUG] Taking ZIDENTITY pagination branch.")
-            # For Zidentity, use the next_link URL directly
+        elif self._service_type == "ziam":
+            logger.debug("[DEBUG] Taking ZIAM pagination branch.")
             if self._next_link:
-                # Parse the next_link URL to extract parameters
                 from urllib.parse import urlparse, parse_qs
 
                 parsed_url = urlparse(self._next_link)
                 query_params = parse_qs(parsed_url.query)
-                # Update params with the next page parameters
                 for key, value in query_params.items():
                     self._params[key] = value[0] if len(value) == 1 else value
-                # Update the URL to the base URL (remove the full next_link)
                 self._url = f"{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}"
-            logger.debug(f"[DEBUG] _fetch_next_page params for ZIDENTITY: {self._params}")
+            logger.debug(f"[DEBUG] _fetch_next_page params for ZIAM: {self._params}")
         else:
             logger.debug("[DEBUG] Taking ZPA/other pagination branch.")
             self._page += 1
@@ -407,10 +403,9 @@ class ZscalerAPIResponse:
             has_next = self._next_offset is not None
             logger.debug("Has next page for ZDX: %s", has_next)
             return has_next
-        elif self._service_type == "zidentity":
-            # More pages if next_link is not None
+        elif self._service_type == "ziam":
             has_next = self._next_link is not None
-            logger.debug("Has next page for ZIDENTITY: %s", has_next)
+            logger.debug("Has next page for ZIAM: %s", has_next)
             return has_next
         elif self._service_type == "bi":
             # ZBI endpoints return all results in a single response

@@ -390,12 +390,12 @@ def test_create_request_with_legacy_client():
 
 
 def test_create_request_with_zidentity_endpoint():
-    """Test create_request method with zidentity endpoint."""
+    """Test create_request method with ziam endpoint."""
     config = {
         "client": {
             "rateLimit": {"maxRetries": 2},
             "cloud": "production",
-            "service": "zidentity",
+            "service": "ziam",
             "vanityDomain": "testcompany",
         }
     }
@@ -407,7 +407,7 @@ def test_create_request_with_zidentity_endpoint():
     mock_http_client = Mock()
     executor._http_client = mock_http_client
 
-    request, error = executor.create_request(method="GET", endpoint="/admin/api/v1/users")
+    request, error = executor.create_request(method="GET", endpoint="/ziam/admin/api/v1/users")
 
     assert error is None
     assert request is not None
@@ -707,9 +707,32 @@ def test_get_service_type():
     service_type = executor.get_service_type("/ztw/api/v1/apps")
     assert service_type == "ztw"
 
-    # Test Zidentity endpoint
-    service_type = executor.get_service_type("/admin/api/v1/users")
-    assert service_type == "zidentity"
+    # Test ZIAM (ZIdentity Admin) endpoint
+    service_type = executor.get_service_type("/ziam/admin/api/v1/users")
+    assert service_type == "ziam"
+
+
+def test_get_service_type_admin_endpoint():
+    """Test get_service_type returns 'admin' for /admin/ endpoints."""
+    config = {"client": {"rateLimit": {"maxRetries": 2}}}
+
+    cache = NoOpCache()
+    executor = RequestExecutor(config, cache)
+
+    service_type = executor.get_service_type("/admin/some/resource")
+    assert service_type == "admin"
+
+
+def test_get_service_type_ziam_with_legacy_client():
+    """Test get_service_type returns 'ziam' for ZIAM endpoints via legacy client recheck."""
+    config = {"client": {"rateLimit": {"maxRetries": 2}}}
+
+    cache = NoOpCache()
+    mock_zpa = Mock()
+    executor = RequestExecutor(config, cache, zpa_legacy_client=mock_zpa)
+
+    service_type = executor.get_service_type("/ziam/admin/api/v1/users")
+    assert service_type == "ziam"
 
 
 def test_get_service_type_with_invalid_endpoint():

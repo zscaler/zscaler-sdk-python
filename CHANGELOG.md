@@ -1,5 +1,21 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.21 (April 14, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* [PR #484](https://github.com/zscaler/zscaler-sdk-python/pull/484) - Migrated ZIdentity (zid) service to the new `/ziam/admin/api/v1` URL path:
+  * Updated `request_executor.py` base URL resolution to use `/ziam/` prefix instead of the legacy `/zidentity` and `/admin/api/v1` patterns
+  * Service type for ZIdentity endpoints is now `ziam` (previously `zidentity`)
+  * Base URL no longer includes `/admin/api/v1`; the full path is carried by the endpoint, preventing URL duplication
+  * Added snake_case body preservation for `/ziam/` endpoints in `_prepare_body()`
+  * Updated `oneapi_response.py` pagination and response parsing to use `ziam` service type
+  * Package name remains `zid`; `client.zid` and `client.zidentity` accessors unchanged
+
 ## 1.9.20 (March 30, 2025)
 
 ### Notes
@@ -1184,7 +1200,7 @@ Please refer to the [Developer Guide](https://help.zscaler.com/zia/getting-start
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
 #### Zscaler OneAPI Support for Cloud & Branch Connector API
-[PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287): Cloud & Branch Connector API are now supported via [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) with Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity)
+[PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287): Cloud & Branch Connector API are now supported via [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) with Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity)
 
 ### ZPA Application Segment Provision
 [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added the following new ZPA API Endpoints:
@@ -1485,7 +1501,7 @@ Please refer to the [Developer Guide](https://help.zscaler.com/zia/getting-start
 
 
 #### Zscaler OneAPI Support
-[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -1757,7 +1773,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -2029,7 +2045,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #260](https://github.com/zscaler/zscaler-sdk-python/pull/260): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #260](https://github.com/zscaler/zscaler-sdk-python/pull/260): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -2301,7 +2317,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -2573,7 +2589,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #259](https://github.com/zscaler/zscaler-sdk-python/pull/259): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #259](https://github.com/zscaler/zscaler-sdk-python/pull/259): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -2845,7 +2861,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -3117,7 +3133,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #258](https://github.com/zscaler/zscaler-sdk-python/pull/258): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #258](https://github.com/zscaler/zscaler-sdk-python/pull/258): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -3389,7 +3405,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -3661,7 +3677,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
@@ -3933,7 +3949,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 
 
 #### Zscaler OneAPI Support
-[PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+[PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255): Added support for [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
   - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.

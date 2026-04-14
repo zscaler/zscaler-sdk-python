@@ -40,10 +40,11 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [ZTB API (Zero Trust Branch)](https://help.zscaler.com/)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
-* Z-Insights (zins) — GraphQL Analytics API
-* ZMS (Zscaler Microsegmentation) — GraphQL Microsegmentation API
+* [Z-Insights - ZINS](https://help.zscaler.com/zscaler-analytics/getting-started) — GraphQL Analytics API
+* [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
+* [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
 
-This SDK is designed to support the new Zscaler API framework [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi)
+This SDK is designed to support the new Zscaler API framework [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started)
 via a single OAuth2 HTTP client. The SDK is also backwards compatible with the previous
 Zscaler API framework, and each package is supported by an individual and robust HTTP client
 designed to handle failures on different levels by performing intelligent retries.
@@ -173,19 +174,24 @@ In most cases, you won't need to build the SDK from source. If you want to build
 ### You'll also need
 
 * An administrator account in the Zscaler products you want to interact with.
-* [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi): If you are using the OneAPI entrypoint you must have a API Client created in the [Zidentity platform](https://help.zscaler.com/zidentity/about-api-clients)
+* [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started): If you are using the OneAPI entrypoint you must have a API Client created in the [Zidentity platform](https://help.zscaler.com/zidentity/about-api-clients)
 * Legacy Framework: If using the legacy API framework you must have API Keys credentials in the the respective Zscaler cloud products.
 * For more information on getting started with Zscaler APIs visit one of the following links:
 
-* [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi)
-* [ZPA API](https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide)
-* [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
-* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
-* [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
-* [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
-* [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
+* [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started)
+* [ZPA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zpa)
+* [ZIA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia)
+* [ZDX API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx)
+* [ZCC API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc)
+* [ZIdentity (ZID)](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
+* [ZTW API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector)
+* [ZTB API (Zero Trust Branch)](https://help.zscaler.com/)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
+* [Z-Insights - ZINS](https://help.zscaler.com/zscaler-analytics/getting-started) — GraphQL Analytics API
+* [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
+* [Zscaler AI Guard API](https://help.zscaler.com/ai-guard)
+* [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
 
 ## Usage guide
 
@@ -197,7 +203,7 @@ Once you initialize a specific service client, you can call methods to make requ
 
 ## Authentication
 
-The latest versions => 0.20.0 of this SDK provides dual API client capability and can be used to interact both with new Zscaler [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) framework and the legacy API platform.
+The latest versions => 0.20.0 of this SDK provides dual API client capability and can be used to interact both with new Zscaler [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started) framework and the legacy API platform.
 
 If your Zscaler tenant has not been migrated to the new Zscaler [Zidentity platform](https://help.zscaler.com/zidentity/what-zidentity), you must use the respective Legacy API client described in the following section: [Zscaler Legacy API Framework](#zscaler-legacy-api-framework)
 
@@ -207,13 +213,19 @@ If your Zscaler tenant has not been migrated to the new Zscaler [Zidentity platf
 
 As of the publication of SDK version => 1.7.x, OneAPI is available for programmatic interaction with the following products:
 
-* [ZPA API](https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide)
-* [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
-* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
-* [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
-* [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
-* [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
+* [ZPA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zpa)
+* [ZIA API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia)
+* [ZDX API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx)
+* [ZCC API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc)
+* [ZIdentity (zid)](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid)
+* [ZTW API](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector)
+* [ZTB API (Zero Trust Branch)](https://help.zscaler.com/)
+* [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 * [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
+* [Z-Insights - ZINS](https://help.zscaler.com/zscaler-analytics/getting-started) — GraphQL Analytics API
+* [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
+* [Zscaler AI Guard API](https://help.zscaler.com/ai-guard)
+* [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and Zscaler Digital Experience (ZDX) are supported only via the legacy authentication method described in this README.
 
@@ -1788,14 +1800,14 @@ At this moment we are not accepting contributions, but we welcome suggestions on
 [zenith]: https://community.zscaler.com/
 [zscaler-support]: https://help.zscaler.com/contact-support
 [github-issues]: https://github.com/zscaler/zscaler-sdk-python/issues
-[rate-limiting-zcc]: https://help.zscaler.com/zscaler-client-connector/understanding-rate-limiting
-[rate-limiting-ZTW]: https://help.zscaler.com/cloud-branch-connector/understanding-rate-limits
-[rate-limiting-zdx]: https://help.zscaler.com/zdx/understanding-rate-limiting
-[rate-limiting-zia]: https://help.zscaler.com/zia/understanding-rate-limiting
-[rate-limiting-zpa]: https://help.zscaler.com/zpa/understanding-rate-limiting
+[rate-limiting-zcc]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/client-connector
+[rate-limiting-ZTW]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/cloud-branch-connector
+[rate-limiting-zdx]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/zdx
+[rate-limiting-zia]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/zia
+[rate-limiting-zpa]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/zpa
+[rate-limiting-bi]: https://automate.zscaler.com/docs/api-reference-and-guides/guides/rate-limiting/bi
 [rate-limiting-zwa]: https://help.zscaler.com/workflow-automation/understanding-api-rate-limiting-workflow-automation-api
-[application-segment-api-docs]: https://help.zscaler.com/zpa/application-controller#/mgmtconfig/v1/admin/customers/{customerId}/application-post
-[application-segment]: zscaler/zpa/application_segment.py
+
 
 Contributors
 ------------
