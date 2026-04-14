@@ -195,9 +195,6 @@ class GetCompanyInfo(ZscalerObject):
             self.ma_cloud_name = config["maCloudName"] if "maCloudName" in config else None
             self.zia_cloud_name = config["ziaCloudName"] if "ziaCloudName" in config else None
             self.zt2_health_probe_interval = config["zt2HealthProbeInterval"] if "zt2HealthProbeInterval" in config else None
-            self.device_posture_frequency = ZscalerCollection.form_list(
-                config["devicePostureFrequency"] if "devicePostureFrequency" in config else [], str
-            )
             self.zdx_manual_rollout = config["zdxManualRollout"] if "zdxManualRollout" in config else None
             self.win_zdx_lite_enabled = config["winZdxLiteEnabled"] if "winZdxLiteEnabled" in config else None
 
