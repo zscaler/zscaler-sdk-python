@@ -561,7 +561,7 @@ class PolicySetControllerAPI(APIClient):
                     [('app', 'id', '99999'),
                     ('app', 'id', '88888'),
                     ('app_group', 'id', '77777),
-                    ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
+                    ('client_type', 'id', 'zpn_client_type_zapp'),
                     ('trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True)]
             custom_msg (str):
                 A custom message.
