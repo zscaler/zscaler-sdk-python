@@ -117,8 +117,8 @@ def camel_to_snake(name: str):
     # Edge-cases where camelCase is breaking
     edge_cases = {
         "routableIP": "routable_ip",
-        "isNameL10nTag": "is_name_l10n_tag",
-        "nameL10nTag": "name_l10n_tag",
+        # "isNameL10nTag": "is_name_l10n_tag",
+        # "nameL10nTag": "name_l10n_tag",
         "surrogateIP": "surrogate_ip",
         "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
         "startIPAddress": "start_ip_address",

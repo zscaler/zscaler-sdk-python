@@ -1,5 +1,29 @@
 from typing import Dict, Any, List, Union
-from pydash.strings import camel_case
+
+from zscaler.helpers import to_lower_camel_case
+
+
+def _to_camel(key: Any) -> Any:
+    """
+    Normalize a dict key to camelCase using the project's own ``to_lower_camel_case``
+    helper instead of ``pydash.strings.camel_case``.
+
+    ``pydash.camel_case`` tokenizes strings on every digit/letter boundary and
+    re-cases the tokens, which silently corrupts already-camelCase keys that
+    contain a digit-followed-by-lowercase-letter pattern. For example,
+    ``camel_case("isNameL10nTag")`` returns ``"isNameL10NTag"`` (capital ``N``),
+    so a downstream model lookup for ``config["isNameL10nTag"]`` fails and
+    the field comes back as ``None``.
+
+    ``to_lower_camel_case`` (from ``zscaler.helpers``) returns the string
+    unchanged when it contains no underscore, and consults a curated
+    ``FIELD_EXCEPTIONS`` map for snake_case keys that don't round-trip
+    cleanly (e.g. ``is_name_l10n_tag`` → ``isNameL10nTag``). Non-string
+    keys (rare, but possible) are returned untouched.
+    """
+    if not isinstance(key, str):
+        return key
+    return to_lower_camel_case(key)
 
 
 class APIClient:
@@ -23,7 +47,7 @@ class APIClient:
                     continue
                 # If val is a dict, process recursively
                 if isinstance(val, dict):
-                    result[camel_case(key)] = APIClient.form_response_body(val)
+                    result[_to_camel(key)] = APIClient.form_response_body(val)
                 # If val is a list, process each item inside it
                 elif isinstance(val, list):
                     processed_list = []
@@ -33,10 +57,10 @@ class APIClient:
                         else:
                             # Simple type inside the list, just append as is
                             processed_list.append(item)
-                    result[camel_case(key)] = processed_list
+                    result[_to_camel(key)] = processed_list
                 else:
                     # Simple type (string, int, etc.)
-                    result[camel_case(key)] = val
+                    result[_to_camel(key)] = val
             return result
 
         # If body is a list (which can happen if we ever pass a list directly),
@@ -65,7 +89,7 @@ class APIClient:
             if val is None:
                 continue
             if not isinstance(val, dict):
-                result[camel_case(key)] = val
+                result[_to_camel(key)] = val
             else:
-                result[camel_case(key)] = APIClient.format_request_body(val)
+                result[_to_camel(key)] = APIClient.format_request_body(val)
         return result

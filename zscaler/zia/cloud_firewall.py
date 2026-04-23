@@ -23,6 +23,7 @@ from zscaler.zia.models.cloud_firewall_nw_application_groups import NetworkAppli
 from zscaler.zia.models.cloud_firewall_nw_applications import NetworkApplications
 from zscaler.zia.models.cloud_firewall_nw_service_groups import NetworkServiceGroups
 from zscaler.zia.models.cloud_firewall_nw_service import NetworkServices
+from zscaler.zia.models.cloud_firewall_nw_service import NetworkServicesLite
 from zscaler.zia.models.cloud_firewall_time_windows import TimeWindows
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.types import APIResult
@@ -1942,7 +1943,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(NetworkServices(self.form_response_body(item)))
+                results.append(NetworkServicesLite(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 

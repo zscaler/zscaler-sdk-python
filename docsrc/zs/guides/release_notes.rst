@@ -6,6 +6,21 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.22 (April 23, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+------------
+
+* (`#493 <https://github.com/zscaler/zscaler-sdk-python/pull/493>`_) - Added a dedicated ``NetworkServicesLite`` model (with a nested ``NetworkServiceExtensions`` block) for the ZIA ``/networkServices/lite`` endpoint, exposing the ``extensions.tag`` payload returned by the API. ``list_network_services_lite()`` now hydrates this richer model.
+
+* (`#493 <https://github.com/zscaler/zscaler-sdk-python/pull/493>`_) - Fixed `Issue #492 <https://github.com/zscaler/zscaler-sdk-python/issues/492>`_: camelCase response keys with digit/letter boundaries (e.g. ``isNameL10nTag``, ``ipV6Enabled``) were silently corrupted by ``APIClient.form_response_body()`` because ``pydash.strings.camel_case`` re-tokenized them (turning ``L10n`` into ``L10N``), causing model fields to resolve to ``None``. The normalizer now uses the SDK's own ``to_lower_camel_case`` helper, which preserves already-camelCase keys verbatim and consults ``FIELD_EXCEPTIONS`` for snake_case input. The fix is applied centrally and benefits every OneAPI endpoint.
+
 1.9.21 (April 14, 2025)
 ---------------------------
 
