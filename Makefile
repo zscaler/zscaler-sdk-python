@@ -404,8 +404,8 @@ sweep\:zins:
 
 
 build\:dist:
-	python3 setup.py sdist bdist_wheel
-	pip3 install dist/zscaler-sdk-python-${VERSION}.tar.gz
+	rm -rf dist build
+	poetry build
 	ls -l dist
 
 publish\:test:

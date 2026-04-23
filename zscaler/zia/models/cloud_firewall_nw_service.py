@@ -88,3 +88,55 @@ class PortRange(ZscalerObject):
 
     def request_format(self) -> Dict[str, Any]:
         return {"start": self.start, "end": self.end}
+
+
+class NetworkServiceExtensions(ZscalerObject):
+    """
+    A class representing the ``extensions`` block returned by the
+    Cloud Firewall Network Services /lite endpoint.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            self.tag = config["tag"] if "tag" in config else None
+        else:
+            self.tag = None
+
+    def request_format(self) -> Dict[str, Any]:
+        return {"tag": self.tag}
+
+
+class NetworkServicesLite(ZscalerObject):
+    """
+    A class representing a Cloud Firewall Network Service Lite object
+    as returned by the /networkServices/lite endpoint.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.is_name_l10n_tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
+            self.extensions = (
+                NetworkServiceExtensions(config["extensions"])
+                if "extensions" in config and config["extensions"] is not None
+                else None
+            )
+        else:
+            self.id = None
+            self.name = None
+            self.is_name_l10n_tag = True
+            self.extensions = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "isNameL10nTag": self.is_name_l10n_tag,
+            "extensions": self.extensions.request_format() if self.extensions else None,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
