@@ -70,6 +70,7 @@ class AppConnectorGroup(ZscalerObject):
             self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
             self.dc_hosting_info = config["dcHostingInfo"] if "dcHostingInfo" in config else None
+            self.enrollment_cert_id = config["enrollmentCertId"] if "enrollmentCertId" in config else None
 
             self.ip_acl = ZscalerCollection.form_list(config["ipAcl"] if "ipAcl" in config else [], str)
 
@@ -116,6 +117,7 @@ class AppConnectorGroup(ZscalerObject):
             self.restriction_type = None
             self.zscaler_managed = None
             self.dc_hosting_info = None
+            self.enrollment_cert_id = None
             self.server_groups = []
 
     def request_format(self) -> Dict[str, Any]:
@@ -158,6 +160,7 @@ class AppConnectorGroup(ZscalerObject):
             "restrictionType": self.restriction_type,
             "zscalerManaged": self.zscaler_managed,
             "dcHostingInfo": self.dc_hosting_info,
+            "enrollmentCertId": self.enrollment_cert_id,
             "serverGroups": [server_group.request_format() for server_group in self.server_groups],
         }
         parent_req_format.update(current_obj_format)

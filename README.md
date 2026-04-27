@@ -6,15 +6,29 @@
 [![Latest version released on PyPi](https://img.shields.io/pypi/v/zscaler-sdk-python.svg)](https://pypi.org/project/zscaler-sdk-python)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/zscaler-sdk-python.svg)](https://pypi.python.org/pypi/zscaler-sdk-python/)
 [![codecov](https://codecov.io/gh/zscaler/zscaler-sdk-python/graph/badge.svg?token=56B53PITU8)](https://codecov.io/gh/zscaler/zscaler-sdk-python)
+[![Automation Hub](https://img.shields.io/badge/automation-hub-blue)](https://automate.zscaler.com/docs/tools/sdk-documentation/sdk-getting-started)
 [![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
 
 ## Support Disclaimer
 
 -> **Disclaimer:** Please refer to our [General Support Statement](docsrc/zs/guides/support.rst) before proceeding with the use of this provider. You can also refer to our [troubleshooting guide](docsrc/zs/guides/troubleshooting.rst) for guidance on typical problems.
 
+> ## 🚧 Heads up: Zscaler Python SDK **v2.x is now in Public Preview / Beta**
+>
+> A new, **data-driven** version of the Zscaler Python SDK — generated directly from the official Zscaler OpenAPI specifications — is now available as a pre-release (`2.0.0bN`) on PyPI.
+>
+> - **v1.x (this README) is the current GA release** and remains the recommended choice for production workloads.
+> - **v2.x is OneAPI-only.** Legacy per-product authentication (ZIA `username`/`password`/`api_key`, ZPA `client_id`/`client_secret`, etc.) is **not** supported and will **not** be added.
+> - **Limited product coverage in v2.x today:** ZIA, ZDX, and ZIdentity. Other products are still being migrated.
+> - **Migrating existing v1.x code to v2.x will introduce breaking changes** — import paths, method signatures, and models all change.
+> - **Install the beta** with `pip install --pre --upgrade "zscaler-sdk-python>=2.0.0b1"` (the default `pip install zscaler-sdk-python` continues to install the latest v1.x GA release).
+>
+> **Get started with v2.x:** [Zscaler Automation Hub – Python SDK](https://automate.zscaler.com/docs/tools/sdk-documentation/sdk-getting-started) · **Migrate from v1.x:** [`UPGRADE_GUIDE.md`](./UPGRADE_GUIDE.md)
+
 # Official Zscaler Python SDK Overview
 
 * [Release status](#release-status)
+* [Migrating to v2.x (Beta)](#migrating-to-v2x-beta)
 * [Breaking Changes & Migration Guide to Multi-Client SDK](#breaking-changes--migration-guide-to-multi-client-sdk)
 * [Need help?](#need-help)
 * [Getting Started](#getting-started)
@@ -53,15 +67,43 @@ designed to handle failures on different levels by performing intelligent retrie
 
 This library uses semantic versioning and updates are posted in ([release notes](/docs/guides/release-notes.md)) |
 
-| Version | Status                           |
-| ------- | -------------------------------- |
-| 0.x     | :warning: Beta Release (Retired) |
-| 1.x     | :heavy_check_mark: Release       |
+| Version | Status                                                                       |
+| ------- | ---------------------------------------------------------------------------- |
+| 0.x     | :warning: Beta Release (Retired)                                             |
+| 1.x     | :heavy_check_mark: General Availability (recommended for production)         |
+| 2.x     | :test_tube: Public Preview / Beta — OneAPI only, limited product coverage    |
 
 The latest release can always be found on the ([releases page](github-releases))
 
 > Requires Python version 3.10 or higher.
 Zscaler SDK for Python is compatible with Python 3.10, 3.11, and 3.12.
+
+## Migrating to v2.x (Beta)
+
+The next major version of this SDK — `zscaler-sdk-python` **2.x** — is a complete redesign and is now available as a **public preview / beta** pre-release on PyPI. v2.x is **data-driven**: every model, request, and response is generated from the official Zscaler OpenAPI specifications, so the SDK stays in lock-step with the public API contract.
+
+> ⚠️ **Important — please read before adopting v2.x:**
+>
+> - **v2.x is in public preview / beta.** APIs, models, and import paths may change before GA. Do not use v2.x for production workloads.
+> - **v2.x supports OneAPI exclusively.** Legacy per-product authentication helpers (`LegacyZIAClient`, `LegacyZPAClient`, `LegacyZCCClient`, `LegacyZDXClient`, `LegacyZIdentityClient`, `LegacyZTWClient`, etc.) are **not** available in v2.x and will **not** be added. Your tenant must be on [Zidentity](https://help.zscaler.com/zidentity/what-zidentity) before you can adopt v2.x.
+> - **Limited product coverage today.** The v2.x beta currently supports **ZIA, ZDX, and ZIdentity**. Other Zscaler products (ZPA, ZCC, ZTW, ZTB, ZWA, …) remain available on **v1.x** and will be migrated to v2.x progressively.
+> - **Breaking changes.** Migrating existing v1.x code to v2.x will require code changes — import paths, method signatures, models, and error classes all change.
+
+**Install the v2.x beta**
+
+```bash
+pip install --pre --upgrade "zscaler-sdk-python>=2.0.0b1"
+```
+
+> The default `pip install zscaler-sdk-python` continues to install the latest **v1.x GA** release. Pre-releases (`2.0.0bN`) must be requested explicitly with `--pre` or by pinning a specific beta version.
+
+**Where to go next**
+
+- 📖 **Full v2.x documentation, getting-started, and per-product API reference:** [Zscaler Automation Hub – Python SDK](https://automate.zscaler.com/docs/tools/sdk-documentation/sdk-getting-started)
+- 🔁 **Migration guide from v1.x to v2.x:** [`UPGRADE_GUIDE.md`](./UPGRADE_GUIDE.md)
+- 🔐 **OneAPI / Zidentity onboarding:** [OneAPI Getting Started](https://automate.zscaler.com/docs/getting-started/getting-started)
+
+If your code depends on a product that is **not yet** in the v2.x beta — or if your tenant has **not** been migrated to Zidentity — continue to use the **v1.x** documentation in the rest of this README. v1.x will keep receiving bug fixes and security updates until v2.x reaches General Availability with full product parity.
 
 ## Need help?
 
