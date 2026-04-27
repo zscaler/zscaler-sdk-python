@@ -6,6 +6,49 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.23 (April 27, 2025) - 🧪 Zscaler Python SDK v2.x — Public Preview / Beta
+----------------------------------------------------------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+--------------
+
+* (`#496 <https://github.com/zscaler/zscaler-sdk-python/pull/493>`_)
+
+  A new **data-driven** Python SDK — generated from the official Zscaler
+  OpenAPI specifications — is now available as a pre-release (``2.0.0bN``)
+  on PyPI.
+
+  .. code-block:: bash
+
+     pip install --pre --upgrade "zscaler-sdk-python>=2.0.0b1"
+
+  **Please read before adopting v2.x:**
+
+  - **OneAPI only.** Legacy per-product authentication
+    (``LegacyZIAClient``, ``LegacyZPAClient``, etc.) is **not** supported
+    and will **not** be added. Your tenant must be on
+    `Zidentity <https://help.zscaler.com/zidentity/what-zidentity>`_.
+  - **Limited product coverage in the beta:** ZIA, ZDX, ZIdentity. ZPA,
+    ZCC, ZTW, ZTB, and ZWA remain on v1.x for now.
+  - **Breaking changes.** Migrating from v1.x will require code
+    changes — import paths, method signatures, models, and error
+    classes all change.
+  - **v1.x remains the recommended GA release** and continues to
+    receive bug fixes and security patches.
+
+  📖 Full v2.x docs:
+  `Zscaler Automation Hub – Python SDK
+  <https://automate.zscaler.com/docs/tools/sdk-documentation/sdk-getting-started>`_
+
+  🔁 v1.x → v2.x migration guide:
+  `UPGRADE_GUIDE.md
+  <https://github.com/zscaler/zscaler-sdk-python/blob/master/UPGRADE_GUIDE.md>`_
+
 1.9.22 (April 23, 2025)
 ---------------------------
 
