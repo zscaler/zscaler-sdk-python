@@ -49,7 +49,7 @@ class PacFiles(ZscalerObject):
             self.pac_version = config["pacVersion"] if "pacVersion" in config else None
             self.pac_commit_message = config["pacCommitMessage"] if "pacCommitMessage" in config else None
             self.total_hits = config["totalHits"] if "totalHits" in config else None
-            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_time = config["lastModificationTime"] if "lastModificationTime" in config else None
             self.create_time = config["createTime"] if "createTime" in config else None
 
             if "lastModifiedBy" in config:
@@ -101,7 +101,7 @@ class PacFiles(ZscalerObject):
             "pacVersion": self.pac_version,
             "pacCommitMessage": self.pac_commit_message,
             "totalHits": self.total_hits,
-            "lastModifiedTime": self.last_modified_time,
+            "lastModificationTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "createTime": self.create_time,
         }
@@ -129,8 +129,10 @@ class PacFileValidationResponse(ZscalerObject):
             self.severity = config["severity"] if "severity" in config else None
             self.warning_count = config["warningCount"] if "warningCount" in config else None
             self.error_count = config["errorCount"] if "errorCount" in config else None
+            self.messages = ZscalerCollection.form_list(
+                config["messages"] if "messages" in config else [], Messages
+            )
 
-            self.messages = ZscalerCollection.form_list(config["messages"] if "messages" in config else [], Messages)
         else:
             self.success = None
             self.message = None

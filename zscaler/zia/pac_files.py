@@ -265,7 +265,7 @@ class PacFilesAPI(APIClient):
         if not pac_content:
             raise ValueError("Missing required parameter: pac_content")
 
-        validation_result, _, validation_error = self.validate_pac_file(body=pac_content)
+        validation_result, _, validation_error = self.validate_pac_file(pac_file_content=pac_content)
         if validation_error or not validation_result.get("success", False):
             raise Exception(f"PAC content validation failed: {validation_result}")
 
@@ -300,70 +300,118 @@ class PacFilesAPI(APIClient):
 
         return (result, response, None)
 
-    def clone_pac_file(self, pac_id: int, pac_version: str, **kwargs) -> APIResult[dict]:
+    def clone_pac_file(
+        self,
+        pac_id: int,
+        pac_version: str,
+        pac_content: str,
+        pac_version_status: str,
+        pac_verification_status: str = "VERIFY_NOERR",
+        pac_commit_message: str = "",
+        delete_version: Optional[int] = None,
+    ) -> APIResult[dict]:
         """
-        Clones an existing PAC file by creating a new PAC file based on the specified PAC ID and version.
+        Branch an existing PAC file by creating a new VERSION inside it
+        (``POST /pacFiles/{pacId}/version/{clonedPacVersion}``).
+
+        This endpoint creates a new version inside an existing PAC file
+        parent. The parent identity (name, description, domain,
+        editable, pacUrlObfuscated) is fixed by the ``pac_id`` in the
+        path and CANNOT be supplied here. Only version-level fields go
+        in the body:
+
+            pacContent
+            pacVerificationStatus
+            pacCommitMessage
+            pacVersionStatus
+
+        Sending parent-level fields (name/description/domain/...) or
+        the path parameter ``pacVersion`` in the body causes the API to
+        reject the request with a misleading 400 RESOURCE_NOT_FOUND
+        instead of a proper INVALID_INPUT_ARGUMENT, which is why this
+        function is a strict signature -- not ``**kwargs`` -- so callers
+        can't accidentally trigger that trap.
+
+        The clone POST must be made against COMMITTED state. If you
+        created the parent earlier in the same session, call
+        ``client.zia.activate.activate()`` BEFORE calling this method,
+        otherwise the parent will not yet be visible to the clone
+        endpoint and you will get the same 400 RESOURCE_NOT_FOUND.
 
         Args:
-            pac_id (int): The unique identifier of the PAC file to be cloned.
-            pac_version (str): The specific version of the PAC file to be cloned.
-            name (str): The name of the new PAC file.
-            description (str): The description of the new PAC file.
-            domain (str): The domain associated with the new PAC file.
-            pac_commit_message (str): Commit message for the new PAC file.
-            pac_verification_status (str): Verification status of the new PAC file.
-                                           Supported Values: `VERIFY_NOERR`, `VERIFY_ERR`, `NOVERIFY`
-            pac_version_status (str): Version status of the new PAC file.
-                                       Supported Values: `DEPLOYED`, `STAGE`, `LKG`
-            pac_content (str): The actual PAC file content to be validated and cloned.
-            delete_version (int, optional): Specifies the PAC file version to replace if the version limit of 10 is reached.
-
-        Keyword Args:
-            Additional optional parameters as key-value pairs.
+            pac_id (int): The unique identifier of the existing PAC
+                file (the parent) to branch FROM.
+            pac_version (str): The version number to branch from
+                (the source version, NOT the new version number --
+                the new version is server-assigned).
+            pac_content (str): The PAC file JS body for the new
+                version. This is what makes the new version different
+                from the source.
+            pac_version_status (str): Lifecycle status for the new
+                version. Supported values: ``DEPLOYED``, ``STAGE``,
+                ``LKG``. Unlike the seed version on
+                :meth:`add_pac_file` (which must be ``DEPLOYED``), a
+                cloned version may be created in any of these states
+                because the parent already has a deployed baseline.
+            pac_verification_status (str): Verification status to
+                stamp on the new version. Defaults to
+                ``VERIFY_NOERR``. Supported values: ``VERIFY_NOERR``,
+                ``VERIFY_ERR``, ``NOVERIFY``.
+            pac_commit_message (str): Commit message for the new
+                version (shown in the policy table next to the
+                version number).
+            delete_version (int, optional): Only meaningful when the
+                parent already has 10 versions (the per-PAC-file
+                cap). When supplied, it points at the version to
+                evict to make room for this new one. When omitted at
+                the cap, the SDK evicts the oldest version
+                automatically.
 
         Returns:
-            Tuple: The newly cloned PAC file resource record.
+            tuple: A 3-tuple of
+            ``(PacFiles | None, Response | None, Exception | None)``.
 
         Example:
-            >>> pac_file = zia.clone_pac_file(
-            ...     pac_id=12345,
+            >>> # Branch v1 of an existing PAC file into a new STAGE
+            >>> # version (v2). Note: parent identity (name/domain) is
+            >>> # implicit from pac_id and is NOT passed here.
+            >>> cloned, _, err = client.zia.pac_files.clone_pac_file(
+            ...     pac_id=50883,
             ...     pac_version="1",
-            ...     name="Cloned_Pac_File_01",
-            ...     description="Cloned_Pac_File_01",
-            ...     domain="bd-hashicorp.com",
-            ...     pac_commit_message="Clone of Test_Pac_File_01",
-            ...     pac_verification_status="VERIFY_NOERR",
-            ...     pac_version_status="DEPLOYED",
-            ...     pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }",
-            ...     delete_version=5
+            ...     pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:9400'; }",
+            ...     pac_version_status="STAGE",
+            ...     pac_commit_message="branch from v1: switch to port 9400",
             ... )
         """
-        # Step 1: Validate the PAC content
-        pac_content = kwargs.get("pac_content")
         if not pac_content:
             raise ValueError("Missing required parameter: pac_content")
 
-        validation_result, _, validation_error = self.validate_pac_file(body=pac_content)
+        # Step 1: pre-validate the PAC content. We do this client-side
+        # first so a broken PAC is rejected before we mutate the parent.
+        validation_result, _, validation_error = self.validate_pac_file(pac_file_content=pac_content)
         if validation_error or not validation_result.get("success", False):
             raise Exception(f"PAC content validation failed: {validation_result}")
 
-        # Step 2: Retrieve PAC file details to handle versioning logic
+        # Step 2: count existing versions so we can manage the 10-cap.
+        # ``get_pac_file`` returns ``PacFiles`` model instances, so we
+        # read the snake_case attribute, not the camelCase API key.
         pac_file_details, _, fetch_error = self.get_pac_file(pac_id)
         if fetch_error:
             raise Exception(f"Failed to retrieve PAC file details: {fetch_error}")
 
-        # Extract pac versions from details
-        pac_versions = [entry.get("pacVersion") for entry in pac_file_details] if pac_file_details else []
+        pac_versions = [entry.pac_version for entry in (pac_file_details or [])]
+        pac_versions = [v for v in pac_versions if v is not None]
         total_versions = len(pac_versions)
 
-        # Step 3: Construct the URL with optional delete_version
+        # Step 3: construct the URL. ZIA caps each PAC file at 10
+        # versions; at the cap we must pin ``deleteVersion`` to free a
+        # slot. We honour the caller's choice or default to evicting
+        # the oldest version.
         if total_versions >= 10:
-            delete_version = kwargs.pop("delete_version", None)
-            if not delete_version:
-                delete_version = min(pac_versions)  # Default to the oldest version if delete_version is not provided
+            evict = delete_version if delete_version is not None else min(pac_versions)
             api_url = format_url(f"""
                 {self._zia_base_endpoint}
-                /pacFiles/{pac_id}/version/{pac_version}?deleteVersion={delete_version}
+                /pacFiles/{pac_id}/version/{pac_version}?deleteVersion={evict}
             """)
         else:
             api_url = format_url(f"""
@@ -371,8 +419,18 @@ class PacFilesAPI(APIClient):
                 /pacFiles/{pac_id}/version/{pac_version}
             """)
 
-        # Step 4: Use the constructor logic to create the request and execute it
-        body = kwargs
+        # Step 4: build the body with ONLY the four fields the clone
+        # endpoint accepts (this matches the payload the ZIA Admin UI
+        # sends from the "Create Branch" dialog). Anything else --
+        # parent identity fields like name/description/domain, or the
+        # path param pacVersion -- causes a confusing 400
+        # RESOURCE_NOT_FOUND from the API.
+        body = {
+            "pac_content": pac_content,
+            "pac_verification_status": pac_verification_status,
+            "pac_commit_message": pac_commit_message,
+            "pac_version_status": pac_version_status,
+        }
 
         request, error = self._request_executor.create_request(
             method="post".upper(),
@@ -383,7 +441,6 @@ class PacFilesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
