@@ -1,6 +1,16 @@
 # Zscaler Python SDK Changelog
 
-## 1.9.23 (April 27, 2025) - 🧪 Zscaler Python SDK v2.x — Public Preview / Beta
+## 1.9.24 (April 28, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #499](https://github.com/zscaler/zscaler-sdk-python/pull/499) - Fixed `TypeError` in `zia.pac_files.add_pac_file()` and `clone_pac_file()` caused by an incorrect `body=` keyword passed to the internal `validate_pac_file()` call (now uses `pac_file_content=`). Resolves [#497](https://github.com/zscaler/zscaler-sdk-python/issues/497).
+
+## 1.9.23 (April 27, 2026) - 🧪 Zscaler Python SDK v2.x — Public Preview / Beta
 
 ### Notes
 
@@ -26,7 +36,7 @@
 > 📖 Full v2.x docs: [Zscaler Automation Hub – Python SDK](https://automate.zscaler.com/docs/tools/sdk-documentation/sdk-getting-started)
 > 🔁 v1.x → v2.x migration guide: [`UPGRADE_GUIDE.md`](./UPGRADE_GUIDE.md)
 
-## 1.9.22 (April 23, 2025)
+## 1.9.22 (April 23, 2026)
 
 ### Notes
 
@@ -38,7 +48,7 @@
 
 * [PR #493](https://github.com/zscaler/zscaler-sdk-python/pull/493) - Fixed [Issue #492](https://github.com/zscaler/zscaler-sdk-python/issues/492): camelCase response keys with digit/letter boundaries (e.g. `isNameL10nTag`, `ipV6Enabled`) were silently corrupted by `APIClient.form_response_body()` because `pydash.strings.camel_case` re-tokenized them (turning `L10n` into `L10N`), causing model fields to resolve to `None`. The normalizer now uses the SDK's own `to_lower_camel_case` helper, which preserves already-camelCase keys verbatim and consults `FIELD_EXCEPTIONS` for snake_case input. The fix is applied centrally and benefits every OneAPI endpoint.
 
-## 1.9.21 (April 14, 2025)
+## 1.9.21 (April 14, 2026)
 
 ### Notes
 
@@ -54,7 +64,7 @@
   * Updated `oneapi_response.py` pagination and response parsing to use `ziam` service type
   * Package name remains `zid`; `client.zid` and `client.zidentity` accessors unchanged
 
-## 1.9.20 (March 30, 2025)
+## 1.9.20 (March 30, 2026)
 
 ### Notes
 
@@ -68,7 +78,7 @@
 
 * [PR #478](https://github.com/zscaler/zscaler-sdk-python/pull/478) - Fixed ZIA pagination where `has_next()` returned `False` after the first page for flat-list endpoints. Normalized `SERVICE_PAGE_LIMITS` keys and `pageSize` parameter resolution to correctly drive page-based iteration.
 
-## 1.9.19 (March 27, 2025)
+## 1.9.19 (March 27, 2026)
 
 ### Notes
 
@@ -78,7 +88,7 @@
 
 * [PR #476](https://github.com/zscaler/zscaler-sdk-python/pull/476) - Fixed ZPA Service Edge Controller attribute incosistency.
 
-## 1.9.18 (March 26, 2025)
+## 1.9.18 (March 26, 2026)
 
 ### Notes
 
@@ -123,7 +133,7 @@
   * Service type `bi` mapped in `request_executor.py`
   * Unit tests, Sphinx documentation, and Makefile targets
 
-## 1.9.17 (March 12, 2025)
+## 1.9.17 (March 12, 2026)
 
 ### Notes
 
@@ -150,7 +160,7 @@
   * `template_router` - Template Router: list_templates, get_template, create_template, update_template_put, delete_template, list_template_interfaces, list_template_names
   * Access via `client.ztb.alarms`, `client.ztb.api_keys`, `client.ztb.app_connector_config`, `client.ztb.devices`, `client.ztb.groups_router`, `client.ztb.template_router`, or via `LegacyZTBClient` for API key authentication
 
-## 1.9.16 (February 16, 2025)
+## 1.9.16 (February 16, 2026)
 
 ### Notes
 

@@ -6,6 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.24 (April 28, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+------------
+
+* (`#499 <https://github.com/zscaler/zscaler-sdk-python/pull/499>`_) - Fixed ``TypeError`` in ``zia.pac_files.add_pac_file()`` and ``clone_pac_file()`` caused by an incorrect ``body=`` keyword passed to the internal ``validate_pac_file()`` call (now uses ``pac_file_content=``). Resolves `Issue #497 <https://github.com/zscaler/zscaler-sdk-python/issues/497>`_.
+
+
 1.9.23 (April 27, 2025) - 🧪 Zscaler Python SDK v2.x — Public Preview / Beta
 ----------------------------------------------------------------------------
 
