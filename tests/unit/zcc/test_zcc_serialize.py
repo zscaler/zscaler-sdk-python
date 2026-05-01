@@ -9,8 +9,8 @@ These tests do not require any network access. They prove that:
    API expects, for every field in the five real ``WebPolicy`` payloads
    (one per supported OS).
 
-Real payloads live under ``local_dev/OneAPI/zcc_dev/web_policy/`` and are
-the source of truth for "what the API wants on input".
+Real payloads are committed under ``tests/unit/zcc/fixtures/web_policy/``
+and are the source of truth for "what the API wants on input".
 """
 
 from __future__ import annotations
@@ -38,7 +38,7 @@ from zscaler.zcc.models.webpolicy import (
     WindowsPolicy,
 )
 
-PAYLOAD_DIR = Path(__file__).resolve().parents[3] / "local_dev" / "OneAPI" / "zcc_dev" / "web_policy"
+PAYLOAD_DIR = Path(__file__).resolve().parent / "fixtures" / "web_policy"
 
 PAYLOAD_FILES = [
     "android_policy.json",
