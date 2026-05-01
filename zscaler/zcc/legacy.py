@@ -30,6 +30,36 @@ if TYPE_CHECKING:
     from zscaler.zcc.web_app_service import WebAppServiceAPI
     from zscaler.zcc.web_privacy import WebPrivacyAPI
     from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+    from zscaler.zcc.custom_ip_base_apps import CustomIPBasedAppsAPI
+    from zscaler.zcc.predefined_ip_based_apps import PredefinedIPBasedAppsAPI
+    from zscaler.zcc.process_based_apps import ProcessBasedAppsAPI
+    from zscaler.zcc.application_profiles import ApplicationProfilesAPI
+
+
+# Default subdomain used to reach the ZCC Mobile Admin Portal API
+# (e.g. ``api-mobile.zscaler.net`` for the commercial ``zscaler`` cloud).
+_DEFAULT_ZCC_SUBDOMAIN = "api-mobile"
+
+# Per-cloud subdomain overrides for tenants that do not follow the default
+# ``api-mobile.{cloud}.net`` pattern. Gov-high tenants in particular expose
+# the Mobile Admin Portal under a different subdomain (e.g. ``mobile6`` for
+# the ``zscalerten`` cloud) because OneAPI / api-mobile is not yet rolled
+# out there. Add new entries here as additional clouds are onboarded.
+_ZCC_CLOUD_SUBDOMAIN_OVERRIDES = {
+    "zscalerten": "mobile6",
+}
+
+
+def _build_zcc_base_url(cloud: str) -> str:
+    """
+    Return the base URL of the ZCC Mobile Admin Portal for the given cloud.
+
+    Looks up ``cloud`` in :data:`_ZCC_CLOUD_SUBDOMAIN_OVERRIDES` and falls
+    back to :data:`_DEFAULT_ZCC_SUBDOMAIN` (``api-mobile``) when no entry
+    exists. Always returns an ``https://`` URL with no trailing slash.
+    """
+    subdomain = _ZCC_CLOUD_SUBDOMAIN_OVERRIDES.get(cloud, _DEFAULT_ZCC_SUBDOMAIN)
+    return f"https://{subdomain}.{cloud}.net"
 
 
 class LegacyZCCClientHelper:
@@ -41,20 +71,22 @@ class LegacyZCCClientHelper:
     Attributes:
         client_id (str): The ZCC Client ID generated from the ZCC Portal.
         client_secret (str): The ZCC Client Secret generated from the ZCC Portal.
-        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+        cloud (str): The Zscaler cloud for your tenancy. The Mobile Admin
+            Portal subdomain is derived from this value automatically:
 
-            * ``zscaler``
-            * ``zscalerone``
-            * ``zscalertwo``
-            * ``zscalerthree``
-            * ``zscloud``
-            * ``zscalerbeta``
-        override_url (str):
-            If supplied, this attribute can be used to override the production URL that is derived
-            from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
-            (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
-            attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
-            i.e. http:// or https://.
+            * ``zscaler``       → ``https://api-mobile.zscaler.net``
+            * ``zscalerone``    → ``https://api-mobile.zscalerone.net``
+            * ``zscalertwo``    → ``https://api-mobile.zscalertwo.net``
+            * ``zscalerthree``  → ``https://api-mobile.zscalerthree.net``
+            * ``zscloud``       → ``https://api-mobile.zscloud.net``
+            * ``zscalerbeta``   → ``https://api-mobile.zscalerbeta.net``
+            * ``zscalergov``    → ``https://api-mobile.zscalergov.net``
+            * ``zscalerten``    → ``https://mobile6.zscalerten.net``
+              (gov-high; Mobile Admin Portal is exposed under ``mobile6``
+              instead of ``api-mobile``)
+
+            See :data:`_ZCC_CLOUD_SUBDOMAIN_OVERRIDES` to extend this map
+            as new clouds are onboarded.
 
     """
 
@@ -79,8 +111,13 @@ class LegacyZCCClientHelper:
         self._secret_key = secret_key or os.getenv("secret_key", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._env_cloud = cloud or os.getenv(f"{self._env_base}_CLOUD", "zscaler")
         self.partner_id = partner_id or os.getenv("ZSCALER_PARTNER_ID")
-        self.login_url = f"https://api-mobile.{self._env_cloud}.net/papi/auth/v1/login"
-        self.url = f"https://api-mobile.{self._env_cloud}.net"
+
+        # Build the Mobile Admin Portal base URL from a per-cloud subdomain
+        # map so non-default clouds (e.g. ``zscalerten`` → ``mobile6``)
+        # are handled automatically without the caller having to supply
+        # an override URL. See ``_ZCC_CLOUD_SUBDOMAIN_OVERRIDES``.
+        self.url = _build_zcc_base_url(self._env_cloud)
+        self.login_url = f"{self.url}/papi/auth/v1/login"
 
         self.timeout = timeout
 
@@ -420,6 +457,46 @@ class LegacyZCCClientHelper:
         from zscaler.zcc.trusted_networks import TrustedNetworksAPI
 
         return TrustedNetworksAPI(self.request_executor)
+
+    @property
+    def application_profiles(self) -> "ApplicationProfilesAPI":
+        """
+        The interface object for the :ref:`ZCC application profiles interface <zcc-application_profiles>`.
+
+        """
+        from zscaler.zcc.application_profiles import ApplicationProfilesAPI
+
+        return ApplicationProfilesAPI(self.request_executor)
+
+    @property
+    def custom_ip_base_apps(self) -> "CustomIPBasedAppsAPI":
+        """
+        The interface object for the :ref:`ZCC custom IP-based apps interface <zcc-custom_ip_base_apps>`.
+
+        """
+        from zscaler.zcc.custom_ip_base_apps import CustomIPBasedAppsAPI
+
+        return CustomIPBasedAppsAPI(self.request_executor)
+
+    @property
+    def predefined_ip_based_apps(self) -> "PredefinedIPBasedAppsAPI":
+        """
+        The interface object for the :ref:`ZCC predefined IP-based apps interface <zcc-predefined_ip_based_apps>`.
+
+        """
+        from zscaler.zcc.predefined_ip_based_apps import PredefinedIPBasedAppsAPI
+
+        return PredefinedIPBasedAppsAPI(self.request_executor)
+
+    @property
+    def process_based_apps(self) -> "ProcessBasedAppsAPI":
+        """
+        The interface object for the :ref:`ZCC process-based apps interface <zcc-process_based_apps>`.
+
+        """
+        from zscaler.zcc.process_based_apps import ProcessBasedAppsAPI
+
+        return ProcessBasedAppsAPI(self.request_executor)
 
     """
     Misc

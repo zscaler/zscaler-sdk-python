@@ -432,22 +432,26 @@ class PolicyExtension(ZscalerObject):
             )
             self.zdx_lite_config_obj = config["zdxLiteConfigObj"] if "zdxLiteConfigObj" in config else None
             self.ddil_config = config["ddilConfig"] if "ddilConfig" in config else None
-            self.zcc_fail_close_settings_exit_uninstall_password = config
-            ["zccFailCloseSettingsExitUninstallPassword"] if "zccFailCloseSettingsExitUninstallPassword" in config else None
-            self.zcc_fail_close_settings_lockdown_on_tunnel_process_exit = config
-            (
-                ["zccFailCloseSettingsLockdownOnTunnelProcessExit"]
+            self.zcc_fail_close_settings_exit_uninstall_password = (
+                config["zccFailCloseSettingsExitUninstallPassword"]
+                if "zccFailCloseSettingsExitUninstallPassword" in config
+                else None
+            )
+            self.zcc_fail_close_settings_lockdown_on_tunnel_process_exit = (
+                config["zccFailCloseSettingsLockdownOnTunnelProcessExit"]
                 if "zccFailCloseSettingsLockdownOnTunnelProcessExit" in config
                 else None
             )
-            self.zcc_fail_close_settings_lockdown_on_firewall_error = config
-            (
-                ["zccFailCloseSettingsLockdownOnFirewallError"]
+            self.zcc_fail_close_settings_lockdown_on_firewall_error = (
+                config["zccFailCloseSettingsLockdownOnFirewallError"]
                 if "zccFailCloseSettingsLockdownOnFirewallError" in config
                 else None
             )
-            self.zcc_fail_close_settings_lockdown_on_driver_error = config
-            ["zccFailCloseSettingsLockdownOnDriverError"] if "zccFailCloseSettingsLockdownOnDriverError" in config else None
+            self.zcc_fail_close_settings_lockdown_on_driver_error = (
+                config["zccFailCloseSettingsLockdownOnDriverError"]
+                if "zccFailCloseSettingsLockdownOnDriverError" in config
+                else None
+            )
             self.zcc_fail_close_settings_thumb_print = (
                 config["zccFailCloseSettingsThumbPrint"] if "zccFailCloseSettingsThumbPrint" in config else None
             )
@@ -1011,20 +1015,23 @@ class AndroidPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.allowed_apps = config["allowedApps"] if "allowedApps" in config else None
-            self.billing_day = config["billingDay"] if "billingDay" in config else None
-            self.bypass_android_apps = config["bypassAndroidApps"] if "bypassAndroidApps" in config else None
-            self.bypass_mms_apps = config["bypassMmsApps"] if "bypassMmsApps" in config else None
-            self.custom_text = config["customText"] if "customText" in config else None
-            self.disable_password = config["disablePassword"] if "disablePassword" in config else None
+            self.allowed_apps = config["allowed_apps"] if "allowed_apps" in config else None
+            self.billing_day = config["billing_day"] if "billing_day" in config else None
+            self.bypass_android_apps = config["bypass_android_apps"] if "bypass_android_apps" in config else None
+            self.bypass_mms_apps = config["bypass_mms_apps"] if "bypass_mms_apps" in config else None
+            self.custom_text = config["custom_text"] if "custom_text" in config else None
+            self.disable_password = config["disable_password"] if "disable_password" in config else None
             self.enable_verbose_log = config["enableVerboseLog"] if "enableVerboseLog" in config else None
             self.enforced = config["enforced"] if "enforced" in config else None
             self.install_certs = config["installCerts"] if "installCerts" in config else None
             self.limit = config["limit"] if "limit" in config else None
-            self.logout_password = config["logoutPassword"] if "logoutPassword" in config else None
+            self.logout_password = config["logout_password"] if "logout_password" in config else None
             self.quota_roaming = config["quotaRoaming"] if "quotaRoaming" in config else None
-            self.uninstall_password = config["uninstallPassword"] if "uninstallPassword" in config else None
+            self.uninstall_password = config["uninstall_password"] if "uninstall_password" in config else None
             self.wifissid = config["wifissid"] if "wifissid" in config else None
+            self.disable_parallel_ipv4and_ipv6 = (
+                config["disableParallelIpv4andIpv6"] if "disableParallelIpv4andIpv6" in config else None
+            )
         else:
             self.allowed_apps = None
             self.billing_day = None
@@ -1040,6 +1047,7 @@ class AndroidPolicy(ZscalerObject):
             self.quota_roaming = None
             self.uninstall_password = None
             self.wifissid = None
+            self.disable_parallel_ipv4and_ipv6 = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -1047,20 +1055,21 @@ class AndroidPolicy(ZscalerObject):
         """
         parent_req_format = super().request_format()
         current_obj_format = {
-            "allowedApps": self.allowed_apps,
-            "billingDay": self.billing_day,
-            "bypassAndroidApps": self.bypass_android_apps,
-            "bypassMmsApps": self.bypass_mms_apps,
-            "customText": self.custom_text,
-            "disablePassword": self.disable_password,
+            "allowed_apps": self.allowed_apps,
+            "billing_day": self.billing_day,
+            "bypass_android_apps": self.bypass_android_apps,
+            "bypass_mms_apps": self.bypass_mms_apps,
+            "custom_text": self.custom_text,
+            "disable_password": self.disable_password,
             "enableVerboseLog": self.enable_verbose_log,
             "enforced": self.enforced,
             "installCerts": self.install_certs,
             "limit": self.limit,
-            "logoutPassword": self.logout_password,
+            "logout_password": self.logout_password,
             "quotaRoaming": self.quota_roaming,
-            "uninstallPassword": self.uninstall_password,
+            "uninstall_password": self.uninstall_password,
             "wifissid": self.wifissid,
+            "disable_parallel_ipv4and_ipv6": self.disable_parallel_ipv4and_ipv6,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

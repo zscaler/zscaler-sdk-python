@@ -6,6 +6,31 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.25 (April 30, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+------------
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Introduced a new model-driven serializer for the ZCC service (``zscaler/zcc/_field_introspect.py`` + ``zscaler/zcc/_serialize.py``) that converts ``snake_case`` user input into the exact wire casing declared by each ``ZscalerObject`` subclass's ``request_format()`` (e.g. ``enforceSplitDNS``, ``oneIdMTDeviceAuthEnabled``). The serializer is wired into ``web_policy_edit`` via a ``_ZccWireBody`` marker that ``RequestExecutor._prepare_body()`` passes through unchanged, so the existing ``FIELD_EXCEPTIONS`` workaround in ``zscaler/helpers.py`` is no longer the only line of defence against ZCC's inconsistent attribute casing.
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Fixed `Issue #458 <https://github.com/zscaler/zscaler-sdk-python/issues/458>`_: ``web_policy_edit`` was returning ``400 Bad Request — type mismatch`` on ``policyExtension.zccFailCloseSettingsExitUninstallPassword`` (and three sibling ``lockdownOn*`` fields). ``PolicyExtension.__init__`` had four malformed multi-line conditional assignments that bound the entire ``policyExtension`` dict to scalar string attributes; the conditionals are now correctly parenthesised so each field receives only its own value.
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Fixed `Issue #500 <https://github.com/zscaler/zscaler-sdk-python/issues/500>`_: ``LegacyZCCClient`` hardcoded the ``api-mobile.zscaler.net`` subdomain, which broke tenants on ``zscalerten`` (which require ``mobile6.zscaler.net``). ``zscaler/zcc/legacy.py`` now derives the host dynamically from the ``cloud`` value via ``_build_zcc_base_url()`` and a new ``_ZCC_CLOUD_SUBDOMAIN_OVERRIDES`` map (default ``api-mobile``; ``zscalerten`` → ``mobile6``); both the base URL and the OAuth login URL honour the override automatically.
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Reworked ``web_policy_edit`` to reflect the ZCC API's request/response asymmetry: requests carry flat ``groupIds: list[int]`` / ``userIds: list[str]`` lists, while responses return nested ``groups`` / ``users`` objects. The legacy ``transform_common_id_fields(reformat_params, ...)`` call was removed and the docstring now documents both shapes (and includes ``Keyword Args`` coverage for every ``WebPolicy`` attribute and its 10 nested model classes).
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Fixed ``TypeError: 'int' object is not iterable`` in ``zscaler/utils.py`` ``zcc_param_mapper`` when ``device_type`` was passed as a single integer (e.g. ``device_type=3``). The scalar-to-list normalisation now wraps both ``str`` and ``int`` inputs before iterating.
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Refactored ZCC integration tests (``test_application_profiles.py``, ``test_custom_ip_base_apps.py``, ``test_predefined_ip_based_apps.py``, ``test_process_based_apps.py``, ``test_web_policy.py``) to the standard single-method ``try / except / finally`` lifecycle pattern. ``test_web_policy.py`` adds a self-healing pre-cleanup phase (the ``/web/policy/edit`` create endpoint silently rejects duplicate names with ``success=false, id=0``) and asserts only the API's actual contract — ``success == "true"`` and a non-zero ``id`` parsed eagerly from the raw response body so the ``finally`` cleanup is always reachable.
+
+* (`#501 <https://github.com/zscaler/zscaler-sdk-python/pull/501>`_) - Added a unit-test suite (``tests/unit/zcc/test_zcc_serialize.py``) covering field-map introspection, nested-class detection, round-trip parity against the real ZCC web-policy payloads (``android``/``ios``/``linux``/``mac``/``windows``), idempotence of ``zcc_to_wire``, and a regression guard that surfaces top-level keys present in payloads but not yet declared by the SDK model.
+
 1.9.24 (April 28, 2026)
 ---------------------------
 

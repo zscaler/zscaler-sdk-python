@@ -9,23 +9,29 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '147'
+      - '143'
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.25 python/3.11.8 Darwin/25.4.0
     method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
   response:
     body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
     headers:
       cache-control:
       - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 11 Feb 2026 02:35:45 GMT
+      - Thu, 30 Apr 2026 06:24:19 GMT
       expires:
       - '0'
       pragma:
@@ -34,12 +40,20 @@ interactions:
       - ingress-gateway
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
       x-content-type-options:
+      - nosniff
+      - nosniff
       - nosniff
       x-frame-options:
       - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
       x-ratelimit-limit:
-      - 500, 500;w=1, 100000;w=60
+      - 500, 500;w=1, 10000;w=60
       x-ratelimit-remaining:
       - '499'
       x-ratelimit-reset:
@@ -63,46 +77,46 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+      - zscaler-sdk-python/1.9.25 python/3.11.8 Darwin/25.4.0
     method: GET
-    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getCompanyInfo
+    uri: https://api.beta.zsapi.net/zcc/papi/public/v1/getCompanyInfo
   response:
     body:
-      string: "{\n  \"orgId\" : \"24326813\",\n  \"masterCustomerId\" : \"216196257331281920\",\n
-        \ \"name\" : \"William Guilherme\",\n  \"businessName\" : \"\",\n  \"businessContactNumber\"
-        : \"\",\n  \"activationRecipient\" : \"\",\n  \"activationCopy\" : \"\",\n
-        \ \"mdmStatus\" : \"0\",\n  \"sendEmail\" : \"0\",\n  \"proxyEnabled\" : \"1\",\n
-        \ \"zpnEnabled\" : \"1\",\n  \"upmEnabled\" : \"1\",\n  \"zadEnabled\" : \"0\",\n
-        \ \"enableDeceptionForAll\" : \"0\",\n  \"dlpEnabled\" : \"1\",\n  \"tunnelProtocolType\"
-        : \"1\",\n  \"secureAgentBasic\" : \"1\",\n  \"secureAgentAdvanced\" : \"1\",\n
-        \ \"supportAdminEmail\" : \"\",\n  \"supportEnabled\" : 0,\n  \"fetchLogsForAdminsEnabled\"
+      string: "{\n  \"orgId\" : \"8061240\",\n  \"masterCustomerId\" : \"72058304855015424\",\n
+        \ \"name\" : \"William Guilherme - Internal\",\n  \"businessName\" : \"\",\n
+        \ \"businessContactNumber\" : \"\",\n  \"activationRecipient\" : \"\",\n  \"activationCopy\"
+        : \"\",\n  \"mdmStatus\" : \"0\",\n  \"sendEmail\" : \"0\",\n  \"proxyEnabled\"
+        : \"1\",\n  \"zpnEnabled\" : \"1\",\n  \"upmEnabled\" : \"1\",\n  \"zadEnabled\"
+        : \"0\",\n  \"enableDeceptionForAll\" : \"0\",\n  \"dlpEnabled\" : \"0\",\n
+        \ \"tunnelProtocolType\" : \"1\",\n  \"secureAgentBasic\" : \"1\",\n  \"secureAgentAdvanced\"
+        : \"1\",\n  \"supportAdminEmail\" : \"\",\n  \"supportEnabled\" : 0,\n  \"fetchLogsForAdminsEnabled\"
         : 0,\n  \"enableRectifyUtils\" : 1,\n  \"supportTicketEnabled\" : 0,\n  \"disableLoggingControls\"
-        : 0,\n  \"defaultAuthType\" : 0,\n  \"version\" : \"4.5.0\",\n  \"policyActivationRequired\"
+        : 1,\n  \"defaultAuthType\" : 0,\n  \"version\" : \"4.5.4\",\n  \"policyActivationRequired\"
         : 1,\n  \"enableAutofillUsername\" : 1,\n  \"autoFillUsingLoginHint\" : 0,\n
         \ \"dcServiceReadOnly\" : 0,\n  \"enableTunnelZappTrafficToggle\" : \"1\",\n
         \ \"machineIdpAuth\" : \"1\",\n  \"linuxVisibility\" : \"1\",\n  \"registryPathForPac\"
-        : \"1\",\n  \"usePollsetForSocketReactor\" : \"0\",\n  \"enableDtlsForZpa\"
+        : \"1\",\n  \"usePollsetForSocketReactor\" : \"1\",\n  \"enableDtlsForZpa\"
         : \"0\",\n  \"useV8JsEngine\" : \"1\",\n  \"disableParallelIpv4AndIPv6\" :
-        \"1\",\n  \"send64BitBuild\" : \"0\",\n  \"useAddIfscopeRoute\" : \"0\",\n
-        \ \"useClearArpCache\" : \"0\",\n  \"useDnsPriorityOrdering\" : \"1\",\n  \"enableBrowserAuth\"
+        \"1\",\n  \"send64BitBuild\" : \"1\",\n  \"useAddIfscopeRoute\" : \"1\",\n
+        \ \"useClearArpCache\" : \"1\",\n  \"useDnsPriorityOrdering\" : \"1\",\n  \"enableBrowserAuth\"
         : \"1\",\n  \"enablePublicAPI\" : \"1\",\n  \"disableReasonVisibility\" :
         \"1\",\n  \"followRoutingTable\" : \"1\",\n  \"useDefaultAdapterForDNS\" :
         \"1\",\n  \"enableMinimumDeviceCleanupAsOne\" : \"0\",\n  \"dnsPriorityOrderingForTrustedDnsCriteria\"
         : \"1\",\n  \"machineTunnelPosture\" : \"1\",\n  \"zpaPartnerLogin\" : \"1\",\n
         \ \"proxyPort\" : 443,\n  \"dnsCacheTtlWindows\" : 30,\n  \"dnsCacheTtlMac\"
         : 30,\n  \"dnsCacheTtlAndroid\" : 30,\n  \"dnsCacheTtlIos\" : 30,\n  \"dnsCacheTtlLinux\"
-        : 30,\n  \"zpaClientCertExpInDays\" : 0,\n  \"enableFlowLogger\" : \"0\",\n
+        : 30,\n  \"zpaClientCertExpInDays\" : 0,\n  \"enableFlowLogger\" : \"1\",\n
         \ \"flowLoggingBufferLimit\" : 65536,\n  \"flowLoggingTimeInterval\" : 1,\n
         \ \"postureBasedService\" : \"0\",\n  \"enablePostureBasedProfile\" : \"0\",\n
         \ \"disasterRecovery\" : \"1\",\n  \"ziaGlobalDbUrlForDR\" : \"https://dll7xpq8c5ev0.cloudfront.net/drdb.txt\",\n
         \ \"enableReactUI\" : \"1\",\n  \"launchReactUIbyDefault\" : \"1\",\n  \"dlpNotification\"
         : \"1\",\n  \"vpnGatewayCharLimit\" : 12288,\n  \"deviceGroupsCount\" : 4,\n
         \ \"vpnBypassRefreshInterval\" : 5,\n  \"destIncludeExcludeCharLimit\" : 6144,\n
-        \ \"ipV6SupportForTunnel2\" : \"0\",\n  \"destIncludeExcludeCharLimitForIpv6\"
+        \ \"ipV6SupportForTunnel2\" : \"1\",\n  \"destIncludeExcludeCharLimitForIpv6\"
         : 6144,\n  \"enableSetProxyOnVPNAdapters\" : \"1\",\n  \"disableDNSRouteExclusion\"
         : \"1\",\n  \"showVPNTunNotification\" : \"1\",\n  \"addAppBypassToVPNGateway\"
         : \"1\",\n  \"enableZscalerFirewall\" : \"1\",\n  \"persistentZscalerFirewall\"
-        : \"0\",\n  \"clearMupCache\" : \"0\",\n  \"executeGpoUpdate\" : \"0\",\n
+        : \"0\",\n  \"clearMupCache\" : \"1\",\n  \"executeGpoUpdate\" : \"1\",\n
         \ \"enablePortBasedZPAFilter\" : \"0\",\n  \"enableAntiTampering\" : \"1\",\n
         \ \"zpaReauthEnabled\" : 1,\n  \"zpaAutoReauthTimeout\" : 30,\n  \"enableZpaAuthUserName\"
         : 1,\n  \"enableGlobalZCCTelemetry\" : 1,\n  \"configureTunnel2fallbackForZia\"
@@ -114,24 +128,24 @@ interactions:
         \   \"zpaAuthUsername\" : \"true\",\n    \"machineTunnel\" : \"true\",\n    \"cacheSystemProxy\"
         : \"true\",\n    \"hideDTLSSupportSettings\" : \"false\",\n    \"machineToken\"
         : \"true\",\n    \"applicationBypassInfo\" : \"true\",\n    \"tunnelTwoForAndroidDevices\"
-        : \"true\",\n    \"tunnelTwoForiOSDevices\" : \"true\",\n    \"ownershipVariablePosture\"
+        : \"false\",\n    \"tunnelTwoForiOSDevices\" : \"true\",\n    \"ownershipVariablePosture\"
         : \"true\",\n    \"blockUnreachableDomainsTrafficFlag\" : \"true\",\n    \"prioritizeIPv4OverIpv6\"
         : \"true\",\n    \"crowdStrikeZTAScoreVisibility\" : \"true\",\n    \"notificationForZPAReauthVisibility\"
         : \"true\",\n    \"crlCheckVisibilityFlag\" : \"true\",\n    \"dedicatedProxyPortsVisibility\"
         : \"true\",\n    \"remoteFetchLogs\" : \"MSwyLDMsNCw1\",\n    \"msDefenderPostureVisibility\"
         : \"true\",\n    \"exitPasswordVisibility\" : \"3,4,5\",\n    \"collectZdxLocationVisibility\"
         : \"true\",\n    \"useV8JsEngineVisibility\" : \"3,4\",\n    \"zdxDisablePasswordVisibility\"
-        : \"2,3,4\",\n    \"zadDisablePasswordVisibility\" : \"3\",\n    \"zpaDisablePasswordVisibility\"
+        : \"1,2,3,4\",\n    \"zadDisablePasswordVisibility\" : \"3\",\n    \"zpaDisablePasswordVisibility\"
         : \"1,2,3,4,5\",\n    \"defaultProtocolForZPA\" : \"0\",\n    \"dropIpv6TrafficVisibility\"
         : \"true\",\n    \"macCacheSystemProxyVisibility\" : \"true\",\n    \"useWsaPollForZpa\"
         : \"false\",\n    \"enable64BitFeature\" : \"true\",\n    \"antivirusPostureVisibility\"
-        : \"3,4\",\n    \"systemProxyOnAnyNetworkChangeVisibility\" : \"true\",\n
-        \   \"devicePostureOsVersionVisibility\" : \"2,3,4,5\",\n    \"sccmConfigVisibility\"
+        : \"3,4,5\",\n    \"systemProxyOnAnyNetworkChangeVisibility\" : \"true\",\n
+        \   \"devicePostureOsVersionVisibility\" : \"1,2,3,4,5\",\n    \"sccmConfigVisibility\"
         : \"true\",\n    \"browserAuthFlagVisibility\" : \"1,2,3,4,5\",\n    \"installWebView2FlagVisibility\"
-        : \"3\",\n    \"allowWebView2ToFollowSPVisibility\" : \"\",\n    \"enableIpv6ResolutionForZscalerDomainsVisibility\"
-        : \"\",\n    \"disableReasonVisibility\" : \"1,2,3,4,5\",\n    \"followRoutingTableVisibility\"
+        : \"3\",\n    \"allowWebView2ToFollowSPVisibility\" : \"3\",\n    \"enableIpv6ResolutionForZscalerDomainsVisibility\"
+        : \"1,2,3,4\",\n    \"disableReasonVisibility\" : \"1,2,3,4,5\",\n    \"followRoutingTableVisibility\"
         : \"3,4\",\n    \"ziaDevicePostureVisibility\" : \"1,2,3,4,5\",\n    \"useCustomDNS\"
-        : \"false\",\n    \"useDefaultAdapterForDNSVisibility\" : \"3,4,5\",\n    \"t2FallbackBlockAllTrafficAndTlsFallback\"
+        : \"false\",\n    \"useDefaultAdapterForDNSVisibility\" : \"1,3,4,5\",\n    \"t2FallbackBlockAllTrafficAndTlsFallback\"
         : \"true\",\n    \"overrideT2ProtocolSetting\" : \"true\",\n    \"grantAccessToZscalerLogFolderVisibility\"
         : \"true\",\n    \"adminManagementVisibility\" : \"true\",\n    \"redirectWebTrafficToZccListeningProxyVisibility\"
         : \"true\",\n    \"useZtunnel2_0ForProxiedWebTrafficVisibility\" : \"true\",\n
@@ -146,73 +160,73 @@ interactions:
         : \"1,2,3,4,5\",\n    \"deviceGroupVisibility\" : \"1,2,3,4\",\n    \"ipV6SupportForTunnel2\"
         : \"1,2,3,4,5\",\n    \"pathMtuDiscovery\" : \"true\",\n    \"postureDiscEncryptionVisibilityForLinux\"
         : \"true\",\n    \"postureMsDefenderVisibilityForLinux\" : \"true\",\n    \"postureOsVersionVisibilityForLinux\"
-        : \"true\",\n    \"postureCrowdStrikeZTAScoreVisibilityForLinux\" : \"false\",\n
+        : \"true\",\n    \"postureCrowdStrikeZTAScoreVisibilityForLinux\" : \"true\",\n
         \   \"flowLoggerZCCBlockedTrafficVisibility\" : \"true\",\n    \"flowLoggerIntranetTrafficVisibility\"
-        : \"true\",\n    \"customMTUForZpaVisibility\" : \"false\",\n    \"zpaAutoReauthTimeoutVisibility\"
+        : \"true\",\n    \"customMTUForZpaVisibility\" : \"true\",\n    \"zpaAutoReauthTimeoutVisibility\"
         : \"true\",\n    \"forceZpaAuthExpireVisibility\" : \"3,4\",\n    \"enableSetProxyOnVPNAdaptersVisibility\"
-        : \"4\",\n    \"dnsServerRouteExclusionVisibility\" : \"4\",\n    \"enableSeparateOtpForDevice\"
-        : \"2,3,4\",\n    \"uninstallPasswordForProfileVisibility\" : \"2,3,4\",\n
-        \   \"zpaAdvanceReauthVisibility\" : \"3,4\",\n    \"latencyBasedZenEnablementVisibility\"
+        : \"4\",\n    \"dnsServerRouteExclusionVisibility\" : \"1,3,4,5\",\n    \"enableSeparateOtpForDevice\"
+        : \"1,2,3,4,5\",\n    \"uninstallPasswordForProfileVisibility\" : \"2,3,4,5\",\n
+        \   \"zpaAdvanceReauthVisibility\" : \"1,2,3,4,5\",\n    \"latencyBasedZenEnablementVisibility\"
         : \"true\",\n    \"dynamicZPAServiceEdgeAssignmenttVisibility\" : \"true\",\n
         \   \"customProxyPortsVisibility\" : \"1,2,3,4,5\",\n    \"domainInclusionExclusionForDNSRequestVisibility\"
         : \"1,2,3,4,5\",\n    \"appNotificationConfigVisibility\" : \"true\",\n    \"enableAntiTamperingVisibility\"
-        : \"3\",\n    \"strictEnforcementStatusVisibility\" : \"3,4\",\n    \"antiTamperingOtpSupportVisibility\"
+        : \"3\",\n    \"strictEnforcementStatusVisibility\" : \"2,3,4\",\n    \"antiTamperingOtpSupportVisibility\"
         : \"true\",\n    \"overrideATCmdByPolicyVisibility\" : \"3\",\n    \"deviceTrustLevelVisibility\"
-        : \"1,2,3,4,5\",\n    \"sourcePortBasedBypassesVisibility\" : \"3\",\n    \"processBasedApplicationBypassVisibility\"
+        : \"1,2,3,4,5\",\n    \"sourcePortBasedBypassesVisibility\" : \"3,5\",\n    \"processBasedApplicationBypassVisibility\"
         : \"true\",\n    \"customBasedApplicationBypassVisibility\" : \"1,2,3,4\",\n
         \   \"clientCertificateTemplateVisibility\" : \"3,4\",\n    \"supportedZccVersionChartVisibility\"
-        : \"true\",\n    \"iosIpv6ModeVisibility\" : \"false\",\n    \"deviceGroupMultiplePosturesVisibility\"
+        : \"true\",\n    \"iosIpv6ModeVisibility\" : \"true\",\n    \"deviceGroupMultiplePosturesVisibility\"
         : \"false\",\n    \"dropNonZscalerPacketsVisibility\" : \"true\",\n    \"zccSyntheticIPRangeVisibility\"
         : \"true\",\n    \"devicePostureFrequencyVisibility\" : \"true\",\n    \"enforceSplitDNSVisibility\"
-        : \"1\",\n    \"dataProtectionVisibility\" : \"3,4\",\n    \"dropQuicTrafficVisibility\"
-        : \"1,2\",\n    \"truncateLargeUDPDNSResponseVisibility\" : \"3,4\",\n    \"prioritizeDnsExclusionsVisibility\"
-        : \"3\",\n    \"fetchLogConfigurationOptionVisibility\" : \"3\",\n    \"enableSerialNumberVisibility\"
-        : \"3,4\",\n    \"supportMultiplePWLPostures\" : \"true\",\n    \"restrictRemotePacketCaptureVisibility\"
+        : \"1,4\",\n    \"dataProtectionVisibility\" : \"3,4\",\n    \"dropQuicTrafficVisibility\"
+        : \"1,2\",\n    \"truncateLargeUDPDNSResponseVisibility\" : \"2,3,4\",\n    \"prioritizeDnsExclusionsVisibility\"
+        : \"1,3\",\n    \"fetchLogConfigurationOptionVisibility\" : \"3\",\n    \"enableSerialNumberVisibility\"
+        : \"1,2,3,4,5\",\n    \"supportMultiplePWLPostures\" : \"true\",\n    \"restrictRemotePacketCaptureVisibility\"
         : \"true\",\n    \"enableApplicationBasedBypassForMacVisibility\" : \"true\",\n
-        \   \"removeExemptedContainersVisibility\" : \"false\",\n    \"captivePortalDetectionVisibility\"
-        : \"false\",\n    \"deviceGroupInProfileVisibility\" : \"\",\n    \"updateDnsSearchOrder\"
-        : \"4\",\n    \"installActivityBasedMonitoringDriverVisibility\" : \"false\",\n
-        \   \"slowRolloutZCC\" : \"1\",\n    \"zccTunnelVersionVisibility\" : \"1\",\n
+        \   \"removeExemptedContainersVisibility\" : \"true\",\n    \"captivePortalDetectionVisibility\"
+        : \"false\",\n    \"deviceGroupInProfileVisibility\" : \"1,2,3,4\",\n    \"updateDnsSearchOrder\"
+        : \"1,3,4\",\n    \"installActivityBasedMonitoringDriverVisibility\" : \"true\",\n
+        \   \"slowRolloutZCC\" : \"1\",\n    \"zccTunnelVersionVisibility\" : \"1,5\",\n
         \   \"antiTamperingStatusVisibility\" : \"true\",\n    \"lbbThresholdRankToPercentMapping\"
         : \"50,100,200,500,1000,2000\",\n    \"removeZscalerSslCertUrl\" : \"1\",\n
         \   \"lbzThresholdRankToPercentMapping\" : \"30,50,100,200,500,1000\",\n    \"splashScreenUrl\"
-        : \"https://webapi.zscaler.com/api/admin-ui-messages/zcc/mobileadmin.zscalerthree.net\",\n
+        : \"https://webapi.zscaler.com/api/admin-ui-messages/zcc/mobileadmin.zscalerbeta.net\",\n
         \   \"splashScreenVisibility\" : \"true\",\n    \"trustedNetworkRangeCriteriaVisibility\"
         : \"true\",\n    \"trustedEgressIpsVisibility\" : \"true\",\n    \"domainProfileDetectionVisibility\"
         : \"true\",\n    \"allInboundTrafficVisibility\" : \"true\",\n    \"exportLogsForNonAdminVisibility\"
         : \"false\",\n    \"enableAutoLogSnippetVisibility\" : \"true\",\n    \"enableCliVisibility\"
         : \"3,4\",\n    \"zccUserTypeVisibility\" : \"true\",\n    \"installWindowsFirewallInboundRule\"
-        : \"false\",\n    \"retryAfterInSeconds\" : \"86400\",\n    \"azureADPostureVisibility\"
-        : \"true\",\n    \"serverCertPostureVisibility\" : \"3\",\n    \"performCRLCheckServerPostureVisibility\"
-        : \"\",\n    \"autoFillUsingLoginHintVisibility\" : \"true\",\n    \"sendDefaultPolicyForInvalidPolicyToken\"
+        : \"true\",\n    \"retryAfterInSeconds\" : \"86400\",\n    \"azureADPostureVisibility\"
+        : \"true\",\n    \"serverCertPostureVisibility\" : \"3,4\",\n    \"performCRLCheckServerPostureVisibility\"
+        : \"3\",\n    \"autoFillUsingLoginHintVisibility\" : \"true\",\n    \"sendDefaultPolicyForInvalidPolicyToken\"
         : \"true\",\n    \"enableZccPasswordSettings\" : \"3\",\n    \"cliPasswordExpiryMinutes\"
         : \"120\",\n    \"ssoUsingWindowsPrimaryAccount\" : \"true\",\n    \"enableVerboseLog\"
         : \"true\",\n    \"zpaAuthExpOnWinLogonSession\" : \"true\",\n    \"zpaAuthExpOnWinSessionLockVisibility\"
-        : \"true\",\n    \"enableZccSlowRolloutByDefault\" : \"false\",\n    \"purgeKerberosPreferredDCCacheVisibility\"
+        : \"true\",\n    \"enableZccSlowRolloutByDefault\" : \"true\",\n    \"purgeKerberosPreferredDCCacheVisibility\"
         : \"3\",\n    \"postureJamfDetectionVisibility\" : \"true\",\n    \"postureJamfDeviceRiskVisibility\"
         : \"true\",\n    \"windowsAPCaptivePortalDetectionVisibility\" : \"true\",\n
         \   \"windowsAPEnableFailOpenVisibility\" : \"false\",\n    \"automaticCaptureDuration\"
         : \"5\",\n    \"forceLocationRefreshSccm\" : \"true\",\n    \"enablePostureFailureDashboard\"
         : \"true\",\n    \"enableOneIDPhase2Changes\" : \"true\",\n    \"dropIpv6TrafficInIpv6NetworkVisibility\"
-        : \"true\",\n    \"enablePosturesForPartner\" : \"3\",\n    \"enablePartnerConfigInPrimaryPolicy\"
-        : \"3\",\n    \"enableOneIDAdminMigrationChanges\" : \"true\",\n    \"ddilConfigVisibility\"
-        : \"3\",\n    \"addZDXServiceEntitlement\" : \"true\",\n    \"useZcdn\" :
-        \"true\",\n    \"deleteDHCPOption121RoutesVisibility\" : \"\",\n    \"zdxRolloutControlVisibility\"
-        : \"false\",\n    \"showM365ServicesInAppBypasses\" : \"true\",\n    \"allowWebView2IgnoreClientCertErrors\"
-        : \"\",\n    \"linuxRPMBuildVisibility\" : \"true\",\n    \"helpBannerDataVisibility\"
+        : \"true\",\n    \"enablePosturesForPartner\" : \"3,4\",\n    \"enablePartnerConfigInPrimaryPolicy\"
+        : \"3,4\",\n    \"enableOneIDAdminMigrationChanges\" : \"true\",\n    \"ddilConfigVisibility\"
+        : \"3,4\",\n    \"addZDXServiceEntitlement\" : \"true\",\n    \"useZcdn\"
+        : \"true\",\n    \"deleteDHCPOption121RoutesVisibility\" : \"\",\n    \"zdxRolloutControlVisibility\"
+        : \"true\",\n    \"showM365ServicesInAppBypasses\" : \"true\",\n    \"allowWebView2IgnoreClientCertErrors\"
+        : \"3\",\n    \"linuxRPMBuildVisibility\" : \"true\",\n    \"helpBannerDataVisibility\"
         : \"true\",\n    \"zpaOnlyDeviceCleanupVisibility\" : \"false\",\n    \"appProfileFailOpenPolicyVisibility\"
-        : \"3\",\n    \"showRegistryOptionInEnforceAndNone\" : \"true\",\n    \"strictEnforcementNotificationVisibility\"
-        : \"true\",\n    \"crowdStrikeZTAOsScoreVisibility\" : \"3\",\n    \"crowdStrikeZTASensorConfigScoreVisibility\"
-        : \"3\",\n    \"resizeWindowToFitToPageVisibility\" : \"3\",\n    \"enableZCCFailCloseSettingsForSEMode\"
-        : \"\"\n  },\n  \"enableInstallWebView2\" : \"1\",\n  \"enableCustomProxyPorts\"
+        : \"3,4\",\n    \"showRegistryOptionInEnforceAndNone\" : \"true\",\n    \"strictEnforcementNotificationVisibility\"
+        : \"true\",\n    \"crowdStrikeZTAOsScoreVisibility\" : \"3,4\",\n    \"crowdStrikeZTASensorConfigScoreVisibility\"
+        : \"3,4\",\n    \"resizeWindowToFitToPageVisibility\" : \"3\",\n    \"enableZCCFailCloseSettingsForSEMode\"
+        : \"3\"\n  },\n  \"enableInstallWebView2\" : \"1\",\n  \"enableCustomProxyPorts\"
         : \"1\",\n  \"interceptZIATrafficAllAdapters\" : \"1\",\n  \"swaggerLink\"
         : \"https://help.zscaler.com/client-connector/about-zscaler-client-connector-api\",\n
         \ \"enableOneIdAdmin\" : \"1\",\n  \"enableOneIdUser\" : \"0\",\n  \"restrictAdminAccess\"
         : \"0\",\n  \"enableZiaUserDepartmentSync\" : \"false\",\n  \"enableUDPTransportSelection\"
         : \"false\",\n  \"computeDeviceGroupsForZIA\" : \"0\",\n  \"computeDeviceGroupsForZPA\"
         : \"0\",\n  \"computeDeviceGroupsForZDX\" : \"0\",\n  \"computeDeviceGroupsForZAD\"
-        : \"0\",\n  \"useTunnel2SmeForTunnel1\" : \"0\",\n  \"maCloudName\" : \"zscalerthree\",\n
-        \ \"ziaCloudName\" : \"zscalerthree\",\n  \"zt2HealthProbeInterval\" : 0,\n
+        : \"0\",\n  \"useTunnel2SmeForTunnel1\" : \"0\",\n  \"maCloudName\" : \"zscalerbeta\",\n
+        \ \"ziaCloudName\" : \"zscalerbeta\",\n  \"zt2HealthProbeInterval\" : 0,\n
         \ \"devicePostureFrequency\" : [ {\n    \"postureId\" : 24,\n    \"postureName\"
         : \"Zscaler Client Connector Version\",\n    \"iosValue\" : 5,\n    \"androidValue\"
         : 5,\n    \"windowsValue\" : 2,\n    \"macValue\" : 2,\n    \"linuxValue\"
@@ -284,7 +298,7 @@ interactions:
         : 15\n  }, {\n    \"postureId\" : 1,\n    \"postureName\" : \"Certificate
         Trust\",\n    \"iosValue\" : 5,\n    \"androidValue\" : 5,\n    \"windowsValue\"
         : 2,\n    \"macValue\" : 2,\n    \"linuxValue\" : 2,\n    \"defaultValue\"
-        : 15\n  } ],\n  \"zdxManualRollout\" : \"0\",\n  \"winZdxLiteEnabled\" : \"0\",\n
+        : 15\n  } ],\n  \"zdxManualRollout\" : \"0\",\n  \"winZdxLiteEnabled\" : \"1\",\n
         \ \"telemetryDefault\" : 1\n}"
     headers:
       cache-control:
@@ -294,7 +308,7 @@ interactions:
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 11 Feb 2026 02:35:45 GMT
+      - Thu, 30 Apr 2026 06:24:19 GMT
       pragma:
       - no-cache
       server:
@@ -308,25 +322,25 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '643'
+      - '636'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
-      - https://apiusw2.zsapi.net
+      - https://apiusw2.beta.zsapi.net
       x-oneapi-request-id:
-      - ac983db5-a8e3-921a-9fb4-060ad711b085
+      - 09faa464-be35-9e13-9ddc-cadf0ceeed69
       x-oneapi-version:
-      - 109.1.111
+      - 111.1.27
       x-rate-limit-remaining:
       - '99'
       x-ratelimit-limit:
       - 100, 100;w=3600, 100;w=3600
       x-ratelimit-remaining:
-      - '90'
+      - '98'
       x-ratelimit-reset:
-      - '1456'
+      - '2141'
       x-transaction-id:
-      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      - abac7a93-60e7-4cdb-aa88-422003ec3314
       x-xss-protection:
       - 1; mode=block
     status:

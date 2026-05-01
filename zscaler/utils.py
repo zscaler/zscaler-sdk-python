@@ -847,7 +847,12 @@ def zcc_param_mapper(func):
         raw_device_type = query_params.get("device_type") or body.get("device_type")
 
         if raw_device_type:
-            raw_device_type = [raw_device_type] if isinstance(raw_device_type, str) else raw_device_type
+            # Accept str ("windows"), int (3, matching the API's numeric
+            # device_type code), or a list of either. Scalars get wrapped
+            # into a single-element list so the comprehension below can
+            # iterate uniformly.
+            if isinstance(raw_device_type, (str, int)):
+                raw_device_type = [raw_device_type]
             mapped = [
                 str(zcc_param_map["os"].get(dt.lower()) if isinstance(dt, str) else dt)
                 for dt in raw_device_type

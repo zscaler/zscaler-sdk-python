@@ -15,11 +15,15 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.zcc.admin_user import AdminUserAPI
+from zscaler.zcc.application_profiles import ApplicationProfilesAPI
 from zscaler.zcc.company import CompanyInfoAPI
+from zscaler.zcc.custom_ip_base_apps import CustomIPBasedAppsAPI
 from zscaler.zcc.devices import DevicesAPI
 from zscaler.zcc.entitlements import EntitlementAPI
 from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
 from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
+from zscaler.zcc.predefined_ip_based_apps import PredefinedIPBasedAppsAPI
+from zscaler.zcc.process_based_apps import ProcessBasedAppsAPI
 from zscaler.zcc.secrets import SecretsAPI
 from zscaler.zcc.trusted_networks import TrustedNetworksAPI
 from zscaler.zcc.web_policy import WebPolicyAPI
@@ -120,3 +124,35 @@ class ZCCService:
 
         """
         return TrustedNetworksAPI(self._request_executor)
+
+    @property
+    def application_profiles(self) -> ApplicationProfilesAPI:
+        """
+        The interface object for the :ref:`ZCC application profiles interface <zcc-application_profiles>`.
+
+        """
+        return ApplicationProfilesAPI(self._request_executor)
+
+    @property
+    def custom_ip_base_apps(self) -> CustomIPBasedAppsAPI:
+        """
+        The interface object for the :ref:`ZCC custom IP-based apps interface <zcc-custom_ip_base_apps>`.
+
+        """
+        return CustomIPBasedAppsAPI(self._request_executor)
+
+    @property
+    def predefined_ip_based_apps(self) -> PredefinedIPBasedAppsAPI:
+        """
+        The interface object for the :ref:`ZCC predefined IP-based apps interface <zcc-predefined_ip_based_apps>`.
+
+        """
+        return PredefinedIPBasedAppsAPI(self._request_executor)
+
+    @property
+    def process_based_apps(self) -> ProcessBasedAppsAPI:
+        """
+        The interface object for the :ref:`ZCC process-based apps interface <zcc-process_based_apps>`.
+
+        """
+        return ProcessBasedAppsAPI(self._request_executor)
