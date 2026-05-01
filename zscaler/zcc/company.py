@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zcc.models.getcompanyinfo import GetCompanyInfo
+from zscaler.zcc.models.company_info import CompanyInfo
 from zscaler.utils import format_url
 from zscaler.types import APIResult
 
@@ -64,14 +64,14 @@ class CompanyInfoAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, GetCompanyInfo)
+        response, error = self._request_executor.execute(request, CompanyInfo)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(GetCompanyInfo(self.form_response_body(item)))
+                result.append(CompanyInfo(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

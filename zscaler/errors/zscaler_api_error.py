@@ -17,10 +17,18 @@ class ZscalerAPIError(Exception):
             response_body = {"message": str(response_body)}
 
         self.error_code: Optional[Union[str, int]] = (
-            response_body.get("code") or response_body.get("id") or response_body.get("errorCode")
+            response_body.get("code")
+            or response_body.get("id")
+            or response_body.get("errorCode")
+            # ZCC error envelope: {"title": "INVALID_FIELD_VALUE", "errorCode": null, ...}
+            or response_body.get("title")
         )
         self.error_message: Optional[str] = (
-            response_body.get("message") or response_body.get("reason") or response_body.get("errorDetails")
+            response_body.get("message")
+            or response_body.get("reason")
+            or response_body.get("errorDetails")
+            # ZCC error envelope: {"errorMessage": "Policy with policyId: ...", ...}
+            or response_body.get("errorMessage")
         )
         self.params: List[Any] = response_body.get("params", [])
         self.path: Optional[str] = response_body.get("path")

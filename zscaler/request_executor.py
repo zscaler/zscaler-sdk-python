@@ -358,9 +358,18 @@ class RequestExecutor:
         # Special handling for ZCC service - use selective conversion
         if "/zcc/" in endpoint and body:
             from zscaler.helpers import convert_keys_to_camel_case_selective
+            from zscaler.zcc._serialize import _ZccWireBody
             from zscaler.zcc.models.webpolicy import WebPolicy
 
-            # Use the WebPolicy's snake_case keys for selective conversion
+            # If the API client method already serialized the body via the
+            # model-driven ``zcc_to_wire`` helper, every key is already in
+            # the exact wire form declared by the schema. Skip any further
+            # conversion to preserve the model's intent verbatim.
+            if isinstance(body, _ZccWireBody):
+                return dict(body)
+
+            # Legacy path for ZCC endpoints that have not yet been migrated
+            # to the model-driven serializer.
             body = convert_keys_to_camel_case_selective(body, WebPolicy.SNAKE_CASE_KEYS)
             return body
 
