@@ -289,7 +289,7 @@ class WebPolicy(ZscalerObject):
             "enableDeviceGroups": self.enable_device_groups,
             "forwardingProfileId": self.forwarding_profile_id,
             "groupAll": self.group_all,
-            "groupIds": self.group_ids,
+            "groups": self.group_ids,
             "groupNames": self.group_names,
             "highlightActiveControl": self.highlight_active_control,
             "id": self.id,
@@ -307,12 +307,10 @@ class WebPolicy(ZscalerObject):
             "ruleOrder": self.rule_order,
             "sendDisableServiceReason": self.send_disable_service_reason,
             "tunnelZappTraffic": self.tunnel_zapp_traffic,
-            "userIds": self.user_ids,
+            "users": self.user_ids,
             "userNames": self.user_names,
             "windowsPolicy": self.windows_policy,
             "ziaPostureConfigId": self.zia_posture_config_id,
-            "groups": self.groups,
-            "users": self.users,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -1133,15 +1131,15 @@ class MacOSPolicy(ZscalerObject):
             "addIfscopeRoute": self.add_ifscope_route,
             "cacheSystemProxy": self.cache_system_proxy,
             "clearArpCache": self.clear_arp_cache,
-            "disablePassword": self.disable_password,
+            "disable_password": self.disable_password,
             "dnsPriorityOrdering": self.dns_priority_ordering,
             "dnsPriorityOrderingForTrustedDnsCriteria": self.dns_priority_ordering_for_trusted_dns_criteria,
             "enableApplicationBasedBypass": self.enable_application_based_bypass,
             "enableZscalerFirewall": self.enable_zscaler_firewall,
             "installCerts": self.install_certs,
-            "logoutPassword": self.logout_password,
+            "logout_password": self.logout_password,
             "persistentZscalerFirewall": self.persistent_zscaler_firewall,
-            "uninstallPassword": self.uninstall_password,
+            "uninstall_password": self.uninstall_password,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

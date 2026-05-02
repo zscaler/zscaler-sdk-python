@@ -91,7 +91,9 @@ def test_disable_password_collision_resolved_per_class():
     assert field_map(AndroidPolicy)["disable_password"] == "disable_password"
     assert field_map(LinuxPolicy)["disable_password"] == "disablePassword"
     assert field_map(IOSPolicy)["disable_password"] == "disablePassword"
-    assert field_map(MacOSPolicy)["disable_password"] == "disablePassword"
+    # macOS now matches Windows/Android: API expects snake_case for the
+    # password fields (verified against working Postman payload).
+    assert field_map(MacOSPolicy)["disable_password"] == "disable_password"
 
 
 def test_install_ssl_certs_collision_resolved_per_class():
@@ -188,10 +190,12 @@ def test_zcc_to_wire_unknown_keys_fall_back_to_legacy_converter():
 
 
 def test_zcc_to_wire_preserves_lists_of_primitives():
+    # WebPolicy.request_format emits ``users`` (not ``userIds``) on the
+    # wire — the API expects this asymmetric contract for create/edit.
     body = {"app_service_ids": ["a", "b"], "user_ids": []}
     out = zcc_to_wire(body, WebPolicy)
     assert out["appServiceIds"] == ["a", "b"]
-    assert out["userIds"] == []
+    assert out["users"] == []
 
 
 def test_zcc_to_wire_recurses_into_lists_of_dicts():

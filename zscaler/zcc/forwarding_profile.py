@@ -18,6 +18,7 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.zcc._serialize import zcc_to_wire
 from zscaler.zcc.models.forwardingprofile import ForwardingProfile
 from zscaler.types import APIResult
 
@@ -116,9 +117,12 @@ class ForwardingProfileAPI(APIClient):
             {self._zcc_base_endpoint}
             /webForwardingProfile/edit
         """)
-        body = {}
+        body = dict(kwargs)
 
-        body.update(kwargs)
+        # Translate snake_case input to the exact wire keys declared by
+        # the ForwardingProfile model (ZCC's API mixes camelCase, snake
+        # and uppercase-acronym keys; the model is the source of truth).
+        body = zcc_to_wire(body, ForwardingProfile)
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:

@@ -288,6 +288,14 @@ def to_lower_camel_case(string):
         "predefined_adp_controls": "predefinedADPControls",
         "runtime_os": "runtimeOS",
         "default_csp": "defaultCSP",
+        # ZCC WebPolicy: API expects this top-level key in snake_case.
+        "exit_password": "exit_password",
+        # ZCC WebPolicy / PolicyExtension: keys with embedded uppercase
+        # acronyms (WPAD, ZPA, TRP) the heuristic camel-casing cannot
+        # produce on its own.
+        "override_wpad": "overrideWPAD",
+        "instant_force_zpa_reauth_state_update": "instantForceZPAReauthStateUpdate",
+        "support_zpa_search_domains_in_trp": "supportZPASearchDomainsInTRP",
     }
 
     if string in FIELD_EXCEPTIONS:
