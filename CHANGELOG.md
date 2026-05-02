@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.26 (May 1, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #502](https://github.com/zscaler/zscaler-sdk-python/pull/502)
+
 ## 1.9.25 (April 30, 2026)
 
 ### Notes
