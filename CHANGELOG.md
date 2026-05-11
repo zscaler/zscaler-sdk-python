@@ -8,7 +8,11 @@
 
 ### Bug Fixes
 
-* [PR #502](https://github.com/zscaler/zscaler-sdk-python/pull/502)
+* [PR #507](https://github.com/zscaler/zscaler-sdk-python/pull/507) - Extended `zscaler/utils.py` `transform_common_id_fields` with a `coerce_ids: bool = True` keyword. When `True` (default) numeric-looking string IDs are still coerced to `int` to satisfy ZIA/ZTW APIs; when `False` IDs pass through verbatim. This protects ZPA's 19-digit string IDs (e.g. `"216196257331405454"`) from being silently retyped to `int` on the wire — the API accepts both, but the canonical shape is string and downstream JS clients lose precision on numbers > 2^53. All 24 existing ZIA/ZTW call sites are unchanged.
+
+* [PR #507](https://github.com/zscaler/zscaler-sdk-python/pull/507) - Migrated 8 ZPA service files (18 call sites) from `add_id_groups` to `transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)` so all ZPA ID-list reformatting flows through a single helper while preserving string IDs on the wire: `application_segment.py` (2 sites), `app_segments_pra.py` (2), `app_segments_inspection.py` (2), `app_segments_ba.py` (2), `app_segments_ba_v2.py` (2), `user_portal_link.py` (2), `server_groups.py` (2), and `policies.py` (4). Behaviour is identical today (existing manual `body[wireKey] = [{"id": x} for x in body.pop(snake_key)]` blocks still pre-empt the helper for the explicitly-handled fields), but the helper is now safe to lean on for new ID kwargs without a coercion regression.
+
+* [PR #507](https://github.com/zscaler/zscaler-sdk-python/pull/507) - Added `tests/unit/test_utils.py` with 12 unit tests pinning both modes of `transform_common_id_fields` — the ZIA/ZTW int-coercion default (list-of-str/int/dict, snake-to-wire remap, missing-key no-op, single-dict coercion) and the ZPA `coerce_ids=False` string-preservation path including a regression guard that fails if a 19-digit string ID is ever silently retyped, plus a sanity check that the default keyword still equals `coerce_ids=True`.
 
 ## 1.9.25 (April 30, 2026)
 

@@ -19,7 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_link import UserPortalLink
 from zscaler.zpa.models.user_portal_link import UserPortalLinks
-from zscaler.utils import format_url, add_id_groups
+from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.types import APIResult
 
 
@@ -199,7 +199,7 @@ class UserPortalLinkAPI(APIClient):
         if "user_portal_link_ids" in body:
             body["userPortals"] = [{"id": portal_link_id} for portal_link_id in body.pop("user_portal_link_ids")]
 
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
@@ -260,7 +260,7 @@ class UserPortalLinkAPI(APIClient):
         if "user_portal_link_ids" in body:
             body["userPortals"] = [{"id": portal_link_id} for portal_link_id in body.pop("user_portal_link_ids")]
 
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:

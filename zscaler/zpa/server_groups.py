@@ -18,7 +18,7 @@ from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.server_group import ServerGroup
-from zscaler.utils import format_url, add_id_groups
+from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.types import APIResult
 
 
@@ -210,14 +210,13 @@ class ServerGroupsAPI(APIClient):
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
         if "app_connector_group_ids" in body:
             body["appConnectorGroups"] = [{"id": group_id} for group_id in body.pop("app_connector_group_ids")]
 
         if "server_ids" in body:
             body["servers"] = [{"id": group_id} for group_id in body.pop("server_ids")]
 
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
@@ -285,7 +284,7 @@ class ServerGroupsAPI(APIClient):
         if "server_ids" in body:
             body["servers"] = [{"id": group_id} for group_id in body.pop("server_ids")]
 
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:

@@ -19,7 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
-from zscaler.utils import add_id_groups, format_url
+from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.types import APIResult
 
 
@@ -279,8 +279,7 @@ class AppSegmentsBAV2API(APIClient):
             # Use format 2 (udpPortRange)
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
 
-        # Apply add_id_groups to reformat params based on self.reformat_params
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
@@ -419,7 +418,7 @@ class AppSegmentsBAV2API(APIClient):
         else:
             body["udpPortRange"] = []  # Explicitly clear if not provided
 
-        add_id_groups(self.reformat_params, kwargs, body)
+        transform_common_id_fields(self.reformat_params, kwargs, body, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:

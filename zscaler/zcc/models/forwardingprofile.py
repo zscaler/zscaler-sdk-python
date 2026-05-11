@@ -129,9 +129,7 @@ class ForwardingProfileActions(ZscalerObject):
                 config["useTunnel2ForProxiedWebTraffic"] if "useTunnel2ForProxiedWebTraffic" in config else None
             )
             self.use_tunnel2_for_unencrypted_web_traffic = (
-                config["useTunnel2ForUnencryptedWebTraffic"]
-                if "useTunnel2ForUnencryptedWebTraffic" in config
-                else None
+                config["useTunnel2ForUnencryptedWebTraffic"] if "useTunnel2ForUnencryptedWebTraffic" in config else None
             )
             self.redirect_web_traffic = config["redirectWebTraffic"] if "redirectWebTraffic" in config else None
             self.drop_ipv6_include_traffic_in_t2 = (
@@ -381,9 +379,7 @@ class ForwardingProfile(ZscalerObject):
             self.dns_servers = config["dnsServers"] if "dnsServers" in config else None
             self.dns_search_domains = config["dnsSearchDomains"] if "dnsSearchDomains" in config else None
             self.hostname = config["hostname"] if "hostname" in config else None
-            self.resolved_ips_for_hostname = (
-                config["resolvedIpsForHostname"] if "resolvedIpsForHostname" in config else None
-            )
+            self.resolved_ips_for_hostname = config["resolvedIpsForHostname"] if "resolvedIpsForHostname" in config else None
             self.trusted_subnets = config["trustedSubnets"] if "trustedSubnets" in config else None
             self.trusted_gateways = config["trustedGateways"] if "trustedGateways" in config else None
             self.trusted_dhcp_servers = config["trustedDhcpServers"] if "trustedDhcpServers" in config else None
@@ -397,9 +393,7 @@ class ForwardingProfile(ZscalerObject):
             self.skip_trusted_criteria_match = (
                 config["skipTrustedCriteriaMatch"] if "skipTrustedCriteriaMatch" in config else None
             )
-            self.evaluate_trusted_network = (
-                config["evaluateTrustedNetwork"] if "evaluateTrustedNetwork" in config else None
-            )
+            self.evaluate_trusted_network = config["evaluateTrustedNetwork"] if "evaluateTrustedNetwork" in config else None
             self.predefined_trusted_networks = (
                 config["predefinedTrustedNetworks"] if "predefinedTrustedNetworks" in config else None
             )

@@ -93,6 +93,11 @@ reformat_params = [
     ("supported_region_ids", "supportedRegions"),
     ("src_workload_groups_ids", "srcWorkloadGroups"),
     ("dest_workload_groups_ids", "destWorkloadGroups"),
+    ("application_ids", "applications"),
+    ("server_group_ids", "serverGroups"),
+    ("connector_ids", "connectors"),
+    ("server_group_ids", "serverGroups"),
+    ("user_portal_ids", "userPortals"),
 ]
 
 
@@ -225,54 +230,54 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     return
 
 
-def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
+def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict, coerce_ids: bool = True):
     """
-    For each (key, payload_key) in 'id_groups':
-      - If 'key' in source_dict, pop it out,
-      - convert that list/dict to the final "id" structure,
-      - store in target_dict[payload_key].
+    For each ``(key, payload_key)`` in ``id_groups``:
+
+    - If ``key`` is in ``source_dict``, pop it out,
+    - convert that list/dict to the final ``{"id": ...}`` structure,
+    - store the result in ``target_dict[payload_key]``.
+
+    Args:
+        id_groups: List of ``(snake_case_key, wire_key)`` tuples to remap.
+        source_dict: Dict to read (and pop) the snake-case keys from.
+        target_dict: Dict to write the wire-keyed, structured payload into.
+        coerce_ids: If ``True`` (default), numeric-looking string IDs are
+            coerced to ``int`` to match ZIA/ZTW APIs that strictly require
+            integer IDs. If ``False``, ID values are passed through verbatim
+            — required for ZPA, whose 19-digit string IDs must be preserved
+            on the wire (the API accepts both, but the canonical shape is
+            string and downstream JS clients lose precision on ints > 2^53).
     """
+
+    def _maybe_coerce(item_id):
+        if not coerce_ids:
+            return item_id
+        if isinstance(item_id, str):
+            try:
+                return int(item_id)
+            except ValueError:
+                return item_id
+        if isinstance(item_id, int):
+            return int(item_id)
+        return item_id
+
     for key, payload_key in id_groups:
         if key in source_dict:
             value = source_dict.pop(key)
             if isinstance(value, list):
-                # 1) Convert list-of-str-or-int => [{ "id":... }, ...]
                 final_list = []
                 for item in value:
                     if isinstance(item, (str, int)):
-                        # Try to convert to int, but keep as string if it's not a valid integer
-                        if isinstance(item, str):
-                            try:
-                                final_list.append({"id": int(item)})
-                            except ValueError:
-                                # Keep as string if it's not a valid integer (e.g., 'ihln05ktj07ds')
-                                final_list.append({"id": item})
-                        else:
-                            final_list.append({"id": int(item)})
+                        final_list.append({"id": _maybe_coerce(item)})
                     elif isinstance(item, dict) and "id" in item:
-                        # Possibly user gave { "id": 123, ... }
-                        if isinstance(item["id"], str):
-                            try:
-                                item["id"] = int(item["id"])
-                            except ValueError:
-                                # Keep as string if it's not a valid integer
-                                pass
-                        else:
-                            item["id"] = int(item["id"])
+                        item["id"] = _maybe_coerce(item["id"])
                         final_list.append(item)
                     else:
                         final_list.append(item)
                 target_dict[payload_key] = final_list
             elif isinstance(value, dict) and "id" in value:
-                # single dict with ID
-                if isinstance(value["id"], str):
-                    try:
-                        value["id"] = int(value["id"])
-                    except ValueError:
-                        # Keep as string if it's not a valid integer
-                        pass
-                else:
-                    value["id"] = int(value["id"])
+                value["id"] = _maybe_coerce(value["id"])
                 target_dict[payload_key] = value
     return
 

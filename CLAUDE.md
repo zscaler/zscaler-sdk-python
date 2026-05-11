@@ -67,6 +67,34 @@ The ZCC API is unusually inconsistent in its attribute casing — payloads mix `
 
 `zscaler/utils.py` `zcc_param_mapper` accepts `device_type` as either a string label (`"ios"`, `"windows"`) or an int code (`3`). The scalar-to-list wrapper handles both `str` and `int`; do not pass `device_type` as a one-element list unless you really mean to fan-out across multiple device types.
 
+## ZPA-Specific Architecture
+
+ZPA returns 19-digit string IDs (e.g. `"216196257331405454"`). The API accepts both string and int but the canonical shape is **string** — coercing to `int` is unsafe for downstream JS consumers (precision loss above 2^53) and inconsistent with the response shape.
+
+### `transform_common_id_fields(coerce_ids=...)`
+
+`zscaler/utils.py` `transform_common_id_fields` takes a `coerce_ids: bool = True` keyword:
+
+- `True` (default) — numeric-looking strings get `int()`-coerced. Required for ZIA/ZTW, whose APIs strictly reject `"123"` for fields they expect as numeric.
+- `False` — IDs pass through verbatim. Required for ZPA.
+
+**ZPA call sites must pass `coerce_ids=False`.** All 18 active call sites across `application_segment.py`, `app_segments_pra.py`, `app_segments_inspection.py`, `app_segments_ba.py`, `app_segments_ba_v2.py`, `user_portal_link.py`, `server_groups.py`, and `policies.py` already do. New ZPA mutating endpoints should follow the same pattern.
+
+### Manual ID-list blocks above the helper
+
+Most ZPA mutating methods still pre-handle the explicitly-supported snake → wire keys with manual blocks like:
+
+```python
+if "server_group_ids" in body:
+    body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
+```
+
+These shadow `transform_common_id_fields` for those fields (the helper finds nothing to do because the snake key was already popped). They are intentional and safe — string IDs pass through unchanged. The `transform_common_id_fields(..., coerce_ids=False)` call below them handles any *additional* ID kwargs declared in the resource's `reformat_params` table without a coercion regression. Do not remove the manual blocks unless you've verified every reformat-params entry can survive helper-only handling.
+
+### `add_id_groups` is being phased out for ZPA
+
+`add_id_groups` (also in `zscaler/utils.py`) is the original ZPA helper and never coerces. It still exists for backwards compatibility and is kept in `application_segment.py`'s `add_segment_provision` flow and `pra_credential_pool.py`. New code in ZPA should prefer `transform_common_id_fields(..., coerce_ids=False)` so the service converges on a single helper.
+
 ## Key Conventions
 
 | Aspect | Convention |

@@ -18,6 +18,7 @@ import pytest
 from tests.integration.zcc.conftest import MockZCCClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
@@ -154,14 +155,13 @@ class TestWebPolicy:
                     "bypass_dns_traffic_using_udp_proxy": "0",
                     "reconnect_tun_on_wakeup": "0",
                     "enable_custom_theme": 0,
-                    "delete_dhcp_option121_routes": "{\"trusted\":1,\"offTrusted\":1,\"vpnTrusted\":1,\"splitVpnTrusted\":1}",
+                    "delete_dhcp_option121_routes": '{"trusted":1,"offTrusted":1,"vpnTrusted":1,"splitVpnTrusted":1}',
                     "machine_idp_auth": False,
                     "nonce": "",
                     "packet_tunnel_dns_exclude_list": "",
                     "packet_tunnel_dns_include_list": "",
                     "packet_tunnel_exclude_list": (
-                        "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,"
-                        "224.0.0.0/4,255.255.255.255,169.254.0.0/16"
+                        "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16," "224.0.0.0/4,255.255.255.255,169.254.0.0/16"
                     ),
                     "packet_tunnel_exclude_list_for_ipv6": "[FF00::/8],[FE80::/10],[FC00::/7]",
                     "packet_tunnel_include_list": "0.0.0.0/0",
@@ -183,9 +183,7 @@ class TestWebPolicy:
                         "vpn_trusted": {"id": 0},
                     },
                     "ddil_config": (
-                        "{\"ddilEnabled\":0,"
-                        "\"businessContinuityActivationDomain\":\"\","
-                        "\"businessContinuityTestModeEnabled\":0}"
+                        '{"ddilEnabled":0,' '"businessContinuityActivationDomain":"",' '"businessContinuityTestModeEnabled":0}'
                     ),
                     "zcc_app_fail_open_policy": 0,
                     "zcc_tunnel_fail_policy": 0,
@@ -210,10 +208,10 @@ class TestWebPolicy:
                     "enable_custom_proxy_detection": "0",
                     "enable_crash_reporting": "0",
                     "zdx_lite_config_obj": (
-                        "{\"localMetrics\":1,"
-                        "\"endToEndDiagnostics\":{"
-                        "\"trusted\":0,\"vpnTrusted\":0,"
-                        "\"offTrusted\":0,\"splitVpnTrusted\":0"
+                        '{"localMetrics":1,'
+                        '"endToEndDiagnostics":{'
+                        '"trusted":0,"vpnTrusted":0,'
+                        '"offTrusted":0,"splitVpnTrusted":0'
                         "}}"
                     ),
                 },
@@ -306,14 +304,8 @@ class TestWebPolicy:
                     "remove_exempted_containers": "1",
                     "disable_parallel_ipv4and_ipv6": "-1",
                     "flow_logger_config": "",
-                    "domain_profile_detection_config": (
-                        "{\"trusted\":0,\"vpnTrusted\":0,"
-                        "\"offTrusted\":0,\"splitVpnTrusted\":0}"
-                    ),
-                    "zpa_reauth_config": (
-                        "{\"trusted\":0,\"vpnTrusted\":0,"
-                        "\"offTrusted\":0,\"splitVpnTrusted\":0}"
-                    ),
+                    "domain_profile_detection_config": ('{"trusted":0,"vpnTrusted":0,' '"offTrusted":0,"splitVpnTrusted":0}'),
+                    "zpa_reauth_config": ('{"trusted":0,"vpnTrusted":0,' '"offTrusted":0,"splitVpnTrusted":0}'),
                     "all_inbound_traffic_config": "",
                     "install_ssl_certs": 1,
                     "trigger_domain_profle_detection": 0,
@@ -327,11 +319,11 @@ class TestWebPolicy:
                     "uninstall_password": "",
                     "wfp_driver": 0,
                     "captive_portal_config": (
-                        "{\"automaticCapture\":1,"
-                        "\"enableCaptivePortalDetection\":1,"
-                        "\"enableFailOpen\":1,"
-                        "\"captivePortalWebSecDisableMinutes\":10,"
-                        "\"enableEmbeddedCaptivePortal\":0}"
+                        '{"automaticCapture":1,'
+                        '"enableCaptivePortalDetection":1,'
+                        '"enableFailOpen":1,'
+                        '"captivePortalWebSecDisableMinutes":10,'
+                        '"enableEmbeddedCaptivePortal":0}'
                     ),
                     "install_windows_firewall_inbound_rule": "1",
                     "force_location_refresh_sccm": 0,
@@ -408,40 +400,28 @@ class TestWebPolicy:
                         policy_id = None
 
             assert err is None, f"Error creating web policy: {err}"
-            assert isinstance(body, dict), (
-                f"Expected a dict response body, got {type(body).__name__}: {body!r}"
-            )
-            assert str(body.get("success", "")).lower() == "true", (
-                f"Expected success='true', got {body.get('success')!r}"
-            )
-            assert policy_id, (
-                f"Expected a non-zero id on the created web policy, got {body.get('id')!r}"
-            )
+            assert isinstance(body, dict), f"Expected a dict response body, got {type(body).__name__}: {body!r}"
+            assert str(body.get("success", "")).lower() == "true", f"Expected success='true', got {body.get('success')!r}"
+            assert policy_id, f"Expected a non-zero id on the created web policy, got {body.get('id')!r}"
         except Exception as exc:
             errors.append(f"Web policy creation failed: {exc}")
 
         try:
             if policy_id:
-                policies, _, err = client.zcc.web_policy.list_by_company(
-                    query_params={"device_type": "windows"}
-                )
+                policies, _, err = client.zcc.web_policy.list_by_company(query_params={"device_type": "windows"})
                 assert err is None, f"Error listing web policies by device_type: {err}"
                 assert isinstance(policies, list), "Expected a list of web policies"
                 # Normalise to int — IDs may come back as int or float in
                 # the listing depending on the underlying transport.
                 assert any(
-                    getattr(p, "id", None) is not None
-                    and int(getattr(p, "id")) == int(policy_id)
-                    for p in policies
+                    getattr(p, "id", None) is not None and int(getattr(p, "id")) == int(policy_id) for p in policies
                 ), "Created policy not found in device_type=windows listing"
         except Exception as exc:
             errors.append(f"Listing web policies by device_type failed: {exc}")
 
         try:
             if policy_id:
-                _, response, err = client.zcc.web_policy.list_by_company(
-                    query_params={"device_type": "windows"}
-                )
+                _, response, err = client.zcc.web_policy.list_by_company(query_params={"device_type": "windows"})
                 assert err is None, f"Error listing web policies for JMESPath search: {err}"
                 assert response is not None, "Expected a response object for client-side filtering"
 
@@ -459,11 +439,6 @@ class TestWebPolicy:
                     _, _, err = client.zcc.web_policy.delete_web_policy(policy_id)
                     assert err is None, f"Error deleting web policy {policy_id}: {err}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for web policy ID {policy_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for web policy ID {policy_id}: {cleanup_exc}")
 
-        assert len(errors) == 0, (
-            f"Errors occurred during the web policy lifecycle test:\n"
-            f"{chr(10).join(errors)}"
-        )
+        assert len(errors) == 0, f"Errors occurred during the web policy lifecycle test:\n" f"{chr(10).join(errors)}"

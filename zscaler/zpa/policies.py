@@ -19,7 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.policyset_controller_v1 import PolicySetControllerV1
 from zscaler.zpa.models.policyset_controller_v2 import PolicySetControllerV2
-from zscaler.utils import format_url, add_id_groups
+from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.types import APIResult
 from threading import Lock
 from functools import wraps
@@ -608,7 +608,7 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        add_id_groups(self.reformat_params, kwargs, payload)
+        transform_common_id_fields(self.reformat_params, kwargs, payload, coerce_ids=False)
 
         conditions = kwargs.pop("conditions", [])
         if conditions:
@@ -700,7 +700,7 @@ class PolicySetControllerAPI(APIClient):
         }
 
         # Add remaining attributes from kwargs, transforming them to camel case
-        add_id_groups(self.reformat_params, kwargs, payload)
+        transform_common_id_fields(self.reformat_params, kwargs, payload, coerce_ids=False)
         conditions = kwargs.pop("conditions", [])
         if conditions:
             payload["conditions"] = self._create_conditions_v1(conditions)
@@ -1634,7 +1634,7 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        add_id_groups(self.reformat_params, kwargs, payload)
+        transform_common_id_fields(self.reformat_params, kwargs, payload, coerce_ids=False)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -1805,7 +1805,7 @@ class PolicySetControllerAPI(APIClient):
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        add_id_groups(self.reformat_params, kwargs, payload)
+        transform_common_id_fields(self.reformat_params, kwargs, payload, coerce_ids=False)
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
