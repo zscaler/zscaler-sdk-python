@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.27 (May 12, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #510](https://github.com/zscaler/zscaler-sdk-python/pull/510) - Addressed [Issue #506](https://github.com/zscaler/zscaler-sdk-python/issues/506): `server_groups.update_group()` now strips the `applications` collection from the GET-derived PUT body unless the caller explicitly passes `applications=[...]`. The field is not required to update connector-group / server membership, and round-tripping it could exceed the API's payload-size cap on tenants whose server group is associated with a large number of application segments. This is a defensive client-side workaround; the underlying API-level 1,000-application-segments-per-server-group limit still applies.
+
 ## 1.9.26 (May 1, 2026)
 
 ### Notes
