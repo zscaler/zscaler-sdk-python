@@ -270,6 +270,14 @@ class ServerGroupsAPI(APIClient):
 
         body = existing_group.request_format()
 
+        # GET returns the full `applications` association on a server group, but the field is
+        # not required to update connector-group / server membership, and round-tripping it can
+        # exceed the API's payload-size cap on tenants where the group is associated with a
+        # large number of application segments (Issue #506). Drop it unless the caller is
+        # explicitly setting it via kwargs.
+        if "applications" not in kwargs:
+            body.pop("applications", None)
+
         body.update(kwargs)
 
         if "dynamicDiscovery" not in body:
