@@ -199,7 +199,7 @@ class TestPolicyDetection:
             # If API works correctly, they should be unique
             unique_ids = set(transaction_ids)
             if len(unique_ids) < 3:
-                pytest.skip(f"API returned duplicate transaction IDs - may indicate API issue")
+                pytest.skip("API returned duplicate transaction IDs - may indicate API issue")
 
     def test_inbound_and_outbound_directions(self, zguard_client):
         """
@@ -266,7 +266,7 @@ class TestPolicyDetection:
 
                 # Check if content size throttling occurred
                 if result.throttling_details:
-                    cs_throttles = [t for t in result.throttling_details if t.metric == "cs"]
+                    [t for t in result.throttling_details if t.metric == "cs"]
                     # It's possible to get cs throttling for large content
                     # Not asserting this as it depends on API limits
 
@@ -361,8 +361,7 @@ class TestPolicyDetection:
                 content="Test reset stats", direction="IN"
             )
 
-            # Get stats
-            stats_before = client.get_rate_limit_stats()
+            client.get_rate_limit_stats()
 
             # Reset stats
             client.reset_rate_limit_stats()

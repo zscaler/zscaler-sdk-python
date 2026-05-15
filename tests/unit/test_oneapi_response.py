@@ -2,10 +2,11 @@
 Testing OneAPI Response for Zscaler SDK
 """
 
-import pytest
 import json
-import uuid
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
+
+import pytest
+
 from zscaler.oneapi_response import ZscalerAPIResponse
 
 

@@ -16,6 +16,14 @@
 
 import pytest
 
+from zscaler.zms.models.common import (
+    AgentEntry,
+    AgentGroupEntry,
+    AppZoneEntry,
+    PageInfo,
+    PolicyRuleEntry,
+    ResourceEntry,
+)
 from zscaler.zms.models.enums import (
     AgentAdminStatus,
     AgentType,
@@ -25,20 +33,12 @@ from zscaler.zms.models.enums import (
     SortDirection,
 )
 from zscaler.zms.models.inputs import (
-    StringExpression,
-    IntegerExpression,
-    ResourceQueryFilter,
-    PolicyRuleFilter,
     AppZoneFilter,
+    IntegerExpression,
     NamespaceFilter,
-)
-from zscaler.zms.models.common import (
-    AgentEntry,
-    AgentGroupEntry,
-    ResourceEntry,
-    PolicyRuleEntry,
-    AppZoneEntry,
-    PageInfo,
+    PolicyRuleFilter,
+    ResourceQueryFilter,
+    StringExpression,
 )
 
 

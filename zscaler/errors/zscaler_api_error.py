@@ -1,5 +1,6 @@
-from typing import Dict, Any, List, Union, Optional
 import json
+from typing import Any, Dict, List, Optional, Union
+
 import requests
 
 

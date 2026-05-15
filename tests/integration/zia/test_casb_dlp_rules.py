@@ -42,14 +42,14 @@ class TestCasbDlpRules:
             try:
                 all_rules, _, error = client.zia.casb_dlp_rules.list_all_rules()
                 assert error is None, f"Error listing all CASB DLP rules: {error}"
-            except Exception as exc:
+            except Exception:
                 pass  # May fail due to permissions
 
             # Step 2: List CASB DLP rules by type - ITSM
             try:
                 typed_rules, _, error = client.zia.casb_dlp_rules.list_rules(rule_type=rule_type)
                 assert error is None, f"Error listing CASB DLP rules by type: {error}"
-            except Exception as exc:
+            except Exception:
                 pass
 
             # Step 3: List CASB DLP rules by type - FILE

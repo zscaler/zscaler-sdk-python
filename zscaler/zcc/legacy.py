@@ -2,17 +2,19 @@ from __future__ import annotations
 
 import logging
 import os
-import urllib.parse
 import time
-import requests
+import urllib.parse
 from datetime import datetime, timedelta
 from typing import TYPE_CHECKING
+
+import requests
+
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.user_agent import UserAgent
-from zscaler.utils import is_token_expired, RateLimitExceededError
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.logger import setup_logging
+from zscaler.user_agent import UserAgent
+from zscaler.utils import RateLimitExceededError, is_token_expired
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -20,20 +22,20 @@ logger = logging.getLogger("zscaler-sdk-python")
 
 # Import all ZCC API classes for type hints only (to avoid circular imports)
 if TYPE_CHECKING:
-    from zscaler.zcc.devices import DevicesAPI
     from zscaler.zcc.admin_user import AdminUserAPI
+    from zscaler.zcc.application_profiles import ApplicationProfilesAPI
     from zscaler.zcc.company import CompanyInfoAPI
-    from zscaler.zcc.entitlements import EntitlementAPI
-    from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
-    from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
-    from zscaler.zcc.web_policy import WebPolicyAPI
-    from zscaler.zcc.web_app_service import WebAppServiceAPI
-    from zscaler.zcc.web_privacy import WebPrivacyAPI
-    from zscaler.zcc.trusted_networks import TrustedNetworksAPI
     from zscaler.zcc.custom_ip_base_apps import CustomIPBasedAppsAPI
+    from zscaler.zcc.devices import DevicesAPI
+    from zscaler.zcc.entitlements import EntitlementAPI
+    from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
+    from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
     from zscaler.zcc.predefined_ip_based_apps import PredefinedIPBasedAppsAPI
     from zscaler.zcc.process_based_apps import ProcessBasedAppsAPI
-    from zscaler.zcc.application_profiles import ApplicationProfilesAPI
+    from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+    from zscaler.zcc.web_app_service import WebAppServiceAPI
+    from zscaler.zcc.web_policy import WebPolicyAPI
+    from zscaler.zcc.web_privacy import WebPrivacyAPI
 
 
 # Default subdomain used to reach the ZCC Mobile Admin Portal API

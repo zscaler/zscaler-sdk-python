@@ -15,11 +15,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zcc.models.application_profiles import ApplicationProfile
-from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.types import APIResult
+from zscaler.utils import format_url, zcc_param_mapper
+from zscaler.zcc.models.application_profiles import ApplicationProfile
 
 
 class ApplicationProfilesAPI(APIClient):

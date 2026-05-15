@@ -14,24 +14,27 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zdx.models.call_quality_metrics import CallQualityMetrics
-from zscaler.zdx.models.devices import Devices
-from zscaler.zdx.models.devices import DeviceModelInfo
-from zscaler.zdx.models.devices import DeviceAppScoreTrend
-from zscaler.zdx.models.devices import DeviceWebProbePageFetch
-from zscaler.zdx.models.devices import DeviceAppCloudPathProbes
-from zscaler.zdx.models.devices import DeviceCloudPathProbesMetric
-from zscaler.zdx.models.devices import DeviceCloudPathProbesHopData
-from zscaler.zdx.models.devices import DeviceActiveGeo
-from zscaler.zdx.models.devices import DeviceAppWebProbes
-from zscaler.zdx.models.devices import DeviceActiveApplications
-from zscaler.zdx.models.devices import DeviceHealthMetrics
-from zscaler.zdx.models.devices import DeviceEvents
-from zscaler.utils import format_url, zdx_params
 from zscaler.types import APIResult
+from zscaler.utils import format_url, zdx_params
+from zscaler.zdx.models.call_quality_metrics import CallQualityMetrics
+from zscaler.zdx.models.devices import (
+    DeviceActiveApplications,
+    DeviceActiveGeo,
+    DeviceAppCloudPathProbes,
+    DeviceAppScoreTrend,
+    DeviceAppWebProbes,
+    DeviceCloudPathProbesHopData,
+    DeviceCloudPathProbesMetric,
+    DeviceEvents,
+    DeviceHealthMetrics,
+    DeviceModelInfo,
+    Devices,
+    DeviceWebProbePageFetch,
+)
 
 
 class DevicesAPI(APIClient):

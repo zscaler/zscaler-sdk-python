@@ -15,9 +15,11 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import os
+
 import pytest
-from zscaler.oneapi_client import LegacyZGuardClient
+
 from tests.test_utils import reset_vcr_counters
+from zscaler.oneapi_client import LegacyZGuardClient
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 

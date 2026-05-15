@@ -232,7 +232,7 @@ class TestAccessPrivilegedConsoleV2:
                 # If we got an error but it’s "Response is None", treat it as success:
                 if err is not None:
                     if isinstance(err, ValueError) and str(err) == "Response is None":
-                        print(f"[INFO] Interpreting 'Response is None' as 204 success.")
+                        print("[INFO] Interpreting 'Response is None' as 204 success.")
                     else:
                         raise AssertionError(f"Error updating PRA Console: {err}")
                 print(f"PRA Console with ID {console_id} updated successfully (204 No Content).")

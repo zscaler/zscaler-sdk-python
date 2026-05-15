@@ -6,7 +6,8 @@ Tests to ensure weak RSA keys are rejected
 import pytest
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
-from zscaler.oneapi_oauth_client import validate_rsa_key_strength, MIN_RSA_KEY_SIZE
+
+from zscaler.oneapi_oauth_client import MIN_RSA_KEY_SIZE, validate_rsa_key_strength
 
 
 def test_validate_strong_rsa_key_2048():

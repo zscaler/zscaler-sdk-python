@@ -15,9 +15,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import pytest
-
 import random
+
+import pytest
 
 
 @pytest.fixture

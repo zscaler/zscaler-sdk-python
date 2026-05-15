@@ -15,12 +15,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zdx.models.software_inventory import SoftwareList
-from zscaler.zdx.models.software_inventory import DeviceSoftwareInventory
-from zscaler.utils import format_url, zdx_params
 from zscaler.types import APIResult
+from zscaler.utils import format_url, zdx_params
+from zscaler.zdx.models.software_inventory import DeviceSoftwareInventory, SoftwareList
 
 
 class InventoryAPI(APIClient):

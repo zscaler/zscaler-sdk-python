@@ -15,12 +15,13 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.devices import Devices
-from zscaler.zia.models.device_groups import DeviceGroups
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.device_groups import DeviceGroups
+from zscaler.zia.models.devices import Devices
 
 
 class DeviceManagementAPI(APIClient):

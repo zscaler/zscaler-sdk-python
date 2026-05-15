@@ -15,7 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
-import os
+
 from tests.integration.zcc.conftest import MockZCCClient
 
 
@@ -163,7 +163,7 @@ class TestDeviceDownloads:
         try:
             test_filename = str(tmp_path / "test_disable_reasons.csv")
 
-            downloaded_file = client.zcc.devices.download_disable_reasons(
+            client.zcc.devices.download_disable_reasons(
                 query_params={
                     "os_types": ["windows"],
                     "start_date": "2024-01-01",

@@ -14,15 +14,16 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zia.models import location_management as location_management
-from zscaler.zia.models import location_group as location_group
-from zscaler.zia.models import rule_labels as rule_labels
-from zscaler.zia.models import cloud_firewall_time_windows as time_windows
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import bandwidth_classes as bandwidth_classes
+from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import common
+from zscaler.zia.models import location_group as location_group
+from zscaler.zia.models import location_management as location_management
+from zscaler.zia.models import rule_labels as rule_labels
 
 
 class BandwidthControlRules(ZscalerObject):

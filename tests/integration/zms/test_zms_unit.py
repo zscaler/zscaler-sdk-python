@@ -14,8 +14,9 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import pytest
 from unittest.mock import Mock
+
+import pytest
 
 
 @pytest.fixture
@@ -58,8 +59,8 @@ class TestAgentsUnit:
 
     def test_list_agents_graphql_error(self, fs):
         """Test list_agents handles GraphQL errors returned by the centralized error handler"""
-        from zscaler.zms.agents import AgentsAPI
         from zscaler.errors.graphql_error import GraphQLAPIError
+        from zscaler.zms.agents import AgentsAPI
 
         mock_executor = Mock()
         mock_request = Mock()

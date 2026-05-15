@@ -19,9 +19,9 @@ from zscaler.zdx.alerts import AlertsAPI
 from zscaler.zdx.apps import AppsAPI
 from zscaler.zdx.devices import DevicesAPI
 from zscaler.zdx.inventory import InventoryAPI
+from zscaler.zdx.snapshot import SnapshotAPI
 from zscaler.zdx.troubleshooting import TroubleshootingAPI
 from zscaler.zdx.users import UsersAPI
-from zscaler.zdx.snapshot import SnapshotAPI
 
 
 class ZDXService:

@@ -26,9 +26,9 @@ from zscaler.zcc.predefined_ip_based_apps import PredefinedIPBasedAppsAPI
 from zscaler.zcc.process_based_apps import ProcessBasedAppsAPI
 from zscaler.zcc.secrets import SecretsAPI
 from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+from zscaler.zcc.web_app_service import WebAppServiceAPI
 from zscaler.zcc.web_policy import WebPolicyAPI
 from zscaler.zcc.web_privacy import WebPrivacyAPI
-from zscaler.zcc.web_app_service import WebAppServiceAPI
 
 
 class ZCCService:

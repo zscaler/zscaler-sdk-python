@@ -15,8 +15,9 @@ Tests:
 """
 
 import os
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock, call
 import requests
 
 from zscaler.ztb.legacy import LegacyZTBClientHelper
@@ -62,9 +63,9 @@ def _build_client(**overrides):
     for k, v in overrides.items():
         defaults[k] = v
 
-    with patch("zscaler.request_executor.RequestExecutor"), patch(
-        "requests.post", return_value=_make_login_response()
-    ) as mock_post, patch("zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None)):
+    with patch("zscaler.request_executor.RequestExecutor"), patch("requests.post", return_value=_make_login_response()), patch(
+        "zscaler.ztb.legacy.check_response_for_error", return_value=(_LOGIN_RESPONSE, None)
+    ):
         client = LegacyZTBClientHelper(**defaults)
     return client
 
@@ -82,7 +83,7 @@ class TestAuthentication:
     def test_authenticate_calls_login_endpoint(self, mock_exec, mock_check, mock_post):
         mock_post.return_value = _make_login_response()
 
-        client = LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
+        LegacyZTBClientHelper(api_key="my-api-key", cloud="zscalerbd-api", timeout=10)
 
         mock_post.assert_called_once()
         call_args = mock_post.call_args
@@ -237,7 +238,7 @@ class TestAutoReauth:
         resp_200 = _make_response(200, json_data={"ok": True})
         mock_request.side_effect = [resp_401, resp_200]
 
-        with patch("zscaler.ztb.legacy.check_response_for_error", return_value=(new_login_resp, None)) as mock_check:
+        with patch("zscaler.ztb.legacy.check_response_for_error", return_value=(new_login_resp, None)):
             resp, ctx = client.send("GET", "/api/v2/alarm")
 
         assert resp.status_code == 200

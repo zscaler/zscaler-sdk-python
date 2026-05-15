@@ -14,7 +14,8 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, Optional, Any
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 

@@ -14,18 +14,17 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-"""
-Integration tests for the ZTB Ransomware Kill resource.
-
-Uses VCR to record/replay HTTP. Deterministic site_id for cassette matching.
-Set MOCK_TESTS=false and ZTB_API_KEY, ZTB_CLOUD (or ZTB_OVERRIDE_URL),
-ZTB_TEST_SITE_ID when recording cassettes.
-"""
+# Integration tests for the ZTB Ransomware Kill resource.
+#
+# Uses VCR to record/replay HTTP. Deterministic site_id for cassette matching.
+# Set MOCK_TESTS=false and ZTB_API_KEY, ZTB_CLOUD (or ZTB_OVERRIDE_URL),
+# ZTB_TEST_SITE_ID when recording cassettes.
 
 import os
+
 import pytest
 
-from tests.integration.ztb.conftest import MockZTBClient, NameGenerator
+from tests.integration.ztb.conftest import MockZTBClient
 
 
 @pytest.fixture

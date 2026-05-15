@@ -3,8 +3,10 @@ from __future__ import annotations
 import logging
 import os
 import time
-import requests
 from typing import TYPE_CHECKING
+
+import requests
+
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.logger import setup_logging

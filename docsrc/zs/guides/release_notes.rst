@@ -6,7 +6,27 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.9.27 (May 12, 2026)
+## 1.9.29 (May 15, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+--------------
+
+* (`#513 <https://github.com/zscaler/zscaler-sdk-python/pull/513>`_) - Added the following new ZIA Custom IPS Signature Rules endpoints
+  - ``GET /ipsSignatureRules`` Retrieves a list of custom IPS signature rules.
+  - ``POST /ipsSignatureRules`` Adds a new custom IPS signature rule.
+  - ``GET /ipsSignatureRules/{id}`` Retrieves the custom IPS signature rules based on the specified ID
+  - ``DELETE /ipsSignatureRules/{id}`` Deletes the custom IPS signature rules based on the specified ID
+  - ``PUT /ipsSignatureRules/{id}`` Updates the custom IPS signature rules based on the specified ID
+  - ``POST /ipsSignatureRules/validateRuleText`` Validates a new custom signature rule based on specific predefined conditions, such as syntax errors, duplicate signatures, and more
+  - ``POST /ipsSignatureRules/export`` Exports the custom IPS signature rules to a CSV file
+
+1.9.28 (May 12, 2026)
 ---------------------------
 
 Notes
@@ -18,6 +38,19 @@ Bug Fixes:
 ------------
 
 * (`#510 <https://github.com/zscaler/zscaler-sdk-python/pull/510>`_) - Addressed `Issue #506 <https://github.com/zscaler/zscaler-sdk-python/issues/506>`_: ``server_groups.update_group()`` now strips the ``applications`` collection from the GET-derived PUT body unless the caller explicitly passes ``applications=[...]``. The field is not required to update connector-group / server membership, and round-tripping it could exceed the API's payload-size cap on tenants whose server group is associated with a large number of application segments. This is a defensive client-side workaround; the underlying API-level 1,000-application-segments-per-server-group limit still applies.
+
+1.9.27 (May 1, 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes:
+------------
+
+* ZPA-#507 unify ID-list helper and preserve string IDs on the wire
 
 1.9.26 (May 1, 2026)
 ---------------------------

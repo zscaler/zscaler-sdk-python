@@ -14,8 +14,9 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
 import time
+
+import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string, generate_time_bounds

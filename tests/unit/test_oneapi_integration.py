@@ -9,9 +9,10 @@ This module tests the complete OneAPI workflow:
 5. Error handling and edge cases
 """
 
-import pytest
 import json
 from unittest.mock import Mock, patch
+
+import pytest
 
 
 # Mock responses for authentication

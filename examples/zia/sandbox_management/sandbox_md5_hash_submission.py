@@ -44,10 +44,11 @@ Examples:
 """
 
 import argparse
-import os
-from zscaler import ZIAClientHelper
 import json
+import os
 import time  # Import the time module for the delay
+
+from zscaler import ZIAClientHelper
 
 
 def main():

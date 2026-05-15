@@ -109,19 +109,19 @@ class TestURLCategories:
                     except Exception:
                         pass
 
-            except Exception as e:
+            except Exception:
                 pass  # Category creation may fail due to permissions/subscription
 
             # Test review_domains_post
             try:
-                review_result = client.zia.url_categories.review_domains_post(urls=["example.com"])
+                client.zia.url_categories.review_domains_post(urls=["example.com"])
                 # May return empty or error - that's ok
             except Exception:
                 pass
 
             # Test review_domains_put
             try:
-                review_result = client.zia.url_categories.review_domains_put(urls=["example.com"])
+                client.zia.url_categories.review_domains_put(urls=["example.com"])
                 # May return empty or error - that's ok
             except Exception:
                 pass

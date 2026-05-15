@@ -14,12 +14,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-"""
-Integration tests for the ZTB Alarms resource.
-
-Uses VCR to record/replay HTTP. Set MOCK_TESTS=false and ZTB_API_KEY,
-ZTB_CLOUD (or ZTB_OVERRIDE_URL) when recording cassettes.
-"""
+# Integration tests for the ZTB Alarms resource.
+#
+# Uses VCR to record/replay HTTP. Set MOCK_TESTS=false and ZTB_API_KEY,
+# ZTB_CLOUD (or ZTB_OVERRIDE_URL) when recording cassettes.
 
 import pytest
 

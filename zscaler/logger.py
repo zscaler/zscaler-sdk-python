@@ -1,9 +1,9 @@
-import logging
 import json as jsonp
+import logging
 import os
 import time
-from urllib.parse import urlencode
 from http.client import HTTPConnection
+from urllib.parse import urlencode
 
 LOG_FORMAT = "%(asctime)s - %(name)s - %(module)s - %(levelname)s - %(message)s"
 

@@ -14,14 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.dlp_resources import DLPICAPServer
-from zscaler.zia.models.dlp_resources import DLPIDMProfile
-from zscaler.zia.models.dlp_resources import DLPEDMSchema
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.dlp_resources import DLPEDMSchema, DLPICAPServer, DLPIDMProfile
 
 
 class DLPResourcesAPI(APIClient):

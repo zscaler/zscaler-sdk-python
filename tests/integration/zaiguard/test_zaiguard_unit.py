@@ -14,8 +14,9 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from unittest.mock import Mock
+
 import pytest
-from unittest.mock import Mock, MagicMock
 
 
 @pytest.fixture
@@ -266,8 +267,8 @@ class TestZGuardServiceUnit:
 
     def test_zguard_service_properties(self, fs):
         """Test ZGuardService property accessors"""
-        from zscaler.zaiguard.zaiguard_service import ZGuardService
         from zscaler.zaiguard.policy_detection import PolicyDetectionAPI
+        from zscaler.zaiguard.zaiguard_service import ZGuardService
 
         mock_executor = Mock()
 
@@ -374,8 +375,9 @@ class TestLegacyClientUnit:
 
     def test_clear_rate_limits(self, fs):
         """Test clear_rate_limits method"""
-        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         import time
+
+        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
         client = LegacyZGuardClientHelper(api_key="test_api_key", cloud="us1")
 
@@ -471,8 +473,9 @@ class TestLegacyClientUnit:
 
     def test_set_auth_header(self, fs):
         """Test set_auth_header method"""
-        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         import requests
+
+        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
         client = LegacyZGuardClientHelper(api_key="test_api_key_12345", cloud="us1")
 
@@ -535,8 +538,9 @@ class TestRateLimitingLogic:
 
     def test_should_wait_before_request_with_limit(self, fs):
         """Test _should_wait_before_request returns wait time when limited"""
-        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         import time
+
+        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
         client = LegacyZGuardClientHelper(api_key="test_api_key", cloud="us1")
 
@@ -550,8 +554,9 @@ class TestRateLimitingLogic:
 
     def test_wait_if_rate_limited(self, fs):
         """Test _wait_if_rate_limited method"""
-        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         import time
+
+        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
         client = LegacyZGuardClientHelper(api_key="test_api_key", cloud="us1")
 
@@ -571,9 +576,10 @@ class TestRateLimitingLogic:
 
     def test_thread_safety(self, fs):
         """Test that rate limiting operations are thread-safe"""
+        import threading
+
         from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         from zscaler.zaiguard.models.policy_detection import RateLimitThrottlingDetail
-        import threading
 
         client = LegacyZGuardClientHelper(api_key="test_api_key", cloud="us1", auto_retry_on_rate_limit=False)
 
@@ -594,8 +600,9 @@ class TestRateLimitingLogic:
 
     def test_get_jsessionid(self, fs):
         """Test get_jsessionid returns None for AIGuard"""
-        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
         import requests
+
+        from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 
         client = LegacyZGuardClientHelper(api_key="test_api_key", cloud="us1")
 

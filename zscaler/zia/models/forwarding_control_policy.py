@@ -14,22 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
+from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
+from zscaler.zia.models import cloud_firewall_nw_service as nw_service
+from zscaler.zia.models import cloud_firewall_nw_service_groups as nw_service_groups
+from zscaler.zia.models import cloud_firewall_time_windows as time_windows
+from zscaler.zia.models import common as common
+from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import device_groups as device_groups
 from zscaler.zia.models import devices as devices
-from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import location_group as location_group
-from zscaler.zia.models import user_management as user_management
+from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import rule_labels as rule_labels
-from zscaler.zia.models import cloud_firewall_time_windows as time_windows
-from zscaler.zia.models import cloud_firewall_nw_service_groups as nw_service_groups
-from zscaler.zia.models import cloud_firewall_nw_service as nw_service
-from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
+from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import zpa_gateway as zpa_gateway
-from zscaler.zia.models import common as common_reference
-from zscaler.zia.models import common as common
 
 
 class ForwardingControlRule(ZscalerObject):

@@ -15,14 +15,15 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import List, Optional
+
+from requests.utils import quote
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.app_protection_profile import AppProtectionProfile
-from zscaler.zpa.models.app_protection_profile import CustomControls
-from zscaler.zpa.models.app_protection_predefined_controls import PredefinedInspectionControlResource
-from zscaler.utils import format_url
 from zscaler.types import APIResult
-from requests.utils import quote
+from zscaler.utils import format_url
+from zscaler.zpa.models.app_protection_predefined_controls import PredefinedInspectionControlResource
+from zscaler.zpa.models.app_protection_profile import AppProtectionProfile, CustomControls
 
 
 class InspectionControllerAPI(APIClient):

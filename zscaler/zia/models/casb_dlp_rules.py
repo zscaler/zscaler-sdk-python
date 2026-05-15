@@ -14,14 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, Optional, Any
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common
 from zscaler.zia.models import dlp_engine as dlp_engine
 from zscaler.zia.models import rule_labels as labels
-from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import saas_security_api as saas_security_api
+from zscaler.zia.models import user_management as user_management
 
 
 class CasbdDlpRules(ZscalerObject):

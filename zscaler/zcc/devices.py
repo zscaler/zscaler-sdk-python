@@ -14,18 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.api_client import APIClient
-from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
-from zscaler.helpers import convert_keys_to_camel_case
-from zscaler.zcc.models.devices import Device
-from zscaler.zcc.models.devices import ForceRemoveDevices
-from zscaler.zcc.models.devices import SetDeviceCleanupInfo
-from zscaler.zcc.models.devices import DeviceCleanup
-from zscaler.zcc.models.devices import DeviceDetails
-from zscaler.types import APIResult
 from datetime import datetime
+from typing import List, Optional
+
+from zscaler.api_client import APIClient
+from zscaler.helpers import convert_keys_to_camel_case
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
+from zscaler.zcc.models.devices import Device, DeviceCleanup, DeviceDetails, ForceRemoveDevices, SetDeviceCleanupInfo
 
 
 class DevicesAPI(APIClient):

@@ -56,9 +56,10 @@ Please note that this script requires environment variables to be set for ZIA_US
 """
 
 import argparse
-import os
 import json
+import os
 import time
+
 from zscaler import ZIAClientHelper
 
 

@@ -39,7 +39,6 @@ class TestCBIRegions:
             regions, _, err = client.zpa.cbi_region.list_cbi_regions()
             assert err is None, f"Error listing CBI regions: {err}"
             assert isinstance(regions, list) and len(regions) >= 2, "Expected at least two CBI regions"
-            tested_regions = regions[:2]  # Test the first two regions
         except AssertionError as exc:
             errors.append(f"Assertion error: {str(exc)}")
         except Exception as exc:

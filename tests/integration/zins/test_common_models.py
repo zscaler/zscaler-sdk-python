@@ -14,16 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
 from zscaler.zins.models.common import (
-    WebReportEntry,
-    WebReportEntryWithId,
-    TrendDataPoint,
-    CyberSecurityIncident,
     CasbIncident,
+    CyberSecurityIncident,
+    FirewallReportEntry,
     IoTDeviceStat,
     ShadowITApp,
-    FirewallReportEntry,
+    TrendDataPoint,
+    WebReportEntry,
+    WebReportEntryWithId,
 )
 
 

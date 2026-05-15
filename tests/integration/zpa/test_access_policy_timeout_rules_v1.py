@@ -36,7 +36,6 @@ class TestAccessPolicyTimeoutV1:
         errors = []
         rule_id = None
         scim_group_ids = []
-        profile_id = None
 
         try:
 

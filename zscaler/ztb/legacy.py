@@ -22,17 +22,18 @@ import random
 import time
 import uuid
 from time import sleep
-from typing import Optional, Dict, Any, Tuple, Type, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Type
 
 import requests
+
 from zscaler import __version__
 from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.errors.response_checker import check_response_for_error
+from zscaler.logger import dump_request, dump_response, setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
-from zscaler.logger import setup_logging, dump_request, dump_response
-from zscaler.errors.response_checker import check_response_for_error
 
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")

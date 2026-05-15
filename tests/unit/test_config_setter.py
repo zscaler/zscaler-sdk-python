@@ -2,9 +2,9 @@
 Testing Config Setter for Zscaler SDK
 """
 
-import pytest
 import os
 from unittest.mock import patch
+
 from zscaler.config.config_setter import ConfigSetter
 
 

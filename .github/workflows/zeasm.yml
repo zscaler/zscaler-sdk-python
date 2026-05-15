@@ -71,7 +71,7 @@
           - name: Install dependencies
             run: poetry install
     
-          - name: Lint with flake8
+          - name: Lint with Ruff
             run: |
               poetry run make lint:zeasm
     
@@ -137,7 +137,7 @@
           - name: Install dependencies
             run: poetry install
     
-          - name: Lint with flake8
+          - name: Lint with Ruff
             run: |
               poetry run make lint:zeasm
     

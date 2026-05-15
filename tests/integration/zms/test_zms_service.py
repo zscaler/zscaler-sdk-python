@@ -14,19 +14,20 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import pytest
 from unittest.mock import Mock
 
-from zscaler.zms.zms_service import ZMSService
-from zscaler.zms.agents import AgentsAPI
+import pytest
+
 from zscaler.zms.agent_groups import AgentGroupsAPI
-from zscaler.zms.nonces import NoncesAPI
-from zscaler.zms.resources import ResourcesAPI
-from zscaler.zms.resource_groups import ResourceGroupsAPI
-from zscaler.zms.policy_rules import PolicyRulesAPI
-from zscaler.zms.app_zones import AppZonesAPI
+from zscaler.zms.agents import AgentsAPI
 from zscaler.zms.app_catalog import AppCatalogAPI
+from zscaler.zms.app_zones import AppZonesAPI
+from zscaler.zms.nonces import NoncesAPI
+from zscaler.zms.policy_rules import PolicyRulesAPI
+from zscaler.zms.resource_groups import ResourceGroupsAPI
+from zscaler.zms.resources import ResourcesAPI
 from zscaler.zms.tags import TagsAPI
+from zscaler.zms.zms_service import ZMSService
 
 
 @pytest.fixture

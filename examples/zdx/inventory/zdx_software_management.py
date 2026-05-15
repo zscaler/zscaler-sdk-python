@@ -23,11 +23,13 @@ Using Legacy Client:
 
 """
 
+import argparse
+import logging
 import os
 import time
-import logging
-import argparse
+
 from prettytable import PrettyTable
+
 from zscaler import ZscalerClient
 from zscaler.oneapi_client import LegacyZDXClient
 

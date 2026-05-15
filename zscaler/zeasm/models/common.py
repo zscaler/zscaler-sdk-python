@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import Any, Dict, Optional
+
 from zscaler.oneapi_object import ZscalerObject
 
 

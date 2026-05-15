@@ -14,14 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+import textwrap
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.pac_files import PacFiles
-from zscaler.zia.models.pac_files import PacFileValidationResponse
-from zscaler.utils import format_url
 from zscaler.types import APIResult
-import textwrap
+from zscaler.utils import format_url
+from zscaler.zia.models.pac_files import PacFiles, PacFileValidationResponse
 
 
 class PacFilesAPI(APIClient):

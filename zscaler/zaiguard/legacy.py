@@ -18,17 +18,17 @@ from __future__ import annotations
 
 import logging
 import os
-import time
 import threading
-from typing import Optional, Dict, Any, Type, List, TYPE_CHECKING
+import time
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type
 
 import requests
+
 from zscaler import __version__
 from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.logger import dump_request, dump_response, setup_logging
 from zscaler.user_agent import UserAgent
-from zscaler.logger import setup_logging, dump_request, dump_response
 
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
@@ -386,8 +386,8 @@ class LegacyZGuardClientHelper:
         prepared = self.set_auth_header(prepared)
 
         # Log request (with proper parameters for dump_request)
-        import uuid
         import time
+        import uuid
 
         request_uuid = str(uuid.uuid4())
         start_time = time.time()

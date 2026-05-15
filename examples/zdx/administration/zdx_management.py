@@ -42,9 +42,10 @@ Using Legacy Client:
 
 import argparse
 import logging
-import json
 import os
+
 from prettytable import PrettyTable
+
 from zscaler import ZscalerClient
 from zscaler.oneapi_client import LegacyZDXClient
 

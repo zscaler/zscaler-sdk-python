@@ -24,9 +24,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 # ``pacURL``, ``actionTypeZIA``, etc.) — so no entries in
 # ``FIELD_EXCEPTIONS`` are required.
 
-from typing import Dict, Optional, Any
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
 
 
 class SystemProxyData(ZscalerObject):

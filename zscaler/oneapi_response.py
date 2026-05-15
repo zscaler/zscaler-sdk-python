@@ -1,9 +1,13 @@
-from typing import Dict, List, Any, Optional, Tuple, Union, Type
 import json
 import logging
 import uuid
-import requests
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, Union
+
 import jmespath
+import requests
+
+if TYPE_CHECKING:
+    from zscaler.request_executor import RequestExecutor
 
 logger = logging.getLogger(__name__)
 
@@ -357,7 +361,7 @@ class ZscalerAPIResponse:
         elif self._service_type == "ziam":
             logger.debug("[DEBUG] Taking ZIAM pagination branch.")
             if self._next_link:
-                from urllib.parse import urlparse, parse_qs
+                from urllib.parse import parse_qs, urlparse
 
                 parsed_url = urlparse(self._next_link)
                 query_params = parse_qs(parsed_url.query)

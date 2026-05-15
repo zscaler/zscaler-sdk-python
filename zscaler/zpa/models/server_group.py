@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import application_segment as application_segment
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
+from zscaler.zpa.models import application_segment as application_segment
 from zscaler.zpa.models import common as common
 
 

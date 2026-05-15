@@ -75,7 +75,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Lint with flake8
+      - name: Lint with Ruff
         run: |
           poetry run make lint:zms
 
@@ -141,7 +141,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Lint with flake8
+      - name: Lint with Ruff
         run: |
           poetry run make lint:zms
 

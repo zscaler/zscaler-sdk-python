@@ -22,7 +22,8 @@ Usage:
         ...
 """
 
-from typing import TypeVar, Tuple, Optional
+from typing import Optional, Tuple, TypeVar
+
 from zscaler.oneapi_response import ZscalerAPIResponse
 
 # Type variable for API result types

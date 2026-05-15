@@ -2,9 +2,9 @@
 Testing OAuth functions for Zscaler SDK
 """
 
-import pytest
 import json
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import Mock, patch
+
 from zscaler.oneapi_oauth_client import OAuth
 
 
@@ -106,7 +106,7 @@ def test_oauth_client_cache_initialization():
         }
     }
 
-    with patch("zscaler.cache.zscaler_cache.ZscalerCache") as mock_cache:
+    with patch("zscaler.cache.zscaler_cache.ZscalerCache"):
         oauth = OAuth(mock_request_executor, config)
 
         # Test that cache is initialized when enabled

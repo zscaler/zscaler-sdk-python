@@ -18,11 +18,9 @@ from typing import List, Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.user_management import UserManagement
-from zscaler.zia.models.user_management import Department
-from zscaler.zia.models.user_management import Groups
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.user_management import Department, Groups, UserManagement
 
 
 class UserManagementAPI(APIClient):

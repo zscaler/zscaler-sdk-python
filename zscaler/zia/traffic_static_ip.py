@@ -1,5 +1,3 @@
-import json
-
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -16,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+import json
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.traffic_static_ip import TrafficStaticIP
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.traffic_static_ip import TrafficStaticIP
 
 
 class TrafficStaticIPAPI(APIClient):

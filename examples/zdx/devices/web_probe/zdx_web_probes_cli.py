@@ -20,10 +20,12 @@ Using Legacy Client:
 
 """
 
-import os
-import logging
 import argparse
+import logging
+import os
+
 from prettytable import PrettyTable
+
 from zscaler import ZscalerClient
 from zscaler.oneapi_client import LegacyZDXClient
 

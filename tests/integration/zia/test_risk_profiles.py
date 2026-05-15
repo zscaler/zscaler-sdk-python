@@ -78,7 +78,7 @@ class TestRiskProfiles:
                             # Update may fail - that's ok
                         except Exception:
                             pass
-            except Exception as e:
+            except Exception:
                 # Add may fail due to permissions/subscription
                 pass
 

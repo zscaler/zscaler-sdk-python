@@ -14,83 +14,83 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, Any
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.activate import ActivationAPI
-from zscaler.zia.advanced_settings import AdvancedSettingsAPI
-from zscaler.zia.atp_policy import ATPPolicyAPI
 from zscaler.zia.admin_roles import AdminRolesAPI
 from zscaler.zia.admin_users import AdminUsersAPI
+from zscaler.zia.advanced_settings import AdvancedSettingsAPI
+from zscaler.zia.alert_subscriptions import AlertSubscriptionsAPI
 from zscaler.zia.apptotal import AppTotalAPI
+from zscaler.zia.atp_policy import ATPPolicyAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
 from zscaler.zia.bandwidth_classes import BandwidthClassesAPI
 from zscaler.zia.bandwidth_control_rules import BandwidthControlRulesAPI
 from zscaler.zia.browser_control_settings import BrowserControlSettingsPI
-from zscaler.zia.shadow_it_report import ShadowITAPI
-from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.casb_dlp_rules import CasbdDlpRulesAPI
 from zscaler.zia.casb_malware_rules import CasbMalwareRulesAPI
-from zscaler.zia.cloud_applications import CloudApplicationsAPI
 from zscaler.zia.cloud_app_instances import CloudApplicationInstancesAPI
-from zscaler.zia.cloud_nss import CloudNSSAPI
+from zscaler.zia.cloud_applications import CloudApplicationsAPI
 from zscaler.zia.cloud_browser_isolation import CBIProfileAPI
-from zscaler.zia.sandbox import CloudSandboxAPI
-from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
-from zscaler.zia.dlp_engine import DLPEngineAPI
-from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
-from zscaler.zia.dlp_templates import DLPTemplatesAPI
-from zscaler.zia.dlp_resources import DLPResourcesAPI
-from zscaler.zia.device_management import DeviceManagementAPI
-from zscaler.zia.end_user_notification import EndUserNotificationAPI
-from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
-from zscaler.zia.custom_file_types import CustomFileTypesAPI
+from zscaler.zia.cloud_firewall import FirewallResourcesAPI
 from zscaler.zia.cloud_firewall_dns import FirewallDNSRulesAPI
 from zscaler.zia.cloud_firewall_ips import FirewallIPSRulesAPI
 from zscaler.zia.cloud_firewall_rules import FirewallPolicyAPI
-from zscaler.zia.cloud_firewall import FirewallResourcesAPI
+from zscaler.zia.cloud_nss import CloudNSSAPI
+from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
+from zscaler.zia.cloudappcontrol import CloudAppControlAPI
+from zscaler.zia.custom_file_types import CustomFileTypesAPI
+from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
+from zscaler.zia.device_management import DeviceManagementAPI
+from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
+from zscaler.zia.dlp_engine import DLPEngineAPI
+from zscaler.zia.dlp_resources import DLPResourcesAPI
+from zscaler.zia.dlp_templates import DLPTemplatesAPI
+from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
+from zscaler.zia.dns_gatways import DNSGatewayAPI
+from zscaler.zia.end_user_notification import EndUserNotificationAPI
+from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.ftp_control_policy import FTPControlPolicyAPI
+from zscaler.zia.gre_tunnel import TrafficForwardingGRETunnelAPI
+from zscaler.zia.intermediate_certificates import IntermediateCertsAPI
+from zscaler.zia.iot_report import IOTReportAPI
+from zscaler.zia.ips_signature_rules import IPSSignatureRulesAPI
 from zscaler.zia.ipv6_config import TrafficIPV6ConfigAPI
-from zscaler.zia.malware_protection_policy import MalwareProtectionPolicyAPI
 from zscaler.zia.locations import LocationsAPI
+from zscaler.zia.malware_protection_policy import MalwareProtectionPolicyAPI
+from zscaler.zia.mobile_threat_settings import MobileAdvancedSettingsAPI
+from zscaler.zia.nat_control_policy import NatControlPolicyAPI
+from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.organization_information import OrganizationInformationAPI
 from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.policy_export import PolicyExportAPI
 from zscaler.zia.proxies import ProxiesAPI
-from zscaler.zia.risk_profiles import RiskProfilesAPI
 from zscaler.zia.remote_assistance import RemoteAssistanceAPI
+from zscaler.zia.risk_profiles import RiskProfilesAPI
 from zscaler.zia.rule_labels import RuleLabelsAPI
+from zscaler.zia.saas_security_api import SaaSSecurityAPI
+from zscaler.zia.sandbox import CloudSandboxAPI
 from zscaler.zia.sandbox_rules import SandboxRulesAPI
 from zscaler.zia.security_policy_settings import SecurityPolicyAPI
+from zscaler.zia.shadow_it_report import ShadowITAPI
 from zscaler.zia.ssl_inspection_rules import SSLInspectionAPI
-from zscaler.zia.intermediate_certificates import IntermediateCertsAPI
+from zscaler.zia.sub_clouds import SubCloudsAPI
+from zscaler.zia.system_audit import SystemAuditReportAPI
+from zscaler.zia.tenancy_restriction_profile import TenancyRestrictionProfileAPI
+from zscaler.zia.time_intervals import TimeIntervalsAPI
+from zscaler.zia.traffic_capture import TrafficCaptureAPI
+from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 from zscaler.zia.traffic_extranet import TrafficExtranetAPI
-from zscaler.zia.gre_tunnel import TrafficForwardingGRETunnelAPI
-from zscaler.zia.traffic_vpn_credentials import TrafficVPNCredentialAPI
 from zscaler.zia.traffic_static_ip import TrafficStaticIPAPI
+from zscaler.zia.traffic_vpn_credentials import TrafficVPNCredentialAPI
 from zscaler.zia.url_categories import URLCategoriesAPI
 from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.user_management import UserManagementAPI
-from zscaler.zia.workload_groups import WorkloadGroupsAPI
-from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-from zscaler.zia.sub_clouds import SubCloudsAPI
-from zscaler.zia.system_audit import SystemAuditReportAPI
-from zscaler.zia.iot_report import IOTReportAPI
-from zscaler.zia.mobile_threat_settings import MobileAdvancedSettingsAPI
-from zscaler.zia.dns_gatways import DNSGatewayAPI
-from zscaler.zia.alert_subscriptions import AlertSubscriptionsAPI
-from zscaler.zia.tenancy_restriction_profile import TenancyRestrictionProfileAPI
-from zscaler.zia.time_intervals import TimeIntervalsAPI
-from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
-from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
-from zscaler.zia.nss_servers import NssServersAPI
-from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
-from zscaler.zia.saas_security_api import SaaSSecurityAPI
-from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
-from zscaler.zia.traffic_capture import TrafficCaptureAPI
+from zscaler.zia.workload_groups import WorkloadGroupsAPI
+from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 
 
 class ZIAService:
@@ -726,3 +726,11 @@ class ZIAService:
         """
 
         return TrafficCaptureAPI(self._request_executor)
+
+    @property
+    def ips_signature_rules(self) -> "IPSSignatureRulesAPI":
+        """
+        The interface object for the :ref:`ZIA IPS Signature Rules API interface <zia-ips_signature_rules>`.
+
+        """
+        return IPSSignatureRulesAPI(self._request_executor)

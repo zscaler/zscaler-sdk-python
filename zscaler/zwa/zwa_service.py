@@ -14,8 +14,8 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from zscaler.zwa.dlp_incidents import DLPIncidentsAPI
 from zscaler.zwa.audit_logs import AuditLogsAPI
+from zscaler.zwa.dlp_incidents import DLPIncidentsAPI
 
 
 class ZWAService:

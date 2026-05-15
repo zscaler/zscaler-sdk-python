@@ -26,13 +26,15 @@ Using Legacy Client:
 
 """
 
-import os
-import logging
 import argparse
+import logging
+import os
+
+from box import BoxList
 from prettytable import PrettyTable
+
 from zscaler import ZscalerClient
 from zscaler.oneapi_client import LegacyZDXClient
-from box import BoxList
 
 
 def prompt_for_input(prompt_message, required=True):

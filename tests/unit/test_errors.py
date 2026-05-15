@@ -4,13 +4,15 @@ Unit tests for Zscaler SDK error classes.
 Tests error initialization, formatting, and serialization.
 """
 
-import pytest
 import json
 from unittest.mock import Mock
+
+import pytest
+
 from zscaler.errors.error import Error
 from zscaler.errors.http_error import HTTPError
-from zscaler.errors.zscaler_api_error import ZscalerAPIError
 from zscaler.errors.response_checker import check_response_for_error
+from zscaler.errors.zscaler_api_error import ZscalerAPIError
 
 
 class TestBaseError:

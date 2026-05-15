@@ -52,7 +52,7 @@ class TestDLPWebRule:
                 )
                 if error is None and created_rule is not None:
                     rule_id = created_rule.id
-            except Exception as exc:
+            except Exception:
                 # Add may fail - that's ok
                 pass
 
@@ -61,7 +61,7 @@ class TestDLPWebRule:
                 rules, _, error = client.zia.dlp_web_rules.list_rules()
                 assert error is None, f"Error listing DLP Web Rules: {error}"
                 assert rules is not None, "DLP Web Rule list is None"
-            except Exception as exc:
+            except Exception:
                 pass  # May fail due to permissions
 
             # Step 3: List DLP Web Rules Lite
@@ -69,7 +69,7 @@ class TestDLPWebRule:
                 rules_lite, _, error = client.zia.dlp_web_rules.list_rules_lite()
                 assert error is None, f"Error listing DLP Web Rules Lite: {error}"
                 assert rules_lite is not None, "DLP Web Rules Lite list is None"
-            except Exception as exc:
+            except Exception:
                 pass  # May fail due to permissions
 
             # Step 4: Get DLP Web Rule by ID

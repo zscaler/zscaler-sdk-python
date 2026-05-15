@@ -23,18 +23,18 @@ import logging
 import random
 import re
 import time
-from typing import Dict, Optional
-from urllib.parse import urlencode
 from datetime import datetime as dt
 from functools import wraps
+from typing import Dict, Optional
+from urllib.parse import urlencode
+
 import pytz
 from box import Box, BoxList
 from dateutil import parser
 from requests import Response
 
 # from restfly import APIIterator
-
-from zscaler.constants import RETRYABLE_STATUS_CODES, DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR
+from zscaler.constants import DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR, RETRYABLE_STATUS_CODES
 
 logger = logging.getLogger(__name__)
 
@@ -160,22 +160,6 @@ def recursive_snake_to_camel(data):
         return {snake_to_camel(key): recursive_snake_to_camel(value) for key, value in data.items()}
     elif isinstance(data, list):
         return [recursive_snake_to_camel(item) for item in data]
-    else:
-        return data
-
-
-def convert_keys(data, direction="to_camel"):
-    converter = camel_to_snake if direction == "to_snake" else snake_to_camel
-
-    if isinstance(data, (list, BoxList)):
-        return [convert_keys(inner_dict, direction=direction) for inner_dict in data]
-    elif isinstance(data, (dict, Box)):
-        new_dict = {}
-        for k in data.keys():
-            v = data[k]
-            new_key = converter(k)
-            new_dict[new_key] = convert_keys(v, direction=direction) if isinstance(v, (dict, list)) else v
-        return new_dict
     else:
         return data
 
@@ -368,7 +352,7 @@ def format_json_response(
     if response.status_code > 299:
         return response
     content_type = response.headers.get("content-type", "application/json")
-    if (conv_json or conv_box) and "application/json" in content_type.lower() and len(response.text) > 0:  # noqa: E124
+    if (conv_json or conv_box) and "application/json" in content_type.lower() and len(response.text) > 0:
         if conv_box:
             data = convert_keys_to_snake(response.json())
             if isinstance(data, list):
@@ -401,9 +385,6 @@ def calculate_epoch(hours: int):
     current_time = int(time.time())
     past_time = int(current_time - (hours * 3600))
     return current_time, past_time
-
-
-import functools
 
 
 def zdx_params(func):
@@ -972,15 +953,6 @@ class RateLimitExceededError(Exception):
 
 
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
-    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
-    # Log the request details before sending the request
-    request_data = {
-        "url": url,
-        "method": method,
-        "params": jsonp.dumps(params),
-        "uuid": str(request_uuid),
-        "request_headers": jsonp.dumps(request_headers_filtered),
-    }
     log_lines = []
     request_body = ""
     if body:

@@ -14,13 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from zscaler.request_executor import RequestExecutor
-from typing import List, Optional
 from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
-from zscaler.ztw.models.discovery_service import DiscoveryService
-from zscaler.ztw.models.discovery_service import DiscoveryServicePermissions
 from zscaler.utils import format_url
+from zscaler.ztw.models.discovery_service import DiscoveryService, DiscoveryServicePermissions
 
 
 class DiscoveryServiceAPI(APIClient):

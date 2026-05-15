@@ -43,11 +43,12 @@ Update an existing Application Segment:
 
 """
 
-from zscaler import ZPAClientHelper
 import argparse
-import logging
 import json
+import logging
 import os
+
+from zscaler import ZPAClientHelper
 from zscaler.utils import str2bool
 
 

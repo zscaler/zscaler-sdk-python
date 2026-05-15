@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
-from tests.test_utils import generate_random_string
 
 
 @pytest.fixture
@@ -35,8 +34,6 @@ class TestCBISecurityProfile:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        profile_name = "tests-isolsec-" + generate_random_string()
-        profile_description = "tests-isolsec-" + generate_random_string()
         profile_id = None  # Define profile_id here to ensure it's accessible throughout
 
         try:

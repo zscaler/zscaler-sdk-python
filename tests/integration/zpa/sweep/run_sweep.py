@@ -14,9 +14,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+import logging
 import os
 import sys
-import logging
+
 from zscaler import ZscalerClient
 
 
@@ -76,6 +77,7 @@ class TestSweepUtility:
             self.sweep_isolation_profile,
             self.sweep_service_edge_group,
             self.sweep_user_portal,
+            self.sweep_user_portal_link,
         ]
 
         for func in sweep_functions:
@@ -544,8 +546,8 @@ class TestSweepUtility:
             raise
 
     @suppress_warnings
-    def sweep_user_portal(self):
-        logging.info("Starting to sweep service user portal")
+    def sweep_user_portal_link(self):
+        logging.info("Starting to sweep service user portal link")
         try:
             user_portals, _, error = self.client.zpa.user_portal_link.list_portal_link()
             if error:
@@ -555,7 +557,10 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_portals)} user portals to delete.")
 
             for portal in test_portals:
-                logging.info(f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'")
+                logging.info(
+                    f"sweep_user_portal_link: Attempting to delete user portal link: "
+                    f"Name='{portal.name}', ID='{portal.id}'"
+                )
                 _, _, error = self.client.zpa.user_portal_link.delete_portal_link(portal_link_id=portal.id)
                 if error:
                     logging.error(f"Failed to delete user portal ID={portal.id} — {error}")

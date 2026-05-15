@@ -2,10 +2,12 @@
 Testing JWT functions for Zscaler SDK
 """
 
-import pytest
-import json
 import base64
-from unittest.mock import patch, Mock
+import json
+from unittest.mock import Mock
+
+import pytest
+
 from zscaler.oneapi_oauth_client import OAuth
 
 

@@ -14,18 +14,17 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import List, Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
 from zscaler.ztb.models.site2site_vpn import (
     CloudGatewayHub,
+    ClusterGatewayWithInterfaces,
     S2SConnection,
     S2SDeleteRequest,
-    S2SHubs,
-    ClusterGatewayWithInterfaces,
     S2SHubItem,
 )
 

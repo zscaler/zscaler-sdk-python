@@ -14,16 +14,19 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.saas_security_api import DomainProfiles
-from zscaler.zia.models.saas_security_api import QuarantineTombstoneTemplate
-from zscaler.zia.models.saas_security_api import CasbEmailLabel
-from zscaler.zia.models.saas_security_api import CasbTenant
-from zscaler.zia.models.saas_security_api import SaaSScanInfo
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.saas_security_api import (
+    CasbEmailLabel,
+    CasbTenant,
+    DomainProfiles,
+    QuarantineTombstoneTemplate,
+    SaaSScanInfo,
+)
 
 
 class SaaSSecurityAPI(APIClient):

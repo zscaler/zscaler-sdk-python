@@ -8,14 +8,16 @@ This module tests:
 4. Integration scenarios
 """
 
-import pytest
 import time
 from unittest.mock import Mock, patch
-from zscaler.request_executor import RequestExecutor
-from zscaler.ratelimiter.ratelimiter import RateLimiter
-from zscaler.utils import should_retry, retry_with_backoff
+
+import pytest
+
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.exceptions.exceptions import RetryTooLong
+from zscaler.ratelimiter.ratelimiter import RateLimiter
+from zscaler.request_executor import RequestExecutor
+from zscaler.utils import retry_with_backoff, should_retry
 
 
 class TestRateLimiter:
@@ -120,7 +122,6 @@ class TestRateLimiter:
     def test_thread_safety(self):
         """Test that RateLimiter is thread-safe."""
         import threading
-        import time
 
         results = []
 

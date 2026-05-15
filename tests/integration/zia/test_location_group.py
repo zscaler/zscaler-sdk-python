@@ -33,7 +33,6 @@ class TestLocationGroup:
     def test_location_group(self, fs):
         client = MockZIAClient(fs)
         errors = []
-        group_id = None
 
         try:
             # Step 1: List all groups

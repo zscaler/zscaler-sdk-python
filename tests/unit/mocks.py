@@ -14,10 +14,10 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import time
 import datetime
+import time
+from typing import Any, Dict, Optional
 from unittest.mock import Mock
-from typing import Dict, Any, Optional
 
 
 class MockRateLimitResponse:

@@ -18,8 +18,8 @@ from typing import Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
 from zscaler.ztb.models.policy_comments import PolicyComment
 
 

@@ -14,6 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from zscaler.zms.models.common import *  # noqa: F401,F403
 from zscaler.zms.models.enums import *  # noqa: F401,F403
 from zscaler.zms.models.inputs import *  # noqa: F401,F403
-from zscaler.zms.models.common import *  # noqa: F401,F403

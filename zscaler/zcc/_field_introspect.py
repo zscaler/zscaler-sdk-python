@@ -21,7 +21,7 @@ import inspect
 import sys
 import textwrap
 from functools import lru_cache
-from typing import Any, Dict, Set, Type
+from typing import Dict, Set, Type
 
 from zscaler.oneapi_object import ZscalerObject
 

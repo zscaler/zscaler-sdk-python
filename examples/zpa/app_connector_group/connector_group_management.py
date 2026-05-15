@@ -49,10 +49,11 @@ Delete a Connector Group by ID:
 __author__ = "Your Name"
 
 import argparse
-import logging
-from zscaler import ZPAClientHelper
 import json
+import logging
 import os
+
+from zscaler import ZPAClientHelper
 from zscaler.utils import str2bool
 
 

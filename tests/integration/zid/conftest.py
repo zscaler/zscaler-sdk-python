@@ -15,10 +15,11 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import os
+
 import pytest
 
-from zscaler import ZscalerClient
 from tests.test_utils import reset_vcr_counters
+from zscaler import ZscalerClient
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 

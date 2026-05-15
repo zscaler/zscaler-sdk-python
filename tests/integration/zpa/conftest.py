@@ -19,8 +19,8 @@ from pathlib import Path
 
 import pytest
 
-from zscaler import ZscalerClient
 from tests.test_utils import reset_vcr_counters
+from zscaler import ZscalerClient
 
 # When recording (MOCK_TESTS=false), load .env so credentials are available even when
 # pytest is run from an IDE or subprocess that doesn't inherit shell env vars

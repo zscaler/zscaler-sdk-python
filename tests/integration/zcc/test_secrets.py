@@ -15,6 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zcc.conftest import MockZCCClient
 
 
@@ -126,7 +127,7 @@ class TestSecrets:
                                 query_params={"username": username, "os_type": os_type}
                             )
                             # Validate the call mechanics - errors for specific OS types are acceptable
-                        except Exception as e:
+                        except Exception:
                             # Some OS types might not be supported for the user
                             pass
         except Exception as exc:

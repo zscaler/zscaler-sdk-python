@@ -15,6 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zcc.conftest import MockZCCClient
 from tests.test_utils import generate_random_string
 
