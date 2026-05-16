@@ -15,11 +15,12 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import time
+
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
-import time
 
 
 @pytest.fixture

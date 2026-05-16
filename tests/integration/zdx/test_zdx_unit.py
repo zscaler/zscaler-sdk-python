@@ -14,8 +14,9 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from unittest.mock import Mock
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 
 @pytest.fixture
@@ -1990,15 +1991,15 @@ class TestZDXServiceUnit:
 
     def test_zdx_service_properties(self, fs):
         """Test ZDXService property accessors"""
-        from zscaler.zdx.zdx_service import ZDXService
         from zscaler.zdx.admin import AdminAPI
         from zscaler.zdx.alerts import AlertsAPI
         from zscaler.zdx.apps import AppsAPI
         from zscaler.zdx.devices import DevicesAPI
         from zscaler.zdx.inventory import InventoryAPI
+        from zscaler.zdx.snapshot import SnapshotAPI
         from zscaler.zdx.troubleshooting import TroubleshootingAPI
         from zscaler.zdx.users import UsersAPI
-        from zscaler.zdx.snapshot import SnapshotAPI
+        from zscaler.zdx.zdx_service import ZDXService
 
         mock_client = Mock()
         mock_client._request_executor = Mock()

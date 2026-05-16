@@ -14,14 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.ztw.models.ecgroup import ECGroup
-from zscaler.ztw.models.ec_group_vm import ECGroupVM
-from zscaler.ztw.models.common import CommonIDNameExternalID
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.ztw.models.common import CommonIDNameExternalID
+from zscaler.ztw.models.ec_group_vm import ECGroupVM
+from zscaler.ztw.models.ecgroup import ECGroup
 
 
 class ECGroupsAPI(APIClient):

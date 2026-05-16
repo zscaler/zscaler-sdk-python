@@ -16,8 +16,6 @@
 
 """Unit tests for ZBI model classes."""
 
-import pytest
-
 from zscaler.zbi.models.custom_apps import CustomApp, Signature
 from zscaler.zbi.models.report_configs import (
     BackfillParams,

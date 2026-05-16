@@ -1,12 +1,10 @@
-from typing import Tuple, Optional, Any, Union, Dict
-import requests
 import json
 import logging
+
+from zscaler.errors.graphql_error import GraphQLAPIError, is_graphql_error_response
 from zscaler.errors.http_error import HTTPError
 from zscaler.errors.zscaler_api_error import ZscalerAPIError
-from zscaler.errors.graphql_error import GraphQLAPIError, is_graphql_error_response
-from zscaler.exceptions import HTTPException, ZscalerAPIException
-from zscaler.exceptions import exceptions
+from zscaler.exceptions import HTTPException, ZscalerAPIException, exceptions
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +34,7 @@ def check_response_for_error(url, response_details, response_body, service_type:
 
     try:
         formatted_response = json.loads(response_body) if is_json else response_body
-    except json.JSONDecodeError as e:
+    except json.JSONDecodeError:
         logger.warning(f"Non-JSON response from {url}: {body_text}")
         if exceptions.raise_exception:
             raise HTTPException(url, response_details, body_text)

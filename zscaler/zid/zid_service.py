@@ -16,10 +16,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.request_executor import RequestExecutor
 from zscaler.zid.api_client import APIClientAPI
-from zscaler.zid.user_entitlement import EntitlementAPI
 from zscaler.zid.groups import GroupsAPI
-from zscaler.zid.users import UsersAPI
 from zscaler.zid.resource_servers import ResourceServersAPI
+from zscaler.zid.user_entitlement import EntitlementAPI
+from zscaler.zid.users import UsersAPI
 
 
 class ZIdService:

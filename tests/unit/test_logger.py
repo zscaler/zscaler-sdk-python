@@ -6,14 +6,16 @@ Tests logger setup, configuration, and log level handling.
 
 import logging
 import os
+
 import pytest
+
 from zscaler.logger import (
-    setup_logging,
     LOG_FORMAT,
-    _sanitize_for_logging,
-    _sanitize_plaintext_for_logging,
     SENSITIVE_FIELDS,
     SENSITIVE_HEADERS,
+    _sanitize_for_logging,
+    _sanitize_plaintext_for_logging,
+    setup_logging,
 )
 
 

@@ -42,7 +42,7 @@ class TestCloudAppInstances:
             try:
                 all_instances, _, error = client.zia.cloud_app_instances.list_cloud_app_instances()
                 assert error is None, f"Error listing all cloud app instances: {error}"
-            except Exception as exc:
+            except Exception:
                 pass  # May fail due to permissions
 
             # Step 2: List cloud application instances with query params

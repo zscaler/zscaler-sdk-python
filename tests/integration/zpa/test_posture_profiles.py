@@ -24,33 +24,6 @@ def fs():
     yield
 
 
-"""
-Copyright (c) 2023, Zscaler Inc.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-"""
-
-
-import pytest
-
-from tests.integration.zpa.conftest import MockZPAClient
-
-
-@pytest.fixture
-def fs():
-    yield
-
-
 class TestPostureProfiles:
     """
     Integration Tests for the Posture Profiles.
@@ -61,8 +34,6 @@ class TestPostureProfiles:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         profile_id = None
-        profile_name = None
-        profile_udid = None
 
         # List all posture profiles
         try:
@@ -72,8 +43,6 @@ class TestPostureProfiles:
             if profile_response:
                 first_profile = profile_response[0]
                 profile_id = first_profile.id
-                profile_name = first_profile.name
-                profile_udid = first_profile.posture_udid
                 assert profile_id is not None, "Posture Profile ID should not be None"
         except Exception as exc:
             errors.append(f"Listing posture profiles failed: {str(exc)}")

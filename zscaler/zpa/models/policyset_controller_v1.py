@@ -14,14 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
+from zscaler.zpa.models import common as common
+from zscaler.zpa.models import policyset_controller_v2 as credentials
 from zscaler.zpa.models import server_group as server_group
 from zscaler.zpa.models import service_edge_groups as service_edge_groups
-from zscaler.zpa.models import policyset_controller_v2 as credentials
-from zscaler.zpa.models import common as common
 
 
 class PolicySetControllerV1(ZscalerObject):

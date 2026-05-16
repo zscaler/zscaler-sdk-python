@@ -15,18 +15,18 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import List, Optional
-from zscaler.request_executor import RequestExecutor
+
 from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url, reformat_params, transform_common_id_fields
 from zscaler.zia.models.cloud_firewall_destination_groups import IPDestinationGroups
-from zscaler.zia.models.cloud_firewall_source_groups import IPSourceGroup
 from zscaler.zia.models.cloud_firewall_nw_application_groups import NetworkApplicationGroups
 from zscaler.zia.models.cloud_firewall_nw_applications import NetworkApplications
+from zscaler.zia.models.cloud_firewall_nw_service import NetworkServices, NetworkServicesLite
 from zscaler.zia.models.cloud_firewall_nw_service_groups import NetworkServiceGroups
-from zscaler.zia.models.cloud_firewall_nw_service import NetworkServices
-from zscaler.zia.models.cloud_firewall_nw_service import NetworkServicesLite
+from zscaler.zia.models.cloud_firewall_source_groups import IPSourceGroup
 from zscaler.zia.models.cloud_firewall_time_windows import TimeWindows
-from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-from zscaler.types import APIResult
 
 
 class FirewallResourcesAPI(APIClient):

@@ -14,13 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.tag_key import TagKey, TagValue, BulkUpdateStatusRequest
-from zscaler.zpa.tag_namespace import _post_search_all_pages
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.tag_key import BulkUpdateStatusRequest, TagKey
+from zscaler.zpa.tag_namespace import _post_search_all_pages
 
 
 class TagKeyAPI(APIClient):

@@ -21,8 +21,9 @@ The legacy module provides property accessors for all ZIA APIs.
 These tests verify that each property accessor works correctly.
 """
 
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 from zscaler.zia.legacy import LegacyZIAClientHelper
 
@@ -60,10 +61,10 @@ class TestLegacyClient:
                 client.jsession_id = "test-session-id"
 
                 # Test is_session_expired
-                assert client.is_session_expired() == False or client.is_session_expired() == True
+                assert client.is_session_expired() is False or client.is_session_expired() is True
 
                 # Test is_session_idle_expired
-                assert client.is_session_idle_expired() == False or client.is_session_idle_expired() == True
+                assert client.is_session_idle_expired() is False or client.is_session_idle_expired() is True
 
                 # Test get_base_url
                 base_url = client.get_base_url("/api/test")

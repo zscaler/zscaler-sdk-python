@@ -5,9 +5,9 @@ OAuth Client Test Runner
 This script runs the enhanced OAuth client tests and provides a summary of the results.
 """
 
-import sys
-import subprocess
 import os
+import subprocess
+import sys
 
 
 def run_oauth_tests():

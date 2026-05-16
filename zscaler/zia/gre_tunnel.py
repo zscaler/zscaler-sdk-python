@@ -14,17 +14,16 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Any, Dict, List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.gre_tunnels import TrafficGRETunnel
-from zscaler.zia.models.gre_recommended_list import TrafficGRERecommendedVIP
-from zscaler.zia.models.gre_vips import TrafficVips
-from zscaler.zia.models.gre_tunnel_info import GreTunnelInfo
-from zscaler.zia.models.gre_vips import GroupByDatacenter
-
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.gre_recommended_list import TrafficGRERecommendedVIP
+from zscaler.zia.models.gre_tunnel_info import GreTunnelInfo
+from zscaler.zia.models.gre_tunnels import TrafficGRETunnel
+from zscaler.zia.models.gre_vips import GroupByDatacenter, TrafficVips
 
 
 class TrafficForwardingGRETunnelAPI(APIClient):

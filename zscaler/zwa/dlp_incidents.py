@@ -14,18 +14,19 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
 from zscaler.zwa.models.change_history import ChangeHistory
 from zscaler.zwa.models.generated_tickets import GeneratedTickets
 from zscaler.zwa.models.incident_details import IncidentDLPDetails
 from zscaler.zwa.models.incident_evidence import IncidentEvidence
-from zscaler.zwa.models.incident_search import IncidentSearch
 from zscaler.zwa.models.incident_group_search import IncidentGroupSearch
+from zscaler.zwa.models.incident_search import IncidentSearch
 from zscaler.zwa.models.incident_trigger import IncidentTrigger
-from zscaler.utils import format_url
-from zscaler.types import APIResult
 
 
 class DLPIncidentsAPI(APIClient):

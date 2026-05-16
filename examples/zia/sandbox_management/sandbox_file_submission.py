@@ -42,8 +42,9 @@ Please ensure that the environment variables ZIA_USERNAME, ZIA_PASSWORD, ZIA_API
 """
 
 import argparse
-import os
 import json
+import os
+
 from zscaler import ZIAClientHelper
 
 

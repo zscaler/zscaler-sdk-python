@@ -14,10 +14,10 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import pytest
-from unittest.mock import Mock, patch, MagicMock
 from datetime import datetime, timedelta
-import json
+from unittest.mock import Mock, patch
+
+import pytest
 
 
 @pytest.fixture
@@ -300,16 +300,16 @@ class TestLegacyZCCClient:
         client = LegacyZCCClientHelper(api_key="test_api_key", secret_key="test_secret_key", cloud="zscaler")
 
         # Test all API properties return correct types
-        from zscaler.zcc.devices import DevicesAPI
         from zscaler.zcc.admin_user import AdminUserAPI
         from zscaler.zcc.company import CompanyInfoAPI
+        from zscaler.zcc.devices import DevicesAPI
         from zscaler.zcc.entitlements import EntitlementAPI
-        from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
         from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
-        from zscaler.zcc.web_policy import WebPolicyAPI
-        from zscaler.zcc.web_app_service import WebAppServiceAPI
-        from zscaler.zcc.web_privacy import WebPrivacyAPI
+        from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
         from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+        from zscaler.zcc.web_app_service import WebAppServiceAPI
+        from zscaler.zcc.web_policy import WebPolicyAPI
+        from zscaler.zcc.web_privacy import WebPrivacyAPI
 
         assert isinstance(client.devices, DevicesAPI)
         assert isinstance(client.admin_user, AdminUserAPI)
@@ -351,7 +351,7 @@ class TestLegacyZCCClient:
 
         from zscaler.zcc.legacy import LegacyZCCClientHelper
 
-        with pytest.raises(Exception) as exc_info:
+        with pytest.raises(Exception):
             LegacyZCCClientHelper(api_key="invalid_key", secret_key="invalid_secret", cloud="zscaler")
 
         # Login failure should raise an exception

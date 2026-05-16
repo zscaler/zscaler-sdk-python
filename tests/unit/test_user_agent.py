@@ -4,12 +4,12 @@ Unit tests for Zscaler SDK User Agent functionality.
 Tests user agent string construction and formatting.
 """
 
-import pytest
 import platform
 import re
 from unittest.mock import patch
-from zscaler.user_agent import UserAgent
+
 from zscaler import __version__ as VERSION
+from zscaler.user_agent import UserAgent
 
 
 class TestUserAgentInitialization:
@@ -271,8 +271,8 @@ class TestPartnerIdHeader:
 
     def test_partner_id_header_in_request_executor(self):
         """Test that x-partner-id header is added when partnerId is in config."""
-        from zscaler.request_executor import RequestExecutor
         from zscaler.cache.no_op_cache import NoOpCache
+        from zscaler.request_executor import RequestExecutor
 
         config = {
             "client": {
@@ -294,8 +294,8 @@ class TestPartnerIdHeader:
 
     def test_partner_id_header_not_added_when_not_provided(self):
         """Test that x-partner-id header is NOT added when partnerId is not in config."""
-        from zscaler.request_executor import RequestExecutor
         from zscaler.cache.no_op_cache import NoOpCache
+        from zscaler.request_executor import RequestExecutor
 
         config = {"client": {"requestTimeout": 240, "rateLimit": {"maxRetries": 2}, "cloud": "production", "service": "zia"}}
 
@@ -308,8 +308,8 @@ class TestPartnerIdHeader:
 
     def test_partner_id_header_value_matches_config(self):
         """Test that x-partner-id header value matches the partnerId from config."""
-        from zscaler.request_executor import RequestExecutor
         from zscaler.cache.no_op_cache import NoOpCache
+        from zscaler.request_executor import RequestExecutor
 
         partner_id = "test-partner-id-12345"
         config = {
@@ -331,9 +331,10 @@ class TestPartnerIdHeader:
 
     def test_partner_id_header_in_prepared_headers(self):
         """Test that x-partner-id header is included in prepared headers."""
-        from zscaler.request_executor import RequestExecutor
-        from zscaler.cache.no_op_cache import NoOpCache
         from unittest.mock import Mock, patch
+
+        from zscaler.cache.no_op_cache import NoOpCache
+        from zscaler.request_executor import RequestExecutor
 
         config = {
             "client": {

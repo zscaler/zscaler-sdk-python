@@ -2,12 +2,9 @@
 Testing HTTP Client for Zscaler SDK
 """
 
-import pytest
-import requests
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock
+
 from zscaler.oneapi_http_client import HTTPClient
-from zscaler.oneapi_client import Client
-from zscaler.cache.no_op_cache import NoOpCache
 
 
 def test_http_client_initialization():

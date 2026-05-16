@@ -50,7 +50,7 @@ class TestActivate:
                 # Activation may fail if no changes pending - that's ok
                 if err is None:
                     assert activation is not None, "Activation result should not be None"
-            except Exception as e:
+            except Exception:
                 # Activation may fail if no changes - that's acceptable
                 pass
 

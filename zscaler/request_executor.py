@@ -1,26 +1,25 @@
-from typing import Dict, Any, Optional, Tuple, List, Union
 import logging
 import time
 import uuid
-import re
-from urllib.parse import quote
-from zscaler.oneapi_http_client import HTTPClient
-from zscaler.oneapi_response import ZscalerAPIResponse
-from zscaler.oneapi_oauth_client import OAuth
-from zscaler.user_agent import UserAgent
-from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from http import HTTPStatus
-from zscaler.helpers import convert_keys_to_snake_case, convert_keys_to_camel_case
+from typing import Any, Dict, Optional, Tuple
+
+from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.exceptions import exceptions
-from zscaler.zcc.legacy import LegacyZCCClientHelper
-from zscaler.ztw.legacy import LegacyZTWClientHelper
-from zscaler.zdx.legacy import LegacyZDXClientHelper
-from zscaler.zpa.legacy import LegacyZPAClientHelper
-from zscaler.zia.legacy import LegacyZIAClientHelper
-from zscaler.zwa.legacy import LegacyZWAClientHelper
-from zscaler.ztb.legacy import LegacyZTBClientHelper
+from zscaler.helpers import convert_keys_to_camel_case, convert_keys_to_snake_case
+from zscaler.oneapi_http_client import HTTPClient
+from zscaler.oneapi_oauth_client import OAuth
+from zscaler.oneapi_response import ZscalerAPIResponse
+from zscaler.user_agent import UserAgent
 from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
+from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zdx.legacy import LegacyZDXClientHelper
+from zscaler.zia.legacy import LegacyZIAClientHelper
+from zscaler.zpa.legacy import LegacyZPAClientHelper
+from zscaler.ztb.legacy import LegacyZTBClientHelper
+from zscaler.ztw.legacy import LegacyZTWClientHelper
+from zscaler.zwa.legacy import LegacyZWAClientHelper
 
 logger = logging.getLogger("zscaler-sdk-python")
 
@@ -564,7 +563,7 @@ class RequestExecutor:
         Returns:
             tuple: Cleaned URL and updated parameters dictionary with query parameters from the URL.
         """
-        from urllib.parse import urlparse, parse_qs, urlunparse
+        from urllib.parse import parse_qs, urlparse, urlunparse
 
         parsed_url = urlparse(url)
         query_params = parse_qs(parsed_url.query)
@@ -581,7 +580,7 @@ class RequestExecutor:
         return cleaned_url, params
 
     def _cache_enabled(self):
-        return self._config["client"]["cache"]["enabled"] == True
+        return self._config["client"]["cache"]["enabled"] is True
 
     def fire_request(
         self, request: Dict[str, Any]

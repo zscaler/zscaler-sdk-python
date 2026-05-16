@@ -14,13 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
 import os
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.service_edge_schedule import ServiceEdgeSchedule
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.service_edge_schedule import ServiceEdgeSchedule
 
 
 class ServiceEdgeScheduleAPI(APIClient):

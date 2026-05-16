@@ -14,9 +14,10 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import pytest
-from unittest.mock import Mock, patch, MagicMock
 import time
+from unittest.mock import Mock
+
+import pytest
 
 
 @pytest.fixture

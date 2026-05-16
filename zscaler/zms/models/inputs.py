@@ -15,7 +15,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from dataclasses import dataclass
-from typing import Optional, List, Any, Dict
+from typing import Any, Dict, List, Optional
+
 from zscaler.zms.models.enums import SortDirection
 
 # ============================================================================

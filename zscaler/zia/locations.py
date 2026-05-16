@@ -18,11 +18,10 @@ from typing import List, Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.location_management import LocationManagement
-from zscaler.zia.models.location_management import RegionInfo
-from zscaler.zia.models.location_group import LocationGroup
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.location_group import LocationGroup
+from zscaler.zia.models.location_management import LocationManagement, RegionInfo
 
 
 class LocationsAPI(APIClient):

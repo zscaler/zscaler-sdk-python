@@ -14,13 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Optional, List, Tuple, Any, Dict
+from typing import List, Optional
 
 from zscaler.api_client import APIClient
+from zscaler.errors.graphql_error import GraphQLAPIError, is_graphql_error_response
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zins.models.inputs import IoTDeviceFilterBy, IoTDeviceOrderBy
-from zscaler.errors.graphql_error import is_graphql_error_response, GraphQLAPIError
 
 
 class IotAPI(APIClient):

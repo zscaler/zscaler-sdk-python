@@ -14,14 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-"""
-Integration tests for the ZTB App Connector Config resource.
-
-Uses VCR to record/replay HTTP. Set MOCK_TESTS=false and ZTB credentials,
-ZTB_TEST_CLUSTER_ID when recording cassettes.
-"""
+# Integration tests for the ZTB App Connector Config resource.
+#
+# Uses VCR to record/replay HTTP. Set MOCK_TESTS=false and ZTB credentials,
+# ZTB_TEST_CLUSTER_ID when recording cassettes.
 
 import os
+
 import pytest
 
 from tests.integration.ztb.conftest import MockZTBClient

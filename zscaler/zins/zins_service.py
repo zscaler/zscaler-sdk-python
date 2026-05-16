@@ -15,12 +15,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
-from zscaler.zins.web_traffic import WebTrafficAPI
-from zscaler.zins.saas_security import SaasSecurityAPI
 from zscaler.zins.cyber_security import CyberSecurityAPI
 from zscaler.zins.firewall import FirewallAPI
 from zscaler.zins.iot import IotAPI
+from zscaler.zins.saas_security import SaasSecurityAPI
 from zscaler.zins.shadow_it import ShadowItAPI
+from zscaler.zins.web_traffic import WebTrafficAPI
 
 
 class ZInsService:

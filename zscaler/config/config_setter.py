@@ -1,10 +1,10 @@
-from typing import Dict, Any, Optional
-import os
 import logging
-import yaml
-from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
+import os
 
-from zscaler.helpers import to_snake_case, flatten_dict, unflatten_dict
+import yaml
+
+from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
+from zscaler.helpers import flatten_dict, to_snake_case, unflatten_dict
 
 logger = logging.getLogger(__name__)
 

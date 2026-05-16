@@ -14,13 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_mapper
+from typing import Optional
+
 from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords
-from zscaler.types import APIResult
 
 
 class SecretsAPI(APIClient):

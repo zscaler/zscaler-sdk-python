@@ -15,7 +15,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-from tests.integration.zms.conftest import MockZMSClient, get_customer_id
+
+from tests.integration.zms.conftest import get_customer_id
 
 
 @pytest.fixture

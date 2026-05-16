@@ -15,19 +15,22 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import List
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zdx.models.troubleshooting import DeviceDeepTraces
-from zscaler.zdx.models.troubleshooting import TraceDetails
-from zscaler.zdx.models.troubleshooting import DeviceTopProcesses
-from zscaler.zdx.models.troubleshooting import DeepTraceWebProbeMetrics
-from zscaler.zdx.models.troubleshooting import DeepTraceCloudPathMetric
-from zscaler.zdx.models.troubleshooting import DeepTraceCloudPath
-from zscaler.zdx.models.troubleshooting import DeepTraceHealthMetrics
-from zscaler.zdx.models.troubleshooting import DeepTraceEvents
-from zscaler.zdx.models.troubleshooting import DeviceApplicationAnalysis
-from zscaler.utils import format_url, zdx_params
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zdx.models.troubleshooting import (
+    DeepTraceCloudPath,
+    DeepTraceCloudPathMetric,
+    DeepTraceEvents,
+    DeepTraceHealthMetrics,
+    DeepTraceWebProbeMetrics,
+    DeviceApplicationAnalysis,
+    DeviceDeepTraces,
+    DeviceTopProcesses,
+    TraceDetails,
+)
 
 
 class TroubleshootingAPI(APIClient):

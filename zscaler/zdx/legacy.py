@@ -1,9 +1,11 @@
 import logging
 import os
-import time
-import requests
 import random
+import time
 from hashlib import sha256
+
+import requests
+
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.logger import setup_logging

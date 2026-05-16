@@ -18,10 +18,9 @@ from typing import List, Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.admin_roles import AdminRoles
-from zscaler.zia.models.admin_roles import PasswordExpiry
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.admin_roles import AdminRoles, PasswordExpiry
 
 
 class AdminRolesAPI(APIClient):
@@ -620,7 +619,7 @@ class AdminRolesAPI(APIClient):
         http_method = "put".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /cyberThreatProtection/advancedThreatSettings
+            /passwordExpiry/settings
             """)
 
         body = {}

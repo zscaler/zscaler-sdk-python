@@ -14,14 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.organization_information import OrganizationInformation
-from zscaler.zia.models.organization_information import OrganizationInformationLite
-from zscaler.zia.models.organization_information import OrganizationSubscription
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.organization_information import (
+    OrganizationInformation,
+    OrganizationInformationLite,
+    OrganizationSubscription,
+)
 
 
 class OrganizationInformationAPI(APIClient):

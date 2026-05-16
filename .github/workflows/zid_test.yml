@@ -67,7 +67,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Lint with flake8
+      - name: Lint with Ruff
         run: |
           poetry run make lint:zid
 
@@ -133,7 +133,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Lint with flake8
+      - name: Lint with Ruff
         run: |
           poetry run make lint:zid
 

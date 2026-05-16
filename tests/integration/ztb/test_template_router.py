@@ -14,17 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-"""
-Integration tests for the ZTB Template Router resource.
-
-Uses VCR to record/replay HTTP. Uses deterministic names.
-Set MOCK_TESTS=false and ZTB credentials when recording cassettes.
-"""
+# Integration tests for the ZTB Template Router resource.
+#
+# Uses VCR to record/replay HTTP. Uses deterministic names.
+# Set MOCK_TESTS=false and ZTB credentials when recording cassettes.
 
 import pytest
 
 from tests.integration.ztb.conftest import MockZTBClient
-from tests.test_utils import generate_random_string
 
 
 @pytest.fixture

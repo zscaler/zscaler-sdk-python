@@ -14,15 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import logging
-from typing import Dict, Any, Optional, List
+from typing import Optional
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url
 from zscaler.types import APIResult
-from zscaler.ztb.models.alarms import Alarms
-from zscaler.ztb.models.alarms import AlarmBulkAcknowledge
+from zscaler.utils import format_url
+from zscaler.ztb.models.alarms import AlarmBulkAcknowledge, Alarms
 
 
 class AlarmsAPI(APIClient):
@@ -347,7 +345,7 @@ class AlarmsAPI(APIClient):
             /alarm/bulkAcknowledgeAll
         """)
 
-        body = kwargs
+        body: dict = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
 
@@ -416,7 +414,7 @@ class AlarmsAPI(APIClient):
             /alarm/bulkIgnoreAll
         """)
 
-        body = kwargs
+        body: dict = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, headers={})
 

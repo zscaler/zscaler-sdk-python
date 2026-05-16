@@ -14,15 +14,16 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from functools import wraps
+from threading import Lock
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.zpa.models.policyset_controller_v1 import PolicySetControllerV1
 from zscaler.zpa.models.policyset_controller_v2 import PolicySetControllerV2
-from zscaler.utils import format_url, transform_common_id_fields
-from zscaler.types import APIResult
-from threading import Lock
-from functools import wraps
 
 # Define a global lock
 global_rule_lock = Lock()

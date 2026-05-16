@@ -4,8 +4,8 @@ Unit tests for ZIA Traffic Static IP check_static_ip method.
 Tests the validation behavior for checking if an IP address is available.
 """
 
-import pytest
-from unittest.mock import Mock, MagicMock
+from unittest.mock import Mock
+
 from zscaler.zia.traffic_static_ip import TrafficStaticIPAPI
 
 

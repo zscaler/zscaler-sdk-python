@@ -24,7 +24,9 @@ This document provides context for AI agents working on the Zscaler Python SDK (
 
 ## Linter
 
-After every code change, run `make format` then `make lint`. Fix all errors (extra spaces, trailing whitespace, import order). The linter must pass.
+After every code change, run `make format` (black) then `make lint` (ruff — two-step: `--select I` for import order, then defaults for Pyflakes + pycodestyle). Fix all errors (extra spaces, trailing whitespace, import order, unused imports/variables). The linter must pass — `make lint` fails on any violation.
+
+Auto-fix import order: `poetry run ruff check . --select I --fix`.
 
 ## Testing
 

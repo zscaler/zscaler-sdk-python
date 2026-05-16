@@ -4,29 +4,31 @@ Unit tests for Zscaler SDK exception classes.
 Tests exception initialization, raising, and the raise_exception flag.
 """
 
-import pytest
 import json
 from unittest.mock import Mock
+
+import pytest
+
 from zscaler.exceptions import exceptions
 from zscaler.exceptions.exceptions import (
-    ZscalerBaseException,
+    APIClientError,
+    BadRequestError,
+    CacheError,
+    ForbiddenError,
+    HeaderUpdateError,
     HTTPException,
-    ZscalerAPIException,
-    ZpaBaseException,
-    ZpaAPIException,
+    InvalidCloudEnvironmentError,
+    NotFoundError,
     RateLimitExceededError,
     RetryLimitExceededError,
-    CacheError,
-    BadRequestError,
-    UnauthorizedError,
-    ForbiddenError,
-    NotFoundError,
-    APIClientError,
-    InvalidCloudEnvironmentError,
+    RetryTooLong,
     TokenExpirationError,
     TokenRefreshError,
-    HeaderUpdateError,
-    RetryTooLong,
+    UnauthorizedError,
+    ZpaAPIException,
+    ZpaBaseException,
+    ZscalerAPIException,
+    ZscalerBaseException,
 )
 
 

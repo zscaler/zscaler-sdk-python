@@ -24,35 +24,37 @@ from time import sleep
 from typing import TYPE_CHECKING
 
 import requests
+
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
+from zscaler.errors.response_checker import check_response_for_error
+from zscaler.logger import setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import obfuscate_api_key
-from zscaler.logger import setup_logging
-from zscaler.errors.response_checker import check_response_for_error
 
 # Import all ZTW API classes for type hints only (to avoid circular imports)
 if TYPE_CHECKING:
     from zscaler.ztw.account_details import AccountDetailsAPI
+    from zscaler.ztw.account_groups import AccountGroupsAPI
     from zscaler.ztw.activation import ActivationAPI
     from zscaler.ztw.admin_roles import AdminRolesAPI
     from zscaler.ztw.admin_users import AdminUsersAPI
-    from zscaler.ztw.ec_groups import ECGroupsAPI
-    from zscaler.ztw.location_management import LocationManagementAPI
-    from zscaler.ztw.location_template import LocationTemplateAPI
     from zscaler.ztw.api_keys import ProvisioningAPIKeyAPI
-    from zscaler.ztw.provisioning_url import ProvisioningURLAPI
+    from zscaler.ztw.discovery_service import DiscoveryServiceAPI
+    from zscaler.ztw.ec_groups import ECGroupsAPI
     from zscaler.ztw.forwarding_gateways import ForwardingGatewaysAPI
     from zscaler.ztw.forwarding_rules import ForwardingControlRulesAPI
     from zscaler.ztw.ip_destination_groups import IPDestinationGroupsAPI
-    from zscaler.ztw.ip_source_groups import IPSourceGroupsAPI
     from zscaler.ztw.ip_groups import IPGroupsAPI
-    from zscaler.ztw.nw_service_groups import NWServiceGroupsAPI
+    from zscaler.ztw.ip_source_groups import IPSourceGroupsAPI
+    from zscaler.ztw.location_management import LocationManagementAPI
+    from zscaler.ztw.location_template import LocationTemplateAPI
     from zscaler.ztw.nw_service import NWServiceAPI
+    from zscaler.ztw.nw_service_groups import NWServiceGroupsAPI
+    from zscaler.ztw.provisioning_url import ProvisioningURLAPI
     from zscaler.ztw.public_cloud_info import PublicCloudInfoAPI
-    from zscaler.ztw.account_groups import AccountGroupsAPI
-    from zscaler.ztw.discovery_service import DiscoveryServiceAPI
+    from zscaler.ztw.workload_groups import WorkloadGroupsAPI
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -224,7 +226,7 @@ class LegacyZTWClientHelper:
                 return True
             else:
                 return False
-        except requests.RequestException as e:
+        except requests.RequestException:
             return False
 
     def get_base_url(self, endpoint):
@@ -511,7 +513,7 @@ class LegacyZTWClientHelper:
         return DiscoveryServiceAPI(self.request_executor)
 
     @property
-    def workload_groups(self) -> "WorkloadGroupsAPI":
+    def workload_groups(self) -> "WorkloadGroupsAPI":  # noqa: F821
         """
         The interface object for the :ref:`ZTW Workload Groups <ztw-workload_groups>`.
 

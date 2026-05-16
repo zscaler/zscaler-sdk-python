@@ -14,15 +14,16 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from zscaler.oneapi_object import ZscalerObject
+from typing import Any, Dict, Optional
+
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zia.models import location_management as location_management
-from zscaler.zia.models import user_management as user_management
-from zscaler.zia.models import traffic_vpn_credentials as vpn_credentials
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 from zscaler.zia.models import dlp_dictionary as dlp_dictionary
 from zscaler.zia.models import dlp_engine as dlp_engine
+from zscaler.zia.models import location_management as location_management
+from zscaler.zia.models import traffic_vpn_credentials as vpn_credentials
+from zscaler.zia.models import user_management as user_management
 
 
 class NssFeeds(ZscalerObject):

@@ -2,11 +2,13 @@
 Testing OAuth proxy configuration for Zscaler SDK
 """
 
+from unittest.mock import Mock, patch
+
 import pytest
 import requests
-from unittest.mock import Mock, patch, MagicMock
-from zscaler.oneapi_oauth_client import OAuth
+
 from zscaler.oneapi_http_client import HTTPClient
+from zscaler.oneapi_oauth_client import OAuth
 
 
 def test_oauth_proxy_setup_function():
@@ -80,7 +82,7 @@ def test_oauth_client_secret_with_proxy():
         mock_post.return_value = mock_response
 
         # Call the authentication method
-        result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+        oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
 
         # Verify that requests.post was called with proxy configuration
         mock_post.assert_called_once()
@@ -166,7 +168,7 @@ def test_oauth_proxy_with_authentication():
         mock_post.return_value = mock_response
 
         # Call the authentication method
-        result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+        oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
 
         # Verify that requests.post was called with proxy configuration
         mock_post.assert_called_once()
@@ -212,7 +214,7 @@ def test_oauth_no_proxy_configuration():
         mock_post.return_value = mock_response
 
         # Call the authentication method
-        result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+        oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
 
         # Verify that requests.post was called without proxy configuration
         mock_post.assert_called_once()
@@ -249,7 +251,7 @@ def test_oauth_proxy_environment_variables():
             mock_post.return_value = mock_response
 
             # Call the authentication method
-            result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+            oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
 
             # Verify that requests.post was called with environment proxy
             mock_post.assert_called_once()
@@ -338,7 +340,7 @@ def test_oauth_proxy_different_clouds():
             mock_post.return_value = mock_response
 
             # Call the authentication method
-            result = oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+            oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
 
             # Verify that requests.post was called with proxy configuration
             mock_post.assert_called_once()
@@ -382,7 +384,7 @@ def test_oauth_proxy_integration():
             mock_checker.return_value = ({"access_token": "test_token", "expires_in": 3600}, None)
 
             # Call the main authentication method
-            result = oauth.authenticate()
+            oauth.authenticate()
 
             # Verify that requests.post was called with proxy configuration
             mock_post.assert_called_once()

@@ -47,10 +47,11 @@ Delete a Service Edge Group by ID:
 """
 
 import argparse
-import logging
-from zscaler import ZPAClientHelper
 import json
+import logging
 import os
+
+from zscaler import ZPAClientHelper
 from zscaler.utils import str2bool
 
 

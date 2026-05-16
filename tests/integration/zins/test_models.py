@@ -14,23 +14,18 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
-from zscaler.zins.models.enums import SortOrder, WebTrafficUnits, TrendInterval, IncidentsGroupBy, ActionStatus
+from zscaler.zins.models.enums import ActionStatus, IncidentsGroupBy, SortOrder, TrendInterval, WebTrafficUnits
 from zscaler.zins.models.inputs import (
-    StringFilter,
-    WebEntriesFilterBy,
-    WebOrderBy,
     FirewallEntriesFilterBy,
     FirewallEntryOrderBy,
-    CasbEntriesFilterBy,
-    CasbEntryOrderBy,
-    CyberSecurityEntriesFilterBy,
-    CyberSecurityEntryOrderBy,
-    ShadowITAppsFilterBy,
-    ShadowITAppsOrderBy,
     IoTDeviceFilterBy,
     IoTDeviceOrderBy,
+    ShadowITAppsFilterBy,
+    ShadowITAppsOrderBy,
+    StringFilter,
     TimeRangeInput,
+    WebEntriesFilterBy,
+    WebOrderBy,
 )
 
 

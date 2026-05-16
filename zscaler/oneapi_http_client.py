@@ -1,18 +1,20 @@
-from typing import Dict, Optional, Any, Tuple, Union
-import requests
 import logging
 import os
 import time
-from zscaler.logger import dump_request, dump_response
-from zscaler.zcc.legacy import LegacyZCCClientHelper
-from zscaler.ztw.legacy import LegacyZTWClientHelper
-from zscaler.zdx.legacy import LegacyZDXClientHelper
-from zscaler.zpa.legacy import LegacyZPAClientHelper
-from zscaler.zia.legacy import LegacyZIAClientHelper
-from zscaler.zwa.legacy import LegacyZWAClientHelper
-from zscaler.ztb.legacy import LegacyZTBClientHelper
-from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
+from typing import Any, Dict, Optional, Tuple, Union
 from urllib.parse import urlparse
+
+import requests
+
+from zscaler.logger import dump_request, dump_response
+from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
+from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zdx.legacy import LegacyZDXClientHelper
+from zscaler.zia.legacy import LegacyZIAClientHelper
+from zscaler.zpa.legacy import LegacyZPAClientHelper
+from zscaler.ztb.legacy import LegacyZTBClientHelper
+from zscaler.ztw.legacy import LegacyZTWClientHelper
+from zscaler.zwa.legacy import LegacyZWAClientHelper
 
 logger = logging.getLogger(__name__)
 
@@ -77,9 +79,6 @@ class HTTPClient:
             self._ssl_context: Union[bool, Any] = True  # Enable SSL certificate validation by default
 
         self._session: Optional[requests.Session] = None
-
-    def _setup_proxy(self, proxy: Optional[Union[Dict[str, Any], str]]) -> Optional[str]:
-        return proxy if proxy else None
 
     def set_session(self, session: requests.Session) -> None:
         """Set Client Session to improve performance by reusing session.
@@ -361,7 +360,7 @@ class HTTPClient:
                 params.get("params"),
                 params.get("headers"),
                 request["uuid"],
-                body=not ("/zscsb" in request["url"]),
+                body="/zscsb" not in request["url"],
             )
 
             start_time: float = time.time()

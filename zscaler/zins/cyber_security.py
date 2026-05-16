@@ -14,12 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Optional, List, Tuple, Any, Dict
+from typing import Any, Dict, List, Optional, Tuple
 
 from zscaler.api_client import APIClient
+from zscaler.errors.graphql_error import GraphQLAPIError, is_graphql_error_response
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.errors.graphql_error import is_graphql_error_response, GraphQLAPIError
 
 
 class CyberSecurityAPI(APIClient):

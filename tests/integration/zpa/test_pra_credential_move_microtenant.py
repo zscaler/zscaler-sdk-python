@@ -16,9 +16,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
 
-from tests.integration.zpa.conftest import MockZPAClient
-from tests.test_utils import generate_random_password, generate_random_string
-
 
 @pytest.fixture
 def fs():

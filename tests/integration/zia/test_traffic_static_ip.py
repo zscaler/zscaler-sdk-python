@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+import time
+
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient, NameGenerator
-from tests.test_utils import generate_random_ip, generate_random_string, reset_vcr_counters
-import time
+from tests.test_utils import generate_random_ip, reset_vcr_counters
 
 
 @pytest.fixture
@@ -96,7 +97,7 @@ class TestTrafficStaticIP:
                     # Update may fail due to timing - don't fail test
                     if error is None and updated_ip is not None:
                         assert updated_ip.comment == updated_comment
-            except Exception as exc:
+            except Exception:
                 pass  # Update may fail due to API timing - don't fail test
 
             # Step 5: List static IPs and check if created IP exists

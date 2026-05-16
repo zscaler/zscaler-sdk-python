@@ -2,14 +2,15 @@
 Testing Request Executor for Zscaler SDK
 """
 
-import pytest
 import time
-import uuid
-from unittest.mock import Mock, patch, MagicMock
 from http import HTTPStatus
-from zscaler.request_executor import RequestExecutor
+from unittest.mock import Mock, patch
+
+import pytest
+
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.exceptions.exceptions import RetryTooLong
+from zscaler.request_executor import RequestExecutor
 
 
 def test_request_executor_initialization():

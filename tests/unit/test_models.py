@@ -8,16 +8,18 @@ Tests model creation with different input types:
 """
 
 import pytest
-from zscaler.oneapi_object import ZscalerObject
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
+from zscaler.zcc.models import devices as zcc_devices
+from zscaler.zdx.models import devices as zdx_devices
 
 # Import models from all services
-from zscaler.zia.models import location_management, rule_labels, admin_users
-from zscaler.zpa.models import segment_group, application_segment, app_connector_groups
-from zscaler.zdx.models import devices as zdx_devices, users as zdx_users
-from zscaler.zcc.models import devices as zcc_devices
+from zscaler.zia.models import admin_users, location_management, rule_labels
+from zscaler.zid.models import groups as zid_groups
+from zscaler.zid.models import users as zid_users
+from zscaler.zpa.models import app_connector_groups, segment_group
 from zscaler.ztw.models import location_management as ztw_location_management
-from zscaler.zid.models import users as zid_users, groups as zid_groups
 from zscaler.zwa.models import common as zwa_common
 
 

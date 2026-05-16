@@ -14,8 +14,9 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
 import time
+
+import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
 
@@ -41,35 +42,35 @@ class TestAuditLogs:
 
         # Step 1: Get audit log report status
         try:
-            status = client.zia.audit_logs.get_status()
+            client.zia.audit_logs.get_status()
             # Status can be None if no report is pending
         except Exception as exc:
             errors.append(f"Failed to get audit log status: {exc}")
 
         # Step 2: Create an audit log report request
         try:
-            result = client.zia.audit_logs.create(start_time=str(one_day_ago_ms), end_time=str(current_time_ms))
+            client.zia.audit_logs.create(start_time=str(one_day_ago_ms), end_time=str(current_time_ms))
             # Result can be None or status code
         except Exception as exc:
             errors.append(f"Failed to create audit log report: {exc}")
 
         # Step 3: Get status again after creating report
         try:
-            status_after_create = client.zia.audit_logs.get_status()
+            client.zia.audit_logs.get_status()
             # Status should show pending or complete
         except Exception as exc:
             errors.append(f"Failed to get audit log status after create: {exc}")
 
         # Step 4: Get the audit log report
         try:
-            report = client.zia.audit_logs.get_report()
+            client.zia.audit_logs.get_report()
             # Report can be None if not ready yet
         except Exception as exc:
             errors.append(f"Failed to get audit log report: {exc}")
 
         # Step 5: Cancel the audit log report request
         try:
-            cancel_result = client.zia.audit_logs.cancel()
+            client.zia.audit_logs.cancel()
             # Cancel result should be status code
         except Exception as exc:
             errors.append(f"Failed to cancel audit log report: {exc}")

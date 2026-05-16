@@ -14,17 +14,16 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+import logging
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.application_segment import ApplicationSegments
-from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
-from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
-from zscaler.zpa.models.application_segment import MultiMatchUnsupportedReferences
-from zscaler.utils import format_url, add_id_groups
-from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.types import APIResult
-import logging
+from zscaler.utils import add_id_groups, format_url, transform_common_id_fields
+from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
+from zscaler.zpa.models.application_segment import ApplicationSegments, MultiMatchUnsupportedReferences
+from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 
 logger = logging.getLogger(__name__)
 

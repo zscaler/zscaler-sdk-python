@@ -28,10 +28,10 @@ This module tests the 429 rate limiting behavior for each legacy client:
 Each client should properly handle 429 responses with appropriate retry logic.
 """
 
+from typing import Any, Dict
+from unittest.mock import patch
+
 import pytest
-import time
-from unittest.mock import Mock, patch, MagicMock, PropertyMock
-from typing import Dict, Any
 
 # =============================================================================
 # Mock Response Classes
@@ -121,7 +121,7 @@ class TestZPALegacyClientRateLimiting:
             # First call returns 429, second call returns 200
             mock_requests.request.side_effect = [Mock429Response(retry_after="2"), Mock200Response()]
 
-            with patch("zscaler.zpa.legacy.LegacyZPAClientHelper.send") as mock_send:
+            with patch("zscaler.zpa.legacy.LegacyZPAClientHelper.send"):
                 # Test the actual retry logic by calling the real implementation
                 pass
 
@@ -463,10 +463,10 @@ class TestLegacyClientRateLimitingConsistency:
 
     def test_all_legacy_clients_have_429_handling(self):
         """Verify all legacy clients implement 429 handling."""
-        from zscaler.zpa.legacy import LegacyZPAClientHelper
-        from zscaler.zia.legacy import LegacyZIAClientHelper
         from zscaler.zcc.legacy import LegacyZCCClientHelper
         from zscaler.zdx.legacy import LegacyZDXClientHelper
+        from zscaler.zia.legacy import LegacyZIAClientHelper
+        from zscaler.zpa.legacy import LegacyZPAClientHelper
         from zscaler.ztw.legacy import LegacyZTWClientHelper
         from zscaler.zwa.legacy import LegacyZWAClientHelper
 
@@ -513,6 +513,7 @@ class TestLegacyClientRateLimitingConsistency:
     def test_zpa_handles_both_retry_after_header_cases(self):
         """Verify ZPA handles both 'Retry-After' and 'retry-after' headers."""
         import inspect
+
         from zscaler.zpa.legacy import LegacyZPAClientHelper
 
         zpa_source = inspect.getsource(LegacyZPAClientHelper.send)
@@ -637,6 +638,7 @@ class TestZIARateLimitingDetails:
     def test_zia_retry_loop_structure(self):
         """Verify ZIA has proper retry loop with max attempts."""
         import inspect
+
         from zscaler.zia.legacy import LegacyZIAClientHelper
 
         zia_source = inspect.getsource(LegacyZIAClientHelper.send)

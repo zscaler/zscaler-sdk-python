@@ -16,6 +16,7 @@
 
 
 import pytest
+
 from tests.integration.ztw.conftest import MockZTWClient
 
 
@@ -42,7 +43,7 @@ class TestAdminRole:
             if roles:  # If there are any roles
                 # Select the first role for further testing
                 first_role = roles[0]
-                role_id = first_role.id if hasattr(first_role, "id") else first_role.get("id")
+                assert (first_role.id if hasattr(first_role, "id") else first_role.get("id")) is not None
 
         except Exception as exc:
             errors.append(f"Listing roles failed: {exc}")

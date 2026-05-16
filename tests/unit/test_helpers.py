@@ -2,13 +2,12 @@
 Testing Helper functions for Zscaler SDK
 """
 
-import pytest
 from zscaler.helpers import (
-    to_snake_case,
-    to_lower_camel_case,
-    convert_keys_to_snake_case,
     convert_keys_to_camel_case,
     convert_keys_to_camel_case_selective,
+    convert_keys_to_snake_case,
+    to_lower_camel_case,
+    to_snake_case,
 )
 
 
@@ -133,8 +132,8 @@ def test_convert_keys_to_snake_case():
     # Non-dictionary/list data
     assert convert_keys_to_snake_case("string") == "string"
     assert convert_keys_to_snake_case(123) == 123
-    assert convert_keys_to_snake_case(True) == True
-    assert convert_keys_to_snake_case(None) == None
+    assert convert_keys_to_snake_case(True) is True
+    assert convert_keys_to_snake_case(None) is None
 
 
 def test_convert_keys_to_camel_case():
@@ -164,8 +163,8 @@ def test_convert_keys_to_camel_case():
     # Non-dictionary/list data
     assert convert_keys_to_camel_case("string") == "string"
     assert convert_keys_to_camel_case(123) == 123
-    assert convert_keys_to_camel_case(True) == True
-    assert convert_keys_to_camel_case(None) == None
+    assert convert_keys_to_camel_case(True) is True
+    assert convert_keys_to_camel_case(None) is None
 
 
 def test_convert_keys_to_camel_case_selective():

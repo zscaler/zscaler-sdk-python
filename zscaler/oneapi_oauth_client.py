@@ -1,20 +1,22 @@
-from typing import Dict, Optional, Any, Union
 import logging
+from typing import TYPE_CHECKING, Any, Dict, Optional, Union
+
+if TYPE_CHECKING:
+    from zscaler.request_executor import RequestExecutor
 import json
 import os
-import requests
 import time
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
 
 # JWT handling - using PyJWT instead of python-jose to avoid ecdsa dependency (CVE-2024-23342)
 import jwt as pyjwt
+import requests
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from jwcrypto.jwk import JWK
 
-from zscaler.user_agent import UserAgent
-from zscaler.oneapi_http_client import HTTPClient
 from zscaler.errors.response_checker import check_response_for_error
+from zscaler.user_agent import UserAgent
 
 logger = logging.getLogger(__name__)
 

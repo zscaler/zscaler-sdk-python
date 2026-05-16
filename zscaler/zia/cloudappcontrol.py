@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.cloudappcontrol import CloudApplicationControl
-from zscaler.utils import transform_common_id_fields, format_url, reformat_params
 from zscaler.types import APIResult
+from zscaler.utils import format_url, reformat_params, transform_common_id_fields
+from zscaler.zia.models.cloudappcontrol import CloudApplicationControl
 
 
 class CloudAppControlAPI(APIClient):
@@ -741,6 +742,7 @@ class CloudAppControlAPI(APIClient):
             method=http_method,
             endpoint=api_url,
             body=body,
+            params=params,
         )
 
         if error:

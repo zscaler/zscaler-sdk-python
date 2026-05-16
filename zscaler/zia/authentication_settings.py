@@ -14,13 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+import time
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.authentication_settings import AuthenticationSettings
-from zscaler.utils import format_url
 from zscaler.types import APIResult
-import time
+from zscaler.utils import format_url
+from zscaler.zia.models.authentication_settings import AuthenticationSettings
 
 
 class AuthenticationSettingsAPI(APIClient):

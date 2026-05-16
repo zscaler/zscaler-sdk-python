@@ -14,10 +14,9 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
-import time
 from pprint import pprint
-from tests.integration.zdx.conftest import MockZDXClient
+
+import pytest
 
 
 @pytest.fixture

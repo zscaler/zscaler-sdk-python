@@ -15,7 +15,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-from tests.integration.zins.conftest import MockZInsClient, get_time_range
+
+from tests.integration.zins.conftest import get_time_range
 
 
 @pytest.fixture

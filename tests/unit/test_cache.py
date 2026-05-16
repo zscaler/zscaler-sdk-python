@@ -2,9 +2,11 @@
 Testing Cache functions for Zscaler SDK
 """
 
-import pytest
 import time
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
+import pytest
+
 from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache

@@ -46,10 +46,11 @@ Environment Variables:
 Please ensure that the ZIA environment variables are set before running this script.
 """
 
-from zscaler import ZIAClientHelper
-import os
 import argparse
+import os
 import time
+
+from zscaler import ZIAClientHelper
 
 
 def main():

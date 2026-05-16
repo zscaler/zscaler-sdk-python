@@ -39,9 +39,10 @@ Examples:
 """
 
 import argparse
-import os
-from zscaler import ZIAClientHelper
 import json
+import os
+
+from zscaler import ZIAClientHelper
 
 
 def main():

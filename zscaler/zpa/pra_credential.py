@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.pra_credential import PrivilegedRemoteAccessCredential
-from zscaler.utils import format_url, is_valid_ssh_key
 from zscaler.types import APIResult
+from zscaler.utils import format_url, is_valid_ssh_key
+from zscaler.zpa.models.pra_credential import PrivilegedRemoteAccessCredential
 
 
 class PRACredentialAPI(APIClient):

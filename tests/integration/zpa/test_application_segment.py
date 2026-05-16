@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import time
+
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient

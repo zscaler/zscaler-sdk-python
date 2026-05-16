@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import pytest
 import time
-import json
-from unittest.mock import Mock, patch
-from zscaler.oneapi_oauth_client import OAuth
+from unittest.mock import patch
+
+import pytest
+
 from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.oneapi_oauth_client import OAuth
 
 
 class MockRequestExecutor:
@@ -357,4 +358,4 @@ class TestEnhancedOAuthClient:
 
         # This should raise a KeyError since vanityDomain is required
         with pytest.raises(KeyError, match="vanityDomain"):
-            oauth_partial = OAuth(request_executor, config_partial)
+            OAuth(request_executor, config_partial)

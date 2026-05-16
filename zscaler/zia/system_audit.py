@@ -14,12 +14,13 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 # """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.system_audit import ConfigAudit
-from zscaler.utils import format_url
 from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.system_audit import ConfigAudit
 
 
 class SystemAuditReportAPI(APIClient):

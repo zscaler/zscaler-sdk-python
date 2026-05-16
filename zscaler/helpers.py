@@ -70,7 +70,6 @@ def to_snake_case(string):
         "computeDeviceGroupsForZIA": "compute_device_groups_for_zia",
         "computeDeviceGroupsForZPA": "compute_device_groups_for_zpa",
         "computeDeviceGroupsForZAD": "compute_device_groups_for_zad",
-        "computeDeviceGroupsForZAD": "compute_device_groups_for_zad",
         "deleteDHCPOption121RoutesVisibility": "delete_dhcp_option121_routes_visibility",
         "deleteDHCPOption121Routes": "delete_dhcp_option121_routes",
         "enableOneIDAdminMigrationChanges": "enable_one_id_admin_migration_changes",
@@ -136,7 +135,6 @@ def to_snake_case(string):
         "extranetDTO": "extranet_dto",
         "locationGroupDTO": "location_group_dto",
         "locationDTO": "location_dto",
-        "predefinedADPControls": "predefined_adp_controls",
         "runtimeOS": "runtime_os",
         "defaultCSP": "default_csp",
         # ZIdentity Edge Cases
@@ -285,7 +283,6 @@ def to_lower_camel_case(string):
         "extranet_dto": "extranetDTO",
         "location_group_dto": "locationGroupDTO",
         "location_dto": "locationDTO",
-        "predefined_adp_controls": "predefinedADPControls",
         "runtime_os": "runtimeOS",
         "default_csp": "defaultCSP",
         # ZCC WebPolicy: API expects this top-level key in snake_case.

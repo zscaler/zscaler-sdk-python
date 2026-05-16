@@ -32,19 +32,19 @@ help:
 	@echo "$(COLOR_WARNING)development$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  check-format                  Check code format/style with black$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  format                        Reformat code with black$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint                          Check style with flake8 for all packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zcc                      Check style with flake8 for zcc packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:ztw                      Check style with flake8 for ztw packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zdx                      Check style with flake8 for zdx packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zid                      Check style with flake8 for zid packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zins                     Check style with flake8 for zins packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zms                     Check style with flake8 for zms packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zbi                     Check style with flake8 for zbi packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with flake8 for zaiguard packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:ztb                      Check style with flake8 for ztb packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint                          Check style with ruff for all packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zcc                      Check style with ruff for zcc packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:ztw                      Check style with ruff for ztw packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zdx                      Check style with ruff for zdx packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zpa                      Check style with ruff for zpa packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zia                      Check style with ruff for zia packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zid                      Check style with ruff for zid packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zins                     Check style with ruff for zins packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zms                     Check style with ruff for zms packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zbi                     Check style with ruff for zbi packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with ruff for zaiguard packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:ztb                      Check style with ruff for ztb packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zwa                      Check style with ruff for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
@@ -98,56 +98,56 @@ docs: clean-docsrc
 	open docsrc/_build/html/index.html
 
 lint:
-	poetry run flake8 zscaler --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check . --select I
+	poetry run ruff check .
 
 lint\:zcc:
-	poetry run flake8 zscaler/zcc --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zcc --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zcc --select I
+	poetry run ruff check zscaler/zcc
 
 lint\:ztw:
-	poetry run flake8 zscaler/ztw --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/ztw --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/ztw --select I
+	poetry run ruff check zscaler/ztw
 
 lint\:zdx:
-	poetry run flake8 zscaler/zdx --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zdx --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zdx --select I
+	poetry run ruff check zscaler/zdx
 
 lint\:zpa:
-	poetry run flake8 zscaler/zpa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zpa --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zpa --select I
+	poetry run ruff check zscaler/zpa
 
 lint\:zia:
-	poetry run flake8 zscaler/zia --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zia --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zia --select I
+	poetry run ruff check zscaler/zia
 
 lint\:zid:
-	poetry run flake8 zscaler/zid --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zid --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zid --select I
+	poetry run ruff check zscaler/zid
 
 lint\:zins:
-	poetry run flake8 zscaler/zins --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zins --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zins --select I
+	poetry run ruff check zscaler/zins
 
 lint\:zms:
-	poetry run flake8 zscaler/zms --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zms --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zms --select I
+	poetry run ruff check zscaler/zms
 
 lint\:zbi:
-	poetry run flake8 zscaler/zbi --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zbi --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zbi --select I
+	poetry run ruff check zscaler/zbi
 
 lint\:zwa:
-	poetry run flake8 zscaler/zwa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zwa --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zwa --select I
+	poetry run ruff check zscaler/zwa
 
 lint\:zeasm:
-	poetry run flake8 zscaler/zeasm --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zeasm --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zeasm --select I
+	poetry run ruff check zscaler/zeasm
 
 lint\:zaiguard:
-	poetry run flake8 zscaler/zaiguard --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run flake8 zscaler/zaiguard --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run ruff check zscaler/zaiguard --select I
+	poetry run ruff check zscaler/zaiguard
 
 format:
 	poetry run black .

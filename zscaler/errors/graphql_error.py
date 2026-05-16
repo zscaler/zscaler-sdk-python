@@ -14,9 +14,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, Any, List, Optional, Union
-from dataclasses import dataclass, field
 import json
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Union
+
 import requests
 
 
@@ -120,7 +121,7 @@ class GraphQLAPIError(Exception):
             self.path = []
 
         # Construct the full message
-        message_parts = [f"GraphQL Error"]
+        message_parts = ["GraphQL Error"]
         if self.status_code != 200:
             message_parts.append(f"HTTP {self.status_code}")
         if self.classification:

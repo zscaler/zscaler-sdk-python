@@ -1,6 +1,6 @@
-from typing import Dict, Any, Optional, List
-from zscaler.helpers import to_snake_case
-from zscaler.helpers import convert_keys_to_snake_case
+from typing import Any, Dict, List, Optional
+
+from zscaler.helpers import convert_keys_to_snake_case, to_snake_case
 
 
 class ZscalerObject:

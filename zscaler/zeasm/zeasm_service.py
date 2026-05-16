@@ -15,9 +15,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
-from zscaler.zeasm.organizations import OrganizationsAPI
 from zscaler.zeasm.findings import FindingsAPI
 from zscaler.zeasm.lookalike_domains import LookALikeDomainsAPI
+from zscaler.zeasm.organizations import OrganizationsAPI
 
 
 class ZEASMService:
