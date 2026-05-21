@@ -178,7 +178,7 @@ You'll also need
    API <https://help.zscaler.com/zscaler-analytics>`__
 
 -  `ZMS - Zscaler Microsegmentation
-   API<https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
+   API <https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
 
 -  `Zscaler AI Guard
    API <https://help.zscaler.com/ai-guard>`__
@@ -244,11 +244,11 @@ programmatic interaction with the following products:
 -  `Z-Insights
    API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
 -  `ZMS - Zscaler Microsegmentation
-   API<https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
+   API <https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
 -  `EASM
    API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 - `Zscaler AI Guard API <https://help.zscaler.com/ai-guard>`__
-- `Business Insights
+-  `Business Insights
    API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi>`__
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and

@@ -1263,6 +1263,15 @@ class LegacyZIAClientHelper:
         """
         return IPSSignatureRulesAPI(self.request_executor)
 
+    @property
+    def secure_browsing(self) -> "SecureBrowsingAPI":
+        """
+        The interface object for the :ref:`ZIA Secure Browsing API interface <zia-secure_browsing>`.
+
+        """
+        return SecureBrowsingAPI(self.request_executor)
+
+
     """
     Misc
     """

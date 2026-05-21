@@ -114,8 +114,15 @@ class URLFilteringRule(ZscalerObject):
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
 
-            # Handling nested single object for CBIProfile
-            self.cbi_profile = isolation.CBIProfile(config["cbiProfile"]) if "cbiProfile" in config else None
+            if "cbiProfile" in config:
+                if isinstance(config["cbiProfile"], isolation.CBIProfile):
+                    self.cbi_profile = config["cbiProfile"]
+                elif config["cbiProfile"] is not None:
+                    self.cbi_profile = isolation.CBIProfile(config["cbiProfile"])
+                else:
+                    self.cbi_profile = None
+            else:
+                self.cbi_profile = None
 
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):

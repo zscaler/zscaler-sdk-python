@@ -91,6 +91,7 @@ from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
+from zscaler.zia.secure_browsing import SecureBrowsingAPI
 
 
 class ZIAService:
@@ -734,3 +735,11 @@ class ZIAService:
 
         """
         return IPSSignatureRulesAPI(self._request_executor)
+
+    @property
+    def secure_browsing(self) -> "SecureBrowsingAPI":
+        """
+        The interface object for the :ref:`ZIA Secure Browsing API interface <zia-secure_browsing>`.
+
+        """
+        return SecureBrowsingAPI(self._request_executor)
