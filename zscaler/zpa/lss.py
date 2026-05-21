@@ -39,6 +39,7 @@ class LSSConfigControllerAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint_v1 = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_lss_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
         self._zpa_base_lss_url_v2 = "/zpa/mgmtconfig/v2/admin/lssConfig"
         self._zpa_lss_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/lssConfig/customers/{customer_id}"
@@ -90,6 +91,44 @@ class LSSConfigControllerAPI(APIClient):
             template.append(operand)
 
         return template
+
+    def _get_siem_policy_set_id(self):
+        """
+        Resolves the SIEM policy set id by fetching the SIEM_POLICY policy type.
+
+        The LSS payload's ``policyRuleResource`` must include ``policySetId``
+        (the id of the parent SIEM_POLICY policy set). This mirrors the
+        mechanism used by ``policies.add_access_rule_v2`` which calls
+        ``get_policy("access")`` and extracts ``id`` -- here the same lookup is
+        done against ``SIEM_POLICY`` and the resulting id is embedded in the
+        payload rather than the URL.
+
+        Returns:
+            tuple: ``(policy_set_id, error)``. ``policy_set_id`` is a string on
+            success, ``None`` on failure (with ``error`` describing why).
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v1}
+            /policySet/policyType/SIEM_POLICY
+        """)
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, error)
+
+        body = response.get_body() if response is not None else None
+        if not body:
+            return (None, "Empty response body when resolving SIEM_POLICY policy set id")
+
+        policy_set_id = body.get("id")
+        if not policy_set_id:
+            return (None, "No policy ID found for 'SIEM_POLICY' policy type")
+        return (policy_set_id, None)
 
     def list_configs(self, query_params: Optional[dict] = None) -> APIResult[List[LSSResourceModel]]:
         """
@@ -270,11 +309,17 @@ class LSSConfigControllerAPI(APIClient):
             "connectorGroups": [{"id": group_id} for group_id in app_connector_group_ids] if app_connector_group_ids else [],
         }
 
-        # Handle policy rules and convert tuples into dictionary format
+        # Handle policy rules and convert tuples into dictionary format.
+        # When policy_rules is set, the payload's policyRuleResource must
+        # include the SIEM_POLICY policy set id (resolved at runtime).
         if kwargs.get("policy_rules"):
+            policy_set_id, err = self._get_siem_policy_set_id()
+            if err:
+                return (None, None, err)
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
                 "name": kwargs.get("policy_name", "SIEM_POLICY"),
+                "policySetId": policy_set_id,
             }
 
         # Add optional filter status codes if provided
@@ -297,40 +342,74 @@ class LSSConfigControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_lss_config(self, lss_config_id: str, **kwargs) -> APIResult[dict]:
+    def update_lss_config(
+        self,
+        lss_config_id: str,
+        lss_host: str = None,
+        lss_port: str = None,
+        name: str = None,
+        source_log_type: str = None,
+        app_connector_group_ids: list = None,
+        enabled: bool = None,
+        source_log_format: str = "csv",
+        use_tls: bool = None,
+        **kwargs,
+    ) -> APIResult[dict]:
         """
         Updates the specified LSS Receiver Config.
 
+        The PUT body is constructed from scratch -- this function does not
+        pre-fetch and merge the current state. Only fields the caller
+        explicitly supplies are included in the body; everything else is
+        preserved by the server. The API treats the PUT body the same way it
+        treats the POST body used by ``add_lss_config``, with the resource id
+        supplied via the URL path (and echoed inside ``config.id``).
+
         Args:
             lss_config_id (str): The unique identifier for the LSS Receiver config.
+            lss_host (str): The IP address of the LSS Receiver. Omitted from the body when ``None``.
+            lss_port (str): The port number for the LSS Receiver. Omitted from the body when ``None``.
+            name (str): The name of the LSS Config. Omitted from the body when ``None``.
+            source_log_type (str): The type of logs that will be sent to the receiver. Omitted from the body when ``None``.
+            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups. ``connectorGroups`` is omitted when ``None``.
+            enabled (bool): Enable the LSS Receiver. Omitted from the body when ``None`` (preserves the current value).
+            source_log_format (str): The format for the default log stream content (``csv``/``json``/``tsv``).
+                Only used to compute ``format`` when ``log_stream_content`` is not provided AND ``source_log_type`` is provided.
+                Defaults to ``csv``.
+            use_tls (bool): Enable TLS on the log traffic between LSS components. Omitted from the body when ``None``.
 
         Keyword Args:
-            description (str): Additional information about the LSS Config.
-            enabled (bool): Enable the LSS host. Defaults to ``True``.
             filter_status_codes (list): A list of Session Status Codes that will be excluded by LSS.
-            log_stream_content (str): Formatter for the log stream content that will be sent to the LSS Host.
-            policy_rules (list): A list of policy rule tuples for conditional logic.
-            source_log_format (str): The format for the logs. Must be one of csv, json, tsv. Defaults to csv.
-            source_log_type (str): The type of logs that will be sent to the receiver as part of this config.
-            use_tls (bool): Enable TLS on the log traffic between LSS components. Defaults to ``False``.
+            log_stream_content (str): Custom log stream content formatting for the LSS Host.
+            policy_rules (list): A list of policy rule tuples, such as (`object_type`, [`object_id`]).
+            policy_name (str): Name for the policy rule resource. ``Defaults to SIEM_POLICY``.
 
         Returns:
             LSSConfig: The updated LSS Receiver config object.
 
         Examples:
-            Update an LSS Log Receiver config to change from user activity to user status.
+            Update just the name of an existing config (other fields preserved server-side):
 
-            .. code-block:: python
-
-                zpa.lss.update_lss_config(
+            >>> zpa.lss.update_lss_config(
                     lss_config_id="99999",
+                    name="renamed-config",
+                )
+
+            Update multiple fields including policy rules:
+
+            >>> zpa.lss.update_lss_config(
+                    lss_config_id="99999",
+                    app_connector_group_ids=["app_conn_group_id"],
+                    lss_host="192.0.2.100",
+                    lss_port="8080",
                     name="user_status_to_siem",
                     policy_rules=[
                         ("idp", ["idp_id"]),
                         ("client_type", ["machine_tunnel"]),
                         ("saml", [("attribute_id", "11111")]),
                     ],
-                    source_log_type="user_status")
+                    source_log_type="user_status",
+                )
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -338,67 +417,69 @@ class LSSConfigControllerAPI(APIClient):
             /lssConfig/{lss_config_id}
         """)
 
-        # Fetch the current configuration so we can merge with the new values
-        current_config, _, error = self.get_config(lss_config_id)
-        if error:
-            return (None, None, error)
+        # Map source_log_type to the ZPA internal code only when supplied.
+        # When omitted, the field is left out of the payload entirely so the
+        # server preserves the current value.
+        mapped_source_log_type = None
+        if source_log_type is not None:
+            if source_log_type not in self.source_log_map:
+                return (None, None, f"Invalid source_log_type: {source_log_type!r}")
+            mapped_source_log_type = self.source_log_map[source_log_type]
 
-        # Convert current config to dictionary format, if it's an object
-        if hasattr(current_config, "as_dict"):
-            current_config = current_config.as_dict()
-
-        # Ensure source_log_type is passed and valid
-        if "source_log_type" in kwargs:
-            source_log_type = self.source_log_map[kwargs.pop("source_log_type")]
-        else:
-            source_log_type = current_config["config"].get("sourceLogType")
-
-        # Handle custom log stream content formatting or use default formatting from ZPA
-        if kwargs.get("log_stream_content"):
+        # Resolve log_stream_content. Only included in the body when:
+        #   - caller passes log_stream_content explicitly, OR
+        #   - caller passes source_log_type (the canonical template is fetched
+        #     using source_log_format, default "csv").
+        # Otherwise the existing format on the server is preserved.
+        log_stream_content = None
+        if "log_stream_content" in kwargs:
             log_stream_content = kwargs.pop("log_stream_content")
-        else:
-            source_log_format = kwargs.pop("source_log_format", "csv")
-            log_stream_content = self.get_all_log_formats()[source_log_type][source_log_format]
+        elif mapped_source_log_type is not None:
+            log_stream_content = self.get_all_log_formats()[mapped_source_log_type][source_log_format]
 
-        # Ensure the 'config' key exists in the payload structure
-        if "config" not in current_config:
-            current_config["config"] = {}
-
-        # Include the LSS config ID in the config block
-        current_config["config"]["id"] = lss_config_id
-
-        # Prepare the payload by merging the current configuration with the new changes
-        current_config["config"].update(
-            {
-                "enabled": kwargs.get("enabled", current_config["config"].get("enabled", True)),
-                "lssHost": kwargs.get("lss_host", current_config["config"].get("lssHost")),
-                "lssPort": kwargs.get("lss_port", current_config["config"].get("lssPort")),
-                "name": kwargs.get("name", current_config["config"].get("name")),
-                "format": log_stream_content,
-                "sourceLogType": source_log_type,
-                "useTls": kwargs.get("use_tls", current_config["config"].get("useTls", False)),
-            }
-        )
-
-        # Update connector groups if provided
-        if "app_connector_group_ids" in kwargs:
-            current_config["connectorGroups"] = [{"id": group_id} for group_id in kwargs.pop("app_connector_group_ids")]
-        elif "connectorGroups" not in current_config:  # If it's missing entirely, add an empty list
-            current_config["connectorGroups"] = []
-
-        # Handle policy rules and convert tuples into dictionary format
-        if kwargs.get("policy_rules"):
-            current_config["policyRuleResource"] = {
-                "conditions": self._create_policy(kwargs.pop("policy_rules")),
-                "name": kwargs.get("policy_name", current_config.get("policyRuleResource", {}).get("name", "SIEM_POLICY")),
-            }
-
-        # Add optional filter status codes if provided
+        # Build config block conditionally -- only include keys the caller
+        # supplied. config.id always rides along (LSS PUT requires it).
+        config_block = {"id": lss_config_id}
+        if enabled is not None:
+            config_block["enabled"] = enabled
+        if lss_host is not None:
+            config_block["lssHost"] = lss_host
+        if lss_port is not None:
+            config_block["lssPort"] = lss_port
+        if name is not None:
+            config_block["name"] = name
+        if log_stream_content is not None:
+            config_block["format"] = log_stream_content
+        if mapped_source_log_type is not None:
+            config_block["sourceLogType"] = mapped_source_log_type
+        if use_tls is not None:
+            config_block["useTls"] = use_tls
         if kwargs.get("filter_status_codes"):
-            current_config["config"]["filter"] = kwargs.pop("filter_status_codes")
+            config_block["filter"] = kwargs.pop("filter_status_codes")
+
+        payload = {"config": config_block}
+
+        # connectorGroups is included only when the caller supplied
+        # app_connector_group_ids. Passing an empty list explicitly will
+        # clear the associations on the server.
+        if app_connector_group_ids is not None:
+            payload["connectorGroups"] = [{"id": group_id} for group_id in app_connector_group_ids]
+
+        # Handle policy rules and convert tuples into dictionary format.
+        # When policy_rules is set, the payload's policyRuleResource must
+        # include the SIEM_POLICY policy set id (resolved at runtime).
+        if kwargs.get("policy_rules"):
+            policy_set_id, err = self._get_siem_policy_set_id()
+            if err:
+                return (None, None, err)
+            payload["policyRuleResource"] = {
+                "policySetId": policy_set_id,
+                "conditions": self._create_policy(kwargs.pop("policy_rules")),
+                "name": kwargs.get("policy_name", "SIEM_POLICY"),
+            }
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=current_config)
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload)
         if error:
             return (None, None, error)
 
@@ -409,10 +490,8 @@ class LSSConfigControllerAPI(APIClient):
 
         # Handle case where no content is returned (204 No Content)
         if response is None or not response.get_body():
-            # Return a meaningful result to indicate success
             return (LSSResourceModel({"id": lss_config_id}), response, None)
 
-        # Parse the response into an LSSConfig instance
         try:
             result = LSSResourceModel(self.form_response_body(response.get_body()))
         except Exception as error:

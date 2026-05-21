@@ -1,5 +1,23 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.30 (May 21, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #517](https://github.com/zscaler/zscaler-sdk-python/pull/517) - Addressed [Issue #514](https://github.com/zscaler/zscaler-sdk-python/issues/514): `lss.update_lss_config()` now builds the PUT body from caller-supplied fields only — omitting `source_log_type` no longer raises `KeyError`, and `enabled`/`use_tls` default to `None` instead of force-toggling the resource on every update. The update also fixes the earlier `policy.invalid.mapping.input` failure by including `config.id` in the body and dynamically resolving `policyRuleResource.policySetId` from the `SIEM_POLICY` policy type when `policy_rules` is provided.
+
+### Enhancements
+
+* [PR #517](https://github.com/zscaler/zscaler-sdk-python/pull/517) - Added the following new ZIA Secure Browsing V2 Endpoints
+  - `GET browserControlSettings/supportedBrowserVersions` Retrieves a list of all supported browsers and their versions.
+  - `PUT browserControlSettings/smartIsolation` Updates the Smart Browser Isolation policy settings.
+  - `GET browserControlSettings` Retrieves the Browser Control status and the list of configured browsers in the Browser Control policy
+  - `PUT browserControlSettings` Updates the Browser Control settings.
+
 ## 1.9.29 (May 15, 2026)
 
 ### Notes

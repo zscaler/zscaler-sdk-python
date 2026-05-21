@@ -40,8 +40,8 @@ class IPSSignatureRulesAPI(APIClient):
         """
         Lists custom IPS signature rules.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-get>`_
+        See the `List ZIA Custom IPS Signature Rules API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-get>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -106,8 +106,8 @@ class IPSSignatureRulesAPI(APIClient):
         """
         Fetches the custom IPS signature rules based on the specified ID
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-post>`_
+        See the `Get ZIA Custom IPS Signature Rule API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-post>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -190,8 +190,8 @@ class IPSSignatureRulesAPI(APIClient):
         issued. If the rule is syntactically or semantically invalid, the method
         returns ``(None, None, ValueError(...))`` and no create call is made.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-post>`_
+        See the `Add ZIA Custom IPS Signature Rule API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules-post>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -264,8 +264,8 @@ class IPSSignatureRulesAPI(APIClient):
             If you want to validate ``rule_text`` before updating, call
             :meth:`validate_ips_signature_rule` explicitly from your code.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/{id}-put>`_
+        See the `Update ZIA Custom IPS Signature Rule API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/{id}-put>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -319,8 +319,8 @@ class IPSSignatureRulesAPI(APIClient):
         """
         Deletes the specified IPS Signature Rule.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/{id}-delete>`_
+        See the `Delete ZIA Custom IPS Signature Rule API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/{id}-delete>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -360,8 +360,8 @@ class IPSSignatureRulesAPI(APIClient):
         Validates a new custom signature rule based on specific predefined conditions,
         such as syntax errors, duplicate signatures, and more.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/validateRuleText-post>`_
+        See the `Validate ZIA Custom IPS Signature Rule API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/validateRuleText-post>`__
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -424,8 +424,8 @@ class IPSSignatureRulesAPI(APIClient):
         """
         Exports the custom IPS signature rules to a CSV file.
 
-        See the `ZIA Custom IPS Signature Rules API reference
-        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/export-get>`_
+        See the `Export ZIA Custom IPS Signature Rules API reference
+        <https://help.zscaler.com/legacy-apis/ips-control-policy#/ipsSignatureRules/export-get>`__
         for further detail on optional keyword parameter structures.
 
         Args:

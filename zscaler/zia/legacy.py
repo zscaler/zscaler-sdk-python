@@ -97,6 +97,7 @@ if TYPE_CHECKING:
     from zscaler.zia.saas_security_api import SaaSSecurityAPI
     from zscaler.zia.sandbox import CloudSandboxAPI
     from zscaler.zia.sandbox_rules import SandboxRulesAPI
+    from zscaler.zia.secure_browsing import SecureBrowsingAPI
     from zscaler.zia.security_policy_settings import SecurityPolicyAPI
     from zscaler.zia.shadow_it_report import ShadowITAPI
     from zscaler.zia.ssl_inspection_rules import SSLInspectionAPI
@@ -1262,6 +1263,15 @@ class LegacyZIAClientHelper:
 
         """
         return IPSSignatureRulesAPI(self.request_executor)
+
+    @property
+    def secure_browsing(self) -> "SecureBrowsingAPI":
+        """
+        The interface object for the :ref:`ZIA Secure Browsing API interface <zia-secure_browsing>`.
+
+        """
+        return SecureBrowsingAPI(self.request_executor)
+
 
     """
     Misc
