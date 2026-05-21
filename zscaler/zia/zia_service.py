@@ -72,6 +72,7 @@ from zscaler.zia.rule_labels import RuleLabelsAPI
 from zscaler.zia.saas_security_api import SaaSSecurityAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
 from zscaler.zia.sandbox_rules import SandboxRulesAPI
+from zscaler.zia.secure_browsing import SecureBrowsingAPI
 from zscaler.zia.security_policy_settings import SecurityPolicyAPI
 from zscaler.zia.shadow_it_report import ShadowITAPI
 from zscaler.zia.ssl_inspection_rules import SSLInspectionAPI
@@ -91,7 +92,6 @@ from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-from zscaler.zia.secure_browsing import SecureBrowsingAPI
 
 
 class ZIAService:

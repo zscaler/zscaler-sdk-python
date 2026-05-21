@@ -15,10 +15,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from typing import Any, Dict, List, Optional
-from zscaler.oneapi_object import ZscalerObject
+
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zia.models import user_management as user_management
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import cloud_browser_isolation as isolation
+from zscaler.zia.models import user_management as user_management
+
 
 class BrowserControlSettings(ZscalerObject):
     """
@@ -90,7 +92,7 @@ class BrowserControlSettings(ZscalerObject):
             self.blocked_internet_explorer_versions: List[Any] = []
             self.blocked_opera_versions: List[Any] = []
             self.blocked_safari_versions: List[Any] = []
-            self.smart_isolation_profile: Optional[SmartIsolationProfile] = None
+            self.smart_isolation_profile: Optional[isolation.CBIProfile] = None
             self.smart_isolation_profile_id: Optional[Any] = None
 
     def request_format(self) -> Dict[str, Any]:
@@ -172,14 +174,14 @@ class SmartIsolation(ZscalerObject):
             )
 
             if "smartIsolationProfile" in config:
-                if isinstance(config["smartIsolationProfile"], cloud_browser_isolation.CBIProfile):
-                    self.smart_isolation_profile: Optional[cloud_browser_isolation.CBIProfile] = config["smartIsolationProfile"]
+                if isinstance(config["smartIsolationProfile"], isolation.CBIProfile):
+                    self.smart_isolation_profile: Optional[isolation.CBIProfile] = config["smartIsolationProfile"]
                 elif config["smartIsolationProfile"] is not None:
-                    self.smart_isolation_profile = cloud_browser_isolation.CBIProfile(config["smartIsolationProfile"])
+                    self.smart_isolation_profile = isolation.CBIProfile(config["smartIsolationProfile"])
                 else:
                     self.smart_isolation_profile = None
             else:
-                self.smart_isolation_profile: Optional[SmartIsolationProfile] = None
+                self.smart_isolation_profile: Optional[isolation.CBIProfile] = None
             self.smart_isolation_profile_id: Optional[Any] = config["smartIsolationProfileId"] \
                 if "smartIsolationProfileId" in config else None
         else:
@@ -195,9 +197,9 @@ class SmartIsolation(ZscalerObject):
             self.allow_all_browsers: Optional[Any] = None
             self.enable_warnings: Optional[Any] = None
             self.enable_smart_browser_isolation: Optional[Any] = None
-            self.smart_isolation_users: List[SmartIsolationUser] = []
-            self.smart_isolation_groups: List[SmartIsolationGroup] = []
-            self.smart_isolation_profile: Optional[SmartIsolationProfile] = None
+            self.smart_isolation_users: List[user_management.UserManagement] = []
+            self.smart_isolation_groups: List[user_management.Groups] = []
+            self.smart_isolation_profile: Optional[isolation.CBIProfile] = None
             self.smart_isolation_profile_id: Optional[Any] = None
 
     def request_format(self) -> Dict[str, Any]:

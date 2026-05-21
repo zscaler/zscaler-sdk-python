@@ -19,11 +19,9 @@ from typing import List
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
-from zscaler.utils import format_url
-from zscaler.zia.models.secure_browsing import BrowserControlSettings
-from zscaler.zia.models.secure_browsing import SmartIsolation
-from zscaler.zia.models.secure_browsing import SupportedBrowserVersions
 from zscaler.utils import format_url, reformat_params, transform_common_id_fields
+from zscaler.zia.models.secure_browsing import BrowserControlSettings, SmartIsolation, SupportedBrowserVersions
+
 
 class SecureBrowsingAPI(APIClient):
     """
