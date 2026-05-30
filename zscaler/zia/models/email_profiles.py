@@ -1,0 +1,66 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+# AUTO-GENERATED! DO NOT EDIT FILE DIRECTLY
+# SEE CONTRIBUTOR DOCUMENTATION
+from typing import Any, Dict, List, Optional
+from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
+
+
+class EmailProfiles(ZscalerObject):
+    """
+    A class for EmailProfiles objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the EmailProfiles model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id: Optional[Any] = config["id"] \
+                if "id" in config else None
+            self.name: Optional[Any] = config["name"] \
+                if "name" in config else None
+            self.description: Optional[Any] = config["description"] \
+                if "description" in config else None
+            self.emails: List[Any] = ZscalerCollection.form_list(
+                config["emails"] if "emails" in config else [], str
+            )
+        else:
+            self.id: Optional[Any] = None
+            self.name: Optional[Any] = None
+            self.description: Optional[Any] = None
+            self.emails: List[Any] = []
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "emails": self.emails
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

@@ -80,6 +80,16 @@ class AppConnectorGroup(ZscalerObject):
             self.server_groups = ZscalerCollection.form_list(
                 config["serverGroups"] if "serverGroups" in config else [], server_group.ServerGroup
             )
+            
+            if "version" in config:
+                if isinstance(config["version"], Version):
+                    self.version = config["version"]
+                elif config["version"] is not None:
+                    self.version = Version(config["version"])
+                else:
+                    self.version = None
+            else:
+                self.version = None
         else:
             self.id = None
             self.ip_acl = None
@@ -103,12 +113,12 @@ class AppConnectorGroup(ZscalerObject):
             self.connector_group_type = None
             self.city_country = None
             self.country_code = None
-            self.tcp_quick_ack_app = False
-            self.tcp_quick_ack_assistant = False
-            self.tcp_quick_ack_read_assistant = False
-            self.pra_enabled = False
-            self.use_in_dr_mode = False
-            self.waf_disabled = False
+            self.tcp_quick_ack_app = None
+            self.tcp_quick_ack_assistant = None
+            self.tcp_quick_ack_read_assistant = None
+            self.pra_enabled = None
+            self.use_in_dr_mode = None
+            self.waf_disabled = None
             self.microtenant_id = None
             self.microtenant_name = None
             self.site_id = None
@@ -119,6 +129,7 @@ class AppConnectorGroup(ZscalerObject):
             self.zscaler_managed = None
             self.dc_hosting_info = None
             self.enrollment_cert_id = None
+            self.version = None
             self.server_groups = []
 
     def request_format(self) -> Dict[str, Any]:
@@ -162,6 +173,7 @@ class AppConnectorGroup(ZscalerObject):
             "zscalerManaged": self.zscaler_managed,
             "dcHostingInfo": self.dc_hosting_info,
             "enrollmentCertId": self.enrollment_cert_id,
+            "version": self.version,
             "serverGroups": [server_group.request_format() for server_group in self.server_groups],
         }
         parent_req_format.update(current_obj_format)
@@ -293,6 +305,39 @@ class NPDnsNsRecord(ZscalerObject):
             "name": self.name,
             "fqdn": self.fqdn,
             "nameserverIps": self.nameserver_ips,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Version(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the Version model based on API response.
+        """
+        super().__init__(config)
+        if config:
+            self.version_profile_gid = config["version_profile_gid"] if "version_profile_gid" in config else None
+            self.version_profile_name = config["versionProfileName"] if "versionProfileName" in config else None
+            self.sarge_version = config["sargeVersion"] if "sargeVersion" in config else None
+            self.child_version = config["childVersion"] if "childVersion" in config else None
+            self.latest_platform = config["latestPlatform"] if "latestPlatform" in config else None
+
+        else:
+            self.version_profile_gid = None
+            self.version_profile_name = None
+            self.sarge_version = None
+            self.child_version = None
+            self.latest_platform = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "versionProfileGid": self.version_profile_gid,
+            "versionProfileName": self.version_profile_name,
+            "sargeVersion": self.sarge_version,
+            "childVersion": self.child_version,
+            "latestPlatform": self.latest_platform,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

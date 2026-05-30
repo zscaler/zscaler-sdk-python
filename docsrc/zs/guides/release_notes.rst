@@ -6,6 +6,31 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.31 (May 29, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+-------------
+
+* (`#525 <https://github.com/zscaler/zscaler-sdk-python/pull/525>`_) - Added the following new ZIA Email Profile endpoints
+  - `GET /emailRecipientProfile` Retrieves a list of email profiles.
+  - `POST /emailRecipientProfile` Add email profiles.
+  - `GET /emailRecipientProfile/{id}` Retrieve individual email profiles.
+  - `PUT /emailRecipientProfile/{id}` Update individual email profiles.
+  - `DELETE /emailRecipientProfile/{id}` Delete individual email profiles.
+
+Bug Fixes:
+------------
+
+* (`#525 <https://github.com/zscaler/zscaler-sdk-python/pull/525>`_) - Fixed ZPA `application_segment` model class `AppResource` to parse the list attribute `inconsistentConfigDetails`
+
+`* (`#525 <https://github.com/zscaler/zscaler-sdk-python/pull/525>`_)` - Fixed resource registration `app_connectors` within the Legacy ZPA Client.
+
 1.9.30 (May 21, 2026)
 ---------------------------
 

@@ -873,6 +873,9 @@ class AppResource(ZscalerObject):
             self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else None
             self.health_reporting = config["healthReporting"] if "healthReporting" in config else None
             self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else None
+            self.inconsistent_config_details = (
+                config["inconsistentConfigDetails"] if "inconsistentConfigDetails" in config else None
+            )
             self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else None
             self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else None
             self.name = config["name"] if "name" in config else None

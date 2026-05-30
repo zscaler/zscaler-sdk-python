@@ -429,9 +429,9 @@ class LegacyZPAClientHelper:
         return AppConnectorScheduleAPI(self.request_executor, self.config)
 
     @property
-    def connectors(self) -> AppConnectorControllerAPI:
+    def app_connectors(self) -> AppConnectorControllerAPI:
         """
-        The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
+        The interface object for the :ref:`ZPA Connectors interface <zpa-app_connectors>`.
 
         """
         from zscaler.zpa.app_connectors import AppConnectorControllerAPI

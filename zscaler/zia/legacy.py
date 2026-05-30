@@ -116,6 +116,7 @@ if TYPE_CHECKING:
     from zscaler.zia.vzen_nodes import VZENNodesAPI
     from zscaler.zia.workload_groups import WorkloadGroupsAPI
     from zscaler.zia.zpa_gateway import ZPAGatewayAPI
+    from zscaler.zia.email_profiles import EmailProfilesAPI
 
 
 class LegacyZIAClientHelper:
@@ -1272,6 +1273,13 @@ class LegacyZIAClientHelper:
         """
         return SecureBrowsingAPI(self.request_executor)
 
+    @property
+    def email_profiles(self) -> "EmailProfilesAPI":
+        """
+        The interface object for the :ref:`ZIA Email Profiles API interface <zia-email_profiles>`.
+
+        """
+        return EmailProfilesAPI(self.request_executor)
 
     """
     Misc
