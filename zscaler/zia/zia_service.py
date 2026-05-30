@@ -48,6 +48,7 @@ from zscaler.zia.dlp_resources import DLPResourcesAPI
 from zscaler.zia.dlp_templates import DLPTemplatesAPI
 from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
 from zscaler.zia.dns_gatways import DNSGatewayAPI
+from zscaler.zia.email_profiles import EmailProfilesAPI
 from zscaler.zia.end_user_notification import EndUserNotificationAPI
 from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
@@ -743,3 +744,11 @@ class ZIAService:
 
         """
         return SecureBrowsingAPI(self._request_executor)
+    
+    @property
+    def email_profiles(self) -> "EmailProfilesAPI":
+        """
+        The interface object for the :ref:`ZIA Email Profiles API interface <zia-email_profiles>`.
+
+        """
+        return EmailProfilesAPI(self._request_executor)
