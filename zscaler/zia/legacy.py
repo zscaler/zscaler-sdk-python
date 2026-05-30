@@ -75,6 +75,7 @@ if TYPE_CHECKING:
     from zscaler.zia.dlp_templates import DLPTemplatesAPI
     from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
     from zscaler.zia.dns_gatways import DNSGatewayAPI
+    from zscaler.zia.email_profiles import EmailProfilesAPI
     from zscaler.zia.end_user_notification import EndUserNotificationAPI
     from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
     from zscaler.zia.ftp_control_policy import FTPControlPolicyAPI
@@ -116,7 +117,6 @@ if TYPE_CHECKING:
     from zscaler.zia.vzen_nodes import VZENNodesAPI
     from zscaler.zia.workload_groups import WorkloadGroupsAPI
     from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-    from zscaler.zia.email_profiles import EmailProfilesAPI
 
 
 class LegacyZIAClientHelper:

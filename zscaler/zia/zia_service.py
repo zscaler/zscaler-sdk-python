@@ -93,7 +93,6 @@ from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-from zscaler.zia.email_profiles import EmailProfilesAPI
 
 
 class ZIAService:

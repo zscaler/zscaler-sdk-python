@@ -17,8 +17,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 # AUTO-GENERATED! DO NOT EDIT FILE DIRECTLY
 # SEE CONTRIBUTOR DOCUMENTATION
 from typing import Any, Dict, List, Optional
-from zscaler.oneapi_object import ZscalerObject
+
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
 
 
 class EmailProfiles(ZscalerObject):
