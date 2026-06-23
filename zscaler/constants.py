@@ -20,7 +20,7 @@ DEV_AUTH_URL = "https://authn1.dev.zpath.net/authn/v1/oauth/token"
 # client selects them via the lowercased ``cloud`` parameter (``gov``/``govus``).
 ONEAPI_GOV_AUTH_DOMAINS = {
     "gov": "zidentitygov.net",
-    "govus": "zidentitygov.us",
+    "govus": "zidentitygovus.net",
 }
 
 ONEAPI_GOV_API_BASE_URLS = {
