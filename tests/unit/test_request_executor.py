@@ -676,6 +676,20 @@ def test_get_base_url():
     base_url = executor.get_base_url("/api/v1/users")
     assert base_url == "https://api.beta.zsapi.net"
 
+    # Test GOV (FedRAMP) cloud - dedicated gateway, not the zsapi.net pattern
+    executor.cloud = "gov"
+    assert executor.get_base_url("/zpa/api/v1/apps") == "https://api.zscalergov.net"
+
+    # Test GOV-US (FedRAMP) cloud
+    executor.cloud = "govus"
+    assert executor.get_base_url("/zpa/api/v1/apps") == "https://api.zscalergov.us"
+
+    # Gov routing must also apply to the zins/zms/bi gateway branches
+    executor.cloud = "gov"
+    assert executor.get_base_url("/zins/graphql") == "https://api.zscalergov.net"
+    assert executor.get_base_url("/zms/graphql") == "https://api.zscalergov.net"
+    assert executor.get_base_url("/bi/report") == "https://api.zscalergov.net"
+
 
 def test_get_service_type():
     """Test get_service_type method."""

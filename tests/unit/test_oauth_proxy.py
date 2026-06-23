@@ -402,3 +402,63 @@ def test_oauth_proxy_integration():
             assert str(http_parsed.port) == "8080"
             assert https_parsed.hostname == "proxy.example.com"
             assert str(https_parsed.port) == "8080"
+
+
+def test_oauth_get_auth_url_clouds():
+    """Test that _get_auth_url builds the correct token endpoint per cloud."""
+    mock_request_executor = Mock()
+    config = {
+        "client": {
+            "clientId": "test_client_id",
+            "clientSecret": "test_client_secret",
+            "vanityDomain": "testcompany",
+            "cloud": "production",
+        }
+    }
+
+    oauth = OAuth(mock_request_executor, config)
+
+    # Commercial production
+    assert oauth._get_auth_url("testcompany", "production") == "https://testcompany.zslogin.net/oauth2/v1/token"
+
+    # Government (FedRAMP) clouds use the dedicated Zidentity identity providers
+    assert oauth._get_auth_url("zsgovlab-net", "gov") == "https://zsgovlab-net.zidentitygov.net/oauth2/v1/token"
+    assert oauth._get_auth_url("zsgovlab-us", "govus") == "https://zsgovlab-us.zidentitygovus.net/oauth2/v1/token"
+
+    # Other non-production commercial clouds keep the legacy zslogin{cloud} pattern
+    assert oauth._get_auth_url("testcompany", "beta") == "https://testcompany.zsloginbeta.net/oauth2/v1/token"
+
+
+@pytest.mark.parametrize(
+    "cloud,expected_url",
+    [
+        ("gov", "https://zsgovlab.zidentitygov.net/oauth2/v1/token"),
+        ("govus", "https://zsgovlab.zidentitygovus.net/oauth2/v1/token"),
+    ],
+)
+def test_oauth_client_secret_uses_gov_auth_url(cloud, expected_url):
+    """Authenticating with a gov/govus config must POST to the FedRAMP token endpoint."""
+    mock_request_executor = Mock()
+    config = {
+        "client": {
+            "clientId": "test_client_id",
+            "clientSecret": "test_client_secret",
+            "vanityDomain": "zsgovlab",
+            "cloud": cloud,
+        }
+    }
+
+    oauth = OAuth(mock_request_executor, config)
+
+    with patch("requests.post") as mock_post:
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = '{"access_token": "test_token", "expires_in": 3600}'
+        mock_post.return_value = mock_response
+
+        oauth._authenticate_with_client_secret("test_client_id", "test_client_secret")
+
+        mock_post.assert_called_once()
+        # The auth URL is the first positional argument to requests.post
+        called_url = mock_post.call_args.args[0]
+        assert called_url == expected_url
