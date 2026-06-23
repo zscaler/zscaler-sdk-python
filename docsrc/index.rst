@@ -365,6 +365,50 @@ an alternative Zidentity cloud environment.
 **Note 2**: By default this SDK will send the authentication request and
 subsequent API calls to the default base URL.
 
+OneAPI Government (FedRAMP) Cloud Environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneAPI supports the Zscaler government (FedRAMP) clouds. These are
+FedRAMP-isolated environments served by a dedicated Zidentity identity
+provider and API gateway. To authenticate, set the ``cloud`` attribute
+(or ``ZSCALER_CLOUD`` environment variable) to one of the supported
+government values:
+
++-------------------+---------------------------------------------------------------+------------------------------+
+| ``cloud`` value   | OAuth token endpoint                                          | API base URL                 |
++===================+===============================================================+==============================+
+| ``gov``           | ``https://<vanity_domain>.zidentitygov.net/oauth2/v1/token``  | ``https://api.zscalergov.net`` |
++-------------------+---------------------------------------------------------------+------------------------------+
+| ``govus``         | ``https://<vanity_domain>.zidentitygovus.net/oauth2/v1/token``| ``https://api.zscalergov.us``  |
++-------------------+---------------------------------------------------------------+------------------------------+
+
+For example, authenticating to the GOV environment:
+
+.. code:: sh
+
+   export ZSCALER_VANITY_DOMAIN="acme"
+   export ZSCALER_CLOUD="gov"
+
+Or inline in the client configuration:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "gov",  # or "govus"
+       "customerId": "",  # Optional parameter. Required only when using ZPA
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+**Note**: The ``cloud`` value is case-insensitive (``gov``, ``GOV``,
+``govus``, ``GOVUS`` are all accepted). The ``vanityDomain`` is still
+required and is used as the host prefix for the government identity
+provider.
+
 **Note 3**: Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`.The following cloud environments are supported:
 
 * `zscaler`

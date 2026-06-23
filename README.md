@@ -282,7 +282,7 @@ dropdown you will see the newly created Role. In the event a newly created role 
 ZIdentity Admin UI a `Sync Now` button is provided in the API Resources menu which will initiate an
 on-demand sync of newly created roles.
 
-**WARNING**: Attention Government customers. OneAPI and Zidentity is not currently supported for the following ZIA clouds: `zscalergov` and `zscalerten` or ZPA `GOV`, and `GOVUS`.
+**NOTE**: Attention Government customers. OneAPI and Zidentity now support the government (FedRAMP) clouds via the unified `cloud=gov` and `cloud=govus` values. See the [OneAPI Government (FedRAMP) Cloud Environments](#oneapi-government-fedramp-cloud-environments) section below for details.
 
 ### Default Environment Variables
 
@@ -318,6 +318,39 @@ export ZSCALER_CLOUD="beta"
 **Note 1**: The attribute `cloud` or environment variable `ZSCALER_CLOUD` is optional and only required when authenticating to an alternative Zidentity cloud environment.
 
 **Note 2**: By default this SDK will send the authentication request and subsequent API calls to the default base URL.
+
+### OneAPI Government (FedRAMP) Cloud Environments
+
+OneAPI supports the Zscaler government (FedRAMP) clouds. These are FedRAMP-isolated environments served by a dedicated Zidentity identity provider and API gateway. To authenticate, set the `cloud` attribute (or `ZSCALER_CLOUD` environment variable) to one of the supported government values:
+
+| `cloud` value | OAuth token endpoint | API base URL |
+|---------------|----------------------|--------------|
+| `gov`         | `https://<vanity_domain>.zidentitygov.net/oauth2/v1/token`   | `https://api.zscalergov.net` |
+| `govus`       | `https://<vanity_domain>.zidentitygovus.net/oauth2/v1/token` | `https://api.zscalergov.us`  |
+
+For example, authenticating to the GOV environment:
+
+```sh
+export ZSCALER_VANITY_DOMAIN="acme"
+export ZSCALER_CLOUD="gov"
+```
+
+Or inline in the client configuration:
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "gov",  # or "govus"
+    "customerId": "",  # Optional parameter. Required only when using ZPA
+    "logging": {"enabled": False, "verbose": False},
+}
+```
+
+**Note**: The `cloud` value is case-insensitive (`gov`, `GOV`, `govus`, `GOVUS` are all accepted). The `vanityDomain` is still required and is used as the host prefix for the government identity provider.
 
 **Note 3**: Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`.The following cloud environments are supported:
 
