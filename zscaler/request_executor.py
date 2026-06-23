@@ -4,6 +4,7 @@ import uuid
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Tuple
 
+from zscaler.constants import ONEAPI_GOV_API_BASE_URLS
 from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.exceptions import exceptions
@@ -156,21 +157,32 @@ class RequestExecutor:
 
         # Special handling for Z-Insights (zins) GraphQL API
         if "/zins" in endpoint:
-            if self.cloud and self.cloud != "production":
-                return f"https://api.{self.cloud}.zsapi.net"
-            return self.BASE_URL
+            return self._resolve_api_base_url()
 
         # Special handling for ZMS (Microsegmentation) GraphQL API
         if "/zms" in endpoint:
-            if self.cloud and self.cloud != "production":
-                return f"https://api.{self.cloud}.zsapi.net"
-            return self.BASE_URL
+            return self._resolve_api_base_url()
 
         # Special handling for Business Insights (ZBI) API
         if "/bi" in endpoint:
-            if self.cloud and self.cloud != "production":
-                return f"https://api.{self.cloud}.zsapi.net"
-            return self.BASE_URL
+            return self._resolve_api_base_url()
+
+        return self._resolve_api_base_url()
+
+    def _resolve_api_base_url(self) -> str:
+        """
+        Resolves the OneAPI gateway base URL for the configured cloud.
+
+        Government (FedRAMP) clouds are isolated environments served by
+        dedicated gateways (``api.zscalergov.net`` / ``api.zscalergov.us``)
+        and do not follow the commercial ``api.{cloud}.zsapi.net`` pattern.
+
+        Returns:
+            str: The base URL for the configured cloud.
+        """
+        gov_base_url = ONEAPI_GOV_API_BASE_URLS.get(self.cloud)
+        if gov_base_url:
+            return gov_base_url
 
         if self.cloud and self.cloud != "production":
             return f"https://api.{self.cloud}.zsapi.net"
@@ -722,8 +734,7 @@ class RequestExecutor:
                 return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
 
             logger.info(
-                f"Hit rate limit or retryable status {response.status_code}. "
-                f"Retrying request in {backoff_seconds} seconds."
+                f"Hit rate limit or retryable status {response.status_code}. Retrying request in {backoff_seconds} seconds."
             )
             time.sleep(backoff_seconds)
             attempts += 1
@@ -869,7 +880,7 @@ class RequestExecutor:
             # but only when mutations (POST/PUT/DELETE) have occurred during the session
             if service_type.lower() in ["zia", "ztw"]:
                 logger.debug(
-                    f"{service_type.upper()} service requires explicit deauthentication to activate " f"staged configurations"
+                    f"{service_type.upper()} service requires explicit deauthentication to activate staged configurations"
                 )
 
             # Send DELETE request to deauthenticate

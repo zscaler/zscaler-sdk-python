@@ -1,5 +1,19 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.32 (June 3, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* [PR #534](https://github.com/zscaler/zscaler-sdk-python/issues/534) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting `cloud=gov` or `cloud=govus` on `ZscalerClient` now routes OAuth to the correct Zidentity identity provider (`https://{vanityDomain}.zidentitygov.net` / `https://{vanityDomain}.zidentitygovus.net`) and API calls to the correct gateway (`https://api.zscalergov.net` / `https://api.zscalergov.us`). Previously these clouds produced non-resolvable hostnames and failed on every call. [Issue #526](https://github.com/zscaler/zscaler-sdk-python/issues/526)
+
+### Bug Fixes
+
+* [PR #534](https://github.com/zscaler/zscaler-sdk-python/issues/534) - Fixed ZPA `add_timeout_rule` (v1) so `re_auth_timeout`/`re_auth_idle_timeout` serialize to the API's `reauthTimeout`/`reauthIdleTimeout` keys instead of the rejected `reAuth*` form.
+
 ## 1.9.31 (May 29, 2026)
 
 ### Notes
@@ -20,6 +34,8 @@
 * [PR #525](https://github.com/zscaler/zscaler-sdk-python/pull/525) - Fixed ZPA `application_segment` model class `AppResource` to parse the list attribute `inconsistentConfigDetails`
 
 * [PR #525](https://github.com/zscaler/zscaler-sdk-python/pull/525) - Fixed resource registration `app_connectors` within the Legacy ZPA Client.
+
+* [Issue #526](https://github.com/zscaler/zscaler-sdk-python/issues/526) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting `cloud=gov` or `cloud=govus` on `ZscalerClient` now routes OAuth to the correct Zidentity identity provider (`https://{vanityDomain}.zidentitygov.net` / `https://{vanityDomain}.zidentitygovus.net`) and API calls to the correct gateway (`https://api.zscalergov.net` / `https://api.zscalergov.us`). Previously these clouds produced non-resolvable hostnames and failed on every call.
 
 ## 1.9.30 (May 21, 2026)
 

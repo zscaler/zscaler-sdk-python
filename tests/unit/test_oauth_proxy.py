@@ -402,3 +402,28 @@ def test_oauth_proxy_integration():
             assert str(http_parsed.port) == "8080"
             assert https_parsed.hostname == "proxy.example.com"
             assert str(https_parsed.port) == "8080"
+
+
+def test_oauth_get_auth_url_clouds():
+    """Test that _get_auth_url builds the correct token endpoint per cloud."""
+    mock_request_executor = Mock()
+    config = {
+        "client": {
+            "clientId": "test_client_id",
+            "clientSecret": "test_client_secret",
+            "vanityDomain": "testcompany",
+            "cloud": "production",
+        }
+    }
+
+    oauth = OAuth(mock_request_executor, config)
+
+    # Commercial production
+    assert oauth._get_auth_url("testcompany", "production") == "https://testcompany.zslogin.net/oauth2/v1/token"
+
+    # Government (FedRAMP) clouds use the dedicated Zidentity identity providers
+    assert oauth._get_auth_url("zsgovlab-net", "gov") == "https://zsgovlab-net.zidentitygov.net/oauth2/v1/token"
+    assert oauth._get_auth_url("zsgovlab-us", "govus") == "https://zsgovlab-us.zidentitygovus.net/oauth2/v1/token"
+
+    # Other non-production commercial clouds keep the legacy zslogin{cloud} pattern
+    assert oauth._get_auth_url("testcompany", "beta") == "https://testcompany.zsloginbeta.net/oauth2/v1/token"

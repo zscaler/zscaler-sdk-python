@@ -285,6 +285,13 @@ def to_lower_camel_case(string):
         "location_dto": "locationDTO",
         "runtime_os": "runtimeOS",
         "default_csp": "defaultCSP",
+        # ZPA Timeout Policy: the API treats "reauth" as a single token. The
+        # default heuristic would split "re_auth_*" into "reAuth*", which the
+        # API rejects. Map both the "re_auth_*" and "reauth_*" spellings.
+        "re_auth_timeout": "reauthTimeout",
+        "re_auth_idle_timeout": "reauthIdleTimeout",
+        "reauth_timeout": "reauthTimeout",
+        "reauth_idle_timeout": "reauthIdleTimeout",
         # ZCC WebPolicy: API expects this top-level key in snake_case.
         "exit_password": "exit_password",
         # ZCC WebPolicy / PolicyExtension: keys with embedded uppercase

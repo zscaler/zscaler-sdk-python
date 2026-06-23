@@ -15,6 +15,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from jwcrypto.jwk import JWK
 
+from zscaler.constants import ONEAPI_GOV_AUTH_DOMAINS
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.user_agent import UserAgent
 
@@ -490,8 +491,14 @@ class OAuth:
         # logging.debug(f"Constructing auth URL for cloud: {cloud}.")
         if cloud == "production":
             return f"https://{vanity_domain}.zslogin.net/oauth2/v1/token"
-        else:
-            return f"https://{vanity_domain}.zslogin{cloud}.net/oauth2/v1/token"
+
+        # Government (FedRAMP) clouds use a dedicated Zidentity identity provider
+        # rather than the commercial ``zslogin{cloud}.net`` family.
+        gov_auth_domain = ONEAPI_GOV_AUTH_DOMAINS.get(cloud)
+        if gov_auth_domain:
+            return f"https://{vanity_domain}.{gov_auth_domain}/oauth2/v1/token"
+
+        return f"https://{vanity_domain}.zslogin{cloud}.net/oauth2/v1/token"
 
     def clear_access_token(self) -> None:
         """
