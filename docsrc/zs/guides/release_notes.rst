@@ -6,7 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.9.32 (June 3, 2026)
+1.9.33 (June 23, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+* (`#535 <https://github.com/zscaler/zscaler-sdk-python/pull/535>`_) - Fixed OneAPI (Zidentity US) support for the government (FedRAMP) clouds.
+
+1.9.32 (June 23, 2026)
 ---------------------------
 
 Notes
@@ -17,7 +30,7 @@ Notes
 Enhancements
 -------------
 
-* (`Issue #526 <https://github.com/zscaler/zscaler-sdk-python/issues/526>`_) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting ``cloud=gov`` or ``cloud=govus`` on ``ZscalerClient`` now routes OAuth to the correct Zidentity identity provider (``https://{vanityDomain}.zidentitygov.net`` / ``https://{vanityDomain}.zidentitygovus.net``) and API calls to the correct gateway (``https://api.zscalergov.net`` / ``https://api.zscalergov.us``). Previously these clouds produced non-resolvable hostnames and failed on every call.
+* (`Issue #526 <https://github.com/zscaler/zscaler-sdk-python/issues/526>`_) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting ``cloud=gov`` or ``cloud=govus`` on ``ZscalerClient`` now routes OAuth to the correct Zidentity identity provider (``https://{vanityDomain}.zidentitygov.net`` / ``https://{vanityDomain}.zidentitygov.us``) and API calls to the correct gateway (``https://api.zscalergov.net`` / ``https://api.zscalergov.us``). Previously these clouds produced non-resolvable hostnames and failed on every call.
 
 Bug Fixes
 ---------
@@ -50,7 +63,7 @@ Bug Fixes:
 
 `* (`#525 <https://github.com/zscaler/zscaler-sdk-python/pull/525>`_)` - Fixed resource registration `app_connectors` within the Legacy ZPA Client.
 
-* (`Issue #526 <https://github.com/zscaler/zscaler-sdk-python/issues/526>`_) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting ``cloud=gov`` or ``cloud=govus`` on ``ZscalerClient`` now routes OAuth to the correct Zidentity identity provider (``https://{vanityDomain}.zidentitygov.net`` / ``https://{vanityDomain}.zidentitygovus.net``) and API calls to the correct gateway (``https://api.zscalergov.net`` / ``https://api.zscalergov.us``). Previously these clouds produced non-resolvable hostnames and failed on every call.
+* (`Issue #526 <https://github.com/zscaler/zscaler-sdk-python/issues/526>`_) - Added OneAPI (Zidentity) support for the government (FedRAMP) clouds. Setting ``cloud=gov`` or ``cloud=govus`` on ``ZscalerClient`` now routes OAuth to the correct Zidentity identity provider (``https://{vanityDomain}.zidentitygov.net`` / ``https://{vanityDomain}.zidentitygov.us``) and API calls to the correct gateway (``https://api.zscalergov.net`` / ``https://api.zscalergov.us``). Previously these clouds produced non-resolvable hostnames and failed on every call.
 
 1.9.30 (May 21, 2026)
 ---------------------------
