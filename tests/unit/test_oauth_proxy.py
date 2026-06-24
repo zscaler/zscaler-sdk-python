@@ -423,7 +423,7 @@ def test_oauth_get_auth_url_clouds():
 
     # Government (FedRAMP) clouds use the dedicated Zidentity identity providers
     assert oauth._get_auth_url("zsgovlab-net", "gov") == "https://zsgovlab-net.zidentitygov.net/oauth2/v1/token"
-    assert oauth._get_auth_url("zsgovlab-us", "govus") == "https://zsgovlab-us.zidentitygovus.net/oauth2/v1/token"
+    assert oauth._get_auth_url("zsgovlab-us", "govus") == "https://zsgovlab-us.zidentitygov.us/oauth2/v1/token"
 
     # Other non-production commercial clouds keep the legacy zslogin{cloud} pattern
     assert oauth._get_auth_url("testcompany", "beta") == "https://testcompany.zsloginbeta.net/oauth2/v1/token"
@@ -433,7 +433,7 @@ def test_oauth_get_auth_url_clouds():
     "cloud,expected_url",
     [
         ("gov", "https://zsgovlab.zidentitygov.net/oauth2/v1/token"),
-        ("govus", "https://zsgovlab.zidentitygovus.net/oauth2/v1/token"),
+        ("govus", "https://zsgovlab.zidentitygov.us/oauth2/v1/token"),
     ],
 )
 def test_oauth_client_secret_uses_gov_auth_url(cloud, expected_url):

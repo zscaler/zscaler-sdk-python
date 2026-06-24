@@ -379,7 +379,7 @@ government values:
 +===================+===============================================================+==============================+
 | ``gov``           | ``https://<vanity_domain>.zidentitygov.net/oauth2/v1/token``  | ``https://api.zscalergov.net`` |
 +-------------------+---------------------------------------------------------------+------------------------------+
-| ``govus``         | ``https://<vanity_domain>.zidentitygovus.net/oauth2/v1/token``| ``https://api.zscalergov.us``  |
+| ``govus``         | ``https://<vanity_domain>.zidentitygov.us/oauth2/v1/token``| ``https://api.zscalergov.us``  |
 +-------------------+---------------------------------------------------------------+------------------------------+
 
 For example, authenticating to the GOV environment:
