@@ -6,7 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.9.32 (June 3, 2026)
+1.9.33 (June 23, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+* (`#535 <https://github.com/zscaler/zscaler-sdk-python/pull/535>`_) - Fixed OneAPI (Zidentity US) support for the government (FedRAMP) clouds.
+
+1.9.32 (June 23, 2026)
 ---------------------------
 
 Notes
