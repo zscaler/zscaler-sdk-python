@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.activate import ActivationAPI
+from zscaler.zia.adaptive_access_profiles import AdaptiveAccessProfilesAPI
 from zscaler.zia.admin_roles import AdminRolesAPI
 from zscaler.zia.admin_users import AdminUsersAPI
 from zscaler.zia.advanced_settings import AdvancedSettingsAPI
@@ -24,6 +25,7 @@ from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.atp_policy import ATPPolicyAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
+from zscaler.zia.azure_integration import AzureIntegrationAPI
 from zscaler.zia.bandwidth_classes import BandwidthClassesAPI
 from zscaler.zia.bandwidth_control_rules import BandwidthControlRulesAPI
 from zscaler.zia.browser_control_settings import BrowserControlSettingsPI
@@ -41,7 +43,8 @@ from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
 from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.custom_file_types import CustomFileTypesAPI
 from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
-from zscaler.zia.device_management import DeviceManagementAPI
+from zscaler.zia.device_groups import DeviceGroupsAPI
+from zscaler.zia.devices import DevicesAPI
 from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
 from zscaler.zia.dlp_engine import DLPEngineAPI
 from zscaler.zia.dlp_resources import DLPResourcesAPI
@@ -54,6 +57,7 @@ from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.ftp_control_policy import FTPControlPolicyAPI
 from zscaler.zia.gre_tunnel import TrafficForwardingGRETunnelAPI
+from zscaler.zia.http_header_control import HttpHeaderControlAPI
 from zscaler.zia.intermediate_certificates import IntermediateCertsAPI
 from zscaler.zia.iot_report import IOTReportAPI
 from zscaler.zia.ips_signature_rules import IPSSignatureRulesAPI
@@ -65,6 +69,7 @@ from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.organization_information import OrganizationInformationAPI
 from zscaler.zia.pac_files import PacFilesAPI
+from zscaler.zia.partner_integrations import PartnerIntegrationsAPI
 from zscaler.zia.policy_export import PolicyExportAPI
 from zscaler.zia.proxies import ProxiesAPI
 from zscaler.zia.remote_assistance import RemoteAssistanceAPI
@@ -75,7 +80,9 @@ from zscaler.zia.sandbox import CloudSandboxAPI
 from zscaler.zia.sandbox_rules import SandboxRulesAPI
 from zscaler.zia.secure_browsing import SecureBrowsingAPI
 from zscaler.zia.security_policy_settings import SecurityPolicyAPI
+from zscaler.zia.security_ueba_alerts import SecurityUebaAlertsAPI
 from zscaler.zia.shadow_it_report import ShadowITAPI
+from zscaler.zia.smpc_instance import SmpcInstanceAPI
 from zscaler.zia.ssl_inspection_rules import SSLInspectionAPI
 from zscaler.zia.sub_clouds import SubCloudsAPI
 from zscaler.zia.system_audit import SystemAuditReportAPI
@@ -288,14 +295,6 @@ class ZIAService:
 
         """
         return DLPResourcesAPI(self._request_executor)
-
-    @property
-    def device_management(self) -> DeviceManagementAPI:
-        """
-        The interface object for the :ref:`ZIA Device Management interface <zia-device_management>`.
-
-        """
-        return DeviceManagementAPI(self._request_executor)
 
     @property
     def end_user_notification(self) -> EndUserNotificationAPI:
@@ -744,7 +743,7 @@ class ZIAService:
 
         """
         return SecureBrowsingAPI(self._request_executor)
-    
+
     @property
     def email_profiles(self) -> "EmailProfilesAPI":
         """
@@ -752,3 +751,67 @@ class ZIAService:
 
         """
         return EmailProfilesAPI(self._request_executor)
+
+    @property
+    def adaptive_access_profiles(self) -> AdaptiveAccessProfilesAPI:
+        """
+        The interface object for the :ref:`ZIA Adaptive Access Profiles interface <zia-adaptive_access_profiles>`.
+
+        """
+        return AdaptiveAccessProfilesAPI(self._request_executor)
+
+    @property
+    def azure_integration(self) -> AzureIntegrationAPI:
+        """
+        The interface object for the :ref:`ZIA Azure Integration interface <zia-azure_integration>`.
+
+        """
+        return AzureIntegrationAPI(self._request_executor)
+
+    @property
+    def devices(self) -> DevicesAPI:
+        """
+        The interface object for the :ref:`ZIA Devices interface <zia-devices>`.
+
+        """
+        return DevicesAPI(self._request_executor)
+
+    @property
+    def device_groups(self) -> DeviceGroupsAPI:
+        """
+        The interface object for the :ref:`ZIA Device Groups interface <zia-device_groups>`.
+
+        """
+        return DeviceGroupsAPI(self._request_executor)
+
+    @property
+    def http_header_control(self) -> HttpHeaderControlAPI:
+        """
+        The interface object for the :ref:`ZIA HTTP Header Control interface <zia-http_header_control>`.
+
+        """
+        return HttpHeaderControlAPI(self._request_executor)
+
+    @property
+    def partner_integrations(self) -> PartnerIntegrationsAPI:
+        """
+        The interface object for the :ref:`ZIA Partner Integrations interface <zia-partner_integrations>`.
+
+        """
+        return PartnerIntegrationsAPI(self._request_executor)
+
+    @property
+    def security_ueba_alerts(self) -> SecurityUebaAlertsAPI:
+        """
+        The interface object for the :ref:`ZIA Security & UEBA Alerts interface <zia-security_ueba_alerts>`.
+
+        """
+        return SecurityUebaAlertsAPI(self._request_executor)
+
+    @property
+    def smpc_instance(self) -> SmpcInstanceAPI:
+        """
+        The interface object for the :ref:`ZIA SMPC Instance interface <zia-smpc_instance>`.
+
+        """
+        return SmpcInstanceAPI(self._request_executor)

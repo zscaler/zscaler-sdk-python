@@ -16,6 +16,7 @@ from zscaler.zaiguard.zaiguard_service import ZGuardService
 from zscaler.zbi.zbi_service import ZBIService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.zcc.zcc_service import ZCCService
+from zscaler.zcell.zcell_service import ZCellService
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zeasm.zeasm_service import ZEASMService
@@ -229,6 +230,7 @@ class Client:
         self._zms = None  # ZMS - Zscaler Microsegmentation (GraphQL API)
         self._zbi = None  # Zscaler Business Insights (REST API)
         self._zguard = None
+        self._zcell = None  # Zscaler Cellular (OneAPI only)
 
     def authenticate(self):
         """
@@ -267,6 +269,14 @@ class Client:
             # Pass RequestExecutor directly
             self._zia = ZIAService(self._request_executor)
         return self._zia
+
+    @property
+    def zcell(self):
+        # ZCell is OneAPI-only (no legacy client); construct lazily with the
+        # RequestExecutor directly, matching ZIA/ZTW.
+        if self._zcell is None:
+            self._zcell = ZCellService(self._request_executor)
+        return self._zcell
 
     @property
     def zwa(self):

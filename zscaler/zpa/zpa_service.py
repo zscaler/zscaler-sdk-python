@@ -16,10 +16,13 @@ from zscaler.zpa.app_segments_ba import ApplicationSegmentBAAPI
 from zscaler.zpa.app_segments_ba_v2 import AppSegmentsBAV2API
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
+from zscaler.zpa.application_federation import ApplicationFederationAPI
 from zscaler.zpa.application_segment import ApplicationSegmentAPI
+from zscaler.zpa.b2b_policy import B2bPolicyAPI
 from zscaler.zpa.branch_connector_group import BranchConnectorGroupAPI
 from zscaler.zpa.branch_connectors import BranchConnectorControllerAPI
 from zscaler.zpa.browser_protection import BrowserProtectionProfileAPI
+from zscaler.zpa.business_continuity import BusinessContinuityAPI
 from zscaler.zpa.c2c_ip_ranges import IPRangesAPI
 from zscaler.zpa.cbi_banner import CBIBannerAPI
 from zscaler.zpa.cbi_certificate import CBICertificateAPI
@@ -46,13 +49,18 @@ from zscaler.zpa.managed_browser_profile import ManagedBrowserProfileAPI
 from zscaler.zpa.microtenants import MicrotenantsAPI
 from zscaler.zpa.npn_client_controller import NPNClientControllerAPI
 from zscaler.zpa.oauth2_user_code import OAuth2UserCodeAPI
+from zscaler.zpa.one_identity import OneIdentityAPI
 from zscaler.zpa.policies import PolicySetControllerAPI
+from zscaler.zpa.policy_group import PolicyGroupAPI
+from zscaler.zpa.policy_group_rule import PolicyGroupRuleAPI
+from zscaler.zpa.policy_group_set import PolicyGroupSetAPI
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.pra_approval import PRAApprovalAPI
 from zscaler.zpa.pra_console import PRAConsoleAPI
 from zscaler.zpa.pra_credential import PRACredentialAPI
 from zscaler.zpa.pra_credential_pool import PRACredentialPoolAPI
 from zscaler.zpa.pra_portal import PRAPortalAPI
+from zscaler.zpa.private_cloud import PrivateCloudAPI
 from zscaler.zpa.private_cloud_controller import PrivateCloudControllerAPI
 from zscaler.zpa.private_cloud_group import PrivateCloudGroupAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
@@ -70,6 +78,7 @@ from zscaler.zpa.stepup_auth_level import StepUpAuthLevelAPI
 from zscaler.zpa.tag_group import TagGroupAPI
 from zscaler.zpa.tag_key import TagKeyAPI
 from zscaler.zpa.tag_namespace import TagNamespaceAPI
+from zscaler.zpa.tenant_federation_provisioning import TenantFederationProvisioningAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 from zscaler.zpa.user_portal_aup import UserPortalAUPAPI
 from zscaler.zpa.user_portal_controller import UserPortalControllerAPI
@@ -446,3 +455,75 @@ class ZPAService:
     def tag_namespace(self) -> TagNamespaceAPI:
         """The interface object for the :ref:`ZPA Tag Namespace interface <zpa-tag_namespace>`."""
         return TagNamespaceAPI(self._request_executor, self._config)
+
+    @property
+    def business_continuity(self) -> BusinessContinuityAPI:
+        """
+        The interface object for the :ref:`ZPA Business-Continuity-controller interface <zpa-business_continuity>`.
+
+        """
+        return BusinessContinuityAPI(self._request_executor, self._config)
+
+    @property
+    def private_cloud(self) -> PrivateCloudAPI:
+        """
+        The interface object for the :ref:`ZPA privateCloud-controller interface <zpa-private_cloud>`.
+
+        """
+        return PrivateCloudAPI(self._request_executor, self._config)
+
+    @property
+    def one_identity(self) -> OneIdentityAPI:
+        """
+        The interface object for the :ref:`ZPA one-identity-controller interface <zpa-one_identity>`.
+
+        """
+        return OneIdentityAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group(self) -> PolicyGroupAPI:
+        """
+        The interface object for the :ref:`ZPA policy-group-controller interface <zpa-policy_group>`.
+
+        """
+        return PolicyGroupAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group_rule(self) -> PolicyGroupRuleAPI:
+        """
+        The interface object for the :ref:`ZPA policy-group-rule-controller interface <zpa-policy_group_rule>`.
+
+        """
+        return PolicyGroupRuleAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group_set(self) -> PolicyGroupSetAPI:
+        """
+        The interface object for the :ref:`ZPA policy-group-set-controller interface <zpa-policy_group_set>`.
+
+        """
+        return PolicyGroupSetAPI(self._request_executor, self._config)
+
+    @property
+    def tenant_federation_provisioning(self) -> TenantFederationProvisioningAPI:
+        """
+        The interface object for the :ref:`ZPA tenant-federation-provisioning-controller interface <zpa-tenant_federation_provisioning>`.
+
+        """
+        return TenantFederationProvisioningAPI(self._request_executor, self._config)
+
+    @property
+    def b2b_policy(self) -> B2bPolicyAPI:
+        """
+        The interface object for the :ref:`ZPA b2b-policy-controller interface <zpa-b2b_policy>`.
+
+        """
+        return B2bPolicyAPI(self._request_executor, self._config)
+
+    @property
+    def application_federation(self) -> ApplicationFederationAPI:
+        """
+        The interface object for the :ref:`ZPA application-federation-controller interface <zpa-application_federation>`.
+
+        """
+        return ApplicationFederationAPI(self._request_executor, self._config)

@@ -198,6 +198,8 @@ class RequestExecutor:
             return "zia"
         elif "/ztw" in url:
             return "ztw"
+        elif "/zcell/config/api/v1" in url:
+            return "zcell"
         elif "/zcc" in url:
             return "zcc"
         elif "/zdx" in url:
@@ -229,6 +231,8 @@ class RequestExecutor:
                 return "zia"
             elif "/ztw" in url:
                 return "ztw"
+            elif "/zcell/config/api/v1" in url:
+                return "zcell"
             elif "/zcc" in url:
                 return "zcc"
             elif "/zdx" in url:
@@ -242,7 +246,21 @@ class RequestExecutor:
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa", "/zins", "/zms", "/ztb", "/bi", "/ziam"]
+        prefixes = [
+            "admin",
+            "/zia",
+            "/zpa",
+            "/zcc",
+            "/ztw",
+            "/zdx",
+            "/zwa",
+            "/zins",
+            "/zms",
+            "/ztb",
+            "/bi",
+            "/ziam",
+            "/zcell/config/api/v1",
+        ]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix) :]

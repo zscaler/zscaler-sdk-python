@@ -37,15 +37,10 @@ class EmailProfiles(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id: Optional[Any] = config["id"] \
-                if "id" in config else None
-            self.name: Optional[Any] = config["name"] \
-                if "name" in config else None
-            self.description: Optional[Any] = config["description"] \
-                if "description" in config else None
-            self.emails: List[Any] = ZscalerCollection.form_list(
-                config["emails"] if "emails" in config else [], str
-            )
+            self.id: Optional[Any] = config["id"] if "id" in config else None
+            self.name: Optional[Any] = config["name"] if "name" in config else None
+            self.description: Optional[Any] = config["description"] if "description" in config else None
+            self.emails: List[Any] = ZscalerCollection.form_list(config["emails"] if "emails" in config else [], str)
         else:
             self.id: Optional[Any] = None
             self.name: Optional[Any] = None
@@ -57,11 +52,6 @@ class EmailProfiles(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "emails": self.emails
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "description": self.description, "emails": self.emails}
         parent_req_format.update(current_obj_format)
         return parent_req_format

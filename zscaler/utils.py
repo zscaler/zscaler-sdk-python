@@ -479,6 +479,72 @@ def zdx_params(func):
     return wrapper
 
 
+def zcell_params(func=None, *, start_key="startDateTime", end_key="endDateTime", target="query"):
+    """
+    Decorator for ZCell endpoints that take an epoch-seconds time window. Lets
+    callers pass a single ``days`` shorthand instead of computing epoch
+    timestamps by hand (mirrors ZDX's ``since`` convenience):
+
+        client.zcell.anomaly_policy.list_anomaly_policy(id=cid, days=7)
+
+    becomes ``startDateTime = now - 7*86400`` and ``endDateTime = now`` (epoch
+    seconds). Explicit window params (or ``days`` omitted) are always respected
+    and never overwritten. ``days`` may be supplied either as a direct keyword
+    argument or inside ``query_params``.
+
+    Different ZCell endpoints name the window differently. Most use
+    ``startDateTime`` / ``endDateTime`` (the default), but some — e.g.
+    ``/sim/analytics/usage/countries`` — use ``startDate`` / ``endDate``. Pass
+    ``start_key`` / ``end_key`` to target those::
+
+        @zcell_params(start_key="startDate", end_key="endDate")
+        def list_sim_analytics_usage_countries(self, id, ...): ...
+
+    Some endpoints expect the window in the JSON request **body** rather than the
+    query string (e.g. the POST ``/audit/customers/{id}/search`` filter). Pass
+    ``target="body"`` to inject the derived window into the body kwargs instead::
+
+        @zcell_params(start_key="startDate", end_key="endDate", target="body")
+        def list_audit_customers_search(self, id, ..., **kwargs): ...
+    """
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            days = kwargs.pop("days", None)
+
+            if target == "body":
+                # Window fields belong in the JSON request body (passed through
+                # **kwargs). setdefault so an explicit value wins over the shorthand.
+                if days is not None:
+                    now = int(time.time())
+                    kwargs.setdefault(start_key, now - int(days) * 86400)
+                    kwargs.setdefault(end_key, now)
+                return func(self, *args, **kwargs)
+
+            query_params = kwargs.get("query_params") or {}
+            if days is None:
+                days = query_params.pop("days", None)
+
+            if days is not None:
+                now = int(time.time())
+                # setdefault so an explicit window param wins over the shorthand
+                query_params.setdefault(start_key, now - int(days) * 86400)
+                query_params.setdefault(end_key, now)
+
+            if query_params:
+                kwargs["query_params"] = query_params
+
+            return func(self, *args, **kwargs)
+
+        return wrapper
+
+    # Support both bare (@zcell_params) and parameterized (@zcell_params(...)) usage.
+    if func is not None:
+        return decorator(func)
+    return decorator
+
+
 class CommonFilters:
     def __init__(self, **kwargs):
         valid_params = {

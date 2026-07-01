@@ -74,7 +74,7 @@ class PolicySetControllerV2(ZscalerObject):
                 config["postActionTypes"] if "postActionTypes" in config else [], str
             )
 
-            self.conditions = ZscalerCollection.form_list(config.get("conditions", []), Condition)
+            self.conditions = ZscalerCollection.form_list(config.get("conditions", []), ConditionSet)
 
             self.app_connector_groups = ZscalerCollection.form_list(
                 config["appConnectorGroups"] if "appConnectorGroups" in config else [], app_connector_groups.AppConnectorGroup
@@ -234,7 +234,7 @@ class PolicySetControllerV2(ZscalerObject):
         return parent_req_format
 
 
-class Condition(ZscalerObject):
+class ConditionSet(ZscalerObject):
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
@@ -243,10 +243,10 @@ class Condition(ZscalerObject):
             self.operands = []
             if "operands" in config:
                 for operand in config["operands"]:
-                    if isinstance(operand, Operand):
+                    if isinstance(operand, OperandResource):
                         self.operands.append(operand)
                     else:
-                        self.operands.append(Operand(operand))
+                        self.operands.append(OperandResource(operand))
 
         else:
             self.operator = None
@@ -259,12 +259,14 @@ class Condition(ZscalerObject):
         return parent_req_format
 
 
-class Operand(ZscalerObject):
+class OperandResource(ZscalerObject):
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
-            self.object_type = config.get("objectType")
+            self.idp_id = config["idpId"] if "idpId" in config else None
+            self.idp_name = config["idpName"] if "idpName" in config else None
+            self.object_type = config["objectType"] if "objectType" in config else None
             self.values = config.get("values", [])
             self.entry_values = (
                 [{"lhs": entry["lhs"], "rhs": entry["rhs"]} for entry in config.get("entryValues", [])]
@@ -273,13 +275,21 @@ class Operand(ZscalerObject):
             )
 
         else:
+            self.idp_id = None
+            self.idp_name = None
             self.object_type = None
             self.values = []
             self.entry_values = []
 
     def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
-        current_obj_format = {"objectType": self.object_type, "values": self.values, "entryValues": self.entry_values}
+        current_obj_format = {
+            "idpId": self.idp_id,
+            "idpName": self.idp_name,
+            "objectType": self.object_type,
+            "values": self.values,
+            "entryValues": self.entry_values,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 

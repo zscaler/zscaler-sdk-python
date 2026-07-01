@@ -137,6 +137,12 @@ def to_snake_case(string):
         "locationDTO": "location_dto",
         "runtimeOS": "runtime_os",
         "defaultCSP": "default_csp",
+        # ZCell Edge Cases — all-caps telecom acronyms the generic heuristic
+        # would otherwise split letter-by-letter (e.g. "ECI" -> "e_c_i").
+        "ECI": "eci",
+        "MCC": "mcc",
+        "MNC": "mnc",
+        "TAC": "tac",
         # ZIdentity Edge Cases
         # "clientJWKsUrl": "clientJWKsUrl",
     }
@@ -285,6 +291,11 @@ def to_lower_camel_case(string):
         "location_dto": "locationDTO",
         "runtime_os": "runtimeOS",
         "default_csp": "defaultCSP",
+        # ZCell Edge Cases — all-caps telecom acronyms restored on the wire.
+        "eci": "ECI",
+        "mcc": "MCC",
+        "mnc": "MNC",
+        "tac": "TAC",
         # ZPA Timeout Policy: the API treats "reauth" as a single token. The
         # default heuristic would split "re_auth_*" into "reAuth*", which the
         # API rejects. Map both the "re_auth_*" and "reauth_*" spellings.

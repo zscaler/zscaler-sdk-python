@@ -22,6 +22,7 @@ class ZscalerAPIResponse:
         "zpa": {"default": 100, "max": 500},
         "zia": {"default": 500, "max": 10000},
         "zdx": {"default": 10, "min": 1},
+        "zcell": {"default": 10, "max": 100, "min": 1},
     }
 
     def __init__(
@@ -86,8 +87,13 @@ class ZscalerAPIResponse:
             self._params.pop("page", None)
 
         # Resolve the user-supplied page size from the correct param key per service.
-        # ZIA uses "pageSize"; ZPA uses "pagesize"; others use "limit".
-        raw_page_size = self._params.get("pageSize") or self._params.get("pagesize") or self._params.get("limit")
+        # ZIA uses "pageSize"; ZPA uses "pagesize"; ZCell uses "size"; others use "limit".
+        raw_page_size = (
+            self._params.get("pageSize")
+            or self._params.get("pagesize")
+            or self._params.get("size")
+            or self._params.get("limit")
+        )
         self._limit = self.validate_page_size(raw_page_size, service_type)
 
         if res_details:
@@ -235,6 +241,21 @@ class ZscalerAPIResponse:
                         items = val
                         break
                 self._list = items
+        elif self._service_type == "zcell":
+            # ZCell wraps paginated list responses in a {"totalElements", "totalPages",
+            # "size", "content": [...]} envelope. Single-object responses (e.g. a
+            # GET-by-id or an activate) come back as a plain dict with no "content"
+            # key — treat those as a one-item list so get_results()/get_body() both work.
+            if isinstance(self._body, dict) and "content" in self._body and isinstance(self._body["content"], list):
+                self._list = self._body["content"]
+                self._total_pages = int(self._body.get("totalPages", 1))
+                self._total_count = int(self._body.get("totalElements", 0))
+            elif isinstance(self._body, dict):
+                self._list = [self._body]
+                self._is_flat_list_response = True
+            else:
+                self._list = self._body if isinstance(self._body, list) else []
+                self._is_flat_list_response = True
         else:
             # ZPA and possibly other services use a dict with "list" field
             self._list = self._body.get("list", [])
@@ -350,6 +371,13 @@ class ZscalerAPIResponse:
         if self._service_type == "zdx":
             logger.debug("[DEBUG] Taking ZDX pagination branch.")
             self._params["offset"] = self._next_offset
+        elif self._service_type == "zcell":
+            logger.debug("[DEBUG] Taking ZCell pagination branch.")
+            # ZCell pages are 0-based: the first (un-paginated) request returns
+            # page 0. The internal _page counter is 1-based, so the API page
+            # index is _page - 1 (e.g. _page == 2 -> page=1, the second page).
+            self._page += 1
+            self._params["page"] = self._page - 1
         elif self._service_type == "zia":
             logger.debug("[DEBUG] Taking ZIA pagination branch.")
             self._page += 1
@@ -399,9 +427,15 @@ class ZscalerAPIResponse:
             logger.debug("Has next page: False (flat list response - all results returned in single response)")
             return False
 
-        if self._service_type == "zpa":
+        if self._service_type in ("zpa", "zcell"):
             has_next = self._page < self._total_pages
-            logger.debug("Has next page for ZPA: %s (page %d of %d)", has_next, self._page, self._total_pages)
+            logger.debug(
+                "Has next page for %s: %s (page %d of %d)",
+                self._service_type.upper(),
+                has_next,
+                self._page,
+                self._total_pages,
+            )
             return has_next
         elif self._service_type == "zdx":
             has_next = self._next_offset is not None
