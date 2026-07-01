@@ -190,29 +190,34 @@ class PRAApprovalAPI(APIClient):
         # Convert start_time and end_time to epoch format
         start_time = body.pop("start_time", None)
         end_time = body.pop("end_time", None)
-        working_hours = body.get("working_hours", {})
+        working_hours = body.get("working_hours") or {}
 
         if start_time and end_time:
-            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours["time_zone"])
+            # A time zone is required to convert the times to epoch. When the caller
+            # omits working hours, default to UTC; the supplied start/end strings
+            # already carry their own offset, so the resulting epoch stays correct.
+            time_zone = working_hours.get("time_zone") or "UTC"
+            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
             body.update({"startTime": start_epoch, "endTime": end_epoch})
 
-        # Add applications and working hours to the body
-        body.update(
-            {
-                "applications": [{"id": app_id} for app_id in body.pop("application_ids", [])],
-                "workingHours": {
-                    "startTimeCron": working_hours.get("start_time_cron"),
-                    "endTimeCron": working_hours.get("end_time_cron"),
-                    "startTime": working_hours.get("start_time"),
-                    "endTime": working_hours.get("end_time"),
-                    "days": working_hours.get("days"),
-                    "timeZone": working_hours.get("time_zone"),
-                },
-            }
-        )
+        # Add applications to the body
+        body["applications"] = [{"id": app_id} for app_id in body.pop("application_ids", [])]
 
-        # Merge in additional keyword arguments
-        body.update(kwargs)
+        # Only include working hours when explicitly provided. The API rejects a
+        # partial/empty workingHours object because its sub-fields (start time, etc.)
+        # are mandatory once the object is present.
+        if working_hours:
+            body["workingHours"] = {
+                "startTimeCron": working_hours.get("start_time_cron"),
+                "endTimeCron": working_hours.get("end_time_cron"),
+                "startTime": working_hours.get("start_time"),
+                "endTime": working_hours.get("end_time"),
+                "days": working_hours.get("days"),
+                "timeZone": working_hours.get("time_zone"),
+            }
+
+        # Drop the snake_case key so it is not serialized into the request body
+        body.pop("working_hours", None)
 
         # Check if microtenant_id is set in the body, and use it to set query parameter
         microtenant_id = body.get("microtenant_id", None)
@@ -277,29 +282,34 @@ class PRAApprovalAPI(APIClient):
         # Convert start_time and end_time to epoch format
         start_time = body.pop("start_time", None)
         end_time = body.pop("end_time", None)
-        working_hours = body.get("working_hours", {})
+        working_hours = body.get("working_hours") or {}
 
         if start_time and end_time:
-            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours["time_zone"])
+            # A time zone is required to convert the times to epoch. When the caller
+            # omits working hours, default to UTC; the supplied start/end strings
+            # already carry their own offset, so the resulting epoch stays correct.
+            time_zone = working_hours.get("time_zone") or "UTC"
+            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
             body.update({"startTime": start_epoch, "endTime": end_epoch})
 
-        # Add applications and working hours to the body
-        body.update(
-            {
-                "applications": [{"id": app_id} for app_id in body.pop("application_ids", [])],
-                "workingHours": {
-                    "startTimeCron": working_hours.get("start_time_cron"),
-                    "endTimeCron": working_hours.get("end_time_cron"),
-                    "startTime": working_hours.get("start_time"),
-                    "endTime": working_hours.get("end_time"),
-                    "days": working_hours.get("days"),
-                    "timeZone": working_hours.get("time_zone"),
-                },
-            }
-        )
+        # Add applications to the body
+        body["applications"] = [{"id": app_id} for app_id in body.pop("application_ids", [])]
 
-        # Merge in additional keyword arguments
-        body.update(kwargs)
+        # Only include working hours when explicitly provided. The API rejects a
+        # partial/empty workingHours object because its sub-fields (start time, etc.)
+        # are mandatory once the object is present.
+        if working_hours:
+            body["workingHours"] = {
+                "startTimeCron": working_hours.get("start_time_cron"),
+                "endTimeCron": working_hours.get("end_time_cron"),
+                "startTime": working_hours.get("start_time"),
+                "endTime": working_hours.get("end_time"),
+                "days": working_hours.get("days"),
+                "timeZone": working_hours.get("time_zone"),
+            }
+
+        # Drop the snake_case key so it is not serialized into the request body
+        body.pop("working_hours", None)
 
         # Check if microtenant_id is set in the body, and use it to set query parameter
         microtenant_id = body.get("microtenant_id", None)
