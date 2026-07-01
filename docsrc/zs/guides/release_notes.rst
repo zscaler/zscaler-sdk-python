@@ -6,6 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.34 (July 1, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+* (`#539 <https://github.com/zscaler/zscaler-sdk-python/pull/539>`_) - Fixed ZPA `pra_approval` attribute `working_hours`.
+
+
 1.9.33 (June 23, 2026)
 ---------------------------
 
