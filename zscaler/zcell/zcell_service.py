@@ -29,9 +29,12 @@ from zscaler.zcell.tag_handling import TagHandlingAPI
 class ZCellService:
     """ZCell Service client, exposing various Zscaler Cellular APIs."""
 
-    def __init__(self, request_executor: RequestExecutor) -> None:
+    def __init__(self, request_executor: RequestExecutor, config: dict = None) -> None:
         # Ensure the service gets the request executor from the Client object
         self._request_executor = request_executor
+        # Shared config carries the resolved zcellCustomerId (config or env), which
+        # each ZCell API reads to auto-inject the customer id into request paths.
+        self._config = config or {}
 
     @property
     def anomaly_policy(self) -> AnomalyPolicyAPI:
@@ -39,7 +42,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Anomaly Policy interface <zcell-anomaly_policy>`.
 
         """
-        return AnomalyPolicyAPI(self._request_executor)
+        return AnomalyPolicyAPI(self._request_executor, self._config)
 
     @property
     def audit_data_handling(self) -> AuditDataHandlingAPI:
@@ -47,7 +50,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Audit Data Handling interface <zcell-audit_data_handling>`.
 
         """
-        return AuditDataHandlingAPI(self._request_executor)
+        return AuditDataHandlingAPI(self._request_executor, self._config)
 
     @property
     def customer_data_handling(self) -> CustomerDataHandlingAPI:
@@ -55,7 +58,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Customer Data Handling interface <zcell-customer_data_handling>`.
 
         """
-        return CustomerDataHandlingAPI(self._request_executor)
+        return CustomerDataHandlingAPI(self._request_executor, self._config)
 
     @property
     def network_events(self) -> NetworkEventsAPI:
@@ -63,7 +66,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Network Events interface <zcell-network_events>`.
 
         """
-        return NetworkEventsAPI(self._request_executor)
+        return NetworkEventsAPI(self._request_executor, self._config)
 
     @property
     def sim_analytics(self) -> SimAnalyticsAPI:
@@ -71,7 +74,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Sim Analytics interface <zcell-sim_analytics>`.
 
         """
-        return SimAnalyticsAPI(self._request_executor)
+        return SimAnalyticsAPI(self._request_executor, self._config)
 
     @property
     def sim_handling(self) -> SimHandlingAPI:
@@ -79,7 +82,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Sim Handling interface <zcell-sim_handling>`.
 
         """
-        return SimHandlingAPI(self._request_executor)
+        return SimHandlingAPI(self._request_executor, self._config)
 
     @property
     def sim_location_groups(self) -> SimLocationGroupsAPI:
@@ -87,7 +90,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Sim Location Groups interface <zcell-sim_location_groups>`.
 
         """
-        return SimLocationGroupsAPI(self._request_executor)
+        return SimLocationGroupsAPI(self._request_executor, self._config)
 
     @property
     def tag_handling(self) -> TagHandlingAPI:
@@ -95,7 +98,7 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Tag Handling interface <zcell-tag_handling>`.
 
         """
-        return TagHandlingAPI(self._request_executor)
+        return TagHandlingAPI(self._request_executor, self._config)
 
     @property
     def customer_region_handling(self) -> CustomerRegionHandlingAPI:
@@ -103,4 +106,4 @@ class ZCellService:
         The interface object for the :ref:`ZCELL Customer Region Handling interface <zcell-customer_region_handling>`.
 
         """
-        return CustomerRegionHandlingAPI(self._request_executor)
+        return CustomerRegionHandlingAPI(self._request_executor, self._config)

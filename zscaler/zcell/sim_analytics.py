@@ -20,29 +20,25 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
 from zscaler.utils import format_url, zcell_params
-from zscaler.zcell.models.sim_analytics import (
-    SimAnalytics,
-    SimCountryUsage,
-    SimDayUsage,
-    SimSummary, 
-    SimUsage
-)
+from zscaler.zcell.models.sim_analytics import SimAnalytics, SimCountryUsage, SimDayUsage, SimSummary, SimUsage
 
 
 class SimAnalyticsAPI(APIClient):
 
     _zcell_base_endpoint_customer = "/zcell/config/api/v1/customers"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def list_sim_analytics_map(self, id: str, query_params=None, **kwargs) -> APIResult[List[SimAnalytics]]:
+    def list_sim_analytics_map(self, id: str = None, query_params=None, **kwargs) -> APIResult[List[SimAnalytics]]:
         """
         Returns dashboard lat/lng details summary.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             **kwargs: Request body fields.
             query_params (dict): Map of query parameters for the request.
 
@@ -60,6 +56,7 @@ class SimAnalyticsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "post".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim/analytics/map")
 
         query_params = query_params or {}
@@ -82,12 +79,13 @@ class SimAnalyticsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_sim_analytics_summary(self, id: str, query_params=None) -> APIResult[List[SimSummary]]:
+    def list_sim_analytics_summary(self, id: str = None, query_params=None) -> APIResult[List[SimSummary]]:
         """
         Returns sim status summary.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             query_params (dict): Map of query parameters for the request.
 
         Returns:
@@ -104,6 +102,7 @@ class SimAnalyticsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim/analytics/summary")
 
         query_params = query_params or {}
@@ -128,7 +127,7 @@ class SimAnalyticsAPI(APIClient):
 
     @zcell_params(start_key="startDate", end_key="endDate")
     def list_sim_analytics_usage_countries(
-        self, id: str, start_date: int = None, end_date: int = None, query_params=None
+        self, id: str = None, start_date: int = None, end_date: int = None, query_params=None
     ) -> APIResult[List[SimCountryUsage]]:
         """
         Returns top countries by usage.
@@ -138,7 +137,8 @@ class SimAnalyticsAPI(APIClient):
         other ZCell endpoints. The ``days`` shorthand fills both accordingly.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             start_date (int): Window start as epoch seconds. Required unless ``days`` is supplied.
             end_date (int): Window end as epoch seconds. Required unless ``days`` is supplied.
             days (int): Convenience shorthand — sets a [now - days, now] start_date/end_date epoch-seconds window.
@@ -164,6 +164,7 @@ class SimAnalyticsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim/analytics/usage/countries")
 
         query_params = query_params or {}
@@ -192,7 +193,7 @@ class SimAnalyticsAPI(APIClient):
 
     @zcell_params(start_key="startDate", end_key="endDate")
     def list_sim_analytics_usage_day(
-        self, id: str, start_date: int = None, end_date: int = None, query_params=None
+        self, id: str = None, start_date: int = None, end_date: int = None, query_params=None
     ) -> APIResult[List[SimDayUsage]]:
         """
         Returns data usage in given date range.
@@ -202,7 +203,8 @@ class SimAnalyticsAPI(APIClient):
         other ZCell endpoints. The ``days`` shorthand fills both accordingly.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             start_date (int): Window start as epoch seconds. Required unless ``days`` is supplied.
             end_date (int): Window end as epoch seconds. Required unless ``days`` is supplied.
             days (int): Convenience shorthand — sets a [now - days, now] start_date/end_date epoch-seconds window.
@@ -225,6 +227,7 @@ class SimAnalyticsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim/analytics/usage/day")
 
         query_params = query_params or {}
@@ -253,13 +256,14 @@ class SimAnalyticsAPI(APIClient):
 
     @zcell_params(start_key="startDate", end_key="endDate")
     def list_sim_analytics_usage_sims(
-        self, id: str, start_date: int = None, end_date: int = None, query_params=None
+        self, id: str = None, start_date: int = None, end_date: int = None, query_params=None
     ) -> APIResult[List[SimUsage]]:
         """
         Returns top sim by usage.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.start_date]`` {int}: Required
                 ``[query_params.end_date]`` {int}: Required
@@ -279,6 +283,7 @@ class SimAnalyticsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim/analytics/usage/sims")
 
         query_params = query_params or {}

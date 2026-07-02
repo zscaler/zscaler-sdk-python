@@ -19,7 +19,7 @@ from typing import List
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
-from zscaler.utils import format_url
+from zscaler.utils import format_url, zcell_params
 from zscaler.zcell.models.network_events import NetworkEvents
 
 
@@ -27,22 +27,36 @@ class NetworkEventsAPI(APIClient):
 
     _zcell_base_endpoint = "/zcell/config/api/v1"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def list_network_events_search_start_time_end_time(
-        self, id: str, start_time: str, end_time: str, query_params=None, **kwargs
+    @zcell_params(start_key="start_time", end_key="end_time", target="path")
+    def list_network_events_search(
+        self, id: str = None, start_time: int = None, end_time: int = None, **kwargs
     ) -> APIResult[List[NetworkEvents]]:
         """
         Searches for network events for a given customer with filtering and pagination.
 
+        The time window (``startTime`` / ``endTime``, epoch seconds) is supplied as
+        **path** parameters, while the filter and pagination options are sent as a
+        flat JSON request **body**. The ``days`` shorthand fills ``start_time`` /
+        ``end_time`` with a ``[now - days, now]`` window.
+
         Args:
-            id (str): Path parameter.
-            start_time (str): Path parameter.
-            end_time (str): Path parameter.
-            **kwargs: Request body fields.
-            query_params (dict): Map of query parameters for the request.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
+            start_time (int): Path parameter. Window start as epoch seconds. Required unless ``days`` is supplied.
+            end_time (int): Path parameter. Window end as epoch seconds. Required unless ``days`` is supplied.
+            days (int): Convenience shorthand — sets a [now - days, now] start_time/end_time epoch-seconds path window.
+            **kwargs: Request body fields (flat):
+                ``[sort_by]`` {dict}: Sort object, e.g. ``{"name": "DESC"}`` (SortDirectionEnum: ASC, DESC).
+                ``[filter_by]`` {list[dict]}: List of filters, each with ``filterName`` (str),
+                ``operator`` (str: EQ, NE, LIKE, NOT_LIKE), and ``values`` (list[str]).
+                ``[exclude_apn_config]`` {bool}: Whether to exclude APN config.
+                ``[page]`` {int}: Page number (>= 0).
+                ``[size]`` {int}: Page size (1-100).
 
         Returns:
             tuple: (result, Response, error)
@@ -50,28 +64,40 @@ class NetworkEventsAPI(APIClient):
         The returned response supports ``resp.search(<jmespath>)`` for client-side filtering/projection of the current page.
 
         Examples:
-            >>> results, response, error = client.zcell.network_events.list_network_events_search_start_time_end_time(
-            ...     id='...',
-            ...     start_time='...',
-            ...     end_time='...',
-            ... )
-            >>> if error:
-            ...     print(f"Error: {error}")
-            ...     return
-            >>> for item in results:
-            ...     print(item.as_dict())
+            Search network events over the last 7 days with a filter::
+
+                >>> results, _, error = client.zcell.network_events.list_network_events_search(
+                ...     id='gi754cvqb07r0',
+                ...     days=7,
+                ...     filter_by=[{'filterName': 'country', 'operator': 'EQ', 'values': ['US']}],
+                ...     page=0,
+                ...     size=10,
+                ... )
+                >>> if error:
+                ...     print(f"Error: {error}")
+                ...     return
+                >>> for item in results:
+                ...     print(item.as_dict())
+
+            Provide an explicit path window instead of the ``days`` shorthand::
+
+                >>> results, _, error = client.zcell.network_events.list_network_events_search(
+                ...     id='gi754cvqb07r0',
+                ...     start_time=1781296768,
+                ...     end_time=1782506368,
+                ...     sort_by={'name': 'DESC'},
+                ... )
         """
         http_method = "post".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(
             f"{self._zcell_base_endpoint}/network-events/{id}/search/startTime/{start_time}/endTime/{end_time}"
         )
 
-        query_params = query_params or {}
-
         body = kwargs
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
         if error:
             return (None, None, error)
 

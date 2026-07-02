@@ -32,16 +32,18 @@ class SimLocationGroupsAPI(APIClient):
 
     _zcell_base_endpoint_customer = "/zcell/config/api/v1/customers"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def list_sim_location_groups(self, id: str, query_params=None) -> APIResult[List[SimLocationGroups]]:
+    def list_sim_location_groups(self, id: str = None, query_params=None) -> APIResult[List[SimLocationGroups]]:
         """
         Get all Sim Location Groups for a customer.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.name]`` {str}
                 ``[query_params.page]`` {int}: Page number (0-based)
@@ -63,6 +65,7 @@ class SimLocationGroupsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim-location-groups")
 
         query_params = query_params or {}
@@ -85,12 +88,13 @@ class SimLocationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_sim_location_group(self, id: str, group_id: str) -> APIResult[GetSimLocationGroup]:
+    def get_sim_location_group(self, id: str = None, group_id: str = None) -> APIResult[GetSimLocationGroup]:
         """
         Get a Sim Location Group by ID.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             group_id (str): Path parameter.
         Returns:
             tuple: (result, Response, error)
@@ -106,6 +110,7 @@ class SimLocationGroupsAPI(APIClient):
             >>> print(result.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim-location-groups/{group_id}")
         body = {}
         headers = {}
@@ -123,7 +128,7 @@ class SimLocationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_location_group(self, id: str, query_params=None, **kwargs) -> APIResult[List[ResponseMessage]]:
+    def add_location_group(self, id: str = None, query_params=None, **kwargs) -> APIResult[List[ResponseMessage]]:
         """
         Creates new Sim Location Groups (bulk create).
 
@@ -131,7 +136,8 @@ class SimLocationGroupsAPI(APIClient):
         ``**kwargs`` describe a single group and are wrapped into a one-element list.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             **kwargs: Request body fields for a single group (e.g. name, geo_fence_details).
             query_params (dict): Map of query parameters for the request.
 
@@ -153,6 +159,7 @@ class SimLocationGroupsAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "post".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim-location-groups")
 
         query_params = query_params or {}
@@ -177,12 +184,13 @@ class SimLocationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_sim_location_group(self, id: str, group_id: str, **kwargs) -> APIResult[UpdateSimLocationGroup]:
+    def update_sim_location_group(self, id: str = None, group_id: str = None, **kwargs) -> APIResult[UpdateSimLocationGroup]:
         """
         Updates an existing Sim Location Group.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             group_id (str): Path parameter.
             **kwargs: Request body fields.
 
@@ -201,6 +209,7 @@ class SimLocationGroupsAPI(APIClient):
             >>> print(result.as_dict())
         """
         http_method = "put".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim-location-groups/{group_id}")
 
         # The model maps the user-facing fields to the wire shape (geoFenceData) via
@@ -224,12 +233,13 @@ class SimLocationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_sim_location_group(self, id: str, group_id: str) -> APIResult[None]:
+    def delete_sim_location_group(self, id: str = None, group_id: str = None) -> APIResult[None]:
         """
         Deletes an existing Sim Location Group.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             group_id (str): Path parameter.
         Returns:
             tuple: (None, Response, error)
@@ -243,6 +253,7 @@ class SimLocationGroupsAPI(APIClient):
             ...     print(f"Error: {error}")
         """
         http_method = "delete".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sim-location-groups/{group_id}")
 
         params = {}

@@ -30,16 +30,18 @@ class CustomerRegionHandlingAPI(APIClient):
 
     _zcell_base_endpoint_customer = "/zcell/config/api/v1/customers"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def list_regions(self, id: str, query_params=None) -> APIResult[List[CustomerRegionHandling]]:
+    def list_regions(self, id: str = None, query_params=None) -> APIResult[List[CustomerRegionHandling]]:
         """
         Gets the available and configured regions for the logged-in customer.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.skip_sku_check]`` {bool}
 
@@ -57,6 +59,7 @@ class CustomerRegionHandlingAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/regions")
 
         query_params = query_params or {}
@@ -79,7 +82,7 @@ class CustomerRegionHandlingAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_regions(self, id: str, regions: List[str]) -> APIResult:
+    def update_regions(self, id: str = None, regions: List[str] = None) -> APIResult:
         """
         Configure customer regions.
 
@@ -89,7 +92,8 @@ class CustomerRegionHandlingAPI(APIClient):
         than a JSON object — so the raw response body is returned as the result.
 
         Args:
-            id (str): Path parameter. The customer ID.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             regions (list[str]): List of region codes to configure (e.g. ``["AMER", "EMEA", "APAC"]``).
 
         Returns:
@@ -108,6 +112,7 @@ class CustomerRegionHandlingAPI(APIClient):
                 >>> print(f"Regions configured successfully. Response: {result}")
         """
         http_method = "put".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/regions")
 
         body = regions
@@ -125,12 +130,13 @@ class CustomerRegionHandlingAPI(APIClient):
             return (None, response, error)
         return (response.get_body(), response, None)
 
-    def list_regions_operational_status(self, id: str, query_params=None) -> APIResult[List[ExtendedRegionStatus]]:
+    def list_regions_operational_status(self, id: str = None, query_params=None) -> APIResult[List[ExtendedRegionStatus]]:
         """
         Gets the configured regions and their operational status for the logged-in customer.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.bc_size]`` {str}
 
@@ -150,6 +156,7 @@ class CustomerRegionHandlingAPI(APIClient):
             ...     print(item.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/regions/operational-status")
 
         query_params = query_params or {}

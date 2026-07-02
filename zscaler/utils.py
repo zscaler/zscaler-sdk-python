@@ -506,6 +506,14 @@ def zcell_params(func=None, *, start_key="startDateTime", end_key="endDateTime",
 
         @zcell_params(start_key="startDate", end_key="endDate", target="body")
         def list_audit_customers_search(self, id, ..., **kwargs): ...
+
+    Other endpoints carry the window as URL **path** parameters (e.g. the POST
+    ``/network-events/{id}/search/startTime/{startTime}/endTime/{endTime}``). Pass
+    ``target="path"`` with ``start_key`` / ``end_key`` set to the function's own
+    parameter names so the shorthand fills those arguments::
+
+        @zcell_params(start_key="start_time", end_key="end_time", target="path")
+        def list_network_events_search(self, id, start_time=None, end_time=None, **kwargs): ...
     """
 
     def decorator(func):
@@ -513,9 +521,11 @@ def zcell_params(func=None, *, start_key="startDateTime", end_key="endDateTime",
         def wrapper(self, *args, **kwargs):
             days = kwargs.pop("days", None)
 
-            if target == "body":
-                # Window fields belong in the JSON request body (passed through
-                # **kwargs). setdefault so an explicit value wins over the shorthand.
+            if target in ("body", "path"):
+                # Window fields belong in the JSON request body or the URL path;
+                # both are passed through **kwargs (path values bind to the
+                # function's explicit parameters). setdefault so an explicit
+                # value wins over the shorthand.
                 if days is not None:
                     now = int(time.time())
                     kwargs.setdefault(start_key, now - int(days) * 86400)

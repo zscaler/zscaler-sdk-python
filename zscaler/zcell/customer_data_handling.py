@@ -26,27 +26,34 @@ class CustomerDataHandlingAPI(APIClient):
 
     _zcell_base_endpoint_customer = "/zcell/config/api/v1/customers"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def get_customer_data_handling(self, id: str) -> APIResult[CustomerDataHandling]:
+    def get_customer_data_handling(self, id: str = None) -> APIResult[CustomerDataHandling]:
         """
         Gets the customer data from the DB for the logged-in customer.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
         Returns:
             tuple: (result, Response, error)
 
         Examples:
-            >>> result, response, error = client.zcell.customer_data_handling.get_customer_data_handling(id='...')
-            >>> if error:
-            ...     print(f"Error: {error}")
-            ...     return
-            >>> print(result.as_dict())
+            Fetch the logged-in customer's data::
+
+                >>> customer_data, _, err = client.zcell.customer_data_handling.get_customer_data_handling(
+                ...     id='gi754cvqb07r0',
+                ... )
+                >>> if err:
+                ...     print(f"Error fetching customer data: {err}")
+                ...     return
+                >>> print(f"Customer data fetched successfully: {customer_data.as_dict()}")
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}")
         body = {}
         headers = {}
@@ -64,28 +71,40 @@ class CustomerDataHandlingAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_customer_data_handling(self, id: str, **kwargs) -> APIResult[ResponseMessage]:
+    def update_customer_data_handling(self, id: str = None, **kwargs) -> APIResult[ResponseMessage]:
         """
         Activate end customer.
 
         Args:
-            id (str): Path parameter.
-            **kwargs: Request body fields.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
+            **kwargs: Request body fields (all required).
+
+                ``username`` (str): The activation username.
+
+                ``password`` (str): The activation password.
+
+                ``api_key`` (str): The activation API key.
 
         Returns:
             tuple: (result, Response, error)
 
         Examples:
-            >>> result, response, error = client.zcell.customer_data_handling.update_customer_data_handling(
-            ...     id='...',
-            ...     name='example',
-            ... )
-            >>> if error:
-            ...     print(f"Error: {error}")
-            ...     return
-            >>> print(result.as_dict())
+            Activate an end customer::
+
+                >>> result, _, error = client.zcell.customer_data_handling.update_customer_data_handling(
+                ...     id='gi754cvqb07r0',
+                ...     username='deploy@cellular-beta-two.zsloginbeta.net',
+                ...     password='********',
+                ...     api_key='********',
+                ... )
+                >>> if error:
+                ...     print(f"Error activating customer: {error}")
+                ...     return
+                >>> print(f"Customer activated successfully: {result.as_dict()}")
         """
         http_method = "put".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}")
 
         body = kwargs
@@ -101,6 +120,11 @@ class CustomerDataHandlingAPI(APIClient):
         response, error = self._request_executor.execute(request, ResponseMessage)
         if error:
             return (None, response, error)
+
+        # The API may return 204 No Content on success — there is no body to parse.
+        if not response or not response.get_body():
+            return (None, response, None)
+
         try:
             result = ResponseMessage(self.form_response_body(response.get_body()))
         except Exception as error:

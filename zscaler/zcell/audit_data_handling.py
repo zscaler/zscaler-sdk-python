@@ -27,12 +27,13 @@ class AuditDataHandlingAPI(APIClient):
 
     _zcell_base_endpoint = "/zcell/config/api/v1"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
     @zcell_params(start_key="startDate", end_key="endDate", target="body")
-    def list_audit_customers_search(self, id: str, query_params=None, **kwargs) -> APIResult[List[AuditDataHandling]]:
+    def list_audit_customers_search(self, id: str = None, query_params=None, **kwargs) -> APIResult[List[AuditDataHandling]]:
         """
         Returns all audit log based on filters.
 
@@ -41,7 +42,8 @@ class AuditDataHandlingAPI(APIClient):
         window, the ``days`` shorthand is supported and fills both accordingly.
 
         Args:
-            id (str): Path parameter. The customer ID.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             days (int): Convenience shorthand — sets a [now - days, now] startDate/endDate epoch-seconds body window.
             **kwargs: Request body fields (flat). Supported fields:
                 ``[start_date]`` {int}: Start of the audit range (epoch seconds).
@@ -57,7 +59,7 @@ class AuditDataHandlingAPI(APIClient):
                 ``[query_params.page]`` {int}: Page number (0-based)
                 ``[query_params.size]`` {int}: Page size (1-100)
                 ``[query_params.sort_by]`` {str}: Field to sort by. Default: creationTime. Sortable fields:
-                  creationTime, auditOperationType, objectType, objectName, objectId, customerId, visibility
+                creationTime, auditOperationType, objectType, objectName, objectId, customerId, visibility
                 ``[query_params.sort_dir]`` {str}: ASC or DESC. Default: DESC
 
         Returns:
@@ -89,6 +91,7 @@ class AuditDataHandlingAPI(APIClient):
                 ... )
         """
         http_method = "post".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint}/audit/customers/{id}/search")
 
         query_params = query_params or {}

@@ -31,19 +31,21 @@ class AnomalyPolicyAPI(APIClient):
 
     _zcell_base_endpoint_customer = "/zcell/config/api/v1/customers"
 
-    def __init__(self, request_executor: "RequestExecutor") -> None:
+    def __init__(self, request_executor: "RequestExecutor", config: dict = None) -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
     @zcell_params
     def list_anomaly_policy(
-        self, id: str, start_date_time: int = None, end_date_time: int = None, query_params=None
+        self, id: str = None, start_date_time: int = None, end_date_time: int = None, query_params=None
     ) -> APIResult[List[AnomalyPolicy]]:
         """
         Get all Anomaly Policies.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             start_date_time (int): Window start as epoch seconds. Required unless ``days`` is supplied.
             end_date_time (int): Window end as epoch seconds. Required unless ``days`` is supplied.
             days (int): Convenience shorthand — sets a [now - days, now] start_date_time/end_date_time epoch-seconds window.
@@ -52,7 +54,7 @@ class AnomalyPolicyAPI(APIClient):
                 ``[query_params.page]`` {int}: Page number (0-based)
                 ``[query_params.size]`` {int}: Page size (1-100)
                 ``[query_params.sort_by]`` {str}: Field to sort by. Default: policyName. Sortable fields: id,
-                  policyType, policyName, violations
+                policyType, policyName, violations
                 ``[query_params.sort_dir]`` {str}: ASC or DESC. Default: ASC
 
         Returns:
@@ -85,6 +87,7 @@ class AnomalyPolicyAPI(APIClient):
                 ... )
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy")
 
         query_params = query_params or {}
@@ -111,12 +114,13 @@ class AnomalyPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def create_anomaly_policy(self, id: str, **kwargs) -> APIResult[AnomalyPolicy]:
+    def create_anomaly_policy(self, id: str = None, **kwargs) -> APIResult[AnomalyPolicy]:
         """
         Create a new Anomaly Policy.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             **kwargs: Request body fields.
 
         Returns:
@@ -137,6 +141,7 @@ class AnomalyPolicyAPI(APIClient):
                 >>> print(f"Anomaly Policy added successfully: {added_policy.as_dict()}")
         """
         http_method = "post".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy")
 
         body = kwargs
@@ -158,12 +163,13 @@ class AnomalyPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_anomaly_policy(self, id: str, policy_id: str, **kwargs) -> APIResult[AnomalyPolicy]:
+    def update_anomaly_policy(self, id: str = None, policy_id: str = None, **kwargs) -> APIResult[AnomalyPolicy]:
         """
         Update an existing Anomaly Policy.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter.
             **kwargs: Request body fields.
 
@@ -185,6 +191,7 @@ class AnomalyPolicyAPI(APIClient):
                 >>> print(f"Anomaly Policy updated successfully: {updated_policy.as_dict()}")
         """
         http_method = "patch".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}")
 
         body = kwargs
@@ -197,18 +204,23 @@ class AnomalyPolicyAPI(APIClient):
         if error:
             return (None, response, error)
 
+        # The API returns 204 No Content on success — there is no body to parse.
+        if not response or not response.get_body():
+            return (None, response, None)
+
         try:
             result = AnomalyPolicy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_anomaly_policy(self, id: str, policy_id: str) -> APIResult[None]:
+    def delete_anomaly_policy(self, id: str = None, policy_id: str = None) -> APIResult[None]:
         """
         Delete an Anomaly Policy.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter.
         Returns:
             tuple: (None, Response, error)
@@ -225,6 +237,7 @@ class AnomalyPolicyAPI(APIClient):
                 ...     return
         """
         http_method = "delete".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}")
 
         params = {}
@@ -238,12 +251,15 @@ class AnomalyPolicyAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_anomaly_policy_logs(self, id: str, policy_id: str, query_params=None) -> APIResult[List[AnomalyPolicyLogContent]]:
+    def list_anomaly_policy_logs(
+        self, id: str = None, policy_id: str = None, query_params=None
+    ) -> APIResult[List[AnomalyPolicyLogContent]]:
         """
         Get Past Anomaly Policy Logs.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter.
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.page]`` {int}
@@ -269,6 +285,7 @@ class AnomalyPolicyAPI(APIClient):
                 ...     print(entry.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}/logs")
 
         query_params = query_params or {}
@@ -291,12 +308,13 @@ class AnomalyPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_anomaly_policy_status(self, id: str, policy_id: str, enabled: bool) -> APIResult:
+    def update_anomaly_policy_status(self, id: str = None, policy_id: str = None, enabled: bool = None) -> APIResult:
         """
         Update Anomaly Policy Status (Enable/Disable).
 
         Args:
-            id (str): Path parameter. The customer ID.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter. The anomaly policy ID.
             enabled (bool): Required query parameter. ``True`` enables the policy,
                 ``False`` disables it.
@@ -325,6 +343,7 @@ class AnomalyPolicyAPI(APIClient):
                 ... )
         """
         http_method = "patch".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}/status")
 
         query_params = {"enabled": str(enabled).lower()}
@@ -343,13 +362,14 @@ class AnomalyPolicyAPI(APIClient):
 
     @zcell_params
     def list_anomaly_policy_violations(
-        self, id: str, policy_id: str, start_date_time: int = None, end_date_time: int = None, query_params=None
+        self, id: str = None, policy_id: str = None, start_date_time: int = None, end_date_time: int = None, query_params=None
     ) -> APIResult:
         """
         Get ICCIDs with violations for an anomaly policy.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter.
             days (int): Convenience shorthand — sets a [now - days, now] start_date_time/end_date_time epoch-seconds window.
             query_params (dict): Map of query parameters for the request.
@@ -382,6 +402,7 @@ class AnomalyPolicyAPI(APIClient):
                 ...     print(violation.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}/violations")
 
         query_params = query_params or {}
@@ -410,13 +431,14 @@ class AnomalyPolicyAPI(APIClient):
 
     @zcell_params
     def get_anomaly_policy_violations(
-        self, id: str, policy_id: str, iccid: str, query_params=None
+        self, id: str = None, policy_id: str = None, iccid: str = None, query_params=None
     ) -> APIResult[List[GetViolationDetails]]:
         """
         Get violations for a specific ICCID.
 
         Args:
-            id (str): Path parameter.
+            id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
+                or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
             policy_id (str): Path parameter.
             iccid (str): Path parameter.
             days (int): Convenience shorthand — sets a [now - days, now] start_date_time/end_date_time epoch-seconds window.
@@ -426,7 +448,7 @@ class AnomalyPolicyAPI(APIClient):
                 ``[query_params.page]`` {int}: Page number (0-based)
                 ``[query_params.size]`` {int}: Page size (1-100)
                 ``[query_params.sort_by]`` {str}: Field to sort by. Default: timestamp. Sortable fields: policyId,
-                  policyType, timestamp
+                policyType, timestamp
                 ``[query_params.sort_dir]`` {str}: ASC or DESC. Default: DESC
 
         Returns:
@@ -451,6 +473,7 @@ class AnomalyPolicyAPI(APIClient):
                 ...     print(violation.as_dict())
         """
         http_method = "get".upper()
+        id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/anomaly-policy/{policy_id}/violations/{iccid}")
 
         query_params = query_params or {}

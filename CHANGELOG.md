@@ -1,5 +1,64 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.35 (July 1, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+#### Zscaler Cellular (ZCell) New Endpoints
+[PR #540](https://github.com/zscaler/zscaler-sdk-python/pull/540) - Added the following new Zscaler Cellular (ZCell) API Endpoints:
+  - Added `GET /customers/{id}/anomaly-policy` to retrieve the list of anomaly policies.
+  - Added `POST /customers/{id}/anomaly-policy` to create a new anomaly policy.
+  - Added `PATCH /customers/{id}/anomaly-policy/{policyId}` to update an anomaly policy.
+  - Added `DELETE /customers/{id}/anomaly-policy/{policyId}` to delete an anomaly policy.
+  - Added `GET /customers/{id}/anomaly-policy/{policyId}/logs` to retrieve past anomaly policy logs.
+  - Added `PATCH /customers/{id}/anomaly-policy/{policyId}/status` to enable or disable an anomaly policy.
+  - Added `GET /customers/{id}/anomaly-policy/{policyId}/violations` to retrieve anomaly policy violations.
+  - Added `GET /customers/{id}/anomaly-policy/{policyId}/violations/{iccid}` to retrieve anomaly policy violations by ICCID.
+  - Added `GET /customers/{id}/sim-location-groups` to retrieve the list of SIM location groups.
+  - Added `GET /customers/{id}/sim-location-groups/{groupId}` to retrieve a SIM location group.
+  - Added `POST /customers/{id}/sim-location-groups` to create a SIM location group.
+  - Added `PUT /customers/{id}/sim-location-groups/{groupId}` to update a SIM location group.
+  - Added `DELETE /customers/{id}/sim-location-groups/{groupId}` to delete a SIM location group.
+  - Added `POST /customers/{id}/sim/analytics/map` to retrieve SIM analytics map data.
+  - Added `GET /customers/{id}/sim/analytics/summary` to retrieve the SIM analytics summary.
+  - Added `GET /customers/{id}/sim/analytics/usage/countries` to retrieve SIM usage by country.
+  - Added `GET /customers/{id}/sim/analytics/usage/day` to retrieve SIM usage by day.
+  - Added `GET /customers/{id}/sim/analytics/usage/sims` to retrieve SIM usage by SIM.
+  - Added `GET /customers/{id}/regions` to retrieve the list of customer regions.
+  - Added `PUT /customers/{id}/regions` to deploy or update customer regions.
+  - Added `GET /customers/{id}/regions/operational-status` to retrieve the operational status of customer regions.
+  - Added `POST /audit/customers/{id}/search` to search customer audit data.
+  - Added `GET /audit/metadata` to retrieve audit metadata.
+  - Added `POST /network-events/{id}/search/startTime/{startTime}/endTime/{endTime}` to search network events within a time window.
+  - Added `GET /customers/{id}/sims/details` to retrieve SIM details by ICCID.
+  - Added `POST /customers/{id}/sims/download` to download SIM data as a CSV file.
+  - Added `PATCH /customers/{id}/sims/assign/tag` to assign a tag to SIMs.
+  - Added `PATCH /customers/{id}/sims/lock` to lock SIMs.
+  - Added `POST /customers/{id}/sims/search` to search SIM data with filtering and pagination.
+  - Added `PATCH /customers/{id}/sims/status` to update the status of SIMs.
+  - Added `PATCH /customers/{id}/sims/{iccid}/assign` to assign an eSIM and return the activation code.
+  - Added `PATCH /customers/{id}/sims/{iccid}/state` to fetch and refresh the provider eSIM state.
+  - Added `GET /customers/{id}/tag` to retrieve the list of tags.
+  - Added `POST /customers/{id}/tag` to create a new tag.
+  - Added `GET /customers/{id}` to retrieve customer data.
+  - Added `PUT /customers/{id}` to activate an end customer.
+  - Added support for a configurable ZCell customer id via the `zcellCustomerId` config attribute and the `ZCELL_CUSTOMER_ID` environment variable, which is automatically injected into the `/customers/{id}` request path so it does not need to be passed on every call. The explicit `id` argument is still supported and takes precedence. This value is independent from ZPA's `customerId`.
+
+## 1.9.34 (July 1, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #539](https://github.com/zscaler/zscaler-sdk-python/issues/539) - Fixed ZPA `pra_approval` attribute `working_hours`.
+
+
 ## 1.9.33 (June 23, 2026)
 
 ### Notes

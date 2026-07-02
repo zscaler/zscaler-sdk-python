@@ -120,7 +120,15 @@ class SearchRequest(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.sort_by = config["sortBy"] if "sortBy" in config else None
+            if "sortBy" in config:
+                if isinstance(config["sortBy"], network_events.SortBy):
+                    self.sort_by = config["sortBy"]
+                elif config["sortBy"] is not None:
+                    self.sort_by = network_events.SortBy(config["sortBy"])
+                else:
+                    self.sort_by = None
+            else:
+                self.sort_by = None
             self.filter_by = ZscalerCollection.form_list(
                 config["filterBy"] if "filterBy" in config else [], network_events.FilterBy
             )
@@ -145,6 +153,60 @@ class SearchRequest(ZscalerObject):
             "excludeApnConfig": self.exclude_apn_config,
             "page": self.page,
             "size": self.size,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SortBy(ZscalerObject):
+    """
+    A class representing a SortBy object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.name = config["name"] if "name" in config else None
+        else:
+            self.name = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "name": self.name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class FilterBy(ZscalerObject):
+    """
+    A class representing a FilterBy object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.filter_name = config["filterName"] if "filterName" in config else None
+            self.operator = config["operator"] if "operator" in config else None
+            self.values = ZscalerCollection.form_list(config["values"] if "values" in config else [], str)
+        else:
+            self.filter_name = None
+            self.operator = None
+            self.values = []
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "filterName": self.filter_name,
+            "operator": self.operator,
+            "values": self.values,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

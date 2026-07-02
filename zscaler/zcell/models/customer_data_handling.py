@@ -64,24 +64,8 @@ class CustomerDataHandling(ZscalerObject):
                 self.sim_provider = None
             self.parent_id = config["parentId"] if "parentId" in config else None
             self.is_activated = config["isActivated"] if "isActivated" in config else False
-            if "bcSize" in config:
-                if isinstance(config["bcSize"], customer_data_handling.BcSizeEnum):
-                    self.bc_size = config["bcSize"]
-                elif config["bcSize"] is not None:
-                    self.bc_size = customer_data_handling.BcSizeEnum(config["bcSize"])
-                else:
-                    self.bc_size = None
-            else:
-                self.bc_size = None
-            if "platformType" in config:
-                if isinstance(config["platformType"], customer_data_handling.PlatformTypeEnum):
-                    self.platform_type = config["platformType"]
-                elif config["platformType"] is not None:
-                    self.platform_type = customer_data_handling.PlatformTypeEnum(config["platformType"])
-                else:
-                    self.platform_type = None
-            else:
-                self.platform_type = None
+            self.bc_size = config["bcSize"] if "bcSize" in config else None
+            self.platform_type = config["platformType"] if "platformType" in config else None
             self.total_sims = config["totalSims"] if "totalSims" in config else None
             self.active_sims = config["activeSims"] if "activeSims" in config else None
             self.inactive_sims = config["inactiveSims"] if "inactiveSims" in config else None
@@ -115,11 +99,11 @@ class CustomerDataHandling(ZscalerObject):
             "name": self.name,
             "email": self.email,
             "userName": self.user_name,
-            "zia": self.zia,
-            "zpa": self.zpa,
+            "zia": self.zia.request_format() if self.zia else None,
+            "zpa": self.zpa.request_format() if self.zpa else None,
             "regions": self.regions,
             "mvnoIds": [item.request_format() for item in (self.mvno_ids or [])],
-            "simProvider": self.sim_provider,
+            "simProvider": self.sim_provider.request_format() if self.sim_provider else None,
             "parentId": self.parent_id,
             "isActivated": self.is_activated,
             "bcSize": self.bc_size,
@@ -128,6 +112,93 @@ class CustomerDataHandling(ZscalerObject):
             "activeSims": self.active_sims,
             "inactiveSims": self.inactive_sims,
             "currentUsage": self.current_usage,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class ZCloud(ZscalerObject):
+    """
+    A class representing a ZCloud object (ZIA/ZPA org and cloud metadata).
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.org_id = config["orgId"] if "orgId" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+        else:
+            self.org_id = None
+            self.cloud_name = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "orgId": self.org_id,
+            "cloudName": self.cloud_name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Mvno(ZscalerObject):
+    """
+    A class representing a Mvno object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+        else:
+            self.id = None
+            self.name = None
+            self.type = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimProvider(ZscalerObject):
+    """
+    A class representing a SimProvider object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+        else:
+            self.id = None
+            self.name = None
+            self.type = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

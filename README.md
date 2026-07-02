@@ -57,6 +57,7 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [Z-Insights - ZINS](https://help.zscaler.com/zscaler-analytics/getting-started) — GraphQL Analytics API
 * [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
 * [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
+* [Zscaler Cellular API (ZCell)](https://help.zscaler.com/)
 
 This SDK is designed to support the new Zscaler API framework [OneAPI](https://automate.zscaler.com/docs/getting-started/getting-started)
 via a single OAuth2 HTTP client. The SDK is also backwards compatible with the previous
@@ -234,6 +235,7 @@ In most cases, you won't need to build the SDK from source. If you want to build
 * [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
 * [Zscaler AI Guard API](https://help.zscaler.com/ai-guard)
 * [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
+* [Zscaler Cellular API (ZCell)](https://help.zscaler.com/)
 
 ## Usage guide
 
@@ -268,6 +270,7 @@ As of the publication of SDK version => 1.7.x, OneAPI is available for programma
 * [ZMS - Zscaler Microsegmentation](https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api) — GraphQL Microsegmentation API
 * [Zscaler AI Guard API](https://help.zscaler.com/ai-guard)
 * [Business Insights](https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi)
+* [Zscaler Cellular API (ZCell)](https://help.zscaler.com/)
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and Zscaler Digital Experience (ZDX) are supported only via the legacy authentication method described in this README.
 
@@ -378,6 +381,56 @@ The authentication to Zscaler Private Access (ZPA) via the OneAPI framework, req
 | `partnerId`       | _(String)_ Optional partner ID. When provided, the SDK automatically includes the `x-partner-id` header in all API requests.| `ZSCALER_PARTNER_ID` |
 | `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
 | `cloud`
+
+### Authenticating to Zscaler Cellular (ZCell)
+
+The authentication to Zscaler Cellular (ZCell) via the OneAPI framework uses the same Zidentity OAuth2 credentials (`clientId`, `clientSecret`/`privateKey`, `vanityDomain`, `cloud`) as the other products. ZCell API endpoints are scoped to a specific customer (`/customers/{id}`), so the SDK provides a dedicated `zcellCustomerId` attribute — and the `ZCELL_CUSTOMER_ID` environment variable — which is automatically injected into the request path. This value is completely independent from ZPA's `customerId`.
+
+You can supply the ZCell customer id in any of three ways (highest precedence first):
+
+1. Explicitly, as the `id` argument on any ZCell method call.
+2. Via the `zcellCustomerId` attribute in the client configuration.
+3. Via the `ZCELL_CUSTOMER_ID` environment variable.
+
+| Argument     | Description | Environment variable |
+|--------------|-------------|-------------------|
+| `clientId`       | _(String)_ Zscaler API Client ID, used with `clientSecret` or `privateKey` OAuth auth mode.| `ZSCALER_CLIENT_ID` |
+| `clientSecret`       | _(String)_ A string that contains the password for the API admin.| `ZSCALER_CLIENT_SECRET` |
+| `privateKey`       | _(String)_ A string Private key value.| `ZSCALER_PRIVATE_KEY` |
+| `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
+| `cloud`       | _(String)_ The host and basePath for the cloud services API is `$api.<cloud_name>.zsapi.net`.| `ZSCALER_CLOUD` |
+| `zcellCustomerId`       | _(String)_ The ZCell customer ID automatically scoped into the `/customers/{id}` request path. Independent from ZPA's `customerId`.| `ZCELL_CUSTOMER_ID` |
+
+Initialize the client with `zcellCustomerId` and call any ZCell service without repeating the customer id on every method:
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta",                          # Optional when authenticating to an alternative cloud environment
+    "zcellCustomerId": "72058304855015424",   # ZCell customer id (independent from ZPA's customerId)
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        # zcellCustomerId is injected automatically — no id argument needed
+        tags, resp, err = client.zcell.tag_handling.list_tag()
+        if err:
+            print(f"Error listing ZCell tags: {err}")
+            return
+        for tag in tags:
+            print(tag)
+
+        # You can still override the customer id explicitly per call
+        tags, resp, err = client.zcell.tag_handling.list_tag(id="another-customer-id")
+
+if __name__ == "__main__":
+    main()
+```
 
 ### Initialize OneAPI OAuth 2.0 Client
 
@@ -626,7 +679,7 @@ The header `x-ratelimit-reset` is returned in the API response for each API call
 
 ## Pagination
 
-The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`
+The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`, `ZCell`
 and is applied transparently whether you're using the Legacy API Client or the new OneAPI OAuth2 Client.
 
 ✅ This means no code changes are needed when transitioning from the legacy API framework to OneAPI framework.
@@ -765,6 +818,7 @@ Each Zscaler service has its own pagination requirements and limits. The SDK aut
 | ZPA     | 20                    | 500           | Uses `page`, `pagesize`                         |
 | ZTW     | 100                   | Varies        | Uses `page`, `pageSize`                         |
 | ZWA     | Varies by endpoint    | Varies        | Uses `page`, `pageSize`                         |
+| ZCell   | 10                    | 100           | Uses `page` (0-based) + `pageSize`              |
 
 **Important Notes:**
 - ✅ The SDK automatically uses each API's default page size when no `page_size` is specified
