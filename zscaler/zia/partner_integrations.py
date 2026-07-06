@@ -24,7 +24,8 @@ from zscaler.zia.models.partner_integrations import (
     CrowdStrikeEndpoint,
     IntegrationPartner,
     MicrosoftDefenderEndpoint,
-    SandboxMd5Detail)
+    SandboxMd5Detail,
+)
 
 
 class PartnerIntegrationsAPI(APIClient):
