@@ -17,6 +17,49 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 
 
+class DeviceGroups(ZscalerObject):
+    """
+    A class representing a Device Group object.
+
+    This lightweight device-group reference block is embedded in policy/rule
+    payloads (firewall, URL filtering, SSL inspection, etc.) and is distinct
+    from the ``DeviceGroup`` model returned by the device-group endpoints.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.group_type = config["groupType"] if "groupType" in config else None
+            self.os_type = config["osType"] if "osType" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else None
+        else:
+            self.id = None
+            self.name = None
+            self.description = None
+            self.group_type = None
+            self.os_type = None
+            self.predefined = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "groupType": self.group_type,
+            "osType": self.os_type,
+            "predefined": self.predefined,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
 class DeviceGroup(ZscalerObject):
     """
     A class representing a DeviceGroup object.

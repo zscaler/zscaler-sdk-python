@@ -44,6 +44,7 @@ from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.custom_file_types import CustomFileTypesAPI
 from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
 from zscaler.zia.device_groups import DeviceGroupsAPI
+from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.devices import DevicesAPI
 from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
 from zscaler.zia.dlp_engine import DLPEngineAPI
@@ -783,6 +784,14 @@ class ZIAService:
 
         """
         return DeviceGroupsAPI(self._request_executor)
+
+    @property
+    def device_management(self) -> DeviceManagementAPI:
+        """
+        The interface object for the :ref:`ZIA Device Management interface <zia-device_management>`.
+
+        """
+        return DeviceManagementAPI(self._request_executor)
 
     @property
     def http_header_control(self) -> HttpHeaderControlAPI:
