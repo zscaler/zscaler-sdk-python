@@ -97,6 +97,22 @@ These shadow `transform_common_id_fields` for those fields (the helper finds not
 
 `add_id_groups` (also in `zscaler/utils.py`) is the original ZPA helper and never coerces. It still exists for backwards compatibility and is kept in `application_segment.py`'s `add_segment_provision` flow and `pra_credential_pool.py`. New code in ZPA should prefer `transform_common_id_fields(..., coerce_ids=False)` so the service converges on a single helper.
 
+## ZCell-Specific Architecture
+
+Every ZCell endpoint is scoped to a customer (`/customers/{id}`). Rather than forcing callers to repeat that id on every call, the SDK resolves it once and auto-injects it — analogous to, but **completely independent from**, ZPA's `customerId`. Never conflate `zcellCustomerId` with ZPA's `customerId`.
+
+### `zcellCustomerId` resolution
+
+- **Config key**: `zcellCustomerId` (declared in `zscaler/config/config_setter.py`'s `_DEFAULT_CONFIG["client"]`). **Env var**: `ZCELL_CUSTOMER_ID`. Both are distinct from ZPA's `customerId` / `ZPA_CUSTOMER_ID`.
+- `zscaler/oneapi_client.py` resolves `zcellCustomerId` (config → `ZCELL_CUSTOMER_ID` env) and writes the resolved value back into `self._config["client"]["zcellCustomerId"]` after `ConfigValidator`, so the env fallback reaches the service clients.
+- `ZCellService.__init__(request_executor, config)` forwards `config` to every ZCell API. Each API `__init__(self, request_executor, config=None)` reads `self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")`.
+- Every ZCell method keeps `id: str = None` as its first parameter (for backwards compatibility) and resolves `id = id or self._zcell_customer_id` before building the URL. **Precedence**: explicit `id` arg → config `zcellCustomerId` → `ZCELL_CUSTOMER_ID` env.
+- No client-side validation is done when all three are absent (mirrors ZPA): the request proceeds and the API returns the error. For methods whose path requires additional ids after `id` (`policy_id`, `group_id`, `iccid`, `enabled`), those also default to `None` solely to satisfy Python's "no required-argument-after-default" rule — they are still logically required.
+
+### Pagination
+
+ZCell uses **0-based** `page` numbering (default size 10, max 100). The centralized engine (`oneapi_response.py`) has a dedicated `zcell` branch that decrements its internal 1-based page counter before each request. Do not change other services' paging when touching this branch.
+
 ## Key Conventions
 
 | Aspect | Convention |

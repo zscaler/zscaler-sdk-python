@@ -211,6 +211,8 @@ class URLFilteringAPI(APIClient):
                 `True` for this to take effect.
             validity_time_zone_id (str): The URL Filter rule validity date and time will be based on the TZ provided.
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
+            http_header_action_profile_ids (list): The HTTP header action profiles that this rule applies to.
+            http_header_profile_ids (list): The HTTP header profiles that this rule applies to.
 
         Returns:
             :obj:`Tuple`: The newly created URL Filtering Policy rule.
@@ -328,6 +330,8 @@ class URLFilteringAPI(APIClient):
                 `True` for this to take effect.
             validity_time_zone_id (str): The URL Filter rule validity date and time will be based on the TZ provided.
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
+            http_header_action_profile_ids (list): The HTTP header action profiles that this rule applies to.
+            http_header_profile_ids (list): The HTTP header profiles that this rule applies to.
 
         Returns:
             :obj:`Tuple`: The updated URL Filtering Policy rule.

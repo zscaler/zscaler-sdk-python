@@ -573,3 +573,46 @@ class DesktopPolicyMappingsDTO(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class ComponentLevelVersion(ZscalerObject):
+    """
+    A class representing a ComponentLevelVersion object.
+
+    Shared across app connector groups, service edge groups, private brokers and
+    site controllers (the spec ``ComponentLevelVersionDTO`` referenced by many
+    resources via their ``version`` field).
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.child_version = config["childVersion"] if "childVersion" in config else None
+            self.latest_platform = config["latestPlatform"] if "latestPlatform" in config else None
+            self.platform = config["platform"] if "platform" in config else None
+            self.sarge_version = config["sargeVersion"] if "sargeVersion" in config else None
+            self.version_profile_name = config["versionProfileName"] if "versionProfileName" in config else None
+            self.version_profile_gid = config["version_profile_gid"] if "version_profile_gid" in config else None
+        else:
+            self.child_version = None
+            self.latest_platform = None
+            self.platform = None
+            self.sarge_version = None
+            self.version_profile_name = None
+            self.version_profile_gid = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "childVersion": self.child_version,
+            "latestPlatform": self.latest_platform,
+            "platform": self.platform,
+            "sargeVersion": self.sarge_version,
+            "versionProfileName": self.version_profile_name,
+            "version_profile_gid": self.version_profile_gid,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

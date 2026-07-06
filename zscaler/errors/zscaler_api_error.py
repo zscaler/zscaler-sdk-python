@@ -23,6 +23,8 @@ class ZscalerAPIError(Exception):
             or response_body.get("errorCode")
             # ZCC error envelope: {"title": "INVALID_FIELD_VALUE", "errorCode": null, ...}
             or response_body.get("title")
+            # ZCell error envelope: {"msgId": "invalid.access", ...}
+            or response_body.get("msgId")
         )
         self.error_message: Optional[str] = (
             response_body.get("message")
@@ -30,9 +32,13 @@ class ZscalerAPIError(Exception):
             or response_body.get("errorDetails")
             # ZCC error envelope: {"errorMessage": "Policy with policyId: ...", ...}
             or response_body.get("errorMessage")
+            # ZCell error envelope: {"detail": "Invalid Authentication.", ...}
+            or response_body.get("detail")
         )
         self.params: List[Any] = response_body.get("params", [])
         self.path: Optional[str] = response_body.get("path")
+        # ZCell error envelope carries an ISO-8601 timestamp.
+        self.timestamp: Optional[str] = response_body.get("timestamp")
 
         message_parts: List[str] = [f"HTTP {self.status_code}"]
         if self.error_code:
@@ -65,6 +71,8 @@ class ZscalerAPIError(Exception):
             error_payload["params"] = self.params
         if self.path:
             error_payload["path"] = self.path
+        if self.timestamp:
+            error_payload["timestamp"] = self.timestamp
         return json.dumps(error_payload, indent=2)
 
     def __repr__(self) -> str:

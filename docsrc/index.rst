@@ -12,6 +12,7 @@
    zs/zdx/index
    zs/zia/index
    zs/zpa/index
+   zs/zcell/index
    zs/zwa/index
    zs/zid/index
    zs/zins/index
@@ -62,6 +63,7 @@ across multiple products such as:
 - `ZCC API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc>`__
 - `ZTW API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector>`__
 - `ZTB API (Zero Trust Branch) <https://help.zscaler.com/>`__
+- `ZCell API (Zscaler Cellular) <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell/>`__
 - `ZWA API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
 - `Zidentity API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid>`__
 - `EASM API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
@@ -165,6 +167,8 @@ You'll also need
 -  `ZTW
    API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector>`__
 
+-  `ZCell API (Zscaler Cellular) <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell>`__
+
 -  `ZWA
    API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
 
@@ -239,6 +243,7 @@ programmatic interaction with the following products:
    API <https://automate.zscaler.com/docs/getting-started/getting-started#:~:text=Workload%20Groups-,ZPA%20API,-Zscaler%20Private%20Access>`__
 -  `ZTW
    API <https://help.zscaler.com/cloud-branch-connector/zscaler-cloud-branch-connector-api/api-developer-reference-guide/reference-guide>`__
+-  `ZCell - Zscaler Cellular API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell>`__
 -  `ZIdentity
    API <https://help.zscaler.com/zidentity/api-clients>`__
 -  `Z-Insights
@@ -374,13 +379,13 @@ provider and API gateway. To authenticate, set the ``cloud`` attribute
 (or ``ZSCALER_CLOUD`` environment variable) to one of the supported
 government values:
 
-+-------------------+---------------------------------------------------------------+------------------------------+
-| ``cloud`` value   | OAuth token endpoint                                          | API base URL                 |
-+===================+===============================================================+==============================+
-| ``gov``           | ``https://<vanity_domain>.zidentitygov.net/oauth2/v1/token``  | ``https://api.zscalergov.net`` |
-+-------------------+---------------------------------------------------------------+------------------------------+
-| ``govus``         | ``https://<vanity_domain>.zidentitygov.us/oauth2/v1/token``| ``https://api.zscalergov.us``  |
-+-------------------+---------------------------------------------------------------+------------------------------+
++-----------------+--------------------------------------------------------------+--------------------------------+
+| ``cloud`` value | OAuth token endpoint                                         | API base URL                   |
++=================+==============================================================+================================+
+| ``gov``         | ``https://<vanity_domain>.zidentitygov.net/oauth2/v1/token`` | ``https://api.zscalergov.net`` |
++-----------------+--------------------------------------------------------------+--------------------------------+
+| ``govus``       | ``https://<vanity_domain>.zidentitygov.us/oauth2/v1/token``  | ``https://api.zscalergov.us``  |
++-----------------+--------------------------------------------------------------+--------------------------------+
 
 For example, authenticating to the GOV environment:
 
@@ -481,6 +486,83 @@ optionally the attributes ``microtenantId`` and ``partnerId``.
 +--------------------+-------------------+----------------------------+
 | ``cloud``          |                   |                            |
 +--------------------+-------------------+----------------------------+
+
+Authenticating to Zscaler Cellular (ZCell)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The authentication to Zscaler Cellular (ZCell) via the OneAPI framework
+uses the same Zidentity OAuth2 credentials (``clientId``,
+``clientSecret``/``privateKey``, ``vanityDomain``, ``cloud``) as the
+other products. ZCell API endpoints are scoped to a specific customer
+(``/customers/{id}``), so the SDK provides a dedicated
+``zcellCustomerId`` attribute — and the ``ZCELL_CUSTOMER_ID`` environment
+variable — which is automatically injected into the request path. This
+value is completely independent from ZPA's ``customerId``.
+
+You can supply the ZCell customer id in any of three ways (highest
+precedence first):
+
+1. Explicitly, as the ``id`` argument on any ZCell method call.
+2. Via the ``zcellCustomerId`` attribute in the client configuration.
+3. Via the ``ZCELL_CUSTOMER_ID`` environment variable.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 50 25
+
+   * - Argument
+     - Description
+     - Environment variable
+   * - ``clientId``
+     - *(String)* Zscaler API Client ID, used with ``clientSecret`` or ``privateKey`` OAuth auth mode.
+     - ``ZSCALER_CLIENT_ID``
+   * - ``clientSecret``
+     - *(String)* A string that contains the password for the API admin.
+     - ``ZSCALER_CLIENT_SECRET``
+   * - ``privateKey``
+     - *(String)* A string Private key value.
+     - ``ZSCALER_PRIVATE_KEY``
+   * - ``vanityDomain``
+     - *(String)* Refers to the domain name used by your organization ``https://<vanity_domain>.zslogin.net/oauth2/v1/token``.
+     - ``ZSCALER_VANITY_DOMAIN``
+   * - ``cloud``
+     - *(String)* The host and basePath for the cloud services API is ``$api.<cloud_name>.zsapi.net``.
+     - ``ZSCALER_CLOUD``
+   * - ``zcellCustomerId``
+     - *(String)* The ZCell customer ID automatically scoped into the ``/customers/{id}`` request path. Independent from ZPA's ``customerId``.
+     - ``ZCELL_CUSTOMER_ID``
+
+Initialize the client with ``zcellCustomerId`` and call any ZCell service
+without repeating the customer id on every method:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta",                          # Optional when authenticating to an alternative cloud environment
+       "zcellCustomerId": "72058304855015424",   # ZCell customer id (independent from ZPA's customerId)
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           # zcellCustomerId is injected automatically — no id argument needed
+           tags, resp, err = client.zcell.tag_handling.list_tag()
+           if err:
+               print(f"Error listing ZCell tags: {err}")
+               return
+           for tag in tags:
+               print(tag)
+
+           # You can still override the customer id explicitly per call
+           tags, resp, err = client.zcell.tag_handling.list_tag(id="another-customer-id")
+
+   if __name__ == "__main__":
+       main()
 
 Initialize OneAPI OAuth 2.0 Client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -781,7 +863,7 @@ retry time for the following services:
 Pagination
 ----------
 
-The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`
+The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`, `ZCell`
 and is applied transparently whether you're using the Legacy API Client or the new OneAPI OAuth2 Client.
 Filter or search for Segment Groups
 
@@ -897,6 +979,10 @@ Each Zscaler service has its own pagination requiremens and max page size:
 |                    |                   |                            |                                 |
 |      ``ZWA``       |     ``varies``    |           ``varies``       |  Uses ``pageSize``` (camelCase) |
 |                    |                   |                            |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZCell``     |     ``10``        |         ``100``            |  Uses ``page`` (0-based) +      |
+|                    |                   |                            |   ``pageSize``` (camelCase)     |
 +--------------------+-------------------+----------------------------+---------------------------------+
 
 ⚠️ **Note:** Always use `snake_case` for all parameter names, even when the API expects camelCase.The SDK handles conversion internally.

@@ -1,14 +1,14 @@
-device_management
+devices
 ------------------
 
 The following methods allow for interaction with the ZIA
 Device Management API endpoints.
 
-Methods are accessible via ``zia.device_management``
+Methods are accessible via ``zia.devices``
 
-.. _zia-device_management:
+.. _zia-devices:
 
-.. automodule:: zscaler.zia.device_management
+.. automodule:: zscaler.zia.devices
     :members:
     :undoc-members:
     :show-inheritance:

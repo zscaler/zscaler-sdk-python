@@ -6,6 +6,109 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.35 (July 6, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+-------------
+
+Zscaler Cellular (ZCell) New Endpoints
+
+(`#542 <https://github.com/zscaler/zscaler-sdk-python/pull/542>`_) - Added the following new Zscaler Cellular (ZCell) API Endpoints:
+
+- Added ``GET /customers/{id}/anomaly-policy`` to retrieve the list of anomaly policies.
+- Added ``POST /customers/{id}/anomaly-policy`` to create a new anomaly policy.
+- Added ``PATCH /customers/{id}/anomaly-policy/{policyId}`` to update an anomaly policy.
+- Added ``DELETE /customers/{id}/anomaly-policy/{policyId}`` to delete an anomaly policy.
+- Added ``GET /customers/{id}/anomaly-policy/{policyId}/logs`` to retrieve past anomaly policy logs.
+- Added ``PATCH /customers/{id}/anomaly-policy/{policyId}/status`` to enable or disable an anomaly policy.
+- Added ``GET /customers/{id}/anomaly-policy/{policyId}/violations`` to retrieve anomaly policy violations.
+- Added ``GET /customers/{id}/anomaly-policy/{policyId}/violations/{iccid}`` to retrieve anomaly policy violations by ICCID.
+- Added ``GET /customers/{id}/sim-location-groups`` to retrieve the list of SIM location groups.
+- Added ``GET /customers/{id}/sim-location-groups/{groupId}`` to retrieve a SIM location group.
+- Added ``POST /customers/{id}/sim-location-groups`` to create a SIM location group.
+- Added ``PUT /customers/{id}/sim-location-groups/{groupId}`` to update a SIM location group.
+- Added ``DELETE /customers/{id}/sim-location-groups/{groupId}`` to delete a SIM location group.
+- Added ``POST /customers/{id}/sim/analytics/map`` to retrieve SIM analytics map data.
+- Added ``GET /customers/{id}/sim/analytics/summary`` to retrieve the SIM analytics summary.
+- Added ``GET /customers/{id}/sim/analytics/usage/countries`` to retrieve SIM usage by country.
+- Added ``GET /customers/{id}/sim/analytics/usage/day`` to retrieve SIM usage by day.
+- Added ``GET /customers/{id}/sim/analytics/usage/sims`` to retrieve SIM usage by SIM.
+- Added ``GET /customers/{id}/regions`` to retrieve the list of customer regions.
+- Added ``PUT /customers/{id}/regions`` to deploy or update customer regions.
+- Added ``GET /customers/{id}/regions/operational-status`` to retrieve the operational status of customer regions.
+- Added ``POST /audit/customers/{id}/search`` to search customer audit data.
+- Added ``GET /audit/metadata`` to retrieve audit metadata.
+- Added ``POST /network-events/{id}/search/startTime/{startTime}/endTime/{endTime}`` to search network events within a time window.
+- Added ``GET /customers/{id}/sims/details`` to retrieve SIM details by ICCID.
+- Added ``POST /customers/{id}/sims/download`` to download SIM data as a CSV file.
+- Added ``PATCH /customers/{id}/sims/assign/tag`` to assign a tag to SIMs.
+- Added ``PATCH /customers/{id}/sims/lock`` to lock SIMs.
+- Added ``POST /customers/{id}/sims/search`` to search SIM data with filtering and pagination.
+- Added ``PATCH /customers/{id}/sims/status`` to update the status of SIMs.
+- Added ``PATCH /customers/{id}/sims/{iccid}/assign`` to assign an eSIM and return the activation code.
+- Added ``PATCH /customers/{id}/sims/{iccid}/state`` to fetch and refresh the provider eSIM state.
+- Added ``GET /customers/{id}/tag`` to retrieve the list of tags.
+- Added ``POST /customers/{id}/tag`` to create a new tag.
+- Added ``GET /customers/{id}`` to retrieve customer data.
+- Added ``PUT /customers/{id}`` to activate an end customer.
+- Added support for a configurable ZCell customer id via the ``zcellCustomerId`` config attribute and the ``ZCELL_CUSTOMER_ID`` environment variable, which is automatically injected into the ``/customers/{id}`` request path so it does not need to be passed on every call. The explicit ``id`` argument is still supported and takes precedence. This value is independent from ZPA's ``customerId``.
+
+Zscaler Private Access (ZPA) New Endpoints
+
+(`#542 <https://github.com/zscaler/zscaler-sdk-python/pull/542>`_) - Added the following new Zscaler Private Access (ZPA) API Endpoints:
+
+- Added ``GET /application/host/{host_id}`` - Get federated applications with search, sorting, and pagination
+- Added ``PUT /application/federate`` - Federate an application with guest customers
+- Added ``PUT /policySet/rules/policyType/GLOBAL_POLICY/guest/{guest_id}`` - Get policy rules created by partner on federated applications
+- Added ``GET /businessContinuitySettings/certificate`` - Download SP Certificate
+- Added ``GET /businessContinuitySettings/metadata`` - Download SP Metadata information
+- Added ``GET /businessContinuitySettings`` - Gets Business Continuity Setting for customer
+- Added ``POST /businessContinuitySettings`` - Creates Business Continuity Setting for the customer
+- Added ``GET /businessContinuitySettings/{id}`` - Get Business Continuity Setting for the given customer by Id
+- Added ``PUT /businessContinuitySettings/{id}`` - Update Business Continuity Setting for the given customer by Id
+- Added ``DELETE /businessContinuitySettings/{id}`` - Delete Business Continuity Setting for the Customer
+- Added ``GET /iamidpmapping`` Retrieves the IamIdpMapping details for the customer
+- Added ``GET /privateCloud`` Retrieves all configured Private clouds for the specified customer.
+- Added ``GET /privateCloud`` Retrieves Private cloud details for the specified ID.
+- Added ``POST /privateCloud`` Adds a new Private cloud for the specified customer.
+- Added ``PUT /privateCloud`` Updates the Private cloud for the specified ID.
+- Added ``DELETE /privateCloud`` Deletes the Private cloud for the specified ID.
+- Added ``GET /tenant-federation/partners`` Retrieves active federation partners for a customer.
+- Added ``PUT /tenant-federation/approval`` Request approval for tenant federation using token.
+- Added ``POST /tenant-federation/token`` Create federation token for a customer by microtenant.
+- Added ``POST /tenant-federation/token/verify`` Verify federation token.
+- Added ``GET /tenant-federation`` Get provisioning requests for a customer with search, sorting, and pagination.
+- Added ``DELETE /tenant-federation/{federation_id}`` Delete tenant federation by Federation ID.
+- Added ``PUT /tenant-federation/{federation_id}/provisioning-state/{status}`` Update tenant federation provisioning state (APPROVED, DENIED, TERMINATED).
+- Added ``PUT /tenant-federation/{federation_id}/notes`` Update notes for tenant federation provisioning. Initiator updates initiatorNotes, partner updates partnerNotes.
+- Added ``PUT /tenant-federation/{federation_id}/federatopm-state/{status}`` Update tenant federation status (ACTIVE or INACTIVE).
+
+Zscaler Internet Access (ZIA) New Endpoints
+
+(`#542 <https://github.com/zscaler/zscaler-sdk-python/pull/542>`_) - Added the following new Zscaler Internet Access (ZIA) API Endpoints:
+
+- Added ``GET /integrationPartners`` Retrieves a list of partners and services integrated with the Zscaler service
+- Added ``GET /integrationPartners/crowdStrike/endpoints`` Retrieves the list of CrowdStrike endpoints based on the indicator of compromise (IOC) query, with pagination support
+- Added ``POST /integrationPartners/crowdStrike/endpoints`` Accepts a list of CrowdStrike endpoint or device IDs in the request body and fetches detailed endpoint or device data for those IDs
+- Added ``GET /integrationPartners/crowdStrike/whitelistedBaseUrls`` Retrieves a list of CrowdStrike configured whitelisted base URLs (allowist URLs).
+- Added ``POST /integrationPartners/microsoftDefender/endpoints`` Configures the integration of Microsoft Defender for Endpoint APIs with Zscaler.
+- Added ``GET /integrationPartners/sandbox/report/{md5}`` Retrieves the MD5 hash of the file required to view the Sandbox Detail Report.
+- Added ``GET /httpHeaderProfile`` Retrieves a list of HTTP header profiles.
+- Added ``POST /httpHeaderProfile`` Adds a new HTTP header profile.
+- Added ``PUT /httpHeaderProfile/{id}`` Updates the HTTP header profile based on the specified ID
+- Added ``DELETE /httpHeaderProfile/{id}`` Deletes the HTTP header profile based on the specified ID
+- Added ``GET /httpHeaderActionProfile`` Retrieves a list of HTTP header insertion profiles.
+- Added ``POST /httpHeaderActionProfile`` Adds a new HTTP header insertion profile.
+- Added ``PUT /httpHeaderActionProfile/{id}`` Updates the HTTP header insertion profile based on the specified ID
+- Added ``DELETE /httpHeaderActionProfile/{id}`` Deletes the HTTP header insertion profile based on the specified ID
+
+
 1.9.34 (July 1, 2026)
 ---------------------------
 

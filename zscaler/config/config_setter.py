@@ -24,6 +24,7 @@ class ConfigSetter:
             "cloud": "",
             "userAgent": "",
             "customerId": "",
+            "zcellCustomerId": "",
             "microtenantId": "",
             "partnerId": "",
             "sandboxToken": "",

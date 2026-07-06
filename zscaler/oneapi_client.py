@@ -16,6 +16,7 @@ from zscaler.zaiguard.zaiguard_service import ZGuardService
 from zscaler.zbi.zbi_service import ZBIService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.zcc.zcc_service import ZCCService
+from zscaler.zcell.zcell_service import ZCellService
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zeasm.zeasm_service import ZEASMService
@@ -153,6 +154,10 @@ class Client:
         # Retrieve optional customerId from config or environment
         self._customer_id = self._config["client"].get("customerId", os.getenv("ZSCALER_CUSTOMER_ID"))
 
+        # Retrieve optional ZCell customer id from config or environment. This is
+        # ZCell-specific and completely independent from ZPA's customerId above.
+        self._zcell_customer_id = self._config["client"].get("zcellCustomerId") or os.getenv("ZCELL_CUSTOMER_ID")
+
         # Prune unnecessary configuration fields
         self._config = client_config_setter._prune_config(self._config)
         # Setup logging based on config
@@ -161,6 +166,10 @@ class Client:
         # Validate configuration
         ConfigValidator(self._config)
         # self.logger.debug("Configuration validated successfully.")
+
+        # Ensure the resolved ZCell customer id (config or ZCELL_CUSTOMER_ID env)
+        # is available to ZCell service clients, which read it from the shared config.
+        self._config["client"]["zcellCustomerId"] = self._zcell_customer_id
 
         # Check inline configuration first, and if not provided, use environment variables
         self._client_id = self._config["client"].get("clientId", os.getenv("ZSCALER_CLIENT_ID"))
@@ -229,6 +238,7 @@ class Client:
         self._zms = None  # ZMS - Zscaler Microsegmentation (GraphQL API)
         self._zbi = None  # Zscaler Business Insights (REST API)
         self._zguard = None
+        self._zcell = None  # Zscaler Cellular (OneAPI only)
 
     def authenticate(self):
         """
@@ -267,6 +277,14 @@ class Client:
             # Pass RequestExecutor directly
             self._zia = ZIAService(self._request_executor)
         return self._zia
+
+    @property
+    def zcell(self):
+        # ZCell is OneAPI-only (no legacy client); construct lazily with the
+        # RequestExecutor directly, matching ZIA/ZTW.
+        if self._zcell is None:
+            self._zcell = ZCellService(self._request_executor, self._config)
+        return self._zcell
 
     @property
     def zwa(self):

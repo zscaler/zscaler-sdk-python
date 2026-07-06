@@ -37,22 +37,21 @@ class BrowserControlSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.enable_smart_browser_isolation: Optional[Any] = config["enableSmartBrowserIsolation"] \
-                if "enableSmartBrowserIsolation" in config else None
-            self.enable_warnings: Optional[Any] = config["enableWarnings"] \
-                if "enableWarnings" in config else None
-            self.plugin_check_frequency: Optional[Any] = config["pluginCheckFrequency"] \
-                if "pluginCheckFrequency" in config else None
+            self.enable_smart_browser_isolation: Optional[Any] = (
+                config["enableSmartBrowserIsolation"] if "enableSmartBrowserIsolation" in config else None
+            )
+            self.enable_warnings: Optional[Any] = config["enableWarnings"] if "enableWarnings" in config else None
+            self.plugin_check_frequency: Optional[Any] = (
+                config["pluginCheckFrequency"] if "pluginCheckFrequency" in config else None
+            )
             self.bypass_plugins: List[Any] = ZscalerCollection.form_list(
                 config["bypassPlugins"] if "bypassPlugins" in config else [], str
             )
             self.bypass_applications: List[Any] = ZscalerCollection.form_list(
                 config["bypassApplications"] if "bypassApplications" in config else [], str
             )
-            self.allow_all_browsers: Optional[Any] = config["allowAllBrowsers"] \
-                if "allowAllBrowsers" in config else None
-            self.bypass_all_browsers: Optional[Any] = config["bypassAllBrowsers"] \
-                if "bypassAllBrowsers" in config else None
+            self.allow_all_browsers: Optional[Any] = config["allowAllBrowsers"] if "allowAllBrowsers" in config else None
+            self.bypass_all_browsers: Optional[Any] = config["bypassAllBrowsers"] if "bypassAllBrowsers" in config else None
             self.blocked_chrome_versions: List[Any] = ZscalerCollection.form_list(
                 config["blockedChromeVersions"] if "blockedChromeVersions" in config else [], str
             )
@@ -77,8 +76,9 @@ class BrowserControlSettings(ZscalerObject):
                     self.smart_isolation_profile = None
             else:
                 self.smart_isolation_profile: Optional[isolation.CBIProfile] = None
-            self.smart_isolation_profile_id: Optional[Any] = config["smartIsolationProfileId"] \
-                if "smartIsolationProfileId" in config else None
+            self.smart_isolation_profile_id: Optional[Any] = (
+                config["smartIsolationProfileId"] if "smartIsolationProfileId" in config else None
+            )
         else:
             self.enable_smart_browser_isolation: Optional[Any] = None
             self.enable_warnings: Optional[Any] = None
@@ -114,7 +114,7 @@ class BrowserControlSettings(ZscalerObject):
             "blockedOperaVersions": self.blocked_opera_versions,
             "blockedSafariVersions": self.blocked_safari_versions,
             "smartIsolationProfile": self.smart_isolation_profile,
-            "smartIsolationProfileId": self.smart_isolation_profile_id
+            "smartIsolationProfileId": self.smart_isolation_profile_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -135,16 +135,16 @@ class SmartIsolation(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.plugin_check_frequency: Optional[Any] = config["pluginCheckFrequency"] \
-                if "pluginCheckFrequency" in config else None
+            self.plugin_check_frequency: Optional[Any] = (
+                config["pluginCheckFrequency"] if "pluginCheckFrequency" in config else None
+            )
             self.bypass_plugins: List[Any] = ZscalerCollection.form_list(
                 config["bypassPlugins"] if "bypassPlugins" in config else [], str
             )
             self.bypass_applications: List[Any] = ZscalerCollection.form_list(
                 config["bypassApplications"] if "bypassApplications" in config else [], str
             )
-            self.bypass_all_browsers: Optional[Any] = config["bypassAllBrowsers"] \
-                if "bypassAllBrowsers" in config else None
+            self.bypass_all_browsers: Optional[Any] = config["bypassAllBrowsers"] if "bypassAllBrowsers" in config else None
             self.blocked_internet_explorer_versions: List[Any] = ZscalerCollection.form_list(
                 config["blockedInternetExplorerVersions"] if "blockedInternetExplorerVersions" in config else [], str
             )
@@ -160,14 +160,15 @@ class SmartIsolation(ZscalerObject):
             self.blocked_opera_versions: List[Any] = ZscalerCollection.form_list(
                 config["blockedOperaVersions"] if "blockedOperaVersions" in config else [], str
             )
-            self.allow_all_browsers: Optional[Any] = config["allowAllBrowsers"] \
-                if "allowAllBrowsers" in config else None
-            self.enable_warnings: Optional[Any] = config["enableWarnings"] \
-                if "enableWarnings" in config else None
-            self.enable_smart_browser_isolation: Optional[Any] = config["enableSmartBrowserIsolation"] \
-                if "enableSmartBrowserIsolation" in config else None
+            self.allow_all_browsers: Optional[Any] = config["allowAllBrowsers"] if "allowAllBrowsers" in config else None
+            self.enable_warnings: Optional[Any] = config["enableWarnings"] if "enableWarnings" in config else None
+            self.enable_smart_browser_isolation: Optional[Any] = (
+                config["enableSmartBrowserIsolation"] if "enableSmartBrowserIsolation" in config else None
+            )
 
-            self.smart_isolation_groups = ZscalerCollection.form_list(config["smartIsolationGroups"] if "smartIsolationGroups" in config else [], user_management.Groups)
+            self.smart_isolation_groups = ZscalerCollection.form_list(
+                config["smartIsolationGroups"] if "smartIsolationGroups" in config else [], user_management.Groups
+            )
 
             self.smart_isolation_users = ZscalerCollection.form_list(
                 config["smartIsolationUsers"] if "smartIsolationUsers" in config else [], user_management.UserManagement
@@ -182,8 +183,9 @@ class SmartIsolation(ZscalerObject):
                     self.smart_isolation_profile = None
             else:
                 self.smart_isolation_profile: Optional[isolation.CBIProfile] = None
-            self.smart_isolation_profile_id: Optional[Any] = config["smartIsolationProfileId"] \
-                if "smartIsolationProfileId" in config else None
+            self.smart_isolation_profile_id: Optional[Any] = (
+                config["smartIsolationProfileId"] if "smartIsolationProfileId" in config else None
+            )
         else:
             self.plugin_check_frequency: Optional[Any] = None
             self.bypass_plugins: List[Any] = []
@@ -223,7 +225,7 @@ class SmartIsolation(ZscalerObject):
             "smartIsolationUsers": self.smart_isolation_users,
             "smartIsolationGroups": self.smart_isolation_groups,
             "smartIsolationProfile": self.smart_isolation_profile,
-            "smartIsolationProfileId": self.smart_isolation_profile_id
+            "smartIsolationProfileId": self.smart_isolation_profile_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -244,11 +246,8 @@ class SupportedBrowserVersions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.browser_type: Optional[Any] = config["browserType"] \
-                if "browserType" in config else None
-            self.versions: List[Any] = ZscalerCollection.form_list(
-                config["versions"] if "versions" in config else [], str
-            )
+            self.browser_type: Optional[Any] = config["browserType"] if "browserType" in config else None
+            self.versions: List[Any] = ZscalerCollection.form_list(config["versions"] if "versions" in config else [], str)
             self.older_versions: List[Any] = ZscalerCollection.form_list(
                 config["olderVersions"] if "olderVersions" in config else [], str
             )
@@ -265,7 +264,7 @@ class SupportedBrowserVersions(ZscalerObject):
         current_obj_format = {
             "browserType": self.browser_type,
             "versions": self.versions,
-            "olderVersions": self.older_versions
+            "olderVersions": self.older_versions,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
