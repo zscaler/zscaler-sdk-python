@@ -29,10 +29,12 @@ class IntegrationPartner(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.type = config["type"] if "type" in config else None
+            self.disabled = config["disabled"] if "disabled" in config else None
         else:
             self.id = None
             self.name = None
             self.type = None
+            self.disabled = None
 
     def request_format(self):
         """
@@ -43,6 +45,7 @@ class IntegrationPartner(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "type": self.type,
+            "disabled": self.disabled,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

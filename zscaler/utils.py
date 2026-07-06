@@ -89,6 +89,8 @@ reformat_params = [
     ("criteria_domain_profile_ids", "criteriaDomainProfiles"),
     ("email_recipient_profile_ids", "emailRecipientProfiles"),
     ("entity_group_ids", "entityGroups"),
+    ("http_header_action_profile_ids", "httpHeaderActionProfiles"),
+    ("http_header_profile_ids", "httpHeaderProfiles"),
     ("scope_entity_ids", "adminScopeScopeEntities"),
     ("supported_region_ids", "supportedRegions"),
     ("src_workload_groups_ids", "srcWorkloadGroups"),
@@ -98,6 +100,7 @@ reformat_params = [
     ("connector_ids", "connectors"),
     ("server_group_ids", "serverGroups"),
     ("user_portal_ids", "userPortals"),
+    
 ]
 
 

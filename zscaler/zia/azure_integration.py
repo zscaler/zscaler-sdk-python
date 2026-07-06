@@ -31,7 +31,8 @@ class AzureIntegrationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_azures_refresh_connection_status(self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
+    def list_azure_refresh_connection_status(
+        self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
         """
         List azures (refreshConnectionStatus).
 
@@ -52,7 +53,8 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -63,6 +65,38 @@ class AzureIntegrationAPI(APIClient):
             result = []
             for item in response.get_results():
                 result.append(AzureVirtualHub(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def start_azure_refresh_connection_status(self, **kwargs) -> APIResult[AzureVirtualHub]:
+        """
+        Starts the tunnel configuration process for the specified Azure hub.
+
+        Returns:
+            tuple: The newly created AzureVirtualHub resource record.
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /azure/tunnelConfiguration
+        """)
+
+        body = kwargs
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, AzureVirtualHub)
+        if error:
+            return (None, response, error)
+        try:
+            result = AzureVirtualHub(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -88,7 +122,8 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -103,7 +138,40 @@ class AzureIntegrationAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_azures_un_configure_tunnel_status(self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
+    def add_azures_tunnel_configuration(self, **kwargs) -> APIResult[AzureVirtualHub]:
+        """
+        Starts the tunnel configuration process for the specified Azure hub.
+
+        Returns:
+            tuple: The newly created AzureVirtualHub resource record.
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /azure/tunnelConfiguration
+        """)
+
+        body = kwargs
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, AzureVirtualHub)
+        if error:
+            return (None, response, error)
+        try:
+            result = AzureVirtualHub(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_azures_un_configure_tunnel_status(
+        self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
         """
         List azures (unConfigureTunnelStatus).
 
@@ -124,7 +192,8 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -144,7 +213,8 @@ class AzureIntegrationAPI(APIClient):
         List azures (virtualHubSync).
 
         Args:
-            query_params (dict): Map of query parameters for the request.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.version]`` {str}: Version of the data to retrieve
 
         Returns:
             tuple: (list of AzureVirtualHub instances, Response, error)
@@ -160,7 +230,8 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -171,6 +242,38 @@ class AzureIntegrationAPI(APIClient):
             result = []
             for item in response.get_results():
                 result.append(AzureVirtualHub(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def start_azure_virtual_hub_sync(self, **kwargs) -> APIResult[AzureVirtualHub]:
+        """
+        Starts an asynchronous process to sync Azure hubs
+
+        Returns:
+            tuple: Azure Virtual Hub sync status record, Response, error
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /azure/virtualHubSync
+        """)
+
+        body = kwargs
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, AzureVirtualHub)
+        if error:
+            return (None, response, error)
+        try:
+            result = AzureVirtualHub(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -196,7 +299,8 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -211,44 +315,12 @@ class AzureIntegrationAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_azure(self, **kwargs) -> APIResult[AzureVirtualHub]:
+    def delete_azure(self, hub_id: int) -> APIResult[None]:
         """
-        Adds a new azure.
-
-        Returns:
-            tuple: The newly created azure resource record.
-        """
-        http_method = "post".upper()
-        api_url = format_url(f"""
-            {self._zia_base_endpoint}
-            /azure
-        """)
-
-        body = kwargs
-
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-        )
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, AzureVirtualHub)
-        if error:
-            return (None, response, error)
-        try:
-            result = AzureVirtualHub(self.form_response_body(response.get_body()))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
-
-    def delete_azure(self, azure_id: int) -> APIResult[None]:
-        """
-        Deletes the specified azure.
+        Removes the tunnel configuration for a specified Azure hub
 
         Args:
-            azure_id (int): The unique identifier for the azure.
+            hub_id (int): The unique identifier for the Azure hub.
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
@@ -256,7 +328,7 @@ class AzureIntegrationAPI(APIClient):
         http_method = "delete".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /azure/{azure_id}
+            /azure/unConfigureTunnel/{hub_id}
         """)
 
         params = {}

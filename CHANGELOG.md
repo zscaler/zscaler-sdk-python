@@ -1,6 +1,6 @@
 # Zscaler Python SDK Changelog
 
-## 1.9.35 (July 1, 2026)
+## 1.9.35 (July 6, 2026)
 
 ### Notes
 
@@ -9,7 +9,7 @@
 ### Enhancements
 
 #### Zscaler Cellular (ZCell) New Endpoints
-[PR #540](https://github.com/zscaler/zscaler-sdk-python/pull/540) - Added the following new Zscaler Cellular (ZCell) API Endpoints:
+[PR #542](https://github.com/zscaler/zscaler-sdk-python/pull/542) - Added the following new Zscaler Cellular (ZCell) API Endpoints:
   - Added `GET /customers/{id}/anomaly-policy` to retrieve the list of anomaly policies.
   - Added `POST /customers/{id}/anomaly-policy` to create a new anomaly policy.
   - Added `PATCH /customers/{id}/anomaly-policy/{policyId}` to update an anomaly policy.
@@ -47,6 +47,51 @@
   - Added `GET /customers/{id}` to retrieve customer data.
   - Added `PUT /customers/{id}` to activate an end customer.
   - Added support for a configurable ZCell customer id via the `zcellCustomerId` config attribute and the `ZCELL_CUSTOMER_ID` environment variable, which is automatically injected into the `/customers/{id}` request path so it does not need to be passed on every call. The explicit `id` argument is still supported and takes precedence. This value is independent from ZPA's `customerId`.
+
+#### Zscaler Private Access (ZPA) New Endpoints
+[PR #542](https://github.com/zscaler/zscaler-sdk-python/pull/542) - Added the following new Zscaler Private Access (ZPA) API Endpoints:
+  - Added `GET /application/host/{host_id}` - Get federated applications with search, sorting, and pagination
+  - Added `PUT /application/federate` - Federate an application with guest customers
+  - Added `PUT /policySet/rules/policyType/GLOBAL_POLICY/guest/{guest_id}` - Get policy rules created by partner on federated applications
+  - Added `GET /businessContinuitySettings/certificate` - Download SP Certificate
+  - Added `GET /businessContinuitySettings/metadata` - Download SP Metadata information
+  - Added `GET /businessContinuitySettings` - Gets Business Continuity Setting for customer
+  - Added `POST /businessContinuitySettings` - Creates Business Continuity Setting for the customer
+  - Added `GET /businessContinuitySettings/{id}` - Get Business Continuity Setting for the given customer by Id
+  - Added `PUT /businessContinuitySettings/{id}` - Update Business Continuity Setting for the given customer by Id
+  - Added `DELETE /businessContinuitySettings/{id}` - Delete Business Continuity Setting for the Customer
+  - Added `GET /iamidpmapping` Retrieves the IamIdpMapping details for the customer
+  - Added `GET /privateCloud` Retrieves all configured Private clouds for the specified customer.
+  - Added `GET /privateCloud` Retrieves Private cloud details for the specified ID.
+  - Added `POST /privateCloud` Adds a new Private cloud for the specified customer.
+  - Added `PUT /privateCloud` Updates the Private cloud for the specified ID.
+  - Added `DELETE /privateCloud` Deletes the Private cloud for the specified ID.
+  - Added `GET /tenant-federation/partners` Retrieves active federation partners for a customer.
+  - Added `PUT /tenant-federation/approval` Request approval for tenant federation using token.
+  - Added `POST /tenant-federation/token` Create federation token for a customer by microtenant.
+  - Added `POST /tenant-federation/token/verify` Verify federation token.
+  - Added `GET /tenant-federation` Get provisioning requests for a customer with search, sorting, and pagination.
+  - Added `DELETE /tenant-federation/{federation_id}` Delete tenant federation by Federation ID.
+  - Added `PUT /tenant-federation/{federation_id}/provisioning-state/{status}` Update tenant federation provisioning state (APPROVED, DENIED, TERMINATED).
+  - Added `PUT /tenant-federation/{federation_id}/notes` Update notes for tenant federation provisioning. Initiator updates initiatorNotes, partner updates partnerNotes.
+  - Added `PUT /tenant-federation/{federation_id}/federatopm-state/{status}` Update tenant federation status (ACTIVE or INACTIVE).
+
+#### Zscaler Internet Access (ZIA) New Endpoints
+[PR #542](https://github.com/zscaler/zscaler-sdk-python/pull/542) - Added the following new Zscaler Private Access (ZPA) API Endpoints:
+  - `GET /integrationPartners` Retrieves a list of partners and services integrated with the Zscaler service
+  - `GET /integrationPartners/crowdStrike/endpoints` Retrieves the list of CrowdStrike endpoints based on the indicator of compromise (IOC) query, with pagination support
+  - `POST /integrationPartners/crowdStrike/endpoints` Accepts a list of CrowdStrike endpoint or device IDs in the request body and fetches detailed endpoint or device data for those IDs
+  - `GET /integrationPartners/crowdStrike/whitelistedBaseUrls` Retrieves a list of CrowdStrike configured whitelisted base URLs (allowist URLs).
+  - `POST /integrationPartners/microsoftDefender/endpoints` Configures the integration of Microsoft Defender for Endpoint APIs with Zscaler.
+  - `GET /integrationPartners/sandbox/report/{md5}` Retrieves the MD5 hash of the file required to view the Sandbox Detail Report.
+  - `GET /httpHeaderProfile` Retrieves a list of HTTP header profiles.
+  - `POST /httpHeaderProfile` Adds a new HTTP header profile.
+  - `PUT /httpHeaderProfile/{id}` Updates the HTTP header profile based on the specified ID
+  - `DELETE /httpHeaderProfile/{id}` Deletes the HTTP header profile based on the specified ID
+  - `GET /httpHeaderActionProfile` Retrieves a list of HTTP header insertion profiles.
+  - `POST /httpHeaderActionProfile` Adds a new HTTP header insertion profile.
+  - `PUT /httpHeaderActionProfile/{id}` Updates the HTTP header insertion profile based on the specified ID
+  - `DELETE /httpHeaderActionProfile/{id}` Deletes the HTTP header insertion profile based on the specified ID
 
 ## 1.9.34 (July 1, 2026)
 

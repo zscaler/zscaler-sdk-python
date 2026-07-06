@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from datetime import datetime
 from typing import List
 
 from zscaler.api_client import APIClient
@@ -31,15 +32,24 @@ class BusinessContinuityAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_business_continuity_settings(self, query_params=None) -> APIResult[List[BusinessContinuity]]:
+    def list_business_continuity_settings(self) -> APIResult[List[BusinessContinuity]]:
         """
-        List business_continuity_settings.
+        Returns the configured business continuity settings.
 
-        Args:
-            query_params (dict): Map of query parameters for the request.
+        This endpoint takes no parameters.
 
         Returns:
             tuple: (list of BusinessContinuity instances, Response, error)
+
+        Examples:
+            List the business continuity settings::
+
+                >>> settings, _, err = client.zpa.business_continuity.list_business_continuity_settings()
+                >>> if err:
+                ...     print(f"Error listing business continuity settings: {err}")
+                ...     return
+                >>> for setting in settings:
+                ...     print(setting.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -47,12 +57,10 @@ class BusinessContinuityAPI(APIClient):
             /businessContinuitySettings
         """)
 
-        query_params = query_params or {}
-
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
         if error:
             return (None, None, error)
 
@@ -67,65 +75,101 @@ class BusinessContinuityAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_business_continuity_setting_certificate(self, query_params=None) -> APIResult:
+    def get_business_continuity_setting_certificate(self, filename: str = None) -> str:
         """
-        Returns the certificate for business_continuity_setting (raw response, no model).
+        Downloads the SAML SP certificate for the business continuity settings.
+
+        This endpoint takes no parameters. The certificate is streamed as a file
+        attachment (``sp_cert.crt``) and written to disk, similar to the ZCC
+        ``download_devices`` helper.
 
         Args:
-            query_params (dict): Map of query parameters for the request.
+            filename (str, optional): Custom filename for the certificate.
+                Defaults to a timestamped ``.crt`` name.
 
         Returns:
-            tuple: (Response, error)
+            str: Path to the downloaded certificate file.
+
+        Examples:
+            Download the business continuity SP certificate::
+
+                >>> try:
+                ...     path = client.zpa.business_continuity.get_business_continuity_setting_certificate()
+                ...     print(f"Certificate downloaded successfully: {path}")
+                ... except Exception as e:
+                ...     print(f"Error during download: {e}")
         """
+        if not filename:
+            filename = f"bc-sp-certificate-{datetime.now().strftime('%Y%m%d-%H_%M_%S')}.crt"
+
         http_method = "get".upper()
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /businessContinuitySettings/certificate
         """)
 
-        query_params = query_params or {}
-
-        body = {}
-        headers = {}
-
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, headers={"Accept": "*/*"})
         if error:
-            return (None, None, error)
+            raise Exception("Error creating request for downloading the business continuity certificate.")
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, return_raw_response=True)
         if error:
-            return (None, response, error)
-        return (response, response, None)
+            raise error
+        if response is None:
+            raise Exception("No response received when downloading the business continuity certificate.")
 
-    def get_business_continuity_setting_metadata(self, query_params=None) -> APIResult:
+        with open(filename, "wb") as f:
+            f.write(response.content)
+
+        return filename
+
+    def get_business_continuity_setting_metadata(self, filename: str = None) -> str:
         """
-        Returns the metadata for business_continuity_setting (raw response, no model).
+        Downloads the SAML metadata for the business continuity settings.
+
+        This endpoint takes no parameters. The metadata is streamed as a file
+        attachment (``metadata.xml``) and written to disk, similar to the ZCC
+        ``download_devices`` helper.
 
         Args:
-            query_params (dict): Map of query parameters for the request.
+            filename (str, optional): Custom filename for the metadata.
+                Defaults to a timestamped ``.xml`` name.
 
         Returns:
-            tuple: (Response, error)
+            str: Path to the downloaded metadata file.
+
+        Examples:
+            Download the business continuity SAML metadata::
+
+                >>> try:
+                ...     path = client.zpa.business_continuity.get_business_continuity_setting_metadata()
+                ...     print(f"Metadata downloaded successfully: {path}")
+                ... except Exception as e:
+                ...     print(f"Error during download: {e}")
         """
+        if not filename:
+            filename = f"bc-metadata-{datetime.now().strftime('%Y%m%d-%H_%M_%S')}.xml"
+
         http_method = "get".upper()
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /businessContinuitySettings/metadata
         """)
 
-        query_params = query_params or {}
-
-        body = {}
-        headers = {}
-
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, headers={"Accept": "*/*"})
         if error:
-            return (None, None, error)
+            raise Exception("Error creating request for downloading the business continuity metadata.")
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, return_raw_response=True)
         if error:
-            return (None, response, error)
-        return (response, response, None)
+            raise error
+        if response is None:
+            raise Exception("No response received when downloading the business continuity metadata.")
+
+        with open(filename, "wb") as f:
+            f.write(response.content)
+
+        return filename
 
     def get_business_continuity_setting(self, business_continuity_setting_id: str) -> APIResult[BusinessContinuity]:
         """

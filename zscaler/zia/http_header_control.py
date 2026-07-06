@@ -31,7 +31,8 @@ class HttpHeaderControlAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_http_header_action_profiles(self, query_params=None) -> APIResult[List[HttpHeaderActionProfile]]:
+    def list_http_header_action_profiles(
+        self, query_params=None) -> APIResult[List[HttpHeaderActionProfile]]:
         """
         List http_header_action_profiles.
 
@@ -52,7 +53,8 @@ class HttpHeaderControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -99,14 +101,17 @@ class HttpHeaderControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_http_header_action_profile(
-        self, http_header_action_profile_id: int, **kwargs
-    ) -> APIResult[HttpHeaderActionProfile]:
+    def update_http_header_action_profile(self, profile_id: int, **kwargs) -> APIResult[HttpHeaderActionProfile]:
         """
         Updates an existing http_header_action_profile.
 
         Args:
-            http_header_action_profile_id (int): The unique ID for the http_header_action_profile being updated.
+            profile_id (int): The unique ID for the http_header_action_profile being updated.
+
+        Keyword Args:
+            slot_id (int): The slot ID assigned to the action profile. This value is required by the API
+                and cannot be 0. If omitted, it is automatically resolved from the existing profile (the SDK
+                lists the action profiles and matches on ``profile_id``), so callers normally do not need to set it.
             **kwargs: Optional keyword args.
 
         Returns:
@@ -115,10 +120,22 @@ class HttpHeaderControlAPI(APIClient):
         http_method = "put".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /httpHeaderActionProfile/{http_header_action_profile_id}
+            /httpHeaderActionProfile/{profile_id}
         """)
 
         body = kwargs
+
+        # ``slotId`` is required by the PUT endpoint and cannot be 0. There is no
+        # get-by-id endpoint, so when the caller does not supply it, look it up by
+        # listing all action profiles and matching on the profile ID.
+        if not body.get("slot_id") and not body.get("slotId"):
+            profiles, _, list_error = self.list_http_header_action_profiles()
+            if list_error:
+                return (None, None, list_error)
+            for profile in profiles or []:
+                if str(profile.id) == str(profile_id):
+                    body["slot_id"] = profile.slot_id
+                    break
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -137,12 +154,12 @@ class HttpHeaderControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_http_header_action_profile(self, http_header_action_profile_id: int) -> APIResult[None]:
+    def delete_http_header_action_profile(self, profile_id: int) -> APIResult[None]:
         """
         Deletes the specified http_header_action_profile.
 
         Args:
-            http_header_action_profile_id (int): The unique identifier for the http_header_action_profile.
+            profile_id (int): The unique identifier for the http_header_action_profile.
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
@@ -150,7 +167,7 @@ class HttpHeaderControlAPI(APIClient):
         http_method = "delete".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /httpHeaderActionProfile/{http_header_action_profile_id}
+            /httpHeaderActionProfile/{profile_id}
         """)
 
         params = {}
@@ -166,10 +183,7 @@ class HttpHeaderControlAPI(APIClient):
 
     def list_http_header_profiles(self, query_params=None) -> APIResult[List[HttpHeaderProfile]]:
         """
-        List http_header_profiles.
-
-        Args:
-            query_params (dict): Map of query parameters for the request.
+        Retrieves a list of HTTP header profiles.
 
         Returns:
             tuple: (list of HttpHeaderProfile instances, Response, error)
@@ -202,10 +216,62 @@ class HttpHeaderControlAPI(APIClient):
 
     def add_http_header_profile(self, **kwargs) -> APIResult[HttpHeaderProfile]:
         """
-        Adds a new http_header_profile.
+        Adds a new HTTP header insertion profile.
+
+        Args:
+            name (str): The HTTP header profile name.
+
+        Keyword Args:
+            description (str): Additional information about the HTTP header profile.
+            slot_id (int): The slot ID assigned to the HTTP header profile.
+            profile_ready_for_use (bool): Indicates whether the HTTP header profile is ready for use.
+            http_header_profile_criteria (list[dict]): The list of matching criteria evaluated by the profile.
+                Each criterion supports:
+
+                ``header`` {str}: The header evaluated by the criteria.
+                    Supported Values: `USERAGENT`, `REFERER`, `ORIGIN`
+                ``operator`` {str}: The operator applied to the header criteria.
+                    Supported Values: `UAVERSIONGT`, `UAVERSIONLT`, `UAVERSIONEQ`, `UAVERSIONNEQ`, `UAVERSIONANY`
+                ``user_agent`` {str}: The user agent evaluated by the criteria.
+                ``user_agent_bitmap`` {str}: The user agent bitmap evaluated by the criteria.
+                    Supported Values: `OPERA`, `FIREFOX`, `MSIE`, `MSEDGE`, `CHROME`, `SAFARI`, `OTHER`,
+                    `MSCHREDGE`, `BRAVE`
+                ``user_agent_version`` {str}: The user agent version evaluated by the criteria.
+                ``category_bitmap`` {list[str]}: The URL category bitmap evaluated by the criteria.
+                ``cloud_app_bitmap`` {list[str]}: The cloud application bitmap evaluated by the criteria.
 
         Returns:
-            tuple: The newly created http_header_profile resource record.
+            tuple: The newly created HTTP header profile resource record.
+
+        Examples:
+            Add an HTTP header profile with ORIGIN, REFERER, and USERAGENT criteria::
+
+                >>> added_profile, _, err = client.zia.http_header_control.add_http_header_profile(
+                ...     name=f"Profile01_{random.randint(1000, 10000)}",
+                ...     description="Example header profile",
+                ...     http_header_profile_criteria=[
+                ...         {
+                ...             "header": "ORIGIN",
+                ...             "cloud_app_bitmap": ["CHATGPT_AI"],
+                ...             "category_bitmap": ["GENERAL_AI_ML", "AI_ML_APPS"],
+                ...         },
+                ...         {
+                ...             "header": "REFERER",
+                ...             "cloud_app_bitmap": ["CHATGPT_AI"],
+                ...             "category_bitmap": ["GENERAL_AI_ML", "AI_ML_APPS"],
+                ...         },
+                ...         {
+                ...             "header": "USERAGENT",
+                ...             "user_agent_bitmap": "FIREFOX",
+                ...             "operator": "UAVERSIONEQ",
+                ...             "user_agent_version": "123.0",
+                ...         },
+                ...     ],
+                ... )
+                >>> if err:
+                ...     print(f"Error adding profile: {err}")
+                ...     return
+                >>> print(f"Profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -232,24 +298,66 @@ class HttpHeaderControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_http_header_profile(self, http_header_profile_id: int, **kwargs) -> APIResult[HttpHeaderProfile]:
+    def update_http_header_profile(self, profile_id: int, **kwargs) -> APIResult[HttpHeaderProfile]:
         """
-        Updates an existing http_header_profile.
+        Updates the HTTP header profile based on the specified ID.
 
         Args:
-            http_header_profile_id (int): The unique ID for the http_header_profile being updated.
-            **kwargs: Optional keyword args.
+            profile_id (int): The unique ID for the HTTP header profile being updated.
+
+        Keyword Args:
+            name (str): The HTTP header profile name.
+            description (str): Additional information about the HTTP header profile.
+            slot_id (int): The slot ID assigned to the HTTP header profile. This value is required by the API
+                and cannot be 0. If omitted, it is automatically resolved from the existing profile (the SDK
+                lists the profiles and matches on ``profile_id``), so callers normally do not need to set it.
+            profile_ready_for_use (bool): Indicates whether the HTTP header profile is ready for use.
+            http_header_profile_criteria (list[dict]): The list of matching criteria evaluated by the profile.
+                See :meth:`add_http_header_profile` for the full list of supported criterion fields and values.
 
         Returns:
-            tuple: The updated http_header_profile resource record.
+            tuple: The updated HTTP header profile resource record.
+
+        Examples:
+            Update the name, description, and criteria of an existing HTTP header profile::
+
+                >>> updated_profile, _, err = client.zia.http_header_control.update_http_header_profile(
+                ...     profile_id='12345',
+                ...     name=f"UpdatedProfile_{random.randint(1000, 10000)}",
+                ...     description="Updated header profile",
+                ...     http_header_profile_criteria=[
+                ...         {
+                ...             "header": "USERAGENT",
+                ...             "user_agent_bitmap": "CHROME",
+                ...             "operator": "UAVERSIONGT",
+                ...             "user_agent_version": "120.0",
+                ...         },
+                ...     ],
+                ... )
+                >>> if err:
+                ...     print(f"Error updating profile: {err}")
+                ...     return
+                >>> print(f"Profile updated successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /httpHeaderProfile/{http_header_profile_id}
+            /httpHeaderProfile/{profile_id}
         """)
 
         body = kwargs
+
+        # ``slotId`` is required by the PUT endpoint and cannot be 0. There is no
+        # get-by-id endpoint, so when the caller does not supply it, look it up by
+        # listing all profiles and matching on the profile ID.
+        if not body.get("slot_id") and not body.get("slotId"):
+            profiles, _, list_error = self.list_http_header_profiles()
+            if list_error:
+                return (None, None, list_error)
+            for profile in profiles or []:
+                if str(profile.id) == str(profile_id):
+                    body["slot_id"] = profile.slot_id
+                    break
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -268,12 +376,12 @@ class HttpHeaderControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_http_header_profile(self, http_header_profile_id: int) -> APIResult[None]:
+    def delete_http_header_profile(self, profile_id: int) -> APIResult[None]:
         """
-        Deletes the specified http_header_profile.
+        Deletes the HTTP header profile based on the specified ID
 
         Args:
-            http_header_profile_id (int): The unique identifier for the http_header_profile.
+            profile_id (int): The unique identifier for the HTTP header profile.
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
@@ -281,7 +389,7 @@ class HttpHeaderControlAPI(APIClient):
         http_method = "delete".upper()
         api_url = format_url(f"""
             {self._zia_base_endpoint}
-            /httpHeaderProfile/{http_header_profile_id}
+            /httpHeaderProfile/{profile_id}
         """)
 
         params = {}

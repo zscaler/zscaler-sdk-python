@@ -108,6 +108,12 @@ class URLFilteringRule(ZscalerObject):
             self.source_ip_groups = ZscalerCollection.form_list(
                 config["sourceIpGroups"] if "sourceIpGroups" in config else [], cloud_firewall_source_groups.IPSourceGroup
             )
+            self.http_header_profiles = ZscalerCollection.form_list(
+                config["httpHeaderProfiles"] if "httpHeaderProfiles" in config else [], common.CommonBlocks
+            )
+            self.http_header_action_profiles = ZscalerCollection.form_list(
+                config["httpHeaderActionProfiles"] if "httpHeaderActionProfiles" in config else [], common.CommonBlocks
+            )
             self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
             self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
@@ -173,6 +179,8 @@ class URLFilteringRule(ZscalerObject):
             self.device_groups = []
             self.user_risk_score_levels = []
             self.source_ip_groups = []
+            self.http_header_action_profiles = []
+            self.http_header_profiles = []
             self.cbi_profile = None
 
     def request_format(self) -> Dict[str, Any]:
@@ -219,6 +227,8 @@ class URLFilteringRule(ZscalerObject):
             "labels": [label.request_format() for label in (self.labels or [])],
             "devices": [device.request_format() for device in (self.devices or [])],
             "deviceGroups": [group.request_format() for group in (self.device_groups or [])],
+            "httpHeaderActionProfiles": [profile.request_format() for profile in (self.http_header_action_profiles or [])],
+            "httpHeaderProfiles": [profile.request_format() for profile in (self.http_header_profiles or [])],
             "cbiProfile": self.cbi_profile.request_format() if self.cbi_profile else None,
         }
         parent_req_format.update(current_obj_format)
