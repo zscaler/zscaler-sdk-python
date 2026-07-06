@@ -14,8 +14,8 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
 from zscaler.zpa.models import private_cloud_group as private_cloud_group
 from zscaler.zpa.models import service_edge_groups as service_edge_groups

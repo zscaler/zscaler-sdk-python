@@ -28,7 +28,7 @@ class B2bPolicyAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/customers/{customer_id}"
 
-    def get_global_policy_rules(self, guest_id: str,query_params=None) -> APIResult:
+    def get_global_policy_rules(self, guest_id: str, query_params=None) -> APIResult:
         """
         Returns the rules/policyType/GLOBAL_POLICY/guest for policy_set (raw response, no model).
 
@@ -49,8 +49,7 @@ class B2bPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
