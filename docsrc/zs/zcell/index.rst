@@ -4,6 +4,7 @@ ZCELL
 This package covers the Zscaler Cellular interface.
 
 .. toctree::
+    :maxdepth: 1
     :glob:
     :hidden:
 

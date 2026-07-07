@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.36 (July 7, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#543 <https://github.com/zscaler/zscaler-sdk-python/pull/543>`_) - Fixed ZCELL Sim Handling model details.
+
 1.9.35 (July 6, 2026)
 ---------------------------
 

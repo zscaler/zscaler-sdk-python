@@ -30,10 +30,7 @@ class ZCellService:
     """ZCell Service client, exposing various Zscaler Cellular APIs."""
 
     def __init__(self, request_executor: RequestExecutor, config: dict = None) -> None:
-        # Ensure the service gets the request executor from the Client object
         self._request_executor = request_executor
-        # Shared config carries the resolved zcellCustomerId (config or env), which
-        # each ZCell API reads to auto-inject the customer id into request paths.
         self._config = config or {}
 
     @property

@@ -16,37 +16,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.oneapi_object import ZscalerObject
-from zscaler.zcell.models import sim_handling as sim_handling
 
 
-class SimHandling(ZscalerObject):
-    """
-    A class representing a SimHandling object.
-    """
-
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            self.icc_id = config["iccId"] if "iccId" in config else None
-            self.tag_ids = ZscalerCollection.form_list(config["tagIds"] if "tagIds" in config else [], str)
-        else:
-            self.icc_id = None
-            self.tag_ids = []
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "iccId": self.icc_id,
-            "tagIds": self.tag_ids,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
-class SimData(ZscalerObject):
+class SimDetails(ZscalerObject):
     """
     A class representing a SimData object.
     """
@@ -78,15 +50,9 @@ class SimData(ZscalerObject):
             self.data_authorize_imei_value = config["dataAuthorizeImeiValue"] if "dataAuthorizeImeiValue" in config else None
             self.sim_lat = config["simLat"] if "simLat" in config else None
             self.sim_lng = config["simLng"] if "simLng" in config else None
-            if "simLocInfo" in config:
-                if isinstance(config["simLocInfo"], sim_handling.JsonNode):
-                    self.sim_loc_info = config["simLocInfo"]
-                elif config["simLocInfo"] is not None:
-                    self.sim_loc_info = sim_handling.JsonNode(config["simLocInfo"])
-                else:
-                    self.sim_loc_info = None
-            else:
-                self.sim_loc_info = None
+            # ``simLocInfo`` is returned by the API as a JSON-encoded string
+            # (e.g. '{"ECI": 7965454, "MCC": "311", "MNC": "480", "TAC": 7936}').
+            self.sim_loc_info = config["simLocInfo"] if "simLocInfo" in config else None
             self.event_session_id = config["eventSessionId"] if "eventSessionId" in config else None
             self.tac_id = config["tacId"] if "tacId" in config else None
             self.brand_name = config["brandName"] if "brandName" in config else None
@@ -195,233 +161,6 @@ class SimData(ZscalerObject):
         return parent_req_format
 
 
-class SimDataSearchRequest(ZscalerObject):
-    """
-    A class representing a SimDataSearchRequest object.
-    """
-
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            self.iccid = ZscalerCollection.form_list(
-                config["iccid"] if "iccid" in config else [], sim_handling.SanitizedString50
-            )
-            if "status" in config:
-                if isinstance(config["status"], sim_handling.SanitizedString20):
-                    self.status = config["status"]
-                elif config["status"] is not None:
-                    self.status = sim_handling.SanitizedString20(config["status"])
-                else:
-                    self.status = None
-            else:
-                self.status = None
-            if "networkStatus" in config:
-                if isinstance(config["networkStatus"], sim_handling.SanitizedString20):
-                    self.network_status = config["networkStatus"]
-                elif config["networkStatus"] is not None:
-                    self.network_status = sim_handling.SanitizedString20(config["networkStatus"])
-                else:
-                    self.network_status = None
-            else:
-                self.network_status = None
-            self.ip_address = ZscalerCollection.form_list(
-                config["ipAddress"] if "ipAddress" in config else [], sim_handling.SanitizedString20
-            )
-            if "locationCountry" in config:
-                if isinstance(config["locationCountry"], sim_handling.SanitizedString50):
-                    self.location_country = config["locationCountry"]
-                elif config["locationCountry"] is not None:
-                    self.location_country = sim_handling.SanitizedString50(config["locationCountry"])
-                else:
-                    self.location_country = None
-            else:
-                self.location_country = None
-            self.tag = ZscalerCollection.form_list(config["tag"] if "tag" in config else [], sim_handling.SanitizedString50)
-            if "deviceType" in config:
-                if isinstance(config["deviceType"], sim_handling.SanitizedString255):
-                    self.device_type = config["deviceType"]
-                elif config["deviceType"] is not None:
-                    self.device_type = sim_handling.SanitizedString255(config["deviceType"])
-                else:
-                    self.device_type = None
-            else:
-                self.device_type = None
-            if "brandName" in config:
-                if isinstance(config["brandName"], sim_handling.SanitizedString255):
-                    self.brand_name = config["brandName"]
-                elif config["brandName"] is not None:
-                    self.brand_name = sim_handling.SanitizedString255(config["brandName"])
-                else:
-                    self.brand_name = None
-            else:
-                self.brand_name = None
-            if "marketingName" in config:
-                if isinstance(config["marketingName"], sim_handling.SanitizedString255):
-                    self.marketing_name = config["marketingName"]
-                elif config["marketingName"] is not None:
-                    self.marketing_name = sim_handling.SanitizedString255(config["marketingName"])
-                else:
-                    self.marketing_name = None
-            else:
-                self.marketing_name = None
-            if "modelName" in config:
-                if isinstance(config["modelName"], sim_handling.SanitizedString255):
-                    self.model_name = config["modelName"]
-                elif config["modelName"] is not None:
-                    self.model_name = sim_handling.SanitizedString255(config["modelName"])
-                else:
-                    self.model_name = None
-            else:
-                self.model_name = None
-            if "formFactor" in config:
-                if isinstance(config["formFactor"], sim_handling.SanitizedString20):
-                    self.form_factor = config["formFactor"]
-                elif config["formFactor"] is not None:
-                    self.form_factor = sim_handling.SanitizedString20(config["formFactor"])
-                else:
-                    self.form_factor = None
-            else:
-                self.form_factor = None
-            if "imeiStatus" in config:
-                if isinstance(config["imeiStatus"], sim_handling.SimImeiStatusEnum):
-                    self.imei_status = config["imeiStatus"]
-                elif config["imeiStatus"] is not None:
-                    self.imei_status = sim_handling.SimImeiStatusEnum(config["imeiStatus"])
-                else:
-                    self.imei_status = None
-            else:
-                self.imei_status = None
-        else:
-            self.iccid = []
-            self.status = None
-            self.network_status = None
-            self.ip_address = []
-            self.location_country = None
-            self.tag = []
-            self.device_type = None
-            self.brand_name = None
-            self.marketing_name = None
-            self.model_name = None
-            self.form_factor = None
-            self.imei_status = None
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "iccid": [item.request_format() for item in (self.iccid or [])],
-            "status": self.status,
-            "networkStatus": self.network_status,
-            "ipAddress": [item.request_format() for item in (self.ip_address or [])],
-            "locationCountry": self.location_country,
-            "tag": [item.request_format() for item in (self.tag or [])],
-            "deviceType": self.device_type,
-            "brandName": self.brand_name,
-            "marketingName": self.marketing_name,
-            "modelName": self.model_name,
-            "formFactor": self.form_factor,
-            "imeiStatus": self.imei_status,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
-class SimLockRequest(ZscalerObject):
-    """
-    A class representing a SimLockRequest object.
-    """
-
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            self.data_authorize = config["dataAuthorize"] if "dataAuthorize" in config else False
-            self.sim_lock_details = ZscalerCollection.form_list(
-                config["simLockDetails"] if "simLockDetails" in config else [], sim_handling.SimLockDetail
-            )
-        else:
-            self.data_authorize = False
-            self.sim_lock_details = []
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "dataAuthorize": self.data_authorize,
-            "simLockDetails": [item.request_format() for item in (self.sim_lock_details or [])],
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
-class SimDataResponse(ZscalerObject):
-    """
-    A class representing a SimDataResponse object.
-    """
-
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            self.page_details = config["pageDetails"] if "pageDetails" in config else None
-            self.total_usage = config["totalUsage"] if "totalUsage" in config else None
-        else:
-            self.page_details = None
-            self.total_usage = None
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "pageDetails": self.page_details,
-            "totalUsage": self.total_usage,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
-class SimUpdateRequest(ZscalerObject):
-    """
-    A class representing a SimUpdateRequest object.
-    """
-
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            if "status" in config:
-                if isinstance(config["status"], sim_handling.SimStatusEnum):
-                    self.status = config["status"]
-                elif config["status"] is not None:
-                    self.status = sim_handling.SimStatusEnum(config["status"])
-                else:
-                    self.status = None
-            else:
-                self.status = None
-            self.iccid = ZscalerCollection.form_list(config["iccid"] if "iccid" in config else [], str)
-            self.reason = config["reason"] if "reason" in config else None
-        else:
-            self.status = None
-            self.iccid = []
-            self.reason = None
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "status": self.status,
-            "iccid": self.iccid,
-            "reason": self.reason,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-
-
 class GetActivationCodeResponse(ZscalerObject):
     """
     A class representing a GetActivationCodeResponse object.
@@ -447,6 +186,119 @@ class GetActivationCodeResponse(ZscalerObject):
             "iccid": self.iccid,
             "activationCode": self.activation_code,
             "qrCode": self.qr_code,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimHandling(ZscalerObject):
+    """
+    A class representing a SimHandling object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.icc_id = config["iccId"] if "iccId" in config else None
+            self.tag_ids = ZscalerCollection.form_list(config["tagIds"] if "tagIds" in config else [], str)
+        else:
+            self.icc_id = None
+            self.tag_ids = []
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "iccId": self.icc_id,
+            "tagIds": self.tag_ids,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimLockRequest(ZscalerObject):
+    """
+    A class representing a SimLockRequest object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.data_authorize = config["dataAuthorize"] if "dataAuthorize" in config else False
+            self.sim_lock_details = ZscalerCollection.form_list(
+                config["simLockDetails"] if "simLockDetails" in config else [], SimLockDetails
+            )
+        else:
+            self.data_authorize = False
+            self.sim_lock_details = []
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "dataAuthorize": self.data_authorize,
+            "simLockDetails": [dg.request_format() for dg in (self.sim_lock_details or [])],
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimLockDetails(ZscalerObject):
+    """
+    A class representing a SimLockDetails object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.imei = config["imei"] if "imei" in config else False
+            self.iccid = config["iccid"] if "iccid" in config else False
+        else:
+            self.imei = False
+            self.iccid = False
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "imei": self.imei,
+            "iccid": self.iccid,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimUpdateRequest(ZscalerObject):
+    """
+    A class representing a SimUpdateRequest object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.status = config["status"] if "status" in config else None
+            self.iccid = ZscalerCollection.form_list(config["iccid"] if "iccid" in config else [], str)
+            self.reason = config["reason"] if "reason" in config else None
+        else:
+            self.status = None
+            self.iccid = []
+            self.reason = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "status": self.status,
+            "iccid": self.iccid,
+            "reason": self.reason,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -495,6 +347,90 @@ class RefreshEsimState(ZscalerObject):
         parent_req_format = super().request_format()
         current_obj_format = {
             "esimState": self.esim_state,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimDataSearchRequest(ZscalerObject):
+    """
+    A class representing a SimUpdateRequest object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.iccid = config["iccid"] if "iccid" in config else None
+            self.status = ZscalerCollection.form_list(config["status"] if "status" in config else [], str)
+            self.network_status = config["networkStatus"] if "networkStatus" in config else None
+            self.ip_address = ZscalerCollection.form_list(config["ipAddress"] if "ipAddress" in config else [], str)
+            self.location_country = config["locationCountry"] if "locationCountry" in config else None
+            self.tag = ZscalerCollection.form_list(config["tag"] if "tag" in config else [], str)
+            self.device_type = config["deviceType"] if "deviceType" in config else None
+            self.brand_name = config["brandName"] if "brandName" in config else None
+            self.marketing_name = config["marketingName"] if "marketingName" in config else None
+            self.model_name = config["modelName"] if "modelName" in config else None
+            self.form_factor = config["formFactor"] if "formFactor" in config else None
+            self.imei_status = config["imeiStatus"] if "imeiStatus" in config else None
+        else:
+            self.iccid = []
+            self.status = None
+            self.network_status = None
+            self.ip_address = []
+            self.location_country = None
+            self.tag = []
+            self.device_type = None
+            self.brand_name = None
+            self.marketing_name = None
+            self.model_name = None
+            self.form_factor = None
+            self.imei_status = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "iccid": [item.request_format() for item in (self.iccid or [])],
+            "status": self.status,
+            "networkStatus": self.network_status,
+            "ipAddress": [item.request_format() for item in (self.ip_address or [])],
+            "locationCountry": self.location_country,
+            "tag": [item.request_format() for item in (self.tag or [])],
+            "deviceType": self.device_type,
+            "brandName": self.brand_name,
+            "marketingName": self.marketing_name,
+            "modelName": self.model_name,
+            "formFactor": self.form_factor,
+            "imeiStatus": self.imei_status,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class SimDataResponse(ZscalerObject):
+    """
+    A class representing a SimDataResponse object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.page_details = config["pageDetails"] if "pageDetails" in config else None
+            self.total_usage = config["totalUsage"] if "totalUsage" in config else None
+        else:
+            self.page_details = None
+            self.total_usage = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "pageDetails": self.page_details,
+            "totalUsage": self.total_usage,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
