@@ -23,8 +23,8 @@ from zscaler.utils import format_url
 from zscaler.zcell.models.sim_handling import (
     GetActivationCodeResponse,
     RefreshEsimState,
-    SimData,
     SimDataResponse,
+    SimDetails,
     SimHandling,
     SimLockRequest,
     SimUpdateRequest,
@@ -40,7 +40,7 @@ class SimHandlingAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcell_customer_id = (config or {}).get("client", {}).get("zcellCustomerId")
 
-    def list_sims_details(self, id: str = None, icc_id: str = None, query_params=None) -> APIResult[SimData]:
+    def list_sims_details(self, id: str = None, icc_id: str = None, query_params=None) -> APIResult[SimDetails]:
         """
         Get sim details by icc_id.
 
@@ -84,11 +84,11 @@ class SimHandlingAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, SimData)
+        response, error = self._request_executor.execute(request, SimDetails)
         if error:
             return (None, response, error)
         try:
-            result = SimData(self.form_response_body(response.get_body()))
+            result = SimDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -338,7 +338,9 @@ class SimHandlingAPI(APIClient):
             tuple: (result, Response, error)
 
         Examples:
-            >>> result, response, error = client.zcell.sim_handling.update_sims_status(id='...', name='example')
+            >>> result, response, error = client.zcell.sim_handling.update_sims_status(
+            ... id='...',
+            ... name='example')
             >>> if error:
             ...     print(f"Error: {error}")
             ...     return
@@ -372,35 +374,39 @@ class SimHandlingAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_sims_assign(self, id: str = None, iccid: str = None, **kwargs) -> APIResult[GetActivationCodeResponse]:
+    def update_sims_assign(
+        self, id: str = None, iccid: str = None, assignment: str = None, **kwargs
+    ) -> APIResult[GetActivationCodeResponse]:
         """
-        Assigns an eSIM to the user email and gives back the activation code.
+        Assigns an eSIM to the user and returns the activation code.
 
         Args:
             id (str): Optional. The ZCell customer ID. Defaults to the ``zcellCustomerId`` config value
                 or the ``ZCELL_CUSTOMER_ID`` environment variable when omitted.
-            iccid (str): Path parameter.
-            **kwargs: Request body fields.
+            iccid (str): The ICCID of the eSIM to assign (path parameter).
+            assignment (str): The user to assign the eSIM to. Sent in the request body as ``{"assignment": ...}``.
 
         Returns:
-            tuple: (result, Response, error)
+            tuple: A tuple containing the :class:`GetActivationCodeResponse` (``iccid``, ``activation_code``,
+            ``qr_code``), the raw Response, and error (if any).
 
         Examples:
             >>> result, response, error = client.zcell.sim_handling.update_sims_assign(
-            ...     id='...',
-            ...     iccid='...',
-            ...     name='example',
+            ...     iccid='89852350525020075842',
+            ...     assignment='testuser',
             ... )
             >>> if error:
             ...     print(f"Error: {error}")
             ...     return
-            >>> print(result.as_dict())
+            >>> print(result.activation_code)
+            >>> print(result.qr_code)
         """
         http_method = "patch".upper()
         id = id or self._zcell_customer_id
         api_url = format_url(f"{self._zcell_base_endpoint_customer}/{id}/sims/{iccid}/assign")
 
-        body = kwargs
+        body = {"assignment": assignment}
+        body.update(kwargs)
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -413,10 +419,6 @@ class SimHandlingAPI(APIClient):
         response, error = self._request_executor.execute(request, GetActivationCodeResponse)
         if error:
             return (None, response, error)
-
-        # The API returns 204 No Content on success — there is no body to parse.
-        if not response or not response.get_body():
-            return (None, response, None)
 
         try:
             result = GetActivationCodeResponse(self.form_response_body(response.get_body()))
@@ -441,7 +443,6 @@ class SimHandlingAPI(APIClient):
             >>> result, response, error = client.zcell.sim_handling.update_sims_state(
             ...     id='...',
             ...     iccid='...',
-            ...     name='example',
             ... )
             >>> if error:
             ...     print(f"Error: {error}")
