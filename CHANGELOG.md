@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.37 (July 7, 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #544](https://github.com/zscaler/zscaler-sdk-python/issues/544) - Added newly nested attributes within the ZPA `app_connectors` and `app_connector_groups` models.
+
 ## 1.9.36 (July 7, 2026)
 
 ### Notes
