@@ -6,6 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.38 (July 14, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#548 <https://github.com/zscaler/zscaler-sdk-python/pull/548>`_) - Fixed ZPA `application_segment` model to include new attributes `extDomain`, `extDomainName`, 
+
+
 1.9.37 (July 8, 2026)
 ---------------------------
 
