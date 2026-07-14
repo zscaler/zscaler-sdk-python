@@ -322,6 +322,7 @@ class AppsConfig(ZscalerObject):
             self.domain = config["domain"] if "domain" in config else None
             self.enabled = config["enabled"] if "enabled" in config else None
             self.ext_domain = config["extDomain"] if "extDomain" in config else None
+            self.ext_domain_name = config["extDomainName"] if "extDomainName" in config else None
             self.ext_id = config["extId"] if "extId" in config else None
             self.ext_label = config["extLabel"] if "extLabel" in config else None
             self.hidden = config["hidden"] if "hidden" in config else None
@@ -349,6 +350,7 @@ class AppsConfig(ZscalerObject):
             self.domain = None
             self.enabled = None
             self.ext_domain = None
+            self.ext_domain_name = None
             self.ext_id = None
             self.ext_label = None
             self.hidden = None
@@ -382,6 +384,7 @@ class AppsConfig(ZscalerObject):
             "domain": self.domain,
             "enabled": self.enabled,
             "extDomain": self.ext_domain,
+            "extDomainName": self.ext_domain_name,
             "extId": self.ext_id,
             "extLabel": self.ext_label,
             "hidden": self.hidden,
@@ -1030,6 +1033,10 @@ class AppSegmentByType(ZscalerObject):
             self.app_id = config["appId"] if "appId" in config else None
             self.hidden = config["hidden"] if "hidden" in config else None
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.ext_domain = config["extDomain"] if "extDomain" in config else None
+            self.ext_domain_name = config["extDomainName"] if "extDomainName" in config else None
+            self.ext_id = config["extId"] if "extId" in config else None
+            self.ext_label = config["extLabel"] if "extLabel" in config else None
 
             if "appResource" in config:
                 if isinstance(config["appResource"], AppResource):
@@ -1052,6 +1059,11 @@ class AppSegmentByType(ZscalerObject):
             self.hidden = None
             self.microtenant_name = None
             self.app_resource = None
+            self.ext_domain = None
+            self.ext_domain_name = None
+            self.ext_id = None
+            self.ext_label = None
+            
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -1069,6 +1081,10 @@ class AppSegmentByType(ZscalerObject):
             "hidden": self.hidden,
             "microtenantName": self.microtenant_name,
             "appResource": self.app_resource,
+            "extDomain": self.ext_domain,
+            "extDomainName": self.ext_domain_name,
+            "extId": self.ext_id,
+            "extLabel": self.ext_label,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
