@@ -1,0 +1,236 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels
+  response:
+    body:
+      string: '[{"id":4105713,"sourceIp":"104.238.235.24","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.19.196.208","lastModificationTime":1770823693,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false},{"id":4106311,"sourceIp":"104.238.235.59","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.17.144.232","lastModificationTime":1770831022,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:43 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '548'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 85e8a435-7f0c-998e-a935-b830a1038faf
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4987'
+      x-ratelimit-reset:
+      - '17'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/4105713
+  response:
+    body:
+      string: '{"id":4105713,"sourceIp":"104.238.235.24","primaryDestVip":{"id":57081,"virtualIp":"165.225.208.32","privateServiceEdge":false,"datacenter":"YTO3","latitude":44.0,"longitude":-79.0,"city":"Toronto","countryCode":"CA  ","region":"NorthAmerica"},"secondaryDestVip":{"id":98509,"virtualIp":"165.225.212.34","privateServiceEdge":false,"datacenter":"YMQ1","latitude":45.0,"longitude":-73.0,"city":"Montreal","countryCode":"CA  ","region":"NorthAmerica"},"internalIpRange":"172.19.196.208","lastModificationTime":1770823693,"lastModifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"comment":"GRE Tunnel Created with Terraform","ipUnnumbered":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:44 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '581'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d9061632-5491-96ea-8f68-ad58b0eeefa6
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4986'
+      x-ratelimit-reset:
+      - '16'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/greTunnels/availableInternalIpRanges
+  response:
+    body:
+      string: '[{"startIPAddress":"172.17.150.88","endIPAddress":"172.17.150.95"},{"startIPAddress":"172.21.43.168","endIPAddress":"172.21.43.175"},{"startIPAddress":"172.21.43.184","endIPAddress":"172.21.43.191"},{"startIPAddress":"172.21.43.192","endIPAddress":"172.21.43.199"},{"startIPAddress":"172.21.43.208","endIPAddress":"172.21.43.215"},{"startIPAddress":"172.21.43.216","endIPAddress":"172.21.43.223"},{"startIPAddress":"172.21.43.224","endIPAddress":"172.21.43.231"},{"startIPAddress":"172.21.43.232","endIPAddress":"172.21.43.239"},{"startIPAddress":"172.21.43.240","endIPAddress":"172.21.43.247"},{"startIPAddress":"172.21.43.248","endIPAddress":"172.21.43.255"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:19:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '668'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 987cc418-4461-93d2-86ea-6924dfd9d015
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4985'
+      x-ratelimit-reset:
+      - '16'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

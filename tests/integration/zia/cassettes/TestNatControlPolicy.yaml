@@ -1,0 +1,237 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/dnatRules
+  response:
+    body:
+      string: '[{"action":"ALLOW","accessControl":"READ_WRITE","id":184234,"name":"Zscaler
+        Trusted DNS Resolver","order":11,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":418830,"name":"SGIO-HoneyPot-Rule","order":12,"rank":7,"state":"DISABLED","destAddresses":["8.8.8.8"],"redirectIp":"3.19.111.8","redirectPort":0,"trustedResolverRule":false,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":false,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":865208,"name":"DNAT_865208","order":11,"rank":7,"description":"DIRECT_FORWARDING_RULE_DNAT","state":"ENABLED","trustedResolverRule":false,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":false,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1536553,"name":"Zscaler
+        Trusted DNS Resolver_1761584834356","order":1,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1770650202,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1536579,"name":"Zscaler
+        Trusted DNS Resolver_1761586860574","order":2,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1770650204,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1536817,"name":"Zscaler
+        Trusted DNS Resolver_1761610094352","order":3,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1538567,"name":"Zscaler
+        Trusted DNS Resolver_1761693615525","order":4,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1538577,"name":"Zscaler
+        Trusted DNS Resolver_1761696713668","order":5,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1539895,"name":"aPRoxTf","order":6,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1567575,"name":"fJh","order":7,"rank":7,"description":"242.47.69.9","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1583356,"name":"Ourk","order":8,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1589803,"name":"MsScaA","order":9,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false},{"action":"ALLOW","accessControl":"READ_WRITE","id":1607084,"name":"IouKXJpz","order":10,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"enableFullLogging":false,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '2056'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a11c63c6-d9c6-9981-8e30-46bf0538891c
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4977'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestNATRule_VCR", "description": "Test NAT rule for VCR testing",
+      "order": 1, "rank": 7, "redirectTrafficToPublicIp": false, "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '154'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/dnatRules
+  response:
+    body:
+      string: '{"message":"Request body is invalid."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '38'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '135'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f28cb534-6c60-9a7c-94f8-abf5802c0bac
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/dnatRules/184234
+  response:
+    body:
+      string: '{"action":"ALLOW","accessControl":"READ_WRITE","id":184234,"name":"Zscaler
+        Trusted DNS Resolver","order":11,"rank":7,"description":"_test_1761191415809_test_1761418104311-test-1761429762733-test-1761429922294","state":"ENABLED","nwServices":[{"id":774003,"name":"DNS","isNameL10nTag":true}],"redirectPort":0,"trustedResolverRule":true,"lastModifiedTime":1773329070,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"predefined":true,"defaultRule":false,"enableFullLogging":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1198'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 34e93918-7765-9d3f-94a1-5b888cde9a72
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

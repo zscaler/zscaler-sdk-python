@@ -1,0 +1,70 @@
+interactions:
+- request:
+    body: '{"query": "\n            query ListAppZones(\n                $customerId:
+      ID!, $pageNum: Int, $pageSize: Int,\n                $filter: AppZoneFilter,
+      $orderBy: AppZoneQueryOrderBy\n            ) {\n                appZones(\n                    customerId:
+      $customerId,\n                    pageNum: $pageNum,\n                    pageSize:
+      $pageSize,\n                    filter: $filter,\n                    orderBy:
+      $orderBy\n                ) {\n                    nodes {\n                        id\n                        appZoneName\n                        description\n                        memberCount\n                        includeAllVpcs\n                        includeAllSubnets\n                    }\n                    pageInfo
+      {\n                        pageNumber\n                        pageSize\n                        totalCount\n                        totalPages\n                    }\n                }\n            }\n        ",
+      "variables": {"customerId": "72058304855015424", "pageNum": 1, "pageSize": 20},
+      "operationName": "ListAppZones"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1081'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zms/graphql
+  response:
+    body:
+      string: '{"data":{"appZones":{"nodes":[],"pageInfo":{"pageNumber":1,"pageSize":20,"totalCount":0,"totalPages":0}}}}
+
+        '
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-store
+      content-length:
+      - '107'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 26 Mar 2026 03:33:44 GMT
+      etag:
+      - W/"6b-yl9zgus5qXlHjYB6UxakD+aTIKU"
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '87'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - e127dbdb-dc08-98d0-bd8f-bb9def55c079
+      x-oneapi-version:
+      - 109.1.146-hotfix
+      x-powered-by:
+      - Express
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 4b11a4bc-f13e-41aa-8b99-47582577ff56
+    status:
+      code: 200
+      message: OK
+version: 1

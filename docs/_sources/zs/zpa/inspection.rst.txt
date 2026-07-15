@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.inspection``
 
 .. automodule:: zscaler.zpa.inspection
     :members:
+    :undoc-members:
+    :show-inheritance:

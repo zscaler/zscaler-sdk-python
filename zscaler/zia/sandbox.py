@@ -1,73 +1,199 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+import mimetypes
+from typing import Dict, List
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zia.models.sandbox import BehavioralAnalysisAdvancedSettings
 
 
-from box import Box
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+class CloudSandboxAPI(APIClient):
+    """
+    A Client object for the Cloud Sandbox resource.
+    """
 
+    _sandbox_base_endpoint = "/zscsb"
+    _zia_base_endpoint = "/zia/api/v1"
 
-class CloudSandboxAPI(APIEndpoint):
-    def __init__(self, api: APISession):
-        super().__init__(api)
+    def __init__(self, request_executor: "RequestExecutor") -> None:
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
 
-        self.sandbox_token = api.sandbox_token
-        self.env_cloud = api.env_cloud
-
-    def submit_file(self, file: str, force: bool = False) -> Box:
+    def submit_file(self, file_path: str, force: bool = False) -> APIResult[dict]:
         """
         Submits a file to the ZIA Advanced Cloud Sandbox for analysis.
 
         Args:
-            file (str): The filename that will be submitted for sandbox analysis.
+            file_path (str): The filename that will be submitted for sandbox analysis.
             force (bool): Force ZIA to analyse the file even if it has been submitted previously.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox submission response information.
+            :obj:`Tuple`: The Cloud Sandbox submission response information.
 
         Examples:
             Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
 
-            >>> zia.sandbox.submit_file('malware.exe', force=True)
-
+            >>> script_dir = os.path.dirname(os.path.abspath(__file__))
+            ... file_path = os.path.join(script_dir, "test-pe-file.exe")
+            ... force_analysis = True
+            ...     submit, _, err = client.zia.sandbox.submit_file(
+                file_path=file_path, force=force_analysis)
+            >>>     if err:
+            ...         print(f"Error submitting file: {err}")
+            ...     else:
+            ...         print("File submitted successfully!")
+            ...         print(f"Response: {submit}")
         """
-        with open(file, "rb") as f:
-            data = f.read()
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._sandbox_base_endpoint}
+            /submit
+            """)
+
+        with open(file_path, "rb") as file:
+            file_content = file.read()
 
         params = {
-            "api_token": self.sandbox_token,
-            "force": int(force),  # convert boolean to int for ZIA
+            "force": int(force),
         }
 
-        return self._post(f"https://csbapi.{self.env_cloud}.net/zscsb/submit", params=params, data=data)
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=file_content,
+            params=params,
+            headers={"Content-Type": "application/octet-stream"},
+            use_raw_data_for_body=True,
+        )
 
-    def get_quota(self) -> Box:
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def submit_file_for_inspection(self, file_path: str) -> APIResult[dict]:
+        """
+        Submits a file for inspection.
+
+        Args:
+            file_path (str): The path to the file to be inspected.
+
+        Returns:
+            tuple: A tuple containing the result, response, and error.
+
+        Examples:
+            Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
+
+            >>> script_dir = os.path.dirname(os.path.abspath(__file__))
+            ... file_path = os.path.join(script_dir, "test-pe-file.exe")
+            ... force_analysis = True
+            ...     submit, _, err = client.zia.sandbox.submit_file_for_inspection(
+                file_path=file_path, force=force_analysis)
+            >>>     if err:
+            ...         print(f"Error submitting file: {err}")
+            ...     else:
+            ...         print("File submitted successfully!")
+            ...         print(f"Response: {submit}")
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._sandbox_base_endpoint}
+            /discan
+            """)
+
+        with open(file_path, "rb") as file:
+            file_content = file.read()
+        content_type, _ = mimetypes.guess_type(file_path)
+        if not content_type:
+            content_type = "application/octet-stream"
+
+        params = {}
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=file_content,
+            params=params,
+            headers={"Content-Type": content_type},
+            use_raw_data_for_body=True,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_quota(self) -> APIResult[dict]:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox quota report.
-
-        Examples:
-            >>> pprint(zia.sandbox.get_quota())
-
+            tuple: A tuple containing the result, response, and error.
         """
-        return self._get("sandbox/report/quota")[0]
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /sandbox/report/quota
+            """)
 
-    def get_report(self, md5_hash: str, report_details: str = "summary") -> Box:
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_report(self, md5_hash: str, report_details: str = "summary") -> APIResult[dict]:
         """
         Returns the Cloud Sandbox Report for the provided hash.
 
@@ -78,17 +204,155 @@ class CloudSandboxAPI(APIEndpoint):
                 The type of report. Accepted values are 'full' or 'summary'. Defaults to 'summary'.
 
         Returns:
-            :obj:`Box`: The cloud sandbox report.
+            tuple: A tuple containing the result, response, and error.
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /sandbox/report/{md5_hash}?details={report_details}
+            """)
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_behavioral_analysis(self) -> APIResult[dict]:
+        """
+        Returns the custom list of MD5 file hashes that are blocked by Sandbox.
+
+        Returns:
+            tuple: A tuple containing the result, response, and error.
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings
+            """)
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = BehavioralAnalysisAdvancedSettings(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_file_hash_count(self) -> APIResult[dict]:
+        """
+        Retrieves the Cloud Sandbox used and unused quota for blocking MD5 file hashes.
+
+        This method fetches the count of MD5 hashes currently blocked by the Sandbox and the remaining
+        quota available for blocking additional hashes.
+
+        Returns:
+            tuple: A tuple containing the result, response, and error.
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings/fileHashCount
+            """)
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def add_hash_to_custom_list(
+        self,
+        md5_hash_value_list: List[Dict[str, str]],
+    ) -> APIResult[BehavioralAnalysisAdvancedSettings]:
+        """
+        Updates the custom list of MD5 file hashes that are blocked by Sandbox.
+
+        Args:
+            md5_hash_value_list (list[dict]): A list of MD5 hash entries to be blocked.
+                Each entry should be a dictionary with the following keys:
+                ``url`` (str): The MD5 hash value.
+                ``type`` (str): The type of hash, e.g., ``CUSTOM_FILEHASH_DENY`` or ``CUSTOM_FILEHASH_ALLOW``.
+                Pass an empty list to clear the blocklist.
+
+        Returns:
+            tuple: A tuple containing (BehavioralAnalysisAdvancedSettings, Response, error).
 
         Examples:
-            Get a summary report:
+            Add MD5 hashes to the sandbox blocklist:
 
-            >>> zia.sandbox.get_report('8350dED6D39DF158E51D6CFBE36FB012')
-
-            Get a full report:
-
-            >>> zia.sandbox.get_report('8350dED6D39DF158E51D6CFBE36FB012', 'full')
-
+            >>> hash_list = [
+            ...     {"url": "35e38d023b253c0cd9bd3e16afc362a7", "type": "CUSTOM_FILEHASH_DENY"},
+            ...     {"url": "f6c1cf98076457e742937240b29132d2", "type": "CUSTOM_FILEHASH_ALLOW"},
+            ... ]
+            >>> result, response, error = client.zia.sandbox.add_hash_to_custom_list(
+            ...     md5_hash_value_list=hash_list
+            ... )
         """
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings
+            """)
 
-        return self._get(f"sandbox/report/{md5_hash}?details={report_details}")
+        payload = {"md5HashValueList": md5_hash_value_list}
+
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = BehavioralAnalysisAdvancedSettings(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

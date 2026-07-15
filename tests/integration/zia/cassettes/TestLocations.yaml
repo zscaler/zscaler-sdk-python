@@ -1,0 +1,879 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations
+  response:
+    body:
+      string: '[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
+        Columbia","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139","subLocScopeEnabled":true},{"id":149873535,"name":"Location01","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"BC","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"latitude":0.0,"longitude":0.0,"ipAddresses":["96.53.93.170"],"vpnCredentials":[{"id":29339942,"type":"IP","ipAddress":"96.53.93.170","comments":"excepturi_1fphDugX"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":false,"ipsControl":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[{"id":66754715,"name":"SDWAN_GLOBAL"},{"id":66754722,"name":"SDWAN_USA"},{"id":66754704,"name":"SDWAN_CAN"}],"dynamiclocationGroups":[{"id":24326828,"name":"Corporate
+        User Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"CORPORATE","description":"Location01"},{"id":166080180,"name":"Location_20260219040945","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":166080178,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
+        test UFQDN credential for location"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Location_20260219040945_updated"},{"id":166862881,"name":"Location_20260227110338","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":166862879,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
+        test UFQDN credential for location"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Location_20260227110338"},{"id":166873020,"name":"Location_20260227170256","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":166873016,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
+        test UFQDN credential for location"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Location_20260227170256"},{"id":167080684,"name":"Location_20260302161529","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":167080678,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
+        test UFQDN credential for location"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Location_20260302161529_updated"},{"id":167698587,"name":"Location_20260309104402","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":167698584,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
+        test UFQDN credential for location"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Location_20260309104402"},{"id":45772677,"name":"nostrud
+        qui dolore","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":true,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":true,"ecLocation":false,"bcLocation":false,"ccLocation":true,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":40594054,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":true,"surrogateRefreshTimeInMinutes":79446126,"surrogateRefreshTimeUnit":"HOUR","kerberosAuth":true,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":true,"excludeFromManualGroups":true,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"et
+        Ut ullamco"},{"id":159819758,"name":"vdqIQRy","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":false,"ipsControl":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","subLocScopeEnabled":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:19 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1715'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 01c8af4c-18a1-9c02-b698-098b8f82a81a
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '43'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/lite
+  response:
+    body:
+      string: '[{"id":-3,"name":"Road Warrior","parentId":0,"tz":"GMT","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":false,"ipsControl":false,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","parentId":0,"tz":"CANADA_AMERICA_VANCOUVER","xffForwardEnabled":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":true,"iotDiscoveryEnabled":false},{"id":256000110,"name":"Cloud
+        Browser","parentId":0,"tz":"NOT_SPECIFIED","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":false,"ipsControl":false,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":149873535,"name":"Location01","parentId":0,"tz":"CANADA_AMERICA_VANCOUVER","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":false,"ipsControl":false,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":166080180,"name":"Location_20260219040945","parentId":0,"tz":"UNITED_STATES_AMERICA_LOS_ANGELES","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":166862881,"name":"Location_20260227110338","parentId":0,"tz":"UNITED_STATES_AMERICA_LOS_ANGELES","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":166873020,"name":"Location_20260227170256","parentId":0,"tz":"UNITED_STATES_AMERICA_LOS_ANGELES","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":167080684,"name":"Location_20260302161529","parentId":0,"tz":"UNITED_STATES_AMERICA_LOS_ANGELES","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":167698587,"name":"Location_20260309104402","parentId":0,"tz":"UNITED_STATES_AMERICA_LOS_ANGELES","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":45772677,"name":"nostrud
+        qui dolore","parentId":0,"tz":"GMT","xffForwardEnabled":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":true,"surrogateIPEnforcedForKnownBrowsers":true,"otherSubLocation":true,"ofwEnabled":true,"ipsControl":true,"kerberosAuth":true,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":false,"iotDiscoveryEnabled":false},{"id":159819758,"name":"vdqIQRy","parentId":0,"tz":"GMT","xffForwardEnabled":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"surrogateIP":false,"surrogateIPEnforcedForKnownBrowsers":false,"otherSubLocation":false,"ofwEnabled":false,"ipsControl":false,"kerberosAuth":false,"digestAuthEnabled":false,"zappSslScanEnabled":false,"ecLocation":true,"iotDiscoveryEnabled":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:19 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '244'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4fa9bcad-ba63-9436-ad6b-21f0a93f8aa3
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/36788941
+  response:
+    body:
+      string: '{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
+        Columbia","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:20 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1059'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c637ece5-d448-9f3b-b132-5100514b07ae
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/36788941/sublocations
+  response:
+    body:
+      string: '[]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '2'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:21 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1031'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 97463dad-a59e-9016-a9d7-450db6d9c03c
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups
+  response:
+    body:
+      string: '[{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"Default
+        Location Group - Corporate User Traffic","lastModTime":1619561356,"predefined":true},{"id":24326829,"name":"Server
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["SERVER"]},"locations":[{"id":166080180,"name":"Location_20260219040945"},{"id":166862881,"name":"Location_20260227110338"},{"id":166873020,"name":"Location_20260227170256"},{"id":167080684,"name":"Location_20260302161529"},{"id":167698587,"name":"Location_20260309104402"}],"locationsCount":5,"comments":"Default
+        Location Group - Server Traffic","lastModTime":1619561356,"predefined":true},{"id":24326830,"name":"Guest
+        Wifi Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]},"comments":"Default
+        Location Group - Guest Wifi","lastModTime":1619561356,"predefined":true},{"id":24326831,"name":"IoT
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["IOT"]},"comments":"Default
+        Location Group - IoT Traffic","lastModTime":1619561356,"predefined":true},{"id":59050241,"name":"Workload
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]},"locations":[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71"},{"id":45772677,"name":"nostrud
+        qui dolore"},{"id":159819758,"name":"vdqIQRy"}],"locationsCount":13,"comments":"Default
+        Location Group - Workload Traffic","lastModTime":1666399620,"predefined":true},{"id":66754704,"name":"SDWAN_CAN","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_CAN","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799854},{"id":66754715,"name":"SDWAN_GLOBAL","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_GLOBAL","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799863},{"id":66754722,"name":"SDWAN_USA","groupType":"STATIC_GROUP","locations":[{"id":149873535,"name":"Location01"}],"locationsCount":1,"comments":"SDWAN_USA","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799872},{"id":157892460,"name":"All Extranet
+        Location Group","groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"comments":"Auto-created
+        - All Extranet Locations","lastModUser":{"id":65544,"name":"DEFAULT ADMIN"},"lastModTime":1763256805,"predefined":true},{"id":165104836,"name":"Extranet
+        Group for test_KDFV0unbx0","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165104835,"name":"test_KDFV0unbx0"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770602520},{"id":165182493,"name":"Extranet
+        Group for 20260209083516_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165182492,"name":"20260209083516_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770654921},{"id":165183657,"name":"Extranet
+        Group for 20260209084412_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183656,"name":"20260209084412_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770655464},{"id":165183952,"name":"Extranet
+        Group for 20260209084625_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183949,"name":"20260209084625_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770655589},{"id":165186544,"name":"Extranet
+        Group for 20260209090523_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186543,"name":"20260209090523_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656730},{"id":165186692,"name":"Extranet
+        Group for 20260209090645_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186691,"name":"20260209090645_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656812},{"id":165186829,"name":"Extranet
+        Group for 20260209090751_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186827,"name":"20260209090751_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770656875},{"id":165187378,"name":"Extranet
+        Group for 20260209091131_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165187377,"name":"20260209091131_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770657096},{"id":165188461,"name":"Extranet
+        Group for 20260209091945_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165188459,"name":"20260209091945_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770657589},{"id":165190062,"name":"Extranet
+        Group for 20260209093306_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190060,"name":"20260209093306_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770658388},{"id":165190561,"name":"Extranet
+        Group for 20260209093811_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190560,"name":"20260209093811_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770658693},{"id":165215756,"name":"Extranet
+        Group for 20260209144142_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165215754,"name":"20260209144142_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1770676904},{"id":165917906,"name":"Extranet
+        Group for 20260217124116_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165917904,"name":"20260217124116_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771360877},{"id":165921551,"name":"Extranet
+        Group for 20260217131936_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165921549,"name":"20260217131936_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771363177},{"id":165928528,"name":"Extranet
+        Group for 20260217152951_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928527,"name":"20260217152951_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771370993},{"id":165928584,"name":"Extranet
+        Group for 20260217153030_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928582,"name":"20260217153030_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771371033},{"id":165928793,"name":"Extranet
+        Group for 20260217153344_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928784,"name":"20260217153344_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771371226},{"id":166008040,"name":"Extranet
+        Group for 20260218092734_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166008039,"name":"20260218092734_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771435656},{"id":166080027,"name":"Extranet
+        Group for 20260219040636_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166080023,"name":"20260219040636_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771502797},{"id":166108472,"name":"Extranet
+        Group for 20260219090619_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166108471,"name":"20260219090619_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771520781},{"id":166139764,"name":"Extranet
+        Group for 20260219165600_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166139763,"name":"20260219165600_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771548962},{"id":166213871,"name":"Extranet
+        Group for 20260220103947_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166213870,"name":"20260220103947_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771612789},{"id":166230502,"name":"Extranet
+        Group for 20260220165926_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166230501,"name":"20260220165926_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1771635568},{"id":166880696,"name":"Extranet
+        Group for 20260227185537_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166880695,"name":"20260227185537_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1772247338},{"id":167533917,"name":"Extranet
+        Group for 20260306163507_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167533916,"name":"20260306163507_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1772843709},{"id":167682535,"name":"Extranet
+        Group for 20260309084514_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167682531,"name":"20260309084514_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1773071122},{"id":167688036,"name":"Extranet
+        Group for 20260309092641_created","defaultExtranetGroup":true,"groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167688033,"name":"20260309092641_created"},"profiles":["EXTRANET"]},"lastModUser":{"id":117810311,"name":"API
+        Client Secret Authentication"},"lastModTime":1773073606}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:22 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '892'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 719afdc5-35e5-9a1a-9160-ea24d50c35c5
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '38'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/lite
+  response:
+    body:
+      string: '[{"id":24326827,"name":"Unassigned Locations","dynamicLocationGroupCriteria":{"profiles":["NONE"]}},{"id":24326828,"name":"Corporate
+        User Traffic Group","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]}},{"id":24326829,"name":"Server
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["SERVER"]}},{"id":24326830,"name":"Guest
+        Wifi Group","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]}},{"id":24326831,"name":"IoT
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["IOT"]}},{"id":59050241,"name":"Workload
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]}},{"id":66754704,"name":"SDWAN_CAN"},{"id":66754715,"name":"SDWAN_GLOBAL"},{"id":66754722,"name":"SDWAN_USA"},{"id":157892460,"name":"All
+        Extranet Location Group","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"predefined":true},{"id":165104836,"name":"Extranet
+        Group for test_KDFV0unbx0","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165104835},"profiles":["EXTRANET"]}},{"id":165182493,"name":"Extranet
+        Group for 20260209083516_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165182492},"profiles":["EXTRANET"]}},{"id":165183657,"name":"Extranet
+        Group for 20260209084412_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183656},"profiles":["EXTRANET"]}},{"id":165183952,"name":"Extranet
+        Group for 20260209084625_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165183949},"profiles":["EXTRANET"]}},{"id":165186544,"name":"Extranet
+        Group for 20260209090523_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186543},"profiles":["EXTRANET"]}},{"id":165186692,"name":"Extranet
+        Group for 20260209090645_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186691},"profiles":["EXTRANET"]}},{"id":165186829,"name":"Extranet
+        Group for 20260209090751_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165186827},"profiles":["EXTRANET"]}},{"id":165187378,"name":"Extranet
+        Group for 20260209091131_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165187377},"profiles":["EXTRANET"]}},{"id":165188461,"name":"Extranet
+        Group for 20260209091945_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165188459},"profiles":["EXTRANET"]}},{"id":165190062,"name":"Extranet
+        Group for 20260209093306_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190060},"profiles":["EXTRANET"]}},{"id":165190561,"name":"Extranet
+        Group for 20260209093811_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165190560},"profiles":["EXTRANET"]}},{"id":165215756,"name":"Extranet
+        Group for 20260209144142_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165215754},"profiles":["EXTRANET"]}},{"id":165917906,"name":"Extranet
+        Group for 20260217124116_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165917904},"profiles":["EXTRANET"]}},{"id":165921551,"name":"Extranet
+        Group for 20260217131936_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165921549},"profiles":["EXTRANET"]}},{"id":165928528,"name":"Extranet
+        Group for 20260217152951_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928527},"profiles":["EXTRANET"]}},{"id":165928584,"name":"Extranet
+        Group for 20260217153030_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928582},"profiles":["EXTRANET"]}},{"id":165928793,"name":"Extranet
+        Group for 20260217153344_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":165928784},"profiles":["EXTRANET"]}},{"id":166008040,"name":"Extranet
+        Group for 20260218092734_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166008039},"profiles":["EXTRANET"]}},{"id":166080027,"name":"Extranet
+        Group for 20260219040636_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166080023},"profiles":["EXTRANET"]}},{"id":166108472,"name":"Extranet
+        Group for 20260219090619_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166108471},"profiles":["EXTRANET"]}},{"id":166139764,"name":"Extranet
+        Group for 20260219165600_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166139763},"profiles":["EXTRANET"]}},{"id":166213871,"name":"Extranet
+        Group for 20260220103947_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166213870},"profiles":["EXTRANET"]}},{"id":166230502,"name":"Extranet
+        Group for 20260220165926_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166230501},"profiles":["EXTRANET"]}},{"id":166880696,"name":"Extranet
+        Group for 20260227185537_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":166880695},"profiles":["EXTRANET"]}},{"id":167533917,"name":"Extranet
+        Group for 20260306163507_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167533916},"profiles":["EXTRANET"]}},{"id":167682535,"name":"Extranet
+        Group for 20260309084514_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167682531},"profiles":["EXTRANET"]}},{"id":167688036,"name":"Extranet
+        Group for 20260309092641_created","defaultExtranetGroup":true,"extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"extranet":{"id":167688033},"profiles":["EXTRANET"]}}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:23 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '191'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 07cc6d82-665d-9b68-b6f4-3307f26d987d
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4989'
+      x-ratelimit-reset:
+      - '37'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/24326828
+  response:
+    body:
+      string: '{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"locations":[{"id":149873535,"name":"Location01"}],"comments":"Default
+        Location Group - Corporate User Traffic","lastModTime":1619561356,"predefined":true}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:23 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '500'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f7ad601f-4bcd-9c6f-864c-e36718d2f653
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '37'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/groups/count
+  response:
+    body:
+      string: '36'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '2'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:24 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '198'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f4a578ab-fd21-95e8-9250-3181988928a2
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4987'
+      x-ratelimit-reset:
+      - '36'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/locations/supportedCountries
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '0'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Fri, 13 Mar 2026 03:20:24 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '163'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 00114665-ccbe-9004-9bd0-fd0bff40fff3
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4986'
+      x-ratelimit-reset:
+      - '36'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/region/search?country=United+States&search=San
+  response:
+    body:
+      string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Invalid or blank search
+        prefix."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '77'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:20:24 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '192'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f6ea2803-f973-9cd7-b85c-9d3fb70e4bce
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4985'
+      x-ratelimit-reset:
+      - '36'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+version: 1

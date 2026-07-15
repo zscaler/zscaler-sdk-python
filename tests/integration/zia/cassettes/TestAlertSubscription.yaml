@@ -1,0 +1,392 @@
+interactions:
+- request:
+    body: '{"description": "Test Alert Subscription", "email": "alert@acme.com", "pt0Severities":
+      ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities": ["CRITICAL",
+      "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL", "MAJOR",
+      "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR", "INFO",
+      "MINOR", "DEBUG"], "systemSeverities": ["CRITICAL", "MAJOR", "INFO", "MINOR",
+      "DEBUG"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '411'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions
+  response:
+    body:
+      string: '{"id":5223,"description":"Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:03 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '739'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0720fe82-05e5-901b-91f9-51381c5d5d23
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '58'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"description": "Updated Test Alert Subscription", "email": "alert@acme.com",
+      "pt0Severities": ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities":
+      ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL",
+      "MAJOR", "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR",
+      "INFO", "MINOR", "DEBUG"], "systemSeverities": ["CRITICAL", "MAJOR", "INFO",
+      "MINOR", "DEBUG"], "id": 5223}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '431'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
+  response:
+    body:
+      string: '{"id":5223,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:03 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '625'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 8484aa1d-8ab6-96ac-a72f-357bf22c3897
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '57'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
+  response:
+    body:
+      string: '{"id":5223,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:04 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '240'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 46c56978-33ec-9fb4-a9c5-43cc486e771a
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '56'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions
+  response:
+    body:
+      string: '[{"id":4950,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["MINOR"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5104,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5105,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5108,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5109,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["INFO"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5159,"description":"testAcc_Alert_Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]},{"id":5194,"email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR"],"manageSeverities":["MINOR"],"complySeverities":["MINOR"],"systemSeverities":["DEBUG"]},{"id":5223,"description":"Updated
+        Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:14:04 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '193'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - cd65133e-cbc7-9f0b-a07e-065c1f77f986
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '56'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/zia/api/v1/alertSubscriptions/5223
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Fri, 13 Mar 2026 03:14:05 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '785'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f5f24fa4-5b27-9150-b5c6-fae0450f1e3a
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '56'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

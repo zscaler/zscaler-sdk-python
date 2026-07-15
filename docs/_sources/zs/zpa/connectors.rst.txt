@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.connectors``
 
 .. automodule:: zscaler.zpa.connectors
     :members:
+    :undoc-members:
+    :show-inheritance:

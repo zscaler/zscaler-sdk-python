@@ -1,0 +1,92 @@
+interactions:
+- request:
+    body: '{"query": "\n            query ListAppCatalog(\n                $customerId:
+      ID!, $pageNum: Int, $pageSize: Int,\n                $filter: AppCatalogQueryFilter,
+      $orderBy: AppCatalogQueryOrderBy\n            ) {\n                appCatalog(\n                    customerId:
+      $customerId,\n                    pageNum: $pageNum,\n                    pageSize:
+      $pageSize,\n                    filter: $filter,\n                    orderBy:
+      $orderBy\n                ) {\n                    nodes {\n                        id\n                        name\n                        category\n                        creationTime\n                        modifiedTime\n                        details
+      {\n                            portAndProtocol {\n                                protocol\n                                portRanges
+      {\n                                    startPort\n                                    endPort\n                                }\n                            }\n                            processes\n                        }\n                    }\n                    pageInfo
+      {\n                        pageNumber\n                        pageSize\n                        totalCount\n                        totalPages\n                    }\n                }\n            }\n        ",
+      "variables": {"customerId": "72058304855015424", "pageNum": 1, "pageSize": 20},
+      "operationName": "ListAppCatalog"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1438'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zms/graphql
+  response:
+    body:
+      string: '{"data":{"appCatalog":{"nodes":[{"id":"72057594037927936-00000000000000000000000000000102","name":"CHARGEN","category":"Network
+        Utilities","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":19,"endPort":19}]},"processes":[]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":19,"endPort":19}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000103","name":"FTP","category":"File
+        Transfer Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":20,"endPort":20}]},"processes":["ftpd"]},{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":21,"endPort":21}]},"processes":["ftpd"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":21,"endPort":21}]},"processes":["ftpd"]}]},{"id":"72057594037927936-00000000000000000000000000000104","name":"SSH","category":"Remote
+        Access","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":22,"endPort":22}]},"processes":["sshd","systemd"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":22,"endPort":22}]},"processes":["sshd"]}]},{"id":"72057594037927936-00000000000000000000000000000105","name":"Telnet","category":"Remote
+        Access","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":23,"endPort":23}]},"processes":[]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":23,"endPort":23}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000106","name":"SMTP","category":"Mail
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":25,"endPort":25}]},"processes":["msexchangehmworker.exe","msexchangefrontendtransport.exe"]},{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":587,"endPort":587}]},"processes":["sendmail"]}]},{"id":"72057594037927936-00000000000000000000000000000107","name":"WINS
+        Replication","category":"Windows Internet Name Service","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":42,"endPort":42}]},"processes":["wins.exe"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":42,"endPort":42}]},"processes":["wins.exe"]}]},{"id":"72057594037927936-00000000000000000000000000000108","name":"WHOIS","category":"Network
+        Utilities","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":43,"endPort":43}]},"processes":[]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":43,"endPort":43}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000109","name":"TACACS","category":"Authentication
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":49,"endPort":49}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000110","name":"DNS","category":"Network
+        Management","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":53,"endPort":53}]},"processes":["named","bind"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":53,"endPort":53}]},"processes":["named","bind"]}]},{"id":"72057594037927936-00000000000000000000000000000111","name":"DHCP-BOOTP","category":"Network
+        Management","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":67,"endPort":67}]},"processes":[]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":68,"endPort":68}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000112","name":"TFTP","category":"File
+        Transfer Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":69,"endPort":69}]},"processes":["ftpd"]}]},{"id":"72057594037927936-00000000000000000000000000000113","name":"Gopher","category":"Web
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":70,"endPort":70}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000114","name":"Finger","category":"Directory
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":79,"endPort":79}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000115","name":"HTTP","category":"Web
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":80,"endPort":80}]},"processes":["isiteserver.exe","w3wp.exe","nginx","apache","httpd"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":80,"endPort":80}]},"processes":["httpd"]}]},{"id":"72057594037927936-00000000000000000000000000000116","name":"Kerberos
+        Authentication","category":"Authentication Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":88,"endPort":88}]},"processes":["krb5kdc"]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":88,"endPort":88}]},"processes":["krb5kdc"]}]},{"id":"72057594037927936-00000000000000000000000000000117","name":"Microsoft
+        Exchange ISO-TSAP","category":"Network Management","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":102,"endPort":102}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000118","name":"POP3","category":"Mail
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":110,"endPort":110}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000119","name":"Ident","category":"Authentication
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":113,"endPort":113}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000120","name":"NNTP","category":"Messaging
+        Services","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":119,"endPort":119}]},"processes":[]}]},{"id":"72057594037927936-00000000000000000000000000000101","name":"Echo","category":"Network
+        Utilities","creationTime":"2025-12-04T19:06:19.587Z","modifiedTime":"2025-12-04T19:06:19.587Z","details":[{"portAndProtocol":{"protocol":"TCP","portRanges":[{"startPort":7,"endPort":7}]},"processes":[]},{"portAndProtocol":{"protocol":"UDP","portRanges":[{"startPort":7,"endPort":7}]},"processes":[]}]}],"pageInfo":{"pageNumber":1,"pageSize":20,"totalCount":188,"totalPages":10}}}}
+
+        '
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-store
+      content-length:
+      - '7733'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 26 Mar 2026 03:33:44 GMT
+      etag:
+      - W/"1e35-UhdwPiR5gbHhIFm3DJVM01sWvj0"
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '249'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 08a98e92-45e2-9176-bfab-e18d5d1a27fb
+      x-oneapi-version:
+      - 109.1.146-hotfix
+      x-powered-by:
+      - Express
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 4b11a4bc-f13e-41aa-8b99-47582577ff56
+    status:
+      code: 200
+      message: OK
+version: 1

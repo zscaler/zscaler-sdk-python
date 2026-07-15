@@ -1,0 +1,80 @@
+from typing import Any, Dict, List, Optional
+
+from zscaler.helpers import convert_keys_to_snake_case, to_snake_case
+
+
+class ZscalerObject:
+    """
+    Base object for all Zscaler datatypes.
+    """
+
+    def __init__(self, config: Optional[Any] = None) -> None:
+        pass
+
+    def __repr__(self) -> str:
+        return str(vars(self))
+
+    def __getitem__(self, key: str) -> Any:
+        if hasattr(self, key):
+            return getattr(self, key)
+        raise KeyError(f"{key} not found in {self.__class__.__name__}")
+
+    def __contains__(self, key: str) -> bool:
+        return hasattr(self, key)
+
+    def get(self, key: str, default: Optional[Any] = None) -> Any:
+        """
+        Get an attribute value with a default if the attribute doesn't exist.
+        Similar to dict.get() method.
+
+        Args:
+            key (str): The attribute name to get
+            default: The default value to return if the attribute doesn't exist
+
+        Returns:
+            The attribute value or the default value
+        """
+        if hasattr(self, key):
+            return getattr(self, key)
+        return default
+
+    def as_dict(self) -> Dict[str, Any]:
+        result: Dict[str, Any] = {}
+        for key, val in self.request_format().items():
+            if val is None:
+                continue
+
+            # If it's a list, convert each item
+            if isinstance(val, list):
+                formatted_list: List[Any] = []
+                for item in val:
+                    if isinstance(item, ZscalerObject):
+                        formatted_list.append(item.as_dict())
+                    else:
+                        # If item is itself a dict, also recursively convert it
+                        if isinstance(item, dict):
+                            formatted_list.append(convert_keys_to_snake_case(item))
+                        else:
+                            formatted_list.append(item)
+                result[to_snake_case(key)] = formatted_list
+
+            # If it's a ZscalerObject, just recurse the same way
+            elif isinstance(val, ZscalerObject):
+                result[to_snake_case(key)] = val.as_dict()
+
+            # If it's a dict, recursively snake_case its contents
+            elif isinstance(val, dict):
+                result[to_snake_case(key)] = convert_keys_to_snake_case(val)
+
+            # Otherwise it's a simple type (string, int, etc.)
+            else:
+                result[to_snake_case(key)] = val
+
+        return result
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object in a format suitable for API requests.
+        The keys are in camelCase as expected by the API.
+        """
+        return {}

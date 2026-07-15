@@ -1,0 +1,314 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/riskProfiles
+  response:
+    body:
+      string: '[{"id":35,"profileName":"All_Unsanctioned_Risk_Index","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"UN_SANCTIONED","excludeCertificates":0,"poorItemsOfService":"ANY","adminAuditLogs":"ANY","dataBreach":"ANY","sourceIpRestrictions":"ANY","mfaSupport":"ANY","sslPinned":"ANY","httpSecurityHeaders":"ANY","evasive":"ANY","dnsCaaPolicy":"ANY","weakCipherSupport":"ANY","passwordStrength":"ANY","sslCertValidity":"ANY","vulnerability":"ANY","malwareScanningForContent":"ANY","fileSharing":"ANY","sslCertKeySize":"ANY","vulnerableToHeartBleed":"ANY","vulnerableToLogJam":"ANY","vulnerableToPoodle":"ANY","vulnerabilityDisclosure":"ANY","supportForWaf":"ANY","remoteScreenSharing":"ANY","senderPolicyFramework":"ANY","domainKeysIdentifiedMail":"ANY","domainBasedMessageAuth":"ANY","dataEncryptionInTransit":["ANY"],"lastModTime":1767417527,"createTime":1640191103,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]},{"id":2271,"profileName":"test_risk_profile_367e6aa3","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"SANCTIONED","excludeCertificates":0,"certifications":["CSA_STAR","CCPA","COPPA","EU_US_SWISS_PRIVACY_SHIELD","EU_US_PRIVACY_SHIELD_FRAMEWORK","CISP","AICPA"],"poorItemsOfService":"YES","adminAuditLogs":"NO","dataBreach":"YES","sourceIpRestrictions":"YES","mfaSupport":"UN_KNOWN","sslPinned":"UN_KNOWN","httpSecurityHeaders":"UN_KNOWN","evasive":"UN_KNOWN","dnsCaaPolicy":"YES","weakCipherSupport":"YES","passwordStrength":"GOOD","sslCertValidity":"YES","vulnerability":"NO","malwareScanningForContent":"ANY","fileSharing":"YES","sslCertKeySize":"BITS_384","vulnerableToHeartBleed":"YES","vulnerableToLogJam":"YES","vulnerableToPoodle":"NO","vulnerabilityDisclosure":"YES","supportForWaf":"YES","remoteScreenSharing":"YES","senderPolicyFramework":"NO","domainKeysIdentifiedMail":"UN_KNOWN","domainBasedMessageAuth":"UN_KNOWN","dataEncryptionInTransit":["UN_KNOWN","TLSV1_0","TLSV1_1","TLSV1_2","TLSV1_3","SSLV2","SSLV3"],"lastModTime":1771600697,"createTime":1771600697,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]},{"id":2272,"profileName":"test_risk_profile_a36788a2","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"SANCTIONED","excludeCertificates":0,"certifications":["CSA_STAR","CCPA","COPPA","EU_US_SWISS_PRIVACY_SHIELD","EU_US_PRIVACY_SHIELD_FRAMEWORK","CISP","AICPA"],"poorItemsOfService":"YES","adminAuditLogs":"NO","dataBreach":"YES","sourceIpRestrictions":"YES","mfaSupport":"UN_KNOWN","sslPinned":"UN_KNOWN","httpSecurityHeaders":"UN_KNOWN","evasive":"UN_KNOWN","dnsCaaPolicy":"YES","weakCipherSupport":"YES","passwordStrength":"GOOD","sslCertValidity":"YES","vulnerability":"NO","malwareScanningForContent":"ANY","fileSharing":"YES","sslCertKeySize":"BITS_384","vulnerableToHeartBleed":"YES","vulnerableToLogJam":"YES","vulnerableToPoodle":"NO","vulnerabilityDisclosure":"YES","supportForWaf":"YES","remoteScreenSharing":"YES","senderPolicyFramework":"NO","domainKeysIdentifiedMail":"UN_KNOWN","domainBasedMessageAuth":"UN_KNOWN","dataEncryptionInTransit":["UN_KNOWN","TLSV1_0","TLSV1_1","TLSV1_2","TLSV1_3","SSLV2","SSLV3"],"lastModTime":1771600721,"createTime":1771600721,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]},{"id":2273,"profileName":"test_risk_profile_25e7258e","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"SANCTIONED","excludeCertificates":0,"certifications":["CSA_STAR","CCPA","COPPA","EU_US_SWISS_PRIVACY_SHIELD","EU_US_PRIVACY_SHIELD_FRAMEWORK","CISP","AICPA"],"poorItemsOfService":"YES","adminAuditLogs":"NO","dataBreach":"YES","sourceIpRestrictions":"YES","mfaSupport":"UN_KNOWN","sslPinned":"UN_KNOWN","httpSecurityHeaders":"UN_KNOWN","evasive":"UN_KNOWN","dnsCaaPolicy":"YES","weakCipherSupport":"YES","passwordStrength":"GOOD","sslCertValidity":"YES","vulnerability":"NO","malwareScanningForContent":"ANY","fileSharing":"YES","sslCertKeySize":"BITS_384","vulnerableToHeartBleed":"YES","vulnerableToLogJam":"YES","vulnerableToPoodle":"NO","vulnerabilityDisclosure":"YES","supportForWaf":"YES","remoteScreenSharing":"YES","senderPolicyFramework":"NO","domainKeysIdentifiedMail":"UN_KNOWN","domainBasedMessageAuth":"UN_KNOWN","dataEncryptionInTransit":["UN_KNOWN","TLSV1_0","TLSV1_1","TLSV1_2","TLSV1_3","SSLV2","SSLV3"],"lastModTime":1771600744,"createTime":1771600744,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]},{"id":2278,"profileName":"tests-wwchmtsply","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"SANCTIONED","excludeCertificates":0,"certifications":["CCPA","CISP","AICPA"],"poorItemsOfService":"YES","adminAuditLogs":"YES","dataBreach":"YES","sourceIpRestrictions":"YES","mfaSupport":"YES","sslPinned":"YES","httpSecurityHeaders":"YES","evasive":"YES","dnsCaaPolicy":"YES","weakCipherSupport":"YES","passwordStrength":"GOOD","sslCertValidity":"YES","vulnerability":"YES","malwareScanningForContent":"YES","fileSharing":"YES","sslCertKeySize":"BITS_2048","vulnerableToHeartBleed":"YES","vulnerableToLogJam":"YES","vulnerableToPoodle":"YES","vulnerabilityDisclosure":"YES","supportForWaf":"YES","remoteScreenSharing":"YES","senderPolicyFramework":"YES","domainKeysIdentifiedMail":"YES","domainBasedMessageAuth":"YES","dataEncryptionInTransit":["UN_KNOWN","TLSV1_0","TLSV1_1","TLSV1_2","TLSV1_3","SSLV2","SSLV3"],"lastModTime":1771625546,"createTime":1771625546,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]},{"id":2321,"profileName":"rp_10409df6","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"SANCTIONED","excludeCertificates":0,"certifications":["CSA_STAR","CCPA","COPPA","EU_US_SWISS_PRIVACY_SHIELD","EU_US_PRIVACY_SHIELD_FRAMEWORK","CISP","AICPA"],"poorItemsOfService":"YES","adminAuditLogs":"NO","dataBreach":"YES","sourceIpRestrictions":"YES","mfaSupport":"UN_KNOWN","sslPinned":"UN_KNOWN","httpSecurityHeaders":"UN_KNOWN","evasive":"UN_KNOWN","dnsCaaPolicy":"YES","weakCipherSupport":"YES","passwordStrength":"GOOD","sslCertValidity":"YES","vulnerability":"NO","malwareScanningForContent":"ANY","fileSharing":"YES","sslCertKeySize":"BITS_384","vulnerableToHeartBleed":"YES","vulnerableToLogJam":"YES","vulnerableToPoodle":"NO","vulnerabilityDisclosure":"YES","supportForWaf":"YES","remoteScreenSharing":"YES","senderPolicyFramework":"NO","domainKeysIdentifiedMail":"UN_KNOWN","domainBasedMessageAuth":"UN_KNOWN","dataEncryptionInTransit":["UN_KNOWN","TLSV1_0","TLSV1_1","TLSV1_2","TLSV1_3","SSLV2","SSLV3"],"lastModTime":1772486582,"createTime":1772486582,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:21:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '389'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 325e738e-36cf-9d01-bbf3-e7f31f17cd0c
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '26'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/riskProfiles/lite
+  response:
+    body:
+      string: '[{"id":35,"profileName":"All_Unsanctioned_Risk_Index","profileType":"CLOUD_APPLICATIONS","status":"ANY"},{"id":2271,"profileName":"test_risk_profile_367e6aa3","profileType":"CLOUD_APPLICATIONS","status":"ANY"},{"id":2272,"profileName":"test_risk_profile_a36788a2","profileType":"CLOUD_APPLICATIONS","status":"ANY"},{"id":2273,"profileName":"test_risk_profile_25e7258e","profileType":"CLOUD_APPLICATIONS","status":"ANY"},{"id":2278,"profileName":"tests-wwchmtsply","profileType":"CLOUD_APPLICATIONS","status":"ANY"},{"id":2321,"profileName":"rp_10409df6","profileType":"CLOUD_APPLICATIONS","status":"ANY"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:21:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '231'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c947f13d-ee02-9f6a-8046-8a0c2d6348b1
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '26'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestRiskProfile_VCR", "description": "Test risk profile for VCR
+      testing", "riskIndexBucket": "LOW"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/riskProfiles
+  response:
+    body:
+      string: '{"message":"Request body is invalid."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '38'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:21:35 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '121'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c171ff33-645b-9ead-bbc2-c25e655c08f2
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '26'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/riskProfiles/35
+  response:
+    body:
+      string: '{"id":35,"profileName":"All_Unsanctioned_Risk_Index","profileType":"CLOUD_APPLICATIONS","riskIndex":[1,2,3,4,5],"status":"UN_SANCTIONED","excludeCertificates":0,"poorItemsOfService":"ANY","adminAuditLogs":"ANY","dataBreach":"ANY","sourceIpRestrictions":"ANY","mfaSupport":"ANY","sslPinned":"ANY","httpSecurityHeaders":"ANY","evasive":"ANY","dnsCaaPolicy":"ANY","weakCipherSupport":"ANY","passwordStrength":"ANY","sslCertValidity":"ANY","vulnerability":"ANY","malwareScanningForContent":"ANY","fileSharing":"ANY","sslCertKeySize":"ANY","vulnerableToHeartBleed":"ANY","vulnerableToLogJam":"ANY","vulnerableToPoodle":"ANY","vulnerabilityDisclosure":"ANY","supportForWaf":"ANY","remoteScreenSharing":"ANY","senderPolicyFramework":"ANY","domainKeysIdentifiedMail":"ANY","domainBasedMessageAuth":"ANY","dataEncryptionInTransit":["ANY"],"lastModTime":1767417527,"createTime":1640191103,"modifiedBy":{"id":117810311,"name":"API
+        Client Secret Authentication"},"customTags":[]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:21:35 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '458'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 87c402bb-8e21-90b8-8b87-7e7a560fc188
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

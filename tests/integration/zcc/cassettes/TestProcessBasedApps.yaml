@@ -1,0 +1,210 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.25 python/3.11.8 Darwin/25.4.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 30 Apr 2026 01:32:34 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 500, 500;w=1, 10000;w=60
+      x-ratelimit-remaining:
+      - '499'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.25 python/3.11.8 Darwin/25.4.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zcc/papi/public/v1/process-based-apps
+  response:
+    body:
+      string: "{\n  \"totalCount\" : 1,\n  \"appIdentities\" : [ {\n    \"id\" : 7119,\n
+        \   \"appName\" : \"App01\",\n    \"fileNames\" : [ \"\" ],\n    \"filePaths\"
+        : [ \"*\\\\Program\\\\Apps\\\\MSApps\\\\ms-teams.exe\", \"*\\\\Program\\\\Apps\\\\MSApps\\\\ms-teams1.exe.\"
+        ],\n    \"matchingCriteria\" : 2,\n    \"signaturePayload\" : \"{\\\"signatures\\\":[]}\",\n
+        \   \"certificatePayload\" : \"{\\\"certificates\\\":[{\\\"certName\\\":\\\"cert02\\\",\\\"thumbprint\\\":\\\"304B4346F337146144839209C6C79146D05E4764\\\"}]}\",\n
+        \   \"createdBy\" : \"140371\",\n    \"editedBy\" : \"140371\",\n    \"editedTimestamp\"
+        : \"1773900472\"\n  } ]\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 30 Apr 2026 01:32:34 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '515'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 59f5509f-38a2-9c5d-a4da-b41f2a4b6d34
+      x-oneapi-version:
+      - 111.1.27
+      x-rate-limit-remaining:
+      - '96'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '89'
+      x-ratelimit-reset:
+      - '1646'
+      x-transaction-id:
+      - 771da375-052a-45dc-952a-b3ee5957d8ab
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.25 python/3.11.8 Darwin/25.4.0
+    method: GET
+    uri: https://api.beta.zsapi.net/zcc/papi/public/v1/process-based-apps/7119
+  response:
+    body:
+      string: "{\n  \"id\" : 7119,\n  \"appName\" : \"App01\",\n  \"fileNames\" :
+        [ \"\" ],\n  \"filePaths\" : [ \"*\\\\Program\\\\Apps\\\\MSApps\\\\ms-teams.exe\",
+        \"*\\\\Program\\\\Apps\\\\MSApps\\\\ms-teams1.exe.\" ],\n  \"matchingCriteria\"
+        : 2,\n  \"signaturePayload\" : \"{\\\"signatures\\\":[]}\",\n  \"certificatePayload\"
+        : \"{\\\"certificates\\\":[{\\\"certName\\\":\\\"cert02\\\",\\\"thumbprint\\\":\\\"304B4346F337146144839209C6C79146D05E4764\\\"}]}\",\n
+        \ \"createdBy\" : \"140371\",\n  \"editedBy\" : \"140371\",\n  \"editedTimestamp\"
+        : \"1773900472\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 30 Apr 2026 01:32:35 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '256'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 5ea9aee6-c622-913b-92b9-fac81569c81f
+      x-oneapi-version:
+      - 111.1.27
+      x-rate-limit-remaining:
+      - '96'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '88'
+      x-ratelimit-reset:
+      - '1646'
+      x-transaction-id:
+      - 771da375-052a-45dc-952a-b3ee5957d8ab
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

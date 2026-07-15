@@ -9,3 +9,5 @@ Methods are accessible via ``zpa.certificates``
 
 .. automodule:: zscaler.zpa.certificates
     :members:
+    :undoc-members:
+    :show-inheritance:

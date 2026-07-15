@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.cloud_connector_groups``
 
 .. automodule:: zscaler.zpa.cloud_connector_groups
     :members:
+    :undoc-members:
+    :show-inheritance:

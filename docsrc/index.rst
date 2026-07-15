@@ -1,122 +1,2112 @@
 .. meta::
    :description lang=en:
-        Zscaler SDK Python is an SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
+        Official Zscaler Python  SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
    :caption: Contents
 
+   zs/zcc/index
+   zs/ztb/index
+   zs/ztw/index
+   zs/zdx/index
    zs/zia/index
    zs/zpa/index
+   zs/zcell/index
+   zs/zwa/index
+   zs/zid/index
+   zs/zins/index
+   zs/zms/index
+   zs/zbi/index
+   zs/zeasm/index
+   zs/zaiguard/index
+   zs/guides/index
 
-Zscaler SDK Python - Library Reference
-=====================================================================
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+Official Python SDK for the Zscaler Products
+=============================================
 
-Quick Links
+|PyPI - Downloads| |License| |Documentation Status| |Latest version
+released on PyPi| |PyPI pyversions| |codecov| |Zscaler Community|
+
+Support Disclaimer
+------------------
+
+-> **Disclaimer:** Please refer to our `General Support
+Statement <docsrc/zs/guides/support.rst>`__ before proceeding with the
+use of this provider. You can also refer to our `troubleshooting
+guide <docsrc/zs/guides/troubleshooting.rst>`__ for guidance on typical
+problems.
+
+Official Zscaler Python SDK Overview
+====================================
+
+-  `Release status <#release-status>`__
+-  `Need help? <#need-help>`__
+-  `Getting Started <#getting-started>`__
+-  `Building the SDK <#building-the-sdk>`__
+-  `Usage guide <#usage-guide>`__
+-  `Authentication <#authentication>`__
+-  `Zscaler OneAPI New Framework <#zscaler-oneapi-new-framework>`__
+-  `Zscaler Legacy API Framework <#zscaler-legacy-api-framework>`__
+-  `Configuration reference <#configuration-reference>`__
+-  `Pagination <#pagination>`__
+-  `Contributing <#contributing>`__
+
+The Zscaler SDK for Python includes functionality to accelerate
+development via `Python <https://www.python.org/>`__. This SDK can be
+used in your server-side code to interact with the Zscaler API platform
+across multiple products such as:
+
+- `ZPA API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zpa>`__
+- `ZIA API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia>`__
+- `ZDX API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx>`__
+- `ZCC API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc>`__
+- `ZTW API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector>`__
+- `ZTB API (Zero Trust Branch) <https://help.zscaler.com/>`__
+- `ZCell API (Zscaler Cellular) <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell/>`__
+- `ZWA API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
+- `Zidentity API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid>`__
+- `EASM API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+- `Zscaler AI Guard API <https://help.zscaler.com/ai-guard>`__
+- `Z-Insights API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
+- `ZMS - Zscaler Microsegmentation API <https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
+
+This SDK is designed to support the new Zscaler API framework
+`OneAPI <https://automate.zscaler.com/docs/getting-started/getting-started>`__ via a
+single OAuth2 HTTP client. The SDK is also backwards compatible with the
+previous Zscaler API framework, and each package is supported by an
+individual and robust HTTP client designed to handle failures on
+different levels by performing intelligent retries.
+
+Release Status
 --------------
-- `Zscaler SDK Python User Documentation and Examples <https://zscaler.github.io/zscaler-sdk-python>`_
-- `Zscaler SDK Python SDK on GitHub <https://github.com/zscaler/zscaler-sdk-python>`_
 
-.. attention:: This SDK is supported by the Zscaler Technology Alliances team.
+This library uses semantic versioning and updates are posted in
+(`release notes </docs/guides/release-notes.md>`__) \|
 
+======= ================================
+Version Status
+======= ================================
+0.x     :warning: Beta Release (Retired)
+1.x     :heavy_check_mark: Release
+======= ================================
 
-Overview
-==========
-This site is the library reference for the Zscaler SDK Python and describes every class and method in detail. If you are
-looking for user documentation with explanations and examples then you might be looking for the
-`Zscaler SDK Python User Documentation <https://zscaler.github.io/zscaler-sdk-python>`_
+The latest release can always be found on the (`releases
+page <github-releases>`__)
 
-Features
+   Requires Python version 3.10 or higher. Zscaler SDK for Python is
+   compatible with Python 3.10, 3.11, and 3.12.
+
+Need help?
 ----------
-- Simplified authentication with Zscaler APIs.
-- Uniform interaction with all Zscaler APIs.
-- Uses `python-box <https://github.com/cdgriffith/Box/wiki>`_ to add dot notation access to json data structures.
-- Zscaler API output automatically converted from CamelCase to Snake Case.
-- Various quality of life enhancements for object update methods.
 
-Products
----------
-- :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
-- :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+If you run into problems, please refer to our `General Support
+Statement <docs/guides/support.md>`__ before proceeding with the use of
+this SDK. You can also refer to our `troubleshooting
+guide <docs/guides/troubleshooting.md>`__ for guidance on typical
+problems. You can also raise an issue via (`github issues
+page <https://github.com/zscaler/zscaler-sdk-go/issues>`__)
 
-Installation
-==============
-
-The most recent version can be installed from pypi as per below.
-
-.. code-block:: console
-
-    $ pip install zscaler
-
-Usage
-========
-Before you can interact with any of the Zscaler APIs, you may need to generate API keys or retrieve tenancy information
-for each product that you are interfacing with. Once you have the requirements and you have installed Zscaler SDK Python,
-you're ready to go.
+-  Ask questions on the `Zenith
+   Community <https://community.zscaler.com/>`__
+-  Post `issues on
+   GitHub <https://github.com/zscaler/zscaler-sdk-python/issues>`__ (for
+   code errors)
+-  Support `customer support
+   portal <https://help.zscaler.com/contact-support>`__
 
 Getting started
---------------------------
+---------------
 
-Quick ZIA Example
-^^^^^^^^^^^^^^^^^^^
+To install the Zscaler Python SDK in your project:
 
-.. code-block:: python
+.. code:: sh
 
-    from zscaler import ZIA
-    from pprint import pprint
+   pip install zscaler-sdk-python
 
-    zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-    for user in zia.users.list_users():
-        pprint(user)
+Building the SDK
+----------------
 
-Quick ZPA Example
-^^^^^^^^^^^^^^^^^^
+In most cases, you won't need to build the SDK from source. If you want
+to build it yourself, you'll need these prerequisites:
 
-.. code-block:: python
+-  Clone the repo
+-  Install ``poetry``
+-  Run ``poetry build`` from the root of the project
+-  Run ``pip install dist/zscalerdist/zscaler_sdk_python-x.x.x.tar.gz``
 
-    from zscaler import ZPA
-    from pprint import pprint
+You'll also need
+~~~~~~~~~~~~~~~~
 
-    zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
-    for app_segment in zpa.app_segments.list_segments():
-        pprint(app_segment)
+-  An administrator account in the Zscaler products you want to interact
+   with.
 
-.. automodule:: zscaler
-   :members:
+-  `OneAPI <https://automate.zscaler.com/docs/getting-started/getting-started>`__: If
+   you are using the OneAPI entrypoint you must have a API Client
+   created in the `Zidentity
+   platform <https://help.zscaler.com/zidentity/about-api-clients>`__
+
+-  Legacy Framework: If using the legacy API framework you must have API
+   Keys credentials in the the respective Zscaler cloud products.
+
+-  For more information on getting started with Zscaler APIs visit one
+   of the following links:
+
+-  `OneAPI <https://automate.zscaler.com/docs/getting-started/getting-started>`__
+
+-  `ZPA
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zpa>`__
+
+-  `ZIA API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zia>`__
+
+-  `ZDX API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zdx>`__
+
+-  `ZCC
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcc>`__
+
+-  `ZTW
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcloudconnector>`__
+
+-  `ZCell API (Zscaler Cellular) <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell>`__
+
+-  `ZWA
+   API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
+
+-  `Zidentity
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zid>`__
+
+-  `EASM
+   API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+
+-  `Z-Insights
+   API <https://help.zscaler.com/zscaler-analytics>`__
+
+-  `ZMS - Zscaler Microsegmentation
+   API <https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
+
+-  `Zscaler AI Guard
+   API <https://help.zscaler.com/ai-guard>`__
+
+-  `Business Insights
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi>`__
+
+Usage guide
+-----------
+
+These examples will help you understand how to use this library.
+
+Once you initialize a specific service client, you can call methods to
+make requests to the Zscaler API. Each Zscaler Service has its own
+package and is grouped by the API endpoint they belong to. For example,
+ZPA methods that call the `Application Segment
+API <https://help.zscaler.com/zpa/application-controller#/mgmtconfig/v1/admin/customers/%7BcustomerId%7D/application-post>`__
+are organized under [the zscaler/zpa resource
+(zscaler.zpa.application_segment.py)][application_segment]. The same
+logic applies to all other services.
+
+**NOTE:** Zscaler APIs DO NOT support Asynchronous I/O calls, which made
+its debut in Python 3.5 and is powered by the ``asyncio`` library and
+provides avenues to produce concurrent code.
+
+Authentication
+--------------
+
+The latest versions => 0.20.0 of this SDK provides dual API client
+capability and can be used to interact both with new Zscaler
+`OneAPI <https://automate.zscaler.com/docs/getting-started/getting-started>`__
+framework and the legacy API platform.
+
+If your Zscaler tenant has not been migrated to the new Zscaler
+`Zidentity
+platform <https://help.zscaler.com/zidentity/what-zidentity>`__, you
+must use the respective Legacy API client described in the following
+section: `Zscaler Legacy API
+Framework <#zscaler-legacy-api-framework>`__
+
+**Caution**: Zscaler does not recommend hard-coding
+credentials into arguments, as they can be exposed in plain text in
+version control systems. Use environment variables instead.
+
+Zscaler OneAPI New Framework
+------------------------------
+
+As of the publication of SDK version => 1.7.0.x, OneAPI is available for
+programmatic interaction with the following products:
+
+-  `ZCC
+   API <https://help.zscaler.com/client-connector/zscaler-client-connector-api/api-developer-reference-guide/reference-guide>`__
+-  `ZDX
+   API <https://help.zscaler.com/zdx/zdx-api/api-developer-reference-guide/reference-guide>`__
+-  `ZIA
+   API <https://automate.zscaler.com/docs/getting-started/getting-started#:~:text=managed%20using%20OneAPI.-,ZIA%20API,-Zscaler%20Internet%20Access>`__
+-  `ZPA
+   API <https://automate.zscaler.com/docs/getting-started/getting-started#:~:text=Workload%20Groups-,ZPA%20API,-Zscaler%20Private%20Access>`__
+-  `ZTW
+   API <https://help.zscaler.com/cloud-branch-connector/zscaler-cloud-branch-connector-api/api-developer-reference-guide/reference-guide>`__
+-  `ZCell - Zscaler Cellular API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/zcell>`__
+-  `ZIdentity
+   API <https://help.zscaler.com/zidentity/api-clients>`__
+-  `Z-Insights
+   API <https://help.zscaler.com/zinsights/getting-started-zinsights-api>`__
+-  `ZMS - Zscaler Microsegmentation
+   API <https://help.zscaler.com/legacy-apis/using-zscaler-microsegmentation-api>`__
+-  `EASM
+   API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+- `Zscaler AI Guard API <https://help.zscaler.com/ai-guard>`__
+-  `Business Insights
+   API <https://automate.zscaler.com/docs/docs/api-reference-and-guides/api-reference/bi>`__
+
+**NOTE** All other products such as Zscaler Cloud Connector (ZTW) and
+Zscaler Digital Experience (ZDX) are supported only via the legacy
+authentication method described in this README.
+
+OneAPI (API Client Scope)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneAPI Resources are automatically created within the ZIdentity Admin UI
+based on the RBAC Roles applicable to APIs within the various products.
+For example, in ZIA, navigate to ``Administration -> Role Management``
+and select ``Add API Role``.
+
+Once this role has been saved, return to the ZIdentity Admin UI and from
+the Integration menu select API Resources. Click the ``View`` icon to
+the right of Zscaler APIs and under the ZIA dropdown you will see the
+newly created Role. In the event a newly created role is not seen in the
+ZIdentity Admin UI a ``Sync Now`` button is provided in the API
+Resources menu which will initiate an on-demand sync of newly created
+roles.
+
+Default Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZSCALER_CLIENT_ID``,
+``ZSCALER_CLIENT_SECRET``, ``ZSCALER_VANITY_DOMAIN``, ``ZSCALER_CLOUD``,
+``ZSCALER_PARTNER_ID`` environment variables, representing your Zidentity
+OneAPI credentials ``clientId``, ``clientSecret``, ``vanityDomain``,
+``cloud`` and ``partnerId`` respectively.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``clientId``       | *(String)*        | ``ZSCALER_CLIENT_ID``      |
+|                    | Zscaler API       |                            |
+|                    | Client ID, used   |                            |
+|                    | with              |                            |
+|                    | ``clientSecret``  |                            |
+|                    | or ``PrivateKey`` |                            |
+|                    | OAuth auth mode.  |                            |
++--------------------+-------------------+----------------------------+
+| ``clientSecret``   | *(String)* A      | ``ZSCALER_CLIENT_SECRET``  |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``privateKey``     | *(String)* A      | ``ZSCALER_PRIVATE_KEY``    |
+|                    | string Private    |                            |
+|                    | key value.        |                            |
++--------------------+-------------------+----------------------------+
+| ``vanityDomain``   | *(String)* Refers | ``ZSCALER_VANITY_DOMAIN``  |
+|                    | to the domain     |                            |
+|                    | name used by your |                            |
+|                    | organization      |                            |
+|                    | ``ht              |                            |
+|                    | tps://<vanity_dom |                            |
+|                    | ain>.zslogin.net/ |                            |
+|                    | oauth2/v1/token`` |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZSCALER_CLOUD``          |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$api.<cloud_n   |                            |
+|                    | ame>.zsapi.net``. |                            |
++--------------------+-------------------+----------------------------+
+
+Alternative OneAPI Cloud Environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneAPI supports authentication and can interact with alternative Zscaler
+enviornments i.e ``beta``, ``alpha`` etc. To authenticate to these
+environments you must provide the following values:
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``vanityDomain``   | *(String)* Refers | ``ZSCALER_VANITY_DOMAIN``  |
+|                    | to the domain     |                            |
+|                    | name used by your |                            |
+|                    | organization      |                            |
+|                    | ``ht              |                            |
+|                    | tps://<vanity_dom |                            |
+|                    | ain>.zslogin.net/ |                            |
+|                    | oauth2/v1/token`` |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    |   ``ZSCALER_CLOUD``        |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$api.<cloud_n   |                            |
+|                    | ame>.zsapi.net``. |                            |
++--------------------+-------------------+----------------------------+
+| ``sandboxToken``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_TOKEN``  |
+|                    | Sandbox Token     |                            |
++--------------------+-------------------+----------------------------+
+| ``sandboxCloud``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_CLOUD``  |
+|                    | Sandbox Cloud     |                            |
++--------------------+-------------------+----------------------------+
+
+For example: Authenticating to Zscaler Beta environment:
+
+.. code:: sh
+
+   export ZSCALER_VANITY_DOMAIN="acme"
+   export ZSCALER_CLOUD="beta"
+
+**Note 1**: The attribute ``cloud`` or environment variable
+``ZSCALER_CLOUD`` is optional and only required when authenticating to
+an alternative Zidentity cloud environment.
+
+**Note 2**: By default this SDK will send the authentication request and
+subsequent API calls to the default base URL.
+
+OneAPI Government (FedRAMP) Cloud Environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneAPI supports the Zscaler government (FedRAMP) clouds. These are
+FedRAMP-isolated environments served by a dedicated Zidentity identity
+provider and API gateway. To authenticate, set the ``cloud`` attribute
+(or ``ZSCALER_CLOUD`` environment variable) to one of the supported
+government values:
+
++-----------------+--------------------------------------------------------------+--------------------------------+
+| ``cloud`` value | OAuth token endpoint                                         | API base URL                   |
++=================+==============================================================+================================+
+| ``gov``         | ``https://<vanity_domain>.zidentitygov.net/oauth2/v1/token`` | ``https://api.zscalergov.net`` |
++-----------------+--------------------------------------------------------------+--------------------------------+
+| ``govus``       | ``https://<vanity_domain>.zidentitygov.us/oauth2/v1/token``  | ``https://api.zscalergov.us``  |
++-----------------+--------------------------------------------------------------+--------------------------------+
+
+For example, authenticating to the GOV environment:
+
+.. code:: sh
+
+   export ZSCALER_VANITY_DOMAIN="acme"
+   export ZSCALER_CLOUD="gov"
+
+Or inline in the client configuration:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "gov",  # or "govus"
+       "customerId": "",  # Optional parameter. Required only when using ZPA
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+**Note**: The ``cloud`` value is case-insensitive (``gov``, ``GOV``,
+``govus``, ``GOVUS`` are all accepted). The ``vanityDomain`` is still
+required and is used as the host prefix for the government identity
+provider.
+
+**Note 3**: Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`.The following cloud environments are supported:
+
+* `zscaler`
+* `zscalerone`
+* `zscalertwo`
+* `zscalerthree`
+* `zscloud`
+* `zscalerbeta`
+* `zscalergov`
+* `zscalerten`
+* `zspreview`
+
+Authenticating to Zscaler Private Access (ZPA)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The authentication to Zscaler Private Access (ZPA) via the OneAPI
+framework, requires the extra attribute called ``customerId`` and
+optionally the attributes ``microtenantId`` and ``partnerId``.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``clientId``       | *(String)*        | ``ZSCALER_CLIENT_ID``      |
+|                    | Zscaler API       |                            |
+|                    | Client ID, used   |                            |
+|                    | with              |                            |
+|                    | ``clientSecret``  |                            |
+|                    | or ``PrivateKey`` |                            |
+|                    | OAuth auth mode.  |                            |
++--------------------+-------------------+----------------------------+
+| ``clientSecret``   | *(String)* A      | ``ZSCALER_CLIENT_SECRET``  |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``privateKey``     | *(String)* A      | ``ZSCALER_PRIVATE_KEY``    |
+|                    | string Private    |                            |
+|                    | key value.        |                            |
++--------------------+-------------------+----------------------------+
+| ``customerId``     | *(String)* The    | ``ZPA_CUSTOMER_ID``        |
+|                    | ZPA tenant ID     |                            |
+|                    | found under       |                            |
+|                    | Configuration &   |                            |
+|                    | Control > Public  |                            |
+|                    | API > API Keys    |                            |
+|                    | menu in the ZPA   |                            |
+|                    | console.          |                            |
++--------------------+-------------------+----------------------------+
+| ``microtenantId``  | *(String)* The    | ``ZPA_MICROTENANT_ID``     |
+|                    | ZPA microtenant   |                            |
+|                    | ID found in the   |                            |
+|                    | respective        |                            |
+|                    | microtenant       |                            |
+|                    | instance under    |                            |
+|                    | Configuration &   |                            |
+|                    | Control > Public  |                            |
+|                    | API > API Keys    |                            |
+|                    | menu in the ZPA   |                            |
+|                    | console.          |                            |
++--------------------+-------------------+----------------------------+
+| ``vanityDomain``   | *(String)* Refers | ``ZSCALER_VANITY_DOMAIN``  |
+|                    | to the domain     |                            |
+|                    | name used by your |                            |
+|                    | organization      |                            |
+|                    | ``ht              |                            |
+|                    | tps://<vanity_dom |                            |
+|                    | ain>.zslogin.net/ |                            |
+|                    | oauth2/v1/token`` |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          |                   |                            |
++--------------------+-------------------+----------------------------+
+
+Authenticating to Zscaler Cellular (ZCell)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The authentication to Zscaler Cellular (ZCell) via the OneAPI framework
+uses the same Zidentity OAuth2 credentials (``clientId``,
+``clientSecret``/``privateKey``, ``vanityDomain``, ``cloud``) as the
+other products. ZCell API endpoints are scoped to a specific customer
+(``/customers/{id}``), so the SDK provides a dedicated
+``zcellCustomerId`` attribute — and the ``ZCELL_CUSTOMER_ID`` environment
+variable — which is automatically injected into the request path. This
+value is completely independent from ZPA's ``customerId``.
+
+You can supply the ZCell customer id in any of three ways (highest
+precedence first):
+
+1. Explicitly, as the ``id`` argument on any ZCell method call.
+2. Via the ``zcellCustomerId`` attribute in the client configuration.
+3. Via the ``ZCELL_CUSTOMER_ID`` environment variable.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 50 25
+
+   * - Argument
+     - Description
+     - Environment variable
+   * - ``clientId``
+     - *(String)* Zscaler API Client ID, used with ``clientSecret`` or ``privateKey`` OAuth auth mode.
+     - ``ZSCALER_CLIENT_ID``
+   * - ``clientSecret``
+     - *(String)* A string that contains the password for the API admin.
+     - ``ZSCALER_CLIENT_SECRET``
+   * - ``privateKey``
+     - *(String)* A string Private key value.
+     - ``ZSCALER_PRIVATE_KEY``
+   * - ``vanityDomain``
+     - *(String)* Refers to the domain name used by your organization ``https://<vanity_domain>.zslogin.net/oauth2/v1/token``.
+     - ``ZSCALER_VANITY_DOMAIN``
+   * - ``cloud``
+     - *(String)* The host and basePath for the cloud services API is ``$api.<cloud_name>.zsapi.net``.
+     - ``ZSCALER_CLOUD``
+   * - ``zcellCustomerId``
+     - *(String)* The ZCell customer ID automatically scoped into the ``/customers/{id}`` request path. Independent from ZPA's ``customerId``.
+     - ``ZCELL_CUSTOMER_ID``
+
+Initialize the client with ``zcellCustomerId`` and call any ZCell service
+without repeating the customer id on every method:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta",                          # Optional when authenticating to an alternative cloud environment
+       "zcellCustomerId": "72058304855015424",   # ZCell customer id (independent from ZPA's customerId)
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           # zcellCustomerId is injected automatically — no id argument needed
+           tags, resp, err = client.zcell.tag_handling.list_tag()
+           if err:
+               print(f"Error listing ZCell tags: {err}")
+               return
+           for tag in tags:
+               print(tag)
+
+           # You can still override the customer id explicitly per call
+           tags, resp, err = client.zcell.tag_handling.list_tag(id="another-customer-id")
+
+   if __name__ == "__main__":
+       main()
+
+Initialize OneAPI OAuth 2.0 Client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneAPI Client ID and Client Secret Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Construct a client instance by passing your Zidentity ``clientId``,
+``clientSecret`` and ``vanityDomain``:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+       "customerId": "", # Optional parameter. Required only when using ZPA
+       "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           idp_id = "72058304855015574"
+           query_params = {'page': '1', 'page_size': '100'}
+           groups, resp, err = client.zpa.scim_groups.list_scim_groups(idp_id=idp_id, query_params=query_params)
+           if err:
+               print(f"Error listing SCIM groups: {err}")
+               return
+           if groups:
+               print(f"Processing {len(groups)} groups:")
+               for group in groups:
+                   print(group)
+
+           try:
+               resp.next()
+           except StopIteration:
+               print("No more groups to retrieve.")
+
+   if __name__ == "__main__":
+       main()
+
+OneAPI Client ID and Private Key Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "privateKey": '{yourPrivateKey}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+       "customerId": "", # Optional parameter. Required only when using ZPA
+       "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           idp_id = "72058304855015574"
+           query_params = {'page': '1', 'page_size': '100'}
+           groups, resp, err = client.zpa.scim_groups.list_scim_groups(idp_id=idp_id, query_params=query_params)
+           if err:
+               print(f"Error listing SCIM groups: {err}")
+               return
+           if groups:
+               print(f"Processing {len(groups)} groups:")
+               for group in groups:
+                   print(group)
+
+           try:
+               resp.next()
+           except StopIteration:
+               print("No more groups to retrieve.")
+
+   if __name__ == "__main__":
+       main()
+
+Note, that ``privateKey`` can be passed in JWK format or in PEM format,
+i.e. (examples generated with https://mkjwk.org):
+
+   Using a Python dictionary to hard-code the Zscaler API credentials is
+   encouraged for development ONLY; In production, you should use a more
+   secure way of storing these values. This library supports a few
+   different configuration sources, covered in the `configuration
+   reference <#configuration-reference>`__ section.
+
+..
+
+   **NOTE**: THIS IS NOT A PRODUCTION KEY AND IS DISPLAYED FOR EXAMPLE
+   PURPOSES ONLY
+
+.. figure:: https://raw.githubusercontent.com/willguibr/servicenow-application/refs/heads/main/jwk.svg
+   :alt: JWK Example
+
+   JWK Example
+
+or
+
+   **NOTE**: THIS IS NOT A PRODUCTION KEY AND IS DISPLAYED FOR EXAMPLE
+   PURPOSES ONLY
+
+::
+
+   -----BEGIN PRIVATE KEY-----
+   # Example private key (not a real key)
+   MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCv3krdYg3z7h0H
+   60QoePJMghllQxsfPxp3mgFfYEaIbF88Z8dvPZEfhAtP19/Mv62ASjwgqzQzKHRV
+   -----END PRIVATE KEY-----
+
+Get and set custom headers
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to set custom headers, which will be sent with each
+request. This feature is only supported when instantiating the OneAPI
+Client ``ZscalerClient``.
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   def main():
+       with ZscalerClient(config) as client:
+           client.set_custom_headers({'Custom-Header': 'custom value'})
+           groups, resp, err = client.zpa.segment_groups.list_groups()
+           for group in groups:
+               print(group.name, group.description)
+
+       # clear all custom headers
+       client.clear_custom_headers()
+
+       # output should be: {}
+       print(client.get_custom_headers())
+
+Note, that custom headers will be overwritten with default headers with
+the same name. This doesn't allow breaking the client. Get default
+headers:
+
+Automatic x-partner-id Header Injection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SDK automatically includes the ``x-partner-id`` header in all API
+requests when ``partnerId`` is provided in the configuration. This
+feature works seamlessly across all services (ZIA, ZPA, ZTW, ZCC, ZDX,
+ZWA) and both OneAPI and Legacy clients.
+
+**How it works:**
+
+-  When ``partnerId`` is provided via config dictionary or
+   ``ZSCALER_PARTNER_ID`` environment variable, the SDK automatically
+   adds ``x-partner-id: <partnerId>`` to all request headers
+-  If ``partnerId`` is not provided, the header is not included
+-  No additional code is required - the header injection is handled
+   automatically by the SDK
+
+**Example:**
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "partnerId": "542585sdsdw", # Automatically adds x-partner-id header to all requests
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           # All API requests will automatically include: x-partner-id: 542585sdsdw
+           groups, resp, err = client.zpa.segment_groups.list_groups()
+           # ... rest of your code
+
+**Note:** This feature is also supported in Legacy clients. When using
+``LegacyZPAClient``, ``LegacyZIAClient``, etc., you can provide
+``partnerId`` in the config dictionary and the header will be
+automatically included in all requests.
+
+ZIA and ZTW Context Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Zscaler SDK provides a context manager pattern that automatically handles authentication and session cleanup for both ZIA and ZTW services. This pattern ensures that all configuration changes are properly activated when the context manager exits.
+
+How Context Manager Works
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When you use the ``with`` statement with a Zscaler client, the following happens automatically:
+
+1. **Authentication**: The client authenticates when entering the context
+2. **Session Management**: A session is established and maintained throughout the context
+3. **Automatic Deauthentication**: When exiting the context, the client automatically deauthenticates, which activates all staged configuration changes
+
+Implicit Activation Process
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The context manager implements an "implicit activation" approach where:
+
+- **All changes are final**: Configuration changes are automatically activated when the context exits
+- **No manual activation required**: You don't need to remember to call activation endpoints
+- **Deterministic behavior**: You always know that exiting the context will activate changes
+- **Automation-friendly**: Perfect for scripts and automation scenarios
+
+Example Usage
+^^^^^^^^^^^^^^
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+       "customerId": "", # Optional parameter. Required only when using ZPA
+       "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           # Make ZIA configuration changes
+           added_role, response, error = client.zia.admin_roles.add_role(
+               name="New API Role",
+               description="Role created via API",
+               feature_permissions={"ZIA_ADMIN_ROLE": "READ"}
+           )
+           if error:
+               print(f"Error adding role: {error}")
+               return
+           
+           # Make ZTW configuration changes
+           added_group, response, error = client.ztw.ip_destination_groups.add_group(
+               name="New IP Group",
+               description="IP group created via API"
+           )
+           if error:
+               print(f"Error adding IP group: {error}")
+               return
+           
+           print("All changes made successfully")
+       
+       # Context manager automatically deauthenticates here
+       # All staged changes are activated automatically for both ZIA and ZTW
+       print("Context exited - all changes have been activated")
+
+   if __name__ == "__main__":
+       main()
+
+Benefits
+^^^^^^^^
+
+- **Automatic cleanup**: No need to manually deauthenticate
+- **Error handling**: Even if an exception occurs, the context manager ensures proper cleanup
+- **Staged configuration activation**: All changes are activated when the context exits
+- **Simplified code**: No need to remember activation steps
+- **Multi-service support**: Works seamlessly with both ZIA and ZTW services
+
+Zscaler OneAPI Rate Limiting
+----------------------------
+
+Zscaler OneAPI provides unique rate limiting numbers for each individual
+product. Regardless of the product, a 429 response will be returned if
+too many requests are made within a given time.
+
+Built-In Retry
+~~~~~~~~~~~~~~
+
+This SDK uses a built-in retry strategy to automatically retry on 429
+errors based on the response headers returned by each respective API
+service.
+
+The header ``x-ratelimit-reset`` is returned in the API response for
+each API call, which indicates the time in seconds until the rate limit
+resets. The SDK uses the returned value in this header to calculate the
+retry time for the following services:
+
+-  `ZCC Rate
+   Limiting <https://help.zscaler.com/zscaler-client-connector/understanding-rate-limiting>`__
+   for rate limiting requirements.
+-  `ZIA Rate
+   Limiting <https://help.zscaler.com/zia/understanding-rate-limiting>`__
+   for rate limiting requirements.
+-  `ZPA Rate
+   Limiting <https://help.zscaler.com/zpa/understanding-rate-limiting>`__
+   for rate limiting requirements.
+
+Pagination
+----------
+
+The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`, `ZCell`
+and is applied transparently whether you're using the Legacy API Client or the new OneAPI OAuth2 Client.
+Filter or search for Segment Groups
+
+✅ This means no code changes are needed when transitioning from the legacy API framework to OneAPI framework.
+
+When calling a method that supports pagination (e.g., `list_users`, `list_groups`, `list_app_segments`), only the first page of results is returned initially. The SDK returns a response tuple:
+
+.. code:: py
+
+   items, response, error = client.zia.user_management.list_groups()
+
+
+You can then use the `response.has_next()` and `response.next()` methods to retrieve subsequent pages.
+
+Basic Pagination Example
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   query_parameters = {'page_size': 100}
+   groups, resp, err = client.zia.user_management.list_groups(query_parameters)
+
+   while resp.has_next():
+      more_groups, err = resp.next()
+      if err:
+         break
+      groups.extend(more_groups)
+
+
+Searching and Filtering
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can filter or search using available query parameters. The available parameters vary by service, so refer to each method's documentation for details.
+
+
+.. code:: py
+
+   # Query parameters are optional on methods that can use them!
+   # Check the method definition for details on which query parameters are accepted.
+   query_parameters = {'page': '1', 'page_size': '100'}
+   groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+
+.. code:: py
+
+   # Query parameters are optional on methods that can use them!
+   # Check the method definition for details on which query parameters are accepted.
+   # Using the search parameter to support search by features and fields.
+   query_parameters = {'search': 'Group1'}
+   groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+
+Full Example with Error Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   def main():
+      with ZscalerClient(config) as client:
+         query_parameters = {}
+         groups, resp, err = client.zia.user_management.list_groups(query_parameters)
+
+         if err:
+               print(f"Error: {err}")
+               return
+
+         print(f"Processing {len(groups)} groups:")
+         for group in groups:
+               print(group)
+
+         while resp.has_next():
+               next_page, err = resp.next()
+               if err:
+                  print(f"Error fetching next page: {err}")
+                  break
+               for group in next_page:
+                  print(group)
+
+         try:
+               resp.next()  # Will raise StopIteration if no more data
+         except StopIteration:
+               print("✅ No more groups to retrieve.")
+
+   if __name__ == "__main__":
+      main()
+
+Pagination Limits and Controls
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each Zscaler service has its own pagination requiremens and max page size:
+
++--------------------+-------------------+----------------------------+---------------------------------+
+|     Service Notes  | Default Page Size |        Max Page Size       |          Notes                  |
++====================+===================+============================+=================================+
+|                    |                   |                            |                                 |
+|      ``ZPA``       |     ``20``        |         ``500``            |  Uses ``pagesize``` (lowercase) |
+|                    |                   |                            |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZIA``       |     ``100``       |  ``10,000`` for `/users`   |  Uses ``pageSize``` (camelCase) |
+|                    |                   |      Others varies         |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZDX``       |     ``10``        |         ``Varies``         |    Uses `limit` + `offset`,     |
+|                    |                   |                            |     similar to cursor API       |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZCC``       |    ``Varies``     |          ``Varies``        |   Uses ``pageSize``` (camelCase)|
+|                    |                   |                            |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZTW``       |     ``100``       |  ``10,000`` for `/users`   |  Uses ``pageSize``` (camelCase) |
+|                    |                   |      Others varies         |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZWA``       |     ``varies``    |           ``varies``       |  Uses ``pageSize``` (camelCase) |
+|                    |                   |                            |                                 |
++--------------------+-------------------+----------------------------+---------------------------------+
+|                    |                   |                            |                                 |
+|      ``ZCell``     |     ``10``        |         ``100``            |  Uses ``page`` (0-based) +      |
+|                    |                   |                            |   ``pageSize``` (camelCase)     |
++--------------------+-------------------+----------------------------+---------------------------------+
+
+⚠️ **Note:** Always use `snake_case` for all parameter names, even when the API expects camelCase.The SDK handles conversion internally.
+
+Internal Pagination Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `ZscalerAPIResponse` object returned as resp handles:
+
+* Tracking the current page
+* Automatically applying proper pagination parameters per service
+* Mapping pagination fields like page, pagesize, limit, offset, next_offset, etc.
+* Fallback handling when the API doesn't indicate the total count
+
+You don't need to worry about API quirks—just use `resp.has_next()` and `resp.next()` safely.
+
+⚠️ Note on StopIteration
+The SDK raises a StopIteration if `next()` is called and no more pages are available:
+
+.. code:: py
+
+   try:
+      resp.next()
+   except StopIteration:
+      print("All data fetched.")
+
+Logging
+-------
+
+The Zscaler SDK Python, provides robust logging for debug purposes. Logs
+are disabled by default and should be enabled explicitly via client
+configuration or via a `configuration
+file <#configuration-reference>`__:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {"logging": {"enabled": True}}
+   client = ZscalerClient(config)
+
+You can also enable debug logging via the following environment
+variables: \* ``ZSCALER_SDK_LOG`` - Turn on logging \*
+``ZSCALER_SDK_VERBOSE`` - Turn on logging in verbose mode
+
+.. code:: sh
+
+   export ZSCALER_SDK_LOG=true
+   export ZSCALER_SDK_VERBOSE=true
+
+This SDK utilizes the standard Python library ``logging``. By default,
+log level INFO is set. You can set another log level by setting the
+argument ``verbose`` to ``True``.
+
+**NOTE**: DO NOT SET DEBUG LEVEL IN PRODUCTION!
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+       "customerId": "", # Optional parameter. Required only when using ZPA
+       "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "logging": {"enabled": True, "verbose": True},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           groups, resp, err = client.zpa.segment_groups.list_groups()
+           for group in groups:
+               print(group.name, group.description)
+   if __name__ == "__main__":
+       main()
+
+You should now see logs in your console. Notice that API Credentials i.e
+``clientId`` and ``clientSecret`` are **NOT** logged to the console;
+however, Bearer tokens are still visible. We still advise to use caution
+and never use ``verbose`` level logging in production.
+
+What it being logged? ``requests``, ``responses``, ``http errors``,
+``caching responses``.
+
+Configuration reference
+-----------------------
+
+This library looks for configuration in the following sources:
+
+0. An ``zscaler.yaml`` file in a ``.zscaler`` folder in the current
+   user’s home directory (``~/.zscaler/zscaler.yaml`` or
+   ``%userprofile%\.zscaler\zscaler.yaml``). See a sample `YAML
+   Configuration <#yaml-configuration>`__
+1. A ``zscaler.yaml`` file in the application or project’s root
+   directory. See a sample `YAML Configuration <#yaml-configuration>`__
+2. `Environment variables <#environment-variables>`__
+3. Configuration explicitly passed to the constructor (see the example
+   in `Getting started <#getting-started>`__)
+
+..
+
+   Only ONE source needs to be provided!
+
+Higher numbers win. In other words, configuration passed via the
+constructor will OVERRIDE configuration found in environment variables,
+which will override configuration in the designated ``zscaler.yaml``
+files.
+
+**NOTE:** This option is only supported for OneAPI Zidentity credentials
+at the moment.
+
+YAML configuration
+~~~~~~~~~~~~~~~~~~
+
+When you use an API Token instead of OAuth 2.0 the full YAML
+configuration looks like:
+
+.. code:: yaml
+
+   zscaler:
+     client:
+       clientId: { yourClientId }
+       clientSecret: { yourClientSecret }
+       proxy:
+         port: { proxy_port }
+         host: { proxy_host }
+         username: { proxy_username }
+         password: { proxy_password }
+       logging:
+         enabled: true
+         verbose: true
+
+..
+
+   **NOTE**: THIS IS NOT A PRODUCTION KEY AND IS DISPLAYED FOR EXAMPLE
+   PURPOSES ONLY
+
+When you use OAuth 2.0 the full YAML configuration looks like:
+
+.. code:: yaml
+
+   zscaler:
+     client:
+       clientId: "YOUR_CLIENT_ID"
+       privateKey: |
+         -----BEGIN RSA PRIVATE KEY-----
+         MIIEogIBAAKCAQEAl4F5CrP6Wu2kKwH1Z+CNBdo0iteHhVRIXeHdeoqIB1iXvuv4
+         THQdM5PIlot6XmeV1KUKuzw2ewDeb5zcasA4QHPcSVh2+KzbttPQ+RUXCUAr5t+r
+         0r6gBc5Dy1IPjCFsqsPJXFwqe3RzUb...
+         -----END RSA PRIVATE KEY-----
+       proxy:
+         port: { proxy_port }
+         host: { proxy_host }
+         username: { proxy_username }
+         password: { proxy_password }
+       logging:
+         enabled: true
+         verbose: true
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+Each one of the configuration values above can be turned into an
+environment variable name with the ``_`` (underscore) character and
+UPPERCASE characters. The following are accepted:
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``clientId``       | *(String)*        | ``ZSCALER_CLIENT_ID``      |
+|                    | Zscaler API       |                            |
+|                    | Client ID, used   |                            |
+|                    | with              |                            |
+|                    | ``clientSecret``  |                            |
+|                    | or ``PrivateKey`` |                            |
+|                    | OAuth auth mode.  |                            |
++--------------------+-------------------+----------------------------+
+| ``clientSecret``   | *(String)* A      | ``ZSCALER_CLIENT_SECRET``  |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``privateKey``     | *(String)* A      | ``Z                        |
+|                    | string Private    | SCALER_CLIENT_PRIVATEKEY`` |
+|                    | key value.        |                            |
++--------------------+-------------------+----------------------------+
+| ``vanityDomain``   | *(String)* Refers | ``ZSCALER_VANITY_DOMAIN``  |
+|                    | to the domain     |                            |
+|                    | name used by your |                            |
+|                    | organization      |                            |
+|                    | ``ht              |                            |
+|                    | tps://<vanity_dom |                            |
+|                    | ain>.zslogin.net/ |                            |
+|                    | oauth2/v1/token`` |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZSCALER_CLOUD``          |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$api.<cloud_n   |                            |
+|                    | ame>.zsapi.net``. |                            |
++--------------------+-------------------+----------------------------+
+| ``userAgent``      | *(String)* Append | ``                         |
+|                    | additional        | ZSCALER_CLIENT_USERAGENT`` |
+|                    | information to    |                            |
+|                    | the HTTP          |                            |
+|                    | User-Agent        |                            |
++--------------------+-------------------+----------------------------+
+| ``cache.enabled``  | *(String)* Use    | ``ZSCA                     |
+|                    | request memory    | LER_CLIENT_CACHE_ENABLED`` |
+|                    | cache             |                            |
++--------------------+-------------------+----------------------------+
+| ``                 | *(String)* Cache  | ``ZSCALER                  |
+| cache.defaultTti`` | clean up interval | _CLIENT_CACHE_DEFAULTTTI`` |
+|                    | in seconds        |                            |
++--------------------+-------------------+----------------------------+
+| ``                 | *(String)* Cache  | ``ZSCALER                  |
+| cache.defaultTtl`` | time to live in   | _CLIENT_CACHE_DEFAULTTTL`` |
+|                    | seconds           |                            |
++--------------------+-------------------+----------------------------+
+| ``proxyPort``      | *(String)* HTTP   | ``Z                        |
+|                    | proxy port        | SCALER_CLIENT_PROXY_PORT`` |
++--------------------+-------------------+----------------------------+
+| ``proxyHost``      | *(String)* HTTP   | ``Z                        |
+|                    | proxy host        | SCALER_CLIENT_PROXY_HOST`` |
++--------------------+-------------------+----------------------------+
+| ``proxyUsername``  | *(String)* HTTP   | ``ZSCAL                    |
+|                    | proxy username    | ER_CLIENT_PROXY_USERNAME`` |
++--------------------+-------------------+----------------------------+
+| ``proxyPassword``  | *(String)* HTTP   | ``ZSCAL                    |
+|                    | proxy password    | ER_CLIENT_PROXY_PASSWORD`` |
++--------------------+-------------------+----------------------------+
+| ``d                | *(String)*        | ``ZSCALER_TESTING_         |
+| isableHttpsCheck`` | Disable SSL       | TESTINGDISABLEHTTPSCHECK`` |
+|                    | checks            |                            |
++--------------------+-------------------+----------------------------+
+
+Zscaler ZIdentity API
+-------------------------------
+
+This SDK supports programmatic integration with the Zscaler ZIdentity API service.
+
+The authentication to Zscaler ZIdentity service via the OneAPI framework, requires uses the API client `ZscalerClient`
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``clientId``       | *(String)*        | ``ZSCALER_CLIENT_ID``      |
+|                    | Zscaler API       |                            |
+|                    | Client ID, used   |                            |
+|                    | with              |                            |
+|                    | ``clientSecret``  |                            |
+|                    | or ``PrivateKey`` |                            |
+|                    | OAuth auth mode.  |                            |
++--------------------+-------------------+----------------------------+
+| ``clientSecret``   | *(String)* A      | ``ZSCALER_CLIENT_SECRET``  |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``privateKey``     | *(String)* A      | ``Z                        |
+|                    | string Private    | SCALER_CLIENT_PRIVATEKEY`` |
+|                    | key value.        |                            |
++--------------------+-------------------+----------------------------+
+| ``vanityDomain``   | *(String)* Refers | ``ZSCALER_VANITY_DOMAIN``  |
+|                    | to the domain     |                            |
+|                    | name used by your |                            |
+|                    | organization      |                            |
+|                    | ``ht              |                            |
+|                    | tps://<vanity_dom |                            |
+|                    | ain>.zslogin.net/ |                            |
+|                    | oauth2/v1/token`` |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZSCALER_CLOUD``          |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$api.<cloud_n   |                            |
+|                    | ame>.zsapi.net``. |                            |
++--------------------+-------------------+----------------------------+
+
+Initialize OneAPI OAuth 2.0 Client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Zidentity OneAPI Client ID and Client Secret Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Construct a client instance by passing your Zidentity `clientId`, `clientSecret` and `vanityDomain`:
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+      "clientId": '{yourClientId}',
+      "clientSecret": '{yourClientSecret}',
+      "vanityDomain": '{yourvanityDomain}',
+      "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+      "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+      with ZscalerClient(config) as client:
+         users, _, error = client.zid.groups.list_groups()
+         if error:
+               print(f"Error listing users: {error}")
+               return
+
+         print(f"Total users found: {len(users)}")
+
+   if __name__ == "__main__":
+      main()
+
+
+ZIdentity OneAPI Client ID and Private Key Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+      "clientId": '{yourClientId}',
+      "privateKey": '{yourPrivateKey}',
+      "vanityDomain": '{yourvanityDomain}',
+      "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+      "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+      with ZscalerClient(config) as client:
+         users, _, error = client.zid.groups.list_groups()
+         if error:
+               print(f"Error listing users: {error}")
+               return
+
+         print(f"Total users found: {len(users)}")
+
+   if __name__ == "__main__":
+      main()
+
+Zscaler Sandbox Authentication
+-------------------------------
+
+To authenticate to the Zscaler Sandbox service you must authenticate by instantiating the `ZscalerClient`.
+
+Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`. The following cloud environments are supported:
+
+* `zscaler`
+* `zscalerone`
+* `zscalertwo`
+* `zscalerthree`
+* `zscloud`
+* `zscalerbeta`
+* `zscalergov`
+* `zscalerten`
+* `zspreview`
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the `ZSCALER_SANDBOX_TOKEN`, `ZSCALER_SANDBOX_CLOUD` environment variables,
+representing your Zscaler Sandbox authentication paraemters respectively `sandboxToken`, `sandboxCloud`
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``sandboxToken``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_TOKEN``  |
+|                    | Sandbox Token     |                            |
++--------------------+-------------------+----------------------------+
+| ``sandboxCloud``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_CLOUD``  |
+|                    | Sandbox Cloud     |                            |
++--------------------+-------------------+----------------------------+
+
+Zscaler Sandbox Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+      "sandboxToken": '{yourSandboxToken}',
+      "sandboxCloud": '{yourSandboxCloud}',
+      "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+
+      script_dir = os.path.dirname(os.path.abspath(__file__))
+      file_path = os.path.join(script_dir, "test-pe-file.exe")
+      force_analysis = True
+
+      with ZscalerClient(config) as client:
+         submit, _, err = client.zia.sandbox.submit_file(file_path=file_path, force=force_analysis)
+
+         if err:
+               print(f"Error submitting file: {err}")
+         else:
+               print("File submitted successfully!")
+               print(f"Response: {submit}")
+
+   if __name__ == "__main__":
+      main()
+
+Zscaler Legacy API Framework
+----------------------------
+
+The legacy Zscaler API is still utilized by several customers, and will
+remain in place for the foreable future with no specific annouced
+deprecation date.
+
+ZIA Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Organizations whose tenant is still not migrated to Zidentity must
+continue using their previous ZIA API credentials. This SDK provides a
+dedicated API client ``LegacyZIAClient`` compatible with the legacy
+framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Internet Access, you must provide
+   ``username``, ``password``, ``api_key`` and ``cloud``
+
+The ZIA Cloud is identified by several cloud name prefixes, which
+determines which API endpoint the requests should be sent to. The
+following cloud environments are supported:
+
+-  ``zscaler``
+-  ``zscalerone``
+-  ``zscalertwo``
+-  ``zscalerthree``
+-  ``zscloud``
+-  ``zscalerbeta``
+-  ``zscalergov``
+-  ``zscalerten``
+-  ``zspreview``
+
+.. _environment-variables-1:
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZIA_USERNAME``, ``ZIA_PASSWORD``,
+``ZIA_API_KEY``, ``ZIA_CLOUD`` environment variables, representing your
+ZIA ``username``, ``password``, ``api_key`` and ``cloud`` respectively.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``username``       | *(String)* A      | ``ZIA_USERNAME``           |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | email ID of the   |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``password``       | *(String)* A      | ``ZIA_PASSWORD``           |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``api_key``        | *(String)* A      | ``ZIA_API_KEY``            |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | obfuscated API    |                            |
+|                    | key (i.e., the    |                            |
+|                    | return value of   |                            |
+|                    | the               |                            |
+|                    | obfuscateApiKey() |                            |
+|                    | method).          |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZIA_CLOUD``              |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$zs             |                            |
+|                    | api.<Zscaler Clou |                            |
+|                    | d Name>/api/v1``. |                            |
++--------------------+-------------------+----------------------------+
+
+ZIA Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZIAClient
+
+   config = {
+       "username": '{yourUsername}',
+       "password": '{yourPassword}',
+       "api_key": '{yourApiKey}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZIAClient(config) as client:
+           added_label, response, error = client.zia.rule_labels.add_label(
+               name=f"NewLabel_{random.randint(1000, 10000)}",
+               description=f"NewLabel_{random.randint(1000, 10000)}",
+           )
+           if err:
+               print(f"Error adding label: {err}")
+               return
+           print(f"Label added successfully: {added_label.as_dict()}")
+
+   if __name__ == "__main__":
+       main()
+
+ZIA and ZTW Context Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Zscaler SDK provides a context manager pattern that automatically handles authentication and session cleanup for both ZIA and ZTW services. This pattern ensures that all configuration changes are properly activated when the context manager exits.
+
+How Context Manager Works
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When you use the ``with`` statement with a Zscaler client, the following happens automatically:
+
+1. **Authentication**: The client authenticates when entering the context
+2. **Session Management**: A session is established and maintained throughout the context
+3. **Automatic Deauthentication**: When exiting the context, the client automatically deauthenticates, which activates all staged configuration changes
+
+Implicit Activation Process
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The context manager implements an "implicit activation" approach where:
+
+- **All changes are final**: Configuration changes are automatically activated when the context exits
+- **No manual activation required**: You don't need to remember to call activation endpoints
+- **Deterministic behavior**: You always know that exiting the context will activate changes
+- **Automation-friendly**: Perfect for scripts and automation scenarios
+
+Example Usage
+^^^^^^^^^^^^^^
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZIAClient
+
+   config = {
+       "username": '{yourUsername}',
+       "password": '{yourPassword}',
+       "api_key": '{yourApiKey}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZIAClient(config) as client:
+           # Make configuration changes
+           added_label, response, error = client.zia.rule_labels.add_label(
+               name=f"NewLabel_{random.randint(1000, 10000)}",
+               description=f"NewLabel_{random.randint(1000, 10000)}",
+           )
+           if error:
+               print(f"Error adding label: {error}")
+               return
+           
+           # Make more changes
+           updated_role, response, error = client.zia.admin_roles.update_role(
+               role_id="12345",
+               name="Updated Role Name"
+           )
+           if error:
+               print(f"Error updating role: {error}")
+               return
+           
+           print("All changes made successfully")
+       
+       # Context manager automatically deauthenticates here
+       # All staged changes are activated automatically
+       print("Context exited - all changes have been activated")
+
+   if __name__ == "__main__":
+       main()
+
+Benefits
+^^^^^^^^
+
+- **Automatic cleanup**: No need to manually deauthenticate
+- **Error handling**: Even if an exception occurs, the context manager ensures proper cleanup
+- **Staged configuration activation**: All changes are activated when the context exits
+- **Simplified code**: No need to remember activation steps
+
+ZTW Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Organizations whose tenant is still not migrated to Zidentity must
+continue using their previous ZTW API credentials. This SDK provides a
+dedicated API client ``LegacyZTWClient`` compatible with the legacy
+framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Internet Access, you must provide
+   ``username``, ``password``, ``api_key`` and ``cloud``
+
+The ZTW Cloud is identified by several cloud name prefixes, which
+determines which API endpoint the requests should be sent to. The
+following cloud environments are supported:
+
+-  ``zscaler``
+-  ``zscalerone``
+-  ``zscalertwo``
+-  ``zscalerthree``
+-  ``zscloud``
+-  ``zscalerbeta``
+-  ``zscalergov``
+-  ``zscalerten``
+-  ``zspreview``
+
+.. _environment-variables-2:
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZTW_USERNAME``,
+``ZTW_PASSWORD``, ``ZTW_API_KEY``, ``ZTW_CLOUD`` environment
+variables, representing your ZTW ``username``, ``password``,
+``api_key`` and ``cloud`` respectively.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``username``       | *(String)* A      | ``ZTW_USERNAME``           |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | email ID of the   |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``password``       | *(String)* A      | ``ZTW_PASSWORD``           |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | password for the  |                            |
+|                    | API admin.        |                            |
++--------------------+-------------------+----------------------------+
+| ``api_key``        | *(String)* A      | ``ZTW_API_KEY``            |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | obfuscated API    |                            |
+|                    | key (i.e., the    |                            |
+|                    | return value of   |                            |
+|                    | the               |                            |
+|                    | obfuscateApiKey() |                            |
+|                    | method).          |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZTW_CLOUD``              |
+|                    | host and basePath |                            |
+|                    | for the cloud     |                            |
+|                    | services API is   |                            |
+|                    | ``$zs             |                            |
+|                    | api.<Zscaler Clou |                            |
+|                    | d Name>/api/v1``. |                            |
++--------------------+-------------------+----------------------------+
+
+ZTW Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZTWClient
+
+   config = {
+       "username": '{yourUsername}',
+       "password": '{yourPassword}',
+       "api_key": '{yourApiKey}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZTWClient(config) as client:
+           fetched_prov_url, response, error = client.ztw.provisioning_url.list_provisioning_url()
+           if error:
+               print(f"Error fetching prov url by ID: {error}")
+               return
+           print(f"Fetched prov url by ID: {fetched_prov_url.as_dict()}")
+
+   if __name__ == "__main__":
+       main()
+
+ZPA Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Organizations whose tenant is still not migrated to Zidentity must
+continue using their previous ZPA API credentials. This SDK provides a
+dedicated API client ``LegacyZPAClient`` compatible with the legacy
+framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Private Access, you must provide
+   ``client_id``, ``client_secret``, ``customer_id`` and ``cloud``
+
+The ZPA Cloud is identified by several cloud name prefixes, which
+determines which API endpoint the requests should be sent to. The
+following cloud environments are supported:
+
+-  ``PRODUCTION``
+-  ``ZPATWO``
+-  ``BETA``
+-  ``GOV``
+-  ``GOVUS``
+
+.. _environment-variables-3:
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZPA_CLIENT_ID``,
+``ZPA_CLIENT_SECRET``, ``ZPA_CUSTOMER_ID``, ``ZPA_CLOUD`` environment
+variables, representing your ZPA ``clientId``, ``clientSecret``,
+``customerId`` and ``cloud`` of your ZPA account, respectively.
+
+~> **NOTE** ``ZPA_CLOUD`` environment variable is required, and is used
+to identify the correct API gateway where the API requests should be
+forwarded to.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``clientId``       | *(String)* The    | ``ZPA_CLIENT_ID``          |
+|                    | ZPA API client ID |                            |
+|                    | generated from    |                            |
+|                    | the ZPA console.  |                            |
++--------------------+-------------------+----------------------------+
+| ``clientSecret``   | *(String)* The    | ``ZPA_CLIENT_SECRET``      |
+|                    | ZPA API client    |                            |
+|                    | secret generated  |                            |
+|                    | from the ZPA      |                            |
+|                    | console.          |                            |
++--------------------+-------------------+----------------------------+
+| ``customerId``     | *(String)* The    | ``ZPA_CUSTOMER_ID``        |
+|                    | ZPA tenant ID     |                            |
+|                    | found in the      |                            |
+|                    | Administration >  |                            |
+|                    | Company menu in   |                            |
+|                    | the ZPA console.  |                            |
++--------------------+-------------------+----------------------------+
+| ``microtenantId``  | *(String)* The    | ``ZPA_MICROTENANT_ID``     |
+|                    | ZPA microtenant   |                            |
+|                    | ID found in the   |                            |
+|                    | respective        |                            |
+|                    | microtenant       |                            |
+|                    | instance under    |                            |
+|                    | Configuration &   |                            |
+|                    | Control > Public  |                            |
+|                    | API > API Keys    |                            |
+|                    | menu in the ZPA   |                            |
+|                    | console.          |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZPA_CLOUD``              |
+|                    | Zscaler cloud for |                            |
+|                    | your tenancy.     |                            |
++--------------------+-------------------+----------------------------+
+
+ZPA Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZPAClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "customerId": '{yourCustomerId}',
+       "microtenantId": '{yourMicrotenantId}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZPAClient(config) as client:
+           added_label, response, error = client.zpa.segment_groups.add_group(
+               name=f"NewGroup_{random.randint(1000, 10000)}",
+               description=f"NewGroup_{random.randint(1000, 10000)}",
+               enabled=True
+           )
+           if err:
+               print(f"Error adding segment group: {err}")
+               return
+           print(f"Segment Group added successfully: {added_label.as_dict()}")
+
+   if __name__ == "__main__":
+       main()
+
+ZCC Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Organizations whose tenant is still not migrated to Zidentity must
+continue using their previous ZCC API credentials. This SDK provides a
+dedicated API client ``LegacyZCCClient`` compatible with the legacy
+framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Client Connector (ZCC), you must
+   provide ``api_key``, ``secret_key``, and ``cloud``
+
+The ZCC Cloud is identified by several cloud name prefixes, which
+determines which API endpoint the requests should be sent to. The
+following cloud environments are supported:
+
+-  ``zscaler``
+-  ``zscalerone``
+-  ``zscalertwo``
+-  ``zscalerthree``
+-  ``zscloud``
+-  ``zscalerbeta``
+-  ``zscalergov``
+-  ``zscalerten``
+-  ``zspreview``
+
+.. _environment-variables-4:
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZCC_CLIENT_ID``,
+``ZCC_CLIENT_ID``, ``ZCC_CLOUD`` environment variables, representing
+your ZIA ``api_key``, ``secret_key``, and ``cloud`` respectively.
+
+~> **NOTE** ``ZCC_CLOUD`` environment variable is required, and is used
+to identify the correct API gateway where the API requests should be
+forwarded to.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``api_key``        | *(String)* A      | ``ZCC_CLIENT_ID``          |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | apiKey for the    |                            |
+|                    | Mobile Portal.    |                            |
++--------------------+-------------------+----------------------------+
+| ``secret_key``     | *(String)* A      | ``ZCC_CLIENT_SECRET``      |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | secret key for    |                            |
+|                    | the Mobile        |                            |
+|                    | Portal.           |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZCC_CLOUD``              |
+|                    | host and basePath |                            |
+|                    | for the ZCC cloud |                            |
+|                    | services API is   |                            |
+|                    | ``$mobile         |                            |
+|                    | admin.<Zscaler Cl |                            |
+|                    | oud Name>/papi``. |                            |
++--------------------+-------------------+----------------------------+
+
+ZCC Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZCCClient
+
+   config = {
+       "api_key": '{yourApiKey}',
+       "secret_key": '{yourSecreKey}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+       with LegacyZCCClient(config) as client:
+
+           for group in client.zcc.devices.list_devices():
+               print(group)
+   if __name__ == "__main__":
+       main()
+
+ZDX Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This SDK provides a dedicated API client ``LegacyZDXClient`` compatible
+with the legacy framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Digital Experience (ZDX), you must
+   provide ``key_id``, ``key_secret``
+
+The ZDX ``cloud`` attribute identifies the cloud name prefix, which
+determines which API endpoint the requests should be sent to. By default
+the ZDX API client will always send the request to the following cloud:
+``zdxcloud``
+
+-  ``zdxcloud``
+-  ``zdxbeta``
+
+ZDX Environment variables
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZDX_CLIENT_ID``,
+``ZDX_CLIENT_SECRET`` environment variables, representing your ZDX
+``key_id``, ``key_secret`` of your ZDX account, respectively.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``key_id``         | *(String)* A      | ``ZDX_CLIENT_ID``          |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | key_id for the    |                            |
+|                    | ZDX Portal.       |                            |
++--------------------+-------------------+----------------------------+
+| ``key_secret``     | *(String)* A      | ``ZDX_CLIENT_SECRET``      |
+|                    | string that       |                            |
+|                    | contains the      |                            |
+|                    | key_secret key    |                            |
+|                    | for the ZDX       |                            |
+|                    | Portal.           |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZDX_CLOUD``              |
+|                    | cloud name        |                            |
+|                    | prefix that       |                            |
+|                    | identifies the    |                            |
+|                    | correct API       |                            |
+|                    | endpoint.         |                            |
++--------------------+-------------------+----------------------------+
+
+ZDX Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZDXClient
+
+   config = {
+       "key_id": '{yourKeyId}',
+       "key_secret": '{yourKeySecret}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZDXClient(config) as client:
+           app_list, _, err = client.zdx.apps.list_apps(query_params{"since": 2})
+           if err:
+               print(f"Error listing applications: {err}")
+               return
+           for app in app_list:
+               print(app.as_dict())
+
+   if __name__ == "__main__":
+       main()
+
+ZWA Legacy Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This SDK provides a dedicated API client ``LegacyZWAClient`` compatible
+with the legacy framework, which must be used in this scenario.
+
+-  For authentication via Zscaler Workflow Automation (ZWA), you must
+   provide ``key_id``, ``key_secret``
+
+The ZWA ``cloud`` attribute identifies the cloud name prefix, which
+determines which API endpoint the requests should be sent to. By default
+the ZDX API client will always send the request to the following cloud:
+``us1``
+
+-  ``us1``
+
+For authentication via Zscaler Workflow Automation (ZWA), you must
+provide ``key_id``, ``key_secret``
+
+ZWA Environment variables
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can provide credentials via the ``ZWA_CLIENT_ID``,
+``ZWA_CLIENT_SECRET`` environment variables, representing your ZDX
+``key_id``, ``key_secret`` of your ZWA account, respectively.
+
++--------------------+-------------------+----------------------------+
+| Argument           | Description       | Environment variable       |
++====================+===================+============================+
+| ``key_id``         | *(String)* The    | ``ZWA_CLIENT_ID``          |
+|                    | ZWA string that   |                            |
+|                    | contains the API  |                            |
+|                    | key ID.           |                            |
++--------------------+-------------------+----------------------------+
+| ``key_secret``     | *(String)* The    | ``ZWA_CLIENT_SECRET``      |
+|                    | ZWA string that   |                            |
+|                    | contains the key  |                            |
+|                    | secret.           |                            |
++--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZWA_CLOUD``              |
+|                    | ZWA string        |                            |
+|                    | containing cloud  |                            |
+|                    | provisioned for   |                            |
+|                    | your              |                            |
+|                    | organization.     |                            |
++--------------------+-------------------+----------------------------+
+
+ZWA Legacy Client Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: py
+
+   import random
+   from zscaler.oneapi_client import LegacyZWAClient
+
+   config = {
+       "key_id": '{yourKeyId}',
+       "key_secret": '{yourKeySecret}',
+       "cloud": '{yourCloud}',
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with LegacyZWAClient(config) as client:
+           transactions, _, err = client.zwa.dlp_incidents.get_incident_transactions('SVDP-17410643229970491392')
+           if err:
+               print(f"Error listing transactions: {err}")
+               return
+           for incident in transactions:
+               print(incident.as_dict())
+
+   if __name__ == "__main__":
+       main()
+
+Zscaler Legacy API Rate Limiting
+--------------------------------
+
+Zscaler provides unique rate limiting numbers for each individual
+product. Regardless of the product, a 429 response will be returned if
+too many requests are made within a given time. Please see:
+
+The header ``X-Rate-Limit-Remaining`` is returned in the API response
+for each API call. This header indicates the time in seconds until the
+rate limit resets. The SDK uses the returned value to calculate the
+retry time for the following services: \* `ZCC Rate
+Limiting <https://help.zscaler.com/zscaler-client-connector/understanding-rate-limiting>`__
+for rate limiting requirements.
+
+The header ``RateLimit-Reset`` is returned in the API response for each
+API call. This header indicates the time in seconds until the rate limit
+resets. The SDK uses the returned value to calculate the retry time for
+the following services: \* `ZDX Rate
+Limiting <https://help.zscaler.com/zdx/understanding-rate-limiting>`__
+for rate limiting requirements. \* `ZWA Rate
+Limiting <https://help.zscaler.com/workflow-automation/understanding-api-rate-limiting-workflow-automation-api>`__
+for rate limiting requirements.
+
+When a 429 error is received, the ``Retry-After`` header is returned in
+the API response. The SDK uses the returned value to calculate the retry
+time. The following services are rate limited based on its respective
+endpoint. \* `ZTW Rate
+Limiting <https://help.zscaler.com/cloud-branch-connector/understanding-rate-limits>`__
+for a complete list of which endpoints are rate limited. \* `ZIA Rate
+Limiting <https://help.zscaler.com/zia/understanding-rate-limiting>`__
+for a complete list of which endpoints are rate limited.
+
+When a 429 error is received, the ``retry-after`` header will tell you
+the time at which you can retry. The SDK uses the returned value to
+calculate the retry time. \* `ZPA Rate
+Limiting <https://help.zscaler.com/zpa/understanding-rate-limiting>`__
+for rate limiting requirements.
+
+.. _built-in-retry-1:
+
+Built-In Retry
+~~~~~~~~~~~~~~
+
+This SDK uses the built-in retry strategy to automatically retry on 429
+errors based on the response headers returned by each respective API
+service.
 
 Contributing
-==============
-Contributions to Zscaler SDK Python are absolutely welcome. At the moment, we could use more tests and documentation/examples.
-Please see the `Contribution Guidelines <https://github.com/zscaler/zscaler-sdk-python/blob/main/CONTRIBUTING.md>`_ for more information.
+~~~~~~~~~~~~~~
 
-`Poetry <https://python-poetry.org/docs/>`_ is currently being used for builds and management. You'll want to have
-poetry installed and available in your environment.
+At this moment we are not accepting contributions, but we welcome
+suggestions on how to improve this SDK or feature requests, which can
+then be added in future releases.
 
-Issues
-=========
-Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ if you run into any problems using Zscaler SDK Python.
+Contributors
+~~~~~~~~~~~~~~
 
-License
-=========
+-  William Guilherme - `willguibr <https://github.com/willguibr>`__
+-  Mitch Kelly - `mitcho <https://github.com/mitcho>`__
+-  Eddie Parra - `eparra <https://github.com/eparra>`__
+-  Paul Abbot - `abbottp <https://github.com/abbottp>`__
+
 MIT License
+~~~~~~~~~~~~~~
 
-Copyright (c) 2023 Zscaler Inc.
+Copyright (c) 2023 `Zscaler <https://github.com/zscaler>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+“Software”), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+.. |PyPI - Downloads| image:: https://img.shields.io/pypi/dw/zscaler-sdk-python
+   :target: https://pypistats.org/packages/zscaler-sdk-python
+.. |License| image:: https://img.shields.io/github/license/zscaler/zscaler-sdk-python.svg
+   :target: https://github.com/zscaler/zscaler-sdk-python
+.. |Documentation Status| image:: https://readthedocs.org/projects/zscaler-sdk-python/badge/?version=latest
+   :target: https://zscaler-sdk-python.readthedocs.io/en/latest/?badge=latest
+.. |Latest version released on PyPi| image:: https://img.shields.io/pypi/v/zscaler-sdk-python.svg
+   :target: https://pypi.org/project/zscaler-sdk-python
+.. |PyPI pyversions| image:: https://img.shields.io/pypi/pyversions/zscaler-sdk-python.svg
+   :target: https://pypi.python.org/pypi/zscaler-sdk-python/
+.. |codecov| image:: https://codecov.io/gh/zscaler/zscaler-sdk-python/graph/badge.svg?token=56B53PITU8
+   :target: https://codecov.io/gh/zscaler/zscaler-sdk-python
+.. |Zscaler Community| image:: https://img.shields.io/badge/zscaler-community-blue
+   :target: https://community.zscaler.com/

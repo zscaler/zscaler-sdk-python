@@ -1,0 +1,634 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules
+  response:
+    body:
+      string: '[{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583292,"name":"djk","order":-1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"DISABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":true},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583290,"name":"fN","order":0,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":184226,"name":"Office
+        365 One Click Rule","order":3,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773245413,"lastModifiedBy":{"id":117781255,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":1,"name":"OFFICE365"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":996855,"name":"Block
+        malicious IPs and domains","order":3,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"Block
+        malicious IPs and domains","lastModifiedTime":1773245413,"lastModifiedBy":{"id":117781255,"name":"REDACTED"},"destIpCategories":["MALWARE_SITE"],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":449521,"name":"UCaaS
+        One Click Rule","order":4,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773327640,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":2,"name":"ZOOM"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:26 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '2140'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 24a8d9de-a6fd-9ece-80e8-a706962d23bd
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4981'
+      x-ratelimit-reset:
+      - '36'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules?ruleAction=ALLOW
+  response:
+    body:
+      string: '[{"accessControl":"READ_WRITE","enableFullLogging":false,"id":184226,"name":"Office
+        365 One Click Rule","order":3,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773245413,"lastModifiedBy":{"id":117781255,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":1,"name":"OFFICE365"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":449521,"name":"UCaaS
+        One Click Rule","order":4,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773327640,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":2,"name":"ZOOM"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:28 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1785'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3c76b714-9d69-9798-aca3-dc615f84ffae
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4980'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0001", "description": "tests-vcr0002", "order": 1, "rank":
+      7, "action": "ALLOW", "enableFullLogging": true, "srcIps": ["192.168.100.0/24",
+      "192.168.200.1"], "destAddresses": ["3.217.228.0-3.217.231.255"], "destCountries":
+      ["COUNTRY_US"], "deviceTrustLevels": ["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST",
+      "MEDIUM_TRUST", "HIGH_TRUST"], "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '370'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules
+  response:
+    body:
+      string: '{"enableFullLogging":true,"id":1690931,"name":"tests-vcr0001","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"tests-vcr0002","srcIps":["192.168.100.0/24","192.168.200.1"],"destAddresses":["3.217.228.0-3.217.231.255"],"destIpCategories":[],"destCountries":["COUNTRY_US"],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '4661'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 434d5b3c-bbbd-9ab2-ab7e-8e0b084c409c
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4979'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules/1690931
+  response:
+    body:
+      string: '{"accessControl":"READ_WRITE","enableFullLogging":true,"id":1690931,"name":"tests-vcr0001","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"tests-vcr0002","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIps":["192.168.100.0/24","192.168.200.1"],"destAddresses":["3.217.228.0-3.217.231.255"],"destIpCategories":[],"destCountries":["COUNTRY_US"],"sourceCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:35 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1553'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 2708dc73-61bd-93ce-9517-b2d51b0ba502
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4978'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "updated-vcr0003", "description": "updated-vcr0004", "order":
+      1, "rank": 7, "action": "ALLOW", "enableFullLogging": true, "srcIps": ["192.168.100.0/24"],
+      "destAddresses": ["3.217.228.0-3.217.231.255"], "destCountries": ["COUNTRY_US",
+      "COUNTRY_CA"], "deviceTrustLevels": ["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST",
+      "MEDIUM_TRUST", "HIGH_TRUST"], "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '371'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules/1690931
+  response:
+    body:
+      string: '{"enableFullLogging":true,"id":1690931,"name":"updated-vcr0003","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"updated-vcr0004","lastModifiedTime":1773371857,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIps":["192.168.100.0/24"],"destAddresses":["3.217.228.0-3.217.231.255"],"destIpCategories":[],"destCountries":["COUNTRY_US","COUNTRY_CA"],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:39 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '4023'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e8999238-985b-95ae-802c-dfb62c9dadd7
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4977'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules
+  response:
+    body:
+      string: '[{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583292,"name":"djk","order":-1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"DISABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":true},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583290,"name":"fN","order":0,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":true,"id":1690931,"name":"updated-vcr0003","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"updated-vcr0004","lastModifiedTime":1773371857,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIps":["192.168.100.0/24"],"destAddresses":["3.217.228.0-3.217.231.255"],"destIpCategories":[],"destCountries":["COUNTRY_CA","COUNTRY_US"],"sourceCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":184226,"name":"Office
+        365 One Click Rule","order":4,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":1,"name":"OFFICE365"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":996855,"name":"Block
+        malicious IPs and domains","order":4,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"Block
+        malicious IPs and domains","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["MALWARE_SITE"],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":449521,"name":"UCaaS
+        One Click Rule","order":5,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":2,"name":"ZOOM"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:40 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1076'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d83243e6-3d69-90c4-ae8d-6c9826bd686d
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '21'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules?page=1&pageSize=10
+  response:
+    body:
+      string: '[{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583292,"name":"djk","order":-1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"DISABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":true},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":1583290,"name":"fN","order":0,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191330606","lastModifiedTime":1765167481,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":true,"id":1690931,"name":"updated-vcr0003","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"updated-vcr0004","lastModifiedTime":1773371857,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIps":["192.168.100.0/24"],"destAddresses":["3.217.228.0-3.217.231.255"],"destIpCategories":[],"destCountries":["COUNTRY_CA","COUNTRY_US"],"sourceCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"isEunEnabled":false,"eunTemplateId":14,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":184226,"name":"Office
+        365 One Click Rule","order":4,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":1,"name":"OFFICE365"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":996855,"name":"Block
+        malicious IPs and domains","order":4,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"Block
+        malicious IPs and domains","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["MALWARE_SITE"],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false},{"accessControl":"READ_WRITE","enableFullLogging":false,"id":449521,"name":"UCaaS
+        One Click Rule","order":5,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"DISABLED","lastModifiedTime":1773371850,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"destCountries":[],"excludeSrcCountries":false,"excludeContextShieldEndPoint":false,"appServiceGroups":[{"id":2,"name":"ZOOM"}],"endPointApplications":[],"endPointApplicationGroups":[],"isEunEnabled":false,"eunTemplateId":14,"predefined":true,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:17:42 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1838'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d638138f-8a17-916b-a7b1-b12d8dc1f906
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '20'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/zia/api/v1/firewallFilteringRules/1690931
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Fri, 13 Mar 2026 03:17:44 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1863'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 8ac271d7-6f0b-9bdf-b8a5-da73a328e35e
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

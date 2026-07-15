@@ -9,3 +9,5 @@ Methods are accessible via ``zia.audit_logs``
 
 .. automodule:: zscaler.zia.audit_logs
     :members:
+    :undoc-members:
+    :show-inheritance:

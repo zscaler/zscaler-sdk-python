@@ -19,3 +19,5 @@ Methods are accessible via ``zia.url_categories``
 
 .. automodule:: zscaler.zia.url_categories
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=REDACTED&client_secret=REDACTED&audience=REDACTED
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '143'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://securitygeekio.zsloginbeta.net/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":86399}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zsloginbeta.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zsloginbeta.net/
+        https://securitygeekio-admin.zsloginbeta.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 26 Mar 2026 03:33:42 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\n            query ListAgentGroups(\n                $customerId:
+      ID!, $page: Int, $pageSize: Int,\n                $search: String, $sort: String,
+      $sortDir: SortDirection\n            ) {\n                agentGroups(\n                    customerId:
+      $customerId,\n                    page: $page,\n                    pageSize:
+      $pageSize,\n                    search: $search,\n                    sort:
+      $sort,\n                    sortDir: $sortDir\n                ) {\n                    nodes
+      {\n                        name\n                        eyezId\n                        agentGroupType\n                        cloudProvider\n                        adminStatus\n                        agentCount\n                        description\n                        policyStatus\n                        upgradeStatus\n                        tamperProtectionStatus\n                        agentAutoUpgrade\n                        agentDeletionTimeoutSeconds\n                        timezone\n                        upgradeDay\n                        upgradeTime\n                        versionProfileName\n                    }\n                    pageInfo
+      {\n                        pageNumber\n                        pageSize\n                        totalCount\n                        totalPages\n                    }\n                }\n            }\n        ",
+      "variables": {"customerId": "72058304855015424", "page": 1, "pageSize": 20},
+      "operationName": "ListAgentGroups"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1514'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://api.beta.zsapi.net/zms/graphql
+  response:
+    body:
+      string: '{"data":{"agentGroups":{"nodes":[],"pageInfo":{"pageNumber":1,"pageSize":0,"totalCount":0,"totalPages":0}}}}
+
+        '
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-store
+      content-length:
+      - '109'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 26 Mar 2026 03:33:43 GMT
+      etag:
+      - W/"6d-7s/S/9or0UwjmIN6gvGGMRhYLIU"
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-envoy-upstream-service-time:
+      - '647'
+      x-oneapi-host:
+      - https://apiusw2.beta.zsapi.net
+      x-oneapi-request-id:
+      - 228556d4-9861-9861-bfe8-ea2c53381f2c
+      x-oneapi-version:
+      - 109.1.146-hotfix
+      x-powered-by:
+      - Express
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 4b11a4bc-f13e-41aa-8b99-47582577ff56
+    status:
+      code: 200
+      message: OK
+version: 1

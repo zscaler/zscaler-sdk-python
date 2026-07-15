@@ -1,0 +1,550 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite
+  response:
+    body:
+      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
+        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:25 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '238'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 73e1ea97-d812-9b78-bc4d-b718a2350fe4
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite
+  response:
+    body:
+      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
+        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss; detail=shadow-mode
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:26 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '257'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7651efcb-d259-92f9-b970-fc2286c00837
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeAuditorRole=True
+  response:
+    body:
+      string: '{"message":"Rate Limit (2/SECOND) exceeded","Retry-After":"1 seconds"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '70'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:26 GMT
+      retry-after:
+      - '1'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '133'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4009b118-3df9-904f-9cc8-a8a328b249bc
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/lite?includeAuditorRole=True
+  response:
+    body:
+      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
+        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":18999,"rank":7,"name":"Auditor","isAuditor":true,"roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:28 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '134'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - cb946551-ac13-96ff-b1a4-791584c08442
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles/11521
+  response:
+    body:
+      string: '{"id":11521,"rank":0,"name":"Super Admin","alertingAccess":"READ_WRITE","dashboardAccess":"READ_WRITE","reportAccess":"READ_WRITE","analysisAccess":"READ_ONLY","usernameAccess":"READ_ONLY","deviceInfoAccess":"READ_ONLY","aiPromptAccess":"READ_ONLY","featurePermissions":{"ZIA_TRAFFIC_CAPTURE":"READ_WRITE","LOCATIONS":"READ_WRITE","BROWSER_ISOLATION":"READ_WRITE","SUBCLOUDS":"READ_WRITE","FTP_CONTROL":"READ_WRITE","CLOUD_APP_CONTROL":"READ_WRITE","CLIENT_CONNECTOR_PORTAL":"READ_WRITE","REPORTING_WEB_DATA":"READ_ONLY","REPORTING_FIREWALL":"READ_ONLY","INTERMEDIATE_CA_CERTIFICATES":"READ_WRITE","INLINE_DLP":"READ_WRITE","REPORTING_SANDBOX":"READ_ONLY","IP_FQDN_GROUPS":"READ_WRITE","BACKUP":"READ_WRITE","REMOTE_ASSISTANCE_MANAGEMENT":"READ_WRITE","CROWDSTRIKE":"READ_WRITE","DEVICE_MANAGEMENT":"READ_WRITE","SD_WAN":"READ_WRITE","IDENTITY_PROXY_SETTINGS":"READ_WRITE","FORWARDING_CONTROL":"READ_WRITE","FILE_TYPE_CONTROL":"READ_WRITE","NAT_CONTROL":"READ_WRITE","MICROSOFT_CLOUD_APP_SECURITY":"READ_WRITE","VPN_CREDENTIALS":"READ_WRITE","SAAS_SECURITY_POSTURE_MGMT":"READ_WRITE","IPS_CONTROL":"READ_WRITE","INCIDENT_WORKFLOW":"READ_WRITE","BANDWIDTH_CONTROL":"READ_WRITE","SECURE_BROWSING":"READ_WRITE","VZEN_CONFIGURATION":"READ_WRITE","FIREWALL_CONTROL":"READ_WRITE","SSL_POLICY":"READ_WRITE","PROXY_GATEWAY":"READ_WRITE","AUTHENTICATION_SETTINGS":"READ_WRITE","END_POINT_DLP":"READ_WRITE","MOBILE_APP_STORE_CONTROL":"READ_WRITE","GRE_TUNNELS":"READ_WRITE","MOBILE_MALWARE_PROTECTION":"READ_WRITE","TIME_INTERVALS":"READ_WRITE","STATIC_IPS":"READ_WRITE","MALWARE_PROTECTION":"READ_WRITE","ADVANCED_THREAT_PROTECTION":"READ_WRITE","DLP_INCIDENT_RECEIVER":"READ_WRITE","ENDPOINT_CONTEXT":"READ_WRITE","AZURE_VIRTUAL_WAN":"READ_WRITE","RESTORE":"READ_WRITE","USER_MANAGEMENT":"READ_WRITE","OVERRIDE_EXISTING_CAT":"READ_WRITE","SAAS_APPLICATION_TENANTS":"READ_WRITE","MICROSOFT_DEFENDER_FOR_ENDPOINT":"READ_WRITE","CLOUD_SANDBOX":"READ_WRITE","REPORTING_URL_CATEGORIES":"READ_ONLY","ADVANCED_SETTINGS":"READ_WRITE","NSS_CONFIGURATION":"READ_WRITE","ALERTS_CONFIGURATION":"READ_WRITE","THIRD_PARTY_SSL_ROOT_CERTS":"READ_WRITE","REPORTING_IOT":"READ_ONLY","SAAS_SECURITY_API":"READ_WRITE","APIKEY_MANAGEMENT":"READ_WRITE","DLP_NOTIFICATION_TEMPLATES":"READ_WRITE","POLICY_RESOURCE_MANAGEMENT":"READ_WRITE","REPORTING_DLP":"READ_ONLY","DNS_CONTROL":"READ_WRITE","ADMINISTRATOR_MANAGEMENT":"READ_WRITE","HOSTED_PAC_FILES":"READ_WRITE","URL_FILTERING_CONTROL":"READ_WRITE","ZS_DEFINED_URL_CATEGORY_MGMT":"READ_WRITE","BANDWIDTH_CLASSES":"READ_WRITE","AUDIT_LOGS":"READ_WRITE","ROLE_MANAGEMENT":"READ_WRITE","CUSTOM_URL_CAT":"READ_WRITE","DLP_DICTIONARIES_ENGINES":"READ_WRITE","REPORTING_SECURITY":"READ_ONLY","TENANT_PROFILE_MANAGEMENT":"READ_WRITE"},"extFeaturePermissions":{},"isNonEditable":true,"logsLimit":"UNRESTRICTED","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:28 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '246'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1a5db8c9-d285-9ba8-8c01-0a77e8ac432e
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "TestAdminRole_VCR", "adminAcctAccess": "READ_ONLY", "dashboardAccess":
+      "READ_ONLY", "reportAccess": "READ_ONLY", "analysisAccess": "READ_ONLY", "usernameAccess":
+      "READ_ONLY", "deviceInfoAccess": "READ_ONLY"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '217'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/adminRoles
+  response:
+    body:
+      string: '{"code":"SCOPE_LIMITED","message":"Only super admins can create, update
+        or delete a role."}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      cache-status:
+      - EdgeCache; fwd=miss
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '91'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:29 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '743'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f3670a67-c77d-9117-a88c-3fdbe55f615d
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4989'
+      x-ratelimit-reset:
+      - '31'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/passwordExpiry/settings
+  response:
+    body:
+      string: '{"code":"INVALID_OPERATION","message":"Not allowed for one identity
+        enabled tenants"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '85'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:13:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '123'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1e773b6b-7ea0-99d0-bb13-c21bf5264b1f
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '31'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 403
+      message: Forbidden
+version: 1

@@ -1,0 +1,213 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webFailOpenPolicy/listByCompany
+  response:
+    body:
+      string: "[ {\n  \"id\" : \"4441\",\n  \"active\" : \"1\",\n  \"captivePortalWebSecDisableMinutes\"
+        : 10,\n  \"enableWebSecOnProxyUnreachable\" : \"0\",\n  \"tunnelFailureRetryCount\"
+        : 25,\n  \"enableWebSecOnTunnelFailure\" : \"0\",\n  \"enableCaptivePortalDetection\"
+        : 1,\n  \"enableFailOpen\" : 1,\n  \"enableStrictEnforcementPrompt\" : 0,\n
+        \ \"strictEnforcementPromptDelayMinutes\" : 2,\n  \"strictEnforcementPromptMessage\"
+        : \"\"\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:59 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '166'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 59df07c7-6ad8-97e8-ad05-73db70b811ac
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '95'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '60'
+      x-ratelimit-reset:
+      - '1441'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webFailOpenPolicy/listByCompany?page=1&pageSize=1
+  response:
+    body:
+      string: "[ {\n  \"id\" : \"4441\",\n  \"active\" : \"1\",\n  \"captivePortalWebSecDisableMinutes\"
+        : 10,\n  \"enableWebSecOnProxyUnreachable\" : \"0\",\n  \"tunnelFailureRetryCount\"
+        : 25,\n  \"enableWebSecOnTunnelFailure\" : \"0\",\n  \"enableCaptivePortalDetection\"
+        : 1,\n  \"enableFailOpen\" : 1,\n  \"enableStrictEnforcementPrompt\" : 0,\n
+        \ \"strictEnforcementPromptDelayMinutes\" : 2,\n  \"strictEnforcementPromptMessage\"
+        : \"\"\n} ]"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:35:59 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '221'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 97300aee-ece4-9108-a5a2-e097f2eadb7b
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '91'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '59'
+      x-ratelimit-reset:
+      - '1441'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"active": "1", "captivePortalWebSecDisableMinutes": 10, "enableCaptivePortalDetection":
+      1, "enableFailOpen": 1, "enableStrictEnforcementPrompt": 0, "enableWebSecOnProxyUnreachable":
+      "0", "enableWebSecOnTunnelFailure": "0", "id": "4441", "strictEnforcementPromptDelayMinutes":
+      2, "strictEnforcementPromptMessage": "", "tunnelFailureRetryCount": 25}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '348'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/webFailOpenPolicy/edit
+  response:
+    body:
+      string: "{\n  \"success\" : \"true\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:36:00 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '191'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c92e1e2e-8cb6-977d-8a5b-5398b07b0053
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '94'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '58'
+      x-ratelimit-reset:
+      - '1440'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

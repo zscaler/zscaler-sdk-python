@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.machine_groups``
 
 .. automodule:: zscaler.zpa.machine_groups
     :members:
+    :undoc-members:
+    :show-inheritance:

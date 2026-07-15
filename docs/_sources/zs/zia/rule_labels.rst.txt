@@ -10,3 +10,5 @@ Methods are accessible via ``zia.labels``
 
 .. automodule:: zscaler.zia.labels
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,28 +1,29 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import List, Optional
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.lss import LSSResourceModel
 
 
-from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
-
-from zscaler.utils import Iterator, convert_keys, keys_exists, snake_to_camel
-
-
-class LSSConfigControllerAPI(APIEndpoint):
+class LSSConfigControllerAPI(APIClient):
     source_log_map = {
         "app_connector_metrics": "zpn_ast_comprehensive_stats",
         "app_connector_status": "zpn_ast_auth_log",
@@ -34,11 +35,14 @@ class LSSConfigControllerAPI(APIEndpoint):
         "web_inspection": "zpn_waf_http_exchanges_log",
     }
 
-    def __init__(self, api: APISession):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
-        self.v2_admin_url = "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint_v1 = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._zpa_lss_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
+        self._zpa_base_lss_url_v2 = "/zpa/mgmtconfig/v2/admin/lssConfig"
+        self._zpa_lss_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/lssConfig/customers/{customer_id}"
 
     def _create_policy(self, conditions: list) -> list:
         """
@@ -48,20 +52,20 @@ class LSSConfigControllerAPI(APIEndpoint):
             conditions (list): List of condition tuples.
 
         Returns:
-            :obj:`dict`: Dictionary containing the LSS Log Receiver Policy conditions template.
+            :obj:`list`: List containing the LSS Log Receiver Policy conditions template.
 
         """
 
         template = []
 
         for condition in conditions:
-            # Template for SAML Policy Rule objects
-            if isinstance(condition, tuple) and len(condition) == 2 and condition[0] == "saml":
-                operand = {"operands": [{"objectType": "SAML", "entryValues": []}]}
-                for item in condition[1]:
+            # Template for SAML, SCIM, and SCIM_GROUP Policy Rule objects
+            if condition[0] in ["saml", "scim", "scim_group"]:
+                operand = {"operands": [{"objectType": condition[0].upper(), "entryValues": []}]}
+                for entry in condition[1]:  # entry is expected to be a tuple (lhs, rhs)
                     entry_values = {
-                        "lhs": item[0],
-                        "rhs": item[1],
+                        "lhs": entry[0],
+                        "rhs": entry[1],
                     }
                     operand["operands"][0]["entryValues"].append(entry_values)
             # Template for client_type Policy Rule objects
@@ -88,137 +92,131 @@ class LSSConfigControllerAPI(APIEndpoint):
 
         return template
 
-    def get_client_types(self) -> Box:
+    def _get_siem_policy_set_id(self):
         """
-        Returns all available LSS Client Types.
+        Resolves the SIEM policy set id by fetching the SIEM_POLICY policy type.
 
-        Client Types are used when creating LSS Receiver configs. ZPA uses an internal code for Client Types, e.g.
-        ``zpn_client_type_ip_anchoring`` is the Client Type for a ZIA Service Edge. zscaler-sdk-python inverts the key/value so
-        that you can perform a lookup using a human-readable name in your code (e.g. ``cloud_connector``).
+        The LSS payload's ``policyRuleResource`` must include ``policySetId``
+        (the id of the parent SIEM_POLICY policy set). This mirrors the
+        mechanism used by ``policies.add_access_rule_v2`` which calls
+        ``get_policy("access")`` and extracts ``id`` -- here the same lookup is
+        done against ``SIEM_POLICY`` and the resulting id is embedded in the
+        payload rather than the URL.
 
         Returns:
-            :obj:`Box`: Dictionary containing all LSS Client Types with human-readable name as the key.
-
-        Examples:
-            Print all LSS Client Types:
-
-            >>> print(zpa.lss.get_client_types())
-
+            tuple: ``(policy_set_id, error)``. ``policy_set_id`` is a string on
+            success, ``None`` on failure (with ``error`` describing why).
         """
-        # ZPA returns a dictionary of client types but the keys are the internal ZPA codes, which our users probably
-        # won't know. This method reverses the dictionary, converts the 'normalised' Client Type name to snake_case
-        # before returning it so that a lookup can be easily performed using the Client Type name in plain english.
-        #
-        # Example before:
-        # {'zpn_client_type_exporter': 'Web Browser'}
-        # Example after:
-        # {'web_browser': 'zpn_client_type_exporter'}
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v1}
+            /policySet/policyType/SIEM_POLICY
+        """)
 
-        resp = self._get(f"{self.v2_admin_url}/clientTypes")
-        reverse_map = {v.lower().replace(" ", "_"): k for k, v in resp.items()}
-        return Box(reverse_map)
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, error)
 
-    def list_configs(self, **kwargs) -> BoxList:
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, error)
+
+        body = response.get_body() if response is not None else None
+        if not body:
+            return (None, "Empty response body when resolving SIEM_POLICY policy set id")
+
+        policy_set_id = body.get("id")
+        if not policy_set_id:
+            return (None, "No policy ID found for 'SIEM_POLICY' policy type")
+        return (policy_set_id, None)
+
+    def list_configs(self, query_params: Optional[dict] = None) -> APIResult[List[LSSResourceModel]]:
         """
-        Returns all configured LSS receivers.
-
-        Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
-
-        Returns:
-            :obj:`BoxList`: List of all configured LSS receivers.
-
-        Examples:
-            Print all configured LSS Receivers.
-
-            >>> for lss_config in zpa.lss.list_configs():
-            ...    print(config)
-        """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/lssConfig", **kwargs))
-
-    def get_config(self, lss_id: str) -> Box:
-        """
-        Returns information on the specified LSS Receiver config.
+        Enumerates log receivers in your organization with pagination.
+        A subset of log receivers can be returned that match a supported
+        filter expression or query.
 
         Args:
-            lss_id (str):
-                The unique identifier for the LSS Receiver config.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            :obj:`Box`: The resource record for the LSS Receiver config.
+            tuple: A tuple containing (list of LSS Config instances, Response, error)
 
-        Examples:
-            Print information on the specified LSS Receiver config.
+        Example:
+            >>> lss_configs = zpa.lss.list_configs(search="example", pagesize=100)
 
-            >>> print(zpa.lss.get_config('99999'))
+            Client-side filtering with JMESPath:
 
-        """
-        return self._get(f"{self.v2_url}/lssConfig/{lss_id}")
-
-    def get_log_formats(self) -> Box:
-        """
-        Returns all available pre-configured LSS Log Formats.
-
-        LSS Log Formats are provided as either CSV, JSON or TSV. LSS Log Format values can be used when
-        creating or updating LSS Log Receiver configs.
-
-        Returns:
-            :obj:`Box`: Dictionary containing pre-configured LSS Log Formats.
-
-        Examples:
-            >>> for item in zpa.lss.get_log_formats():
-            ...    print(item)
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
-        return self._get(f"{self.v2_admin_url}/logType/formats")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_lss_base_endpoint_v2}
+            /lssConfig
+        """)
 
-    def get_status_codes(self, log_type: str = "all") -> Box:
+        query_params = query_params or {}
+
+        # Prepare request
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request, LSSResourceModel)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LSSResourceModel(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_config(self, lss_config_id: str, query_params: Optional[dict] = None) -> APIResult[LSSResourceModel]:
         """
-        Returns a list of LSS Session Status Codes.
-
-        The LSS Session Status codes are used to filter the messages received by LSS. LSS Session Status Codes can be
-        used when adding or updating the filters for an LSS Log Receiver.
+        Gets information on the specified LSS Receiver config.
 
         Args:
-            log_type (str):
-                Filter the LSS Session Status Codes by Log Type, accepted values are:
-
-                - ``all``
-                - ``app_connector_status``
-                - ``private_svc_edge_status``
-                - ``user_activity``
-                - ``user_status``
-
-                `Defaults to all.`
+            lss_config_id (str): The unique identifier of the LSS Receiver config.
 
         Returns:
-            :obj:`Box`: Dictionary containing all LSS Session Status Codes.
-
-        Examples:
-            Print all LSS Session Status Codes.
-
-            >>> for item in zpa.lss.get_status_codes():
-            ...    print(item)
-
-            Print LSS Session Status Codes for `User Activity` log types.
-
-            >>> for item in zpa.lss.get_status_codes(log_type="user_activity"):
-            ...    print(item)
-
+            LSSConfig: The corresponding LSS Receiver config object.
         """
-        if log_type == "all":
-            return self._get(f"{self.v2_admin_url}/statusCodes")
-        elif log_type in ["user_activity", "user_status", "private_svc_edge_status", "app_connector_status"]:
-            return self._get(f"{self.v2_admin_url}/statusCodes")[self.source_log_map[log_type]]
-        else:
-            raise ValueError("Incorrect log_type provided.")
+        http_method = "get".upper()
+        api_url = format_url(f"""{
+            self._zpa_lss_base_endpoint_v2}
+            /lssConfig/{lss_config_id}
+        """)
+
+        query_params = query_params or {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, LSSResourceModel)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = LSSResourceModel(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def add_lss_config(
         self,
@@ -231,121 +229,73 @@ class LSSConfigControllerAPI(APIEndpoint):
         source_log_format: str = "csv",
         use_tls: bool = False,
         **kwargs,
-    ) -> Box:
+    ) -> APIResult[dict]:
         """
         Adds a new LSS Receiver Config to ZPA.
 
         Args:
-            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups associated with this
-                LSS Config. `Defaults to None.`
+            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups associated with this LSS Config.
             enabled (bool): Enable the LSS Receiver. `Defaults to True`.
             lss_host (str): The IP address of the LSS Receiver.
             lss_port (str): The port number for the LSS Receiver.
             name (str): The name of the LSS Config.
-            source_log_format (str):
-                The format for the logs. Must be one of the following options:
-
-                - ``csv`` - send logs in CSV format
-                - ``json`` - send logs in JSON format
-                - ``tsv`` - send logs in TSV format
-
-                `Defaults to csv.`
-            source_log_type (str):
-                The type of logs that will be sent to the receiver as part of this config. Must be one of the following
-                options:
-
-                - ``app_connector_metrics``
-                - ``app_connector_status``
-                - ``audit_logs``
-                - ``browser_access``
-                - ``private_svc_edge_status``
-                - ``user_activity``
-                - ``user_status``
-            use_tls (bool):
-                Enable to use TLS on the log traffic between LSS components. `Defaults to False.`
+            source_log_format (str): The format for the logs. Defaults to `csv`.
+            source_log_type (str): The type of logs that will be sent to the receiver as part of this config.
+            use_tls (bool): Enable to use TLS on the log traffic between LSS components. `Defaults to False.`
 
         Keyword Args:
-            description (str):
-                Additional information about the LSS Config.
-            filter_status_codes (list):
-                A list of Session Status Codes that will be excluded by LSS.
-            log_stream_content (str):
-                Formatter for the log stream content that will be sent to the LSS Host. Only pass this parameter if you
-                intend on using custom log stream content.
-            policy_rules (list):
-                A list of policy rule tuples. Tuples must follow the convention:
-
-                 (`object_type`, [`object_id`]).
-
-                E.g.
-
-                .. code-block:: python
-
-                    ('app_segment_ids', ['11111', '22222']),
-                    ('segment_group_ids', ['88888']),
-                    ('idp_ids', ['99999']),
-                    ('client_type', ['zia_service_edge'])
-                    ('saml', [('33333', 'value')])
+            description (str): Additional information about the LSS Config.
+            filter_status_codes (list): A list of Session Status Codes that will be excluded by LSS.
+            log_stream_content (str): Custom log stream content formatting for the LSS Host.
+            policy_rules (list): A list of policy rule tuples, such as (`object_type`, [`object_id`]).
 
         Returns:
-            :obj:`Box`: The newly created LSS Config resource record.
+            LSSConfig: The newly created LSS Config resource object.
 
         Examples:
 
             Add an LSS Receiver config that receives App Connector Metrics logs.
 
-            .. code-block:: python
-
-                zpa.lss.add_config(
+            >>> zpa.lss.add_lss_config(
                     app_connector_group_ids=["app_conn_group_id"],
-                    lss_host="192.0.2.100,
+                    lss_host="192.0.2.100",
                     lss_port="8080",
                     name="app_con_metrics_to_siem",
-                    source_log_type="app_connector_metrics")
+                    source_log_type="app_connector_metrics"
+                )
 
             Add an LSS Receiver config that receives User Activity logs.
 
-            .. code-block:: python
-
-                zpa.lss.add_config(
+            >>> zpa.lss.add_lss_config(
                     app_connector_group_ids=["app_conn_group_id"],
-                    lss_host="192.0.2.100,
+                    lss_host="192.0.2.100",
                     lss_port="8080",
                     name="user_activity_to_siem",
                     policy_rules=[
                         ("idp", ["idp_id"]),
                         ("app", ["app_seg_id"]),
                         ("app_group", ["app_seg_group_id"]),
-                        ("saml", [("saml_attr_id", "saml_attr_value")]),
+                        ("saml", [("saml_attr_id", "saml_attr_value")])
                     ],
-                    source_log_type="user_activity")
-
-            Add an LSS Receiver config that receives User Status logs.
-
-            .. code-block:: python
-
-                zpa.lss.add_config(
-                    app_connector_group_ids=["app_conn_group_id"],
-                    lss_host="192.0.2.100,
-                    lss_port="8080",
-                    name="user_activity_to_siem",
-                    policy_rules=[
-                        ("idp", ["idp_id"]),
-                        ("client_type", ["web_browser", "client_connector"]),
-                        ("saml", [("attribute_id", "test3")]),
-                    ],
-                    source_log_type="user_status")
-
+                    source_log_type="user_activity"
+                )
         """
+        http_method = "post".upper()
+        api_url = format_url(f"""{
+            self._zpa_lss_base_endpoint_v2}
+            /lssConfig
+        """)
+
+        # Map the source log type to ZPA internal log codes
         source_log_type = self.source_log_map[source_log_type]
 
-        # If the user has supplied custom log stream content formatting then we'll use that. Otherwise map the log
-        # type to internal ZPA log codes and get the preformatted log stream content formatting directly from ZPA.
+        # Handle custom log stream content formatting or use default formatting from ZPA
         if kwargs.get("log_stream_content"):
             log_stream_content = kwargs.pop("log_stream_content")
         else:
-            log_stream_content = self.get_log_formats()[source_log_type][source_log_format]
+            log_stream_content = self.get_all_log_formats()[source_log_type][source_log_format]
 
+        # Prepare the payload
         payload = {
             "config": {
                 "enabled": enabled,
@@ -356,154 +306,344 @@ class LSSConfigControllerAPI(APIEndpoint):
                 "sourceLogType": source_log_type,
                 "useTls": use_tls,
             },
-            "connectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
+            "connectorGroups": [{"id": group_id} for group_id in app_connector_group_ids] if app_connector_group_ids else [],
         }
 
-        # Convert tuple list to dict and add to payload
+        # Handle policy rules and convert tuples into dictionary format.
+        # When policy_rules is set, the payload's policyRuleResource must
+        # include the SIEM_POLICY policy set id (resolved at runtime).
         if kwargs.get("policy_rules"):
+            policy_set_id, err = self._get_siem_policy_set_id()
+            if err:
+                return (None, None, err)
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
-                "name": kwargs.get("policy_name", "placeholder"),
+                "name": kwargs.get("policy_name", "SIEM_POLICY"),
+                "policySetId": policy_set_id,
             }
 
-        # Add Session Status Codes to filter if provided
+        # Add optional filter status codes if provided
         if kwargs.get("filter_status_codes"):
             payload["config"]["filter"] = kwargs.pop("filter_status_codes")
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload)
+        if error:
+            return (None, None, error)
 
-        # return payload
-        return self._post(f"{self.v2_url}/lssConfig", json=payload)
+        # Execute the request
+        response, error = self._request_executor.execute(request, LSSResourceModel)
+        if error:
+            return (None, response, error)
 
-    def update_lss_config(self, lss_config_id: str, **kwargs):
+        try:
+            result = LSSResourceModel(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_lss_config(
+        self,
+        lss_config_id: str,
+        lss_host: str = None,
+        lss_port: str = None,
+        name: str = None,
+        source_log_type: str = None,
+        app_connector_group_ids: list = None,
+        enabled: bool = None,
+        source_log_format: str = "csv",
+        use_tls: bool = None,
+        **kwargs,
+    ) -> APIResult[dict]:
         """
-        Update the LSS Receiver Config.
+        Updates the specified LSS Receiver Config.
+
+        The PUT body is constructed from scratch -- this function does not
+        pre-fetch and merge the current state. Only fields the caller
+        explicitly supplies are included in the body; everything else is
+        preserved by the server. The API treats the PUT body the same way it
+        treats the POST body used by ``add_lss_config``, with the resource id
+        supplied via the URL path (and echoed inside ``config.id``).
 
         Args:
-            lss_config_id (str): The unique id for the LSS Receiver config.
-            **kwargs: Optional keyword args.
+            lss_config_id (str): The unique identifier for the LSS Receiver config.
+            lss_host (str): The IP address of the LSS Receiver. Omitted from the body when ``None``.
+            lss_port (str): The port number for the LSS Receiver. Omitted from the body when ``None``.
+            name (str): The name of the LSS Config. Omitted from the body when ``None``.
+            source_log_type (str): The type of logs that will be sent to the receiver. Omitted from the body when ``None``.
+            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups. ``connectorGroups`` is omitted when ``None``.
+            enabled (bool): Enable the LSS Receiver. Omitted from the body when ``None`` (preserves the current value).
+            source_log_format (str): The format for the default log stream content (``csv``/``json``/``tsv``).
+                Only used to compute ``format`` when ``log_stream_content`` is not provided AND ``source_log_type`` is provided.
+                Defaults to ``csv``.
+            use_tls (bool): Enable TLS on the log traffic between LSS components. Omitted from the body when ``None``.
 
         Keyword Args:
-            description (str):
-                Additional information about the LSS Config.
-            enabled (bool):
-                Enable the LSS host. Defaults to ``True``.
-            filter_status_codes (list):
-                A list of Session Status Codes that will be excluded by LSS. If you would like to filter all error codes
-                then pass the string "all".
-            log_stream_content (str):
-                Formatter for the log stream content that will be sent to the LSS Host.
-            policy_rules (list):
-                A list of policy rule tuples. Tuples must follow the convention:
+            filter_status_codes (list): A list of Session Status Codes that will be excluded by LSS.
+            log_stream_content (str): Custom log stream content formatting for the LSS Host.
+            policy_rules (list): A list of policy rule tuples, such as (`object_type`, [`object_id`]).
+            policy_name (str): Name for the policy rule resource. ``Defaults to SIEM_POLICY``.
 
-                 (`object_type`, [`object_id`]).
-
-                E.g.
-
-                .. code-block:: python
-
-                    ('app_segment_ids', ['11111', '22222']),
-                    ('segment_group_ids', ['88888']),
-                    ('idp_ids', ['99999']),
-                    ('client_type', ['zpn_client_type_exporter'])
-                    ('saml_attributes', [('33333', 'value')])
-            source_log_format (str):
-                The format for the logs. Must be one of the following options:
-
-                - ``csv`` - send logs in CSV format
-                - ``json`` - send logs in JSON format
-                - ``tsv`` - send logs in TSV format
-            source_log_type (str):
-                The type of logs that will be sent to the receiver as part of this config. Must be one of the following
-                options:
-
-                - ``app_connector_metrics``
-                - ``app_connector_status``
-                - ``audit_logs``
-                - ``browser_access``
-                - ``private_svc_edge_status``
-                - ``user_activity``
-                - ``user_status``
-            use_tls (bool):
-                Enable to use TLS on the log traffic between LSS components. Defaults to ``False``.
+        Returns:
+            LSSConfig: The updated LSS Receiver config object.
 
         Examples:
+            Update just the name of an existing config (other fields preserved server-side):
 
-            Update an LSS Log Receiver config to change from user activity to user status.
+            >>> zpa.lss.update_lss_config(
+                    lss_config_id="99999",
+                    name="renamed-config",
+                )
 
-            Note that the ``policy_rules`` will need to be modified to be compatible with the chosen
-            ``source_log_type``.
+            Update multiple fields including policy rules:
 
-            .. code-block:: python
-
-                zpa.lss.update_config(
+            >>> zpa.lss.update_lss_config(
+                    lss_config_id="99999",
+                    app_connector_group_ids=["app_conn_group_id"],
+                    lss_host="192.0.2.100",
+                    lss_port="8080",
                     name="user_status_to_siem",
                     policy_rules=[
                         ("idp", ["idp_id"]),
                         ("client_type", ["machine_tunnel"]),
                         ("saml", [("attribute_id", "11111")]),
                     ],
-                    source_log_type="user_status")
-
-
+                    source_log_type="user_status",
+                )
         """
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_lss_base_endpoint_v2}
+            /lssConfig/{lss_config_id}
+        """)
 
-        # Set payload to value of existing record
-        payload = convert_keys(self.get_config(lss_config_id))
+        # Map source_log_type to the ZPA internal code only when supplied.
+        # When omitted, the field is left out of the payload entirely so the
+        # server preserves the current value.
+        mapped_source_log_type = None
+        if source_log_type is not None:
+            if source_log_type not in self.source_log_map:
+                return (None, None, f"Invalid source_log_type: {source_log_type!r}")
+            mapped_source_log_type = self.source_log_map[source_log_type]
 
-        # If the user has supplied custom log stream content formatting then we'll use that. Otherwise, map the log
-        # type to internal ZPA log codes and get the preformatted log stream content formatting directly from ZPA.
-        if kwargs.get("log_stream_content"):
-            payload["config"]["format"] = kwargs.pop("log_stream_content")
-        elif kwargs.get("source_log_type"):
-            source_log_type = self.source_log_map[kwargs.pop("source_log_type")]
-            payload["config"]["sourceLogType"] = source_log_type
-            payload["config"]["format"] = self.get_log_formats()[source_log_type][kwargs.pop("source_log_format", "csv")]
+        # Resolve log_stream_content. Only included in the body when:
+        #   - caller passes log_stream_content explicitly, OR
+        #   - caller passes source_log_type (the canonical template is fetched
+        #     using source_log_format, default "csv").
+        # Otherwise the existing format on the server is preserved.
+        log_stream_content = None
+        if "log_stream_content" in kwargs:
+            log_stream_content = kwargs.pop("log_stream_content")
+        elif mapped_source_log_type is not None:
+            log_stream_content = self.get_all_log_formats()[mapped_source_log_type][source_log_format]
 
-        # Iterate kwargs and update payload for keys that we've renamed.
-        for k in list(kwargs):
-            if k in ["name", "lss_host", "lss_port", "enabled", "use_tls"]:
-                payload["config"][snake_to_camel(k)] = kwargs.pop(k)
-            elif k == "filter_status_codes":
-                payload["config"]["filter"] = kwargs.pop(k)
+        # Build config block conditionally -- only include keys the caller
+        # supplied. config.id always rides along (LSS PUT requires it).
+        config_block = {"id": lss_config_id}
+        if enabled is not None:
+            config_block["enabled"] = enabled
+        if lss_host is not None:
+            config_block["lssHost"] = lss_host
+        if lss_port is not None:
+            config_block["lssPort"] = lss_port
+        if name is not None:
+            config_block["name"] = name
+        if log_stream_content is not None:
+            config_block["format"] = log_stream_content
+        if mapped_source_log_type is not None:
+            config_block["sourceLogType"] = mapped_source_log_type
+        if use_tls is not None:
+            config_block["useTls"] = use_tls
+        if kwargs.get("filter_status_codes"):
+            config_block["filter"] = kwargs.pop("filter_status_codes")
 
-        # Convert tuple list to dict and add to payload
+        payload = {"config": config_block}
+
+        # connectorGroups is included only when the caller supplied
+        # app_connector_group_ids. Passing an empty list explicitly will
+        # clear the associations on the server.
+        if app_connector_group_ids is not None:
+            payload["connectorGroups"] = [{"id": group_id} for group_id in app_connector_group_ids]
+
+        # Handle policy rules and convert tuples into dictionary format.
+        # When policy_rules is set, the payload's policyRuleResource must
+        # include the SIEM_POLICY policy set id (resolved at runtime).
         if kwargs.get("policy_rules"):
-            if keys_exists(payload, "policyRuleResource", "name"):
-                policy_name = payload["policyRuleResource"]["name"]
-            else:
-                policy_name = "placeholder"
+            policy_set_id, err = self._get_siem_policy_set_id()
+            if err:
+                return (None, None, err)
             payload["policyRuleResource"] = {
+                "policySetId": policy_set_id,
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
-                "name": kwargs.pop("policy_name", policy_name),
+                "name": kwargs.get("policy_name", "SIEM_POLICY"),
             }
 
-        # Add additional provided parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload)
+        if error:
+            return (None, None, error)
 
-        resp = self._put(f"{self.v2_url}/lssConfig/{lss_config_id}", json=payload).status_code
+        # Execute the request
+        response, error = self._request_executor.execute(request, LSSResourceModel)
+        if error:
+            return (None, response, error)
 
-        if resp == 204:
-            return self.get_config(lss_config_id)
+        # Handle case where no content is returned (204 No Content)
+        if response is None or not response.get_body():
+            return (LSSResourceModel({"id": lss_config_id}), response, None)
 
-    def delete_lss_config(self, lss_id: str) -> int:
+        try:
+            result = LSSResourceModel(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def delete_lss_config(self, lss_config_id: str) -> APIResult[None]:
         """
-        Delete the specified LSS Receiver Config.
+        Deletes the specified LSS Receiver Config.
 
         Args:
-            lss_id (str): The unique identifier for the LSS Receiver Config to be deleted.
+            lss_config_id (str): The unique identifier of the LSS Receiver config to be deleted.
 
         Returns:
-            :obj:`int`:
-                The response code for the operation.
+            int: Status code of the delete operation.
+        """
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zpa_lss_base_endpoint_v2}
+            /lssConfig/{lss_config_id}
+        """)
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def get_client_types(self, client_type=None) -> dict:
+        """
+        Returns all available LSS Client Types or a specific Client Type if specified.
+
+        Args:
+            client_type (str, optional): The human-readable name of the client type to filter for.
+
+        Returns:
+            dict: Dictionary containing all or a specific LSS Client Type with human-readable name as the key.
 
         Examples:
-            Delete an LSS Receiver config.
-
-            >>> zpa.lss.delete_config('99999')
-
+            >>> client_types = zpa.lss.get_client_types()
+            >>> web_browser_type = zpa.lss.get_client_types('web_browser')
         """
-        return self._delete(f"{self.v2_url}/lssConfig/{lss_id}").status_code
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_lss_endpoint_v2}
+            /clientTypes
+        """)
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return None
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return None
+
+        client_types = response.get_body()
+        reverse_map = {v.lower().replace(" ", "_"): k for k, v in client_types.items()}
+
+        if client_type and client_type in reverse_map:
+            return {client_type: reverse_map[client_type]}
+
+        return reverse_map
+
+    def get_all_log_formats(self, log_type=None, query_params=None) -> dict:
+        """
+        Returns all available pre-configured LSS Log Formats or a specific log format if specified.
+
+        Args:
+            log_type (str, optional): The name of the log type to retrieve (e.g., 'zpn_ast_comprehensive_stats').
+
+        Returns:
+            dict: Dictionary containing pre-configured LSS Log Formats.
+
+        Examples:
+            >>> all_log_formats = zpa.lss.get_log_formats()
+            >>> specific_format = zpa.lss.get_log_formats('zpn_ast_comprehensive_stats')
+        """
+        http_method = "get".upper()
+        query_params = query_params or {}
+
+        # Check if a specific log_type is provided; if so, use the specific endpoint
+        if log_type:
+            api_url = format_url(f"""
+                {self._zpa_lss_base_endpoint_v2}
+                /lssConfig/logType/formats
+            """)
+            query_params["logType"] = log_type
+        else:
+            # Otherwise, fetch all log formats
+            api_url = format_url(f"""
+                {self._zpa_base_lss_url_v2}
+                /logType/formats
+            """)
+
+        # Prepare request and execute
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return None
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return None
+
+        # Return the response
+        return response.get_body()
+
+    def get_status_codes(self, log_type: str = "all") -> dict:
+        """
+        Returns a list of LSS Session Status Codes filtered by log type.
+
+        Args:
+            log_type (str): Filter the LSS Session Status Codes by Log Type.
+
+        Returns:
+            dict: Dictionary containing all LSS Session Status Codes.
+
+        Examples:
+            >>> all_status_codes = zpa.lss.get_status_codes()
+            >>> user_activity_codes = zpa.lss.get_status_codes(log_type="user_activity")
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_lss_url_v2}
+            /statusCodes
+        """)
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return None
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return None
+
+        all_status_codes = response.get_body()
+
+        if log_type == "all":
+            return all_status_codes
+        else:
+            log_type_key = self.source_log_map.get(log_type)
+            if not log_type_key:
+                raise ValueError("Incorrect log_type provided.")
+
+            filtered_status_codes = {
+                code: details for code, details in all_status_codes.items() if log_type_key in details.get("log_types", [])
+            }
+            return filtered_status_codes

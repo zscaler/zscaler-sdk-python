@@ -1,0 +1,325 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations
+  response:
+    body:
+      string: '{"results":[{"id":"3f61a446-1a0d-11f0-94e8-8a5f4d45e80c","name":"AssuredPartners"}],"total_results":1}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:10 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '17'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 517fe924-d1f4-9988-b008-757085e37b17
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/lookalike-domains
+  response:
+    body:
+      string: '{"results":[{"original_domain":"assuredpartners.com","lookalike_raw":"assuredartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":26,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:45:58.005556Z","updated_date":"2025-12-02T18:19:27.654555Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredprtners.com","risk_category":"Watchlist
+        Lookalike","risk_score":26,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T02:14:16.375519Z","updated_date":"2025-12-02T18:24:35.136194Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurepartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":28,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:49.040135Z","updated_date":"2025-12-02T18:24:35.136194Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpqrtners-us.com","risk_category":"Watchlist
+        Lookalike","risk_score":28,"deception_method":["Extension","KeyboardTypos"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-24T22:05:05.090042Z","updated_date":"2025-11-25T18:12:13.872623Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpqrtners-eu.com","risk_category":"Watchlist
+        Lookalike","risk_score":30,"deception_method":["KeyboardTypos","Extension"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-05-14T04:29:00.02958Z","updated_date":"2025-11-18T18:21:51.156242Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpatners.com","risk_category":"Watchlist
+        Lookalike","risk_score":30,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:29.590335Z","updated_date":"2025-12-02T18:26:18.045402Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurdpartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":30,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T02:11:33.90223Z","updated_date":"2025-12-02T18:26:18.045402Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuedpartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":31,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:40.33064Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpartners-uk.com","risk_category":"Watchlist
+        Lookalike","risk_score":33,"deception_method":["Extension"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:48.234541Z","updated_date":"2025-12-02T18:19:27.654555Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredprartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:34.72188Z","updated_date":"2025-12-02T18:04:14.169714Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpmartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:45.745975Z","updated_date":"2025-12-02T18:10:42.116358Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpgartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:06.186286Z","updated_date":"2025-12-02T18:14:31.784366Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpfartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:59.088704Z","updated_date":"2025-12-02T18:15:05.407988Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpvartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:55.229852Z","updated_date":"2025-12-02T18:15:57.744377Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpjartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:29.81962Z","updated_date":"2025-12-02T18:16:03.609695Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpartners-us.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["Extension"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:45:57.966511Z","updated_date":"2025-12-02T18:19:27.654555Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpajrtners.com","risk_category":"Watchlist
+        Lookalike","risk_score":34,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:43.693158Z","updated_date":"2025-12-02T18:22:30.058084Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredptartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:35.381165Z","updated_date":"2025-12-02T17:57:29.926369Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpqartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:25.081131Z","updated_date":"2025-12-02T18:04:14.169714Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpsartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:00.560403Z","updated_date":"2025-12-02T18:06:29.808828Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpuartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:06.221319Z","updated_date":"2025-12-02T18:07:43.708093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpabrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:49.821646Z","updated_date":"2025-12-02T18:07:43.874868Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpyartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:40.938504Z","updated_date":"2025-12-02T18:08:03.504653Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpzartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:02.651502Z","updated_date":"2025-12-02T18:08:03.504653Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpoartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:51.533984Z","updated_date":"2025-12-02T18:10:42.116358Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpbartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:22.201138Z","updated_date":"2025-12-02T18:10:42.116358Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpcartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:51.94787Z","updated_date":"2025-12-02T18:13:33.599418Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpxartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:03.053254Z","updated_date":"2025-12-02T18:15:57.744377Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpwartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:54.488203Z","updated_date":"2025-12-02T18:15:57.744377Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpkartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:47.561949Z","updated_date":"2025-12-02T18:16:03.609695Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpakrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:57.252577Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpavrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:32.554134Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpartners-eu.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["Extension"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:48.182849Z","updated_date":"2025-12-02T18:19:27.654555Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpiartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:26.881876Z","updated_date":"2025-12-02T18:20:40.925892Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpayrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:54.000138Z","updated_date":"2025-12-02T18:22:28.154093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredplartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:45.949597Z","updated_date":"2025-12-02T18:22:28.154093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurwedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":35,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:58.414777Z","updated_date":"2025-12-02T18:24:07.751444Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpadrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:04.758297Z","updated_date":"2025-12-02T18:00:48.820658Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaertners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:22.13115Z","updated_date":"2025-12-02T18:00:48.820658Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpafrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:59.967204Z","updated_date":"2025-12-02T18:00:48.820658Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpagrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:44.247253Z","updated_date":"2025-12-02T18:00:48.820658Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpacrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:50.969539Z","updated_date":"2025-12-02T18:04:14.169714Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpnartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:55.559207Z","updated_date":"2025-12-02T18:05:03.290843Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpahrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["PhoneticReplacement"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:27.764411Z","updated_date":"2025-12-02T18:06:29.808828Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpamrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:33.844247Z","updated_date":"2025-12-02T18:06:37.601787Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpatrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:41.862967Z","updated_date":"2025-12-02T18:08:03.504653Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurpedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:48.008647Z","updated_date":"2025-12-02T18:10:49.06489Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpdartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:01.124889Z","updated_date":"2025-12-02T18:13:05.145022Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuriedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:04.483988Z","updated_date":"2025-12-02T18:13:05.145022Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureqdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:10.999948Z","updated_date":"2025-12-02T18:13:05.303744Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurjedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:59.528637Z","updated_date":"2025-12-02T18:13:05.303744Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurmedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:39.625729Z","updated_date":"2025-12-02T18:13:05.303744Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuroedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:38.932994Z","updated_date":"2025-12-02T18:13:27.447108Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpeartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:52.252365Z","updated_date":"2025-12-02T18:13:33.599418Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurqedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:48.815137Z","updated_date":"2025-12-02T18:13:33.599418Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurledpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:35.735582Z","updated_date":"2025-12-02T18:13:54.974774Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuregdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:31.072699Z","updated_date":"2025-12-02T18:14:31.784366Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredphartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:26.760053Z","updated_date":"2025-12-02T18:14:31.784366Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureodpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:11.368207Z","updated_date":"2025-12-02T18:15:05.407988Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurnedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:50.591265Z","updated_date":"2025-12-02T18:15:26.005383Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assursedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:07.008311Z","updated_date":"2025-12-02T18:15:36.818691Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurebdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:58.076759Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpalrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:59.855162Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurecdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:18.714603Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaprtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:54.35045Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpasrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:10.066461Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaortners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:30.085284Z","updated_date":"2025-12-02T18:17:17.908192Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredapartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:50.538543Z","updated_date":"2025-12-02T18:17:18.795801Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredqpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:28.969763Z","updated_date":"2025-12-02T18:17:22.003978Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredjpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:54.435803Z","updated_date":"2025-12-02T18:17:22.003978Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurcedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:01.6028Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpazrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:34.336012Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaurtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:41.894091Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpawrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:25.0598Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaqrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:31.860597Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpanrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:01.671828Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpairtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:59.944307Z","updated_date":"2025-12-02T18:19:19.470607Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredopartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:51:02.052164Z","updated_date":"2025-12-02T18:20:40.791372Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureadpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:27.970503Z","updated_date":"2025-12-02T18:20:40.802336Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredpaxrtners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:08.502276Z","updated_date":"2025-12-02T18:22:28.154093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureudpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:44.225345Z","updated_date":"2025-12-02T18:22:28.154093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureidpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:03.270391Z","updated_date":"2025-12-02T18:22:28.154093Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuraedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:07.780825Z","updated_date":"2025-12-02T18:22:30.058084Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurgedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:13.659953Z","updated_date":"2025-12-02T18:22:30.058084Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurbedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:04.176783Z","updated_date":"2025-12-02T18:22:30.058084Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurdedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:39.388006Z","updated_date":"2025-12-02T18:22:30.058084Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredepartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:59:43.160275Z","updated_date":"2025-12-02T18:22:30.239311Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredcpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:56.293493Z","updated_date":"2025-12-02T18:22:30.239311Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredbpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:55.222857Z","updated_date":"2025-12-02T18:22:30.239311Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurzedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:55.510196Z","updated_date":"2025-12-02T18:22:30.40922Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuryedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:04.668237Z","updated_date":"2025-12-02T18:22:30.40922Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuremdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:38.834937Z","updated_date":"2025-12-02T18:22:36.54206Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assureydpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:49.082162Z","updated_date":"2025-12-02T18:24:07.751444Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurewdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:48:07.571814Z","updated_date":"2025-12-02T18:24:07.751444Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurevdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:29.768892Z","updated_date":"2025-12-02T18:24:07.751444Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuruedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:38.536434Z","updated_date":"2025-12-02T18:24:21.864925Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assuredhpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:47:36.254733Z","updated_date":"2025-12-02T18:26:18.045402Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurfedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:49:02.368506Z","updated_date":"2025-12-02T18:26:18.195783Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurhedpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:46:53.638614Z","updated_date":"2025-12-02T18:26:45.448838Z","expiration_date":null,"status":"NOT_VERIFIED"},{"original_domain":"assuredpartners.com","lookalike_raw":"assurepdpartners.com","risk_category":"Preventative
+        Lookalike","risk_score":36,"deception_method":["MidInsertion"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:50:28.72514Z","updated_date":"2025-12-02T18:26:45.448838Z","expiration_date":null,"status":"NOT_VERIFIED"}],"total_results":287,"next_link":"/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/lookalike-domains?offset=20","prev_link":""}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:10 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '53'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 531887da-137b-9b41-b54d-bdad43e8621f
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '997'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/lookalike-domains/assuredartners.com/details
+  response:
+    body:
+      string: '{"original_domain":"assuredpartners.com","lookalike_raw":"assuredartners.com","risk_category":"Watchlist
+        Lookalike","risk_score":26,"deception_method":["Omission"],"registrar":null,"is_registered":false,"registered_by":null,"created_date":"2025-04-17T01:45:58.005556Z","updated_date":"2025-12-02T18:19:27.654555Z","expiration_date":null,"status":"NOT_VERIFIED","description":"This
+        domain is suspected of being a lookalike domain due to the use of omission
+        deception. Threat actors can leverage Omission deception to create domain
+        names visually similar to an actual company domain by dropping a letter at
+        the middle of an original domain name, for example: \"zscler.com\".  The resulting
+        lookalike domain can be abused to manipulate users into trusting the domain
+        due to visual similarity with the original domain name, resulting in potential
+        phishing attacks.\n"}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:10 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '17'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 79e01bae-43da-9758-bba1-de1218b82044
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '996'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

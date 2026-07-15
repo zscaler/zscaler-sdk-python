@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.posture_profiles``
 
 .. automodule:: zscaler.zpa.posture_profiles
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,307 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/cloudApplicationInstances
+  response:
+    body:
+      string: '[{"instanceId":175137,"instanceType":"BITBUCKET","instanceName":"Bitbucket","modifiedBy":{"id":24328827,"name":"REDACTED"},"modifiedAt":1683065259,"instanceIdentifiers":[{"instanceId":175137,"instanceIdentifier":"dev.bitbucket.org","instanceIdentifierName":"dev","identifierType":"URL","modifiedAt":1683065259,"modifiedBy":{"id":24328827,"name":"REDACTED"}},{"instanceId":175137,"instanceIdentifier":"dev1.bitbucket.org","instanceIdentifierName":"dev1","identifierType":"URL","modifiedAt":1683065259,"modifiedBy":{"id":24328827,"name":"REDACTED"}}]},{"instanceId":157353,"instanceType":"BOXNET","instanceName":"Box","modifiedBy":{"id":24328827,"name":"REDACTED"},"modifiedAt":1676106104,"instanceIdentifiers":[{"instanceId":157353,"instanceIdentifier":"securitygeek01.app.box.com","instanceIdentifierName":"securitygeek01","identifierType":"URL","modifiedAt":1676106105,"modifiedBy":{"id":24328827,"name":"REDACTED"}},{"instanceId":157353,"instanceIdentifier":"securitygeek02.app.box.com","instanceIdentifierName":"securitygeek02","identifierType":"URL","modifiedAt":1676106105,"modifiedBy":{"id":24328827,"name":"REDACTED"}}]},{"instanceId":4106439,"instanceType":"SHAREPOINTONLINE","instanceName":"hgolku568873","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833280,"instanceIdentifiers":[{"instanceId":4106439,"instanceIdentifier":"ewwjcw167233.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833281,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106461,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211101357_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833640,"instanceIdentifiers":[{"instanceId":4106461,"instanceIdentifier":"20260211101357_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833641,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106472,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211101843_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833927,"instanceIdentifiers":[{"instanceId":4106472,"instanceIdentifier":"20260211101843_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833927,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106511,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211102424_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834266,"instanceIdentifiers":[{"instanceId":4106511,"instanceIdentifier":"20260211102424_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834266,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106589,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211103116_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834678,"instanceIdentifiers":[{"instanceId":4106589,"instanceIdentifier":"20260211103116_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834679,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106596,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211103518_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834931,"instanceIdentifiers":[{"instanceId":4106596,"instanceIdentifier":"20260211103518_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834932,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4139571,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217111436_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771355679,"instanceIdentifiers":[{"instanceId":4139571,"instanceIdentifier":"20260217111436_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771355679,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4139967,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217124023_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771360825,"instanceIdentifiers":[{"instanceId":4139967,"instanceIdentifier":"20260217124023_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771360826,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140010,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217131843_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771363126,"instanceIdentifiers":[{"instanceId":4140010,"instanceIdentifier":"20260217131843_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771363126,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140457,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217164834_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771375717,"instanceIdentifiers":[{"instanceId":4140457,"instanceIdentifier":"20260217164834_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771375717,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140477,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217165124_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771375886,"instanceIdentifiers":[{"instanceId":4140477,"instanceIdentifier":"20260217165124_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771375886,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4248210,"instanceType":"SHAREPOINTONLINE","instanceName":"20260301113833_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772393920,"instanceIdentifiers":[{"instanceId":4248210,"instanceIdentifier":"20260301113833_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772393921,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4300237,"instanceType":"SHAREPOINTONLINE","instanceName":"20260306163255_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772843583,"instanceIdentifiers":[{"instanceId":4300237,"instanceIdentifier":"20260306163255_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772843583,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4284326,"instanceType":"SHAREPOINTONLINE","instanceName":"20260304093117_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772645482,"instanceIdentifiers":[{"instanceId":4284326,"instanceIdentifier":"20260304093117_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772645482,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:15:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '481'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 512cfdf9-e58d-9918-9f15-e51f975d62e7
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4978'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/cloudApplicationInstances?instanceType=SHAREPOINTONLINE
+  response:
+    body:
+      string: '[{"instanceId":4106439,"instanceType":"SHAREPOINTONLINE","instanceName":"hgolku568873","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833280,"instanceIdentifiers":[{"instanceId":4106439,"instanceIdentifier":"ewwjcw167233.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833281,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106461,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211101357_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833640,"instanceIdentifiers":[{"instanceId":4106461,"instanceIdentifier":"20260211101357_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833641,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106472,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211101843_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770833927,"instanceIdentifiers":[{"instanceId":4106472,"instanceIdentifier":"20260211101843_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770833927,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106511,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211102424_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834266,"instanceIdentifiers":[{"instanceId":4106511,"instanceIdentifier":"20260211102424_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834266,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106589,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211103116_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834678,"instanceIdentifiers":[{"instanceId":4106589,"instanceIdentifier":"20260211103116_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834679,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4106596,"instanceType":"SHAREPOINTONLINE","instanceName":"20260211103518_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1770834931,"instanceIdentifiers":[{"instanceId":4106596,"instanceIdentifier":"20260211103518_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1770834932,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4139571,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217111436_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771355679,"instanceIdentifiers":[{"instanceId":4139571,"instanceIdentifier":"20260217111436_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771355679,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4139967,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217124023_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771360825,"instanceIdentifiers":[{"instanceId":4139967,"instanceIdentifier":"20260217124023_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771360826,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140010,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217131843_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771363126,"instanceIdentifiers":[{"instanceId":4140010,"instanceIdentifier":"20260217131843_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771363126,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140457,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217164834_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771375717,"instanceIdentifiers":[{"instanceId":4140457,"instanceIdentifier":"20260217164834_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771375717,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4140477,"instanceType":"SHAREPOINTONLINE","instanceName":"20260217165124_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1771375886,"instanceIdentifiers":[{"instanceId":4140477,"instanceIdentifier":"20260217165124_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1771375886,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4248210,"instanceType":"SHAREPOINTONLINE","instanceName":"20260301113833_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772393920,"instanceIdentifiers":[{"instanceId":4248210,"instanceIdentifier":"20260301113833_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772393921,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4300237,"instanceType":"SHAREPOINTONLINE","instanceName":"20260306163255_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772843583,"instanceIdentifiers":[{"instanceId":4300237,"instanceIdentifier":"20260306163255_created_instance_updated.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772843583,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]},{"instanceId":4284326,"instanceType":"SHAREPOINTONLINE","instanceName":"20260304093117_created","modifiedBy":{"id":117810311,"name":"REDACTED"},"modifiedAt":1772645482,"instanceIdentifiers":[{"instanceId":4284326,"instanceIdentifier":"20260304093117_created_instance.sharepoint.com","instanceIdentifierName":"dnyfdk587075","identifierType":"URL","modifiedAt":1772645482,"modifiedBy":{"id":117810311,"name":"REDACTED"}}]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:15:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '562'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 56772fe6-f41f-9cd9-bb25-e5ded440c218
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4977'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"instanceName": "TestInstance_VCR", "instanceType": "SHAREPOINTONLINE"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '72'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: POST
+    uri: https://easm.test.zscaler.com/zia/api/v1/cloudApplicationInstances
+  response:
+    body:
+      string: '{"code":"INVALID_INPUT_ARGUMENT","message":"Please add at least one
+        instance identifier"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '89'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:15:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '640'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e416d3e3-8108-9f8b-8666-cc7fc88ec5e9
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.17 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zia/api/v1/cloudApplicationInstances/175137
+  response:
+    body:
+      string: '{"instanceId":175137,"instanceType":"BITBUCKET","instanceName":"Bitbucket","modifiedBy":{"id":24328827,"name":"REDACTED"},"modifiedAt":1683065259,"instanceIdentifiers":[{"instanceId":175137,"instanceIdentifier":"dev.bitbucket.org","instanceIdentifierName":"dev","identifierType":"URL","modifiedAt":1683065259,"modifiedBy":{"id":24328827,"name":"REDACTED"}},{"instanceId":175137,"instanceIdentifier":"dev1.bitbucket.org","instanceIdentifierName":"dev1","identifierType":"URL","modifiedAt":1683065259,"modifiedBy":{"id":24328827,"name":"REDACTED"}}]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Fri, 13 Mar 2026 03:15:34 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '474'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 6f7f17e6-719b-944d-aa96-61f5992ae326
+      x-oneapi-version:
+      - 109.1.146
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '26'
+      x-transaction-id:
+      - 61fe504f-898a-4b1c-87dc-88dcdd8e09cd
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

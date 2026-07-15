@@ -1,65 +1,194 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import List, Optional
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.cloud_connector_groups import CloudConnectorGroup
 
 
-from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+class CloudConnectorGroupsAPI(APIClient):
+    """
+    A Client object for the Cloud Connector Groups resource.
+    """
 
-from zscaler.utils import Iterator
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-
-class CloudConnectorGroupsAPI(APIEndpoint):
-    def list_groups(self, **kwargs) -> BoxList:
+    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
         """
         Returns a list of all configured cloud connector groups.
 
         Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`BoxList`: A list of all configured cloud connector groups.
+            list: A list of `CloudConnectorGroup` instances.
 
         Examples:
-            >>> for cloud_connector_group in zpa.cloud_connector_groups.list_groups():
-            ...    pprint(cloud_connector_group)
+            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_groups(
+            ... query_params={'search': 'CloudConnectorGroup01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing connector groups: {err}")
+            ...     return
+            ... print(f"Total connector groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
-        return BoxList(Iterator(self._api, "cloudConnectorGroup", **kwargs))
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /cloudConnectorGroup
+        """)
 
-    def get_group(self, group_id: str) -> Box:
+        query_params = query_params or {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, CloudConnectorGroup)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(CloudConnectorGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_cloud_connector_groups(
+        self,
+        group_id: str,
+    ) -> APIResult[dict]:
         """
         Returns information on the specified cloud connector group.
 
         Args:
-            group_id (str):
-                The unique identifier for the cloud connector group.
+            group_id (str): The unique identifier for the cloud connector group.
+            query_params (dict): Optional query parameters.
 
         Returns:
-            :obj:`Box`: The resource record for the cloud connector group.
+            dict: The cloud connector group object.
 
         Examples:
-            >>> pprint(zpa.cloud_connector_groups.get_group('99999'))
+            >>> fetched_group, _, err = client.zpa.cloud_connector_groups.get_cloud_connector_groups('999999')
+            ... if err:
+            ...     print(f"Error fetching group by ID: {err}")
+            ...     return
+            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /cloudConnectorGroup/{group_id}
+        """)
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, CloudConnectorGroup)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = CloudConnectorGroup(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
+        """
+        Retrieves all configured cloud connector groups Name and IDs
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of CloudConnectorGroups instances, Response, error)
+
+        Examples:
+            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_group_summary(
+            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing cloud connector groups: {err}")
+            ...     return
+            ... print(f"Total cloud connector groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /cloudConnectorGroup/summary
+        """)
 
-        return self._get(f"cloudConnectorGroup/{group_id}")
+        query_params = query_params or {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, CloudConnectorGroup)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(CloudConnectorGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

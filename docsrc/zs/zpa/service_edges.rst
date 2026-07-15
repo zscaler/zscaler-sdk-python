@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.service_edges``
 
 .. automodule:: zscaler.zpa.service_edges
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,137 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: GET
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/getWebPrivacyInfo
+  response:
+    body:
+      string: "{\n  \"id\" : \"1537\",\n  \"active\" : \"1\",\n  \"collectUserInfo\"
+        : \"1\",\n  \"collectMachineHostname\" : \"1\",\n  \"collectZdxLocation\"
+        : \"1\",\n  \"enablePacketCapture\" : \"1\",\n  \"disableCrashlytics\" : \"0\",\n
+        \ \"overrideT2ProtocolSetting\" : \"0\",\n  \"restrictRemotePacketCapture\"
+        : \"0\",\n  \"grantAccessToZscalerLogFolder\" : \"0\",\n  \"exportLogsForNonAdmin\"
+        : \"1\",\n  \"enableAutoLogSnippet\" : \"0\"\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:36:27 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '162'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9c876de5-a8f2-91ea-942f-c28bf0c2b36a
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '83'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '12'
+      x-ratelimit-reset:
+      - '1413'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"active": "1", "collectUserInfo": "1", "collectMachineHostname": "1"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '70'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.13 python/3.11.8 Darwin/25.2.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/zcc/papi/public/v1/setWebPrivacyInfo
+  response:
+    body:
+      string: '{ }'
+    headers:
+      cache-control:
+      - no-cache
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 11 Feb 2026 02:36:28 GMT
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '165'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 53fe5731-5226-9a00-94d2-0bad5b72ee16
+      x-oneapi-version:
+      - 109.1.111
+      x-rate-limit-remaining:
+      - '85'
+      x-ratelimit-limit:
+      - 100, 100;w=3600, 100;w=3600
+      x-ratelimit-remaining:
+      - '11'
+      x-ratelimit-reset:
+      - '1412'
+      x-transaction-id:
+      - b4f2ba96-af19-4c5f-ada8-da85f767d2d4
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

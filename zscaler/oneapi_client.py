@@ -1,0 +1,726 @@
+import logging
+import os
+from typing import Any, Dict, Optional, TypeVar
+
+import requests
+
+from zscaler.cache.no_op_cache import NoOpCache
+from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.config.config_setter import ConfigSetter
+from zscaler.config.config_validator import ConfigValidator
+from zscaler.logger import setup_logging
+from zscaler.oneapi_oauth_client import OAuth
+from zscaler.request_executor import RequestExecutor
+from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
+from zscaler.zaiguard.zaiguard_service import ZGuardService
+from zscaler.zbi.zbi_service import ZBIService
+from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zcc.zcc_service import ZCCService
+from zscaler.zcell.zcell_service import ZCellService
+from zscaler.zdx.legacy import LegacyZDXClientHelper
+from zscaler.zdx.zdx_service import ZDXService
+from zscaler.zeasm.zeasm_service import ZEASMService
+from zscaler.zia.legacy import LegacyZIAClientHelper
+from zscaler.zia.zia_service import ZIAService
+from zscaler.zid.zid_service import ZIdService
+from zscaler.zpa.legacy import LegacyZPAClientHelper
+from zscaler.zpa.zpa_service import ZPAService
+from zscaler.ztb.legacy import LegacyZTBClientHelper
+from zscaler.ztb.ztb_service import ZTBService
+from zscaler.ztw.legacy import LegacyZTWClientHelper
+from zscaler.ztw.ztw_service import ZTWService
+from zscaler.zwa.legacy import LegacyZWAClientHelper
+from zscaler.zwa.zwa_service import ZWAService
+
+TLegacy = TypeVar("TLegacy")
+
+
+class Client:
+    """A Zscaler client object"""
+
+    def __init__(
+        self,
+        user_config: Dict[str, Any] = {},
+        zcc_legacy_client: Optional[LegacyZCCClientHelper] = None,
+        ztw_legacy_client: Optional[LegacyZTWClientHelper] = None,
+        zdx_legacy_client: Optional[LegacyZDXClientHelper] = None,
+        zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
+        zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
+        zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
+        ztb_legacy_client: Optional[LegacyZTBClientHelper] = None,
+        zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
+        use_legacy_client: bool = False,
+    ) -> None:
+        self.use_legacy_client = use_legacy_client
+        self.zcc_legacy_client = zcc_legacy_client
+        self.ztw_legacy_client = ztw_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
+        self.zpa_legacy_client = zpa_legacy_client
+        self.zia_legacy_client = zia_legacy_client
+        self.zwa_legacy_client = zwa_legacy_client
+        self.ztb_legacy_client = ztb_legacy_client
+        self.zguard_legacy_client = zguard_legacy_client
+
+        # ZCC Legacy client initialization logic
+        if use_legacy_client and zcc_legacy_client:
+            self._config = {}
+            self._request_executor = zcc_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZCC client initialized successfully.")
+            return
+
+        # ZDX Legacy client initialization logic
+        if use_legacy_client and zdx_legacy_client:
+            self._config = {}
+            self._request_executor = zdx_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZDX client initialized successfully.")
+            return
+
+        # ZWA Legacy client initialization logic
+        if use_legacy_client and zwa_legacy_client:
+            self._config = {}
+            self._request_executor = zwa_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZWA client initialized successfully.")
+            return
+
+        # ZPA Legacy client initialization logic
+        if use_legacy_client and zpa_legacy_client:
+            self._config = {}
+            self._request_executor = zpa_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZPA client initialized successfully.")
+            return
+
+        # ZIA Legacy client initialization logic for ZIA
+        if use_legacy_client and zia_legacy_client:
+            self._config = {}
+            self._request_executor = zia_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZIA client initialized successfully.")
+            return
+
+        # ZTWService Legacy client initialization logic for ZTWService
+        if use_legacy_client and ztw_legacy_client:
+            self._config = {}
+            self._request_executor = ztw_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZTWService client initialized successfully.")
+            return
+
+        # ZTB Legacy client initialization logic
+        if use_legacy_client and ztb_legacy_client:
+            self._config = {}
+            self._request_executor = ztb_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZTB client initialized successfully.")
+            return
+
+        # ZGuard Legacy client initialization logic
+        if use_legacy_client and zguard_legacy_client:
+            self._config = {}
+            self._request_executor = zguard_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZGuard client initialized successfully.")
+            return
+
+        # Assuming user_config is a dictionary or an object with a 'logging' attribute
+        logging_config = (
+            user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
+        )
+        self.zcc_legacy_client = zcc_legacy_client
+        self.ztw_legacy_client = ztw_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
+        self.zpa_legacy_client = zpa_legacy_client
+        self.zia_legacy_client = zia_legacy_client
+        self.zwa_legacy_client = zwa_legacy_client
+        self.ztb_legacy_client = ztb_legacy_client
+        self.zguard_legacy_client = zguard_legacy_client
+
+        # Extract enabled and verbose from the logging configuration
+        enabled = logging_config.get("enabled", None)
+        verbose = logging_config.get("verbose", None)
+
+        # Setup logging with the extracted configuration
+        setup_logging("zscaler-sdk-python", enabled=enabled, verbose=verbose)
+        self.logger = logging.getLogger(__name__)
+
+        # self.logger.debug("Initializing Client with user configuration.")
+        client_config_setter = ConfigSetter()
+        client_config_setter._apply_config({"client": user_config})
+        self._config = client_config_setter.get_config()
+
+        # Retrieve optional customerId from config or environment
+        self._customer_id = self._config["client"].get("customerId", os.getenv("ZSCALER_CUSTOMER_ID"))
+
+        # Retrieve optional ZCell customer id from config or environment. This is
+        # ZCell-specific and completely independent from ZPA's customerId above.
+        self._zcell_customer_id = self._config["client"].get("zcellCustomerId") or os.getenv("ZCELL_CUSTOMER_ID")
+
+        # Prune unnecessary configuration fields
+        self._config = client_config_setter._prune_config(self._config)
+        # Setup logging based on config
+        client_config_setter._setup_logging()
+        # self.logger.debug(f"Customer ID set to: {self._customer_id}")
+        # Validate configuration
+        ConfigValidator(self._config)
+        # self.logger.debug("Configuration validated successfully.")
+
+        # Ensure the resolved ZCell customer id (config or ZCELL_CUSTOMER_ID env)
+        # is available to ZCell service clients, which read it from the shared config.
+        self._config["client"]["zcellCustomerId"] = self._zcell_customer_id
+
+        # Check inline configuration first, and if not provided, use environment variables
+        self._client_id = self._config["client"].get("clientId", os.getenv("ZSCALER_CLIENT_ID"))
+
+        self._client_secret = self._config["client"].get("clientSecret", os.getenv("ZSCALER_CLIENT_SECRET"))
+
+        self._private_key = self._config["client"].get("privateKey", os.getenv("ZSCALER_PRIVATE_KEY"))
+
+        self._vanity_domain = self._config["client"].get("vanityDomain", os.getenv("ZSCALER_VANITY_DOMAIN"))
+
+        self._cloud = self._config["client"].get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
+
+        self._sandbox_token = self._config["client"].get("sandboxToken", os.getenv("ZSCALER_SANDBOX_TOKEN"))
+
+        self._auth_token = None
+
+        # Ensure required fields are set, either through inline config or environment variables
+        if not self._client_id and not self._sandbox_token:
+            raise ValueError("Client ID is required. Please set 'clientId' or 'ZSCALER_CLIENT_ID' environment variable.")
+        if not self._sandbox_token and not (self._client_secret or self._private_key):
+            raise ValueError("Either Client Secret or Private Key is required. Please set 'clientSecret' or 'privateKey'.")
+
+        # self.logger.debug(f"Client ID: {self._client_id}")
+        # self.logger.debug(f"Vanity Domain: {self._vanity_domain}")
+        # self.logger.debug(f"Cloud: {self._cloud}")
+        # self.logger.debug(f"Customer ID: {self._customer_id}")
+
+        # Handle cache
+        cache = NoOpCache()
+        if self._config["client"]["cache"]["enabled"]:
+            if user_config.get("cacheManager") is None:
+                time_to_idle = self._config["client"]["cache"]["defaultTti"]
+                time_to_live = self._config["client"]["cache"]["defaultTtl"]
+                cache = ZscalerCache(time_to_live, time_to_idle)
+                self.logger.debug(f"Using default cache with TTL: {time_to_live}, TTI: {time_to_idle}")
+            else:
+                cache = user_config.get("cacheManager")
+                self.logger.debug("Using custom cache manager.")
+
+        self._request_executor = user_config.get("requestExecutor", RequestExecutor)(
+            self._config,
+            cache,
+            user_config.get("httpClient", None),
+            self.zcc_legacy_client,
+            self.ztw_legacy_client,
+            self.zdx_legacy_client,
+            self.zpa_legacy_client,
+            self.zia_legacy_client,
+            self.zwa_legacy_client,
+            self.ztb_legacy_client,
+            self.zguard_legacy_client,
+        )
+        # self.logger.debug("Request executor initialized.")
+
+        # Lazy load service clients
+        self._zcc = None
+        self._ztw = None
+        self._zia = None
+        self._zwa = None
+        self._ztb = None
+        self._zpa = None
+        self._zdx = None
+        self._zid = None
+        self._zeasm = None
+        self._zins = None  # Z-Insights (GraphQL Analytics API)
+        self._zms = None  # ZMS - Zscaler Microsegmentation (GraphQL API)
+        self._zbi = None  # Zscaler Business Insights (REST API)
+        self._zguard = None
+        self._zcell = None  # Zscaler Cellular (OneAPI only)
+
+    def authenticate(self):
+        """
+        Handles authentication by using either client_secret or private_key.
+        """
+        # self.logger.debug("Starting authentication process.")
+        oauth_client = OAuth(self._request_executor, self._config)
+        self._auth_token = oauth_client._get_access_token()
+        self.logger.debug("Authentication successful. Access token obtained.")
+
+        # Update the default headers by setting the Authorization Bearer token
+        self._request_executor._default_headers.update({"Authorization": f"Bearer {self._auth_token}"})
+        self.logger.debug("Authorization header updated with access token.")
+
+    @property
+    def zcc(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZCC", self.zcc_legacy_client)
+        if self._zcc is None:
+            self._zcc = ZCCService(self)
+        return self._zcc
+
+    @property
+    def zdx(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZDX", self.zdx_legacy_client)
+        if self._zdx is None:
+            self._zdx = ZDXService(self)
+        return self._zdx
+
+    @property
+    def zia(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZIA", self.zia_legacy_client)
+        if self._zia is None:
+            # Pass RequestExecutor directly
+            self._zia = ZIAService(self._request_executor)
+        return self._zia
+
+    @property
+    def zcell(self):
+        # ZCell is OneAPI-only (no legacy client); construct lazily with the
+        # RequestExecutor directly, matching ZIA/ZTW.
+        if self._zcell is None:
+            self._zcell = ZCellService(self._request_executor, self._config)
+        return self._zcell
+
+    @property
+    def zwa(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZWA", self.zwa_legacy_client)
+        if self._zwa is None:
+            self._zwa = ZWAService(self)
+        return self._zwa
+
+    @property
+    def ztb(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZTB", self.ztb_legacy_client)
+        if self._ztb is None:
+            self._ztb = ZTBService(self)
+        return self._ztb
+
+    @property
+    def ztw(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZTW", self.ztw_legacy_client)
+        if self._ztw is None:
+            # Pass RequestExecutor directly
+            self._ztw = ZTWService(self._request_executor)
+        return self._ztw
+
+    @property
+    def zpa(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZPA", self.zpa_legacy_client)
+        if self._zpa is None:
+            self._zpa = ZPAService(self._request_executor, self._config)
+        return self._zpa
+
+    @property
+    def zid(self):
+        if self._zid is None:
+            self._zid = ZIdService(self._request_executor)
+        return self._zid
+
+    @property
+    def zidentity(self):
+        """Alias for zid property (backward compatibility)."""
+        return self.zid
+
+    @property
+    def zbi(self):
+        if self._zbi is None:
+            self._zbi = ZBIService(self._request_executor)
+        return self._zbi
+
+    @property
+    def zeasm(self):
+        if self._zeasm is None:
+            self._zeasm = ZEASMService(self._request_executor)
+        return self._zeasm
+
+    @property
+    def zguard(self):
+        if self.use_legacy_client:
+            return self._require_legacy_client("ZGuard", self.zguard_legacy_client)
+        if self._zguard is None:
+            self._zguard = ZGuardService(self._request_executor)
+        return self._zguard
+
+    @property
+    def zins(self):
+        """
+        Z-Insights Analytics Service (GraphQL API).
+
+        Provides access to Zscaler analytics data including:
+        - WEB_TRAFFIC: Web traffic analytics and reports
+        - CYBER_SECURITY: Security incidents and threat data
+        - ZERO_TRUST_FIREWALL: Firewall traffic and policy data
+        - IOT: IoT device visibility and statistics
+        - SHADOW_IT: Shadow IT discovery and application data
+        - SAAS_SECURITY: CASB and SaaS security data
+
+        Note: Z-Insights only supports OneAPI authentication.
+        Legacy client authentication is not supported.
+
+        Example:
+            with ZscalerClient(config) as client:
+                response, error = client.zins.graphql.execute(
+                    query='{ WEB_TRAFFIC { ... } }'
+                )
+        """
+        if self.use_legacy_client:
+            raise RuntimeError(
+                "Z-Insights (zins) does not support legacy client authentication. "
+                "Please use OneAPI authentication with clientId and clientSecret."
+            )
+        if self._zins is None:
+            from zscaler.zins.zins_service import ZInsService
+
+            self._zins = ZInsService(self._request_executor)
+        return self._zins
+
+    @property
+    def zinsights(self):
+        """Alias for zins property (backward compatibility)."""
+        return self.zins
+
+    @property
+    def zms(self):
+        """
+        ZMS (Zscaler Microsegmentation) Service (GraphQL API).
+
+        Provides access to Zscaler Microsegmentation data including:
+        - Agents: Agent management and statistics
+        - Agent Groups: Agent group management
+        - Nonces: Provisioning key management
+        - Resources: Resource visibility and protection status
+        - Resource Groups: Managed and unmanaged resource groups
+        - Policy Rules: Microsegmentation policy management
+        - App Zones: Application zone management
+        - App Catalog: Application catalog entries
+        - Tags: Tag namespace, key, and value management
+
+        Note: ZMS only supports OneAPI authentication.
+        Legacy client authentication is not supported.
+
+        Example:
+            with ZscalerClient(config) as client:
+                result, _, err = client.zms.agents.list_agents(
+                    customer_id="123456789"
+                )
+        """
+        if self.use_legacy_client:
+            raise RuntimeError(
+                "ZMS (Microsegmentation) does not support legacy client authentication. "
+                "Please use OneAPI authentication with clientId and clientSecret."
+            )
+        if self._zms is None:
+            from zscaler.zms.zms_service import ZMSService
+
+            self._zms = ZMSService(self._request_executor)
+        return self._zms
+
+    @property
+    def zmicroseg(self):
+        """Alias for zms property."""
+        return self.zms
+
+    def __enter__(self):
+        """
+        Automatically create and set session within context manager.
+        """
+        if not self.use_legacy_client:
+            # Create and set up a session using 'requests' library for sync.
+            self._session = requests.Session()
+            self._request_executor.set_session(self._session)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Automatically close session within context manager."""
+        self.logger.debug("Exiting context manager, closing session.")
+        if hasattr(self, "_session"):
+            self._session.close()
+            self.logger.debug("Session closed.")
+
+        # Clean up Zscaler authentication session
+        if hasattr(self, "_request_executor"):
+            # For legacy clients, use their deauthenticate method
+            if self.use_legacy_client and hasattr(self._request_executor, "deauthenticate"):
+                self.logger.debug("Deauthenticating Zscaler session via legacy client.")
+                self._request_executor.deauthenticate()
+                self.logger.debug("Zscaler session deauthenticated.")
+            # For OneAPI clients, use the request executor's deauthenticate method for ZIA/ZTW
+            elif not self.use_legacy_client and hasattr(self._request_executor, "deauthenticate"):
+                # Get the service type from the request executor's last known service type
+                # or fall back to config if no requests were made
+                service_type = getattr(self._request_executor, "_last_service_type", None)
+                if not service_type:
+                    service_type = self._config.get("client", {}).get("service", "zia")
+
+                if service_type.lower() in ["zia", "ztw"]:
+                    # For ZIA, deauthenticate only if mutations occurred; executor will decide.
+                    self.logger.debug(f"Deauthenticating Zscaler session for {service_type} service.")
+                    self._request_executor.deauthenticate(service_type)
+                    self.logger.debug(f"Zscaler session deauthenticated for {service_type}.")
+
+    """
+    Getters
+    """
+
+    def get_config(self):
+        return self._config
+
+    def get_request_executor(self):
+        return self._request_executor
+
+    """
+    Misc
+    """
+
+    def set_custom_headers(self, headers):
+        self._request_executor.set_custom_headers(headers)
+
+    def clear_custom_headers(self):
+        self._request_executor.clear_custom_headers()
+
+    def _require_legacy_client(self, service_name: str, client: Optional[TLegacy]) -> TLegacy:
+        """
+        Ensure a legacy client instance is available before returning it.
+
+        Raises:
+            RuntimeError: If the legacy client was requested but not provided.
+        """
+        if client is None:
+            raise RuntimeError(
+                f"Legacy {service_name} client requested but no legacy client instance was provided. "
+                "Pass the appropriate legacy helper when constructing the Client or disable "
+                "use_legacy_client."
+            )
+        return client
+
+    def get_custom_headers(self):
+        return self._request_executor.get_custom_headers()
+
+    def get_default_headers(self):
+        return self._request_executor.get_default_headers()
+
+
+class LegacyZPAClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        client_id = config.get("clientId", os.getenv("ZPA_CLIENT_ID"))
+        client_secret = config.get("clientSecret", os.getenv("ZPA_CLIENT_SECRET"))
+        customer_id = config.get("customerId", os.getenv("ZPA_CUSTOMER_ID"))
+        cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
+        microtenant_id = config.get("microtenantId", os.getenv("ZPA_MICROTENANT_ID"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        # Initialize the LegacyZPAClientHelper with the extracted parameters
+        legacy_helper = LegacyZPAClientHelper(
+            client_id=client_id,
+            client_secret=client_secret,
+            customer_id=customer_id,
+            cloud=cloud,
+            microtenant_id=microtenant_id,
+            partner_id=partner_id,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zpa_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZIAClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        username = config.get("username", os.getenv("ZIA_USERNAME"))
+        password = config.get("password", os.getenv("ZIA_PASSWORD"))
+        api_key = config.get("api_key", os.getenv("ZIA_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZIA_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+        session_safety_margin = config.get("session_safety_margin", None)
+        use_session_validation = config.get("use_session_validation", None)
+
+        # Initialize the LegacyZIAClientHelper with the extracted parameters
+        legacy_helper = LegacyZIAClientHelper(
+            username=username,
+            password=password,
+            api_key=api_key,
+            cloud=cloud,
+            partner_id=partner_id,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+            session_safety_margin=session_safety_margin,
+            use_session_validation=use_session_validation,
+        )
+        super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZTWClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        username = config.get("username", os.getenv("ZTW_USERNAME"))
+        password = config.get("password", os.getenv("ZTW_PASSWORD"))
+        api_key = config.get("api_key", os.getenv("ZTW_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZTW_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+        # Initialize the LegacyZTWClientHelper with the extracted parameters
+        legacy_helper = LegacyZTWClientHelper(
+            username=username,
+            password=password,
+            api_key=api_key,
+            cloud=cloud,
+            partner_id=partner_id,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, ztw_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZCCClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("ZCC_CLIENT_ID"))
+        secret_key = config.get("secret_key", os.getenv("ZCC_CLIENT_SECRET"))
+        cloud = config.get("cloud", os.getenv("ZCC_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        # Initialize the LegacyZCCClientHelper with the extracted parameters
+        legacy_helper = LegacyZCCClientHelper(
+            api_key=api_key,
+            secret_key=secret_key,
+            cloud=cloud,
+            partner_id=partner_id,
+            timeout=timeout,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zcc_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZDXClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        client_id = config.get("key_id", os.getenv("ZDX_CLIENT_ID"))
+        client_secret = config.get("key_secret", os.getenv("ZDX_CLIENT_SECRET"))
+        cloud = config.get("cloud", os.getenv("ZDX_CLOUD", "zdxcloud"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        request_executor_impl = config.get("requestExecutor", None)
+        # Initialize the LegacyZDXClientHelper with the extracted parameters
+        legacy_helper = LegacyZDXClientHelper(
+            client_id=client_id,
+            client_secret=client_secret,
+            cloud=cloud,
+            partner_id=partner_id,
+            timeout=timeout,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zdx_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZWAClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        key_id = config.get("key_id", os.getenv("ZWA_CLIENT_ID"))
+        key_secret = config.get("key_secret", os.getenv("ZWA_CLIENT_SECRET"))
+        cloud = config.get("cloud", os.getenv("ZWA_CLOUD", "us1"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        request_executor_impl = config.get("requestExecutor", None)
+        # Initialize the LegacyZWAClientHelper with the extracted parameters
+        legacy_helper = LegacyZWAClientHelper(
+            key_id=key_id,
+            key_secret=key_secret,
+            cloud=cloud,
+            partner_id=partner_id,
+            timeout=timeout,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zwa_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZTBClient(Client):
+
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("ZTB_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZTB_CLOUD"))
+        override_url = config.get("override_url", os.getenv("ZTB_OVERRIDE_URL"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        legacy_helper = LegacyZTBClientHelper(
+            api_key=api_key,
+            cloud=cloud,
+            override_url=override_url,
+            partner_id=partner_id,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, ztb_legacy_client=legacy_helper, use_legacy_client=True)
+
+
+class LegacyZGuardClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("AIGUARD_API_KEY"))
+        cloud = config.get("cloud", os.getenv("AIGUARD_CLOUD", "us1"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        # Initialize the LegacyZGuardClientHelper with the extracted parameters
+        legacy_helper = LegacyZGuardClientHelper(
+            api_key=api_key,
+            cloud=cloud,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, zguard_legacy_client=legacy_helper, use_legacy_client=True)

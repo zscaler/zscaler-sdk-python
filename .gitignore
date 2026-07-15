@@ -55,6 +55,8 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+docsrc/_build/
+
 
 # PyBuilder
 target/
@@ -81,6 +83,14 @@ ENV/
 docs/_diagrams
 local_dev
 
+.vscode
+.claude
+.cursor
+trivy.yaml
+
 # vim swap files
 *.swp
 .DS_Store
+install_package.sh
+openapi
+trivy.yaml

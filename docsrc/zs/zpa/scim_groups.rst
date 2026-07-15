@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.scim_groups``
 
 .. automodule:: zscaler.zpa.scim_groups
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,71 +1,149 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import List, Optional
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.posture_profiles import PostureProfile
 
 
-from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+class PostureProfilesAPI(APIClient):
+    """
+    A Client object for the Posture Profiles resource.
+    """
 
-from zscaler.utils import Iterator
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-
-class PostureProfilesAPI(APIEndpoint):
-    def __init__(self, api: APISession):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
-
-    def list_profiles(self, **kwargs) -> BoxList:
+    def list_posture_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[PostureProfile]]:
         """
         Returns a list of all configured posture profiles.
 
         Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`BoxList`: A list of all configured posture profiles.
+            list: A list of `PostureProfile` instances.
 
         Examples:
-            >>> for posture_profile in zpa.posture_profiles.list_profiles():
-            ...    pprint(posture_profile)
+            Retrieve posture profiles with pagination parameters:
+
+            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles(
+            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing posture: {err}")
+            ...     return
+            ... print(f"Total posture profiles found: {len(posture_list)}")
+            ... for posture in posture_list:
+            ...     print(posture.as_dict())
+
+            Retrieve posture profiles udid with:
+
+            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles()
+            ... if err:
+            ...     print(f"Error listing profiles: {err}")
+            ...     return
+            ... print("Extracted posture_udid values:")
+            ... for profile in profile_list:
+            ...     if profile.posture_udid:
+            ...         print(profile.posture_udid)
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/posture", **kwargs))
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v2}
+            /posture
+        """)
 
-    def get_profile(self, profile_id: str) -> Box:
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PostureProfile)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PostureProfile(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_profile(self, profile_id: str) -> APIResult[dict]:
         """
-        Returns information on the specified posture profiles.
+        Gets a specific posture profile by its unique ID.
 
         Args:
-            profile_id (str):
-                The unique identifier for the posture profiles.
+            profile_id (str): The unique identifier of the posture profile.
 
         Returns:
-            :obj:`Box`: The resource record for the posture profiles.
+            :obj:`Tuple`: A tuple containing (list of Posture Profile instances, Response, error)
 
         Examples:
-            >>> pprint(zpa.posture_profiles.get_profile('99999'))
-
+            >>> fetched_posture, _, err = client.zpa.posture_profile.get_profile('999999')
+            ... if err:
+            ...     print(f"Error fetching posture by ID: {err}")
+            ...     return
+            ... print(fetched_profile.posture_udid)
         """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /posture/{profile_id}
+        """)
 
-        return self._get(f"posture/{profile_id}")
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PostureProfile)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = PostureProfile(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

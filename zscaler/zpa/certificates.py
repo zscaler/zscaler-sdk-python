@@ -1,116 +1,359 @@
-# -*- coding: utf-8 -*-
+"""
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import List, Optional
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.types import APIResult
+from zscaler.utils import format_url
+from zscaler.zpa.models.certificates import Certificate
 
 
-from box import Box, BoxList
-from restfly.endpoint import APIEndpoint, APISession
+class CertificatesAPI(APIClient):
+    """
+    A Client object for the Certificates resource.
+    """
 
-from zscaler.utils import Iterator
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-
-class CertificatesAPI(APIEndpoint):
-    def __init__(self, api: APISession):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
-
-    def list_browser_access(self, **kwargs) -> BoxList:
+    def list_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[Certificate]]:
         """
-        Returns a list of all Browser Access certificates.
-
-        Args:
-            **kwargs: Optional keyword args.
+        Fetches a list of all certificates with pagination support.
 
         Keyword Args:
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int, optional):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`BoxList`: List of all Browser Access certificates.
+            list: A list of `Certificate` instances.
 
         Examples:
-            >>> for cert in zpa.certificates.list_browser_access():
-            ...    print(cert)
+            Retrieve browser certificates with pagination parameters:
+
+            >>> cert_list, _, err = client.zpa.certificates.list_certificates(
+            ... query_params={'search': 'certificate01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing certificates: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(cert_list)}")
+            ... for cert in cert_list:
+            ...     print(cert.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/clientlessCertificate/issued", **kwargs))
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /certificate
+        """)
 
-    def get_browser_access(self, certificate_id: str) -> Box:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Certificate)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(Certificate(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_issued_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[Certificate]]:
         """
-        Returns information on a specified Browser Access certificate.
+        Fetches a list of all issued certificates with pagination support.
 
         Args:
-            certificate_id (str):
-                The unique identifier for the Browser Access certificate.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            :obj:`Box`:
-                The Browser Access certificate resource record.
+            list: A list of `IssuedCertificate` instances.
 
         Examples:
-            >>> ba_certificate = zpa.certificates.get_browser_access('99999')
+            Retrieve browser certificates with pagination parameters:
+
+            >>> cert_list, _, err = client.zpa.certificates.list_issued_certificates(
+            ... query_params={'search': 'certificate01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing certificates: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(cert_list)}")
+            ... for cert in cert_list:
+            ...     print(cert.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
 
         """
-        return self._get(f"clientlessCertificate/{certificate_id}")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v2}
+            /clientlessCertificate/issued
+        """)
 
-    def get_enrolment(self, certificate_id: str) -> Box:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Certificate)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(Certificate(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_certificate(self, certificate_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
-        Returns information on the specified enrollment certificate.
+        Fetches a specific certificate by ID.
 
         Args:
-            certificate_id (str): The unique id of the enrollment certificate.
+            group_id (str): The unique identifier for the connector group.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Box`: The enrollment certificate resource record.
+            tuple: A tuple containing (Certificate instance, Response, error).
 
         Examples:
-            enrolment_cert = zpa.certificates.get_enrolment('99999999')
-
+            >>> fetched_cert, _, err = client.zpa.certificates.get_certificate('999999')
+            ... if err:
+            ...     print(f"Error fetching certificate by ID: {err}")
+            ...     return
+            ... print(fetched_cert.id)
         """
-        return self._get(f"enrollmentCert/{certificate_id}")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /certificate/{certificate_id}
+        """)
 
-    def list_enrolment(self, **kwargs) -> BoxList:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Certificate)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = Certificate(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_certificate(self, **kwargs) -> APIResult[dict]:
         """
-        Returns a list of all configured enrollment certificates.
+        Adds a new certificate.
 
         Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int, optional):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            certificate_data (dict): Data for the certificate to be added.
 
         Returns:
-            :obj:`BoxList`: List of all enrollment certificates.
+            :obj:`Tuple`: The newly created certificate object.
 
         Examples:
-            >>> for cert in zpa.certificates.list_enrolment():
-            ...    print(cert)
+            Creating a Cloud browser isolation with the minimum required parameters:
 
+            >>> added_certificate, _, err = client.zpa.certificates.add_certificate(
+            ...   name='new_certificate',
+            ...   pem=("-----BEGIN CERTIFICATE-----\\n"
+            ...              "nMIIF2DCCA8CgAwIBAgIBATANBgkqhkiG==\\n"
+            ...              "-----END CERTIFICATE-----"),
+            ... )
+            ... if err:
+            ...     print(f"Error adding ba certificate: {err}")
+            ...     return
+            ... print(f"BA Certificate added successfully: {added_certificate.as_dict()}")
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/enrollmentCert", **kwargs))
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /certificate
+        """)
+
+        body = kwargs
+
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Certificate)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = Certificate(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_certificate(self, certificate_id: str, **kwargs) -> APIResult[dict]:
+        """
+        Updates a specific certificate.
+
+        Args:
+            certificate_id (str): The ID of the certificate to update.
+            certificate_data (dict): The new data for the certificate.
+
+        Returns:
+            :obj:`Tuple`: The updated certificate object.
+
+        Examples:
+            Creating a Cloud browser isolation with the minimum required parameters:
+
+            >>> updated_certificate, _, err = client.zpa.certificates.update_certificate(
+            ...   name='new_certificate',
+            ...   pem=("-----BEGIN CERTIFICATE-----\\n"
+            ...              "nMIIF2DCCA8CgAwIBAgIBATANBgkqhkiG==\\n"
+            ...              "-----END CERTIFICATE-----"),
+            ... )
+            ... if err:
+            ...     print(f"Error adding ba certificate: {err}")
+            ...     return
+            ... print(f"BA Certificate added successfully: {updated_certificate.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /certificate/{certificate_id}
+        """)
+
+        body = {}
+
+        body.update(kwargs)
+
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, Certificate)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None or not response.get_body():
+            # Return a meaningful result to indicate success
+            return (Certificate({"id": certificate_id}), response, None)
+
+        try:
+            result = Certificate(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_certificate(self, certificate_id, microtenant_id: str = None) -> APIResult[dict]:
+        """
+        Deletes a certificate by its ID.
+
+        Args:
+            certificate_id (str): The ID of the certificate to delete.
+
+        Returns:
+            Response: The response object for the delete operation.
+
+        Examples:
+            >>> _, _, err = client.zpa.certificates.delete_certificate(
+            ...     certificate_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting ba certificate: {err}")
+            ...     return
+            ... print(f"BA Certificate with ID {'999999'} deleted successfully.")
+        """
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /certificate/{certificate_id}
+        """)
+
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+        return (None, response, error)

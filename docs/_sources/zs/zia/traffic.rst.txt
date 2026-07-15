@@ -10,3 +10,5 @@ Methods are accessible via ``zia.traffic``
 
 .. automodule:: zscaler.zia.traffic
     :members:
+    :undoc-members:
+    :show-inheritance:
