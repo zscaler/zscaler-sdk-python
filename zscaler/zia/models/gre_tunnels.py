@@ -44,6 +44,8 @@ class TrafficGRETunnel(ZscalerObject):
                     self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
                 else:
                     self.last_modified_by = None
+            else:
+                self.last_modified_by = None
 
             if "primaryDestVip" in config:
                 if isinstance(config["primaryDestVip"], GreVirtualIP):
