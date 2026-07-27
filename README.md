@@ -1404,6 +1404,83 @@ if __name__ == "__main__":
 
 **Note:** `client.zmicroseg` is available as an alias for `client.zms`.
 
+### Zscaler AI Guard (aiguard)
+
+AI Guard provides configuration and detection APIs to secure the use of generative AI — detection policies, policy match rules, LLM providers, LLM applications, and their credentials.
+
+AI Guard is split across **two** authentication paths:
+
+| Resource | Client | Endpoint |
+|---|---|---|
+| Detection policies, policy match rules, LLM providers/applications and their credentials | `ZscalerClient` (OneAPI) | `/aiguard/v1/*` |
+| `policy_detection` — `execute_policy`, `resolve_and_execute_policy` | `LegacyAIGuardClient` | `/v1/detection/*` |
+
+**Important:** the policy detection endpoints are **not** exposed through OneAPI. They must be
+called with `LegacyAIGuardClient`, which authenticates with an AI Guard API key against
+`https://api.<cloud>.zseclipse.net`. Every other AI Guard resource is OneAPI only.
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta",
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        policies, _, err = client.aiguard.policies.list_policies()
+        if err:
+            print(f"Error: {err}")
+            return
+        for policy in policies:
+            print(policy.as_dict())
+
+if __name__ == "__main__":
+    main()
+```
+
+**Available Resources (via `client.aiguard.<resource>`):**
+
+- `policies` — List, get (by ID or name), create, update, and delete detection policies
+- `policy_match_rules` — List, get (by ID or name), create, update, and delete policy match rules
+- `llm_providers` — Manage LLM providers, list provider types, and run referential checks
+- `llm_provider_credentials` — Manage LLM provider credentials and run referential checks
+- `llm_applications` — Manage LLM applications and run referential checks
+- `llm_application_credentials` — Manage LLM application credentials
+
+**Policy detection (legacy client only):**
+
+```py
+from zscaler.oneapi_client import LegacyAIGuardClient
+
+config = {
+    "api_key": '{yourAIGuardApiKey}',   # or the AIGUARD_API_KEY environment variable
+    "cloud": "us1",                     # or AIGUARD_CLOUD
+}
+
+def main():
+    with LegacyAIGuardClient(config) as client:
+        result, _, err = client.aiguard.policy_detection.resolve_and_execute_policy(
+            content="User prompt or AI response to scan",
+            direction="IN",
+        )
+        if err:
+            print(f"Error: {err}")
+            return
+        print(result.as_dict())
+
+if __name__ == "__main__":
+    main()
+```
+
+- `policy_detection` — Execute a detection policy (`execute_policy`) or resolve-and-execute
+  (`resolve_and_execute_policy`) against content. **Requires `LegacyAIGuardClient`.**
+
+**Note:** `client.zguard` is available as a deprecated alias for `client.aiguard`.
+
 ## Zscaler Legacy API Framework
 
 The legacy Zscaler API is still utilized by several customers, and will remain in place for the foreseeable future with no specific announced deprecation date.

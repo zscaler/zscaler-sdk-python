@@ -1,0 +1,501 @@
+interactions:
+- request:
+    body: '{"name": "tests-pol-vcr0001", "inputDetectorPolicies": [{"detector": "toxicity",
+      "enabled": true, "severity": "HIGH", "configuration": {"action": "BLOCK", "threshold":
+      0.87}}, {"detector": "prompt_injection", "enabled": true, "severity": "CRITICAL",
+      "configuration": {"action": "BLOCK", "threshold": 0.75}}], "outputDetectorPolicies":
+      [{"detector": "toxicity", "enabled": true, "severity": "CRITICAL", "configuration":
+      {"action": "BLOCK", "threshold": 0.87}}, {"detector": "pii", "enabled": false,
+      "severity": "CRITICAL", "configuration": {"entities": [{"action": "DETECT",
+      "entityType": "CRYPTO"}, {"action": "DETECT", "entityType": "EMAIL_ADDRESS"},
+      {"action": "DETECT", "entityType": "IP_ADDRESS"}, {"action": "DETECT", "entityType":
+      "LOCATION"}, {"action": "DETECT", "entityType": "US_ITIN"}, {"action": "DETECT",
+      "entityType": "DATE_TIME"}, {"action": "DETECT", "entityType": "URL"}, {"action":
+      "DETECT", "entityType": "MEDICAL_LICENSE"}, {"action": "DETECT", "entityType":
+      "STREET_ADDRESS"}, {"action": "DETECT", "entityType": "DATE_OF_BIRTH"}, {"action":
+      "DETECT", "entityType": "US_DEA_NUMBER"}, {"action": "BLOCK", "entityType":
+      "CREDIT_CARD"}, {"action": "BLOCK", "entityType": "US_SSN"}, {"action": "DETECT",
+      "entityType": "PERSON"}, {"action": "BLOCK", "entityType": "US_PASSPORT"}, {"action":
+      "BLOCK", "entityType": "US_BANK_NUMBER"}, {"action": "BLOCK", "entityType":
+      "US_DRIVER_LICENSE"}, {"action": "BLOCK", "entityType": "IBAN_CODE"}, {"action":
+      "BLOCK", "entityType": "SWIFT_CODE"}, {"action": "ALLOW", "entityType": "PHONE_NUMBER"}],
+      "threshold": 0.5, "anonymization": "NONE", "defaultAction": "BLOCK", "replaceWithMaskedContent":
+      false}}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1659'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies
+  response:
+    body:
+      string: '{"id":2933,"name":"tests-pol-vcr0001","version":1,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750616893}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '14'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f3da8c14-968d-92aa-a6a8-c4db20aca147
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '992'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/2933
+  response:
+    body:
+      string: '{"id":2933,"name":"tests-pol-vcr0001","version":1,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750616893}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '6'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f3bb0121-5ff7-9962-aacb-3f27f8cbccf9
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '991'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/name/tests-pol-vcr0001
+  response:
+    body:
+      string: '{"id":2933,"name":"tests-pol-vcr0001","version":1,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750616893}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '53'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 882e61ea-0d0e-9fc4-b156-bff8a48fa5b4
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-pol-vcr0001Updated", "inputDetectorPolicies": [{"detector":
+      "toxicity", "enabled": true, "severity": "HIGH", "configuration": {"action":
+      "BLOCK", "threshold": 0.87}}, {"detector": "prompt_injection", "enabled": true,
+      "severity": "CRITICAL", "configuration": {"action": "BLOCK", "threshold": 0.75}}],
+      "outputDetectorPolicies": [{"detector": "toxicity", "enabled": true, "severity":
+      "CRITICAL", "configuration": {"action": "BLOCK", "threshold": 0.87}}, {"detector":
+      "pii", "enabled": false, "severity": "CRITICAL", "configuration": {"entities":
+      [{"action": "DETECT", "entityType": "CRYPTO"}, {"action": "DETECT", "entityType":
+      "EMAIL_ADDRESS"}, {"action": "DETECT", "entityType": "IP_ADDRESS"}, {"action":
+      "DETECT", "entityType": "LOCATION"}, {"action": "DETECT", "entityType": "US_ITIN"},
+      {"action": "DETECT", "entityType": "DATE_TIME"}, {"action": "DETECT", "entityType":
+      "URL"}, {"action": "DETECT", "entityType": "MEDICAL_LICENSE"}, {"action": "DETECT",
+      "entityType": "STREET_ADDRESS"}, {"action": "DETECT", "entityType": "DATE_OF_BIRTH"},
+      {"action": "DETECT", "entityType": "US_DEA_NUMBER"}, {"action": "BLOCK", "entityType":
+      "CREDIT_CARD"}, {"action": "BLOCK", "entityType": "US_SSN"}, {"action": "DETECT",
+      "entityType": "PERSON"}, {"action": "BLOCK", "entityType": "US_PASSPORT"}, {"action":
+      "BLOCK", "entityType": "US_BANK_NUMBER"}, {"action": "BLOCK", "entityType":
+      "US_DRIVER_LICENSE"}, {"action": "BLOCK", "entityType": "IBAN_CODE"}, {"action":
+      "BLOCK", "entityType": "SWIFT_CODE"}, {"action": "ALLOW", "entityType": "PHONE_NUMBER"}],
+      "threshold": 0.5, "anonymization": "NONE", "defaultAction": "BLOCK", "replaceWithMaskedContent":
+      false}}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1666'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/2933
+  response:
+    body:
+      string: '{"id":2933,"name":"tests-pol-vcr0001Updated","version":2,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750617280}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '14'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 10ffa1c7-d190-95e5-9fc1-3b153d4c9e89
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/2933
+  response:
+    body:
+      string: '{"id":2933,"name":"tests-pol-vcr0001Updated","version":2,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750617280}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '19'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c9d37ad5-1407-97e3-a984-ab9a59863c39
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '997'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies
+  response:
+    body:
+      string: '{"items":[{"id":2933,"name":"tests-pol-vcr0001Updated","version":2,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}}],"createTimeMillis":1784750616893,"updateTimeMillis":1784750617280},{"id":1152,"name":"PolicyRule01","version":17,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}},{"detector":"pii","enabled":true,"severity":"CRITICAL","configuration":{"entities":[{"action":"ALLOW","entityType":"CRYPTO"},{"action":"ALLOW","entityType":"EMAIL_ADDRESS"},{"action":"ALLOW","entityType":"IP_ADDRESS"},{"action":"ALLOW","entityType":"LOCATION"},{"action":"ALLOW","entityType":"PERSON"},{"action":"ALLOW","entityType":"PHONE_NUMBER"},{"action":"ALLOW","entityType":"US_DRIVER_LICENSE"},{"action":"ALLOW","entityType":"US_ITIN"},{"action":"ALLOW","entityType":"US_PASSPORT"},{"action":"ALLOW","entityType":"DATE_TIME"},{"action":"ALLOW","entityType":"URL"},{"action":"ALLOW","entityType":"MEDICAL_LICENSE"},{"action":"ALLOW","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"STREET_ADDRESS"},{"action":"ALLOW","entityType":"DATE_OF_BIRTH"},{"action":"ALLOW","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"}],"threshold":0.85,"anonymization":"REPLACE","defaultAction":"BLOCK","replaceWithMaskedContent":true}},{"detector":"secrets","enabled":true,"severity":"CRITICAL","configuration":{"secretTypes":[{"action":"DETECT","secretType":"GOOGLE_API_KEY"},{"action":"DETECT","secretType":"GOOGLE_OAUTH_ACCESS_TOKEN"},{"action":"DETECT","secretType":"PAYPAL_BRAINTREE_ACCESS_TOKEN"},{"action":"DETECT","secretType":"PICATIC_API_KEY"},{"action":"DETECT","secretType":"PAN_BASED_CARDS"},{"action":"DETECT","secretType":"SENDGRID_API_KEY"},{"action":"DETECT","secretType":"SLACK_ACCESS_TOKEN"},{"action":"DETECT","secretType":"SLACK_WEBHOOK"},{"action":"DETECT","secretType":"SQUARE_ACCESS_TOKEN"},{"action":"DETECT","secretType":"SQUARE_OAUTH_SECRET"},{"action":"DETECT","secretType":"STRIPE_API_KEY"},{"action":"DETECT","secretType":"TWO_FACTOR_TOKEN"},{"action":"BLOCK","secretType":"GITHUB_TOKEN"},{"action":"BLOCK","secretType":"JWT_TOKEN"},{"action":"BLOCK","secretType":"PRIVATE_KEY"},{"action":"BLOCK","secretType":"US_GOVERNMENT_IDS"},{"action":"BLOCK","secretType":"AMAZON_MWS_AUTH_TOKEN"}],"anonymization":"NONE","defaultAction":"DETECT"}},{"detector":"personal_data","enabled":true,"severity":"HIGH","configuration":{"action":"DETECT","threshold":0.85}},{"detector":"gibberish","enabled":true,"severity":"MEDIUM","configuration":{"action":"DETECT","threshold":0.9}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"pii","enabled":false,"severity":"CRITICAL","configuration":{"entities":[{"action":"DETECT","entityType":"CRYPTO"},{"action":"DETECT","entityType":"EMAIL_ADDRESS"},{"action":"DETECT","entityType":"IP_ADDRESS"},{"action":"DETECT","entityType":"LOCATION"},{"action":"DETECT","entityType":"US_ITIN"},{"action":"DETECT","entityType":"DATE_TIME"},{"action":"DETECT","entityType":"URL"},{"action":"DETECT","entityType":"MEDICAL_LICENSE"},{"action":"DETECT","entityType":"STREET_ADDRESS"},{"action":"DETECT","entityType":"DATE_OF_BIRTH"},{"action":"DETECT","entityType":"US_DEA_NUMBER"},{"action":"BLOCK","entityType":"CREDIT_CARD"},{"action":"BLOCK","entityType":"US_SSN"},{"action":"DETECT","entityType":"PERSON"},{"action":"BLOCK","entityType":"US_PASSPORT"},{"action":"BLOCK","entityType":"US_BANK_NUMBER"},{"action":"BLOCK","entityType":"US_DRIVER_LICENSE"},{"action":"BLOCK","entityType":"IBAN_CODE"},{"action":"BLOCK","entityType":"SWIFT_CODE"},{"action":"ALLOW","entityType":"PHONE_NUMBER"}],"threshold":0.5,"anonymization":"NONE","defaultAction":"BLOCK","replaceWithMaskedContent":false}},{"detector":"secrets","enabled":true,"severity":"CRITICAL","configuration":{"secretTypes":[{"action":"DETECT","secretType":"PAYPAL_BRAINTREE_ACCESS_TOKEN"},{"action":"DETECT","secretType":"PICATIC_API_KEY"},{"action":"DETECT","secretType":"PAN_BASED_CARDS"},{"action":"DETECT","secretType":"SENDGRID_API_KEY"},{"action":"DETECT","secretType":"SLACK_ACCESS_TOKEN"},{"action":"DETECT","secretType":"SLACK_WEBHOOK"},{"action":"DETECT","secretType":"SQUARE_ACCESS_TOKEN"},{"action":"DETECT","secretType":"SQUARE_OAUTH_SECRET"},{"action":"DETECT","secretType":"STRIPE_API_KEY"},{"action":"DETECT","secretType":"TWO_FACTOR_TOKEN"},{"action":"DETECT","secretType":"US_GOVERNMENT_IDS"},{"action":"BLOCK","secretType":"GITHUB_TOKEN"},{"action":"BLOCK","secretType":"AMAZON_MWS_AUTH_TOKEN"},{"action":"BLOCK","secretType":"PRIVATE_KEY"},{"action":"BLOCK","secretType":"GOOGLE_API_KEY"},{"action":"BLOCK","secretType":"JWT_TOKEN"},{"action":"BLOCK","secretType":"GOOGLE_OAUTH_ACCESS_TOKEN"}],"anonymization":"NONE","defaultAction":"DETECT"}},{"detector":"gibberish","enabled":true,"severity":"MEDIUM","configuration":{"action":"DETECT","threshold":0.9}},{"detector":"malicious_url","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK"}},{"detector":"invisible_text","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK"}},{"detector":"personal_data","enabled":true,"severity":"LOW","configuration":{"action":"DETECT","threshold":0.8}},{"detector":"refusal","enabled":true,"severity":"LOW","configuration":{"action":"DETECT"}},{"detector":"pii_deepscan","enabled":true,"severity":"LOW","configuration":{"action":"DETECT","threshold":0.87}},{"detector":"url_reachability","enabled":true,"severity":"LOW","configuration":{"action":"DETECT"}},{"detector":"code","enabled":true,"severity":"LOW","configuration":{"languages":[{"action":"DETECT","language":"C"},{"action":"DETECT","language":"C#"},{"action":"DETECT","language":"C++"},{"action":"DETECT","language":"CLI
+        Command"},{"action":"DETECT","language":"COBOL"},{"action":"DETECT","language":"Erlang"},{"action":"DETECT","language":"Fortran"},{"action":"DETECT","language":"Go"},{"action":"DETECT","language":"Java"},{"action":"DETECT","language":"JavaScript"},{"action":"DETECT","language":"Kotlin"},{"action":"DETECT","language":"Lua"},{"action":"DETECT","language":"Mathematica/Wolfram
+        Language"},{"action":"DETECT","language":"PHP"},{"action":"DETECT","language":"Pascal"},{"action":"DETECT","language":"Perl"},{"action":"DETECT","language":"R"},{"action":"DETECT","language":"Ruby"},{"action":"DETECT","language":"Rust"},{"action":"DETECT","language":"Scala"},{"action":"DETECT","language":"SQL"},{"action":"DETECT","language":"Swift"},{"action":"DETECT","language":"Visual
+        Basic .NET"},{"action":"DETECT","language":"jq"},{"action":"DETECT","language":"Python"}],"threshold":0.35,"defaultAction":"DETECT"}},{"detector":"brand_and_reputation_risk","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.85}}],"description":"PolicyRule01","createTimeMillis":1774752247197,"updateTimeMillis":1776749485316}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '8'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 774a08ab-6c39-975a-9116-6effd997882e
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '996'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/2933
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '12'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - be97312f-bfc5-95ef-8dba-e4d5cdce4f29
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '995'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

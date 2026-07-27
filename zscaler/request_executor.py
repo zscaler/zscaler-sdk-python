@@ -13,7 +13,6 @@ from zscaler.oneapi_http_client import HTTPClient
 from zscaler.oneapi_oauth_client import OAuth
 from zscaler.oneapi_response import ZscalerAPIResponse
 from zscaler.user_agent import UserAgent
-from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
@@ -44,7 +43,7 @@ class RequestExecutor:
         zia_legacy_client: LegacyZIAClientHelper = None,
         zwa_legacy_client: LegacyZWAClientHelper = None,
         ztb_legacy_client: LegacyZTBClientHelper = None,
-        zguard_legacy_client: LegacyZGuardClientHelper = None,
+        aiguard_legacy_client=None,
     ):
         """
         Constructor for Request Executor object for Zscaler SDK Client.
@@ -61,7 +60,9 @@ class RequestExecutor:
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
         self.ztb_legacy_client = ztb_legacy_client
-        self.zguard_legacy_client = zguard_legacy_client
+        # AI Guard is OneAPI-only except for policy detection, which the OneAPI
+        # gateway does not expose -- those endpoints stay on the legacy client.
+        self.aiguard_legacy_client = aiguard_legacy_client
 
         self.use_legacy_client = (
             zpa_legacy_client is not None
@@ -71,7 +72,7 @@ class RequestExecutor:
             or ztw_legacy_client is not None
             or zdx_legacy_client is not None
             or ztb_legacy_client is not None
-            or zguard_legacy_client is not None
+            or aiguard_legacy_client is not None
         )
 
         # Validate and set request timeout
@@ -132,7 +133,7 @@ class RequestExecutor:
             zia_legacy_client=self.zia_legacy_client,
             zwa_legacy_client=self.zwa_legacy_client,
             ztb_legacy_client=self.ztb_legacy_client,
-            zguard_legacy_client=self.zguard_legacy_client,
+            aiguard_legacy_client=self.aiguard_legacy_client,
         )
 
         exceptions.raise_exception = self._config["client"].get("raiseException", False)
@@ -220,8 +221,14 @@ class RequestExecutor:
             return "zins"
         elif "/zms" in url:
             return "zms"
-        elif "/v1/detection" in url or (self.zguard_legacy_client and "/v1/" in url):
-            return "zguard"
+        elif "/aiguard" in url:
+            # OneAPI AI Guard (/aiguard/v1/...). Checked before the legacy branch below:
+            # "/aiguard/v1/detections/policies" also contains the substring "/v1/detection".
+            return "aiguard"
+        elif "/v1/detection/" in url:
+            # Legacy AI Guard policy detection (api.<cloud>.zseclipse.net/v1/detection/*).
+            # These endpoints are not available through OneAPI.
+            return "aiguard_legacy"
         if self.use_legacy_client:
             url = self.remove_oneapi_endpoint_prefix(url)
             # Recheck for service type after removing the prefix
@@ -304,8 +311,8 @@ class RequestExecutor:
                 base_url = self.zwa_legacy_client.get_base_url(endpoint)
             elif service_type == "ztb":
                 base_url = self.ztb_legacy_client.get_base_url(endpoint)
-            elif service_type == "zguard":
-                base_url = self.zguard_legacy_client.get_base_url(endpoint)
+            elif service_type == "aiguard_legacy":
+                base_url = self.aiguard_legacy_client.get_base_url(endpoint)
             else:
                 base_url = self.get_base_url(endpoint)
         else:

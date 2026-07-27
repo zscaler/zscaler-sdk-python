@@ -171,6 +171,14 @@ def before_record_request(request):
                 b'"zccFailCloseSettingsExitUninstallPassword":"REDACTED"',
                 body,
             )
+            # AI Guard: the provider/application credential secret lives at
+            # apiCredentials.key. "key" is too generic to redact globally, so it is
+            # scoped to the apiCredentials object.
+            body = re.sub(
+                rb'("apiCredentials"\s*:\s*\{[^}]*?"key"\s*:\s*)"[^"]*"',
+                rb'\1"REDACTED"',
+                body,
+            )
         else:
             body = re.sub(r'client_id=[^&"]*', "client_id=REDACTED", body)
             body = re.sub(r'client_secret=[^&"]*', "client_secret=REDACTED", body)
@@ -194,6 +202,12 @@ def before_record_request(request):
             body = re.sub(
                 r'"zccFailCloseSettingsExitUninstallPassword"\s*:\s*"[^"]*"',
                 '"zccFailCloseSettingsExitUninstallPassword":"REDACTED"',
+                body,
+            )
+            # AI Guard: see the note in the bytes branch above.
+            body = re.sub(
+                r'("apiCredentials"\s*:\s*\{[^}]*?"key"\s*:\s*)"[^"]*"',
+                r'\1"REDACTED"',
                 body,
             )
         request.body = body
@@ -325,6 +339,13 @@ def before_record_response(response):
             # Redact any email-like values (anything with @ in a quoted string)
             body = re.sub(rb'"[^"]*@[^"]*"', b'"REDACTED"', body)
 
+            # AI Guard: the llm-application-credentials response returns a live generated
+            # secret in a top-level "key". "key" is too generic to redact globally (e.g.
+            # provider-type payloads use "key":"publicApi"), so it is scoped to bodies that
+            # carry providerCredentialsId -- i.e. credential responses.
+            if b"providerCredentialsId" in body:
+                body = re.sub(rb'"key"\s*:\s*"[^"]*"', b'"key":"REDACTED"', body)
+
             for service, pattern in URL_PATTERNS_BYTES.items():
                 test_url = pattern_to_test_url_bytes.get(service, TEST_URLS_BYTES["base"])
                 body = re.sub(pattern, test_url, body)
@@ -405,6 +426,10 @@ def before_record_response(response):
 
             # Redact any email-like values (anything with @ in a quoted string)
             body = re.sub(r'"[^"]*@[^"]*"', '"REDACTED"', body)
+
+            # AI Guard: see the note in the bytes branch above.
+            if "providerCredentialsId" in body:
+                body = re.sub(r'"key"\s*:\s*"[^"]*"', '"key":"REDACTED"', body)
 
             pattern_to_test_url = {
                 "zia": TEST_URLS["zia"],

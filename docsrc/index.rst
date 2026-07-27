@@ -19,7 +19,7 @@
    zs/zms/index
    zs/zbi/index
    zs/zeasm/index
-   zs/zaiguard/index
+   zs/aiguard/index
    zs/guides/index
 
 Official Python SDK for the Zscaler Products
@@ -222,6 +222,15 @@ platform <https://help.zscaler.com/zidentity/what-zidentity>`__, you
 must use the respective Legacy API client described in the following
 section: `Zscaler Legacy API
 Framework <#zscaler-legacy-api-framework>`__
+
+.. note::
+
+    **AI Guard is an exception.** Its policy detection endpoints
+    (``/v1/detection/execute-policy`` and
+    ``/v1/detection/resolve-and-execute-policy``) are not exposed through OneAPI,
+    so they require ``LegacyAIGuardClient`` regardless of whether your tenant has
+    been migrated to Zidentity. Every other AI Guard resource is OneAPI only. See
+    :doc:`zs/aiguard/index`.
 
 **Caution**: Zscaler does not recommend hard-coding
 credentials into arguments, as they can be exposed in plain text in

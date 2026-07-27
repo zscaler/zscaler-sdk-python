@@ -48,10 +48,9 @@ from zscaler.zpa.npn_client_controller import NPNClientControllerAPI
 from zscaler.zpa.oauth2_user_code import OAuth2UserCodeAPI
 from zscaler.zpa.one_identity import OneIdentityAPI
 from zscaler.zpa.policies import PolicySetControllerAPI
-
-# from zscaler.zpa.policy_group import PolicyGroupAPI
-# from zscaler.zpa.policy_group_rule import PolicyGroupRuleAPI
-# from zscaler.zpa.policy_group_set import PolicyGroupSetAPI
+from zscaler.zpa.policy_group import PolicyGroupAPI
+from zscaler.zpa.policy_group_rule import PolicyGroupRuleAPI
+from zscaler.zpa.policy_group_set import PolicyGroupSetAPI
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.pra_approval import PRAApprovalAPI
 from zscaler.zpa.pra_console import PRAConsoleAPI
@@ -478,30 +477,6 @@ class ZPAService:
         """
         return OneIdentityAPI(self._request_executor, self._config)
 
-    # @property
-    # def policy_group(self) -> PolicyGroupAPI:
-    #     """
-    #     The interface object for the :ref:`ZPA policy-group-controller interface <zpa-policy_group>`.
-
-    #     """
-    #     return PolicyGroupAPI(self._request_executor, self._config)
-
-    # @property
-    # def policy_group_rule(self) -> PolicyGroupRuleAPI:
-    #     """
-    #     The interface object for the :ref:`ZPA policy-group-rule-controller interface <zpa-policy_group_rule>`.
-
-    #     """
-    #     return PolicyGroupRuleAPI(self._request_executor, self._config)
-
-    # @property
-    # def policy_group_set(self) -> PolicyGroupSetAPI:
-    #     """
-    #     The interface object for the :ref:`ZPA policy-group-set-controller interface <zpa-policy_group_set>`.
-
-    #     """
-    #     return PolicyGroupSetAPI(self._request_executor, self._config)
-
     @property
     def tenant_federation_provisioning(self) -> TenantFederationProvisioningAPI:
         """
@@ -525,3 +500,18 @@ class ZPAService:
 
         """
         return ApplicationFederationAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group(self) -> PolicyGroupAPI:
+        """The interface object for the :ref:`ZPA Policy Group interface <zpa-policy_group>`."""
+        return PolicyGroupAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group_rule(self) -> PolicyGroupRuleAPI:
+        """The interface object for the :ref:`ZPA Policy Group Rule interface <zpa-policy_group_rule>`."""
+        return PolicyGroupRuleAPI(self._request_executor, self._config)
+
+    @property
+    def policy_group_set(self) -> PolicyGroupSetAPI:
+        """The interface object for the :ref:`ZPA Policy Group Set interface <zpa-policy_group_set>`."""
+        return PolicyGroupSetAPI(self._request_executor, self._config)

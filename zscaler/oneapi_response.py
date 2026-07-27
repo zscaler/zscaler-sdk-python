@@ -241,6 +241,22 @@ class ZscalerAPIResponse:
                         items = val
                         break
                 self._list = items
+        elif self._service_type == "aiguard":
+            # AI Guard wraps list responses in an {"items": [...]} envelope with
+            # no page/pageSize/total metadata. Unwrap the items transparently and
+            # treat the response as complete (single page). Single-object
+            # responses (e.g. GET-by-id) come back as a plain dict without an
+            # "items" key — expose those as a one-item list so get_results()
+            # and get_body() both work.
+            if isinstance(self._body, dict) and isinstance(self._body.get("items"), list):
+                self._list = self._body["items"]
+                self._is_flat_list_response = True
+            elif isinstance(self._body, dict):
+                self._list = [self._body]
+                self._is_flat_list_response = True
+            else:
+                self._list = self._body if isinstance(self._body, list) else []
+                self._is_flat_list_response = True
         elif self._service_type == "zcell":
             # ZCell wraps paginated list responses in a {"totalElements", "totalPages",
             # "size", "content": [...]} envelope. Single-object responses (e.g. a

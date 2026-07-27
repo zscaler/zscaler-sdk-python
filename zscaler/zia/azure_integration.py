@@ -31,8 +31,7 @@ class AzureIntegrationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_azure_refresh_connection_status(
-        self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
+    def list_azure_refresh_connection_status(self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
         """
         List azures (refreshConnectionStatus).
 
@@ -53,8 +52,7 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -122,8 +120,7 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -170,8 +167,7 @@ class AzureIntegrationAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_azures_un_configure_tunnel_status(
-        self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
+    def list_azures_un_configure_tunnel_status(self, query_params=None) -> APIResult[List[AzureVirtualHub]]:
         """
         List azures (unConfigureTunnelStatus).
 
@@ -192,8 +188,7 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -230,8 +225,7 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -299,8 +293,7 @@ class AzureIntegrationAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 

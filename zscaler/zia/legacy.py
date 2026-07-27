@@ -122,6 +122,7 @@ if TYPE_CHECKING:
     from zscaler.zia.user_management import UserManagementAPI
     from zscaler.zia.vzen_clusters import VZENClustersAPI
     from zscaler.zia.vzen_nodes import VZENNodesAPI
+    from zscaler.zia.web_dlp_global_options import WebDlpGlobalOptionsAPI
     from zscaler.zia.workload_groups import WorkloadGroupsAPI
     from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 
@@ -780,6 +781,14 @@ class LegacyZIAClientHelper:
         from zscaler.zia.dlp_resources import DLPResourcesAPI
 
         return DLPResourcesAPI(self.request_executor)
+
+    @property
+    def web_dlp_global_options(self) -> WebDlpGlobalOptionsAPI:
+        """
+        The interface object for the :ref:`ZIA DLP Advanced Settings information interface <zia-web_dlp_global_options>`.
+
+        """
+        return WebDlpGlobalOptionsAPI(self.request_executor)
 
     @property
     def end_user_notification(self) -> "EndUserNotificationAPI":

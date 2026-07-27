@@ -1,0 +1,513 @@
+interactions:
+- request:
+    body: '{"name": "tests-lp-vcr0001", "type": "xai", "public": true}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '59'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers
+  response:
+    body:
+      string: '{"id":29109,"name":"tests-lp-vcr0001","type":"xai","createTimeMillis":1784750616073,"updateTimeMillis":1784750616073,"public":true}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '19'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a31db233-fcc1-9960-bfd9-8d195258af51
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers/29109
+  response:
+    body:
+      string: '{"id":29109,"name":"tests-lp-vcr0001","type":"xai","createTimeMillis":1784750616073,"updateTimeMillis":1784750616073,"public":true}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '5'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1465dbb9-3a65-9ace-9a11-5b6bddf017ed
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers/name/tests-lp-vcr0001
+  response:
+    body:
+      string: '{"id":29109,"name":"tests-lp-vcr0001","type":"xai","createTimeMillis":1784750616073,"updateTimeMillis":1784750616073,"public":true}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '17'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 75e85abe-8172-9cf7-9e2a-343c4cca15fa
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '997'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-provider-types
+  response:
+    body:
+      string: '{"items":[{"type":"openai","name":"OpenAI","description":"Metadata
+        for OpenAI APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"anthropic","name":"Anthropic","description":"Metadata
+        for Anthropic APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"azure","name":"Azure","description":"Metadata
+        for Azure APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"bedrock-agent","name":"Bedrock-Agent","description":"Metadata
+        for Bedrock Invoke Agent","servers":{"public":{"accepted":true,"key":"publicApi","allowedValues":["bedrock-agent-runtime.us-east-1.amazonaws.com","bedrock-agent-runtime.us-east-2.amazonaws.com","bedrock-agent-runtime.us-west-2.amazonaws.com"]},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"bedrock-anthropic","name":"Bedrock-Anthropic","description":"Metadata
+        for Bedrock APIs for Anthropic Models","servers":{"public":{"accepted":true,"key":"publicApi","allowedValues":["bedrock-runtime.ap-northeast-1.amazonaws.com","bedrock-runtime.ap-northeast-2.amazonaws.com","bedrock-runtime.ap-south-1.amazonaws.com","bedrock-runtime.ap-southeast-1.amazonaws.com","bedrock-runtime.ap-southeast-2.amazonaws.com","bedrock-runtime.ca-central-1.amazonaws.com","bedrock-runtime.eu-central-1.amazonaws.com","bedrock-runtime.eu-west-1.amazonaws.com","bedrock-runtime.eu-west-2.amazonaws.com","bedrock-runtime.eu-west-3.amazonaws.com","bedrock-runtime.sa-east-1.amazonaws.com","bedrock-runtime.us-east-1.amazonaws.com","bedrock-runtime.us-east-2.amazonaws.com","bedrock-runtime.us-gov-east-1.amazonaws.com","bedrock-runtime.us-west-2.amazonaws.com","bedrock-runtime.ap-northeast-3.amazonaws.com"]},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"bedrock-unified","name":"Bedrock-Unified","description":"Metadata
+        for Bedrock Converse APIs","servers":{"public":{"accepted":true,"key":"publicApi","allowedValues":["bedrock-runtime.us-east-1.amazonaws.com","bedrock-runtime.us-east-2.amazonaws.com","bedrock-runtime.us-west-2.amazonaws.com"]},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"bolt","name":"Bolt","description":"Bolt
+        API signature for prompt and response extraction.","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"builder","name":"Builder","description":"Metadata
+        for Builder.io","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"deepai","name":"DeepAI","description":"Metadata
+        for DeepAI","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"elevenlabs","name":"Elevenlabs","description":"Metadata
+        for Elevenlabs.io","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"gamma","name":"Gamma","description":"Metadata
+        for Gamma.app","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"github-copilot","name":"GitHub
+        Copilot","description":"Metadata for GitHub Copilot APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"glean","name":"Glean","description":"Metadata
+        for Glean","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"google-gemini","name":"Google
+        Gemini","description":"Metadata for Google Gemini APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"google-gemini-code","name":"Google
+        Gemini Code","description":"Metadata for Google Gemini Code Assist APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"google-gemini-enterprise","name":"Google
+        Gemini Enterprise","description":"Metadata for Google Gemini Enterprise APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"google-gemini-workspace","name":"Google
+        Gemini Workspace","description":"Metadata for Google Gemini Workspace APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"google-vertex-studio","name":"Google
+        Vertex Studio","description":"Google Cloud Vertex AI Studio","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"lovable","name":"Lovable","description":"Lovable
+        Dev API signature for prompt and response extraction.","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"maxai","name":"MaxAI","description":"Metadata
+        for MaxAI","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"microsoft-365-copilot","name":"Microsoft
+        365 Copilot","description":"Metadata for Microsoft 365 Copilot APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"microsoft-copilot","name":"Microsoft
+        Copilot","description":"Metadata for Microsoft Copilot APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"mistral","name":"Mistral
+        AI","description":"API signature for the Mistral AI Le Chat web application.","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"napkin","name":"Napkin","description":"Napkin
+        API signature for prompt and response extraction.","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"notebooklm","name":"NotebookLM","description":"Metadata
+        for NotebookLM APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"opencode","name":"OpenCode","description":"Metadata
+        for OpenCode APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"perplexity","name":"PerplexityAI","description":"Metadata
+        for Perplexity APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"quillbot","name":"Quillbot","description":"Quillbot
+        AI powered writing assitant","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"replit","name":"Replit","description":"Replit
+        AI agent platform API","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"vertex","name":"Vertex","description":"Metadata
+        for Vertex APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":true,"key":"publicApi","allowedValues":null}}},{"type":"windsurf","name":"Windsurf","description":"Metadata
+        for Windsurf","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}},{"type":"xai","name":"xAI","description":"Metadata
+        for Grok APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '52'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - fbab5f2c-b097-9b79-a083-e259e49f1f38
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '996'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-provider-types/xai
+  response:
+    body:
+      string: '{"type":"xai","name":"xAI","description":"Metadata for Grok APIs","servers":{"public":{"accepted":false,"key":null,"allowedValues":null},"private":{"accepted":false,"key":null,"allowedValues":null}}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 75d4046d-2ebb-910a-aa65-58777ab8ee85
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '995'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers
+  response:
+    body:
+      string: '{"items":[{"id":1480,"name":"Anthropic","type":"xai","createTimeMillis":1775163852257,"updateTimeMillis":1775163852257,"public":true},{"id":6104,"name":"Default
+        Bolt Provider","type":"bolt","createTimeMillis":1775790150705,"updateTimeMillis":1775790150705,"public":true},{"id":29103,"name":"BDAnthropic","type":"xai","createTimeMillis":1784744445921,"updateTimeMillis":1784744445921,"public":true},{"id":29109,"name":"tests-lp-vcr0001","type":"xai","createTimeMillis":1784750616073,"updateTimeMillis":1784750616073,"public":true},{"id":6099,"name":"Default
+        Anthropic Provider","type":"anthropic","createTimeMillis":1775790150684,"updateTimeMillis":1775790150684,"public":true},{"id":6100,"name":"Default
+        Azure Provider","type":"azure","createTimeMillis":1775790150688,"updateTimeMillis":1775790150688,"public":true},{"id":6101,"name":"Default
+        Bedrock-Agent Provider","type":"bedrock-agent","servers":{"publicApi":["bedrock-agent-runtime.us-east-1.amazonaws.com"]},"createTimeMillis":1775790150692,"updateTimeMillis":1775790150692,"public":true},{"id":6102,"name":"Default
+        Bedrock-Anthropic Provider","type":"bedrock-anthropic","servers":{"publicApi":["bedrock-runtime.us-east-1.amazonaws.com"]},"createTimeMillis":1775790150697,"updateTimeMillis":1775790150697,"public":true},{"id":6103,"name":"Default
+        Bedrock-Unified Provider","type":"bedrock-unified","servers":{"publicApi":["bedrock-runtime.us-east-1.amazonaws.com"]},"createTimeMillis":1775790150701,"updateTimeMillis":1775790150701,"public":true},{"id":6105,"name":"Default
+        Microsoft Copilot Provider","type":"microsoft-copilot","createTimeMillis":1775790150709,"updateTimeMillis":1775790150709,"public":true},{"id":6106,"name":"Default
+        DeepAI Provider","type":"deepai","createTimeMillis":1775790150714,"updateTimeMillis":1775790150714,"public":true},{"id":6107,"name":"Default
+        Google Gemini Code Provider","type":"google-gemini-code","createTimeMillis":1775790150718,"updateTimeMillis":1775790150718,"public":true},{"id":6116,"name":"Default
+        Napkin Provider","type":"napkin","createTimeMillis":1775790150755,"updateTimeMillis":1775790150755,"public":true},{"id":6117,"name":"Default
+        OpenAI Provider","type":"openai","servers":{"publicApi":["api.openai.com"]},"createTimeMillis":1775790150759,"updateTimeMillis":1775790150759,"public":true},{"id":6118,"name":"Default
+        OpenCode Provider","type":"opencode","createTimeMillis":1775790150763,"updateTimeMillis":1775790150763,"public":true},{"id":6119,"name":"Default
+        PerplexityAI Provider","type":"perplexity","createTimeMillis":1775790150767,"updateTimeMillis":1775790150767,"public":true},{"id":6120,"name":"Default
+        Google Vertex Studio Provider","type":"google-vertex-studio","createTimeMillis":1775790150771,"updateTimeMillis":1775790150771,"public":true},{"id":6121,"name":"Default
+        Vertex Provider","type":"vertex","servers":{"publicApi":["aiplatform.googleapis.com"]},"createTimeMillis":1775790150775,"updateTimeMillis":1775790150775,"public":true},{"id":6108,"name":"Default
+        Google Gemini Enterprise Provider","type":"google-gemini-enterprise","createTimeMillis":1775790150722,"updateTimeMillis":1775790150722,"public":true},{"id":6109,"name":"Default
+        Google Gemini Provider","type":"google-gemini","servers":{"publicApi":["generativelanguage.googleapis.com"]},"createTimeMillis":1775790150726,"updateTimeMillis":1775790150726,"public":true},{"id":6110,"name":"Default
+        Google Gemini Workspace Provider","type":"google-gemini-workspace","createTimeMillis":1775790150730,"updateTimeMillis":1775790150730,"public":true},{"id":6111,"name":"Default
+        Glean Provider","type":"glean","createTimeMillis":1775790150734,"updateTimeMillis":1775790150734,"public":true},{"id":6114,"name":"Default
+        Microsoft 365 Copilot Provider","type":"microsoft-365-copilot","createTimeMillis":1775790150747,"updateTimeMillis":1775790150747,"public":true},{"id":6115,"name":"Default
+        MaxAI Provider","type":"maxai","createTimeMillis":1775790150751,"updateTimeMillis":1775790150751,"public":true},{"id":6112,"name":"Default
+        xAI Provider","type":"xai","createTimeMillis":1775790150738,"updateTimeMillis":1775790150738,"public":true},{"id":6113,"name":"Default
+        Lovable Provider","type":"lovable","createTimeMillis":1775790150742,"updateTimeMillis":1775790150742,"public":true}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '16'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b7509575-060a-9a30-8300-7ab39ea3b0d7
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '994'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers/29109
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:36 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '18'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c8bba3cc-9d7f-92b0-9a33-a2a5490d3e1d
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '993'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

@@ -4,6 +4,8 @@ from typing import Any, Dict, Optional, TypeVar
 
 import requests
 
+from zscaler.aiguard.aiguard_service import AIGuardService
+from zscaler.aiguard.legacy import LegacyZGuardClientHelper
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.config.config_setter import ConfigSetter
@@ -11,8 +13,6 @@ from zscaler.config.config_validator import ConfigValidator
 from zscaler.logger import setup_logging
 from zscaler.oneapi_oauth_client import OAuth
 from zscaler.request_executor import RequestExecutor
-from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
-from zscaler.zaiguard.zaiguard_service import ZGuardService
 from zscaler.zbi.zbi_service import ZBIService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.zcc.zcc_service import ZCCService
@@ -48,7 +48,7 @@ class Client:
         zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
         zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
         ztb_legacy_client: Optional[LegacyZTBClientHelper] = None,
-        zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
+        aiguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
         use_legacy_client: bool = False,
     ) -> None:
         self.use_legacy_client = use_legacy_client
@@ -59,7 +59,7 @@ class Client:
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
         self.ztb_legacy_client = ztb_legacy_client
-        self.zguard_legacy_client = zguard_legacy_client
+        self.aiguard_legacy_client = aiguard_legacy_client
 
         # ZCC Legacy client initialization logic
         if use_legacy_client and zcc_legacy_client:
@@ -67,6 +67,14 @@ class Client:
             self._request_executor = zcc_legacy_client
             self.logger = logging.getLogger(__name__)
             self.logger.info("Legacy ZCC client initialized successfully.")
+            return
+
+        # AI Guard Legacy client initialization logic (policy detection only)
+        if use_legacy_client and aiguard_legacy_client:
+            self._config = {}
+            self._request_executor = aiguard_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy AI Guard client initialized successfully.")
             return
 
         # ZDX Legacy client initialization logic
@@ -117,14 +125,6 @@ class Client:
             self.logger.info("Legacy ZTB client initialized successfully.")
             return
 
-        # ZGuard Legacy client initialization logic
-        if use_legacy_client and zguard_legacy_client:
-            self._config = {}
-            self._request_executor = zguard_legacy_client
-            self.logger = logging.getLogger(__name__)
-            self.logger.info("Legacy ZGuard client initialized successfully.")
-            return
-
         # Assuming user_config is a dictionary or an object with a 'logging' attribute
         logging_config = (
             user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
@@ -136,7 +136,6 @@ class Client:
         self.zia_legacy_client = zia_legacy_client
         self.zwa_legacy_client = zwa_legacy_client
         self.ztb_legacy_client = ztb_legacy_client
-        self.zguard_legacy_client = zguard_legacy_client
 
         # Extract enabled and verbose from the logging configuration
         enabled = logging_config.get("enabled", None)
@@ -220,7 +219,6 @@ class Client:
             self.zia_legacy_client,
             self.zwa_legacy_client,
             self.ztb_legacy_client,
-            self.zguard_legacy_client,
         )
         # self.logger.debug("Request executor initialized.")
 
@@ -237,7 +235,7 @@ class Client:
         self._zins = None  # Z-Insights (GraphQL Analytics API)
         self._zms = None  # ZMS - Zscaler Microsegmentation (GraphQL API)
         self._zbi = None  # Zscaler Business Insights (REST API)
-        self._zguard = None
+        self._aiguard = None  # Zscaler AI Guard (OneAPI only)
         self._zcell = None  # Zscaler Cellular (OneAPI only)
 
     def authenticate(self):
@@ -343,12 +341,48 @@ class Client:
         return self._zeasm
 
     @property
-    def zguard(self):
+    def aiguard(self):
+        """
+        Zscaler AI Guard Service.
+
+        AI Guard is split across two authentication paths:
+
+        **OneAPI** (``ZscalerClient``) -- all configuration APIs:
+            - Detection Policies and Policy Match Rules
+            - LLM Providers and LLM Provider Credentials
+            - LLM Applications and LLM Application Credentials
+
+        **Legacy** (``LegacyAIGuardClient``) -- policy detection only:
+            - ``policy_detection.execute_policy``
+            - ``policy_detection.resolve_and_execute_policy``
+
+        The policy detection endpoints (``/v1/detection/*``) are **not** exposed
+        through OneAPI, so they must be reached with ``LegacyAIGuardClient`` and an
+        AI Guard API key. Every other AI Guard resource is OneAPI only.
+
+        Examples:
+            OneAPI -- configuration APIs::
+
+                with ZscalerClient(config) as client:
+                    policies, _, err = client.aiguard.policies.list_policies()
+
+            Legacy -- policy detection::
+
+                with LegacyAIGuardClient({"api_key": "...", "cloud": "us1"}) as client:
+                    result, _, err = client.aiguard.policy_detection.resolve_and_execute_policy(
+                        content="User prompt to scan", direction="IN"
+                    )
+        """
         if self.use_legacy_client:
-            return self._require_legacy_client("ZGuard", self.zguard_legacy_client)
-        if self._zguard is None:
-            self._zguard = ZGuardService(self._request_executor)
-        return self._zguard
+            return self._require_legacy_client("AI Guard", self.aiguard_legacy_client)
+        if self._aiguard is None:
+            self._aiguard = AIGuardService(self._request_executor)
+        return self._aiguard
+
+    @property
+    def zguard(self):
+        """Deprecated alias for the :obj:`aiguard` property."""
+        return self.aiguard
 
     @property
     def zins(self):
@@ -441,6 +475,12 @@ class Client:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Automatically close session within context manager."""
+        # AI Guard's legacy client authenticates per request with an API key: there is no
+        # session to close and no deauthenticate endpoint (unlike ZIA/ZTW), so skip the
+        # teardown entirely rather than logging a session close that never happens.
+        if getattr(self, "aiguard_legacy_client", None) is not None:
+            return
+
         self.logger.debug("Exiting context manager, closing session.")
         if hasattr(self, "_session"):
             self._session.close()
@@ -628,6 +668,50 @@ class LegacyZCCClient(Client):
         super().__init__(config, zcc_legacy_client=legacy_helper, use_legacy_client=True)
 
 
+class LegacyAIGuardClient(Client):
+    """
+    Legacy AI Guard client, used **only** for the policy detection endpoints.
+
+    The ``/v1/detection/execute-policy`` and ``/v1/detection/resolve-and-execute-policy``
+    endpoints are not exposed through OneAPI, so they are reached directly against
+    ``https://api.<cloud>.zseclipse.net`` with an AI Guard API key.
+
+    Every other AI Guard resource (detection policies, policy match rules, LLM
+    providers/applications and their credentials) is OneAPI only -- use
+    :class:`ZscalerClient` for those.
+
+    Examples:
+        >>> from zscaler.oneapi_client import LegacyAIGuardClient
+        >>> with LegacyAIGuardClient({"api_key": "<api key>", "cloud": "us1"}) as client:
+        ...     result, _, err = client.aiguard.policy_detection.resolve_and_execute_policy(
+        ...         content="User prompt to scan",
+        ...         direction="IN",
+        ...     )
+    """
+
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        api_key = config.get("api_key", os.getenv("AIGUARD_API_KEY"))
+        cloud = config.get("cloud", os.getenv("AIGUARD_CLOUD", "us1"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
+
+        # Initialize the LegacyZGuardClientHelper with the extracted parameters
+        legacy_helper = LegacyZGuardClientHelper(
+            api_key=api_key,
+            cloud=cloud,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
+        )
+        super().__init__(config, aiguard_legacy_client=legacy_helper, use_legacy_client=True)
+
+
 class LegacyZDXClient(Client):
     def __init__(
         self,
@@ -700,27 +784,3 @@ class LegacyZTBClient(Client):
             request_executor_impl=request_executor_impl,
         )
         super().__init__(config, ztb_legacy_client=legacy_helper, use_legacy_client=True)
-
-
-class LegacyZGuardClient(Client):
-    def __init__(
-        self,
-        config: dict = {},
-    ):
-        api_key = config.get("api_key", os.getenv("AIGUARD_API_KEY"))
-        cloud = config.get("cloud", os.getenv("AIGUARD_CLOUD", "us1"))
-        timeout = config.get("timeout", 240)
-        cache = config.get("cache", None)
-        fail_safe = config.get("failSafe", None)
-        request_executor_impl = config.get("requestExecutor", None)
-
-        # Initialize the LegacyZGuardClientHelper with the extracted parameters
-        legacy_helper = LegacyZGuardClientHelper(
-            api_key=api_key,
-            cloud=cloud,
-            timeout=timeout,
-            cache=cache,
-            fail_safe=fail_safe,
-            request_executor_impl=request_executor_impl,
-        )
-        super().__init__(config, zguard_legacy_client=legacy_helper, use_legacy_client=True)

@@ -1,0 +1,980 @@
+interactions:
+- request:
+    body: '{"name": "tests-pol-vcr0001", "inputDetectorPolicies": [{"detector": "toxicity",
+      "enabled": true, "severity": "HIGH", "configuration": {"action": "BLOCK", "threshold":
+      0.87}}, {"detector": "prompt_injection", "enabled": true, "severity": "CRITICAL",
+      "configuration": {"action": "BLOCK", "threshold": 0.75}}], "outputDetectorPolicies":
+      [{"detector": "toxicity", "enabled": true, "severity": "CRITICAL", "configuration":
+      {"action": "BLOCK", "threshold": 0.87}}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '460'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies
+  response:
+    body:
+      string: '{"id":2934,"name":"tests-pol-vcr0001","version":1,"inputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"HIGH","configuration":{"action":"BLOCK","threshold":0.87}},{"detector":"prompt_injection","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.75}}],"outputDetectorPolicies":[{"detector":"toxicity","enabled":true,"severity":"CRITICAL","configuration":{"action":"BLOCK","threshold":0.87}}],"createTimeMillis":1784750617724,"updateTimeMillis":1784750617724}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '13'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f9badc43-9a64-97f5-a3ca-cf9ea256c94e
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '994'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"name": "tests-la-vcr0002", "ownerEmail": "tests-la-vcr0002@acme.com",
+      "applicationSettings": {"includeEventContents": true, "encryptEventContents":
+      false}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '157'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-applications
+  response:
+    body:
+      string: '{"id":1583,"name":"tests-la-vcr0002","ownerEmail":"REDACTED","applicationSettings":{"includeEventContents":true,"encryptEventContents":false},"createTimeMillis":1784750617834,"updateTimeMillis":1784750617834}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '11'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - da712e4b-c25d-9d6f-b0cb-b3615a456336
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '993'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-providers/name/Default%20Anthropic%20Provider
+  response:
+    body:
+      string: '{"id":6099,"name":"Default Anthropic Provider","type":"anthropic","createTimeMillis":1775790150684,"updateTimeMillis":1775790150684,"public":true}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:37 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '4'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 14d581c0-0ff3-9947-85e1-c85e6d5bac75
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '992'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-provider-credentials
+  response:
+    body:
+      string: '{"items":[{"id":744,"providerId":6099,"name":"Anthropic_API01","createTimeMillis":1784745192169,"updateTimeMillis":1784745192169,"expireTimeMillis":1785481200000},{"id":747,"providerId":6099,"name":"Anthropic_API02","createTimeMillis":1784745463518,"updateTimeMillis":1784745463518},{"id":739,"providerId":6099,"name":"Anthropic_API_Key","createTimeMillis":1784654432715,"updateTimeMillis":1784743942727,"expireTimeMillis":1785481200000}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '6'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4b06d6e8-f7ed-970a-bf85-23e6a6a418fb
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"applicationId": 1583, "providerId": 6099, "providerCredentialsId": 744,
+      "name": "tests-lac-vcr0003", "mode": "PROXY"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '119'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-application-credentials
+  response:
+    body:
+      string: '{"id":2155,"applicationId":1583,"providerId":6099,"providerCredentialsId":744,"name":"tests-lac-vcr0003","mode":"PROXY","key":"REDACTED","createTimeMillis":1784750618138,"updateTimeMillis":1784750618138}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '17'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 6f876cd6-6694-9e2c-8924-7b16a8a201ba
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"policyId": 2934, "name": "tests-pmr-vcr0004", "enabled": true, "ruleOrder":
+      2, "matchCriteria": {"llmApplications": [{"applicationId": 1583, "applicationCredentialsIds":
+      [2155]}], "type": "DAS_APPLICATION"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '209'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: POST
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules
+  response:
+    body:
+      string: '{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004","enabled":true,"ruleOrder":2,"version":1,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '23'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f866031a-48ca-9f5f-bedc-4870c54a6fa8
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '997'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules/2758
+  response:
+    body:
+      string: '{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004","enabled":true,"ruleOrder":2,"version":1,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '6'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 696b68e9-3f4e-97d3-bd2e-efe5227ffaf5
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '996'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules/name/tests-pmr-vcr0004
+  response:
+    body:
+      string: '{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004","enabled":true,"ruleOrder":2,"version":1,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '7'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 873b1d57-df32-9774-9e87-0a27a0bd9d62
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '995'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"policyId": 2934, "name": "tests-pmr-vcr0004Updated", "enabled": true,
+      "ruleOrder": 2, "matchCriteria": {"llmApplications": [{"applicationId": 1583,
+      "applicationCredentialsIds": [2155]}], "type": "DAS_APPLICATION"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '216'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: PUT
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules/2758
+  response:
+    body:
+      string: '{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004Updated","enabled":true,"ruleOrder":2,"version":2,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '24'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 814affff-1614-9b00-aaac-c5a5893108ba
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '994'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules/2758
+  response:
+    body:
+      string: '{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004Updated","enabled":true,"ruleOrder":2,"version":2,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '7'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 31b9f3fd-b76f-94cc-ae9d-6fd3757de83d
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '993'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: GET
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules
+  response:
+    body:
+      string: '{"items":[{"id":978,"policyId":1152,"name":"PolicyRule01","enabled":true,"ruleOrder":1,"version":1,"matchCriteria":{"llmApplications":[{"applicationId":647,"applicationCredentialsIds":[1075]}],"sourceIpAddresses":[],"applicationGroups":[],"customRequestHeaders":[],"type":"DAS_APPLICATION"}},{"id":2758,"policyId":2934,"name":"tests-pmr-vcr0004Updated","enabled":true,"ruleOrder":2,"version":2,"matchCriteria":{"llmApplications":[{"applicationId":1583,"applicationCredentialsIds":[2155]}],"type":"DAS_APPLICATION"}}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '7'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4b398422-8e59-9d2c-be96-f0166eeb8c53
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '992'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policy-match-rules/2758
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:38 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '10'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1cc5881c-931c-94ec-bedd-abe4ed81cba5
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '991'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-application-credentials/2155
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:39 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '13'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - adef3a9a-c33c-9495-92a2-7e5c827cf026
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/llm-applications/1583
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:39 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '9'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 072fd609-d5b0-9e65-8afe-b775ffddd3f0
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.39 python/3.11.8 Darwin/25.5.0
+    method: DELETE
+    uri: https://easm.test.zscaler.com/aiguard/v1/detections/policies/2934
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      date:
+      - Wed, 22 Jul 2026 20:03:39 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '12'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 305ae334-d640-9677-852b-eb0e61b7cf20
+      x-oneapi-version:
+      - 111.1.54
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '997'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - c8078f6a-077d-42df-8d96-d31429769b5f
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

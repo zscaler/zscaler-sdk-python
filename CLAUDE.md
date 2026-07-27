@@ -97,6 +97,60 @@ These shadow `transform_common_id_fields` for those fields (the helper finds not
 
 `add_id_groups` (also in `zscaler/utils.py`) is the original ZPA helper and never coerces. It still exists for backwards compatibility and is kept in `application_segment.py`'s `add_segment_provision` flow and `pra_credential_pool.py`. New code in ZPA should prefer `transform_common_id_fields(..., coerce_ids=False)` so the service converges on a single helper.
 
+## AI Guard-Specific Architecture
+
+AI Guard is the only product **split across two authentication paths**. Getting this wrong sends requests to a gateway that returns `404` with an empty body.
+
+| Resources | Client | Base URL |
+|---|---|---|
+| `policies`, `policy_match_rules`, `llm_providers`, `llm_provider_credentials`, `llm_applications`, `llm_application_credentials` | `ZscalerClient` (OneAPI) | `api.zsapi.net/aiguard/v1/*` |
+| `policy_detection` **only** | `LegacyAIGuardClient` | `api.<cloud>.zseclipse.net/v1/detection/*` |
+
+The policy detection endpoints (`/v1/detection/execute-policy`, `/v1/detection/resolve-and-execute-policy`) were never onboarded to OneAPI. `AIGuardService` deliberately does **not** expose `policy_detection` — advertising it there would route users to a 404. Both paths are reached through `client.aiguard`; which one you get depends on the client you constructed.
+
+### Service-type routing order matters
+
+In `request_executor.py`'s `get_service_type`, the `/aiguard` check **must** come before the `/v1/detection/` check:
+
+```python
+elif "/aiguard" in url:          # OneAPI - checked FIRST
+    return "aiguard"
+elif "/v1/detection/" in url:    # legacy policy detection
+    return "aiguard_legacy"
+```
+
+`/aiguard/v1/detections/policies` contains the substring `/v1/detection`, so the reverse order silently misroutes every OneAPI policy call to the legacy client. Note the trailing slash on `/v1/detection/` — it prevents matching `/detections`.
+
+### Legacy client wiring
+
+`LegacyZGuardClientHelper` lives in `zscaler/aiguard/legacy.py` (repo convention: `<product>/legacy.py`; there is no separate `zaiguard` package). The `aiguard_legacy_client` kwarg is threaded through `Client.__init__` → `RequestExecutor` → `HTTPClient`; all three must accept it. Auth is `Authorization: Bearer <api_key>`, config keys `api_key` / `cloud` / `timeout`, env vars `AIGUARD_API_KEY` / `AIGUARD_CLOUD` / `AIGUARD_OVERRIDE_URL`.
+
+`Client.__exit__` early-returns when `aiguard_legacy_client` is set: AI Guard authenticates per request and has no session to close or `deauthenticate` endpoint, unlike ZIA/ZTW.
+
+### Pagination
+
+AI Guard list endpoints return `{"items": [...]}` rather than a bare array. `oneapi_response.py` has a dedicated `aiguard` branch that unwraps it.
+
+### API constraints worth knowing before writing tests
+
+These are enforced server-side and each one produced a real test failure:
+
+- **Public providers are not editable** (`"A public provider is not editable."`), and private ones require a `servers` payload (`"'servers' is required for a private (public=false) provider."`). A create→update→delete lifecycle cannot be written against `llm_providers` without a `servers` body.
+- **`encryptEventContents: true`** on an LLM application requires a customer-managed key (CMK) in tenant settings.
+- **`apiCredentials`** is required when creating a provider credential, and is **write-only** — never returned in responses, so it cannot be asserted on.
+- **Policy match rules 409** (`already_exists`) when the referenced application/credential is already claimed by another rule. Create the full chain (policy → application → application credential) inside the test rather than reusing shared tenant fixtures.
+- **`LlmProviderCredentials` has no `id` attribute** in the model; read it from the raw response body (`response.get_body()["id"]`).
+- **`referential_check`** (all four resources) and **`regenerate_credential`** return 404 against the live API. `referential_check` is commented out in the clients and removed from the manifests so codegen does not reintroduce it.
+
+### Cassette scrubbing
+
+`tests/conftest.py` scrubs two AI Guard credential paths — both are required, and neither is covered by `filter_post_data_parameters` (that only handles form-encoded bodies, and AI Guard sends JSON):
+
+- **request**: `apiCredentials.key`, scoped to the `apiCredentials` object so the generic `"key"` field is not redacted globally
+- **response**: the generated `key` returned by `POST /llm-application-credentials`, scoped to bodies containing `providerCredentialsId` (provider-type payloads legitimately carry `"key": "publicApi"`)
+
+Recording: `make test:vcr:record:aiguard` deletes cassettes first, because `vcr_config` pins `record_mode` to `new_episodes` when `MOCK_TESTS=false`, which overrides `--record-mode=rewrite`. With `match_on=[method, path, query]` the body is not matched, so a stale cassette replays the old response even after the request payload changes.
+
 ## ZCell-Specific Architecture
 
 Every ZCell endpoint is scoped to a customer (`/customers/{id}`). Rather than forcing callers to repeat that id on every call, the SDK resolves it once and auto-injects it — analogous to, but **completely independent from**, ZPA's `customerId`. Never conflate `zcellCustomerId` with ZPA's `customerId`.

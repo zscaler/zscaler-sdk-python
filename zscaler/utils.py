@@ -100,7 +100,6 @@ reformat_params = [
     ("connector_ids", "connectors"),
     ("server_group_ids", "serverGroups"),
     ("user_portal_ids", "userPortals"),
-    
 ]
 
 
