@@ -1063,7 +1063,6 @@ class AppSegmentByType(ZscalerObject):
             self.ext_domain_name = None
             self.ext_id = None
             self.ext_label = None
-            
 
     def request_format(self) -> Dict[str, Any]:
         """

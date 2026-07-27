@@ -7,7 +7,6 @@ from urllib.parse import urlparse
 import requests
 
 from zscaler.logger import dump_request, dump_response
-from zscaler.zaiguard.legacy import LegacyZGuardClientHelper
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
@@ -37,7 +36,7 @@ class HTTPClient:
         zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
         zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
         ztb_legacy_client: Optional[LegacyZTBClientHelper] = None,
-        zguard_legacy_client: Optional[LegacyZGuardClientHelper] = None,
+        aiguard_legacy_client=None,
     ) -> None:
 
         # Get headers from Request Executor
@@ -49,7 +48,7 @@ class HTTPClient:
         self.zia_legacy_client: Optional[LegacyZIAClientHelper] = zia_legacy_client
         self.zwa_legacy_client: Optional[LegacyZWAClientHelper] = zwa_legacy_client
         self.ztb_legacy_client: Optional[LegacyZTBClientHelper] = ztb_legacy_client
-        self.zguard_legacy_client: Optional[LegacyZGuardClientHelper] = zguard_legacy_client
+        self.aiguard_legacy_client = aiguard_legacy_client
 
         # Determine if legacy clients are enabled
         self.use_zcc_legacy_client: bool = zcc_legacy_client is not None
@@ -59,7 +58,6 @@ class HTTPClient:
         self.use_zia_legacy_client: bool = zia_legacy_client is not None
         self.use_zwa_legacy_client: bool = zwa_legacy_client is not None
         self.use_ztb_legacy_client: bool = ztb_legacy_client is not None
-        self.use_zguard_legacy_client: bool = zguard_legacy_client is not None
 
         # Set timeout for all HTTP requests
         request_timeout: Optional[int] = http_config.get("requestTimeout", None)
@@ -316,28 +314,6 @@ class HTTPClient:
                         "headers": legacy_request["headers"],
                     }
                 )
-
-            elif self.use_zguard_legacy_client:
-                parsed_url = urlparse(request["url"])
-                path = parsed_url.path
-                logger.debug(f"Sending request via AIGuard legacy client. Path: {path}")
-
-                response = self.zguard_legacy_client.send(
-                    method=request["method"],
-                    path=path,
-                    params=request["params"],
-                    json=request.get("json") or request.get("data"),
-                )
-
-                logger.debug(f"AIGuard Legacy Client Response: {response}")
-
-                if response is None:
-                    error_msg = f"AIGuard Legacy client returned None for path: {path}"
-                    logger.error(error_msg)
-                    return (None, ValueError(error_msg))
-
-                # For AIGuard, the response is just the requests.Response object
-                # No need to update params as authentication is already handled
 
             else:
                 # Standard session

@@ -42,10 +42,18 @@ help:
 	@echo "$(COLOR_OK)  lint:zins                     Check style with ruff for zins packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zms                     Check style with ruff for zms packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zbi                     Check style with ruff for zbi packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zaiguard                 Check style with ruff for zaiguard packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:aiguard                  Check style with ruff for aiguard packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:ztb                      Check style with ruff for ztb packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zwa                      Check style with ruff for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)codegen (python_model_generation/)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  manifests PRODUCT=zpa         List a spec's controllers (add SECTION=\"...\" to generate manifests+payloads)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  generate PRODUCT=zia          Generate models + API clients for a product (into generated_*/)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  generate:models PRODUCT=zia   Generate only models from json_payloads/$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  generate:clients PRODUCT=zia  Generate only API clients from api_manifests/$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  generate:tests PRODUCT=zia    Generate only VCR integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  promote PRODUCT=zia           Promote generated files into zscaler/ + wire *_service.py$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  promote:dry PRODUCT=zia       Preview promotion without writing anything$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:unit                     Run only unit tests$(COLOR_NONE)"
@@ -58,8 +66,12 @@ help:
 	@echo "$(COLOR_OK)  test:integration:zins         Run only zins integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zms         Run only zms integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zbi         Run only zbi integration tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:zaiguard     Run only zaiguard integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:ztb          Run only ztb integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:aiguard      Run only aiguard integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:vcr:record:aiguard       Record aiguard VCR cassettes against a live tenant$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:vcr:playback:aiguard     Replay aiguard VCR cassettes (no credentials needed)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  coverage:aiguard              Coverage report for the aiguard package$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  sweep:aiguard                 Delete leftover aiguard tests- resources$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)security$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  security-scan                 Run Trivy (vuln + secret scan, excludes local_dev/openapi)$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
@@ -145,15 +157,59 @@ lint\:zeasm:
 	poetry run ruff check zscaler/zeasm --select I
 	poetry run ruff check zscaler/zeasm
 
-lint\:zaiguard:
-	poetry run ruff check zscaler/zaiguard --select I
-	poetry run ruff check zscaler/zaiguard
+lint\:aiguard:
+	poetry run ruff check zscaler/aiguard --select I
+	poetry run ruff check zscaler/aiguard
 
 format:
 	poetry run black .
 
 check-format:
 	poetry run black --check --diff .
+
+# ---------------------------------------------------------------------------
+# Code generation (python_model_generation/)
+#   generate  -> json_payloads/ + api_manifests/  into  generated_*/  (review)
+#   promote   -> generated_*/  into  zscaler/<product>/  (+ *_service.py wiring)
+# All require PRODUCT, e.g.  make generate PRODUCT=zia
+# ---------------------------------------------------------------------------
+GEN_DIR=python_model_generation
+
+_require-product:
+	@if [ -z "$(PRODUCT)" ]; then \
+		echo "$(COLOR_ERROR)PRODUCT is required, e.g. make generate PRODUCT=zia$(COLOR_NONE)"; \
+		exit 1; \
+	fi
+
+# Derive manifests + payloads from a product's OpenAPI spec (ZPA today).
+#   make manifests PRODUCT=zpa                      -> list controllers
+#   make manifests PRODUCT=zpa SECTION="Policy Group"
+manifests: _require-product
+	@if [ -z "$(SECTION)" ]; then \
+		poetry run python $(GEN_DIR)/generate_manifests.py --product $(PRODUCT) --list; \
+	else \
+		poetry run python $(GEN_DIR)/generate_manifests.py --product $(PRODUCT) --section "$(SECTION)"; \
+	fi
+
+generate\:models: _require-product
+	poetry run python $(GEN_DIR)/generate_models.py --product $(PRODUCT)
+
+generate\:clients: _require-product
+	poetry run python $(GEN_DIR)/generate_api_client.py --product $(PRODUCT)
+
+generate\:tests: _require-product
+	poetry run python $(GEN_DIR)/generate_tests.py --product $(PRODUCT)
+
+generate: _require-product
+	poetry run python $(GEN_DIR)/generate_models.py --product $(PRODUCT)
+	poetry run python $(GEN_DIR)/generate_api_client.py --product $(PRODUCT)
+	poetry run python $(GEN_DIR)/generate_tests.py --product $(PRODUCT)
+
+promote: _require-product
+	poetry run python $(GEN_DIR)/promote.py --product $(PRODUCT) --all
+
+promote\:dry: _require-product
+	poetry run python $(GEN_DIR)/promote.py --product $(PRODUCT) --all --dry-run
 
 test\:unit:
 	@echo "$(COLOR_ZSCALER)Running unit tests...$(COLOR_NONE)"
@@ -190,6 +246,10 @@ test\:integration\:zid:
 test\:integration\:zins:
 	@echo "$(COLOR_ZSCALER)Running zins integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zins --disable-warnings
+
+test\:integration\:aiguard:
+	@echo "$(COLOR_ZSCALER)Running aiguard integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/aiguard --disable-warnings
 
 test\:integration\:zms:
 	@echo "$(COLOR_ZSCALER)Running zms integration tests...$(COLOR_NONE)"
@@ -246,6 +306,9 @@ coverage\:zbi:
 
 coverage\:zeasm:
 	poetry run pytest tests/integration/zeasm --cov=zscaler/zeasm --cov-report xml --cov-report term
+
+coverage\:aiguard:
+	poetry run pytest tests/integration/aiguard --cov=zscaler/aiguard --cov-report xml --cov-report term
 # ==========================================
 # VCR Testing Commands
 # ==========================================
@@ -323,11 +386,26 @@ test\:vcr\:record\:ztw:
 	MOCK_TESTS=false poetry run pytest tests/integration/ztw --record-mode=rewrite -v --disable-warnings
 
 # Record VCR cassettes for ZEASM
+# Record VCR cassettes for AI Guard
+# tests/conftest.py's vcr_config pins record_mode to "new_episodes" when MOCK_TESTS=false,
+# which overrides --record-mode=rewrite. Combined with match_on=[method, path, query] that
+# replays a previously recorded response for the same endpoint even when the request body
+# has changed, so stale cassettes are removed first to force a genuine re-record.
+test\:vcr\:record\:aiguard:
+	@echo "$(COLOR_ZSCALER)Recording AI Guard VCR cassettes...$(COLOR_NONE)"
+	find tests/integration/aiguard/cassettes -name '*.yaml' -delete
+	MOCK_TESTS=false poetry run pytest tests/integration/aiguard --record-mode=rewrite -v --disable-warnings
+
 test\:vcr\:record\:zeasm:
 	@echo "$(COLOR_ZSCALER)Recording ZEASM VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=false poetry run pytest tests/integration/zeasm --record-mode=rewrite -v --disable-warnings
 
 # Playback VCR cassettes for ZIA (no credentials needed)
+# Playback VCR cassettes for AI Guard (no credentials needed)
+test\:vcr\:playback\:aiguard:
+	@echo "$(COLOR_ZSCALER)Playing back AI Guard VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/aiguard -v --disable-warnings
+
 test\:vcr\:playback\:zia:
 	@echo "$(COLOR_ZSCALER)Playing back ZIA VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=true poetry run pytest tests/integration/zia -v --disable-warnings
@@ -402,6 +480,10 @@ sweep\:zins:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZINS_SDK_TEST_SWEEP=true poetry run python tests/integration/zins/sweep/run_sweep.py --sweep
 
+sweep\:aiguard:
+	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
+	AIGUARD_SDK_TEST_SWEEP=true poetry run python tests/integration/aiguard/sweep/run_sweep.py --sweep
+
 
 build\:dist:
 	rm -rf dist build
@@ -453,4 +535,4 @@ security\:install:
 	@echo "$(COLOR_ZSCALER)Installing secret detection tools...$(COLOR_NONE)"
 	./scripts/check-secrets.sh --install
 
-.PHONY: clean-pyc clean-build docs clean
+.PHONY: clean-pyc clean-build docs clean _require-product manifests generate generate\:models generate\:clients generate\:tests promote promote\:dry

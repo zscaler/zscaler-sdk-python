@@ -50,6 +50,12 @@ class PolicySetControllerV2(ZscalerObject):
             self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
             self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
             self.custom_msg = config["customMsg"] if "customMsg" in config else None
+            self.button_text = config["buttonText"] if "buttonText" in config else None
+            self.url = config["url"] if "url" in config else None
+            self.browser_posture_name = config["browserPostureName"] if "browserPostureName" in config else None
+            self.browser_posture_profile_id = (
+                config["browserPostureProfileId"] if "browserPostureProfileId" in config else None
+            )
             self.device_posture_failure_notification_enabled = (
                 config["devicePostureFailureNotificationEnabled"]
                 if "devicePostureFailureNotificationEnabled" in config
@@ -184,6 +190,10 @@ class PolicySetControllerV2(ZscalerObject):
             self.read_only = None
             self.zscaler_managed = None
             self.device_posture_failure_notification_enabled = None
+            self.button_text = None
+            self.url = None
+            self.browser_posture_name = None
+            self.browser_posture_profile_id = None
             self.desktop_policy_mappings = []
 
     def request_format(self) -> Dict[str, Any]:
@@ -223,6 +233,10 @@ class PolicySetControllerV2(ZscalerObject):
             "restrictionType": self.restriction_type,
             "readOnly": self.read_only,
             "zscalerManaged": self.zscaler_managed,
+            "buttonText": self.button_text,
+            "url": self.url,
+            "browserPostureName": self.browser_posture_name,
+            "browserPostureProfileId": self.browser_posture_profile_id,
             "conditions": [condition.request_format() for condition in self.conditions],
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
             "appServerGroups": [group.request_format() for group in self.app_server_groups],

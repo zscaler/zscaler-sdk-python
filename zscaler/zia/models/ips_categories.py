@@ -1,0 +1,68 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import Any, Dict, Optional
+
+from zscaler.oneapi_object import ZscalerObject
+
+
+class IpsCategories(ZscalerObject):
+    """
+    A class for IpsCategories objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the IpsCategories model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.back_end_name = config["backEndName"] if "backEndName" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.deleted = config["deleted"] if "deleted" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else None
+            self.ips_signature_rules_count = config["ipsSignatureRulesCount"] if "ipsSignatureRulesCount" in config else None
+        else:
+            self.id = None
+            self.name = None
+            self.back_end_name = None
+            self.description = None
+            self.deleted = None
+            self.predefined = None
+            self.ips_signature_rules_count = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "backEndName": self.back_end_name,
+            "description": self.description,
+            "deleted": self.deleted,
+            "predefined": self.predefined,
+            "ipsSignatureRulesCount": self.ips_signature_rules_count,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

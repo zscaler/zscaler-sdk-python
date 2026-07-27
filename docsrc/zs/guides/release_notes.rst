@@ -6,6 +6,203 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.39 (July 27, 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+-------------
+
+Zscaler Internet Access (ZIA) New Endpoints
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoints:
+
+- Added ``GET /webDlpGlobalOptions`` Retrieves the DLP Advanced Settings information
+- Added ``PUT /webDlpGlobalOptions`` Updates the existing DLP Advanced Settings.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Applications endpoints:
+
+- Added ``GET /endPointApplications`` Retrieves the list of endpoint applications.
+- Added ``GET /endPointApplications/lite`` Retrieves a lightweight list of endpoint applications.
+- Added ``GET /endPointApplications/count`` Retrieves the count of all endpoint applications.
+- Added ``GET /endPointApplications/cloudApps/count`` Retrieves the count of well-known and discovered endpoint applications.
+- Added ``GET /endPointApplications/policies`` Retrieves the list of policy rules associated with the specified endpoint applications.
+- Added ``GET /endPointApplications/getCategoriesWithNonEmptyApps`` Retrieves the categories that currently have endpoint applications grouped within them.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Custom Applications endpoints:
+
+- Added ``GET /endPointApplications/customApps`` Retrieves the list of custom endpoint applications.
+- Added ``GET /endPointApplications/customApp/{id}`` Retrieves the custom endpoint application based on the specified ID.
+- Added ``POST /endPointApplications/customApp`` Adds a new custom endpoint application.
+- Added ``PUT /endPointApplications/customApp/{id}`` Updates the custom endpoint application based on the specified ID.
+- Added ``DELETE /endPointApplications/customApp/{id}`` Deletes the custom endpoint application based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Application Groups endpoints:
+
+- Added ``GET /endPointApplicationGroups`` Retrieves the list of application tag groups.
+- Added ``GET /endPointApplicationGroups/policies`` Retrieves the list of policy rules associated with the specified application tag groups.
+- Added ``POST /endPointApplicationGroups`` Adds a new application tag group.
+- Added ``PUT /endPointApplicationGroups/{id}`` Updates the application tag group based on the specified ID.
+- Added ``PUT /endPointApplicationGroups/{id}/resources`` Updates the applications associated with the specified tag group.
+- Added ``DELETE /endPointApplicationGroups/{id}`` Deletes the application tag group based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Resources endpoints:
+
+- Added ``GET /dlpEndpointResource/{channel}`` Retrieves the list of DLP resources configured for the specified channel.
+- Added ``GET /dlpEndpointResource/{channel}/{id}`` Retrieves the DLP resource based on the specified channel and ID.
+- Added ``GET /dlpEndpointResource/{id}/groups`` Retrieves the list of tags to which the specified DLP resource is associated.
+- Added ``POST /dlpEndpointResource`` Adds a new DLP endpoint resource.
+- Added ``PUT /dlpEndpointResource/{id}`` Updates the DLP endpoint resource based on the specified ID.
+- Added ``DELETE /dlpEndpointResource/{id}`` Deletes the DLP endpoint resource based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Resource Groups endpoints:
+
+- Added ``GET /endPointDlpResourceGroups/{channel}`` Retrieves the list of DLP resource tags added for the specified channel.
+- Added ``GET /endPointDlpResourceGroups/{id}/resources`` Retrieves the DLP resources associated with the specified tag group.
+- Added ``PUT /endPointDlpResourceGroups/{id}/resources`` Updates the DLP resources associated with the specified tag group.
+- Added ``POST /endPointDlpResourceGroups`` Adds a new DLP resource tag group.
+- Added ``PUT /endPointDlpResourceGroups/{id}`` Updates the DLP resource tag group based on the specified ID.
+- Added ``DELETE /endPointDlpResourceGroups/{id}`` Deletes the DLP resource tag group based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Rules endpoints:
+
+- Added ``GET /endPointDlpRules`` Retrieves a list of Endpoint DLP rules.
+- Added ``GET /endPointDlpRules/{id}`` Retrieves the Endpoint DLP rule based on the specified ID.
+- Added ``GET /endPointDlpRules/fileTypeCategories`` Retrieves the file type categories supported by Endpoint DLP rules.
+- Added ``POST /endPointDlpRules`` Adds a new Endpoint DLP rule.
+- Added ``PUT /endPointDlpRules/{id}`` Updates the Endpoint DLP rule based on the specified ID.
+- Added ``DELETE /endPointDlpRules/{id}`` Deletes the Endpoint DLP rule based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Endpoint DLP Exception (Sub) Rules endpoints:
+
+- Added ``POST /endPointDlpRules/{id}/subRule`` Adds a new exception (sub) rule to an existing Endpoint DLP rule.
+- Added ``PUT /endPointDlpRules/{id}/subRule/{subRuleId}`` Updates the Endpoint DLP exception (sub) rule based on the specified IDs.
+- Added ``DELETE /endPointDlpRules/{id}/subRule/{subRuleId}`` Deletes the Endpoint DLP exception (sub) rule based on the specified IDs.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA Outbound Email DLP endpoint:
+
+- Added ``GET /emailDlpRules/actions`` Retrieves the supported Outbound Email DLP rule actions for the specified email tenants as a CSV file.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA DNS Application Groups endpoints:
+
+- Added ``GET /dnsApplicationGroups`` Retrieves a list of DNS application groups.
+- Added ``GET /dnsApplicationGroups/{id}`` Retrieves the DNS application group based on the specified ID.
+- Added ``POST /dnsApplicationGroups`` Adds a new DNS application group.
+- Added ``PUT /dnsApplicationGroups/{id}`` Updates the DNS application group based on the specified ID.
+- Added ``DELETE /dnsApplicationGroups/{id}`` Deletes the DNS application group based on the specified ID.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZIA End User Notification endpoints:
+
+- Added ``GET /eunTemplate/{templateType}/product/{product}`` Retrieves the browser-based/ZCC end user notification template for the specified template type and product.
+- Added ``GET /eunTemplate/{templateType}/featureEnablementStatus`` Retrieves the feature enablement status for the specified end user notification template type.
+- Added ``GET /userConfirmation/product/{product}`` Retrieves the user confirmation template by policy for the specified product.
+- Added ``GET /userConfirmation/globalDefaultTemplates`` Retrieves the global default user confirmation templates.
+- Added ``GET /userConfirmation/{templateType}/featureEnablementStatus`` Retrieves the notification enablement feature status for the specified template type.
+
+Zscaler Private Access (ZPA) New Endpoints
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZPA Policy Group Controller Endpoints:
+
+- Added ``GET /policyGroupSet/{groupSetId}/group/{groupId}`` Get a specific Policy Group by ID within a Policy Group Set
+- Added ``PUT /policyGroupSet/{groupSetId}/group/{groupId}`` Update an existing Policy Group.
+- Added ``DELETE /policyGroupSet/{groupSetId}/group/{groupId}`` Delete an existing Policy Group.
+- Added ``POST /policyGroupSet/{groupSetId}/group/search`` Get All Policy Groups within a Policy Group Set with advanced search and pagination.
+- Added ``POST /policyGroupSet/{groupSetId}/group/{groupId}/reorder/{newOrder}`` Update an existing Policy Group Order.
+- Added ``GET /policyGroupSet/{groupSetId}/group/all`` Get All Policy Groups within a Policy Group Set.
+- Added ``GET /policyGroupSet/{groupSetId}/group`` Add a new Policy Group to a Policy Group Set.
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZPA Policy Group Rule Controller Endpoints:
+
+- Added ``GET /policyGroupSet/{groupSetId}/group/{groupId}/rule/{ruleId}`` Get a policy rule within a policy group
+- Added ``DELETE /policyGroupSet/{groupSetId}/group/{groupId}/rule/{ruleId}`` Delete a policy rule within a policy group
+- Added ``GET /policyGroupSet/{groupSetId}/group/{groupId}/rule`` Get All Policy Groups Rules within a Policy Group with advanced search and pagination.
+- Added ``POST /policyGroupSet/{groupSetId}/group/{groupId}/rule`` Add a new policy rule for a given policy group.
+- Added ``PUT /policyGroupSet/{groupSetId}/group/{groupId}/rule/{ruleId}/reorder/{newOrder}`` Update rule order of a rule within policy group
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - Added the following new ZPA Policy Group Set Controller Endpoints:
+
+- Added ``GET /policyGroupSet/{groupSetId}`` Get a specific Policy Group Set by ID.
+- Added ``GET /policyGroupSet`` Get all Policy Group Sets for a customer.
+- Added ``GET /policyGroupSet/policyType/{policyType}/rules`` Get paginated rules across groups within a Policy Group Set.
+- Added ``GET /policyGroupSet/policyType/{policyType}/summary`` Get Policy Group Set Summary fo a customer for policy type.
+- Added ``GET /policyGroupSet/policyType/{policyType}`` Get Policy Group Set fo a customer for policy type.
+- Added ``GET /policyGroupSet/policyType/{policyType}/summaryStats`` Get summary stats for groups and rules within a Policy Group Set.
+
+Zscaler AI Guard (AIGuard) New Service and Endpoints
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#549 <https://github.com/zscaler/zscaler-sdk-python/pull/549>`_) - Added full OneAPI support for the Zscaler AI Guard (`aiguard`) service. AI Guard resources are now accessible via ``client.aiguard``. All AI Guard configuration resources are supported through the OneAPI client (Zidentity); the policy detection endpoints (``/v1/detection/*``) are not exposed through OneAPI and remain available via ``LegacyAIGuardClient``. New resources: Detection Policies, Policy Match Rules, LLM Providers (including provider types), LLM Provider Credentials, LLM Applications, and LLM Application Credentials (including credential regeneration and referential checks).
+
+(`#554 <https://github.com/zscaler/zscaler-sdk-python/pull/554>`_) - The following new AI Guard API endpoints were added:
+
+- Added ``GET /detections/policies`` to retrieve the list of detection policies.
+- Added ``GET /detections/policies/{policyId}`` to retrieve a detection policy by ID.
+- Added ``GET /detections/policies/name/{name}`` to retrieve a detection policy by name.
+- Added ``POST /detections/policies`` to create a new detection policy.
+- Added ``PUT /detections/policies/{policyId}`` to update a detection policy.
+- Added ``DELETE /detections/policies/{policyId}`` to delete a detection policy.
+- Added ``GET /detections/policy-match-rules`` to retrieve the list of policy match rules.
+- Added ``GET /detections/policy-match-rules/{ruleId}`` to retrieve a policy match rule by ID.
+- Added ``GET /detections/policy-match-rules/name/{name}`` to retrieve a policy match rule by name.
+- Added ``POST /detections/policy-match-rules`` to create a new policy match rule.
+- Added ``PUT /detections/policy-match-rules/{ruleId}`` to update a policy match rule.
+- Added ``DELETE /detections/policy-match-rules/{ruleId}`` to delete a policy match rule.
+- Added ``GET /llm-providers`` to retrieve the list of LLM providers.
+- Added ``GET /llm-providers/{providerId}`` to retrieve an LLM provider by ID.
+- Added ``GET /llm-providers/name/{name}`` to retrieve an LLM provider by name.
+- Added ``GET /llm-providers/{providerId}/referential-check`` to retrieve resources referencing an LLM provider.
+- Added ``GET /llm-provider-types`` to retrieve the list of supported LLM provider types.
+- Added ``GET /llm-provider-types/{type}`` to retrieve a specific LLM provider type.
+- Added ``POST /llm-providers`` to create a new LLM provider.
+- Added ``PUT /llm-providers/{providerId}`` to update an LLM provider.
+- Added ``DELETE /llm-providers/{providerId}`` to delete an LLM provider.
+- Added ``GET /llm-provider-credentials`` to retrieve the list of LLM provider credentials.
+- Added ``GET /llm-provider-credentials/{credentialId}`` to retrieve an LLM provider credential by ID.
+- Added ``GET /llm-provider-credentials/name/{name}`` to retrieve an LLM provider credential by name.
+- Added ``GET /llm-provider-credentials/{credentialId}/referential-check`` to retrieve resources referencing an LLM provider credential.
+- Added ``POST /llm-provider-credentials`` to create a new LLM provider credential.
+- Added ``PUT /llm-provider-credentials/{credentialId}`` to update an LLM provider credential.
+- Added ``DELETE /llm-provider-credentials/{credentialId}`` to delete an LLM provider credential.
+- Added ``GET /llm-applications`` to retrieve the list of LLM applications.
+- Added ``GET /llm-applications/{applicationId}`` to retrieve an LLM application by ID.
+- Added ``GET /llm-applications/name/{name}`` to retrieve an LLM application by name.
+- Added ``GET /llm-applications/{applicationId}/referential-check`` to retrieve resources referencing an LLM application.
+- Added ``POST /llm-applications`` to create a new LLM application.
+- Added ``PUT /llm-applications/{applicationId}`` to update an LLM application.
+- Added ``DELETE /llm-applications/{applicationId}`` to delete an LLM application.
+- Added ``GET /llm-application-credentials`` to retrieve the list of LLM application credentials.
+- Added ``GET /llm-application-credentials/{credentialId}`` to retrieve an LLM application credential by ID.
+- Added ``GET /llm-application-credentials/name/{name}`` to retrieve an LLM application credential by name.
+- Added ``GET /llm-application-credentials/{credentialId}/referential-check`` to retrieve resources referencing an LLM application credential.
+- Added ``POST /llm-application-credentials`` to create a new LLM application credential.
+- Added ``POST /llm-application-credentials/{credentialId}/regenerate`` to regenerate an LLM application credential.
+- Added ``PUT /llm-application-credentials/{credentialId}`` to update an LLM application credential.
+- Added ``DELETE /llm-application-credentials/{credentialId}`` to delete an LLM application credential.
+
+Zscaler AI Guard (AIGuard) Policy Detection via Legacy Client
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#549 <https://github.com/zscaler/zscaler-sdk-python/pull/549>`_) - The AI Guard policy detection endpoints (``POST /v1/detection/execute-policy`` and ``POST /v1/detection/resolve-and-execute-policy``) are not exposed through OneAPI and are served by the AI Guard legacy client, ``LegacyAIGuardClient``. They are reached via ``client.aiguard.policy_detection`` and authenticate with an AI Guard API key (``api_key`` / ``AIGUARD_API_KEY``) against ``https://api.<cloud>.zseclipse.net``. All other AI Guard resources remain OneAPI only via ``ZscalerClient``.
+
+.. code-block:: python
+
+    from zscaler.oneapi_client import LegacyAIGuardClient
+
+    with LegacyAIGuardClient({"api_key": "<api key>", "cloud": "us1"}) as client:
+        result, _, err = client.aiguard.policy_detection.resolve_and_execute_policy(
+            content="User prompt or AI response to scan",
+            direction="IN",
+        )
+
+Deprecations
+-------------
+
+(`#549 <https://github.com/zscaler/zscaler-sdk-python/pull/549>`_) - AI Guard configuration resources are supported via the OneAPI client. The AI Guard legacy client is retained as ``LegacyAIGuardClient`` solely for policy detection (``client.aiguard.policy_detection``), because ``/v1/detection/execute-policy`` and ``/v1/detection/resolve-and-execute-policy`` are not exposed through OneAPI. The ``client.zguard`` property remains as a deprecated alias for ``client.aiguard``.
+
 1.9.38 (July 14, 2026)
 ---------------------------
 

@@ -25,7 +25,7 @@ from zscaler.zpa.models.segment_group import SegmentGroup
 
 class SegmentGroupsAPI(APIClient):
     """
-    A client object for the Segment Groups resource.
+    A Client object for the Segment Groups resource.
     """
 
     def __init__(self, request_executor, config):
@@ -37,9 +37,7 @@ class SegmentGroupsAPI(APIClient):
 
     def list_groups(self, query_params: Optional[dict] = None) -> APIResult[List[SegmentGroup]]:
         """
-        Enumerates segment groups in your organization with pagination.
-        A subset of segment groups can be returned that match a supported
-        filter expression or query.
+        Lists the segment groups configured in your organization.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
@@ -49,33 +47,34 @@ class SegmentGroupsAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`Tuple`: A tuple containing (list of SegmentGroup instances, Response, error)
+            tuple: A tuple containing (list of SegmentGroup instances, Response, error)
 
-        Example:
-            Fetch all segment groups without filtering
+        Examples:
+            List segment groups:
 
-            >>> group_list, _, err = client.zpa.segment_groups.list_groups()
-            ... if err:
-            ...     print(f"Error listing segment groups: {err}")
+            >>> group_list, _, error = client.zpa.segment_groups.list_groups()
+            >>> if error:
+            ...     print(f"Error listing segment groups: {error}")
             ...     return
             ... print(f"Total segment groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
 
-            Fetch segment groups with query_params filters
-            >>> group_list, _, err = client.zpa.segment_groups.list_groups(
-            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
-            ... if err:
-            ...     print(f"Error listing segment groups: {err}")
+            List segment groups using filters:
+
+            >>> group_list, _, error = client.zpa.segment_groups.list_groups(
+            ...     query_params={'page': 'VALUE'})
+            >>> if error:
+            ...     print(f"Error listing segment groups: {error}")
             ...     return
             ... print(f"Total segment groups found: {len(group_list)}")
-            ... for group in group_list:
-            ...     print(group.as_dict())
 
-            Use JMESPath to filter results client-side:
+            Client-side filtering with JMESPath:
 
-            >>> groups, resp, err = client.zpa.segment_groups.list_groups()
-            >>> enabled = resp.search("list[?enabled==`true`].{name: name, id: id}")
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -104,24 +103,24 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[SegmentGroup]:
         """
-        Gets information on the specified segment group.
+        Fetches a specific segment group by ID.
 
         Args:
-            group_id (str): The unique identifier of the segment group.
+            group_id (str): The unique identifier for the segment group.
             query_params (dict, optional): Map of query parameters for the request.
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: SegmentGroup: The corresponding segment group object.
+            tuple: A tuple containing (SegmentGroup instance, Response, error).
 
-        Example:
-            Retrieve details of a specific segment group
+        Examples:
+            Print a specific segment group:
 
-            >>> fetched_group, _, err = client.zpa.segment_groups.get_group('999999')
-            ... if err:
-            ...     print(f"Error fetching segment group by ID: {err}")
+            >>> fetched_group, _, error = client.zpa.segment_groups.get_group('216196257331370181')
+            >>> if error:
+            ...     print(f"Error fetching segment group by ID: {error}")
             ...     return
             ... print(f"Fetched segment group by ID: {fetched_group.as_dict()}")
         """
@@ -150,33 +149,39 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> APIResult[dict]:
+    def add_group(self, **kwargs) -> APIResult[SegmentGroup]:
         """
-        Adds a new segment group.
+        Creates a new segment group.
 
         Args:
             name (str): The name of the segment group.
-            description (str): The description of the segment group.
-            enabled (bool): Enable the segment group. Defaults to True.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            description (str): Additional information about the segment group.
+            enabled (bool): Indicates whether the segment group is enabled.
+            policy_migrated (str): The policy migrated for this segment group.
+            config_space (str): The config space for this segment group.
+            tcp_keep_alive_enabled (str): The tcp keep alive enabled for this segment group.
+            microtenant_name (str): The microtenant name for this segment group.
+            skip_detailed_app_info (str): The skip detailed app info for this segment group.
+            applications (str): The applications for this segment group.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: SegmentGroup: The created segment group object.
+            tuple: A tuple containing the newly added SegmentGroup instance, response, and error.
 
-        Example:
-            # Basic example: Add a new segment group
-            >>> added_group, _, err = client.zpa.segment_groups.add_group(
-            ...     name="Example Group",
-            ...     description="This is an example segment group.",
-            ...     enabled=True
-            ... )
+        Examples:
+            Add a new segment group:
 
-            # Adding a new segment group for a specific microtenant
-            >>> added_group, _, err = zpa.segment_groups.add_group(
-            ...     name="Example Group",
-            ...     description="Segment group for microtenant",
-            ...     enabled=True,
-            ...     microtenant_id="216196257331380392"
+            >>> added_group, _, error = client.zpa.segment_groups.add_group(
+            ...     name=f"NewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"NewGroup_{random.randint(1000, 10000)}",
             ... )
+            >>> if error:
+            ...     print(f"Error adding segment group: {error}")
+            ...     return
+            ... print(f"Segment group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -203,35 +208,40 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def update_group(self, group_id: str, **kwargs) -> APIResult[SegmentGroup]:
         """
-        Updates the specified segment group.
+        Updates information for the specified segment group.
 
         Args:
-            group_id (str): The unique identifier for the segment group being updated.
+            group_id (str): The unique identifier for the segment group.
+
+        Keyword Args:
+            name (str): The name of the segment group.
+            description (str): Additional information about the segment group.
+            enabled (bool): Indicates whether the segment group is enabled.
+            policy_migrated (str): The policy migrated for this segment group.
+            config_space (str): The config space for this segment group.
+            tcp_keep_alive_enabled (str): The tcp keep alive enabled for this segment group.
+            microtenant_name (str): The microtenant name for this segment group.
+            skip_detailed_app_info (str): The skip detailed app info for this segment group.
+            applications (str): The applications for this segment group.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: SegmentGroup: The updated segment group object.
+            tuple: A tuple containing the updated SegmentGroup instance, response, and error.
 
-        Example:
-            # Basic example: Update an existing segment group
-            >>> group_id = "216196257331370181"
-            >>> updated_group, _, err = zpa.segment_groups.update_group(
-            ...     group_id,
-            ...     name="Updated Group Name",
-            ...     description="Updated description for the segment group",
-            ...     enabled=False
-            ... )
+        Examples:
+            Update an existing segment group:
 
-            # Updating a segment group for a specific microtenant
-            >>> group_id = "216196257331370181"
-            >>> updated_group, _, err = zpa.segment_groups.update_group(
-            ...     group_id,
-            ...     name="Tenant-Specific Group Update",
-            ...     description="Updated segment group for microtenant",
-            ...     enabled=True,
-            ...     microtenant_id="216196257331380392"
+            >>> updated_group, _, error = client.zpa.segment_groups.update_group(
+            ...     group_id='216196257331370181',
+            ...     name=f"UpdatedGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdatedGroup_{random.randint(1000, 10000)}",
             ... )
+            >>> if error:
+            ...     print(f"Error updating segment group: {error}")
+            ...     return
+            ... print(f"Segment group updated successfully: {updated_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -264,35 +274,40 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group_v2(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def update_group_v2(self, group_id: str, **kwargs) -> APIResult[SegmentGroup]:
         """
-        Updates the specified segment group.
+        Updates the specified segment group (v2 endpoint).
 
         Args:
-            group_id (str): The unique identifier for the segment group being updated.
+            group_id (str): The unique identifier for the segment group.
+
+        Keyword Args:
+            name (str): The name of the segment group.
+            description (str): Additional information about the segment group.
+            enabled (bool): Indicates whether the segment group is enabled.
+            policy_migrated (str): The policy migrated for this segment group.
+            config_space (str): The config space for this segment group.
+            tcp_keep_alive_enabled (str): The tcp keep alive enabled for this segment group.
+            microtenant_name (str): The microtenant name for this segment group.
+            skip_detailed_app_info (str): The skip detailed app info for this segment group.
+            applications (str): The applications for this segment group.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            :obj:`Tuple`: SegmentGroup: The updated segment group object.
+            tuple: A tuple containing the updated SegmentGroup instance, response, and error.
 
-        Example:
-            # Basic example: Update an existing segment group
-            >>> group_id = "216196257331370181"
-            >>> updated_group, response, err = zpa.segment_groups.update_group_v2(
-            ...     group_id,
-            ...     name="Updated Group Name",
-            ...     description="Updated description for the segment group",
-            ...     enabled=False
-            ... )
+        Examples:
+            Update an existing segment group:
 
-            # Updating a segment group for a specific microtenant
-            >>> group_id = "216196257331370181"
-            >>> updated_group, response, err = zpa.segment_groups.update_group_v2(
-            ...     group_id,
-            ...     name="Tenant-Specific Group Update",
-            ...     description="Updated segment group for microtenant",
-            ...     enabled=True,
-            ...     microtenant_id="216196257331380392"
+            >>> updated_group, _, error = client.zpa.segment_groups.update_group_v2(
+            ...     group_id='216196257331370181',
+            ...     name=f"UpdatedGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdatedGroup_{random.randint(1000, 10000)}",
             ... )
+            >>> if error:
+            ...     print(f"Error updating segment group: {error}")
+            ...     return
+            ... print(f"Segment group updated successfully: {updated_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -330,18 +345,20 @@ class SegmentGroupsAPI(APIClient):
         Deletes the specified segment group.
 
         Args:
-            group_id (str): The unique identifier for the segment group to be deleted.
+            group_id (str): The unique identifier for the segment group.
+            microtenant_id (str, optional): The microtenant ID, if applicable.
 
         Returns:
-            int: Status code of the delete operation.
+            tuple: A tuple containing the response object and error (if any).
 
-        Example:
-            # Delete a segment group by ID
-            >>> _, _, err = client.zpa.segment_groups.delete_group(updated_group_v2.id)
-            ... if err:
-            ...     print(f"Error deleting group: {err}")
+        Examples:
+            Delete a segment group:
+
+            >>> _, _, error = client.zpa.segment_groups.delete_group('216196257331370181')
+            >>> if error:
+            ...     print(f"Error deleting segment group: {error}")
             ...     return
-            ... print(f"Group with ID {updated_group_v2.id} deleted successfully.")
+            ... print(f"Segment group deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""
@@ -353,10 +370,9 @@ class SegmentGroupsAPI(APIClient):
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
-
         if error:
             return (None, response, error)
-        return (None, response, error)
+        return (None, response, None)

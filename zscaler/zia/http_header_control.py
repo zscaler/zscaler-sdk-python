@@ -31,8 +31,7 @@ class HttpHeaderControlAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_http_header_action_profiles(
-        self, query_params=None) -> APIResult[List[HttpHeaderActionProfile]]:
+    def list_http_header_action_profiles(self, query_params=None) -> APIResult[List[HttpHeaderActionProfile]]:
         """
         List http_header_action_profiles.
 
@@ -53,8 +52,7 @@ class HttpHeaderControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 

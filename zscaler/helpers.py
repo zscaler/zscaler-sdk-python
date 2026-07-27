@@ -53,6 +53,10 @@ def to_snake_case(string):
         "extranetDNSList": "extranet_dns_list",
         "primaryDNSServer": "primary_dns_server",
         "secondaryDNSServer": "secondary_dns_server",
+        # ZIA Endpoint DLP edge cases — the generic heuristic splits the
+        # trailing acronyms letter-by-letter (bundleID -> bundle_i_d).
+        "bundleID": "bundle_id",
+        "modUId": "mod_uid",
         # ZCC Edge Case Attributes
         "enableUDPTransportSelection": "enable_udp_transport_selection",
         "interceptZIATrafficAllAdapters": "intercept_zia_traffic_all_adapters",
@@ -207,6 +211,12 @@ def to_lower_camel_case(string):
         "extranet_dns_list": "extranetDNSList",
         "primary_dns_server": "primaryDNSServer",
         "secondary_dns_server": "secondaryDNSServer",
+        # ZIA Endpoint DLP edge cases (see the matching entries in
+        # to_snake_case). Note: the read-only Version threat-metadata object
+        # uses a literal snake_case "bundle_id" wire key; that response-only
+        # path is unaffected by request-body camel-casing.
+        "bundle_id": "bundleID",
+        "mod_uid": "modUId",
         # ZCC Edge Case Attributes
         "enable_udp_transport_selection": "enableUDPTransportSelection",
         "intercept_zia_traffic_all_adapters": "interceptZIATrafficAllAdapters",

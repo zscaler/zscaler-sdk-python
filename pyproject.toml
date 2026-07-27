@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "1.9.38"
+version = "1.9.39"
 description = "Official Python SDK for the Zscaler Products"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -45,7 +45,7 @@ jmespath = ">=1.0.0"
 [tool.poetry.group.dev.dependencies]
 black = ">=24.3.0"
 python-dotenv = ">=1.0.0"
-ruff = ">=0.15.0"
+ruff = ">=0.15.0,<0.16"
 pytest = ">=8.3.5"
 pytest-mock = ">=3.12.0"
 pytest-asyncio = ">=0.23.0"

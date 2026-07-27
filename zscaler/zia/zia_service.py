@@ -47,13 +47,22 @@ from zscaler.zia.device_groups import DeviceGroupsAPI
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.devices import DevicesAPI
 from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
+from zscaler.zia.dlp_endpoint_resource import DLPEndpointResourceAPI
 from zscaler.zia.dlp_engine import DLPEngineAPI
 from zscaler.zia.dlp_resources import DLPResourcesAPI
 from zscaler.zia.dlp_templates import DLPTemplatesAPI
 from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
+from zscaler.zia.dns_application_groups import DNSApplicationGroupsAPI
 from zscaler.zia.dns_gatways import DNSGatewayAPI
 from zscaler.zia.email_profiles import EmailProfilesAPI
 from zscaler.zia.end_user_notification import EndUserNotificationAPI
+from zscaler.zia.end_user_notification_templates import EndUserNotificationTemplatesAPI
+from zscaler.zia.endpoint_application_groups import EndpointApplicationGroupsAPI
+from zscaler.zia.endpoint_applications import EndpointApplicationsAPI
+from zscaler.zia.endpoint_custom_apps import EndpointCustomAppsAPI
+from zscaler.zia.endpoint_dlp_resource_groups import EndpointDLPResourceGroupsAPI
+from zscaler.zia.endpoint_dlp_rules import EndpointDLPRulesAPI
+from zscaler.zia.endpoint_dlp_sub_rules import EndpointDLPSubRulesAPI
 from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.ftp_control_policy import FTPControlPolicyAPI
@@ -61,14 +70,17 @@ from zscaler.zia.gre_tunnel import TrafficForwardingGRETunnelAPI
 from zscaler.zia.http_header_control import HttpHeaderControlAPI
 from zscaler.zia.intermediate_certificates import IntermediateCertsAPI
 from zscaler.zia.iot_report import IOTReportAPI
+from zscaler.zia.ips_categories import IpsCategoriesAPI
 from zscaler.zia.ips_signature_rules import IPSSignatureRulesAPI
 from zscaler.zia.ipv6_config import TrafficIPV6ConfigAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.malware_protection_policy import MalwareProtectionPolicyAPI
 from zscaler.zia.mobile_threat_settings import MobileAdvancedSettingsAPI
 from zscaler.zia.nat_control_policy import NatControlPolicyAPI
+from zscaler.zia.nss_collectors import NssCollectorsAPI
 from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.organization_information import OrganizationInformationAPI
+from zscaler.zia.outbound_email_dlp_rules import OutboundEmailDLPRulesAPI
 from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.partner_integrations import PartnerIntegrationsAPI
 from zscaler.zia.policy_export import PolicyExportAPI
@@ -99,6 +111,7 @@ from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.user_management import UserManagementAPI
 from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
+from zscaler.zia.web_dlp_global_options import WebDlpGlobalOptionsAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 
@@ -824,3 +837,107 @@ class ZIAService:
 
         """
         return SmpcInstanceAPI(self._request_executor)
+
+    @property
+    def dns_application_groups(self) -> DNSApplicationGroupsAPI:
+        """
+        The interface object for the :ref:`ZIA DNS Application Groups interface <zia-dns_application_groups>`.
+
+        """
+        return DNSApplicationGroupsAPI(self._request_executor)
+
+    @property
+    def endpoint_dlp_rules(self) -> EndpointDLPRulesAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint DLP Rules interface <zia-endpoint_dlp_rules>`.
+
+        """
+        return EndpointDLPRulesAPI(self._request_executor)
+
+    @property
+    def dlp_endpoint_resource(self) -> DLPEndpointResourceAPI:
+        """
+        The interface object for the :ref:`ZIA DLP Endpoint Resources interface <zia-dlp_endpoint_resource>`.
+
+        """
+        return DLPEndpointResourceAPI(self._request_executor)
+
+    @property
+    def web_dlp_global_options(self) -> WebDlpGlobalOptionsAPI:
+        """
+        The interface object for the :ref:`ZIA DLP Advanced Settings information interface <zia-web_dlp_global_options>`.
+
+        """
+        return WebDlpGlobalOptionsAPI(self._request_executor)
+
+    @property
+    def end_user_notification_templates(self) -> EndUserNotificationTemplatesAPI:
+        """
+        The interface object for the :ref:`ZIA End User Notification Templates interface <zia-end_user_notification_templates>`.
+
+        """
+        return EndUserNotificationTemplatesAPI(self._request_executor)
+
+    @property
+    def endpoint_application_groups(self) -> EndpointApplicationGroupsAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint Application Groups interface <zia-endpoint_application_groups>`.
+
+        """
+        return EndpointApplicationGroupsAPI(self._request_executor)
+
+    @property
+    def endpoint_applications(self) -> EndpointApplicationsAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint Applications interface <zia-endpoint_applications>`.
+
+        """
+        return EndpointApplicationsAPI(self._request_executor)
+
+    @property
+    def endpoint_custom_apps(self) -> EndpointCustomAppsAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint Custom Apps interface <zia-endpoint_custom_apps>`.
+
+        """
+        return EndpointCustomAppsAPI(self._request_executor)
+
+    @property
+    def endpoint_dlp_resource_groups(self) -> EndpointDLPResourceGroupsAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint DLP Resource Groups interface <zia-endpoint_dlp_resource_groups>`.
+
+        """
+        return EndpointDLPResourceGroupsAPI(self._request_executor)
+
+    @property
+    def endpoint_dlp_sub_rules(self) -> EndpointDLPSubRulesAPI:
+        """
+        The interface object for the :ref:`ZIA Endpoint DLP Sub-Rules interface <zia-endpoint_dlp_sub_rules>`.
+
+        """
+        return EndpointDLPSubRulesAPI(self._request_executor)
+
+    @property
+    def outbound_email_dlp_rules(self) -> OutboundEmailDLPRulesAPI:
+        """
+        The interface object for the :ref:`ZIA Outbound Email DLP Rules interface <zia-outbound_email_dlp_rules>`.
+
+        """
+        return OutboundEmailDLPRulesAPI(self._request_executor)
+
+    @property
+    def ips_categories(self) -> IpsCategoriesAPI:
+        """
+        The interface object for the :ref:`ZIA IPS Categories interface <zia-ips_categories>`.
+
+        """
+        return IpsCategoriesAPI(self._request_executor)
+
+    @property
+    def nss_collectors(self) -> NssCollectorsAPI:
+        """
+        The interface object for the :ref:`ZIA NSS Collectors interface <zia-nss_collectors>`.
+
+        """
+        return NssCollectorsAPI(self._request_executor)

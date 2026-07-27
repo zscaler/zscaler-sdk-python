@@ -1,0 +1,113 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from typing import Any, Dict, Optional
+
+from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.oneapi_object import ZscalerObject
+
+
+class PolicyGroupSetSummary(ZscalerObject):
+    """
+    A class for PolicyGroupSetSummary objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the PolicyGroupSetSummary model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.group_count_excluding_global = (
+                config["groupCountExcludingGlobal"] if "groupCountExcludingGlobal" in config else None
+            )
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.policy_type = config["policyType"] if "policyType" in config else None
+            self.policy_group_summary_list = ZscalerCollection.form_list(
+                config["policyGroupSummaryList"] if "policyGroupSummaryList" in config else [], PolicyGroupSummaryList
+            )
+        else:
+            self.group_count_excluding_global = None
+            self.id = None
+            self.name = None
+            self.policy_type = None
+            self.policy_group_summary_list = []
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "groupCountExcludingGlobal": self.group_count_excluding_global,
+            "id": self.id,
+            "name": self.name,
+            "policyType": self.policy_type,
+            "policyGroupSummaryList": [item.request_format() for item in (self.policy_group_summary_list or [])],
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class PolicyGroupSummaryList(ZscalerObject):
+    """
+    A class for PolicyGroupSummaryList objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the PolicyGroupSummaryList model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.group_criteria_count = config["groupCriteriaCount"] if "groupCriteriaCount" in config else None
+            self.group_order = config["groupOrder"] if "groupOrder" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.rule_count = config["ruleCount"] if "ruleCount" in config else None
+            self.type = config["type"] if "type" in config else None
+        else:
+            self.group_criteria_count = None
+            self.group_order = None
+            self.id = None
+            self.name = None
+            self.rule_count = None
+            self.type = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "groupCriteriaCount": self.group_criteria_count,
+            "groupOrder": self.group_order,
+            "id": self.id,
+            "name": self.name,
+            "ruleCount": self.rule_count,
+            "type": self.type,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
