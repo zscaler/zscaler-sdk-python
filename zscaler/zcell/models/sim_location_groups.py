@@ -78,24 +78,112 @@ class ResponseMessage(ZscalerObject):
         return parent_req_format
 
 
-class ApiCreateSimLocationGroupRequestBody(ZscalerObject):
+class GeoFence(ZscalerObject):
     """
-    A class representing a ApiCreateSimLocationGroupRequestBody object.
+    A class representing the geo fence of a SIM location group.
+
+    The API spells this ``geoFenceData`` on read/update and ``geoFenceDetails`` on
+    create; both carry the same shape. ``lat``/``lng``/``radius`` are fractional --
+    e.g. ``{"lat": -17.687827, "lng": 52.8125, "radius": 1637864.965089}``.
     """
 
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            pass
+            self.lat = config["lat"] if "lat" in config else None
+            self.lng = config["lng"] if "lng" in config else None
+            self.radius = config["radius"] if "radius" in config else None
         else:
-            pass
+            self.lat = None
+            self.lng = None
+            self.radius = None
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {}
+        current_obj_format = {
+            "lat": self.lat,
+            "lng": self.lng,
+            "radius": self.radius,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class LinkedPolicyDetails(ZscalerObject):
+    """
+    A class representing a policy linked to a SIM location group.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.policy_id = config["policyId"] if "policyId" in config else None
+            self.policy_name = config["policyName"] if "policyName" in config else None
+            self.policy_type = config["policyType"] if "policyType" in config else None
+            self.status = config["status"] if "status" in config else None
+        else:
+            self.policy_id = None
+            self.policy_name = None
+            self.policy_type = None
+            self.status = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "policyId": self.policy_id,
+            "policyName": self.policy_name,
+            "policyType": self.policy_type,
+            "status": self.status,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class ApiCreateSimLocationGroupRequestBody(ZscalerObject):
+    """
+    A class representing a ApiCreateSimLocationGroupRequestBody object.
+
+    Note the create payload uses ``geoFenceDetails``, where read and update use
+    ``geoFenceData``. The endpoint takes a *list* of these bodies per call.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.name = config["name"] if "name" in config else None
+            self.tracked_devices = ZscalerCollection.form_list(
+                config["trackedDevices"] if "trackedDevices" in config else [], str
+            )
+            if "geoFenceDetails" in config:
+                if isinstance(config["geoFenceDetails"], sim_location_groups.GeoFence):
+                    self.geo_fence_details = config["geoFenceDetails"]
+                elif config["geoFenceDetails"] is not None:
+                    self.geo_fence_details = sim_location_groups.GeoFence(config["geoFenceDetails"])
+                else:
+                    self.geo_fence_details = None
+            else:
+                self.geo_fence_details = None
+        else:
+            self.name = None
+            self.tracked_devices = []
+            self.geo_fence_details = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "name": self.name,
+            "trackedDevices": self.tracked_devices,
+            "geoFenceDetails": self.geo_fence_details,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 

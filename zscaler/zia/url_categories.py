@@ -104,6 +104,63 @@ class URLCategoriesAPI(APIClient):
 
         return (results, response, None)
 
+    def list_categories_lite(self, query_params: Optional[dict] = None) -> APIResult[List[URLCategory]]:
+        """
+        Returns lightweight key-value list of all or custom URL categories.
+
+        Keyword Args:
+
+        Returns:
+            :obj:`Tuple`: A list of configured categories.
+
+        Examples:
+            List locations with default settings:
+
+            >>> categories_list, _, err = client.zia.url_categories.list_categories_lite()
+            >>> if err:
+            ...     print(f"Error listing url categories: {err}")
+            ...     return
+            ... print(f"Total url categories found: {len(categories_list)}")
+            ... for category in categories_list:
+            ...     print(category.as_dict())
+
+            Client-side filtering with JMESPath:
+
+            The response object supports client-side filtering and
+            projection via ``resp.search(expression)``.  See the
+            `JMESPath documentation <https://jmespath.org/>`_ for
+            expression syntax.
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /urlCategories/lite
+        """)
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(URLCategory(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
     def get_category(self, category_id: str) -> APIResult[URLCategory]:
         """
         Returns URL category information for the provided category.
