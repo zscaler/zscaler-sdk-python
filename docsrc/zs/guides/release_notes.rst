@@ -6,6 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.40 (August 4 2026)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#557 <https://github.com/zscaler/zscaler-sdk-python/pull/557>`_) - Added new ZIA URL Category function `list_categories_lite` to return lightweight key-value list of all or custom URL categories.
+(`#557 <https://github.com/zscaler/zscaler-sdk-python/pull/557>`_) - Fixed ZCELL Model `sim_location_groups` to properly parse the `GeoFence` block attribute.
+
 1.9.39 (July 27, 2026)
 ---------------------------
 

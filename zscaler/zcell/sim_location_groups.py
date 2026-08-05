@@ -100,7 +100,7 @@ class SimLocationGroupsAPI(APIClient):
             tuple: (result, Response, error)
 
         Examples:
-            >>> result, response, error = client.zcell.sim_location_groups.get_sim_location_groups(
+            >>> result, response, error = client.zcell.sim_location_groups.get_sim_location_group(
             ...     id='...',
             ...     group_id='...',
             ... )
