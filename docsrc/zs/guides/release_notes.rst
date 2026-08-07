@@ -6,6 +6,27 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.41 (August 6 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements
+-------------
+
+(`#558 <https://github.com/zscaler/zscaler-sdk-python/pull/558>`_) - Added new ZPA Application Segment attributes:
+  - `guestDetails`
+  - `stickyEntity`
+  - `stickyGroup`
+  - `hbrEnabled`
+
+(`#558 <https://github.com/zscaler/zscaler-sdk-python/pull/558>`_) - Added new ZIA URL Filtering and Cloud App Sdettings attributes:
+  - `enableGoogleAIPrompt` - Indicates whether the use of generative AI prompts with Google AI by users should be categorized and logged
+  - `enableQuillbotAIPrompt` - Indicates whether the use of generative AI prompts with QuillBot by users should be categorized and logged
+
 1.9.40 (August 4 2026)
 ---------------------------
 
