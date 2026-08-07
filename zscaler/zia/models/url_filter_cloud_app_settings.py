@@ -62,6 +62,9 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
                 config["enableBlockOverrideForNonAuthUser"] if "enableBlockOverrideForNonAuthUser" in config else False
             )
             self.enable_cipa_compliance = config["enableCIPACompliance"] if "enableCIPACompliance" in config else False
+            self.enable_google_ai_prompt = config["enableGoogleAIPrompt"] if "enableGoogleAIPrompt" in config else False
+            self.enable_quillbot_ai_prompt = config["enableQuillbotAIPrompt"] if "enableQuillbotAIPrompt" in config else False
+
         else:
             self.enable_dynamic_content_cat = False
             self.consider_embedded_sites = False
@@ -83,6 +86,8 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
             self.enable_newly_registered_domains = False
             self.enable_block_override_for_non_auth_user = False
             self.enable_cipa_compliance = False
+            self.enable_google_ai_prompt = False
+            self.enable_quillbot_ai_prompt = False
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -110,6 +115,8 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
             "enableNewlyRegisteredDomains": self.enable_newly_registered_domains,
             "enableBlockOverrideForNonAuthUser": self.enable_block_override_for_non_auth_user,
             "enableCIPACompliance": self.enable_cipa_compliance,
+            "enableGoogleAIPrompt": self.enable_google_ai_prompt,
+            "enableQuillbotAIPrompt": self.enable_quillbot_ai_prompt,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

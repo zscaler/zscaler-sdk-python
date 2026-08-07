@@ -497,6 +497,8 @@ class URLFilteringAPI(APIClient):
             - enable_newly_registered_domains (bool): Block or allow domains identified shortly after registration.
             - enable_block_override_for_non_auth_user (bool): Allow authenticated users to override website blocks.
             - enable_cipa_compliance (bool): Enables the predefined CIPA Compliance Rule.
+            - enable_google_ai_prompt (bool): Categorize and log user prompts sent to Google AI.
+            - enable_quillbot_ai_prompt (bool): Categorize and log user prompts sent to Quillbot AI.
 
         Returns:
             tuple:

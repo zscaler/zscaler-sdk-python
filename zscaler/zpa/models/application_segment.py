@@ -71,7 +71,10 @@ class ApplicationSegments(ZscalerObject):
             self.read_only = config["readOnly"] if "readOnly" in config else None
             self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
-
+            self.hbr_enabled = config["hbrEnabled"] if "hbrEnabled" in config else None
+            self.sticky_entity = config["stickyEntity"] if "stickyEntity" in config else None
+            self.sticky_group = config["stickyGroup"] if "stickyGroup" in config else None
+            
             self.domain_names = ZscalerCollection.form_list(config["domainNames"] if "domainNames" in config else [], str)
 
             self.server_groups = []
@@ -83,6 +86,8 @@ class ApplicationSegments(ZscalerObject):
                         self.server_groups.append(server_group.ServerGroup(group))
 
             self.pra_apps = ZscalerCollection.form_list(config["praApps"] if "praApps" in config else [], PRAApps)
+
+            self.guest_details = ZscalerCollection.form_list(config["guestDetails"] if "guestDetails" in config else [], GuestDetails)
 
             self.inspection_apps = ZscalerCollection.form_list(
                 config["inspectionApps"] if "inspectionApps" in config else [], InspectionApps
@@ -168,6 +173,7 @@ class ApplicationSegments(ZscalerObject):
             self.udp_port_ranges = []
             self.tcp_port_range = []
             self.udp_port_range = []
+            self.guest_details = []
             self.enabled = None
             self.double_encrypt = None
             self.passive_health_enabled = None
@@ -200,6 +206,9 @@ class ApplicationSegments(ZscalerObject):
             self.application_group = None
             self.zpn_er_id = None
             self.policy_style = None
+            self.hbr_enabled = None
+            self.sticky_entity = None
+            self.sticky_group = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -254,6 +263,10 @@ class ApplicationSegments(ZscalerObject):
             "applicationGroup": self.application_group,
             "zpnErId": self.zpn_er_id,
             "policyStyle": self.policy_style,
+            "hbrEnabled": self.hbr_enabled,
+            "stickyEntity": self.sticky_entity,
+            "stickyGroup": self.sticky_group,
+            "guestDetails": self.guest_details,
         }
 
 
@@ -1143,6 +1156,96 @@ class MultiMatchUnsupportedReferences(ZscalerObject):
             "domains": self.domains,
             "tcpPorts": self.tcp_ports,
             "unsupportedFeatures": self.unsupported_features,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class GuestDetails(ZscalerObject):
+    """
+    A class for GuestDetail objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the GuestDetails model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the GuestDetails configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.federation_id = config["federationId"] if "federationId" in config else None
+
+            if "partnerInfo" in config:
+                if isinstance(config["partnerInfo"], common.PrivilegedCapabilitiesResource):
+                    self.partner_info = config["partnerInfo"]
+                elif config["partnerInfo"] is not None:
+                    self.partner_info = common.PartnerInfo(config["partnerInfo"])
+                else:
+                    self.partner_info = None
+            else:
+                self.partner_info = None
+
+        else:
+            self.federation_id = None
+            self.partner_info = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "federationId": self.federation_id,
+            "partnerInfo": self.partner_info,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class PartnerInfo(ZscalerObject):
+    """
+    A class for PartnerInfo objects.
+    """
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Initialize the GuestDetails model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the PartnerInfo configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.approval_status = config["approvalStatus"] if "approvalStatus" in config else None
+            self.federation_status = config["federationStatus"] if "federationStatus" in config else None
+            self.partner_gid = config["partnerGid"] if "partnerGid" in config else None
+            self.partner_name = config["partnerName"] if "partnerName" in config else None
+            self.partner_scope_name = config["partnerScopeName"] if "partnerScopeName" in config else None
+
+        else:
+            self.approval_status = None
+            self.federation_status = None
+            self.partner_gid = None
+            self.partner_name = None
+            self.partner_scope_name = None
+            self.partner_info = None
+
+    def request_format(self) -> Dict[str, Any]:
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "approvalStatus": self.approval_status,
+            "federationStatus": self.federation_status,
+            "partnerGid": self.partner_gid,
+            "partnerName": self.partner_name,
+            "partnerScopeName": self.partner_scope_name,
+            "partnerInfo": self.partner_info,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
