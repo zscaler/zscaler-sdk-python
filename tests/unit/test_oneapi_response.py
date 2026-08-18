@@ -838,6 +838,168 @@ def test_next_zia_flat_list_pagination():
         empty_resp.next()
 
 
+def test_zcc_flat_list_pagination():
+    """Test that ZCC flat list responses DO support pagination (issue #563)."""
+    mock_request_executor = Mock()
+
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+
+    req = {
+        "url": "https://api.example.com/zcc/papi/public/v1/getDevices",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"page": 1, "pageSize": 5000},
+    }
+
+    # ZCC returns flat JSON arrays for paginated list endpoints (e.g. getDevices)
+    response_body = json.dumps([{"udid": str(i)} for i in range(5000)])
+
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zcc",
+        res_details=mock_res_details,
+        response_body=response_body,
+    )
+
+    # ZCC flat lists must NOT be marked as non-paginated
+    assert response._is_flat_list_response is False
+    # ZCC page-size limits (default 50 / max 5000) must not clamp the user's value
+    assert response._limit == 5000
+    # User-supplied "page" initializes the internal page counter
+    assert response._page == 1
+    assert response.has_next() is True  # got results → might have more
+
+
+def test_next_zcc_two_pages():
+    """Test ZCC next() walks pages until a partial page is returned (issue #563)."""
+    mock_request_executor = Mock()
+    # Page 2 is a partial page (1 item < pageSize 3) → pagination stops after it
+    mock_request_executor.fire_request.return_value = (
+        None,
+        None,
+        '[{"udid": "device-4"}]',
+        None,
+    )
+
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+
+    req = {
+        "url": "https://api.example.com/zcc/papi/public/v1/getDevices",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"page": 1, "pageSize": 3},
+    }
+
+    # First page is full (3 items == pageSize)
+    response_body = json.dumps([{"udid": f"device-{i}"} for i in range(1, 4)])
+
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zcc",
+        res_details=mock_res_details,
+        response_body=response_body,
+    )
+
+    assert response.has_next() is True
+
+    results, next_response, error = response.next()
+
+    assert error is None
+    assert results == [{"udid": "device-4"}]
+    assert next_response == response
+    # The next-page request must ask for 1-based page 2
+    assert response._params["page"] == 2
+    # Partial page (1 < 3) → no more pages
+    assert response.has_next() is False
+
+
+def test_zcc_page_param_initializes_page_counter():
+    """Test that a user-supplied ZCC 'page' param seeds the page counter."""
+    mock_request_executor = Mock()
+    mock_request_executor.fire_request.return_value = (None, None, "[]", None)
+
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+
+    req = {
+        "url": "https://api.example.com/zcc/papi/public/v1/getDevices",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"page": 3, "pageSize": 2},
+    }
+
+    response_body = '[{"udid": "a"}, {"udid": "b"}]'
+
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zcc",
+        res_details=mock_res_details,
+        response_body=response_body,
+    )
+
+    assert response._page == 3
+
+    response.next()
+    # Continuing from page 3, the next request must ask for page 4
+    assert response._params["page"] == 4
+
+
+def test_zcc_empty_first_page_has_no_next():
+    """Test that an empty ZCC list response reports no further pages."""
+    mock_request_executor = Mock()
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+
+    req = {
+        "url": "https://api.example.com/zcc/papi/public/v1/getDevices",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"page": 1, "pageSize": 50},
+    }
+
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zcc",
+        res_details=mock_res_details,
+        response_body="[]",
+    )
+
+    assert response.has_next() is False
+    with pytest.raises(StopIteration):
+        response.next()
+
+
+def test_zcc_single_object_response_unchanged():
+    """Test that ZCC single-object (dict) responses still wrap into a one-item list."""
+    mock_request_executor = Mock()
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+
+    req = {
+        "url": "https://api.example.com/zcc/papi/public/v1/getServiceStatus",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {},
+    }
+
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="zcc",
+        res_details=mock_res_details,
+        response_body='{"id": 1, "name": "test"}',
+    )
+
+    assert response._list == [{"id": 1, "name": "test"}]
+    assert response._is_flat_list_response is False
+
+
 def test_next_no_more_pages():
     """Test next method when no more pages are available."""
     mock_request_executor = Mock()

@@ -74,7 +74,7 @@ class ApplicationSegments(ZscalerObject):
             self.hbr_enabled = config["hbrEnabled"] if "hbrEnabled" in config else None
             self.sticky_entity = config["stickyEntity"] if "stickyEntity" in config else None
             self.sticky_group = config["stickyGroup"] if "stickyGroup" in config else None
-            
+
             self.domain_names = ZscalerCollection.form_list(config["domainNames"] if "domainNames" in config else [], str)
 
             self.server_groups = []
@@ -87,7 +87,9 @@ class ApplicationSegments(ZscalerObject):
 
             self.pra_apps = ZscalerCollection.form_list(config["praApps"] if "praApps" in config else [], PRAApps)
 
-            self.guest_details = ZscalerCollection.form_list(config["guestDetails"] if "guestDetails" in config else [], GuestDetails)
+            self.guest_details = ZscalerCollection.form_list(
+                config["guestDetails"] if "guestDetails" in config else [], GuestDetails
+            )
 
             self.inspection_apps = ZscalerCollection.form_list(
                 config["inspectionApps"] if "inspectionApps" in config else [], InspectionApps

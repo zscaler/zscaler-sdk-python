@@ -160,7 +160,7 @@ class URLCategoriesAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def get_category(self, category_id: str) -> APIResult[URLCategory]:
         """
         Returns URL category information for the provided category.

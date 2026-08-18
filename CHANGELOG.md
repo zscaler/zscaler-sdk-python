@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.42 (August 18 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #564](https://github.com/zscaler/zscaler-sdk-python/pull/564) - Fixed ZCC pagination so `has_next()`/`next()` properly traverse all pages on flat-array list endpoints (e.g. `list_devices`). [Issue #563](https://github.com/zscaler/zscaler-sdk-python/issues/563)
+
 ## 1.9.41 (August 6 2026)
 
 ### Notes

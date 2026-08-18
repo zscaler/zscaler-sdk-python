@@ -22,6 +22,7 @@ class ZscalerAPIResponse:
         "zpa": {"default": 100, "max": 500},
         "zia": {"default": 500, "max": 10000},
         "zdx": {"default": 10, "min": 1},
+        "zcc": {"default": 50, "max": 5000, "min": 1},
         "zcell": {"default": 10, "max": 100, "min": 1},
     }
 
@@ -85,6 +86,14 @@ class ZscalerAPIResponse:
                 except Exception:
                     self._page = 1
             self._params.pop("page", None)
+
+        # ZCC uses a 1-based "page" query param; if the user supplied one,
+        # initialize self._page so next() continues from the right place.
+        if self._service_type == "zcc" and "page" in self._params:
+            try:
+                self._page = int(self._params["page"])
+            except Exception:
+                self._page = 1
 
         # Resolve the user-supplied page size from the correct param key per service.
         # ZIA uses "pageSize"; ZPA uses "pagesize"; ZCell uses "size"; others use "limit".
@@ -173,10 +182,11 @@ class ZscalerAPIResponse:
         if isinstance(self._body, list):
             self._list = self._body
 
-            # ZIA returns flat JSON arrays for paginated list endpoints.
+            # ZIA and ZCC return flat JSON arrays for paginated list endpoints
+            # (ZCC paginates via 1-based "page"/"pageSize" query params).
             # Do NOT mark those as flat-list (non-paginated); let the
             # page-size heuristic in _has_next() drive pagination instead.
-            if self._service_type == "zia":
+            if self._service_type in ("zia", "zcc"):
                 self._is_flat_list_response = False
             else:
                 self._is_flat_list_response = True
