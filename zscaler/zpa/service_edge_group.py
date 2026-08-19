@@ -191,6 +191,8 @@ class ServiceEdgeGroupAPI(APIClient):
                 Indicates the grace distance unit of measure in miles or kilometers.
                 This value is only required if graceDistanceEnabled is set to true.
                 Supported Values: `MILES`, `KMS`
+            **enrollment_cert_id (str): ID of the enrollment certificate used for OAuth2 enrollment. 
+                If not set, the provider will automatically look up the "Service Edge" enrollment certificate by name and populate this attribute for you.
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The newly created service edge group object.
@@ -207,6 +209,7 @@ class ServiceEdgeGroupAPI(APIClient):
             ...     location= "San Jose, CA, USA",
             ...     upgrade_day= "SUNDAY",
             ...     dns_query_type= "IPV4_IPV6",
+            ...     enrollment_cert_id= "1234567890",
             ... )
             ... if err:
             ...     print(f"Error creating service edge group: {err}")
@@ -270,6 +273,7 @@ class ServiceEdgeGroupAPI(APIClient):
             ...     location= "San Jose, CA, USA",
             ...     upgrade_day= "SUNDAY",
             ...     dns_query_type= "IPV4_IPV6",
+            ...     enrollment_cert_id= "1234567890",
             ... )
             ... if err:
             ...     print(f"Error creating service edge group: {err}")

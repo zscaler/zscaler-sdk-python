@@ -290,6 +290,8 @@ class AppConnectorGroupAPI(APIClient):
                 The version profile to use. This will automatically set ``override_version_profile`` to True.
                 Accepted values are:
                 ``default``, ``previous_default`` and ``new_release``
+            **enrollment_cert_id (str): ID of the enrollment certificate used for OAuth2 enrollment. 
+                If not set, the provider will automatically look up the "Connector" enrollment certificate by name and populate this attribute for you.
 
         Returns:
             :obj:`Tuple`: A tuple containing (AppConnectorGroup, Response, error)
@@ -306,6 +308,7 @@ class AppConnectorGroupAPI(APIClient):
             ...     location= "San Jose, CA, USA",
             ...     upgrade_day= "SUNDAY",
             ...     dns_query_type= "IPV4_IPV6",
+            ...     enrollment_cert_id= "1234567890",
             ... )
             ... if err:
             ...     print(f"Error creating connector group: {err}")
@@ -395,6 +398,7 @@ class AppConnectorGroupAPI(APIClient):
             ...     location= "San Jose, CA, USA",
             ...     upgrade_day= "SUNDAY",
             ...     dns_query_type= "IPV4_IPV6",
+            ...     enrollment_cert_id= "1234567890",
             ... )
             ... if err:
             ...     print(f"Error creating connector group: {err}")
