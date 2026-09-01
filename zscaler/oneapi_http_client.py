@@ -58,6 +58,7 @@ class HTTPClient:
         self.use_zia_legacy_client: bool = zia_legacy_client is not None
         self.use_zwa_legacy_client: bool = zwa_legacy_client is not None
         self.use_ztb_legacy_client: bool = ztb_legacy_client is not None
+        self.use_aiguard_legacy_client: bool = aiguard_legacy_client is not None
 
         # Set timeout for all HTTP requests
         request_timeout: Optional[int] = http_config.get("requestTimeout", None)
@@ -314,6 +315,26 @@ class HTTPClient:
                         "headers": legacy_request["headers"],
                     }
                 )
+
+            elif self.use_aiguard_legacy_client:
+                parsed_url = urlparse(request["url"])
+                path = parsed_url.path
+                logger.debug(f"Sending request via AI Guard legacy client. Path: {path}")
+
+                # The AI Guard helper's send() applies the Bearer API key and
+                # response-based rate limiting, and returns only the response.
+                response = self.aiguard_legacy_client.send(
+                    method=request["method"],
+                    path=path,
+                    params=request["params"],
+                    json=request.get("json") or request.get("data"),
+                    headers=request.get("headers"),
+                )
+
+                if response is None:
+                    error_msg = "AI Guard legacy client returned None response"
+                    logger.error(error_msg)
+                    return (None, ValueError(error_msg))
 
             else:
                 # Standard session

@@ -6,6 +6,33 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.44 (September 1 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#572 <https://github.com/zscaler/zscaler-sdk-python/pull/572>`_) - Fixed AI Guard policy detection requests not being dispatched through the legacy AI Guard client. `execute_policy` and `resolve_and_execute_policy` fell through to the standard OneAPI session and were sent without the AI Guard API key.
+
+1.9.43 (August 18 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+* Updated docstrings and examples in ZPA app_connector_group and service_edge_group resources.
+
+
 1.9.42 (August 18 2026)
 ---------------------------
 
