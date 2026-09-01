@@ -4,6 +4,7 @@ import uuid
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Tuple
 
+from zscaler.aiguard.legacy import LegacyZGuardClientHelper
 from zscaler.constants import ONEAPI_GOV_API_BASE_URLS
 from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from zscaler.errors.response_checker import check_response_for_error
@@ -43,7 +44,7 @@ class RequestExecutor:
         zia_legacy_client: LegacyZIAClientHelper = None,
         zwa_legacy_client: LegacyZWAClientHelper = None,
         ztb_legacy_client: LegacyZTBClientHelper = None,
-        aiguard_legacy_client=None,
+        aiguard_legacy_client: LegacyZGuardClientHelper = None,
     ):
         """
         Constructor for Request Executor object for Zscaler SDK Client.
