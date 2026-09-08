@@ -241,8 +241,9 @@ class AppSegmentsInspectionAPI(APIClient):
             return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
         # Reformat server_group_ids to match the expected API format (serverGroups)
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+        server_group_ids = body.pop("server_group_ids", None)
+        if server_group_ids is not None:
+            body["serverGroups"] = [{"id": group_id} for group_id in server_group_ids]
 
         # Auto-add `"app_types": ["INSPECT"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
@@ -393,8 +394,9 @@ class AppSegmentsInspectionAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
+        server_group_ids = body.pop("server_group_ids", None)
+        if server_group_ids is not None:
+            body["serverGroups"] = [{"id": gid} for gid in server_group_ids]
 
         # Auto-add `"app_types": ["INSPECT"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
