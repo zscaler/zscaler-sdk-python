@@ -140,6 +140,7 @@ class PolicyDetectionAPI(APIClient):
         content: str,
         direction: str,
         transaction_id: Optional[str] = None,
+        user: Optional[str] = None,
     ) -> APIResult[ResolveAndExecuteDetectionsPolicyResponse]:
         """
         Resolves and executes a policy detection (automatic policy selection).
@@ -148,6 +149,8 @@ class PolicyDetectionAPI(APIClient):
             content (str): The content to scan
             direction (str): The direction of the content ('IN' or 'OUT')
             transaction_id (str, optional): Optional transaction ID for tracking
+            user (str, optional): Optional end-user identity associated with the request,
+                recorded on the detection event so the user surfaces on the dashboard
 
         Returns:
             APIResult[ResolveAndExecuteDetectionsPolicyResponse]: Tuple of (result, response, error)
@@ -179,6 +182,9 @@ class PolicyDetectionAPI(APIClient):
 
         if transaction_id is not None:
             body["transactionId"] = transaction_id
+
+        if user is not None:
+            body["user"] = user
 
         request, error = self._request_executor.create_request(
             method=http_method,
