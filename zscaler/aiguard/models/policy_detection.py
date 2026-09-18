@@ -291,10 +291,12 @@ class DasResolveAndExecuteDetectionsPolicyRequest(ZscalerObject):
             self.transaction_id = config["transactionId"] if "transactionId" in config else None
             self.content = config["content"] if "content" in config else None
             self.direction = config["direction"] if "direction" in config else None
+            self.user = config["user"] if "user" in config else None
         else:
             self.transaction_id = None
             self.content = None
             self.direction = None
+            self.user = None
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -305,6 +307,7 @@ class DasResolveAndExecuteDetectionsPolicyRequest(ZscalerObject):
             "transactionId": self.transaction_id,
             "content": self.content,
             "direction": self.direction,
+            "user": self.user,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
