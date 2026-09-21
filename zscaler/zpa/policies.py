@@ -1305,7 +1305,7 @@ class PolicySetControllerAPI(APIClient):
             "name": name,
             "description": kwargs.get("description"),
             "rule_order": kwargs.get("rule_order"),
-            "action": action.upper(),
+            "action": action.upper() if action else None,
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
@@ -2520,7 +2520,7 @@ class PolicySetControllerAPI(APIClient):
             "name": name,
             "description": kwargs.get("description"),
             "rule_order": kwargs.get("rule_order"),
-            "action": action.upper(),
+            "action": action.upper() if action else None,
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
