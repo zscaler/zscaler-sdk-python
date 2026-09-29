@@ -141,6 +141,7 @@ class PolicyDetectionAPI(APIClient):
         direction: str,
         transaction_id: Optional[str] = None,
         user: Optional[str] = None,
+        headers: Optional[dict] = None,
     ) -> APIResult[ResolveAndExecuteDetectionsPolicyResponse]:
         """
         Resolves and executes a policy detection (automatic policy selection).
@@ -151,6 +152,9 @@ class PolicyDetectionAPI(APIClient):
             transaction_id (str, optional): Optional transaction ID for tracking
             user (str, optional): Optional end-user identity associated with the request,
                 recorded on the detection event so the user surfaces on the dashboard
+            headers (dict, optional): Extra HTTP headers to send with this request. Used for
+                the tenant's configured custom request headers, such as the one carrying the
+                conversation ID; the header names are set per tenant, so the caller supplies them
 
         Returns:
             APIResult[ResolveAndExecuteDetectionsPolicyResponse]: Tuple of (result, response, error)
@@ -190,6 +194,7 @@ class PolicyDetectionAPI(APIClient):
             method=http_method,
             endpoint=api_url,
             body=body,
+            headers=headers,
         )
 
         if error:
