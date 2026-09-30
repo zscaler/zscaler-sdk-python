@@ -1,5 +1,30 @@
 # Zscaler Python SDK Changelog
 
+## 1.10.1 (September 29 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* Added an optional `headers` argument to AI Guard `resolve_and_execute_policy`. Extra headers are
+  merged into the request, which lets a caller send the tenant's configured custom request headers
+  — including the one AI Guard reads the conversation ID from, so multi-turn interactions can be
+  correlated on the dashboard.
+
+## 1.10.0 (September 18 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* [PR #587](https://github.com/zscaler/zscaler-sdk-python/pull/587) - Added an optional `user`
+  argument to AI Guard `resolve_and_execute_policy`. The end-user identity is recorded on the
+  detection event so the user surfaces on the dashboard.
+
 ## 1.9.44 (September 1 2026)
 
 ### Notes
