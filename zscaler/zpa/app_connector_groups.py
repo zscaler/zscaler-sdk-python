@@ -290,8 +290,9 @@ class AppConnectorGroupAPI(APIClient):
                 The version profile to use. This will automatically set ``override_version_profile`` to True.
                 Accepted values are:
                 ``default``, ``previous_default`` and ``new_release``
-            **enrollment_cert_id (str): ID of the enrollment certificate used for OAuth2 enrollment. 
-                If not set, the provider will automatically look up the "Connector" enrollment certificate by name and populate this attribute for you.
+            **enrollment_cert_id (str): ID of the enrollment certificate used to sign App Connector enrollment.
+                The SDK does not look this up for you; retrieve it with
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Connector"})``.
 
         Returns:
             :obj:`Tuple`: A tuple containing (AppConnectorGroup, Response, error)

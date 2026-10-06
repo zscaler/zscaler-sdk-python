@@ -270,9 +270,6 @@ class ApplicationSegmentAPI(APIClient):
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
-
         # --- Prevent mixed legacy + structured port range usage ---
         if "tcp_port_ranges" in body and "tcp_port_range" in body:
             return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
@@ -312,6 +309,9 @@ class ApplicationSegmentAPI(APIClient):
     def update_segment(self, segment_id: str, **kwargs) -> APIResult[ApplicationSegments]:
         """
         Update an existing application segment.
+
+        Port fields (``tcp_port_range(s)`` / ``udp_port_range(s)``) that are omitted are sent as empty
+        lists and therefore cleared. To keep the existing ports, pass them on every update.
 
         See the
         `Updating Application Segments Using API reference:
@@ -405,9 +405,6 @@ class ApplicationSegmentAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
-
         if "clientless_app_ids" in body:
             clientless_apps = body.pop("clientless_app_ids")
 
@@ -418,18 +415,21 @@ class ApplicationSegmentAPI(APIClient):
             if err:
                 return (None, None, f"Error fetching application segment data: {err}")
 
-            matched_segment = next((app for app in segments_list if app.get("appId") == segment_id), None)
-
-            if not matched_segment:
-                return (None, None, f"Error: No matching clientless App found with appId '{segment_id}' in existing segments.")
-
-            clientless_app_id = matched_segment["id"]
-
             body["clientlessApps"] = []
             for app in clientless_apps:
-                app["appId"] = segment_id
-                app["id"] = clientless_app_id
+                matched_segment = next(
+                    (seg for seg in segments_list if seg.domain == app.get("domain") and str(seg.app_id) == segment_id), None
+                )
 
+                if not matched_segment:
+                    return (
+                        None,
+                        None,
+                        f"Error: No matching clientless App found for domain '{app.get('domain')}' in existing segments.",
+                    )
+
+                app["appId"] = segment_id
+                app["id"] = matched_segment.id
                 body["clientlessApps"].append(app)
 
         if "tcp_port_ranges" in body:

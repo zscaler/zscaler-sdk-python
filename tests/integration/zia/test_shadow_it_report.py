@@ -65,14 +65,14 @@ class TestShadowITReport:
 
             # Test export_shadow_it_report
             try:
-                report, err = client.zia.shadow_it_report.export_shadow_it_report(duration="LAST_1_DAYS")
+                report, response, err = client.zia.shadow_it_report.export_shadow_it_report(duration="LAST_1_DAYS")
                 # May return None or fail
             except Exception:
                 pass
 
             # Test export_shadow_it_csv
             try:
-                csv_data, err = client.zia.shadow_it_report.export_shadow_it_csv(
+                csv_data, response, err = client.zia.shadow_it_report.export_shadow_it_csv(
                     application="GOOGLE_APPS", entity="USER", duration="LAST_1_DAYS"
                 )
                 # May fail

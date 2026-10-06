@@ -6,6 +6,44 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.11.1 (October 6 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA application segment add/update functions raising `TypeError` when `server_group_ids=None` is passed; `None` is now treated as not supplied. (`Issue #575 <https://github.com/zscaler/zscaler-sdk-python/issues/575>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA `update_isolation_rule` and `update_isolation_rule_v2` raising `AttributeError` when `action` is omitted. (`Issue #574 <https://github.com/zscaler/zscaler-sdk-python/issues/574>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA `update_app_protection_rule_v2` silently dropping `conditions` from the request. (`Issue #584 <https://github.com/zscaler/zscaler-sdk-python/issues/584>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - ZPA policy `conditions` now accept lists as well as tuples (e.g. conditions loaded from JSON); list-shaped conditions were previously dropped. (`Issue #583 <https://github.com/zscaler/zscaler-sdk-python/issues/583>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA policy error messages printing a literal `{err}` instead of the underlying error.
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA `get_service_edge`, `delete_service_edge` and `bulk_delete_service_edges` to return the documented `(result, response, error)` tuple instead of a bare object or status code. Callers using the bare return value must now unpack the tuple. (`Issue #578 <https://github.com/zscaler/zscaler-sdk-python/issues/578>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZPA `update_segment` failing whenever `clientless_app_ids` is passed; Browser Access apps are now matched by domain and segment ID. (`Issue #581 <https://github.com/zscaler/zscaler-sdk-python/issues/581>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Fixed ZIA `export_shadow_it_report` and `export_shadow_it_csv` sending an empty request body instead of the requested filters. Both now return the standard `(report, response, error)` tuple. (`Issue #594 <https://github.com/zscaler/zscaler-sdk-python/issues/594>`_)
+
+Documentation
+-------------
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Corrected the `enrollment_cert_id` description for ZPA `add_connector_group` and `add_service_edge_group`; the SDK does not look up the certificate automatically. (`Issue #565 <https://github.com/zscaler/zscaler-sdk-python/issues/565>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - ZPA timeout rules: removed the ignored `action` argument from the v2 docstrings (the action is always `RE_AUTH`) and corrected the documented `reauth_timeout` / `reauth_idle_timeout` argument names. (`Issue #579 <https://github.com/zscaler/zscaler-sdk-python/issues/579>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Documented that ZPA application segment updates clear omitted port fields. (`Issue #580 <https://github.com/zscaler/zscaler-sdk-python/issues/580>`_)
+
+(`#595 <https://github.com/zscaler/zscaler-sdk-python/pull/595>`_) - Documented the ZPA `204 No Content` update response behavior in the README. (`Issue #582 <https://github.com/zscaler/zscaler-sdk-python/issues/582>`_)
+
 1.9.44 (September 1 2026)
 ---------------------------
 

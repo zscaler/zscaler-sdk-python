@@ -106,11 +106,12 @@ class ServiceEdgeControllerAPI(APIClient):
 
         Args:
             service_edge_id (str): The unique ID of the ZPA Service Edge.
-            query_params (dict, optional): Map of query parameters for the request.
-                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+
+        Keyword Args:
+            microtenant_id (str, optional): The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Tuple`: ServiceEdge: The corresponding Service Edge object.
+            :obj:`Tuple`: A tuple containing (ServiceEdge, Response, error)
 
         Examples:
             >>> fetched_service_edge, _, err = client.zpa.service_edges.get_service_edge('999999')
@@ -129,13 +130,17 @@ class ServiceEdgeControllerAPI(APIClient):
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
-            return None
+            return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, ServiceEdge)
         if error:
-            return None
+            return (None, response, error)
 
-        return ServiceEdge(response.get_body())
+        try:
+            result = ServiceEdge(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def update_service_edge(self, service_edge_id: str, **kwargs) -> APIResult[dict]:
         """
@@ -198,7 +203,7 @@ class ServiceEdgeControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_service_edge(self, service_edge_id: str, **kwargs) -> int:
+    def delete_service_edge(self, service_edge_id: str, **kwargs) -> APIResult[dict]:
         """
         Deletes the specified ZPA Service Edge.
 
@@ -206,7 +211,7 @@ class ServiceEdgeControllerAPI(APIClient):
             service_edge_id (str): The unique ID of the Service Edge to be deleted.
 
         Returns:
-            int: Status code of the delete operation.
+            :obj:`Tuple`: A tuple containing (None, Response, error)
 
         Examples:
             >>> _, _, err = client.zpa.service_edges.delete_service_edge(
@@ -227,15 +232,15 @@ class ServiceEdgeControllerAPI(APIClient):
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
-            return None
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
         if error:
-            return None
+            return (None, response, error)
 
-        return response.get_status()
+        return (None, response, None)
 
-    def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> int:
+    def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> APIResult[dict]:
         """
         Bulk deletes the specified Service Edges from ZPA.
 
@@ -243,7 +248,14 @@ class ServiceEdgeControllerAPI(APIClient):
             service_edge_ids (list): A list of Service Edge IDs to be deleted.
 
         Returns:
-            int: Status code for the operation.
+            :obj:`Tuple`: A tuple containing (None, Response, error)
+
+        Examples:
+            >>> _, _, err = client.zpa.service_edges.bulk_delete_service_edges(
+            ...     service_edge_ids=['72058304855098016', '72058304855098017'])
+            ... if err:
+            ...     print(f"Error deleting service edges: {err}")
+            ...     return
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -257,10 +269,10 @@ class ServiceEdgeControllerAPI(APIClient):
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
-            return None
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
         if error:
-            return None
+            return (None, response, error)
 
-        return response.get_status()
+        return (None, response, None)
