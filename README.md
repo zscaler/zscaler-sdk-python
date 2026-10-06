@@ -677,6 +677,20 @@ The header `x-ratelimit-reset` is returned in the API response for each API call
 * [ZIA Rate Limiting][rate-limiting-zia] for rate limiting requirements.
 * [ZPA Rate Limiting][rate-limiting-zpa] for rate limiting requirements.
 
+## ZPA Update Responses
+
+ZPA update endpoints return `204 No Content`. In that case the SDK returns an object that carries only the `id`;
+its other attributes are model defaults, not data returned by the API. Use `response.get_status()` to detect this,
+and call the matching `get_*` method to read the updated resource:
+
+```py
+segment, response, err = client.zpa.application_segment.update_segment(segment_id, description="new description")
+if err:
+    ...
+if response.get_status() == 204:
+    segment, _, err = client.zpa.application_segment.get_segment(segment_id)
+```
+
 ## Pagination
 
 The pagination system in this SDK is unified across `ZCC`, `ZTW`, `ZDX`, `ZIA`, `ZPA`, `ZWA`, `ZCell`

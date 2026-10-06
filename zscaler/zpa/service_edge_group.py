@@ -191,8 +191,9 @@ class ServiceEdgeGroupAPI(APIClient):
                 Indicates the grace distance unit of measure in miles or kilometers.
                 This value is only required if graceDistanceEnabled is set to true.
                 Supported Values: `MILES`, `KMS`
-            **enrollment_cert_id (str): ID of the enrollment certificate used for OAuth2 enrollment. 
-                If not set, the provider will automatically look up the "Service Edge" enrollment certificate by name and populate this attribute for you.
+            **enrollment_cert_id (str): ID of the enrollment certificate used to sign Service Edge enrollment.
+                The SDK does not look this up for you; retrieve it with
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Service Edge"})``.
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The newly created service edge group object.

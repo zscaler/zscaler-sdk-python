@@ -190,14 +190,14 @@ class PolicySetControllerAPI(APIClient):
             operator = "OR"  # Default operator
 
             # Handle optional operator prefix
-            if isinstance(condition, tuple) and condition[0].upper() in ["AND", "OR"]:
+            if isinstance(condition, (tuple, list)) and condition[0].upper() in ["AND", "OR"]:
                 # Skip operator for chrome_enterprise conditions
-                if not (isinstance(condition[1], tuple) and condition[1][0].lower() == "chrome_enterprise"):
+                if not (isinstance(condition[1], (tuple, list)) and condition[1][0].lower() == "chrome_enterprise"):
                     operator = condition[0].upper()
                 condition = condition[1]
 
             # Process the actual condition
-            if isinstance(condition, tuple):
+            if isinstance(condition, (tuple, list)):
                 object_type = condition[0].lower()
                 values = condition[1:]
 
@@ -763,9 +763,9 @@ class PolicySetControllerAPI(APIClient):
                 A custom message.
             description (str):
                 A description for the rule.
-            re_auth_idle_timeout (int):
+            reauth_idle_timeout (int):
                 The re-authentication idle timeout value in seconds.
-            re_auth_timeout (int):
+            reauth_timeout (int):
                 The re-authentication timeout value in seconds.
         """
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
@@ -836,9 +836,9 @@ class PolicySetControllerAPI(APIClient):
                 A custom message.
             description (str):
                 A description for the rule.
-            re_auth_idle_timeout (int):
+            reauth_idle_timeout (int):
                 The re-authentication idle timeout value in seconds.
-            re_auth_timeout (int):
+            reauth_timeout (int):
                 The re-authentication timeout value in seconds.
 
         Returns:
@@ -1305,7 +1305,7 @@ class PolicySetControllerAPI(APIClient):
             "name": name,
             "description": kwargs.get("description"),
             "rule_order": kwargs.get("rule_order"),
-            "action": action.upper(),
+            "action": action.upper() if action else None,
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
@@ -1833,6 +1833,8 @@ class PolicySetControllerAPI(APIClient):
         """
         Add a new timeout policy rule.
 
+        The rule action is always ``RE_AUTH``; it is set automatically.
+
         Ensure you are using the correct arguments for the policy type that you want to update.
 
         Args:
@@ -1855,16 +1857,13 @@ class PolicySetControllerAPI(APIClient):
                     ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
                     "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
 
-            action (str):
-                The action for the policy. Accepted values are:
-                |  ``RE_AUTH``
             custom_msg (str):
                 A custom message.
             description (str):
                 A description for the rule.
-            re_auth_idle_timeout (str):
+            reauth_idle_timeout (str):
                 The re-authentication idle timeout value in seconds.
-            re_auth_timeout (str):
+            reauth_timeout (str):
                 The re-authentication timeout value in seconds.
 
         Returns:
@@ -1909,7 +1908,7 @@ class PolicySetControllerAPI(APIClient):
         """
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'timeout': {err}")
+            return (None, None, f"Error retrieving policy for 'timeout': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -1955,6 +1954,8 @@ class PolicySetControllerAPI(APIClient):
         """
         Update an existing policy rule.
 
+        The rule action is always ``RE_AUTH``; it is set automatically.
+
         Ensure you are using the correct arguments for the policy type that you want to update.
 
         Args:
@@ -1976,16 +1977,13 @@ class PolicySetControllerAPI(APIClient):
                     ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
                     "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
 
-            action (str):
-                The action for the policy. Accepted values are:
-                |  ``RE_AUTH``
             custom_msg (str):
                 A custom message.
             description (str):
                 A description for the rule.
-            re_auth_idle_timeout (str):
+            reauth_idle_timeout (str):
                 The re-authentication idle timeout value in seconds.
-            re_auth_timeout (str):
+            reauth_timeout (str):
                 The re-authentication timeout value in seconds.
 
         Returns:
@@ -2032,7 +2030,7 @@ class PolicySetControllerAPI(APIClient):
         """
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'timeout': {err}")
+            return (None, None, f"Error retrieving policy for 'timeout': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2156,7 +2154,7 @@ class PolicySetControllerAPI(APIClient):
             "client_forwarding", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'client_forwarding': {err}")
+            return (None, None, f"Error retrieving policy for 'client_forwarding': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2261,7 +2259,7 @@ class PolicySetControllerAPI(APIClient):
             "client_forwarding", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'client_forwarding': {err}")
+            return (None, None, f"Error retrieving policy for 'client_forwarding': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2378,7 +2376,7 @@ class PolicySetControllerAPI(APIClient):
             "isolation", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'isolation': {err}")
+            return (None, None, f"Error retrieving policy for 'isolation': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2504,7 +2502,7 @@ class PolicySetControllerAPI(APIClient):
             "isolation", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'isolation': {err}")
+            return (None, None, f"Error retrieving policy for 'isolation': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2520,7 +2518,7 @@ class PolicySetControllerAPI(APIClient):
             "name": name,
             "description": kwargs.get("description"),
             "rule_order": kwargs.get("rule_order"),
-            "action": action.upper(),
+            "action": action.upper() if action else None,
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
@@ -2640,7 +2638,7 @@ class PolicySetControllerAPI(APIClient):
             "inspection", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'inspection': {err}")
+            return (None, None, f"Error retrieving policy for 'inspection': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2763,7 +2761,7 @@ class PolicySetControllerAPI(APIClient):
             "inspection", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'inspection': {err}")
+            return (None, None, f"Error retrieving policy for 'inspection': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2786,13 +2784,6 @@ class PolicySetControllerAPI(APIClient):
 
         if action == "inspect":
             payload["zpnInspectionProfileId"] = zpn_inspection_profile_id
-
-        if "conditions" in payload and "conditions" not in kwargs:
-            del payload["conditions"]
-
-        for key, value in kwargs.items():
-            if key == "conditions":
-                payload["conditions"] = self._create_conditions_v2(value)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload)
         if error:
@@ -3040,7 +3031,7 @@ class PolicySetControllerAPI(APIClient):
             "credential", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'credential': {err}")
+            return (None, None, f"Error retrieving policy for 'credential': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -3175,7 +3166,7 @@ class PolicySetControllerAPI(APIClient):
             "capabilities", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'capabilities': {err}")
+            return (None, None, f"Error retrieving policy for 'capabilities': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -3349,9 +3340,7 @@ class PolicySetControllerAPI(APIClient):
         }
 
         for key, value in kwargs.items():
-            if key == "conditions":
-                payload["conditions"] = self._create_conditions_v2(value)
-            elif key == "privileged_capabilities":
+            if key == "privileged_capabilities":
                 capabilities = []
                 priv_caps_map = value
 
@@ -3753,7 +3742,7 @@ class PolicySetControllerAPI(APIClient):
             "clientless", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'browser protection': {err}")
+            return (None, None, f"Error retrieving policy for 'browser protection': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -3869,7 +3858,7 @@ class PolicySetControllerAPI(APIClient):
             "clientless", query_params={"microtenantId": kwargs.get("microtenantId")}
         )
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'Browser Protection': {err}")
+            return (None, None, f"Error retrieving policy for 'Browser Protection': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:

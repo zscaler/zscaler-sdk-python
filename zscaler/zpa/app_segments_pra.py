@@ -248,10 +248,6 @@ class AppSegmentsPRAAPI(APIClient):
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
-
         # Auto-add `"app_types": ["SECURE_REMOTE_ACCESS"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
@@ -294,6 +290,9 @@ class AppSegmentsPRAAPI(APIClient):
     def update_segment_pra(self, segment_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing application segment.
+
+        Port fields (``tcp_port_range(s)`` / ``udp_port_range(s)``) that are omitted are sent as empty
+        lists and therefore cleared. To keep the existing ports, pass them on every update.
 
         Args:
             segment_id (str): The unique identifier of the application segment.
@@ -352,9 +351,6 @@ class AppSegmentsPRAAPI(APIClient):
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
-
-        if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:

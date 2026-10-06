@@ -93,6 +93,8 @@ if "server_group_ids" in body:
 
 These shadow `transform_common_id_fields` for those fields (the helper finds nothing to do because the snake key was already popped). They are intentional and safe — string IDs pass through unchanged. The `transform_common_id_fields(..., coerce_ids=False)` call below them handles any *additional* ID kwargs declared in the resource's `reformat_params` table without a coercion regression. Do not remove the manual blocks unless you've verified every reformat-params entry can survive helper-only handling.
 
+Exception: the application segment resources (`application_segment.py`, `app_segments_ba.py`, `app_segments_ba_v2.py`, `app_segments_inspection.py`, `app_segments_pra.py`) no longer have a manual `server_group_ids` block in their add/update paths — the helper handles it, which also makes `server_group_ids=None` a no-op instead of a `TypeError` (#575). `add_segment_provision` keeps its block because it still uses `add_id_groups`.
+
 ### `add_id_groups` is being phased out for ZPA
 
 `add_id_groups` (also in `zscaler/utils.py`) is the original ZPA helper and never coerces. It still exists for backwards compatibility and is kept in `application_segment.py`'s `add_segment_provision` flow and `pra_credential_pool.py`. New code in ZPA should prefer `transform_common_id_fields(..., coerce_ids=False)` so the service converges on a single helper.

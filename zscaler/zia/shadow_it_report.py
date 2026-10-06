@@ -19,7 +19,7 @@ from typing import List, Optional
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
-from zscaler.utils import convert_keys, format_url
+from zscaler.utils import format_url
 from zscaler.zia.models.shadow_it_report import CloudapplicationsAndTags
 
 
@@ -258,7 +258,7 @@ class ShadowITAPI(APIClient):
         result = self.form_response_body(body) if body else {}
         return (result, response, None)
 
-    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> APIResult[dict]:
+    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> APIResult[str]:
         """
         Export the Shadow IT Report (in CSV format) for the cloud applications recognized by Zscaler
         based on their usage in your organisation.
@@ -441,12 +441,12 @@ class ShadowITAPI(APIClient):
                 ``BITS_3072``, ``BITS_384``, ``BITS_4096``, ``BITS_1024``.
 
         Returns:
-            :obj:`str`: The Shadow IT Report in CSV format.
+            :obj:`Tuple`: A tuple containing (CSV report as ``str``, Response, error)
 
         Examples:
             Export the Shadow IT Report for the last 7 days::
 
-                report = zia.shadow_it.export_shadow_it_report('LAST_7_DAYS')
+                report, _, err = client.zia.shadow_it_report.export_shadow_it_report(duration="LAST_7_DAYS")
 
         Notes:
             Zscaler has a rate limit of 1 report per-minute, ensure you take this into account when calling this method.
@@ -459,28 +459,21 @@ class ShadowITAPI(APIClient):
         """)
 
         payload = {"duration": duration}
-        payload.update(kwargs)  # Update the payload with kwargs
-        convert_keys(payload)  # Convert keys after updating
+        payload.update(kwargs)
 
-        body = {}
-        headers = {"Accept": "text/csv"}  # Explicitly request a CSV response
+        headers = {"Accept": "text/csv"}
 
-        # Creating the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
+        request, error = self._request_executor.create_request(http_method, api_url, payload, headers)
         if error:
-            return (None, error)
+            return (None, None, error)
 
-        # Executing the request
         response, error = self._request_executor.execute(request)
-
         if error:
-            return (response.get_body(), error)
+            return (None, response, error)
 
-        # Return the CSV content directly
-        return (response.get_body(), None)
+        return (response.get_body(), response, None)
 
-    def export_shadow_it_csv(self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs):
+    def export_shadow_it_csv(self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs) -> APIResult[str]:
         """
         Export the Shadow IT Report (in CSV format) for the list of users or known locations
         identified with using the cloud applications specified in the request. The report
@@ -529,12 +522,14 @@ class ShadowITAPI(APIClient):
                 ``id`` and ``name`` fields specify the department information.
 
         Returns:
-            :obj:`str`: The Shadow IT Report in CSV format.
+            :obj:`Tuple`: A tuple containing (CSV report as ``str``, Response, error)
 
         Examples:
-            Export the Shadow IT Report for GitHub the last 15 days::
+            Export the Shadow IT Report for GitHub users over the last 15 days::
 
-                report = zia.shadow_it.export_shadow_it_report(application="Github", duration="LAST_15_DAYS")
+                report, _, err = client.zia.shadow_it_report.export_shadow_it_csv(
+                    application="Github", entity="USER", duration="LAST_15_DAYS"
+                )
 
         Notes:
             Zscaler has a rate limit of 1 report per-minute, ensure you take this into account when calling this method.
@@ -551,20 +546,15 @@ class ShadowITAPI(APIClient):
                 payload[key] = self._convert_ids_to_dict_list(id_list)
 
         payload.update(kwargs)
-        convert_keys(payload)
 
-        body = {}
         headers = {"Accept": "text/csv"}
-        params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
-
+        request, error = self._request_executor.create_request(http_method, api_url, payload, headers)
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
-
         if error:
-            return (response.get_body(), error)
+            return (None, response, error)
 
-        return (response.get_body(), None)
+        return (response.get_body(), response, None)
