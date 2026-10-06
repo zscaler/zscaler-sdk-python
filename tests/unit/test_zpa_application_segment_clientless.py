@@ -55,5 +55,5 @@ def test_update_segment_reports_unmatched_clientless_domain():
     (segment, _, err), executor = _update([{"domain": "missing.example.com"}], by_type)
 
     assert segment is None
-    assert "missing.example.com" in err
+    assert err == "Error: No matching clientless App found for domain 'missing.example.com' in existing segments."
     executor.create_request.assert_not_called()
