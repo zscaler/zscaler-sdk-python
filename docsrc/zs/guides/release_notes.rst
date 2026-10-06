@@ -21,6 +21,8 @@ Bug Fixes
 
 (`#596 <https://github.com/zscaler/zscaler-sdk-python/pull/596>`_) - Added `enrollment_cert_id` to the ZPA `ServiceEdgeGroup` model.
 
+(`#596 <https://github.com/zscaler/zscaler-sdk-python/pull/596>`_) - Fixed ZIA `cloudappcontrol.list_rules` failing with `KeyError: 0` when a rule has a `cloudAppRiskProfile`; the field is a single object and is now parsed as one. (`Issue #586 <https://github.com/zscaler/zscaler-sdk-python/issues/586>`_)
+
 Enhancements
 ------------
 

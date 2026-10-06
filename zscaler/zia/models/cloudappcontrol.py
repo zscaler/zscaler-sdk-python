@@ -112,8 +112,10 @@ class CloudApplicationControl(ZscalerObject):
                 config["formSharingDomainProfiles"] if "formSharingDomainProfiles" in config else [],
                 common_reference.ResourceReference,
             )
-            self.cloud_app_risk_profile = ZscalerCollection.form_list(
-                config["cloudAppRiskProfile"] if "cloudAppRiskProfile" in config else [], common_reference.ResourceReference
+            self.cloud_app_risk_profile = (
+                common_reference.ResourceReference(config["cloudAppRiskProfile"])
+                if config.get("cloudAppRiskProfile")
+                else None
             )
 
             # Assign the cbi_profile as-is; conversions are handled by ZscalerObject
