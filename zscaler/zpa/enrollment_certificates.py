@@ -143,6 +143,33 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    def get_enrolment_by_name(self, name: str) -> APIResult[EnrollmentCertificate]:
+        """
+        Returns the enrollment certificate whose name matches ``name`` (case-insensitive).
+
+        Args:
+            name (str): The name of the enrollment certificate, e.g. ``Connector`` or ``Service Edge``.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (EnrollmentCertificate, Response, error). If no certificate
+            matches, the error is a ``ValueError``.
+
+        Examples:
+            >>> cert, _, err = client.zpa.enrollment_certificates.get_enrolment_by_name("Connector")
+            ... if err:
+            ...     print(f"Error fetching certificate by name: {err}")
+            ...     return
+            ... print(cert.id)
+        """
+        certs, response, error = self.list_enrolment(query_params={"search": name})
+        if error:
+            return (None, response, error)
+
+        cert = next((c for c in certs or [] if (c.name or "").lower() == name.lower()), None)
+        if cert is None or not cert.id:
+            return (None, response, ValueError(f"Enrollment certificate '{name}' not found"))
+        return (cert, response, None)
+
     def add_enrollment_cert(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new Enrollment Certificate.

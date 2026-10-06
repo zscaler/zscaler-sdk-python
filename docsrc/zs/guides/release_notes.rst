@@ -6,6 +6,26 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.11.2 (October 7 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#596 <https://github.com/zscaler/zscaler-sdk-python/pull/596>`_) - ZPA `add_connector_group` / `update_connector_group` and `add_service_edge_group` / `update_service_edge_group` now populate the required `enrollment_cert_id` when it is not provided, by looking up the `Connector` or `Service Edge` enrollment certificate respectively. An explicitly passed `enrollment_cert_id` is used as-is. (`Issue #565 <https://github.com/zscaler/zscaler-sdk-python/issues/565>`_)
+
+(`#596 <https://github.com/zscaler/zscaler-sdk-python/pull/596>`_) - Added `enrollment_cert_id` to the ZPA `ServiceEdgeGroup` model.
+
+Enhancements
+------------
+
+(`#596 <https://github.com/zscaler/zscaler-sdk-python/pull/596>`_) - Added ZPA `enrollment_certificates.get_enrolment_by_name(name)` to retrieve an enrollment certificate by exact (case-insensitive) name.
+
 1.11.1 (October 6 2026)
 ---------------------------
 

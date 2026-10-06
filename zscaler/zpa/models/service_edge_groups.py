@@ -42,6 +42,7 @@ class ServiceEdgeGroup(ZscalerObject):
             self.location = config["location"] if "location" in config else None
             self.version_profile_id = config["versionProfileId"] if "versionProfileId" in config else None
             self.version_profile_name = config["versionProfileName"] if "versionProfileName" in config else None
+            self.enrollment_cert_id = config["enrollmentCertId"] if "enrollmentCertId" in config else None
             self.override_version_profile = config["overrideVersionProfile"] if "overrideVersionProfile" in config else None
             self.version_profile_visibility_scope = (
                 config["versionProfileVisibilityScope"] if "versionProfileVisibilityScope" in config else None
@@ -87,6 +88,7 @@ class ServiceEdgeGroup(ZscalerObject):
             self.version_profile_id = None
             self.override_version_profile = None
             self.version_profile_name = None
+            self.enrollment_cert_id = None
             self.upgrade_priority = None
             self.version_profile_visibility_scope = None
             self.alt_cloud = None
@@ -127,6 +129,7 @@ class ServiceEdgeGroup(ZscalerObject):
             "versionProfileId": self.version_profile_id,
             "overrideVersionProfile": self.override_version_profile,
             "versionProfileName": self.version_profile_name,
+            "enrollmentCertId": self.enrollment_cert_id,
             "upgradePriority": self.upgrade_priority,
             "versionProfileVisibilityScope": self.version_profile_visibility_scope,
             "altCloud": self.alt_cloud,

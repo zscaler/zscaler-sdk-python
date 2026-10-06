@@ -20,6 +20,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
 from zscaler.utils import format_url
+from zscaler.zpa.enrollment_certificates import EnrollmentCertificateAPI
 from zscaler.zpa.models.service_edge_groups import ServiceEdgeGroup
 
 
@@ -33,6 +34,7 @@ class ServiceEdgeGroupAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._enrollment_certificates = EnrollmentCertificateAPI(request_executor, config)
 
     def list_service_edge_groups(self, query_params: Optional[dict] = None) -> APIResult[List[ServiceEdgeGroup]]:
         """
@@ -191,9 +193,11 @@ class ServiceEdgeGroupAPI(APIClient):
                 Indicates the grace distance unit of measure in miles or kilometers.
                 This value is only required if graceDistanceEnabled is set to true.
                 Supported Values: `MILES`, `KMS`
-            **enrollment_cert_id (str): ID of the enrollment certificate used to sign Service Edge enrollment.
-                The SDK does not look this up for you; retrieve it with
-                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Service Edge"})``.
+            **enrollment_cert_id (str):
+                ID of the enrollment certificate used for Service Edge enrollment. Required by the ZPA API.
+                If not provided, the SDK looks up the ``Service Edge`` enrollment certificate via
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Service Edge"})``
+                and sends its ID. Pass it explicitly to use a different certificate.
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The newly created service edge group object.
@@ -236,6 +240,12 @@ class ServiceEdgeGroupAPI(APIClient):
         if "service_edge_ids" in body:
             body["serviceEdges"] = [{"id": id} for id in body.pop("service_edge_ids")]
 
+        if not body.get("enrollment_cert_id"):
+            cert, _, error = self._enrollment_certificates.get_enrolment_by_name("Service Edge")
+            if error:
+                return (None, None, error)
+            body["enrollment_cert_id"] = cert.id
+
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
@@ -257,6 +267,13 @@ class ServiceEdgeGroupAPI(APIClient):
         Args:
             group_id (str): The unique ID of the service edge group.
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+
+        Keyword Args:
+            **enrollment_cert_id (str):
+                ID of the enrollment certificate used for Service Edge enrollment. Required by the ZPA API.
+                If not provided, the SDK looks up the ``Service Edge`` enrollment certificate via
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Service Edge"})``
+                and sends its ID. Pass it explicitly to keep a different certificate.
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The updated service edge group object.
@@ -302,6 +319,12 @@ class ServiceEdgeGroupAPI(APIClient):
 
         if "service_edge_ids" in body:
             body["serviceEdges"] = [{"id": id} for id in body.pop("service_edge_ids")]
+
+        if not body.get("enrollment_cert_id"):
+            cert, _, error = self._enrollment_certificates.get_enrolment_by_name("Service Edge")
+            if error:
+                return (None, None, error)
+            body["enrollment_cert_id"] = cert.id
 
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
