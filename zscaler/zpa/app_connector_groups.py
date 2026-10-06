@@ -20,6 +20,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
 from zscaler.utils import format_url
+from zscaler.zpa.enrollment_certificates import EnrollmentCertificateAPI
 from zscaler.zpa.models.app_connector_groups import AppConnectorGroup
 
 
@@ -33,6 +34,7 @@ class AppConnectorGroupAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._enrollment_certificates = EnrollmentCertificateAPI(request_executor, config)
 
     def list_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorGroup]]:
         """
@@ -290,9 +292,11 @@ class AppConnectorGroupAPI(APIClient):
                 The version profile to use. This will automatically set ``override_version_profile`` to True.
                 Accepted values are:
                 ``default``, ``previous_default`` and ``new_release``
-            **enrollment_cert_id (str): ID of the enrollment certificate used to sign App Connector enrollment.
-                The SDK does not look this up for you; retrieve it with
-                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Connector"})``.
+            **enrollment_cert_id (str):
+                ID of the enrollment certificate used for App Connector enrollment. Required by the ZPA API.
+                If not provided, the SDK looks up the ``Connector`` enrollment certificate via
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Connector"})``
+                and sends its ID. Pass it explicitly to use a different certificate.
 
         Returns:
             :obj:`Tuple`: A tuple containing (AppConnectorGroup, Response, error)
@@ -326,6 +330,12 @@ class AppConnectorGroupAPI(APIClient):
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        if not body.get("enrollment_cert_id"):
+            cert, _, error = self._enrollment_certificates.get_enrolment_by_name("Connector")
+            if error:
+                return (None, None, error)
+            body["enrollment_cert_id"] = cert.id
 
         # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
@@ -384,6 +394,11 @@ class AppConnectorGroupAPI(APIClient):
                 Accepted values are:
 
                 ``default``, ``previous_default`` and ``new_release``
+            **enrollment_cert_id (str):
+                ID of the enrollment certificate used for App Connector enrollment. Required by the ZPA API.
+                If not provided, the SDK looks up the ``Connector`` enrollment certificate via
+                ``client.zpa.enrollment_certificates.list_enrolment(query_params={"search": "Connector"})``
+                and sends its ID. Pass it explicitly to keep a different certificate.
 
         Returns:
             tuple: A tuple containing (AppConnectorGroup, Response, error)
@@ -418,6 +433,12 @@ class AppConnectorGroupAPI(APIClient):
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        if not body.get("enrollment_cert_id"):
+            cert, _, error = self._enrollment_certificates.get_enrolment_by_name("Connector")
+            if error:
+                return (None, None, error)
+            body["enrollment_cert_id"] = cert.id
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
