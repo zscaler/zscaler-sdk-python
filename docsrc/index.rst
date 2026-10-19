@@ -1105,6 +1105,14 @@ files.
 **NOTE:** This option is only supported for OneAPI Zidentity credentials
 at the moment.
 
+.. note::
+
+   TLS verification (``sslContext``) can only be set in the configuration
+   passed to the constructor; it is ignored in ``zscaler.yaml`` files. The SDK
+   logs a warning when it applies a ``zscaler.yaml`` from the current working
+   directory and whenever TLS verification is disabled. Only run the SDK from
+   directories whose configuration files you trust.
+
 YAML configuration
 ~~~~~~~~~~~~~~~~~~
 
@@ -1227,9 +1235,17 @@ UPPERCASE characters. The following are accepted:
 | ``proxyPassword``  | *(String)* HTTP   | ``ZSCAL                    |
 |                    | proxy password    | ER_CLIENT_PROXY_PASSWORD`` |
 +--------------------+-------------------+----------------------------+
-| ``d                | *(String)*        | ``ZSCALER_TESTING_         |
-| isableHttpsCheck`` | Disable SSL       | TESTINGDISABLEHTTPSCHECK`` |
-|                    | checks            |                            |
+| ``sslContext``     | *(Boolean or      | *(none)*                   |
+|                    | String)* TLS      |                            |
+|                    | verification:     |                            |
+|                    | ``True``          |                            |
+|                    | (default),        |                            |
+|                    | ``False``         |                            |
+|                    | (testing only),   |                            |
+|                    | or a CA bundle    |                            |
+|                    | path. Constructor |                            |
+|                    | only; ignored in  |                            |
+|                    | YAML files.       |                            |
 +--------------------+-------------------+----------------------------+
 
 Zscaler ZIdentity API

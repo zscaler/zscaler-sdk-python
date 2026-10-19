@@ -21,6 +21,9 @@ SENSITIVE_FIELDS = {
     "access_token",
     "accessToken",
     "accesstoken",
+    "api_token",
+    "apiToken",
+    "apitoken",
     "refresh_token",
     "refreshToken",
     "refreshtoken",
@@ -181,7 +184,7 @@ def dump_request(logger, url: str, method: str, json, params, headers, request_u
     log_lines.append(f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------")
     full_url = url
     if params:
-        full_url += "?" + urlencode(params)
+        full_url += "?" + urlencode(_sanitize_for_logging(params))
     log_lines.append(f"{method} {full_url}")
     for key, value in request_headers_filtered.items():
         log_lines.append(f"{key}: {value}")
@@ -214,7 +217,7 @@ def dump_response(
 
     full_url = url
     if params:
-        full_url += "?" + urlencode(params)
+        full_url += "?" + urlencode(_sanitize_for_logging(params))
     log_lines = []
 
     if from_cache:

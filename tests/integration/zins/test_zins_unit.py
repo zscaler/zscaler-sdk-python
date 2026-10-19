@@ -32,7 +32,7 @@ class TestShadowItUnit:
 
     def test_get_apps_request_error(self, fs):
         """Test get_apps handles request creation errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -47,7 +47,7 @@ class TestShadowItUnit:
 
     def test_get_apps_execute_error(self, fs):
         """Test get_apps handles execution errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -64,7 +64,7 @@ class TestShadowItUnit:
 
     def test_get_apps_graphql_error(self, fs):
         """Test get_apps handles GraphQL errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -86,7 +86,7 @@ class TestShadowItUnit:
 
     def test_get_shadow_it_summary_request_error(self, fs):
         """Test get_shadow_it_summary handles request creation errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -101,7 +101,7 @@ class TestShadowItUnit:
 
     def test_get_shadow_it_summary_execute_error(self, fs):
         """Test get_shadow_it_summary handles execution errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -118,7 +118,7 @@ class TestShadowItUnit:
 
     def test_get_shadow_it_summary_graphql_error(self, fs):
         """Test get_shadow_it_summary handles GraphQL errors correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -140,7 +140,7 @@ class TestShadowItUnit:
 
     def test_extract_graphql_response_exception(self, fs):
         """Test _extract_graphql_response handles exceptions correctly"""
-        from zscaler.zinsights.shadow_it import ShadowItAPI
+        from zscaler.zins.shadow_it import ShadowItAPI
 
         mock_executor = Mock()
         shadow_api = ShadowItAPI(mock_executor)
@@ -162,7 +162,7 @@ class TestIoTUnit:
 
     def test_get_device_stats_request_error(self, fs):
         """Test get_device_stats handles request creation errors correctly"""
-        from zscaler.zinsights.iot import IotAPI
+        from zscaler.zins.iot import IotAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -175,7 +175,7 @@ class TestIoTUnit:
 
     def test_get_device_stats_execute_error(self, fs):
         """Test get_device_stats handles execution errors correctly"""
-        from zscaler.zinsights.iot import IotAPI
+        from zscaler.zins.iot import IotAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -190,7 +190,7 @@ class TestIoTUnit:
 
     def test_get_device_stats_graphql_error(self, fs):
         """Test get_device_stats handles GraphQL errors correctly"""
-        from zscaler.zinsights.iot import IotAPI
+        from zscaler.zins.iot import IotAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -210,7 +210,7 @@ class TestIoTUnit:
 
     def test_get_device_stats_exception(self, fs):
         """Test get_device_stats handles exceptions in response parsing correctly"""
-        from zscaler.zinsights.iot import IotAPI
+        from zscaler.zins.iot import IotAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -235,7 +235,7 @@ class TestWebTrafficUnit:
 
     def test_get_traffic_by_location_request_error(self, fs):
         """Test get_traffic_by_location handles request creation errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -250,7 +250,7 @@ class TestWebTrafficUnit:
 
     def test_get_traffic_by_location_execute_error(self, fs):
         """Test get_traffic_by_location handles execution errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -267,7 +267,7 @@ class TestWebTrafficUnit:
 
     def test_get_protocols_request_error(self, fs):
         """Test get_protocols handles request creation errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -282,7 +282,7 @@ class TestWebTrafficUnit:
 
     def test_get_protocols_execute_error(self, fs):
         """Test get_protocols handles execution errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -299,7 +299,7 @@ class TestWebTrafficUnit:
 
     def test_get_threat_super_categories_request_error(self, fs):
         """Test get_threat_super_categories handles request creation errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -314,7 +314,7 @@ class TestWebTrafficUnit:
 
     def test_get_threat_class_request_error(self, fs):
         """Test get_threat_class handles request creation errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -329,7 +329,7 @@ class TestWebTrafficUnit:
 
     def test_get_no_grouping_request_error(self, fs):
         """Test get_no_grouping handles request creation errors correctly"""
-        from zscaler.zinsights.web_traffic import WebTrafficAPI
+        from zscaler.zins.web_traffic import WebTrafficAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -350,7 +350,7 @@ class TestFirewallUnit:
 
     def test_get_traffic_by_action_request_error(self, fs):
         """Test get_traffic_by_action handles request creation errors correctly"""
-        from zscaler.zinsights.firewall import FirewallAPI
+        from zscaler.zins.firewall import FirewallAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -365,7 +365,7 @@ class TestFirewallUnit:
 
     def test_get_traffic_by_action_execute_error(self, fs):
         """Test get_traffic_by_action handles execution errors correctly"""
-        from zscaler.zinsights.firewall import FirewallAPI
+        from zscaler.zins.firewall import FirewallAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -382,7 +382,7 @@ class TestFirewallUnit:
 
     def test_get_traffic_by_location_request_error(self, fs):
         """Test get_traffic_by_location handles request creation errors correctly"""
-        from zscaler.zinsights.firewall import FirewallAPI
+        from zscaler.zins.firewall import FirewallAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -397,7 +397,7 @@ class TestFirewallUnit:
 
     def test_get_network_services_request_error(self, fs):
         """Test get_network_services handles request creation errors correctly"""
-        from zscaler.zinsights.firewall import FirewallAPI
+        from zscaler.zins.firewall import FirewallAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -418,7 +418,7 @@ class TestCyberSecurityUnit:
 
     def test_get_incidents_request_error(self, fs):
         """Test get_incidents handles request creation errors correctly"""
-        from zscaler.zinsights.cyber_security import CyberSecurityAPI
+        from zscaler.zins.cyber_security import CyberSecurityAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -433,7 +433,7 @@ class TestCyberSecurityUnit:
 
     def test_get_incidents_execute_error(self, fs):
         """Test get_incidents handles execution errors correctly"""
-        from zscaler.zinsights.cyber_security import CyberSecurityAPI
+        from zscaler.zins.cyber_security import CyberSecurityAPI
 
         mock_executor = Mock()
         mock_request = Mock()
@@ -456,7 +456,7 @@ class TestSaasSecurityUnit:
 
     def test_get_casb_app_report_request_error(self, fs):
         """Test get_casb_app_report handles request creation errors correctly"""
-        from zscaler.zinsights.saas_security import SaasSecurityAPI
+        from zscaler.zins.saas_security import SaasSecurityAPI
 
         mock_executor = Mock()
         mock_executor.create_request = Mock(return_value=(None, Exception("Request error")))
@@ -471,7 +471,7 @@ class TestSaasSecurityUnit:
 
     def test_get_casb_app_report_execute_error(self, fs):
         """Test get_casb_app_report handles execution errors correctly"""
-        from zscaler.zinsights.saas_security import SaasSecurityAPI
+        from zscaler.zins.saas_security import SaasSecurityAPI
 
         mock_executor = Mock()
         mock_request = Mock()

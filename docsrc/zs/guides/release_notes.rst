@@ -6,6 +6,25 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.11.3 (October 13 2026)
+---------------------------
+
+Notes
+-------
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Bug Fixes
+---------
+
+(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - TLS verification (`sslContext`) is now only honored when passed to the client constructor; it is ignored in `zscaler.yaml` files. The SDK logs a warning whenever TLS verification is disabled.
+
+(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - The SDK now logs a warning when it applies a `zscaler.yaml` from the current working directory.
+
+(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - Request and response logs now redact token query parameters such as the sandbox `api_token`.
+
+(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - Removed the non-functional `testing.disableHttpsCheck` option and documented `sslContext` in the configuration reference.
+
 1.11.2 (October 7 2026)
 ---------------------------
 

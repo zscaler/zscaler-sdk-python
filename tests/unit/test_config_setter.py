@@ -79,7 +79,7 @@ def test_config_setter_merge_config():
     # Set up base config
     base_config = {
         "client": {"clientId": "base_client_id", "connectionTimeout": 30, "cache": {"enabled": False, "defaultTtl": 1800}},
-        "testing": {"disableHttpsCheck": False},
+        "testing": {},
     }
 
     # Set up override config

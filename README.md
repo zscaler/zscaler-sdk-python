@@ -1040,6 +1040,8 @@ Higher numbers win. In other words, configuration passed via the constructor wil
 
 **NOTE:** This option is only supported for OneAPI Zidentity credentials at the moment.
 
+> **Security note:** TLS verification (`sslContext`) can only be set in the configuration passed to the constructor; it is ignored in `zscaler.yaml` files. The SDK logs a warning when it applies a `zscaler.yaml` from the current working directory and whenever TLS verification is disabled. Only run the SDK from directories whose configuration files you trust.
+
 ### YAML configuration
 
 When you use an API Token instead of OAuth 2.0 the full YAML configuration looks like:
@@ -1106,7 +1108,7 @@ Each one of the configuration values above can be turned into an environment var
 | `proxyHost`       | _(String)_ HTTP proxy host  | `ZSCALER_CLIENT_PROXY_HOST` |
 | `proxyUsername`       | _(String)_ HTTP proxy username  | `ZSCALER_CLIENT_PROXY_USERNAME` |
 | `proxyPassword`       | _(String)_ HTTP proxy password  | `ZSCALER_CLIENT_PROXY_PASSWORD` |
-| `disableHttpsCheck`       | _(String)_ Disable SSL checks  | `ZSCALER_TESTING_TESTINGDISABLEHTTPSCHECK` |
+| `sslContext`       | _(Boolean or String)_ TLS certificate verification: `True` (default), `False` (testing only), or a CA bundle path. Constructor only; ignored in YAML files. | _(none)_ |
 | `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
 | `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
