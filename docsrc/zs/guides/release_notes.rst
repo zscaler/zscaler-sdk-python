@@ -17,13 +17,15 @@ Notes
 Bug Fixes
 ---------
 
-(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - TLS verification (`sslContext`) is now only honored when passed to the client constructor; it is ignored in `zscaler.yaml` files. The SDK logs a warning whenever TLS verification is disabled.
+(`#602 <https://github.com/zscaler/zscaler-sdk-python/pull/602>`_) - TLS verification (`sslContext`) is now only honored when passed to the client constructor; it is ignored in `zscaler.yaml` files. The SDK logs a warning whenever TLS verification is disabled.
 
-(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - The SDK now logs a warning when it applies a `zscaler.yaml` from the current working directory.
+(`#602 <https://github.com/zscaler/zscaler-sdk-python/pull/602>`_) - The SDK now logs a warning when it applies a `zscaler.yaml` from the current working directory.
 
-(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - Request and response logs now redact token query parameters such as the sandbox `api_token`.
+(`#602 <https://github.com/zscaler/zscaler-sdk-python/pull/602>`_) - Request and response logs now redact token query parameters such as the sandbox `api_token`.
 
-(`#599 <https://github.com/zscaler/zscaler-sdk-python/pull/599>`_) - Removed the non-functional `testing.disableHttpsCheck` option and documented `sslContext` in the configuration reference.
+(`#602 <https://github.com/zscaler/zscaler-sdk-python/pull/602>`_) - Removed the non-functional `testing.disableHttpsCheck` option and documented `sslContext` in the configuration reference.
+
+(`#602 <https://github.com/zscaler/zscaler-sdk-python/pull/602>`_) - Fixed ZIA `bulk_delete_locations`, `bulk_delete_vpn_credentials`, `outbound_email_dlp_rules.get_actions`, `policy_export` and ZPA `get_microtenant_summary` plus seven ZPA `delete_*` functions to always return the documented `(result, response, error)` tuple. Callers unpacking two values must now unpack three. (`Issue #598 <https://github.com/zscaler/zscaler-sdk-python/issues/598>`_)
 
 1.11.2 (October 7 2026)
 ---------------------------

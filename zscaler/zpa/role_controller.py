@@ -350,7 +350,7 @@ class RoleControllerAPI(APIClient):
 
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
 

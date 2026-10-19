@@ -41,14 +41,11 @@ class PolicyExportAPI(APIClient):
             output_file (str): Optional. If provided, the ZIP is saved to disk at this file path.
 
         Returns:
-            tuple:
-                (export_content, error)
-
-                - export_content (bytes): The raw ZIP file bytes from the server (or raw JSON if only one type).
-                - error (str): Any error message, or None on success.
+            :obj:`Tuple`: A tuple containing (export content as bytes, Response, error). The content is the raw
+            ZIP file from the server (or raw JSON if only one policy type is exported).
 
         Example:
-            >>> export_content, err = client.zia.policy_export.policy_export(
+            >>> export_content, _, err = client.zia.policy_export.policy_export(
             ...     policy_types=["BA","URL_FILTERING"],
             ...     output_file="policy_export.zip"
             ... )
@@ -76,12 +73,12 @@ class PolicyExportAPI(APIClient):
             use_raw_data_for_body=False,  # We'll let JSON be formed from the Python list
         )
         if error:
-            return (None, error)
+            return (None, None, error)
 
         # We want raw bytes so we can save them if it's a ZIP
         response, error = self._request_executor.execute(request, return_raw_response=True)
         if error:
-            return (None, f"Request failed: {error}")
+            return (None, response, error)
 
         content = response.content  # raw bytes (likely a .zip)
 
@@ -90,4 +87,4 @@ class PolicyExportAPI(APIClient):
             with open(output_file, "wb") as f:
                 f.write(content)
 
-        return (content, None)
+        return (content, response, None)

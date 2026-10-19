@@ -331,18 +331,21 @@ class TrafficVPNCredentialAPI(APIClient):
             credential_ids (list): List containing IDs of each vpn credential that will be deleted.
 
         Returns:
-            :obj:`tuple`: Response code for operation.
+            :obj:`Tuple`: A tuple containing (None, Response, error)
 
         Examples:
-            >>> zia.traffic.bulk_delete_vpn_credentials(['94963984', '97679232'])
+            >>> _, _, err = client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(['94963984', '97679232'])
+            ... if err:
+            ...     print(f"Error bulk deleting VPN credentials: {err}")
+            ...     return
 
         """
         # Validate input before making the request
         if not credential_ids:
-            return (None, ValueError("Empty credential_ids list provided"))
+            return (None, None, ValueError("Empty credential_ids list provided"))
 
         if len(credential_ids) > 100:
-            return (None, ValueError("Maximum 100 credential IDs allowed per bulk delete request"))
+            return (None, None, ValueError("Maximum 100 credential IDs allowed per bulk delete request"))
 
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -356,12 +359,10 @@ class TrafficVPNCredentialAPI(APIClient):
             method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
-
         if error:
             return (None, response, error)
 
-        # ✅ Return a 3-tuple, even if response is None (e.g., 204 No Content)
         return (None, response, None)
