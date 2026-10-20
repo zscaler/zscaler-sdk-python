@@ -42,7 +42,6 @@ class ConfigSetter:
                 "maxRetries": 2,
                 "maxRetrySeconds": "",
             },
-            "testing": {"disableHttpsCheck": ""},
         }
     }
 
@@ -97,7 +96,10 @@ class ConfigSetter:
 
         # check if LOCAL yaml exists, apply if true
         if os.path.exists(_LOCAL_YAML_PATH):
-            logger.info(f"Applying local YAML configuration from {_LOCAL_YAML_PATH}.")
+            logger.warning(
+                f"Applying zscaler.yaml from the current working directory ({_LOCAL_YAML_PATH}). "
+                "Only run the SDK from directories whose configuration files you trust."
+            )
             self._apply_yaml_config(_LOCAL_YAML_PATH)
 
         # apply existing environment variables
@@ -138,13 +140,6 @@ class ConfigSetter:
         self._config["client"]["requestTimeout"] = 0
         self._config["client"]["rateLimit"] = {"maxRetries": 2}
 
-        # Add a check for the 'testing' key before accessing it
-        if "testing" not in self._config:
-            self._config["testing"] = {}
-
-        # Initialize the 'testing' section with default values
-        self._config["testing"]["disableHttpsCheck"] = False
-
     def _apply_config(self, new_config: dict):
         """Apply a config dictionary to the current config, overwriting values"""
         # logger.debug("Applying new configuration settings.")
@@ -170,8 +165,13 @@ class ConfigSetter:
         with open(path, "r") as file:
             # Open file stream and attempt to load YAML
             config = yaml.load(file, Loader=yaml.SafeLoader)
-        # Apply acquired config to configuration
-        self._apply_config(config.get("zscaler", {}))
+        zscaler_config = (config or {}).get("zscaler", {}) or {}
+        # TLS verification settings are only honored when passed to the client constructor.
+        client_config = zscaler_config.get("client") or {}
+        if "sslContext" in client_config:
+            client_config.pop("sslContext")
+            logger.warning(f"Ignoring 'sslContext' in {path}; TLS settings must be passed to the client constructor.")
+        self._apply_config(zscaler_config)
 
     def _apply_env_config(self, conf_key):
         """

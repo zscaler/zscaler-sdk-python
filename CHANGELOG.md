@@ -1,5 +1,19 @@
 # Zscaler Python SDK Changelog
 
+## 1.11.3 (October 13 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Bug Fixes
+
+* [PR #602](https://github.com/zscaler/zscaler-sdk-python/pull/602) - TLS verification (`sslContext`) is now only honored when passed to the client constructor; it is ignored in `zscaler.yaml` files. The SDK logs a warning whenever TLS verification is disabled.
+* [PR #602](https://github.com/zscaler/zscaler-sdk-python/pull/602) - The SDK now logs a warning when it applies a `zscaler.yaml` from the current working directory.
+* [PR #602](https://github.com/zscaler/zscaler-sdk-python/pull/602) - Request and response logs now redact token query parameters such as the sandbox `api_token`.
+* [PR #602](https://github.com/zscaler/zscaler-sdk-python/pull/602) - Removed the non-functional `testing.disableHttpsCheck` option and documented `sslContext` in the configuration reference.
+* [PR #602](https://github.com/zscaler/zscaler-sdk-python/pull/602) - Fixed ZIA `bulk_delete_locations`, `bulk_delete_vpn_credentials`, `outbound_email_dlp_rules.get_actions`, `policy_export` and ZPA `get_microtenant_summary` plus seven ZPA `delete_*` functions to always return the documented `(result, response, error)` tuple. Callers unpacking two values must now unpack three. [Issue #598](https://github.com/zscaler/zscaler-sdk-python/issues/598)
+
 ## 1.11.2 (October 7 2026)
 
 ### Notes

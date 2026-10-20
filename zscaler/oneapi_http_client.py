@@ -69,13 +69,11 @@ class HTTPClient:
         else:
             self._proxy: Optional[str] = None
 
-        # Setup SSL context or handle disableHttpsCheck
-        if "sslContext" in http_config:
-            self._ssl_context: Union[bool, Any] = http_config["sslContext"]  # Use the custom SSL context
-        elif "disableHttpsCheck" in http_config and http_config["disableHttpsCheck"]:
-            self._ssl_context: Union[bool, Any] = False  # Disable SSL certificate validation if disableHttpsCheck is true
-        else:
-            self._ssl_context: Union[bool, Any] = True  # Enable SSL certificate validation by default
+        # Passed to requests as ``verify``: True (default), False, or a CA bundle path.
+        ssl_context: Union[bool, Any] = http_config.get("sslContext")
+        self._ssl_context: Union[bool, Any] = True if ssl_context is None else ssl_context
+        if self._ssl_context is False:
+            logger.warning("TLS certificate verification is disabled (sslContext=False). Do not use this outside of testing.")
 
         self._session: Optional[requests.Session] = None
 

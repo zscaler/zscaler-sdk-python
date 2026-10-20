@@ -411,10 +411,10 @@ class OutboundEmailDLPRulesAPI(APIClient):
             output_file (str): Optional path; when given, the downloaded bytes are written to this file.
 
         Returns:
-            tuple: A 2-tuple of (the CSV mapping of supported outbound email DLP rule actions as bytes, error).
+            :obj:`Tuple`: A tuple containing (CSV mapping of supported actions as bytes, Response, error)
 
         Examples:
-            >>> content, error = client.zia.outbound_email_dlp_rules.get_actions(output_file='get_actions.csv')
+            >>> content, _, error = client.zia.outbound_email_dlp_rules.get_actions(output_file='get_actions.csv')
             >>> if error:
             ...     print(f"Error downloading outbound email DLP rule: {error}")
             ...     return
@@ -441,11 +441,11 @@ class OutboundEmailDLPRulesAPI(APIClient):
             params=query_params,
         )
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request, return_raw_response=True)
         if error:
-            return (None, f"Request failed: {error}")
+            return (None, response, error)
 
         content = response.content
 
@@ -453,4 +453,4 @@ class OutboundEmailDLPRulesAPI(APIClient):
             with open(output_file, "wb") as f:
                 f.write(content)
 
-        return (content, None)
+        return (content, response, None)

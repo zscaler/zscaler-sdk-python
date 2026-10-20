@@ -529,7 +529,7 @@ class LocationsAPI(APIClient):
             location_ids (list): The list of unique ids for the ZIA Locations that will be deleted.
 
         Returns:
-            :obj:`int`: The status code for the operation.
+            :obj:`Tuple`: A tuple containing (None, Response, error)
 
         Examples:
             >>> location_ids_to_delete = ['8665786', '8766865']
@@ -541,10 +541,10 @@ class LocationsAPI(APIClient):
         """
         # Validate input before making the request
         if not location_ids:
-            return (None, ValueError("Empty location_ids list provided"))
+            return (None, None, ValueError("Empty location_ids list provided"))
 
         if len(location_ids) > 100:
-            return (None, ValueError("Maximum 100 location IDs allowed per bulk delete request"))
+            return (None, None, ValueError("Maximum 100 location IDs allowed per bulk delete request"))
 
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -558,18 +558,13 @@ class LocationsAPI(APIClient):
             method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
         if error:
-            return (None, error)
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
-
-        # For 204 No Content responses, the executor may return None
         if error:
-            return (None, error)
-        elif response is None:
-            # This is the expected case for 204 No Content
-            return (None, None)
+            return (None, response, error)
 
-        return (response, None)
+        return (None, response, None)
 
     def list_sub_locations(self, location_id: int, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
