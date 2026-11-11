@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from typing import List, Optional
 
 from zscaler.api_client import APIClient
+from zscaler.errors.response_checker import check_response_for_error
 from zscaler.request_executor import RequestExecutor
 from zscaler.types import APIResult
 from zscaler.utils import format_url
@@ -303,3 +304,72 @@ class NssServersAPI(APIClient):
         if error:
             return (None, response, error)
         return (None, response, None)
+
+def nss_download_certificate(self, nss_id: int, output_file: Optional[str] = None) -> APIResult[bytes]:
+        """
+        Downloads the SSL certificate of the specified NSS server. The server returns a ZIP file
+        (``NssCertificate.zip``) that is installed on the NSS virtual machine with ``sudo nss install-cert``.
+
+        Args:
+            nss_id (int): The unique identifier of the NSS server.
+            output_file (str): Optional path; when given, the downloaded bytes are written to this file.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (certificate ZIP file as bytes, Response, error)
+
+        Examples:
+            Download the certificate of an NSS server and save it to disk:
+
+            >>> content, _, error = client.zia.nss_servers.nss_download_certificate(
+            ...     nss_id=1254654,
+            ...     output_file='NssCertificate.zip',
+            ... )
+            >>> if error:
+            ...     print(f"Error downloading NSS certificate: {error}")
+            ...     return
+            ... print(f"Downloaded {len(content)} bytes.")
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /nssDownload/{nss_id}
+        """)
+
+        headers = {
+            "Accept": "*/*",
+        }
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body={},
+            headers=headers,
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, return_raw_response=True)
+        if error:
+            return (None, response, error)
+
+        # A raw response skips the executor's error handling, so an API error body
+        # would otherwise be returned, and saved, as if it were the certificate.
+        status_code = getattr(response, "status_code", None)
+        if not isinstance(status_code, int) or not 200 <= status_code < 300:
+            try:
+                _, error = check_response_for_error(request.get("url", api_url), response, getattr(response, "text", ""))
+            except Exception as ex:
+                error = ex
+            if not error:
+                error = ValueError(f"Unexpected response while downloading the certificate of NSS server {nss_id}.")
+            return (None, response, error)
+
+        content = getattr(response, "content", None)
+        if not content:
+            return (None, response, ValueError(f"The API returned no certificate for NSS server {nss_id}."))
+
+        if output_file:
+            with open(output_file, "wb") as f:
+                f.write(content)
+
+        return (content, response, None)

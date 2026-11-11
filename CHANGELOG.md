@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.11.4 (November 10 2026)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements
+
+* [PR #610](https://github.com/zscaler/zscaler-sdk-python/pull/610) - Added ZIA `nss_servers.nss_download_certificate(nss_id, output_file=None)` to download the SSL certificate ZIP file of an NSS server (`GET /nssDownload/{nssId}`). The function returns the file as bytes, optionally saves it to `output_file`, and returns API errors instead of treating an error body as the certificate.1.11.4 
+
 ## 1.11.3 (October 13 2026)
 
 ### Notes
